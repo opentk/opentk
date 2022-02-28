@@ -41,6 +41,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             return p;
         }
 
+        //BOOL wglGetPixelFormatAttribivARB(HDC hdc, int iPixelFormat ,int iLayerPlane, UINT nAttributes, const int* piAttributes, int* piValues);
+
         internal static unsafe delegate* unmanaged<IntPtr, byte*> _GetExtensionsStringARB__fnptr = &GetExtensionsStringARB__Lazy;
         public static unsafe byte* GetExtensionsStringARB_(IntPtr hdc) => _GetExtensionsStringARB__fnptr(hdc);
         [UnmanagedCallersOnly]
@@ -56,6 +58,23 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             returnValue = GetExtensionsStringARB_(hdc);
             returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             return returnValue_str;
+        }
+
+        internal static unsafe delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int> _GetPixelFormatAttribivARB__fnptr = &GetPixelFormatAttribivARB__Lazy;
+        public static unsafe int GetPixelFormatAttribivARB_(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues) => _GetPixelFormatAttribivARB__fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
+        [UnmanagedCallersOnly]
+        private static unsafe int GetPixelFormatAttribivARB__Lazy(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int* piAttributes, int* piValues)
+        {
+            _GetPixelFormatAttribivARB__fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)GetProcAddress("wglGetPixelFormatAttribivARB");
+            return _GetPixelFormatAttribivARB__fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
+        }
+        public static unsafe bool GetPixelFormatAttribivARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int[] attributes, int[] values)
+        {
+            fixed (int* piAttributes = attributes)
+            fixed (int* piValues = values)
+            {
+                return GetPixelFormatAttribivARB_(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues) != 0;
+            }
         }
     }
 #pragma warning restore SA1401 // Fields should be private

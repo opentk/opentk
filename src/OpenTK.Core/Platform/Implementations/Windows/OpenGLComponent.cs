@@ -11,6 +11,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 {
     public class OpenGLComponent : IOpenGLComponent
     {
+        public IntPtr HelperHWnd { get; private set; }
+
         public string Name => "Win32OpenGL";
 
         public PalComponents Provides => PalComponents.OpenGL;
@@ -20,6 +22,129 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             if (which != PalComponents.OpenGL)
             {
                 throw new Exception("OpenGLComponent can only initialize the OpenGL component.");
+            }
+
+            Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
+            pfd = new Win32.PIXELFORMATDESCRIPTOR()
+            {
+                nSize = pfd.nSize,
+                nVersion = 1,
+                dwFlags = PFD.DRAW_TO_WINDOW | PFD.SUPPORT_OPENGL | PFD.DOUBLEBUFFER,
+                iPixelType = PFDType.TYPE_RGBA,
+                cColorBits = 32,
+                cRedBits = 0,
+                cRedShift = 0,
+                cGreenBits = 0,
+                cGreenShift = 0,
+                cBlueBits = 0,
+                cBlueShift = 0,
+                cAlphaBits = 0,
+                cAlphaShift = 0,
+                cAccumBits = 0,
+                cAccumRedBits = 0,
+                cAccumGreenBits = 0,
+                cAccumBlueBits = 0,
+                cAccumAlphaBits = 0,
+                cDepthBits = 24, // FIXME: Ability to configure!
+                cStencilBits = 8, // FIXME: Ability to configure!
+                cAuxBuffers = 0,
+                iLayerType = 0,
+                bReserved = 0,
+                dwLayerMask = 0,
+                dwVisibleMask = 0,
+                dwDamageMask = 0,
+            };
+
+            IntPtr hDC = Win32.GetDC(WindowComponent.HelperHWnd);
+
+            if (hDC == IntPtr.Zero)
+            {
+                throw new Win32Exception("GetDC failed", Marshal.GetLastWin32Error());
+            }
+            uint nBytes;
+            unchecked
+            {
+                nBytes = (uint)Marshal.SizeOf<Win32.PIXELFORMATDESCRIPTOR>();
+            }
+
+            int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
+            if (pixelFormatIndex == 0)
+            {
+                throw new Win32Exception("ChoosePixelFormat failed", Marshal.GetLastWin32Error());
+            }
+
+            Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
+            Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+            Console.WriteLine($"=== Chosen Format ===");
+            Console.WriteLine($"Version: {chosenFormat.nVersion}");
+            Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
+            Console.WriteLine($"Pixel Type: {chosenFormat.iPixelType}");
+            Console.WriteLine($"Color bits: {chosenFormat.cColorBits}");
+            Console.WriteLine($"Depth bits: {chosenFormat.cDepthBits}");
+            Console.WriteLine($"Stencil bits: {chosenFormat.cStencilBits}");
+            JsonSerializerOptions opt2 = new JsonSerializerOptions()
+            {
+                IncludeFields = true,
+                WriteIndented = true,
+            };
+            Console.WriteLine($"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), opt2)}");
+
+            bool success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
+            if (success == false)
+            {
+                throw new Win32Exception("SetPixelFormat failed", Marshal.GetLastWin32Error());
+            }
+
+            IntPtr hGLRC = Wgl.CreateContext(hDC);
+            if (hGLRC == IntPtr.Zero)
+            {
+                throw new Win32Exception("wglCreateContext failed", Marshal.GetLastWin32Error());
+            }
+
+            // FIXME: Maybe restore the context that was already there after?
+            success = Wgl.MakeCurrent(hDC, hGLRC);
+            if (success == false)
+            {
+                throw new Win32Exception("wglMakeCurrent failed to make helper context current", Marshal.GetLastWin32Error());
+            }
+
+            unsafe
+            {
+                Wgl._GetExtensionsStringARB__fnptr = (delegate* unmanaged<IntPtr, byte*>)Wgl.GetProcAddress("wglGetExtensionsStringARB");
+
+                Wgl._GetPixelFormatAttribivARB__fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)Wgl.GetProcAddress("wglGetPixelFormatAttribivARB");
+
+                if (Wgl._GetExtensionsStringARB__fnptr != null)
+                {
+                    string[] wglExts = Wgl.GetExtensionsStringARB(hDC).Split(" ");
+
+                    ARB_multisample = wglExts.Contains("WGL_ARB_multisample");
+                    ARB_framebuffer_sRGB = wglExts.Contains("WGL_ARB_framebuffer_sRGB");
+                    EXT_framebuffer_sRGB = wglExts.Contains("WGL_EXT_framebuffer_sRGB");
+                    ARB_create_context = wglExts.Contains("WGL_ARB_create_context");
+                    ARB_create_context_profile = wglExts.Contains("WGL_ARB_create_context_profile");
+                    ARB_create_context_es2_profile = wglExts.Contains("WGL_EXT_create_context_es2_profile");
+                    ARB_create_context_robustness = wglExts.Contains("WGL_ARB_create_context_robustness");
+                    ARB_create_context_no_error = wglExts.Contains("WGL_ARB_create_context_no_error");
+                    EXT_swap_control = wglExts.Contains("WGL_EXT_swap_control");
+                    EXT_colorspace = wglExts.Contains("WGL_EXT_colorspace");
+                    ARB_pixel_format = wglExts.Contains("WGL_ARB_pixel_format");
+                    ARB_context_flush_control = wglExts.Contains("WGL_ARB_context_flush_control");
+
+                    foreach (var ext in wglExts)
+                    {
+                        Console.WriteLine($"wglExts: {ext}");
+                    }
+                }
+            }
+
+            // FIXME: Maybe restore the context that was already there?
+
+            // Delete the helper context
+            success = Wgl.DeleteContext(hGLRC);
+            if (success == false)
+            {
+                throw new Win32Exception("wglDeleteContext failed for helper window", Marshal.GetLastWin32Error());
             }
         }
 
@@ -66,6 +191,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            if (ARB_pixel_format)
+            {
+                // We have the pixel format extension!
+
+
+                Wgl.GetPixelFormatAttribivARB()
+
+            }
+
             Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
             pfd = new Win32.PIXELFORMATDESCRIPTOR()
             {
@@ -109,43 +243,6 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 nBytes = (uint)Marshal.SizeOf<Win32.PIXELFORMATDESCRIPTOR>();
             }
 
-            /**
-            int maxPixelFormats = Win32.DescribePixelFormat(hDC, 1, nBytes, ref Unsafe.NullRef<Win32.PIXELFORMATDESCRIPTOR>());
-            if (maxPixelFormats == 0)
-            {
-                throw new Win32Exception("DescribePixelFormat failed to get maximum format index", Marshal.GetLastWin32Error());
-            }
-
-            for (int i = 1; i <= maxPixelFormats; i++)
-            {
-                Win32.PIXELFORMATDESCRIPTOR desc = default;
-                Win32.DescribePixelFormat(hDC, i, nBytes, ref desc);
-
-                if (desc.dwFlags.HasFlag(PFD.SUPPORT_OPENGL) == false)
-                {
-                    continue;
-                }
-
-                if (desc.dwFlags.HasFlag(PFD.DRAW_TO_WINDOW) == false)
-                {
-                    continue;
-                }
-
-                Console.WriteLine($"=== Format {i} ===");
-                Console.WriteLine($"Version: {desc.nVersion}");
-                Console.WriteLine($"Flags: {desc.dwFlags} ({Convert.ToString((uint)desc.dwFlags, 2)})");
-                Console.WriteLine($"Pixel Type: {desc.iPixelType}");
-                Console.WriteLine($"Color bits: {desc.cColorBits}");
-                Console.WriteLine($"Depth bits: {desc.cDepthBits}");
-                Console.WriteLine($"Stencil bits: {desc.cStencilBits}");
-                JsonSerializerOptions opt = new JsonSerializerOptions()
-                {
-                    IncludeFields = true,
-                    WriteIndented = true,
-                };
-                Console.WriteLine($"Full desc: {JsonSerializer.Serialize(desc, desc.GetType(), opt)}");
-            }
-            */
             int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
             if (pixelFormatIndex == 0)
             {
@@ -168,9 +265,6 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             };
             Console.WriteLine($"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), opt2)}");
 
-            // FIXME: We can only ever set this format once!!
-            // So if we need to support sRGB backbuffers or other more andvanced features we need
-            // to create a new window to create a dummy context and query the capabilities.
             bool success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
             if (success == false)
             {
@@ -183,37 +277,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 throw new Win32Exception("wglCreateContext failed", Marshal.GetLastWin32Error());
             }
 
+            // FIXME: Maybe restore the context that was already there after?
+            success = Wgl.MakeCurrent(hDC, hGLRC);
+            if (success == false)
+            {
+                throw new Win32Exception("wglMakeCurrent failed to make helper context current", Marshal.GetLastWin32Error());
+            }
+
             HGLRC hglrc = new HGLRC(hGLRC, hDC, this);
             HGLRCDict.Add(hGLRC, hglrc);
-
-            Wgl.MakeCurrent(hDC, hGLRC);
-
-            unsafe
-            {
-                Wgl._GetExtensionsStringARB__fnptr = (delegate* unmanaged<IntPtr, byte*>)Wgl.GetProcAddress("wglGetExtensionsStringARB");
-                if (Wgl._GetExtensionsStringARB__fnptr != null)
-                {
-                    string[] wglExts = Wgl.GetExtensionsStringARB(hDC).Split(" ");
-
-                    ARB_multisample = wglExts.Contains("WGL_ARB_multisample");
-                    ARB_framebuffer_sRGB = wglExts.Contains("WGL_ARB_framebuffer_sRGB");
-                    EXT_framebuffer_sRGB = wglExts.Contains("WGL_EXT_framebuffer_sRGB");
-                    ARB_create_context = wglExts.Contains("WGL_ARB_create_context");
-                    ARB_create_context_profile = wglExts.Contains("WGL_ARB_create_context_profile");
-                    ARB_create_context_es2_profile = wglExts.Contains("WGL_EXT_create_context_es2_profile");
-                    ARB_create_context_robustness = wglExts.Contains("WGL_ARB_create_context_robustness");
-                    ARB_create_context_no_error = wglExts.Contains("WGL_ARB_create_context_no_error");
-                    EXT_swap_control = wglExts.Contains("WGL_EXT_swap_control");
-                    EXT_colorspace = wglExts.Contains("WGL_EXT_colorspace");
-                    ARB_pixel_format = wglExts.Contains("WGL_ARB_pixel_format");
-                    ARB_context_flush_control = wglExts.Contains("WGL_ARB_context_flush_control");
-
-                    foreach (var ext in wglExts)
-                    {
-                        Console.WriteLine($"wglExts: {ext}");
-                    }
-                }
-            }
 
             return hglrc;
         }

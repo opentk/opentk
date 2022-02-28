@@ -1950,4 +1950,316 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         /// </summary>
         HSHELL_WINDOWREPLACED = 13
     }
+
+
+    public enum WGLPixelFormat : int
+    {
+        /// <summary>
+        /// The number of pixel formats for the device context. The
+        /// iLayerPlane and iPixelFormat parameters are ignored if this
+        /// attribute is specified.
+        /// </summary>
+        NUMBER_PIXEL_FORMATS_ARB = 0x2000,
+
+        /// <summary>
+        /// True if the pixel format can be used with a window. The
+        /// iLayerPlane parameter is ignored if this attribute is
+        /// specified.
+        /// </summary>
+        DRAW_TO_WINDOW_ARB = 0x2001,
+
+        /// <summary>
+        /// True if the pixel format can be used with a memory bitmap. The
+        /// iLayerPlane parameter is ignored if this attribute is
+        /// specified.
+        /// </summary>
+        DRAW_TO_BITMAP_ARB = 0x2002,
+
+        /// <summary>
+        /// Indicates whether the pixel format is supported by the driver.
+        /// If this is set to WGL_NO_ACCELERATION_ARB then only the software
+        /// renderer supports this pixel format; if this is set to
+        /// WGL_GENERIC_ACCELERATION_ARB then the pixel format is supported
+        /// by an MCD driver; if this is set to WGL_FULL_ACCELERATION_ARB
+        /// then the pixel format is supported by an ICD driver.
+        /// </summary>
+        ACCELERATION_ARB = 0x2003,
+
+        /// <summary>
+        /// A logical palette is required to achieve the best results for
+        /// this pixel format. The iLayerPlane parameter is ignored if
+        /// this attribute is specified.
+        /// </summary>
+        NEED_PALETTE_ARB = 0x2004,
+
+        /// <summary>
+        /// The hardware supports one hardware palette in 256-color mode
+        /// only. The iLayerPlane parameter is ignored if this attribute
+        /// is specified.
+        /// </summary>
+        NEED_SYSTEM_PALETTE_ARB = 0x2005,
+
+        /// <summary>
+        /// True if the pixel format supports swapping layer planes
+        /// independently of the main planes. If the pixel format does not
+        /// support a back buffer then this is set to FALSE. The
+        /// iLayerPlane parameter is ignored if this attribute is
+        /// specified.
+        /// </summary>
+        SWAP_LAYER_BUFFERS_ARB = 0x2006,
+
+        /// <summary>
+        /// If the pixel format supports a back buffer, then this indicates
+        /// how they are swapped. If this attribute is set to
+        /// WGL_SWAP_EXCHANGE_ARB then swapping exchanges the front and back
+        /// buffer contents; if it is set to WGL_SWAP_COPY_ARB then swapping
+        /// copies the back buffer contents to the front buffer; if it is
+        /// set to WGL_SWAP_UNDEFINED_ARB then the back buffer contents are
+        /// copied to the front buffer but the back buffer contents are
+        /// undefined after the operation. If the pixel format does not
+        /// support a back buffer then this parameter is set to
+        /// WGL_SWAP_UNDEFINED_ARB. The <iLayerPlane> parameter is ignored
+        /// if this attribute is specified.
+        /// </summary>
+        SWAP_METHOD_ARB = 0x2007,
+
+        /// <summary>
+        /// The number of overlay planes. The <iLayerPlane> parameter is
+        /// ignored if this attribute is specified.
+        /// </summary>
+        NUMBER_OVERLAYS_ARB = 0x2008,
+
+        /// <summary>
+        /// The number of underlay planes. The <iLayerPlane> parameter is
+        /// ignored if this attribute is specified.
+        /// </summary>
+        NUMBER_UNDERLAYS_ARB = 0x2009,
+
+        /// <summary>
+        /// True if transparency is supported.
+        /// </summary>
+        TRANSPARENT_ARB = 0x200A,
+
+        /// <summary>
+        /// Specifies the transparent red color value. Typically this value
+        /// is the same for all layer planes. This value is undefined if
+        /// transparency is not supported.
+        /// </summary>
+        TRANSPARENT_RED_VALUE_ARB = 0x2037,
+
+        /// <summary>
+        /// Specifies the transparent green value. Typically this value is
+        /// the same for all layer planes. This value is undefined if
+        /// transparency is not supported.
+        /// </summary>
+        TRANSPARENT_GREEN_VALUE_ARB = 0x2038,
+
+        /// <summary>
+        /// Specifies the transparent blue color value. Typically this value
+        /// is the same for all layer planes. This value is undefined if
+        /// transparency is not supported.
+        /// </summary>
+        TRANSPARENT_BLUE_VALUE_ARB = 0x2039,
+
+        /// <summary>
+        /// Specifies the transparent alpha value. This is reserved for
+        /// future use.
+        /// </summary>
+        TRANSPARENT_ALPHA_VALUE_ARB = 0x203A,
+
+        /// <summary>
+        /// Specifies the transparent color index value. Typically this
+        /// value is the same for all layer planes. This value is undefined
+        /// if transparency is not supported.
+        /// </summary>
+        TRANSPARENT_INDEX_VALUE_ARB = 0x203B,
+
+        /// <summary>
+        /// True if the layer plane shares the depth buffer with the main
+        /// planes. If <iLayerPlane> is zero, this is always true.
+        /// </summary>
+        SHARE_DEPTH_ARB = 0x200C,
+
+        /// <summary>
+        ///  True if the layer plane shares the stencil buffer with the main
+        /// planes. If <iLayerPlane> is zero, this is always true.
+        /// </summary>
+        SHARE_STENCIL_ARB = 0x200D,
+
+        /// <summary>
+        /// True if the layer plane shares the accumulation buffer with the
+        /// main planes. If <iLayerPlane> is zero, this is always true.
+        /// </summary>
+        SHARE_ACCUM_ARB = 0x200E,
+
+        /// <summary>
+        /// True if GDI rendering is supported.
+        /// </summary>
+        SUPPORT_GDI_ARB = 0x200F,
+
+        /// <summary>
+        /// True if OpenGL is supported.
+        /// </summary>
+        SUPPORT_OPENGL_ARB = 0x2010,
+
+        /// <summary>
+        /// True if the color buffer has back/front pairs.
+        /// </summary>
+        DOUBLE_BUFFER_ARB = 0x2011,
+
+        /// <summary>
+        /// True if the color buffer has left/right pairs.
+        /// </summary>
+        STEREO_ARB = 0x2012,
+
+        /// <summary>
+        ///  The type of pixel data. This can be set to WGL_TYPE_RGBA_ARB or
+        /// WGL_TYPE_COLORINDEX_ARB.
+        /// </summary>
+        PIXEL_TYPE_ARB = 0x2013,
+
+        /// <summary>
+        /// The number of color bitplanes in each color buffer. For RGBA
+        /// pixel types, it is the size of the color buffer, excluding the
+        /// alpha bitplanes. For color-index pixels, it is the size of the
+        /// color index buffer.
+        /// </summary>
+        COLOR_BITS_ARB = 0x2014,
+
+        /// <summary>
+        /// The number of red bitplanes in each RGBA color buffer.
+        /// </summary>
+        RED_BITS_ARB = 0x2015,
+
+        /// <summary>
+        /// The shift count for red bitplanes in each RGBA color buffer.
+        /// </summary>
+        RED_SHIFT_ARB = 0x2016,
+
+        /// <summary>
+        /// The number of green bitplanes in each RGBA color buffer.
+        /// </summary>
+        GREEN_BITS_ARB = 0x2017,
+
+        /// <summary>
+        /// The shift count for green bitplanes in each RGBA color buffer.
+        /// </summary>
+        GREEN_SHIFT_ARB = 0x2018,
+
+        /// <summary>
+        /// The number of blue bitplanes in each RGBA color buffer.
+        /// </summary>
+        BLUE_BITS_ARB = 0x2019,
+
+        /// <summary>
+        /// The shift count for blue bitplanes in each RGBA color buffer.
+        /// </summary>
+        BLUE_SHIFT_ARB = 0x201A,
+
+        /// <summary>
+        /// The number of alpha bitplanes in each RGBA color buffer.
+        /// </summary>
+        ALPHA_BITS_ARB = 0x201B,
+
+        /// <summary>
+        /// The shift count for alpha bitplanes in each RGBA color buffer.
+        /// </summary>
+        ALPHA_SHIFT_ARB = 0x201C,
+
+        /// <summary>
+        /// The total number of bitplanes in the accumulation buffer.
+        /// </summary>
+        ACCUM_BITS_ARB = 0x201D,
+
+        /// <summary>
+        /// The number of red bitplanes in the accumulation buffer.
+        /// </summary>
+        ACCUM_RED_BITS_ARB = 0x201E,
+
+        /// <summary>
+        /// The number of green bitplanes in the accumulation buffer.
+        /// </summary>
+        ACCUM_GREEN_BITS_ARB = 0x201F,
+
+        /// <summary>
+        /// The number of blue bitplanes in the accumulation buffer.
+        /// </summary>
+        ACCUM_BLUE_BITS_ARB = 0x2020,
+
+        /// <summary>
+        /// The number of alpha bitplanes in the accumulation buffer.
+        /// </summary>
+        ACCUM_ALPHA_BITS_ARB = 0x2021,
+
+        /// <summary>
+        /// The depth of the depth (z-axis) buffer.
+        /// </summary>
+        DEPTH_BITS_ARB = 0x2022,
+
+        /// <summary>
+        /// The depth of the stencil buffer.
+        /// </summary>
+        STENCIL_BITS_ARB = 0x2023,
+
+        /// <summary>
+        /// The number of auxiliary buffers.
+        /// </summary>
+        AUX_BUFFERS_ARB = 0x2024,
+
+        // ### WGL_ARB_multisample ###
+        SAMPLE_BUFFERS_ARB = 0x2041,
+        SAMPLES_ARB = 0x2042,
+
+        // ### WGL_ARB_framebuffer_sRGB ###
+        FRAMEBUFFER_SRGB_CAPABLE_ARB = 0x20A9,
+    }
+
+    /// <summary>
+    /// Indicates whether the pixel format is supported by the driver.
+    /// </summary>
+    public enum WGLAcceleration
+    {
+        /// <summary>
+        /// Only the software renderer supports this pixel format.
+        /// </summary>
+        NO_ACCELERATION_ARB = 0x2025,
+
+        /// <summary>
+        /// The pixel format is supported by an MCD driver.
+        /// </summary>
+        GENERIC_ACCELERATION_ARB = 0x2026,
+
+        /// <summary>
+        ///  The pixel format is supported by an ICD driver.
+        /// </summary>
+        FULL_ACCELERATION_ARB = 0x2027,
+    }
+
+    public enum WGLSwapMethod
+    {
+        /// <summary>
+        /// Swapping exchanges the front and back buffer contents.
+        /// </summary>
+        SWAP_EXCHANGE_ARB = 0x2028,
+
+        /// <summary>
+        /// Swapping copies the back buffer contents to the front buffer.
+        /// </summary>
+        SWAP_COPY_ARB = 0x2029,
+
+        /// <summary>
+        /// the back buffer contents are
+        /// copied to the front buffer but the back buffer contents are
+        /// undefined after the operation. If the pixel format does not
+        /// support a back buffer then this parameter is set to
+        /// WGL_SWAP_UNDEFINED_ARB.
+        /// </summary>
+        SWAP_UNDEFINED_ARB = 0x202A,
+    }
+
+    public enum WGLColorType
+    {
+        TYPE_RGBA_ARB = 0x202B,
+        TYPE_COLORINDEX_ARB = 0x202C,
+    }
 }

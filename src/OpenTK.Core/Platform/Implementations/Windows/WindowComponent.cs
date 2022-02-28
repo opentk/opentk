@@ -14,6 +14,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public static readonly IntPtr HInstance;
 
+        public static IntPtr HelperHWnd { get; private set; }
+
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
         static WindowComponent()
@@ -46,6 +48,32 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             {
                 throw new Win32Exception("RegisterClassEx failed!", Marshal.GetLastWin32Error());
             }
+
+            HelperHWnd = Win32.CreateWindowEx(
+                0,
+                WindowComponent.CLASS_NAME,
+                "OpenTK Helper Window",
+                WindowStyles.WS_CLIPSIBLINGS | WindowStyles.WS_CLIPCHILDREN,
+                Win32.CW_USEDEFAULT,
+                Win32.CW_USEDEFAULT,
+                Win32.CW_USEDEFAULT,
+                Win32.CW_USEDEFAULT,
+                IntPtr.Zero,
+                IntPtr.Zero,
+                HInstance,
+                IntPtr.Zero);
+
+            if (HelperHWnd == IntPtr.Zero)
+            {
+                throw new Win32Exception("Failed to create helper window", Marshal.GetLastWin32Error());
+            }
+
+            // Eat all messages so that the WM_CREATE messages get processed etc.
+            while (Win32.PeekMessage(out Win32.MSG lpMsg, HelperHWnd, 0, 0, PM.REMOVE) != 0)
+            {
+                Win32.TranslateMessage(in lpMsg);
+                Win32.DispatchMessage(in lpMsg);
+            }
         }
 
         public bool CanSetIcon => throw new NotImplementedException();
@@ -69,18 +97,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             while (true)
             {
-                int bRet;
-                while ((bRet = Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.REMOVE)) != 0)
+                while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.REMOVE) != 0)
                 {
-                    if (bRet == -1)
-                    {
-                        throw new Win32Exception("GetMessage failed ", Marshal.GetLastWin32Error());
-                    }
-                    else
-                    {
-                        Win32.TranslateMessage(in lpMsg);
-                        Win32.DispatchMessage(in lpMsg);
-                    }
+                    Win32.TranslateMessage(in lpMsg);
+                    Win32.DispatchMessage(in lpMsg);
                 }
 
                 if (quit == true)
@@ -112,7 +132,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         private static IntPtr Win32WindowProc(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam)
         {
             WM message = (WM)uMsg;
-            Console.WriteLine("WinProc " + message);
+            Console.WriteLine("WinProc " + message + " " + hWnd);
             switch (message)
             {
                 case WM.KEYDOWN:
