@@ -9,7 +9,7 @@ namespace OpenTK.Core.Platform
     /// <summary>
     /// Handle to an Icon object.
     /// </summary>
-    public abstract class IconHandle
+    public abstract class IconHandle : PalHandle
     {
     }
 }
