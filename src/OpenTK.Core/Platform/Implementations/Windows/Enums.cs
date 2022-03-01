@@ -1951,8 +1951,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         HSHELL_WINDOWREPLACED = 13
     }
 
-
-    public enum WGLPixelFormat : int
+    public enum WGLPixelFormatAttribute : int
     {
         /// <summary>
         /// The number of pixel formats for the device context. The

@@ -68,12 +68,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             _GetPixelFormatAttribivARB__fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)GetProcAddress("wglGetPixelFormatAttribivARB");
             return _GetPixelFormatAttribivARB__fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
-        public static unsafe bool GetPixelFormatAttribivARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int[] attributes, int[] values)
+        public static unsafe bool GetPixelFormatAttribivARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, int nAttributes, ReadOnlySpan<WGLPixelFormatAttribute> attributes, Span<int> values)
         {
-            fixed (int* piAttributes = attributes)
+            fixed (WGLPixelFormatAttribute* piAttributes = attributes)
             fixed (int* piValues = values)
             {
-                return GetPixelFormatAttribivARB_(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues) != 0;
+                unchecked
+                {
+                    return GetPixelFormatAttribivARB_(hdc, iPixelFormat, iLayerPlane, (uint)nAttributes, (int*)piAttributes, piValues) != 0;
+                }
             }
         }
     }

@@ -66,7 +66,18 @@ public class Program
         OpenGLComponent glComp = new OpenGLComponent();
         glComp.Initialize(PalComponents.OpenGL);
 
-        OpenGLContextHandle context = glComp.CreateFromWindow(handle);
+        ContextSettings contextSettings = new ContextSettings()
+        {
+
+            DoubleBuffer = true,
+            sRGBFramebuffer = true,
+            Multisample = true,
+            Samples = 8,
+            DepthBits = ContextDepthBits.Depth24,
+            StencilBits = ContextStencilBits.Stencil8,
+        };
+
+        OpenGLContextHandle context = glComp.CreateFromWindow(handle, contextSettings);
 
         glComp.SetCurrentContext(context);
 

@@ -46,7 +46,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (wndClassAtom == 0)
             {
-                throw new Win32Exception("RegisterClassEx failed!", Marshal.GetLastWin32Error());
+                throw new Win32Exception("RegisterClassEx failed!");
             }
 
             HelperHWnd = Win32.CreateWindowEx(
@@ -65,7 +65,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (HelperHWnd == IntPtr.Zero)
             {
-                throw new Win32Exception("Failed to create helper window", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Failed to create helper window");
             }
 
             // Eat all messages so that the WM_CREATE messages get processed etc.
@@ -125,7 +125,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("SwapBuffers failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("SwapBuffers failed");
             }
         }
 
@@ -157,7 +157,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                         if (success == 0)
                         {
-                            throw new Win32Exception("FillRect failed.", Marshal.GetLastWin32Error());
+                            throw new Win32Exception("FillRect failed.");
                         }
 
                         Win32.EndPaint(hWnd, in lpPaint);
@@ -201,7 +201,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (hWnd == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateWindowEx failed!", Marshal.GetLastWin32Error());
+                throw new Win32Exception("CreateWindowEx failed!");
             }
 
             HWND hwnd = new HWND(hWnd, this);
@@ -222,7 +222,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             // FIXME: Do we add back the hglrc to HGLRCDict?
             if (success == false)
             {
-                throw new Win32Exception("DestroyWindow failed!", Marshal.GetLastWin32Error());
+                throw new Win32Exception("DestroyWindow failed!");
             }
         }
 
@@ -235,7 +235,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             int error = Marshal.GetLastWin32Error();
             if (textLength == 0 && error != 0)
             {
-                throw new Win32Exception("GetWindowTextLength: Could not get length of window text", error);
+                throw new Win32Exception(error, "GetWindowTextLength: Could not get length of window text");
             }
 
             StringBuilder title = new StringBuilder(textLength + 1);
@@ -253,7 +253,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window title", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window title");
             }
         }
 
@@ -275,7 +275,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("GetWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("GetWindowRect failed");
             }
 
             x = lpRect.left;
@@ -292,7 +292,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window position");
             }
         }
 
@@ -304,7 +304,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("GetWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("GetWindowRect failed");
             }
 
             width = lpRect.right - lpRect.left;
@@ -321,7 +321,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window size", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window size");
             }
         }
 
@@ -335,7 +335,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("ClientToScreen failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("ClientToScreen failed");
             }
 
             x = point.X;
@@ -354,7 +354,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("AdjustWindowRect failed");
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
@@ -363,7 +363,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window position");
             }
         }
 
@@ -375,7 +375,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("GetClientRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("GetClientRect failed");
             }
 
             width = lpRect.right;
@@ -395,7 +395,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("AdjustWindowRect failed");
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
@@ -404,7 +404,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("SetWindowPos failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("SetWindowPos failed");
             }
         }
 

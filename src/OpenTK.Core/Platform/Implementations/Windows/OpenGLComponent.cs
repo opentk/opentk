@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace OpenTK.Core.Platform.Implementations.Windows
 {
@@ -59,7 +57,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (hDC == IntPtr.Zero)
             {
-                throw new Win32Exception("GetDC failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("GetDC failed");
             }
             uint nBytes;
             unchecked
@@ -70,7 +68,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
             if (pixelFormatIndex == 0)
             {
-                throw new Win32Exception("ChoosePixelFormat failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("ChoosePixelFormat failed");
             }
 
             Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
@@ -92,20 +90,20 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             bool success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
             if (success == false)
             {
-                throw new Win32Exception("SetPixelFormat failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("SetPixelFormat failed");
             }
 
             IntPtr hGLRC = Wgl.CreateContext(hDC);
             if (hGLRC == IntPtr.Zero)
             {
-                throw new Win32Exception("wglCreateContext failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("wglCreateContext failed");
             }
 
             // FIXME: Maybe restore the context that was already there after?
             success = Wgl.MakeCurrent(hDC, hGLRC);
             if (success == false)
             {
-                throw new Win32Exception("wglMakeCurrent failed to make helper context current", Marshal.GetLastWin32Error());
+                throw new Win32Exception("wglMakeCurrent failed to make helper context current");
             }
 
             unsafe
@@ -144,7 +142,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             success = Wgl.DeleteContext(hGLRC);
             if (success == false)
             {
-                throw new Win32Exception("wglDeleteContext failed for helper window", Marshal.GetLastWin32Error());
+                throw new Win32Exception("wglDeleteContext failed for helper window");
             }
         }
 
@@ -187,17 +185,115 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             throw new NotImplementedException();
         }
 
-        public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
+        public OpenGLContextHandle CreateFromWindow(WindowHandle handle, ContextSettings settings)
         {
             HWND hwnd = handle.As<HWND>(this);
+            bool success;
+
+            IntPtr hDC = Win32.GetDC(hwnd.HWnd);
+            if (hDC == IntPtr.Zero)
+            {
+                throw new Win32Exception("GetDC failed");
+            }
 
             if (ARB_pixel_format)
             {
                 // We have the pixel format extension!
+                WGLPixelFormatAttribute[] attrib = new WGLPixelFormatAttribute[1] { WGLPixelFormatAttribute.NUMBER_PIXEL_FORMATS_ARB };
+                int[] values = new int[1];
+                success = Wgl.GetPixelFormatAttribivARB(hDC, 1, 0, 1, attrib, values);
+                if (success == false)
+                {
+                    throw new Win32Exception("GetPixelFormatAttribivARB failed to get number of pixel formats");
+                }
 
+                int numberOfFormats = values[0];
 
-                Wgl.GetPixelFormatAttribivARB()
+                List<WGLPixelFormatAttribute> attribList = new List<WGLPixelFormatAttribute>()
+                {
+                    WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB,
+                    WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB,
+                    WGLPixelFormatAttribute.PIXEL_TYPE_ARB,
+                    WGLPixelFormatAttribute.ACCELERATION_ARB,
+                    WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB,
+                    WGLPixelFormatAttribute.STEREO_ARB,
+                    WGLPixelFormatAttribute.RED_BITS_ARB,
+                    WGLPixelFormatAttribute.GREEN_BITS_ARB,
+                    WGLPixelFormatAttribute.BLUE_BITS_ARB,
+                    WGLPixelFormatAttribute.ALPHA_BITS_ARB,
+                    WGLPixelFormatAttribute.DEPTH_BITS_ARB,
+                    WGLPixelFormatAttribute.STENCIL_BITS_ARB,
+                };
 
+                if (ARB_multisample)
+                {
+                    attribList.Add(WGLPixelFormatAttribute.SAMPLES_ARB);
+                }
+
+                if (ARB_framebuffer_sRGB)
+                {
+                    attribList.Add(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
+                }
+
+                attrib = attribList.ToArray();
+                values = new int[attrib.Length];
+
+                for (int i = 0; i < numberOfFormats; i++)
+                {
+                    success = Wgl.GetPixelFormatAttribivARB(hDC, i + 1, 0, attrib.Length, attrib, values);
+                    if (success == false)
+                    {
+                        throw new Win32Exception("GetPixelFormatAttribivARB failed");
+                    }
+
+                    // FIXME: Hardcoded indices!!
+
+                    // !SUPPORT_OPENGL_ARB || !DRAW_TO_WINDOW_ARB
+                    if (values[0] == 0 || values[1] == 0)
+                    {
+                        continue;
+                    }
+
+                    if ((WGLColorType)values[2] != WGLColorType.TYPE_RGBA_ARB)
+                    {
+                        continue;
+                    }
+
+                    if ((WGLAcceleration)values[3] == WGLAcceleration.NO_ACCELERATION_ARB)
+                    {
+                        continue;
+                    }
+
+                    if (values[4] != (settings.DoubleBuffer ? 1 : 0))
+                    {
+                        continue;
+                    }
+
+                    Console.WriteLine($"===== Pixel Format ARB {i} =====");
+                    for (int j = 0; j < attrib.Length; j++)
+                    {
+                        Console.WriteLine($"{attrib[j]}: {values[j]}");
+                    }
+                    Console.WriteLine();
+
+                    // FIXME: Actually choose a format!!
+                }
+            }
+
+            byte depthBits;
+            switch (settings.DepthBits)
+            {
+                case ContextDepthBits.Depth24: depthBits = 24; break;
+                case ContextDepthBits.Depth32: depthBits = 32; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
+            }
+
+            byte stencilBits;
+            switch (settings.StencilBits)
+            {
+                case ContextStencilBits.Stencil1: stencilBits = 1; break;
+                case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
             }
 
             Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
@@ -221,8 +317,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 cAccumGreenBits = 0,
                 cAccumBlueBits = 0,
                 cAccumAlphaBits = 0,
-                cDepthBits = 24, // FIXME: Ability to configure!
-                cStencilBits = 8, // FIXME: Ability to configure!
+                cDepthBits = depthBits,
+                cStencilBits = stencilBits,
                 cAuxBuffers = 0,
                 iLayerType = 0,
                 bReserved = 0,
@@ -231,12 +327,6 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 dwDamageMask = 0,
             };
 
-            IntPtr hDC = Win32.GetDC(hwnd.HWnd);
-
-            if (hDC == IntPtr.Zero)
-            {
-                throw new Win32Exception("GetDC failed", Marshal.GetLastWin32Error());
-            }
             uint nBytes;
             unchecked
             {
@@ -246,7 +336,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
             if (pixelFormatIndex == 0)
             {
-                throw new Win32Exception("ChoosePixelFormat failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("ChoosePixelFormat failed");
             }
 
             Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
@@ -265,23 +355,23 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             };
             Console.WriteLine($"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), opt2)}");
 
-            bool success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
+            success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
             if (success == false)
             {
-                throw new Win32Exception("SetPixelFormat failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("SetPixelFormat failed");
             }
 
             IntPtr hGLRC = Wgl.CreateContext(hDC);
             if (hGLRC == IntPtr.Zero)
             {
-                throw new Win32Exception("wglCreateContext failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("wglCreateContext failed");
             }
 
             // FIXME: Maybe restore the context that was already there after?
             success = Wgl.MakeCurrent(hDC, hGLRC);
             if (success == false)
             {
-                throw new Win32Exception("wglMakeCurrent failed to make helper context current", Marshal.GetLastWin32Error());
+                throw new Win32Exception("wglMakeCurrent failed to make helper context current");
             }
 
             HGLRC hglrc = new HGLRC(hGLRC, hDC, this);
@@ -301,7 +391,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             // FIXME: Do we add back the hglrc to HGLRCDict?
             if (success == false)
             {
-                throw new Win32Exception("wglDeleteContext failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("wglDeleteContext failed");
             }
         }
 
@@ -334,7 +424,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                 if (success == false)
                 {
-                    throw new Win32Exception("wglMakeCurrent failed when unbinding context", Marshal.GetLastWin32Error());
+                    throw new Win32Exception("wglMakeCurrent failed when unbinding context");
                 }
             }
             else
@@ -343,7 +433,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                 if (success == false)
                 {
-                    throw new Win32Exception("wglMakeCurrent failed", Marshal.GetLastWin32Error());
+                    throw new Win32Exception("wglMakeCurrent failed");
                 }
             }
 
