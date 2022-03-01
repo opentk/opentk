@@ -70,9 +70,9 @@ public class Program
         {
 
             DoubleBuffer = true,
-            sRGBFramebuffer = true,
-            Multisample = true,
-            Samples = 8,
+            //sRGBFramebuffer = true,
+            //Multisample = true,
+            //Samples = 8,
             DepthBits = ContextDepthBits.Depth24,
             StencilBits = ContextStencilBits.Stencil8,
         };

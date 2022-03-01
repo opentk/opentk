@@ -24,6 +24,17 @@ namespace OpenTK.Core.Platform
         public ContextStencilBits StencilBits { get; set; }
     }
 
+    public struct ContextValues
+    {
+        public int ColorBits;
+        public int DepthBits;
+        public int StencilBits;
+        public bool DoubleBuffered;
+        public bool SRGBFramebuffer;
+        public bool Multisample;
+        public int Samples;
+    }
+
     public enum ContextDepthBits
     {
         Depth24,

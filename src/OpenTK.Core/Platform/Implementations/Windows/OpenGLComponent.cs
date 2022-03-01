@@ -112,6 +112,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                 Wgl._GetPixelFormatAttribivARB__fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)Wgl.GetProcAddress("wglGetPixelFormatAttribivARB");
 
+                Wgl._CreateContextAttribsARB__fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)Wgl.GetProcAddress("wglCreateContextAttribsARB");
+
                 if (Wgl._GetExtensionsStringARB__fnptr != null)
                 {
                     string[] wglExts = Wgl.GetExtensionsStringARB(hDC).Split(" ");
@@ -196,7 +198,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 throw new Win32Exception("GetDC failed");
             }
 
-            if (ARB_pixel_format)
+            if (ARB_pixel_format && false)
             {
                 // We have the pixel format extension!
                 WGLPixelFormatAttribute[] attrib = new WGLPixelFormatAttribute[1] { WGLPixelFormatAttribute.NUMBER_PIXEL_FORMATS_ARB };
@@ -238,6 +240,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 attrib = attribList.ToArray();
                 values = new int[attrib.Length];
 
+                int choosenFormat = -1;
+                ContextValues choosenValues = default;
                 for (int i = 0; i < numberOfFormats; i++)
                 {
                     success = Wgl.GetPixelFormatAttribivARB(hDC, i + 1, 0, attrib.Length, attrib, values);
@@ -269,6 +273,21 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         continue;
                     }
 
+                    // FIXME: Do a proper version where we choose the correct format
+                    choosenFormat = i;
+                    choosenValues.ColorBits = values[6] + values[7] + values[8] + values[9];
+                    choosenValues.DepthBits = values[10];
+                    choosenValues.StencilBits = values[11];
+
+                    choosenValues.Samples = ARB_multisample ? values[12] : 0;
+                    if (choosenValues.Samples > 0)
+                    {
+                        choosenValues.Multisample = true;
+                    }
+
+                    choosenValues.SRGBFramebuffer = ARB_multisample ? values[13] == 1 : false;
+                    break;
+
                     Console.WriteLine($"===== Pixel Format ARB {i} =====");
                     for (int j = 0; j < attrib.Length; j++)
                     {
@@ -278,93 +297,171 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                     // FIXME: Actually choose a format!!
                 }
+
+                if (choosenFormat == -1)
+                {
+                    throw new PalException(this, "No suitable pixel format found!");
+                }
+                else
+                {
+                    Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
+                    pfd = new Win32.PIXELFORMATDESCRIPTOR()
+                    {
+                        nSize = pfd.nSize,
+                        nVersion = 1,
+                        dwFlags = PFD.DRAW_TO_WINDOW | PFD.SUPPORT_OPENGL | PFD.DOUBLEBUFFER,
+                        iPixelType = PFDType.TYPE_RGBA,
+                        cColorBits = (byte)choosenValues.ColorBits,
+                        cRedBits = 0,
+                        cRedShift = 0,
+                        cGreenBits = 0,
+                        cGreenShift = 0,
+                        cBlueBits = 0,
+                        cBlueShift = 0,
+                        cAlphaBits = 0,
+                        cAlphaShift = 0,
+                        cAccumBits = 0,
+                        cAccumRedBits = 0,
+                        cAccumGreenBits = 0,
+                        cAccumBlueBits = 0,
+                        cAccumAlphaBits = 0,
+                        cDepthBits = (byte)choosenValues.DepthBits,
+                        cStencilBits = (byte)choosenValues.StencilBits,
+                        cAuxBuffers = 0,
+                        iLayerType = PFDPlane.MAIN,
+                        bReserved = 0,
+                        dwLayerMask = 0,
+                        dwVisibleMask = 0,
+                        dwDamageMask = 0,
+                    };
+
+                    success = Win32.SetPixelFormat(hDC, choosenFormat, in pfd);
+                    if (success == false)
+                    {
+                        throw new Win32Exception("SetPixelFormat failed");
+                    }
+                }
+
+                Console.WriteLine("Got pixel format from wgl_arb_pixel_format");
+            }
+            else
+            {
+                byte depthBits;
+                switch (settings.DepthBits)
+                {
+                    case ContextDepthBits.Depth24: depthBits = 24; break;
+                    case ContextDepthBits.Depth32: depthBits = 32; break;
+                    default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
+                }
+
+                byte stencilBits;
+                switch (settings.StencilBits)
+                {
+                    case ContextStencilBits.Stencil1: stencilBits = 1; break;
+                    case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                    default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
+                }
+
+                Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
+                pfd = new Win32.PIXELFORMATDESCRIPTOR()
+                {
+                    nSize = pfd.nSize,
+                    nVersion = 1,
+                    dwFlags = PFD.DRAW_TO_WINDOW | PFD.SUPPORT_OPENGL | PFD.DOUBLEBUFFER,
+                    iPixelType = PFDType.TYPE_RGBA,
+                    cColorBits = 32,
+                    cRedBits = 0,
+                    cRedShift = 0,
+                    cGreenBits = 0,
+                    cGreenShift = 0,
+                    cBlueBits = 0,
+                    cBlueShift = 0,
+                    cAlphaBits = 0,
+                    cAlphaShift = 0,
+                    cAccumBits = 0,
+                    cAccumRedBits = 0,
+                    cAccumGreenBits = 0,
+                    cAccumBlueBits = 0,
+                    cAccumAlphaBits = 0,
+                    cDepthBits = depthBits,
+                    cStencilBits = stencilBits,
+                    cAuxBuffers = 0,
+                    iLayerType = 0,
+                    bReserved = 0,
+                    dwLayerMask = 0,
+                    dwVisibleMask = 0,
+                    dwDamageMask = 0,
+                };
+
+                uint nBytes;
+                unchecked
+                {
+                    nBytes = (uint)Marshal.SizeOf<Win32.PIXELFORMATDESCRIPTOR>();
+                }
+
+                int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
+                if (pixelFormatIndex == 0)
+                {
+                    throw new Win32Exception("ChoosePixelFormat failed");
+                }
+
+                Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
+                Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+                Console.WriteLine($"=== Chosen Format ===");
+                Console.WriteLine($"Version: {chosenFormat.nVersion}");
+                Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
+                Console.WriteLine($"Pixel Type: {chosenFormat.iPixelType}");
+                Console.WriteLine($"Color bits: {chosenFormat.cColorBits}");
+                Console.WriteLine($"Depth bits: {chosenFormat.cDepthBits}");
+                Console.WriteLine($"Stencil bits: {chosenFormat.cStencilBits}");
+                JsonSerializerOptions opt2 = new JsonSerializerOptions()
+                {
+                    IncludeFields = true,
+                    WriteIndented = true,
+                };
+                Console.WriteLine($"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), opt2)}");
+
+                success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
+                if (success == false)
+                {
+                    throw new Win32Exception("SetPixelFormat failed");
+                }
+
+                Console.WriteLine("Got pixel format from DescribePixelFormat");
             }
 
-            byte depthBits;
-            switch (settings.DepthBits)
+            IntPtr hGLRC;
+            unsafe
             {
-                case ContextDepthBits.Depth24: depthBits = 24; break;
-                case ContextDepthBits.Depth32: depthBits = 32; break;
-                default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
-            }
+                if (Wgl._CreateContextAttribsARB__fnptr != null)
+                {
+                    // FIXME: Shared context!
+                    int[] attribs = new int[]
+                    {
+                        (int)WGLContextAttribs.CONTEXT_MAJOR_VERSION_ARB, 3,
+                        (int)WGLContextAttribs.CONTEXT_MINOR_VERSION_ARB, 2,
+                        (int)WGLContextAttribs.CONTEXT_FLAGS_ARB, 0x00, // FIXME: context flags!!
+                        (int)WGLContextAttribs.CONTEXT_PROFILE_MASK_ARB, 0x01, // Core profile FIXME: Configurable!
+                    };
 
-            byte stencilBits;
-            switch (settings.StencilBits)
-            {
-                case ContextStencilBits.Stencil1: stencilBits = 1; break;
-                case ContextStencilBits.Stencil8: stencilBits = 8; break;
-                default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
-            }
+                    hGLRC = Wgl.CreateContextAttribsARB(hDC, IntPtr.Zero, attribs);
+                    if (hGLRC == IntPtr.Zero)
+                    {
+                        throw new Win32Exception("wglCreateContextAttribsARB failed");
+                    }
 
-            Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
-            pfd = new Win32.PIXELFORMATDESCRIPTOR()
-            {
-                nSize = pfd.nSize,
-                nVersion = 1,
-                dwFlags = PFD.DRAW_TO_WINDOW | PFD.SUPPORT_OPENGL | PFD.DOUBLEBUFFER,
-                iPixelType = PFDType.TYPE_RGBA,
-                cColorBits = 32,
-                cRedBits = 0,
-                cRedShift = 0,
-                cGreenBits = 0,
-                cGreenShift = 0,
-                cBlueBits = 0,
-                cBlueShift = 0,
-                cAlphaBits = 0,
-                cAlphaShift = 0,
-                cAccumBits = 0,
-                cAccumRedBits = 0,
-                cAccumGreenBits = 0,
-                cAccumBlueBits = 0,
-                cAccumAlphaBits = 0,
-                cDepthBits = depthBits,
-                cStencilBits = stencilBits,
-                cAuxBuffers = 0,
-                iLayerType = 0,
-                bReserved = 0,
-                dwLayerMask = 0,
-                dwVisibleMask = 0,
-                dwDamageMask = 0,
-            };
+                    Console.WriteLine("Created context using wglCreateContextAttribsARB");
+                }
+                else
+                {
+                    hGLRC = Wgl.CreateContext(hDC);
+                    if (hGLRC == IntPtr.Zero)
+                    {
+                        throw new Win32Exception("wglCreateContext failed");
+                    }
 
-            uint nBytes;
-            unchecked
-            {
-                nBytes = (uint)Marshal.SizeOf<Win32.PIXELFORMATDESCRIPTOR>();
-            }
-
-            int pixelFormatIndex = Win32.ChoosePixelFormat(hDC, in pfd);
-            if (pixelFormatIndex == 0)
-            {
-                throw new Win32Exception("ChoosePixelFormat failed");
-            }
-
-            Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
-            Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
-            Console.WriteLine($"=== Chosen Format ===");
-            Console.WriteLine($"Version: {chosenFormat.nVersion}");
-            Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
-            Console.WriteLine($"Pixel Type: {chosenFormat.iPixelType}");
-            Console.WriteLine($"Color bits: {chosenFormat.cColorBits}");
-            Console.WriteLine($"Depth bits: {chosenFormat.cDepthBits}");
-            Console.WriteLine($"Stencil bits: {chosenFormat.cStencilBits}");
-            JsonSerializerOptions opt2 = new JsonSerializerOptions()
-            {
-                IncludeFields = true,
-                WriteIndented = true,
-            };
-            Console.WriteLine($"Full desc: {JsonSerializer.Serialize(chosenFormat, chosenFormat.GetType(), opt2)}");
-
-            success = Win32.SetPixelFormat(hDC, pixelFormatIndex, in chosenFormat);
-            if (success == false)
-            {
-                throw new Win32Exception("SetPixelFormat failed");
-            }
-
-            IntPtr hGLRC = Wgl.CreateContext(hDC);
-            if (hGLRC == IntPtr.Zero)
-            {
-                throw new Win32Exception("wglCreateContext failed");
+                    Console.WriteLine("Created context using wglCreateContext");
+                }
             }
 
             // FIXME: Maybe restore the context that was already there after?

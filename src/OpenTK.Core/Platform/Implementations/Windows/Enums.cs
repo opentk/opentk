@@ -2261,4 +2261,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         TYPE_RGBA_ARB = 0x202B,
         TYPE_COLORINDEX_ARB = 0x202C,
     }
+
+    public enum WGLContextAttribs : int
+    {
+        CONTEXT_MAJOR_VERSION_ARB = 0x2091,
+        CONTEXT_MINOR_VERSION_ARB = 0x2092,
+        CONTEXT_LAYER_PLANE_ARB = 0x2093,
+        CONTEXT_FLAGS_ARB = 0x2094,
+        CONTEXT_PROFILE_MASK_ARB = 0x9126,
+    }
 }

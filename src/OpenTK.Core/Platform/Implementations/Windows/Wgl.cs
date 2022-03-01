@@ -79,6 +79,22 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 }
             }
         }
+
+        internal static unsafe delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr> _CreateContextAttribsARB__fnptr = &CreateContextAttribsARB__Lazy;
+        public static unsafe IntPtr CreateContextAttribsARB_(IntPtr hdc, IntPtr hglrc, int* attribList) => _CreateContextAttribsARB__fnptr(hdc, hglrc, attribList);
+        [UnmanagedCallersOnly]
+        private static unsafe IntPtr CreateContextAttribsARB__Lazy(IntPtr hdc, IntPtr hglrc, int* attribList)
+        {
+            _CreateContextAttribsARB__fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)GetProcAddress("wglCreateContextAttribsARB");
+            return _CreateContextAttribsARB__fnptr(hdc, hglrc, attribList);
+        }
+        public static unsafe IntPtr CreateContextAttribsARB(IntPtr hdc, IntPtr hglrc, Span<int> attribList)
+        {
+            fixed (int* attribPtr = attribList)
+            {
+                return CreateContextAttribsARB_(hdc, hglrc, attribPtr);
+            }
+        }
     }
 #pragma warning restore SA1401 // Fields should be private
 #pragma warning restore SA1516 // Elements should be separated by blank line
