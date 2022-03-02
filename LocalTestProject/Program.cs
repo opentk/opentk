@@ -132,6 +132,8 @@ void main()
         GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
         GL.BufferData(BufferTargetARB.ArrayBuffer, vertices, BufferUsageARB.StaticDraw);
 
+        CheckError("buffer");
+
         GL.BindVertexArray(vao);
 
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(float) * 6, 0);
@@ -139,6 +141,8 @@ void main()
 
         GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, sizeof(float) * 6, sizeof(float) * 3);
         GL.EnableVertexAttribArray(1);
+
+        CheckError("vao");
 
         var vert = GL.CreateShader(ShaderType.VertexShader);
         var frag = GL.CreateShader(ShaderType.FragmentShader);
@@ -157,26 +161,35 @@ void main()
         GL.LinkProgram(program);
 
         GL.DetachShader(program, vert);
-        GL.DetachShader(program, vert);
+        GL.DetachShader(program, frag);
 
         GL.DeleteShader(vert);
         GL.DeleteShader(frag);
 
         GL.UseProgram(program);
 
-        string[] ext = GL.GetString(StringName.Extensions)?.Split(" ") ?? Array.Empty<string>();
+        CheckError("shader");
+
+        /*
+        int numExtensions = 0;
         Console.WriteLine($"Extensions:");
-        foreach (var e in ext)
+        GL.GetInteger(GetPName.NumExtensions, ref numExtensions);
+        for (int i = 0; i < numExtensions; i++)
         {
-            if (e.StartsWith("WGL"))
+            string ext = GL.GetStringi(StringName.Extensions, (uint)i);
+            
+            if (ext.StartsWith("WGL"))
             {
-                Console.WriteLine("  " + e);
+                Console.WriteLine("  " + ext);
             }
             else
             {
-                Console.WriteLine(e);
+                Console.WriteLine(ext);
             }
         }
+        */
+
+        CheckError("getString");
     }
 
     public static bool Render()
@@ -184,9 +197,24 @@ void main()
         GL.ClearColor(Color4.Darkslategray);
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
 
+        CheckError("clear");
+
+        GL.BindVertexArray(vao);
         GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+
+        CheckError("draw");
 
         windowComp.SwapBuffers(handle);
         return true;
+    }
+
+    static void CheckError(string place)
+    {
+        var error = GL.GetError();
+        while (error != ErrorCode.NoError)
+        {
+            Console.WriteLine($"{place} Error: {error}");
+            error = GL.GetError();
+        }
     }
 }

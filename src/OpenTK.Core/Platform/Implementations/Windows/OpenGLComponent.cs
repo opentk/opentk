@@ -198,7 +198,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 throw new Win32Exception("GetDC failed");
             }
 
-            if (ARB_pixel_format && false)
+            if (ARB_pixel_format)
             {
                 // We have the pixel format extension!
                 WGLPixelFormatAttribute[] attrib = new WGLPixelFormatAttribute[1] { WGLPixelFormatAttribute.NUMBER_PIXEL_FORMATS_ARB };
@@ -244,6 +244,19 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 ContextValues choosenValues = default;
                 for (int i = 0; i < numberOfFormats; i++)
                 {
+                    int FindAttribute(WGLPixelFormatAttribute search)
+                    {
+                        for (int i = 0; i < attrib.Length; i++)
+                        {
+                            if (attrib[i] == search)
+                            {
+                                return values[i];
+                            }
+                        }
+
+                        return -1;
+                    }
+
                     success = Wgl.GetPixelFormatAttribivARB(hDC, i + 1, 0, attrib.Length, attrib, values);
                     if (success == false)
                     {
@@ -253,39 +266,45 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     // FIXME: Hardcoded indices!!
 
                     // !SUPPORT_OPENGL_ARB || !DRAW_TO_WINDOW_ARB
-                    if (values[0] == 0 || values[1] == 0)
+                    if (FindAttribute(WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB) == 0 ||
+                        FindAttribute(WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB) == 0)
                     {
                         continue;
                     }
 
-                    if ((WGLColorType)values[2] != WGLColorType.TYPE_RGBA_ARB)
+                    if ((WGLColorType)FindAttribute(WGLPixelFormatAttribute.PIXEL_TYPE_ARB) != WGLColorType.TYPE_RGBA_ARB)
                     {
                         continue;
                     }
 
-                    if ((WGLAcceleration)values[3] == WGLAcceleration.NO_ACCELERATION_ARB)
+                    if ((WGLAcceleration)FindAttribute(WGLPixelFormatAttribute.ACCELERATION_ARB) == WGLAcceleration.NO_ACCELERATION_ARB)
                     {
                         continue;
                     }
 
-                    if (values[4] != (settings.DoubleBuffer ? 1 : 0))
+                    if (FindAttribute(WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB) != (settings.DoubleBuffer ? 1 : 0))
                     {
                         continue;
                     }
 
                     // FIXME: Do a proper version where we choose the correct format
                     choosenFormat = i;
-                    choosenValues.ColorBits = values[6] + values[7] + values[8] + values[9];
-                    choosenValues.DepthBits = values[10];
-                    choosenValues.StencilBits = values[11];
+                    choosenValues.ColorBits =
+                        FindAttribute(WGLPixelFormatAttribute.RED_BITS_ARB) +
+                        FindAttribute(WGLPixelFormatAttribute.GREEN_BITS_ARB) +
+                        FindAttribute(WGLPixelFormatAttribute.BLUE_BITS_ARB) +
+                        FindAttribute(WGLPixelFormatAttribute.ALPHA_BITS_ARB);
+                        //  values[6] + values[7] + values[8] + values[9];
+                    choosenValues.DepthBits = FindAttribute(WGLPixelFormatAttribute.DEPTH_BITS_ARB);
+                    choosenValues.StencilBits = FindAttribute(WGLPixelFormatAttribute.STENCIL_BITS_ARB);
 
-                    choosenValues.Samples = ARB_multisample ? values[12] : 0;
+                    choosenValues.Samples = ARB_multisample ? FindAttribute(WGLPixelFormatAttribute.SAMPLES_ARB) : 0;
                     if (choosenValues.Samples > 0)
                     {
                         choosenValues.Multisample = true;
                     }
 
-                    choosenValues.SRGBFramebuffer = ARB_multisample ? values[13] == 1 : false;
+                    choosenValues.SRGBFramebuffer = ARB_framebuffer_sRGB ? FindAttribute(WGLPixelFormatAttribute.SAMPLES_ARB) == 1 : false;
                     break;
 
                     Console.WriteLine($"===== Pixel Format ARB {i} =====");
