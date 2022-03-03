@@ -217,6 +217,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB,
                     WGLPixelFormatAttribute.PIXEL_TYPE_ARB,
                     WGLPixelFormatAttribute.ACCELERATION_ARB,
+                    WGLPixelFormatAttribute.SWAP_METHOD_ARB,
                     WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB,
                     WGLPixelFormatAttribute.STEREO_ARB,
                     WGLPixelFormatAttribute.RED_BITS_ARB,
@@ -263,6 +264,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         throw new Win32Exception("GetPixelFormatAttribivARB failed");
                     }
 
+                    Console.WriteLine($"===== Pixel Format ARB {i} =====");
+                    for (int j = 0; j < attrib.Length; j++)
+                    {
+                        Console.WriteLine($"{attrib[j]}: {values[j]}");
+                    }
+                    Console.WriteLine();
+
                     // FIXME: Hardcoded indices!!
 
                     // !SUPPORT_OPENGL_ARB || !DRAW_TO_WINDOW_ARB
@@ -287,6 +295,12 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         continue;
                     }
 
+                    if ((WGLSwapMethod)FindAttribute(WGLPixelFormatAttribute.SWAP_METHOD_ARB) == WGLSwapMethod.SWAP_UNDEFINED_ARB)
+                    {
+                        //continue;
+                    }
+                    Console.WriteLine("Swap method:" + (WGLSwapMethod)values[4]);
+
                     // FIXME: Do a proper version where we choose the correct format
                     choosenFormat = i;
                     choosenValues.ColorBits =
@@ -294,7 +308,6 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         FindAttribute(WGLPixelFormatAttribute.GREEN_BITS_ARB) +
                         FindAttribute(WGLPixelFormatAttribute.BLUE_BITS_ARB) +
                         FindAttribute(WGLPixelFormatAttribute.ALPHA_BITS_ARB);
-                        //  values[6] + values[7] + values[8] + values[9];
                     choosenValues.DepthBits = FindAttribute(WGLPixelFormatAttribute.DEPTH_BITS_ARB);
                     choosenValues.StencilBits = FindAttribute(WGLPixelFormatAttribute.STENCIL_BITS_ARB);
 
@@ -314,7 +327,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     }
                     Console.WriteLine();
 
-                    // FIXME: Actually choose a format!!
+                    break;
                 }
 
                 if (choosenFormat == -1)

@@ -68,7 +68,6 @@ public class Program
 
         ContextSettings contextSettings = new ContextSettings()
         {
-
             DoubleBuffer = true,
             //sRGBFramebuffer = true,
             //Multisample = true,
@@ -190,12 +189,17 @@ void main()
         */
 
         CheckError("getString");
+
+        GL.Enable(EnableCap.FramebufferSrgb);
+        GL.Enable(EnableCap.Multisample);
     }
 
     public static bool Render()
     {
         GL.ClearColor(Color4.Darkslategray);
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+        windowComp.GetClientSize(handle, out int width, out int height);
+        GL.Viewport(0, 0, width, height);
 
         CheckError("clear");
 
