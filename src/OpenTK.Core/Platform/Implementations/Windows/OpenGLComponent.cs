@@ -247,8 +247,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 attribs.Add(8);
 
                 // FIXME: Make settings available
-                //attribs.Add((int)WGLPixelFormatAttribute.ALPHA_BITS_ARB);
-                //attribs.Add(0);
+                attribs.Add((int)WGLPixelFormatAttribute.ALPHA_BITS_ARB);
+                attribs.Add(0);
 
                 if (settings.DoubleBuffer)
                 {
@@ -274,11 +274,12 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     attribs.Add(settings.Samples);
                 }
 
-                if (settings.sRGBFramebuffer && ARB_framebuffer_sRGB)
+                if (ARB_framebuffer_sRGB)
                 {
                     attribs.Add((int)WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
-                    attribs.Add(1);
+                    attribs.Add(settings.sRGBFramebuffer ? 1 : 0);
                 }
+                attribs.Add(0);
 
                 int[] formats = new int[1];
                 success = Wgl.ChoosePixelFormatARB(hDC, attribs.ToArray(), null, formats.Length, formats, out int numFormats);
@@ -379,7 +380,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 choosenValues.Samples = ARB_multisample ? FindAttribute(WGLPixelFormatAttribute.SAMPLES_ARB) : 0;
                 choosenValues.Multisample = choosenValues.Samples > 0;
 
-                choosenValues.SRGBFramebuffer = ARB_framebuffer_sRGB ? FindAttribute(WGLPixelFormatAttribute.SAMPLES_ARB) == 1 : false;
+                choosenValues.SRGBFramebuffer = ARB_framebuffer_sRGB ? FindAttribute(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB) == 1 : false;
 
                 Console.WriteLine($"===== Chosen Format ARB =====");
                 for (int j = 0; j < attrib.Length; j++)

@@ -72,7 +72,7 @@ public class Program
         ContextSettings contextSettings = new ContextSettings()
         {
             DoubleBuffer = true,
-            //sRGBFramebuffer = true,
+            sRGBFramebuffer = false,
             //Multisample = true,
             //Samples = 8,
             DepthBits = ContextDepthBits.Depth24,
@@ -210,14 +210,25 @@ void main()
 
         CheckError("getString");
 
-        //GL.Enable(EnableCap.FramebufferSrgb);
+        int encoding = 0;
+        GL.GetFramebufferAttachmentParameteri(FramebufferTarget.DrawFramebuffer, (FramebufferAttachment)All.BackLeft, FramebufferAttachmentParameterName.FramebufferAttachmentColorEncoding, ref encoding);
+
+        if ((All)encoding == All.Linear)
+        {
+            Console.WriteLine("Linear default framebuffer!");
+        }
+        else if ((All)encoding == All.Srgb)
+        {
+            Console.WriteLine("sRGB default framebuffer!");
+        }
+        CheckError("getFramebuffer");
+
+        GL.Disable(EnableCap.FramebufferSrgb);
     }
 
     public static bool Render()
     {
-        
-
-        GL.ClearColor(Color4.Darkslategray);
+        GL.ClearColor(new Color4<Rgba>(127/255f, 0, 64/255f, 255));
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
         windowComp.GetClientSize(handle, out int width, out int height);
         GL.Viewport(0, 0, width, height);
