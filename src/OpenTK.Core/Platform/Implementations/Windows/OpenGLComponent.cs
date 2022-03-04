@@ -112,6 +112,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                 Wgl._GetPixelFormatAttribivARB__fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)Wgl.GetProcAddress("wglGetPixelFormatAttribivARB");
 
+                Wgl._ChoosePixelFormatARB__fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)Wgl.GetProcAddress("wglChoosePixelFormatARB");
+
                 Wgl._CreateContextAttribsARB__fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)Wgl.GetProcAddress("wglCreateContextAttribsARB");
 
                 if (Wgl._GetExtensionsStringARB__fnptr != null)
@@ -198,6 +200,22 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 throw new Win32Exception("GetDC failed");
             }
 
+            byte depthBits;
+            switch (settings.DepthBits)
+            {
+                case ContextDepthBits.Depth24: depthBits = 24; break;
+                case ContextDepthBits.Depth32: depthBits = 32; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
+            }
+
+            byte stencilBits;
+            switch (settings.StencilBits)
+            {
+                case ContextStencilBits.Stencil1: stencilBits = 1; break;
+                case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
+            }
+
             if (ARB_pixel_format)
             {
                 // We have the pixel format extension!
@@ -211,6 +229,203 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                 int numberOfFormats = values[0];
 
+                List<int> attribs = new List<int>();
+                attribs.Add((int)WGLPixelFormatAttribute.ACCELERATION_ARB);
+                attribs.Add((int)WGLAcceleration.FULL_ACCELERATION_ARB);
+
+                attribs.Add((int)WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB);
+                attribs.Add(1);
+
+                // FIXME! Settings!
+                attribs.Add((int)WGLPixelFormatAttribute.RED_BITS_ARB);
+                attribs.Add(8);
+
+                attribs.Add((int)WGLPixelFormatAttribute.GREEN_BITS_ARB);
+                attribs.Add(8);
+
+                attribs.Add((int)WGLPixelFormatAttribute.BLUE_BITS_ARB);
+                attribs.Add(8);
+
+                // FIXME: Make settings available
+                //attribs.Add((int)WGLPixelFormatAttribute.ALPHA_BITS_ARB);
+                //attribs.Add(0);
+
+                if (settings.DoubleBuffer)
+                {
+                    attribs.Add((int)WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB);
+                    attribs.Add(1);
+                }
+
+                if (depthBits > 0)
+                {
+                    attribs.Add((int)WGLPixelFormatAttribute.DEPTH_BITS_ARB);
+                    attribs.Add(depthBits);
+                }
+
+                if (stencilBits > 0)
+                {
+                    attribs.Add((int)WGLPixelFormatAttribute.STENCIL_BITS_ARB);
+                    attribs.Add(stencilBits);
+                }
+
+                if (settings.Multisample && ARB_multisample)
+                {
+                    attribs.Add((int)WGLPixelFormatAttribute.SAMPLES_ARB);
+                    attribs.Add(settings.Samples);
+                }
+
+                if (settings.sRGBFramebuffer && ARB_framebuffer_sRGB)
+                {
+                    attribs.Add((int)WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
+                    attribs.Add(1);
+                }
+
+                int[] formats = new int[1];
+                success = Wgl.ChoosePixelFormatARB(hDC, attribs.ToArray(), null, formats.Length, formats, out int numFormats);
+                if (success == false || numFormats == 0)
+                {
+                    throw new NotImplementedException("FIXME: Relax requirements and try again!");
+                }
+
+                int choosenFormat = formats[0];
+
+                List<WGLPixelFormatAttribute> attribList = new List<WGLPixelFormatAttribute>()
+                {
+                    WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB,
+                    WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB,
+                    WGLPixelFormatAttribute.PIXEL_TYPE_ARB,
+                    WGLPixelFormatAttribute.ACCELERATION_ARB,
+                    WGLPixelFormatAttribute.SWAP_METHOD_ARB,
+                    WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB,
+                    WGLPixelFormatAttribute.STEREO_ARB,
+                    WGLPixelFormatAttribute.RED_BITS_ARB,
+                    WGLPixelFormatAttribute.GREEN_BITS_ARB,
+                    WGLPixelFormatAttribute.BLUE_BITS_ARB,
+                    WGLPixelFormatAttribute.ALPHA_BITS_ARB,
+                    WGLPixelFormatAttribute.DEPTH_BITS_ARB,
+                    WGLPixelFormatAttribute.STENCIL_BITS_ARB,
+                };
+
+                if (ARB_multisample)
+                {
+                    attribList.Add(WGLPixelFormatAttribute.SAMPLES_ARB);
+                }
+
+                if (ARB_framebuffer_sRGB)
+                {
+                    attribList.Add(WGLPixelFormatAttribute.FRAMEBUFFER_SRGB_CAPABLE_ARB);
+                }
+
+                attrib = attribList.ToArray();
+                values = new int[attrib.Length];
+
+                int FindAttribute(WGLPixelFormatAttribute search)
+                {
+                    for (int i = 0; i < attrib.Length; i++)
+                    {
+                        if (attrib[i] == search)
+                        {
+                            return values[i];
+                        }
+                    }
+
+                    return -1;
+                }
+
+                success = Wgl.GetPixelFormatAttribivARB(hDC, choosenFormat, 0, attrib.Length, attrib, values);
+                if (success == false)
+                {
+                    throw new Win32Exception("GetPixelFormatAttribivARB failed");
+                }
+
+                if (FindAttribute(WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB) == 0 ||
+                    FindAttribute(WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB) == 0)
+                {
+                    // FIXME:
+                    Console.WriteLine("WARNING: OpenGL or DrawToWindow not supported!");
+                }
+
+                if ((WGLColorType)FindAttribute(WGLPixelFormatAttribute.PIXEL_TYPE_ARB) != WGLColorType.TYPE_RGBA_ARB)
+                {
+                    Console.WriteLine("WARNING: Pixel type is not RGBA");
+                }
+
+                if ((WGLAcceleration)FindAttribute(WGLPixelFormatAttribute.ACCELERATION_ARB) == WGLAcceleration.NO_ACCELERATION_ARB)
+                {
+                    Console.WriteLine("WARNING: No acceleration!");
+                }
+
+                if (FindAttribute(WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB) != (settings.DoubleBuffer ? 1 : 0))
+                {
+                    Console.WriteLine("WARNING: No double buffering!");
+                }
+
+                if ((WGLSwapMethod)FindAttribute(WGLPixelFormatAttribute.SWAP_METHOD_ARB) == WGLSwapMethod.SWAP_UNDEFINED_ARB)
+                {
+                    Console.WriteLine("WARNING: Undefined swap method!");
+                }
+                Console.WriteLine("Swap method:" + (WGLSwapMethod)values[4]);
+
+                ContextValues choosenValues = default;
+
+                choosenValues.ColorBits =
+                        FindAttribute(WGLPixelFormatAttribute.RED_BITS_ARB) +
+                        FindAttribute(WGLPixelFormatAttribute.GREEN_BITS_ARB) +
+                        FindAttribute(WGLPixelFormatAttribute.BLUE_BITS_ARB) +
+                        FindAttribute(WGLPixelFormatAttribute.ALPHA_BITS_ARB);
+                choosenValues.DepthBits = FindAttribute(WGLPixelFormatAttribute.DEPTH_BITS_ARB);
+                choosenValues.StencilBits = FindAttribute(WGLPixelFormatAttribute.STENCIL_BITS_ARB);
+
+                choosenValues.Samples = ARB_multisample ? FindAttribute(WGLPixelFormatAttribute.SAMPLES_ARB) : 0;
+                choosenValues.Multisample = choosenValues.Samples > 0;
+
+                choosenValues.SRGBFramebuffer = ARB_framebuffer_sRGB ? FindAttribute(WGLPixelFormatAttribute.SAMPLES_ARB) == 1 : false;
+
+                Console.WriteLine($"===== Chosen Format ARB =====");
+                for (int j = 0; j < attrib.Length; j++)
+                {
+                    Console.WriteLine($"{attrib[j]}: {values[j]}");
+                }
+                Console.WriteLine();
+
+                Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
+                pfd = new Win32.PIXELFORMATDESCRIPTOR()
+                {
+                    nSize = pfd.nSize,
+                    nVersion = 1,
+                    dwFlags = PFD.DRAW_TO_WINDOW | PFD.SUPPORT_OPENGL | PFD.DOUBLEBUFFER,
+                    iPixelType = PFDType.TYPE_RGBA,
+                    cColorBits = (byte)choosenValues.ColorBits,
+                    cRedBits = 0,
+                    cRedShift = 0,
+                    cGreenBits = 0,
+                    cGreenShift = 0,
+                    cBlueBits = 0,
+                    cBlueShift = 0,
+                    cAlphaBits = 0,
+                    cAlphaShift = 0,
+                    cAccumBits = 0,
+                    cAccumRedBits = 0,
+                    cAccumGreenBits = 0,
+                    cAccumBlueBits = 0,
+                    cAccumAlphaBits = 0,
+                    cDepthBits = (byte)choosenValues.DepthBits,
+                    cStencilBits = (byte)choosenValues.StencilBits,
+                    cAuxBuffers = 0,
+                    iLayerType = PFDPlane.MAIN,
+                    bReserved = 0,
+                    dwLayerMask = 0,
+                    dwVisibleMask = 0,
+                    dwDamageMask = 0,
+                };
+
+                success = Win32.SetPixelFormat(hDC, choosenFormat, in pfd);
+                if (success == false)
+                {
+                    throw new Win32Exception("SetPixelFormat failed");
+                }
+
+                /**
                 List<WGLPixelFormatAttribute> attribList = new List<WGLPixelFormatAttribute>()
                 {
                     WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB,
@@ -372,28 +587,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     {
                         throw new Win32Exception("SetPixelFormat failed");
                     }
-                }
-
+                }*/
                 Console.WriteLine("Got pixel format from wgl_arb_pixel_format");
             }
             else
             {
-                byte depthBits;
-                switch (settings.DepthBits)
-                {
-                    case ContextDepthBits.Depth24: depthBits = 24; break;
-                    case ContextDepthBits.Depth32: depthBits = 32; break;
-                    default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
-                }
-
-                byte stencilBits;
-                switch (settings.StencilBits)
-                {
-                    case ContextStencilBits.Stencil1: stencilBits = 1; break;
-                    case ContextStencilBits.Stencil8: stencilBits = 8; break;
-                    default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
-                }
-
                 Win32.PIXELFORMATDESCRIPTOR pfd = Win32.PIXELFORMATDESCRIPTOR.Create();
                 pfd = new Win32.PIXELFORMATDESCRIPTOR()
                 {

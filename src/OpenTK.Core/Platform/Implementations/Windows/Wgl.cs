@@ -80,6 +80,36 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /*    BOOL wglChoosePixelFormatARB(HDC hdc,
+                                 const int *piAttribIList,
+                                 const FLOAT *pfAttribFList,
+                                 UINT nMaxFormats,
+                                 int *piFormats,
+                                 UINT *nNumFormats);
+        */
+
+        internal static unsafe delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int> _ChoosePixelFormatARB__fnptr = &ChoosePixelFormatARB__Lazy;
+        public static unsafe int ChoosePixelFormatARB_(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats) => _ChoosePixelFormatARB__fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
+        [UnmanagedCallersOnly]
+        private static unsafe int ChoosePixelFormatARB__Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
+        {
+            _ChoosePixelFormatARB__fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)GetProcAddress("wglChoosePixelFormatARB");
+            return _ChoosePixelFormatARB__fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
+        }
+        public static unsafe bool ChoosePixelFormatARB(IntPtr hdc, Span<int> attribIList, Span<float> attribFList, int nMaxFormats, Span<int> formats, out int numFormats)
+        {
+            fixed (int* piAttribIList = attribIList)
+            fixed (float* pfAttribFList = attribFList)
+            fixed (int* piFormats = formats)
+            fixed (int* nNumFormats = &numFormats)
+            {
+                unchecked
+                {
+                    return ChoosePixelFormatARB_(hdc, piAttribIList, pfAttribFList, (uint)nMaxFormats, piFormats, (uint*)nNumFormats) != 0;
+                }
+            }
+        }
+
         internal static unsafe delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr> _CreateContextAttribsARB__fnptr = &CreateContextAttribsARB__Lazy;
         public static unsafe IntPtr CreateContextAttribsARB_(IntPtr hdc, IntPtr hglrc, int* attribList) => _CreateContextAttribsARB__fnptr(hdc, hglrc, attribList);
         [UnmanagedCallersOnly]

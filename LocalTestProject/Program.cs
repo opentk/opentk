@@ -63,6 +63,9 @@ public class Program
         mode = windowComp.GetMode(handle);
         Console.WriteLine($"Mode: {mode}");
 
+        var eventQueue = windowComp.GetEventQueue(handle);
+        eventQueue.EventRaised += EventQueue_EventRaised;
+
         OpenGLComponent glComp = new OpenGLComponent();
         glComp.Initialize(PalComponents.OpenGL);
 
@@ -86,6 +89,23 @@ public class Program
         Init();
 
         windowComp.Loop(handle, Render);
+    }
+
+    static bool enabled_sRGB = false;
+    private static void EventQueue_EventRaised(object sender, WindowEventType type, WindowEventArgs arguments)
+    {
+        if (enabled_sRGB == false)
+        {
+            Console.WriteLine("Enabled sRGB");
+            GL.Enable(EnableCap.FramebufferSrgb);
+            enabled_sRGB = true;
+        }
+        else
+        {
+            Console.WriteLine("Disabled sRGB");
+            GL.Disable(EnableCap.FramebufferSrgb);
+            enabled_sRGB = false;
+        }
     }
 
     static VertexArrayHandle vao;
@@ -190,12 +210,13 @@ void main()
 
         CheckError("getString");
 
-        GL.Enable(EnableCap.FramebufferSrgb);
-        GL.Enable(EnableCap.Multisample);
+        //GL.Enable(EnableCap.FramebufferSrgb);
     }
 
     public static bool Render()
     {
+        
+
         GL.ClearColor(Color4.Darkslategray);
         GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
         windowComp.GetClientSize(handle, out int width, out int height);

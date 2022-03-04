@@ -21,6 +21,7 @@ namespace OpenTK.Core.Platform
         public void Send(object sender, TType type, TArguments arguments)
         {
             _events.Enqueue(new Event(sender, type, arguments));
+            EventRaised(sender, type, arguments);
         }
 
         private readonly struct Event
