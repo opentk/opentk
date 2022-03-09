@@ -471,6 +471,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         private Vector2i _size;
+        private Vector2i? _minimumSize;
+        private Vector2i? _maximumSize;
 
         /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the external size of this window.
@@ -482,6 +484,59 @@ namespace OpenTK.Windowing.Desktop
             {
                 _size = value;
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the minimum external size of this window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the minimum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public unsafe Vector2i? MinimumSize
+        {
+            get => _minimumSize;
+            set
+            {
+                _minimumSize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare, _maximumSize?.X ?? GLFW.DontCare, _maximumSize?.Y ?? GLFW.DontCare);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the maximum external size of this window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the maximum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public unsafe Vector2i? MaximumSize
+        {
+            get => _maximumSize;
+            set
+            {
+                _maximumSize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize?.X ?? GLFW.DontCare, _minimumSize?.Y ?? GLFW.DontCare, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare);
+            }
+        }
+
+        private (int numerator, int denominator)? _aspectRatio;
+
+        /// <summary>
+        /// Gets or sets the aspect ratio this window is locked to.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> disable aspect ratio locking.
+        /// If you set size limits and an aspect ratio lock that conflict, the results are undefined.
+        /// </remarks>
+        public unsafe (int numerator, int denominator)? AspectRatio
+        {
+            get => _aspectRatio;
+            set
+            {
+                _aspectRatio = value;
+                GLFW.SetWindowAspectRatio(WindowPtr, value?.numerator ?? GLFW.DontCare, value?.denominator ?? GLFW.DontCare);
             }
         }
 
@@ -790,6 +845,12 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowSize(WindowPtr, out var width, out var height);
 
             HandleResize(width, height);
+
+            AspectRatio = settings.AspectRatio;
+            _minimumSize = settings.MinimumSize;
+            _maximumSize = settings.MaximumSize;
+
+            GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize?.X ?? GLFW.DontCare, _minimumSize?.Y ?? GLFW.DontCare, _maximumSize?.X ?? GLFW.DontCare, _maximumSize?.Y ?? GLFW.DontCare);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);

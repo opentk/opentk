@@ -158,6 +158,33 @@ namespace OpenTK.Windowing.Desktop
         public Vector2i Size { get; set; } = new Vector2i(640, 360);
 
         /// <summary>
+        ///     Gets or sets the minimum size of the contents of the window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the minimum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public Vector2i? MinimumSize { get; set; } = null;
+
+        /// <summary>
+        ///     Gets or sets the maximum size of the contents of the window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the minimum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public Vector2i? MaximumSize { get; set; } = null;
+
+        /// <summary>
+        /// Gets or sets the aspect ratio the window is locked to until changed.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to disable aspect ratio locking.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public (int numerator, int denominator)? AspectRatio { get; set; } = null;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the window should start fullscreen.
         /// </summary>
         [Obsolete("Use WindowState instead.", true)]
