@@ -483,10 +483,19 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         #region GLFW Native functions
 
         [DllImport(LibraryName)]
+        public static extern byte* glfwGetWin32Adapter(Monitor* monitor);
+
+        [DllImport(LibraryName)]
+        public static extern byte* glfwGetWin32Monitor(Monitor* monitor);
+
+        [DllImport(LibraryName)]
         public static extern IntPtr glfwGetWin32Window(Window* window);
 
         [DllImport(LibraryName)]
         public static extern IntPtr glfwGetWGLContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern uint glfwGetCocoaMonitor(Monitor* monitor);
 
         [DllImport(LibraryName)]
         public static extern IntPtr glfwGetCocoaWindow(Window* window);
@@ -495,7 +504,22 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern IntPtr glfwGetNSGLContext(Window* window);
 
         [DllImport(LibraryName)]
-        public static extern uint glfwGetX11Window(Window* window);
+        public static extern IntPtr glfwGetX11Display();
+
+        [DllImport(LibraryName)]
+        public static extern UIntPtr glfwGetX11Adapter(Monitor* monitor);
+
+        [DllImport(LibraryName)]
+        public static extern UIntPtr glfwGetX11Monitor(Monitor* monitor);
+
+        [DllImport(LibraryName)]
+        public static extern UIntPtr glfwGetX11Window(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern void glfwSetX11SelectionString(byte* @string);
+
+        [DllImport(LibraryName)]
+        public static extern byte* glfwGetX11SelectionString();
 
         [DllImport(LibraryName)]
         public static extern uint glfwGetGLXContext(Window* window);
@@ -504,10 +528,28 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static extern uint glfwGetGLXWindow(Window* window);
 
         [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWaylandDisplay();
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetWaylandMonitor(Monitor* monitor);
+
+        [DllImport(LibraryName)]
         public static extern IntPtr glfwGetWaylandWindow(Window* window);
 
         [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetEGLDisplay();
+
+        [DllImport(LibraryName)]
         public static extern IntPtr glfwGetEGLContext(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern IntPtr glfwGetEGLSurface(Window* window);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetOSMesaColorBuffer(Window* window, int* width, int* height, int* format, void** buffer);
+
+        [DllImport(LibraryName)]
+        public static extern int glfwGetOSMesaDepthBuffer(Window* window, int* width, int* height, int* bytesPerValue, void** buffer);
 
         [DllImport(LibraryName)]
         public static extern IntPtr glfwGetOSMesaContext(Window* window);
