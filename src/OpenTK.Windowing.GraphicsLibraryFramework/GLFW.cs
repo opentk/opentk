@@ -5787,7 +5787,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Returns the adapter device name of the specified monitor.
         /// </summary>
         /// <param name="monitor">The monitor to query.</param>
-        /// <returns>The adapter device name (for example \\.\DISPLAY1) of the specified monitor, or NULL if an error occurred.</returns>
+        /// <returns>The adapter device name (for example \\.\DISPLAY1) of the specified monitor, or <c>NULL</c> if an error occurred.</returns>
         public static unsafe string GetWin32Adapter(Monitor* monitor)
         {
             byte* strPtr = glfwGetWin32Adapter(monitor);
@@ -5818,7 +5818,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Returns the <c>HGLRC</c> of the specified window.
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <returns>The <c>HGLRC</c> of the specified window, or NULL if an error occurred.</returns>
+        /// <returns>The <c>HGLRC</c> of the specified window, or <c>NULL</c> if an error occurred.</returns>
         public static unsafe IntPtr GetWGLContext(Window* window) => glfwGetWGLContext(window);
 
         /// <summary>
@@ -5843,13 +5843,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public static unsafe IntPtr GetNSGLContext(Window* window) => glfwGetNSGLContext(window);
 
         /// <summary>
-        /// Returns the <c>xDisplayReturns</c> the Display used by GLFW. used by GLFW.
+        /// Returns the <c>Display</c> used by GLFW.
         /// </summary>
         /// <returns>The <c>Display</c> used by GLFW, or <c>NULL</c> if an error occurred.</returns>
         public static unsafe IntPtr GetX11Display() => glfwGetX11Display();
 
         /// <summary>
-        /// Returns the RRCrtc of the specified monitor.
+        /// Returns the <c>RRCrtc</c> of the specified monitor.
         /// </summary>
         /// <param name="monitor">The monitor to query.</param>
         /// <returns>The <c>RRCrtc</c> of the specified monitor, or <c>None</c> if an error occurred.</returns>
