@@ -13,6 +13,8 @@ public class Program
     static WindowComponent windowComp;
     static WindowHandle handle;
 
+    static IMouseComponent mouseComp = new MouseComponent();
+
     public static void Main(string[] args)
     {
         windowComp = new WindowComponent();
@@ -234,6 +236,10 @@ void main()
         GL.Viewport(0, 0, width, height);
 
         CheckError("clear");
+
+        mouseComp.GetPosition(null, out int x, out int y);
+        windowComp.ScreenToClient(handle, x, y, out int clientX, out int clientY);
+        windowComp.SetTitle(handle, $"({clientX},{clientY})");
 
         GL.BindVertexArray(vao);
         GL.DrawArrays(PrimitiveType.Triangles, 0, 3);

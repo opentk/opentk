@@ -10,11 +10,22 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 {
     public class WindowComponent : IWindowComponent
     {
+        /// <summary>
+        /// Class name used to create windows.
+        /// </summary>
         public const string CLASS_NAME = "OpenTK Window";
 
+        /// <summary>
+        /// The applications HInstance.
+        /// </summary>
         public static readonly IntPtr HInstance;
 
+        /// <summary>
+        /// The helper window used to load wgl extensions.
+        /// </summary>
         public static IntPtr HelperHWnd { get; private set; }
+
+        private static Win32.WNDPROC WindowProc = Win32WindowProc;
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
@@ -24,10 +35,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             HInstance = Win32.GetModuleHandle(null);
         }
 
+        /// <inheritdoc/>
         public string Name => "Win32Window";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Window;
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Window)
@@ -37,7 +51,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             // Here we register the window class that we will use for all created windows.
             Win32.WNDCLASSEX wndClass = Win32.WNDCLASSEX.Create();
-            wndClass.lpfnWndProc = Win32WindowProc;
+            wndClass.lpfnWndProc = WindowProc;
             wndClass.hInstance = HInstance;
             wndClass.lpszClassName = CLASS_NAME;
             wndClass.style = ClassStyles.OwnDC;
@@ -76,16 +90,22 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool CanSetIcon => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanGetDisplay => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanSetCursor => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowEventType> SupportedEvents => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowStyle> SupportedStyles => _SupportedStyles;
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => _SupportedModes;
 
         // FIXME: HACK!!!!!!
@@ -132,7 +152,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         private static IntPtr Win32WindowProc(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam)
         {
             WM message = (WM)uMsg;
-            Console.WriteLine("WinProc " + message + " " + hWnd);
+            //Console.WriteLine("WinProc " + message + " " + hWnd);
             switch (message)
             {
                 case WM.KEYDOWN:
@@ -183,6 +203,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public WindowHandle Create()
         {
             IntPtr hWnd = Win32.CreateWindowEx(
@@ -211,6 +232,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             return hwnd;
         }
 
+        /// <inheritdoc/>
         public void Destroy(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -226,6 +248,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public string GetTitle(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -245,6 +268,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             return title.ToString();
         }
 
+        /// <inheritdoc/>
         public void SetTitle(WindowHandle handle, string title)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -257,16 +281,19 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public IconHandle GetIcon(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void GetPosition(WindowHandle handle, out int x, out int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -282,6 +309,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             y = lpRect.top;
         }
 
+        /// <inheritdoc/>
         public void SetPosition(WindowHandle handle, int x, int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -296,6 +324,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetSize(WindowHandle handle, out int width, out int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -311,6 +340,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             height = lpRect.bottom - lpRect.top;
         }
 
+        /// <inheritdoc/>
         public void SetSize(WindowHandle handle, int width, int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -325,6 +355,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -342,6 +373,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             y = point.Y;
         }
 
+        /// <inheritdoc/>
         public void SetClientPosition(WindowHandle handle, int x, int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -367,6 +399,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -382,6 +415,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             height = lpRect.bottom;
         }
 
+        /// <inheritdoc/>
         public void SetClientSize(WindowHandle handle, int width, int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -408,11 +442,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public WindowMode GetMode(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -451,6 +487,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             WindowMode.Maximized
         };
 
+        /// <inheritdoc/>
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -480,6 +517,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public WindowStyle GetBorderStyle(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -518,6 +556,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             WindowStyle.ResizableBorder,
         };
 
+        /// <inheritdoc/>
         public unsafe void SetBorderStyle(WindowHandle handle, WindowStyle style)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -556,11 +595,49 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
         }
 
+        /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle cursor)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            Win32.POINT point;
+            point.X = x;
+            point.Y = y;
+            bool success = Win32.ScreenToClient(hwnd.HWnd, ref point);
+            if (success == false)
+            {
+                throw new Win32Exception("ScreenToClient failed.");
+            }
+
+            clientX = point.X;
+            clientY = point.Y;
+        }
+
+        /// <inheritdoc/>
+        public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            Win32.POINT point;
+            point.X = clientX;
+            point.Y = clientY;
+            bool success = Win32.ClientToScreen(hwnd.HWnd, ref point);
+            if (success == false)
+            {
+                throw new Win32Exception("ClientToScreen failed.");
+            }
+
+            x = point.X;
+            y = point.Y;
+        }
+
+        /// <inheritdoc/>
         public IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);

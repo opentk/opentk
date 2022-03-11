@@ -153,6 +153,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal static extern bool ClientToScreen(IntPtr hWnd, ref POINT lpPoint);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool GetCursorPos(out POINT lpPoint);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool SetCursorPos(int X, int Y);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool AdjustWindowRect(ref RECT lpRect, WindowStyles dwStyle, bool bMenu);
 
         /// <summary>
