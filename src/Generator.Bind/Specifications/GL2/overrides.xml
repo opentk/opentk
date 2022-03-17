@@ -5540,7 +5540,7 @@
     <function name="GetTranslatedShaderSource" extension="ANGLE">
       <param name="length" legacyArrayParameter="true" />
       <param name="source">
-        <count>bufsize</count>
+        <count>bufSize</count>
       </param>
     </function>
     <function name="GetProgramBinary" extension="OES">
