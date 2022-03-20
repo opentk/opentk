@@ -1,0 +1,513 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetTexImage">
+  <info>
+    <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetTexImage</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refdescriptor>glGetTexImage</refdescriptor>
+        <refname>glGetTexImage</refname>
+        <refname>glGetnTexImage</refname>
+        <refname>glGetTextureImage</refname>
+        <refpurpose>return a texture image</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetTexImage</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>void * <parameter>pixels</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetnTexImage</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>void *<parameter>pixels</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glGetTextureImage</function></funcdef>
+                <paramdef>GLuint <parameter>texture</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLsizei <parameter>bufSize</parameter></paramdef>
+                <paramdef>void *<parameter>pixels</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+  <refsect1 xml:id="parameters">
+    <title>Parameters</title>
+
+    <variablelist>
+      <varlistentry>
+        <term><parameter>target</parameter></term>
+
+        <listitem>
+          <para>Specifies the target to which the texture is bound for
+          <function>glGetTexImage</function> and
+          <function>glGetnTexImage</function> functions.
+          <constant>GL_TEXTURE_1D</constant>,
+          <constant>GL_TEXTURE_2D</constant>,
+          <constant>GL_TEXTURE_3D</constant>,
+          <constant>GL_TEXTURE_1D_ARRAY</constant>,
+          <constant>GL_TEXTURE_2D_ARRAY</constant>,
+          <constant>GL_TEXTURE_RECTANGLE</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant>, and
+          <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant> are acceptable.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>texture</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the texture object name.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>level</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the level-of-detail number of the desired image.
+                    Level 0 is the base image level.
+                    Level
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>
+                    is the
+                    <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+                    mipmap reduction image.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+        <term><parameter>format</parameter></term>
+
+        <listitem>
+          <para>Specifies a pixel format for the returned data. The supported
+          formats are <constant>GL_STENCIL_INDEX</constant>,
+          <constant>GL_DEPTH_COMPONENT</constant>,
+          <constant>GL_DEPTH_STENCIL</constant>, <constant>GL_RED</constant>,
+          <constant>GL_GREEN</constant>, <constant>GL_BLUE</constant>,
+          <constant>GL_RG</constant>, <constant>GL_RGB</constant>,
+          <constant>GL_RGBA</constant>, <constant>GL_BGR</constant>,
+          <constant>GL_BGRA</constant>, <constant>GL_RED_INTEGER</constant>,
+          <constant>GL_GREEN_INTEGER</constant>,
+          <constant>GL_BLUE_INTEGER</constant>,
+          <constant>GL_RG_INTEGER</constant>,
+          <constant>GL_RGB_INTEGER</constant>,
+          <constant>GL_RGBA_INTEGER</constant>,
+          <constant>GL_BGR_INTEGER</constant>,
+          <constant>GL_BGRA_INTEGER</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>type</parameter></term>
+
+        <listitem>
+          <para>Specifies a pixel type for the returned data. The supported
+          types are <constant>GL_UNSIGNED_BYTE</constant>,
+          <constant>GL_BYTE</constant>,
+          <constant>GL_UNSIGNED_SHORT</constant>,
+          <constant>GL_SHORT</constant>, <constant>GL_UNSIGNED_INT</constant>,
+          <constant>GL_INT</constant>, <constant>GL_HALF_FLOAT</constant>,
+          <constant>GL_FLOAT</constant>,
+          <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+          <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+          <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+          <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+          <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+          <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+          <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+          <constant>GL_UNSIGNED_INT_10_10_10_2</constant>,
+          <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>,
+          <constant>GL_UNSIGNED_INT_24_8</constant>,
+          <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant>,
+          <constant>GL_UNSIGNED_INT_5_9_9_9_REV</constant>, and
+          <constant>GL_FLOAT_32_UNSIGNED_INT_24_8_REV</constant>.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>bufSize</parameter></term>
+
+        <listitem>
+          <para>Specifies the size of the buffer <parameter>pixels</parameter>
+          for <function>glGetnTexImage</function> and
+          <function>glGetTextureImage</function> functions.</para>
+        </listitem>
+      </varlistentry>
+
+      <varlistentry>
+        <term><parameter>pixels</parameter></term>
+
+        <listitem>
+          <para>Returns the texture image. Should be a pointer to an array of
+          the type specified by <parameter>type</parameter>.</para>
+        </listitem>
+      </varlistentry>
+    </variablelist>
+  </refsect1>
+
+  <refsect1 xml:id="description">
+    <title>Description</title>
+
+    <para>
+    <function>glGetTexImage</function>, <function>glGetnTexImage</function>
+    and <function>glGetTextureImage</function> functions return a texture
+    image into <parameter>pixels</parameter>. For
+    <function>glGetTexImage</function> and
+    <function>glGetnTexImage</function>, <parameter>target</parameter>
+    specifies whether the desired texture image is one specified by
+    <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>
+    (<constant>GL_TEXTURE_1D</constant>),
+    <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>
+    (<constant>GL_TEXTURE_1D_ARRAY</constant>,
+    <constant>GL_TEXTURE_RECTANGLE</constant>,
+    <constant>GL_TEXTURE_2D</constant> or any of
+    <constant>GL_TEXTURE_CUBE_MAP_*</constant>), or
+    <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>
+    (<constant>GL_TEXTURE_2D_ARRAY</constant>,
+    <constant>GL_TEXTURE_3D</constant>,
+    <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>). For
+    <function>glGetTextureImage</function>, <parameter>texture</parameter>
+    specifies the texture object name. In addition to types of textures
+    accepted by <function>glGetTexImage</function> and
+    <function>glGetnTexImage</function>, the function also accepts cube map
+    texture objects (with effective target
+    <constant>GL_TEXTURE_CUBE_MAP</constant>). <parameter>level</parameter>
+    specifies the level-of-detail number of the desired image.
+    <parameter>format</parameter> and <parameter>type</parameter> specify
+    the format and type of the desired image array. See the reference page
+    for <citerefentry><refentrytitle>glTexImage1D</refentrytitle>
+    </citerefentry> for a description of the acceptable values for the
+    <parameter>format</parameter> and <parameter>type</parameter>
+    parameters, respectively. For glGetnTexImage and glGetTextureImage
+    functions, bufSize tells the size of the buffer to receive the retrieved
+    pixel data. <function>glGetnTexImage</function> and
+    <function>glGetTextureImage</function> do not write more than
+    <parameter>bufSize</parameter> bytes into
+    <parameter>pixels</parameter>.</para>
+
+    <para>If a non-zero named buffer object is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target (see
+    <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>)
+    while a texture image is requested, <parameter>pixels</parameter> is
+    treated as a byte offset into the buffer object's data store.</para>
+
+    <para>To understand the operation of <function>glGetTexImage</function>,
+    consider the selected internal four-component texture image to be an RGBA
+    color buffer the size of the image. The semantics of
+    <function>glGetTexImage</function> are then identical to those of
+    <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+    with the exception that no pixel transfer operations are performed, when
+    called with the same <parameter>format</parameter> and
+    <parameter>type</parameter>, with <emphasis>x</emphasis> and
+    <emphasis>y</emphasis> set to 0, <emphasis>width</emphasis> set to the
+    width of the texture image and <emphasis>height</emphasis> set to 1 for
+    1D images, or to the height of the texture image for 2D images.</para>
+
+    <para>If the selected texture image does not contain four components, the
+    following mappings are applied. Single-component textures are treated as
+    RGBA buffers with red set to the single-component value, green set to 0,
+    blue set to 0, and alpha set to 1. Two-component textures are treated as
+    RGBA buffers with red set to the value of component zero, alpha set to the
+    value of component one, and green and blue set to 0. Finally,
+    three-component textures are treated as RGBA buffers with red set to
+    component zero, green set to component one, blue set to component two, and
+    alpha set to 1.</para>
+
+    <para>To determine the required size of <parameter>pixels</parameter>, use
+    <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>
+    to determine the dimensions of the internal texture image, then scale
+    the required number of pixels by the storage required for each pixel,
+    based on <parameter>format</parameter> and <parameter>type</parameter>.
+    Be sure to take the pixel storage parameters into account, especially
+    <constant>GL_PACK_ALIGNMENT</constant>.</para>
+
+    <para>If <function>glGetTextureImage</function> is used against a cube map
+    texture object, the texture is treated as a three-dimensional image of a
+    depth of 6, where the cube map faces are ordered as image layers, in an
+    order presented in the table below:</para>
+
+    <informaltable>
+      <tgroup cols="2">
+        <thead>
+          <row>
+            <entry align="center">Layer number</entry>
+
+            <entry align="center">Cube Map Face</entry>
+          </row>
+        </thead>
+
+        <tbody>
+          <row>
+            <entry>0</entry>
+
+            <entry>GL_TEXTURE_CUBE_MAP_POSITIVE_X</entry>
+          </row>
+
+          <row>
+            <entry>1</entry>
+
+            <entry>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</entry>
+          </row>
+
+          <row>
+            <entry>2</entry>
+
+            <entry>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</entry>
+          </row>
+
+          <row>
+            <entry>3</entry>
+
+            <entry>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</entry>
+          </row>
+
+          <row>
+            <entry>4</entry>
+
+            <entry>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</entry>
+          </row>
+
+          <row>
+            <entry>5</entry>
+
+            <entry>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </informaltable>
+  </refsect1>
+
+  <refsect1 xml:id="notes">
+    <title>Notes</title>
+
+    <para>If an error is generated, no change is made to the contents of
+    <parameter>pixels</parameter>.</para>
+
+    <para><function>glGetTexImage</function> and
+    <function>glGetnTexImage</function> return the texture image for the
+    active texture unit.</para>
+
+    <para><constant>GL_STENCIL_INDEX</constant> is accepted for
+    <parameter>format</parameter> only if the GL version is 4.4 or
+    greater.</para>
+  </refsect1>
+
+  <refsect1 xml:id="errors">
+    <title>Errors</title>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated by
+    <function>glGetTexImage</function> and <function>glGetnTexImage</function>
+    functions if <parameter>target</parameter> is not an accepted value. These
+    include:</para>
+
+    <para><itemizedlist>
+        <listitem>
+          <para><constant>GL_TEXTURE_1D</constant>,
+          <constant>GL_TEXTURE_2D</constant>,
+          <constant>GL_TEXTURE_3D</constant>,
+          <constant>GL_TEXTURE_1D_ARRAY</constant>,
+          <constant>GL_TEXTURE_2D_ARRAY</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+          <constant>GL_TEXTURE_RECTANGLE</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_X</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Y</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_POSITIVE_Z</constant>, and
+          <constant>GL_TEXTURE_CUBE_MAP_NEGATIVE_Z</constant> for
+          <function>glGetTexImage</function> and
+          <function>glGetnTexImage</function> functions.</para>
+        </listitem>
+
+        <listitem>
+          <para><constant>GL_TEXTURE_1D</constant>,
+          <constant>GL_TEXTURE_2D</constant>,
+          <constant>GL_TEXTURE_3D</constant>,
+          <constant>GL_TEXTURE_1D_ARRAY</constant>,
+          <constant>GL_TEXTURE_2D_ARRAY</constant>,
+          <constant>GL_TEXTURE_CUBE_MAP_ARRAY</constant>,
+          <constant>GL_TEXTURE_RECTANGLE</constant>, and
+          <constant>GL_TEXTURE_CUBE_MAP</constant> for
+          <function>glGetTextureImage</function> function.</para>
+        </listitem>
+      </itemizedlist></para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glGetTextureImage</function> if <parameter>texture</parameter>
+    is not the name of an existing texture object.</para>
+
+    <para><constant>GL_INVALID_ENUM</constant> is generated if
+    <parameter>format</parameter>, or <parameter>type</parameter> is not an
+    accepted value.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>level</parameter> is less than 0.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> may be generated if
+    <parameter>level</parameter> is greater than <inlineequation>
+        <mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: log sub 2 (max): -->
+                <mml:mrow>
+                    <mml:msub><mml:mi mathvariant="italic">log</mml:mi>
+                    <mml:mn>2</mml:mn>
+                    </mml:msub>
+                    <mml:mo>&af;</mml:mo>
+                    <mml:mfenced open="(" close=")">
+                        <mml:mi mathvariant="italic">max</mml:mi>
+                    </mml:mfenced>
+                </mml:mrow>
+            </mml:math>
+      </inlineequation>,
+ where
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll"><mml:mi mathvariant="italic">max</mml:mi></mml:math></inlineequation>
+is the returned value of
+    <constant>GL_MAX_TEXTURE_SIZE</constant>.</para>
+
+    <para><constant>GL_INVALID_VALUE</constant> is generated if
+    <parameter>level</parameter> is non-zero and the effective target is
+    <constant>GL_TEXTURE_RECTANGLE</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>type</parameter> is one of
+    <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+    <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+    <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>, or
+    <constant>GL_UNSIGNED_INT_10F_11F_11F_REV</constant> and
+    <parameter>format</parameter> is not <constant>GL_RGB</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>type</parameter> is one of
+    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+    <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+    <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+    <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+    <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>,
+    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>, or
+    <constant>GL_UNSIGNED_INT_5_9_9_9_REV</constant> and
+    <parameter>format</parameter> is neither <constant>GL_RGBA</constant> or
+    <constant>GL_BGRA</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if
+    <parameter>format</parameter> is <constant>GL_STENCIL_INDEX</constant> and
+    the base internal format is not <constant>GL_STENCIL_INDEX</constant> or
+    <constant>GL_DEPTH_STENCIL</constant>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target and the buffer object's
+    data store is currently mapped.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target and the data would be
+    packed to the buffer object such that the memory writes required would
+    exceed the data store size.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated if a non-zero
+    buffer object name is bound to the
+    <constant>GL_PIXEL_PACK_BUFFER</constant> target and
+    <parameter>pixels</parameter> is not evenly divisible into the number of
+    bytes needed to store in memory a datum indicated by
+    <parameter>type</parameter>.</para>
+
+    <para><constant>GL_INVALID_OPERATION</constant> is generated by
+    <function>glGetTextureImage</function> and
+    <function>glGetnTexImage</function> if the buffer size required to store
+    the requested data is greater than <parameter>bufSize</parameter>.</para>
+  </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_WIDTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_HEIGHT</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_INTERNAL_FORMAT</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with arguments <constant>GL_PACK_ALIGNMENT</constant> and others
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_PACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetTexImage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetTextureImage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetnTexImage</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='45']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

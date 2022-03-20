@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glNormal">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glNormal</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glNormal</refdescriptor>
+        <refname>glNormal3f</refname>
+        <refname>glNormal3x</refname>
+        <refpurpose>set the current normal vector</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glNormal3f</function></funcdef>
+                <paramdef>GLfloat <parameter>nx</parameter></paramdef>
+                <paramdef>GLfloat <parameter>ny</parameter></paramdef>
+                <paramdef>GLfloat <parameter>nz</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glNormal3x</function></funcdef>
+                <paramdef>GLfixed <parameter>nx</parameter></paramdef>
+                <paramdef>GLfixed <parameter>ny</parameter></paramdef>
+                <paramdef>GLfixed <parameter>nz</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                <parameter>nx</parameter>,
+                <parameter>ny</parameter>,
+                <parameter>nz</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specify the
+                    <parameter>x</parameter>,
+                    <parameter>y</parameter>, and
+                    <parameter>z</parameter> coordinates of the
+                    new current normal. The initial value is (0, 0, 1).</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>The current normal is set to the given coordinates whenever
+        <function>glNormal</function>
+        is issued.</para>
+
+        <para>Normals specified with <function>glNormal</function>
+        need not have unit length. If <constant>GL_NORMALIZE</constant>
+        is enabled, then normals of any length specified with
+        <function>glNormal</function>
+        are normalized after transformation. If
+        <constant>GL_RESCALE_NORMAL</constant>
+        is enabled, normals are scaled by a scaling factor derived from
+        the modelview matrix.  <constant>GL_RESCALE_NORMAL</constant>
+        requires that the originally specified normals were of unit
+        length, and that the modelview matrix contain only uniform
+        scales for proper results. To enable and disable normalization,
+        call
+        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and
+        <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
+        with either
+        <constant>GL_NORMALIZE</constant> or <constant>GL_RESCALE_NORMAL</constant>.
+        Normalization is initially disabled.</para>
+    </refsect1>
+<!--
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>The current normal can be updated at any time.</para>
+    </refsect1>
+-->
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_NORMAL</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_NORMALIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_RESCALE_NORMAL</constant>
+        </para>
+    </refsect1>
+    
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

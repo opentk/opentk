@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glLoadIdentity">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glLoadIdentity</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glLoadIdentity</refname>
+        <refpurpose>replace the current matrix with the identity matrix</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glLoadIdentity</function></funcdef>
+                <paramdef> <parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glLoadIdentity</function> replaces the current matrix with the identity matrix.
+            It is semantically equivalent to calling <citerefentry><refentrytitle>glLoadMatrix</refentrytitle></citerefentry>
+            with the identity matrix
+        </para>
+        <para>
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: left (  {   matrix {    lcol { 1 above 0 above 0 above 0  }    lcol { 0 above 1 above 0 above 0  }    lcol { 0 above 0 above 1 above 0  }    lcol { 0 above 0 above 0 above 1 } } }    right ):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:mfenced open="" close="">
+                        <mml:mtable>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                            </mml:mtr>
+                            <mml:mtr>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>0</mml:mn>
+                                </mml:mtd>
+                                <mml:mtd>
+                                    <mml:mn>1</mml:mn>
+                                </mml:mtd>
+                            </mml:mtr>
+                        </mml:mtable>
+                    </mml:mfenced>
+                </mml:mfenced>
+            </mml:math></informalequation>
+        </para>
+        <para>
+        </para>
+        <para>
+            but in some cases it is more efficient.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glLoadIdentity</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MATRIX_MODE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MODELVIEW_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PROJECTION_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_MATRIX</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glLoadMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glLoadTransposeMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultTransposeMatrix</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushMatrix</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

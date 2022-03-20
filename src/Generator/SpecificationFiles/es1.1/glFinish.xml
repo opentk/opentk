@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glFinish">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glFinish</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glFinish</refname>
+        <refpurpose>block until all GL execution is complete</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glFinish</function></funcdef>
+                <void/>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="description"><title>Description</title>
+
+                <para>
+        <function>glFinish</function> does not return until the effects
+        of all previously called GL commands are complete. Such effects
+        include all changes to GL client and server state as well as all
+        changes to the frame buffer contents.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+            <function>glFinish</function> is NOT required before a call
+            to eglSwapBuffers
+            or <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>.  
+                        <function>glFinish</function> can take some time and for
+                        performance reasons it is best to use this function
+                        infrequently and only when necessary.
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+            <citerefentry><refentrytitle>glFlush</refentrytitle></citerefentry>
+            <citerefentry><refentrytitle>glReadPixels</refentrytitle></citerefentry>
+            eglSwapBuffers
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

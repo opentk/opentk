@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glReadPixels">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glReadPixels</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glReadPixels</refname>
+        <refpurpose>read a block of pixels from the color buffer</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glReadPixels</function></funcdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>void * <parameter>pixels</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                <parameter>x</parameter>, <parameter>y</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specify the window coordinates of the first pixel
+                    that is read from the color buffer. This location is the
+                    lower left corner of a rectangular block of pixels.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                <parameter>width</parameter>, <parameter>height</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specify the dimensions of the pixel rectangle.
+                    <parameter>width</parameter> and <parameter>height</parameter>
+                    of one correspond to a single pixel.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>format</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the format of the pixel data. Must be either
+                    <constant>GL_RGBA</constant> or the value of
+                    <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>type</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the data type of the pixel data. Must be either
+                    <constant>GL_UNSIGNED_BYTE</constant> or the value of
+                    <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE_OES</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>pixels</parameter>
+                </term>
+
+                <listitem>
+                    <para>Returns the pixel data.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+
+
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para><function>glReadPixels</function>
+        returns pixel data from the color buffer, starting with the
+        pixel whose lower left corner is at location
+        (<parameter>x</parameter>, <parameter>y</parameter>),
+        into client memory starting at location
+        <parameter>pixels</parameter>.
+        The processing of the pixel data before it is placed into
+        client memory can be controlled with
+        <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>.
+        </para>
+
+        <para><function>glReadPixels</function>
+        returns values from each pixel with lower left corner at
+        <inlineequation><mml:math>
+            <mml:mfenced>
+                <mml:mrow><mml:mi>x</mml:mi><mml:mo>+</mml:mo><mml:mi>i</mml:mi></mml:mrow>
+                <mml:mrow><mml:mi>y</mml:mi><mml:mo>+</mml:mo><mml:mi>j</mml:mi></mml:mrow>
+            </mml:mfenced>
+        </mml:math></inlineequation>
+        for
+        <inlineequation><mml:math>
+            <mml:mn>0</mml:mn><mml:mo>&lt;=</mml:mo><mml:mi>i</mml:mi><mml:mo>&lt;</mml:mo><mml:mi>width</mml:mi>
+        </mml:math></inlineequation>
+        and
+        <inlineequation><mml:math>
+            <mml:mn>0</mml:mn><mml:mo>&lt;=</mml:mo><mml:mi>j</mml:mi><mml:mo>&lt;</mml:mo><mml:mi>height</mml:mi>
+        </mml:math></inlineequation>.
+        This pixel is said to be the <replaceable>i</replaceable>th pixel
+        in the <replaceable>j</replaceable>th row.
+        Pixels are returned in row order from the lowest to the
+        highest row, left to right in each row.</para>
+
+        <para><parameter>format</parameter>
+        specifies the format of the returned pixel values; accepted values are:</para>
+
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_ALPHA</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGB</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RGBA</constant></term>
+                <listitem>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+
+        <para>
+            RGBA color components are read from the color buffer.
+            Each color component is converted to floating point such that zero intensity
+            maps to 0.0 and full intensity maps to 1.0.
+        </para>
+
+        <para>Unneeded data is then discarded. For example,
+        <constant>GL_ALPHA</constant>
+        discards the red, green, and blue components, while
+        <constant>GL_RGB</constant>
+        discards only the alpha component.
+        <constant>GL_LUMINANCE</constant>
+        computes a single-component value as the sum of the red, green,
+        and blue components, and
+        <constant>GL_LUMINANCE_ALPHA</constant>
+        does the same, while keeping alpha as a second value. The final
+        values are clamped to the range [0, 1].</para>
+
+        <para>Finally, the components are converted to the proper, as
+        specified by <parameter>type</parameter> where each
+        component is multiplied by
+        <inlineequation><mml:math>
+            <mml:msup><mml:mn>2</mml:mn><mml:mi>n</mml:mi></mml:msup><mml:mo>-</mml:mo><mml:mn>1</mml:mn>
+        </mml:math></inlineequation>,
+        where <replaceable>n</replaceable> is the number of bits
+        per component.</para>
+
+        <para>Return values are placed in memory as follows. If
+        <parameter>format</parameter> is
+        <constant>GL_ALPHA</constant>,
+        a single value is returned and the data for the
+        <replaceable>i</replaceable>th pixel in the
+        <replaceable>j</replaceable>th row is placed in location
+        <inlineequation><mml:math>
+            <mml:mi>j</mml:mi><mml:mo>*</mml:mo><mml:mi>width</mml:mi><mml:mo>+</mml:mo><mml:mi>i</mml:mi>
+        </mml:math></inlineequation>.
+        <constant>GL_RGB</constant> returns three values and
+        <constant>GL_RGBA</constant> returns four values for each pixel, with all values
+        corresponding to a single pixel occupying contiguous space in
+        <parameter>pixels</parameter>.
+        Storage parameter <constant>GL_PACK_ALIGNMENT</constant> set by
+        <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>,
+        affects the way that data is written into memory. See
+        <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>
+        for a description.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+            Only two <parameter>format</parameter>/<parameter>type</parameter> parameter pairs are
+            accepted.  <constant>GL_RGBA</constant>/<constant>GL_UNSIGNED_BYTE</constant> is
+            always accepted, and the other acceptable pair can be discovered by querying
+            <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES</constant> and
+            <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE_OES</constant>.
+        </para>
+
+        <para>Values for pixels that lie outside the window connected
+        to the current GL context are undefined.</para>
+
+        <para>If an error is generated, no change is made to the
+        contents of <parameter>pixels</parameter>.</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para><constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>format</parameter> is not
+        <constant>GL_RGBA</constant> or the value of
+        <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES</constant>.</para>
+
+        <para><constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>type</parameter> is not
+        <constant>GL_UNSIGNED_BYTE</constant> or the value of
+        <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE_OES</constant>.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if either
+        <parameter>width</parameter> or
+        <parameter>height</parameter> is negative.</para>
+
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
+        </para>
+
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>type</parameter> is
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant> or
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGBA</constant>.
+        </para>
+
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>format</parameter>
+            and <parameter>type</parameter> are neither <constant>GL_RGBA</constant> and
+            <constant>GL_UNSIGNED_BYTE</constant>, respectively, nor the format/type pair
+            returned by querying <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES</constant>
+            and <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE_OES</constant>.
+        </para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES</constant></para>
+
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_IMPLEMENTATION_COLOR_READ_TYPE_OES</constant></para>
+
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PACK_ALIGNMENT</constant>
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+            <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

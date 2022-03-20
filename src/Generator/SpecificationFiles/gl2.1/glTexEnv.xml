@@ -1,0 +1,2614 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glTexEnv">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glTexEnv</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glTexEnv</refname>
+        <refpurpose>set texture environment parameters</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexEnvf</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <para></para>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexEnvi</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLint <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a texture environment.
+                    May be <constant>GL_TEXTURE_ENV</constant>, <constant>GL_TEXTURE_FILTER_CONTROL</constant> or <constant>GL_POINT_SPRITE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a single-valued texture environment parameter.
+                    May be either <constant>GL_TEXTURE_ENV_MODE</constant>, <constant>GL_TEXTURE_LOD_BIAS</constant>,
+                    <constant>GL_COMBINE_RGB</constant>,
+                    <constant>GL_COMBINE_ALPHA</constant>,
+                    <constant>GL_SRC0_RGB</constant>,
+                    <constant>GL_SRC1_RGB</constant>,
+                    <constant>GL_SRC2_RGB</constant>,
+                    <constant>GL_SRC0_ALPHA</constant>,
+                    <constant>GL_SRC1_ALPHA</constant>,
+                    <constant>GL_SRC2_ALPHA</constant>,
+                    <constant>GL_OPERAND0_RGB</constant>,
+                    <constant>GL_OPERAND1_RGB</constant>,
+                    <constant>GL_OPERAND2_RGB</constant>,
+                    <constant>GL_OPERAND0_ALPHA</constant>,
+                    <constant>GL_OPERAND1_ALPHA</constant>,
+                    <constant>GL_OPERAND2_ALPHA</constant>,
+                    <constant>GL_RGB_SCALE</constant>,
+                    <constant>GL_ALPHA_SCALE</constant>, or
+                    <constant>GL_COORD_REPLACE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>param</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a single symbolic constant, one of <constant>GL_ADD</constant>,
+                    <constant>GL_ADD_SIGNED</constant>, <constant>GL_INTERPOLATE</constant>, <constant>GL_MODULATE</constant>, <constant>GL_DECAL</constant>,
+                    <constant>GL_BLEND</constant>, <constant>GL_REPLACE</constant>, <constant>GL_SUBTRACT</constant>, <constant>GL_COMBINE</constant>,
+                    <constant>GL_TEXTURE</constant>, <constant>GL_CONSTANT</constant>, <constant>GL_PRIMARY_COLOR</constant>, <constant>GL_PREVIOUS</constant>,
+                    <constant>GL_SRC_COLOR</constant>, <constant>GL_ONE_MINUS_SRC_COLOR</constant>, <constant>GL_SRC_ALPHA</constant>,
+                    <constant>GL_ONE_MINUS_SRC_ALPHA</constant>,
+                    a single boolean value for the point sprite texture coordinate replacement,
+                    a single floating-point value for the texture level-of-detail bias,
+                    or 1.0, 2.0, or 4.0 when specifying the <constant>GL_RGB_SCALE</constant> or <constant>GL_ALPHA_SCALE</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexEnvfv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexEnviv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLint * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters2"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a texture environment.
+                    May be either <constant>GL_TEXTURE_ENV</constant>, or <constant>GL_TEXTURE_FILTER_CONTROL</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pname</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a texture environment parameter.
+                    Accepted values are <constant>GL_TEXTURE_ENV_MODE</constant>, <constant>GL_TEXTURE_ENV_COLOR</constant>, or
+                    <constant>GL_TEXTURE_LOD_BIAS</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>params</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to a parameter array that contains
+                    either a single symbolic constant, single floating-point number, or an RGBA
+                    color.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            A texture environment specifies how texture values are interpreted when a
+            fragment is textured.  When <parameter>target</parameter> is <constant>GL_TEXTURE_FILTER_CONTROL</constant>,
+            <parameter>pname</parameter> must be <constant>GL_TEXTURE_LOD_BIAS</constant>.  When <parameter>target</parameter> is
+            <constant>GL_TEXTURE_ENV</constant>, <parameter>pname</parameter> can be <constant>GL_TEXTURE_ENV_MODE</constant>,
+            <constant>GL_TEXTURE_ENV_COLOR</constant>, <constant>GL_COMBINE_RGB</constant>, <constant>GL_COMBINE_ALPHA</constant>,
+            <constant>GL_RGB_SCALE</constant>, <constant>GL_ALPHA_SCALE</constant>,
+            <constant>GL_SRC0_RGB</constant>, <constant>GL_SRC1_RGB</constant>, <constant>GL_SRC2_RGB</constant>,
+            <constant>GL_SRC0_ALPHA</constant>, <constant>GL_SRC1_ALPHA</constant>, or <constant>GL_SRC2_ALPHA</constant>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_ENV_MODE</constant>,
+            then <parameter>params</parameter> is (or points to) the symbolic name of a texture function.
+            Six texture functions may be specified:
+            <constant>GL_ADD</constant>,
+            <constant>GL_MODULATE</constant>,
+            <constant>GL_DECAL</constant>,
+            <constant>GL_BLEND</constant>,
+            <constant>GL_REPLACE</constant>, or
+            <constant>GL_COMBINE</constant>.
+        </para>
+        <para>
+            The following table shows the correspondence of filtered texture
+            values
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+            <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+            <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+            <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+            <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">L</mml:mi>
+            <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">I</mml:mi>
+            <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+            to texture source components.
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+            <mml:mi mathvariant="italic">s</mml:mi></mml:msub></mml:math></inlineequation>
+            and
+            <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+            <mml:mi mathvariant="italic">s</mml:mi></mml:msub></mml:math></inlineequation>
+            are used by the texture functions described below.
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="3" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left">
+                        Texture Base Internal Format
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="bold-italic">C</mml:mi>
+                        <mml:mi mathvariant="italic">s</mml:mi></mml:msub></mml:math></inlineequation>
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="bold-italic">A</mml:mi>
+                        <mml:mi mathvariant="italic">s</mml:mi></mml:msub></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ALPHA</constant>
+                        </entry>
+                        <entry align="left">
+                        (0, 0, 0)
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE</constant>
+                        </entry>
+                        <entry align="left">
+                        (
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">L</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">L</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">L</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        )
+                        </entry>
+                        <entry align="left">
+                        1
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE_ALPHA</constant>
+                        </entry>
+                        <entry align="left">
+                        (
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">L</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">L</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">L</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        )
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_INTENSITY</constant>
+                        </entry>
+                        <entry align="left">
+                        (
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">I</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">I</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">I</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        )
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">I</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGB</constant>
+                        </entry>
+                        <entry align="left">
+                        (
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        )
+                        </entry>
+                        <entry align="left">
+                        1
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGBA</constant>
+                        </entry>
+                        <entry align="left">
+                        (
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">R</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">G</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>,
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">B</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        )
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math><mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                        <mml:mi mathvariant="italic">t</mml:mi></mml:msub></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            A texture function acts on the fragment to be textured using
+            the texture image value that applies to the fragment
+            (see <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>)
+            and produces an RGBA color for that fragment.
+            The following table shows how the RGBA color is produced for each
+            of the first five texture functions that can be chosen.
+            <inlineequation><mml:math><mml:mi mathvariant="italic">C</mml:mi></mml:math></inlineequation>
+            is a triple of color values (RGB) and
+            <inlineequation><mml:math><mml:mi mathvariant="italic">A</mml:mi></mml:math></inlineequation>
+            is the associated alpha value.
+            RGBA values extracted from a texture image are in the range [0,1].
+            The subscript
+            <inlineequation><mml:math><mml:mi mathvariant="italic">p</mml:mi></mml:math></inlineequation>
+            refers to the color computed from the previous texture stage (or the incoming fragment if processing texture stage 0),
+            the subscript
+            <inlineequation><mml:math><mml:mi mathvariant="italic">s</mml:mi></mml:math></inlineequation>
+            to the texture source color,
+            the subscript
+            <inlineequation><mml:math><mml:mi mathvariant="italic">c</mml:mi></mml:math></inlineequation>
+            to the texture environment color,
+            and the subscript
+            <inlineequation><mml:math><mml:mi mathvariant="italic">v</mml:mi></mml:math></inlineequation>
+            indicates a value produced by the texture function.
+        </para>
+        <para>
+        </para>
+        <informaltable pgwide="1" font-size="8pt" frame="topbot">
+            <tgroup cols="7" align="left">
+                <colspec colwidth="4.1*" align="center"/>
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="2.3*" align="center"/>
+                <colspec colwidth="2.7*" />
+                <colspec colwidth="3.4*" />
+                <colspec colwidth="3.5*" />
+                <colspec colwidth="1.4*" />
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="center">
+                        Texture Base Internal Format
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <constant>Value</constant>
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <constant>GL_REPLACE</constant> Function
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <constant>GL_MODULATE</constant> Function
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <constant>GL_DECAL</constant> Function
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <constant>GL_BLEND</constant> Function
+                        </entry>
+                        <entry rowsep="1" align="center">
+                        <constant>GL_ADD</constant> Function
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="center">
+                        <constant>GL_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        undefined
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <constant>GL_LUMINANCE</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        undefined
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p ( 1 - C sub s ) + C sub c C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                            <mml:mi mathvariant="italic">s</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p + C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        (or 1)
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <constant>GL_LUMINANCE_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        undefined
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p ( 1 - C sub s ) + C sub c C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                            <mml:mi mathvariant="italic">s</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p + C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        (or 2)
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <constant>GL_INTENSITY</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        undefined
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p ( 1 - C sub s ) + C sub c C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                            <mml:mi mathvariant="italic">s</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p + C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p ( 1 - A sub s ) + A sub c A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                            <mml:mi mathvariant="italic">s</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p + A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <constant>GL_RGB</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p ( 1 - C sub s ) + C sub c C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                            <mml:mi mathvariant="italic">s</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p + C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        (or 3)
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        <constant>GL_RGBA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p ( 1 - A sub s ) + C sub s A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                            <mml:mi mathvariant="italic">s</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p ( 1 - C sub s ) + C sub c C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                            <mml:mi mathvariant="italic">s</mml:mi>
+                                            </mml:msub>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: C sub v  =  C sub p + C sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>+</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="center">
+                        (or 4)
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v = :-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">v</mml:mi>
+                                </mml:msub>
+                                <mml:mo>=</mml:mo>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub s:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p:-->
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: A sub v  =  A sub p A sub s:-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                    <mml:mo>&it;</mml:mo>
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_ENV_MODE</constant>, and <parameter>params</parameter> is <constant>GL_COMBINE</constant>, the
+            form of the texture function depends on the values of <constant>GL_COMBINE_RGB</constant>
+            and <constant>GL_COMBINE_ALPHA</constant>.
+        </para>
+        <para>
+            The following describes how the texture sources, as specified by
+            <constant>GL_SRC0_RGB</constant>, <constant>GL_SRC1_RGB</constant>, <constant>GL_SRC2_RGB</constant>,
+            <constant>GL_SRC0_ALPHA</constant>, <constant>GL_SRC1_ALPHA</constant>, and <constant>GL_SRC2_ALPHA</constant>,
+            are combined to produce a final texture color. In the following tables,
+            <constant>GL_SRC0_c</constant> is represented by
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>,
+            <constant>GL_SRC1_c</constant> is
+            represented by
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg1</mml:mi></mml:math></inlineequation>,
+            and <constant>GL_SRC2_c</constant> is represented by
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg2</mml:mi></mml:math></inlineequation>.
+        </para>
+        <para>
+            <constant>GL_COMBINE_RGB</constant> accepts any of <constant>GL_REPLACE</constant>, <constant>GL_MODULATE</constant>,
+            <constant>GL_ADD</constant>, <constant>GL_ADD_SIGNED</constant>, <constant>GL_INTERPOLATE</constant>, <constant>GL_SUBTRACT</constant>,
+            <constant>GL_DOT3_RGB</constant>, or <constant>GL_DOT3_RGBA</constant>.
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <constant>GL_COMBINE_RGB</constant>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Texture Function
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_REPLACE</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_MODULATE</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0 * Arg1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ADD</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0  +  Arg1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ADD_SIGNED</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0  +  Arg1  -  0.5:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>0.5</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_INTERPOLATE</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0 * Arg2  +  Arg1*(1 - Arg2):-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                    <mml:mo>&times;</mml:mo>
+                                    <mml:mi mathvariant="italic">Arg2</mml:mi>
+                                </mml:mrow>
+                                <mml:mo>+</mml:mo>
+                                <mml:mrow>
+                                    <mml:mi mathvariant="italic">Arg1</mml:mi>
+                                    <mml:mo>&times;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:mi mathvariant="italic">Arg2</mml:mi>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_SUBTRACT</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0  -  Arg1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_DOT3_RGB</constant>
+                        or
+                        <constant>GL_DOT3_RGBA</constant>
+                        </entry>
+                        <entry align="left">
+                        <!-- eqn: 4  *  ((({Arg0 sub r}  -  0.5) * ({Arg1 sub r} - 0.5)) +
+                                         (({Arg0 sub g}  -  0.5) * ({Arg1 sub g} - 0.5)) +
+                                         (({Arg0 sub b}  -  0.5) * ({Arg1 sub b} - 0.5)):-->
+                        <inlineequation><mml:math>
+                            <mml:mrow>
+                                <mml:mn>4</mml:mn>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:mfenced open="(" close=")">
+                                    <mml:mrow>
+                                        <mml:mfenced open="(" close=")">
+                                            <mml:mrow>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
+                                                            <mml:mi mathvariant="italic">r</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                                <mml:mo>&times;</mml:mo>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
+                                                            <mml:mi mathvariant="italic">r</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                            </mml:mrow>
+                                        </mml:mfenced>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mfenced open="(" close=")">
+                                            <mml:mrow>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
+                                                            <mml:mi mathvariant="italic">g</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                                <mml:mo>&times;</mml:mo>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
+                                                            <mml:mi mathvariant="italic">g</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                            </mml:mrow>
+                                        </mml:mfenced>
+                                        <mml:mo>+</mml:mo>
+                                        <mml:mfenced open="(" close=")">
+                                            <mml:mrow>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg0</mml:mi>
+                                                            <mml:mi mathvariant="italic">b</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                                <mml:mo>&times;</mml:mo>
+                                                <mml:mfenced open="(" close=")">
+                                                    <mml:mrow>
+                                                        <mml:mfenced open="" close="">
+                                                            <mml:msub><mml:mi mathvariant="italic">Arg1</mml:mi>
+                                                            <mml:mi mathvariant="italic">b</mml:mi>
+                                                            </mml:msub>
+                                                        </mml:mfenced>
+                                                        <mml:mo>-</mml:mo>
+                                                        <mml:mn>0.5</mml:mn>
+                                                    </mml:mrow>
+                                                </mml:mfenced>
+                                            </mml:mrow>
+                                        </mml:mfenced>
+                                    </mml:mrow>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            The scalar results for <constant>GL_DOT3_RGB</constant> and <constant>GL_DOT3_RGBA</constant> are placed
+            into each of the 3 (RGB) or 4 (RGBA) components on output.
+        </para>
+        <para>
+            Likewise, <constant>GL_COMBINE_ALPHA</constant> accepts any of <constant>GL_REPLACE</constant>,
+            <constant>GL_MODULATE</constant>, <constant>GL_ADD</constant>, <constant>GL_ADD_SIGNED</constant>, <constant>GL_INTERPOLATE</constant>, or
+            <constant>GL_SUBTRACT</constant>.  The following table describes how alpha values are
+            combined:
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <constant>GL_COMBINE_ALPHA</constant>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Texture Function
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_REPLACE</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_MODULATE</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0 * Arg1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ADD</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0  +  Arg1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ADD_SIGNED</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0  +  Arg1  -  0.5:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mn>0.5</mml:mn>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_INTERPOLATE</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0 * Arg2  +  Arg1*(1 - Arg2):-->
+                            <mml:mrow>
+                                <mml:mrow>
+                                    <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                    <mml:mo>&times;</mml:mo>
+                                    <mml:mi mathvariant="italic">Arg2</mml:mi>
+                                </mml:mrow>
+                                <mml:mo>+</mml:mo>
+                                <mml:mrow>
+                                    <mml:mi mathvariant="italic">Arg1</mml:mi>
+                                    <mml:mo>&times;</mml:mo>
+                                    <mml:mfenced open="(" close=")">
+                                        <mml:mrow>
+                                            <mml:mn>1</mml:mn>
+                                            <mml:mo>-</mml:mo>
+                                            <mml:mi mathvariant="italic">Arg2</mml:mi>
+                                        </mml:mrow>
+                                    </mml:mfenced>
+                                </mml:mrow>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_SUBTRACT</constant>
+                        </entry>
+                        <entry align="left">
+                        <inlineequation><mml:math>
+                            <!-- eqn: Arg0  -  Arg1:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">Arg0</mml:mi>
+                                <mml:mo>-</mml:mo>
+                                <mml:mi mathvariant="italic">Arg1</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            In the following tables, the value
+            <inlineequation><mml:math>
+                <!-- eqn: C sub s:-->
+                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                <mml:mi mathvariant="italic">s</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            represents the color sampled
+            from the currently bound texture,
+            <inlineequation><mml:math>
+                <!-- eqn: C sub c:-->
+                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                <mml:mi mathvariant="italic">c</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            represents the constant
+            texture-environment color,
+            <inlineequation><mml:math>
+                <!-- eqn: C sub f:-->
+                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                <mml:mi mathvariant="italic">f</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            represents the primary color of the
+            incoming fragment, and
+            <inlineequation><mml:math>
+                <!-- eqn: C sub p:-->
+                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                <mml:mi mathvariant="italic">p</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            represents the color computed from the
+            previous texture stage or
+            <inlineequation><mml:math>
+                <!-- eqn: C sub f:-->
+                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                <mml:mi mathvariant="italic">f</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            if processing texture stage 0.  Likewise,
+            <inlineequation><mml:math>
+                <!-- eqn: A sub s:-->
+                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                <mml:mi mathvariant="italic">s</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: A sub c:-->
+                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                <mml:mi mathvariant="italic">c</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            <inlineequation><mml:math>
+                <!-- eqn: A sub f:-->
+                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                <mml:mi mathvariant="italic">f</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: A sub p:-->
+                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                <mml:mi mathvariant="italic">p</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            represent the respective
+            alpha values.
+        </para>
+        <para>
+            The following table describes the values assigned to
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg1</mml:mi></mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg2</mml:mi></mml:math></inlineequation>
+            based upon the RGB sources and operands:
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="3" align="left">
+                <colspec/>
+                <colspec/>
+                <colspec align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <constant>GL_SRCn_RGB</constant>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <constant>GL_OPERANDn_RGB</constant>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Argument Value
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_TEXTURE</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {C sub s}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {C sub s}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub s}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub s}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_TEXTUREn</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {C sub s}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {C sub s}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub s}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub s}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_CONSTANT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {C sub c}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {C sub c}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub c}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub c}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PRIMARY_COLOR</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {C sub f}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">f</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {C sub f}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">f</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub f}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">f</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub f}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">f</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PREVIOUS</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {C sub p}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_COLOR</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {C sub p}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub p}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub p}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            For <constant>GL_TEXTUREn</constant> sources,
+            <inlineequation><mml:math>
+                <!-- eqn: C sub s:-->
+                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                <mml:mi mathvariant="italic">s</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            and
+            <inlineequation><mml:math>
+                <!-- eqn: A sub s:-->
+                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                <mml:mi mathvariant="italic">s</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            represent the color
+            and alpha, respectively, produced from texture stage
+            <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>.
+        </para>
+        <para>
+            The follow table describes the values assigned to
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg0</mml:mi></mml:math></inlineequation>,
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg1</mml:mi></mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math><mml:mi mathvariant="italic">Arg2</mml:mi></mml:math></inlineequation>
+            based upon the alpha sources and operands:
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="3" align="left">
+                <colspec/>
+                <colspec/>
+                <colspec align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <constant>GL_SRCn_ALPHA</constant>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        <constant>GL_OPERANDn_ALPHA</constant>
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Argument Value
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_TEXTURE</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub s}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub s}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_TEXTUREn</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub s}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">s</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub s}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">s</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_CONSTANT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub c}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">c</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub c}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">c</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PRIMARY_COLOR</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub f}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">f</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub f}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">f</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PREVIOUS</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: {A sub p}:-->
+                            <mml:mfenced open="" close="">
+                                <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                <mml:mi mathvariant="italic">p</mml:mi>
+                                </mml:msub>
+                            </mml:mfenced>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ONE_MINUS_SRC_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        <inlineequation><mml:math>
+                            <!-- eqn: 1  -  {A sub p}:-->
+                            <mml:mrow>
+                                <mml:mn>1</mml:mn>
+                                <mml:mo>-</mml:mo>
+                                <mml:mfenced open="" close="">
+                                    <mml:msub><mml:mi mathvariant="italic">A</mml:mi>
+                                    <mml:mi mathvariant="italic">p</mml:mi>
+                                    </mml:msub>
+                                </mml:mfenced>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            The RGB and alpha results of the texture function are multiplied by the
+            values of <constant>GL_RGB_SCALE</constant> and <constant>GL_ALPHA_SCALE</constant>, respectively, and
+            clamped to the range
+            <inlineequation><mml:math>
+                <!-- eqn: [0, 1]:-->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>1</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_ENV_COLOR</constant>,
+            <parameter>params</parameter> is a pointer to an array that holds an RGBA color consisting of four
+            values.
+            Integer color components are interpreted linearly such that the most
+            positive integer maps to 1.0,
+            and the most negative integer maps to -1.0.
+            The values are clamped to the range [0,1] when they are specified.
+            <inlineequation><mml:math>
+                <!-- eqn: C sub c:-->
+                <mml:msub><mml:mi mathvariant="italic">C</mml:mi>
+                <mml:mi mathvariant="italic">c</mml:mi>
+                </mml:msub>
+            </mml:math></inlineequation>
+            takes these four values.
+        </para>
+        <para>
+            If <parameter>pname</parameter> is <constant>GL_TEXTURE_LOD_BIAS</constant>, the value specified is added to the
+            texture level-of-detail parameter, that selects which mipmap, or mipmaps
+            depending upon the selected <constant>GL_TEXTURE_MIN_FILTER</constant>, will be sampled.
+        </para>
+        <para>
+            <constant>GL_TEXTURE_ENV_MODE</constant> defaults to <constant>GL_MODULATE</constant> and
+            <constant>GL_TEXTURE_ENV_COLOR</constant> defaults to (0, 0, 0, 0).
+        </para>
+        <para>
+            If <parameter>target</parameter> is <constant>GL_POINT_SPRITE</constant> and <parameter>pname</parameter> is <constant>GL_COORD_REPLACE</constant>, the boolean value specified
+            is used to either enable or disable point sprite texture coordinate replacement. The default value is <constant>GL_FALSE</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <constant>GL_REPLACE</constant> may only be used if the GL version is 1.1 or greater.
+        </para>
+        <para>
+            <constant>GL_TEXTURE_FILTER_CONTROL</constant> and <constant>GL_TEXTURE_LOD_BIAS</constant> may only be
+            used if the GL version is 1.4 or greater.
+        </para>
+        <para>
+            <constant>GL_COMBINE</constant> mode and its associated constants may only be used if the
+            GL version is 1.3 or greater.
+        </para>
+        <para>
+            <constant>GL_TEXTUREn</constant> may only be used if the GL version is 1.4 or greater.
+        </para>
+        <para>
+            Internal formats other than 1, 2, 3, or 4 may only be used if the GL
+            version is 1.1 or greater.
+        </para>
+        <para>
+            For OpenGL versions 1.3 and greater, or when the <code>ARB_multitexture</code> extension is supported, <function>glTexEnv</function> controls
+            the texture environment for the current active texture unit, selected by
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            <constant>GL_POINT_SPRITE</constant> and <constant>GL_COORD_REPLACE</constant> are available
+            only if the GL version is 2.0 or greater.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated when <parameter>target</parameter> or <parameter>pname</parameter> is not
+            one of the accepted defined values,
+            or when <parameter>params</parameter> should have a defined constant value
+            (based on the value of <parameter>pname</parameter>)
+            and does not.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if the <parameter>params</parameter> value for
+            <constant>GL_RGB_SCALE</constant> or <constant>GL_ALPHA_SCALE</constant> are not one of 1.0, 2.0,
+            or 4.0.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glTexEnv</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetTexEnv</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glCopyTexSubImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexImage3D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexSubImage3D</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

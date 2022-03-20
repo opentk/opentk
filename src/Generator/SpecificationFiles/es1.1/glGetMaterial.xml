@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glGetMaterial">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetMaterial</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glGetMaterial</refdescriptor>
+        <refname>glGetMaterialfv</refname>
+        <refname>glGetMaterialxv</refname>
+        <refpurpose>return material parameters values</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetMaterialfv</function></funcdef>
+                <paramdef>GLenum <parameter>face</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetMaterialxv</function></funcdef>
+                <paramdef>GLenum <parameter>face</parameter></paramdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfixed * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <parameter>face</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies which of the two materials is being
+                    queried.
+                    <constant>GL_FRONT</constant>
+                    or
+                    <constant>GL_BACK</constant> are accepted,
+                    representing the front and back materials, respectively.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>pname</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies the material parameter to return.
+                    Accepted symbolic names are
+                    <constant>GL_AMBIENT</constant>,
+                    <constant>GL_DIFFUSE</constant>,
+                    <constant>GL_SPECULAR</constant>,
+                    <constant>GL_EMISSION</constant>, and
+                    <constant>GL_SHININESS</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>params</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Returns the requested data.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glGetMaterial</function>
+        returns in <parameter>params</parameter> the value or values of
+        parameter <parameter>pname</parameter> of material <parameter>face</parameter>.
+        </para>
+
+        <para>Five parameters are defined:</para>
+
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_AMBIENT</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns four fixed-point or floating-point values that
+                    specify the ambient RGBA reflectance of the material.
+                    The values are not clamped. The initial ambient reflectance
+                    <!-- for both front- and back-facing materials-->
+                    is (0.2, 0.2, 0.2, 1.0).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_DIFFUSE</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns four fixed-point or floating-point values that
+                    specify the diffuse RGBA reflectance of the material.
+                    The values are not clamped. The initial diffuse reflectance
+                    <!-- for both front- and back-facing materials-->
+                    is (0.8, 0.8, 0.8, 1.0).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_SPECULAR</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns four fixed-point or floating-point values that
+                    specify the specular RGBA reflectance of the material.
+                    The values are not clamped. The initial specular reflectance
+                    <!-- for both front- and back-facing materials-->
+                    is (0, 0, 0, 1).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_EMISSION</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns four fixed-point or floating-point values that
+                    specify the RGBA emitted light intensity of the material.
+                    The values are not clamped. The initial emission intensity
+                    <!-- for both front- and back-facing materials-->
+                    is (0, 0, 0, 1).
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_SHININESS</constant>
+                </term>
+                <listitem>
+                    <para>
+                    <parameter>params</parameter>
+                    returns a single fixed-point or floating-point value that
+                    specifies the RGBA specular exponent of the material.
+                    The initial specular exponent
+                    <!-- for both front- and back-facing materials -->
+                    is 0.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+        If an error is generated, no change is made to the contents
+        of <parameter>params</parameter>.
+        </para>
+
+        <para>
+        In OpenGL ES there is only one material shared by the front and back.
+		Therefore querying 
+        <constant>GL_FRONT</constant>
+		and querying 
+        <constant>GL_BACK</constant>
+		will always return the
+		same value.
+        </para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para>
+        <constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>face</parameter> or <parameter>pname</parameter>
+        is not an accepted value.
+        </para>
+    </refsect1>
+
+        <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

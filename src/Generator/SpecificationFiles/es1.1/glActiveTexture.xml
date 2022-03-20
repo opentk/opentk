@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glActiveTexture">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glActiveTexture</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glActiveTexture</refname>
+        <refpurpose>select server-side active texture unit</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glActiveTexture</function></funcdef>
+                <paramdef>GLenum <parameter>texture</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>texture</parameter>
+                </term>
+
+                <listitem>
+                    <para>
+                        Specifies which texture unit to make active. The
+                        number of texture units is implementation dependent, but
+                        must be at least two.
+                        <parameter>texture</parameter> must be one of
+                        <constant>GL_TEXTURE</constant><replaceable>i</replaceable>,
+                        where
+                        <inlineequation><mml:math>
+                            <mml:mn>0</mml:mn>
+                            <mml:mo>&lt;=</mml:mo>
+                            <mml:mi>i</mml:mi>
+                            <mml:mo>&lt;</mml:mo>
+                            <mml:mi>GL_MAX_TEXTURE_UNITS</mml:mi>
+                        </mml:math></inlineequation>,
+                        which is an implementation-dependent value. The initial value is
+                        <constant>GL_TEXTURE0</constant>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glActiveTexture</function>
+        selects which texture unit subsequent texture state calls will
+        affect. The number of texture units an implementation supports
+        is implementation dependent, it must be at least 2.</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if
+            <parameter>texture</parameter> is not one of
+            <constant>GL_TEXTURE</constant><replaceable>i</replaceable>,
+            where
+            <inlineequation><mml:math>
+                <mml:mn>0</mml:mn>
+                <mml:mo>&lt;=</mml:mo>
+                <mml:mi>i</mml:mi>
+                <mml:mo>&lt;</mml:mo>
+                <mml:mi>GL_MAX_TEXTURE_UNITS</mml:mi>
+            </mml:math></inlineequation>.
+        </para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>It is always the case that
+        <inlineequation><mml:math>
+            <mml:mi>GL_TEXTURE</mml:mi><mml:mi>i</mml:mi> <mml:mo>=</mml:mo>
+            <mml:mi>GL_TEXTURE0</mml:mi><mml:mo>+</mml:mo><mml:mi>i</mml:mi>
+        </mml:math></inlineequation>.</para>
+
+        <para>A texture unit consists of the texture enable state,
+            texture matrix stack, texture environment and currently bound
+            texture. Modifying any of these states has an effect only on
+            the active texture unit.
+        </para>
+
+        <para>Vertex arrays are client-side GL resources, which are
+        selected by the
+        <citerefentry><refentrytitle>glClientActiveTexture</refentrytitle></citerefentry>
+        routine.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+            with argument <constant>GL_ACTIVE_TEXTURE</constant> or 
+            <constant>GL_MAX_TEXTURE_UNITS</constant>
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+            <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glClientActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

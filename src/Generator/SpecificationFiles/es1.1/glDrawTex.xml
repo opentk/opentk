@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glDrawTex">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glDrawTex</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glDrawTex</refdescriptor>
+        <refname>glDrawTexsOES</refname>
+        <refname>glDrawTexiOES</refname>
+        <refname>glDrawTexfOES</refname>
+        <refname>glDrawTexxOES</refname>
+        <refname>glDrawTexsvOES</refname>
+        <refname>glDrawTexivOES</refname>
+        <refname>glDrawTexfvOES</refname>
+        <refname>glDrawTexxvOES</refname>
+        <refpurpose>draws a texture rectangle to the screen</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexsOES</function></funcdef>
+                <paramdef>GLshort <parameter>x</parameter></paramdef>
+                <paramdef>GLshort <parameter>y</parameter></paramdef>
+                <paramdef>GLshort <parameter>z</parameter></paramdef>
+                <paramdef>GLshort <parameter>width</parameter></paramdef>
+                <paramdef>GLshort <parameter>height</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexiOES</function></funcdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLint <parameter>z</parameter></paramdef>
+                <paramdef>GLint <parameter>width</parameter></paramdef>
+                <paramdef>GLint <parameter>height</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexfOES</function></funcdef>
+                <paramdef>GLfloat <parameter>x</parameter></paramdef>
+                <paramdef>GLfloat <parameter>y</parameter></paramdef>
+                <paramdef>GLfloat <parameter>z</parameter></paramdef>
+                <paramdef>GLfloat <parameter>width</parameter></paramdef>
+                <paramdef>GLfloat <parameter>height</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexxOES</function></funcdef>
+                <paramdef>GLfixed <parameter>x</parameter></paramdef>
+                <paramdef>GLfixed <parameter>y</parameter></paramdef>
+                <paramdef>GLfixed <parameter>z</parameter></paramdef>
+                <paramdef>GLfixed <parameter>width</parameter></paramdef>
+                <paramdef>GLfixed <parameter>height</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <parameter>x</parameter>, <parameter>y</parameter>, <parameter>z</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specify the position of the affected screen rectangle.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>width</parameter>, <parameter>height</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies the width and height of the affected screen rectangle in pixels.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexsvOES</function></funcdef>
+                <paramdef>GLshort* <parameter>coords</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexivOES</function></funcdef>
+                <paramdef>GLint* <parameter>coords</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexfvOES</function></funcdef>
+                <paramdef>GLfloat* <parameter>coords</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDrawTexxvOES</function></funcdef>
+                <paramdef>GLfixed* <parameter>coords</parameter></paramdef>
+            </funcprototype>
+
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+
+            <varlistentry>
+                <term>
+                    <parameter>coords</parameter>
+                </term>
+                <listitem>
+                    <para>
+                    Specifies a pointer to the coords for the affected screen rectangle.
+                    </para>
+                </listitem>
+            </varlistentry>
+
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glDrawTexOES</function>
+        draws a texture rectangle to the screen.
+        </para>
+
+        <para>
+        <parameter>x</parameter> and <parameter>y</parameter>
+        are given directly in window (viewport) coordinates.
+        </para>
+
+        <para>
+        <parameter>z</parameter>
+        is mapped to window depth Zw as follows:
+        </para>
+
+        <para>
+        If
+        <inlineequation><mml:math>
+        <mml:mi>z</mml:mi><mml:mo>&lt;=</mml:mo><mml:mi>0</mml:mi>
+        then
+        <mml:mi>Zw</mml:mi><mml:mo>=</mml:mo><mml:mi>n</mml:mi>
+        </mml:math></inlineequation>
+        </para>
+
+        <para>
+        If
+        <inlineequation><mml:math>
+        <mml:mi>z</mml:mi><mml:mo>&gt;=</mml:mo><mml:mi>1</mml:mi>
+        then
+        <mml:mi>Zw</mml:mi><mml:mo>=</mml:mo><mml:mi>f</mml:mi>
+        </mml:math></inlineequation>
+        </para>
+
+        <para>
+        Otherwise
+        <inlineequation><mml:math>
+        <mml:mi>Zw</mml:mi><mml:mo>=</mml:mo>
+        <mml:mi>n</mml:mi><mml:mo>+</mml:mo><mml:mi>z</mml:mi>
+        <mml:mo>*</mml:mo>
+        <mml:mo>(</mml:mo><mml:mi>f</mml:mi><mml:mo>-</mml:mo><mml:mi>n</mml:mi><mml:mo>)</mml:mo>
+        </mml:math></inlineequation>
+        </para>
+
+        <para>
+        where <parameter>n</parameter> and <parameter>f</parameter>
+        are the near and far values of <constant>GL_DEPTH_RANGE</constant> respectively.
+        </para>
+
+        <para>
+        <parameter>width</parameter> and <parameter>height</parameter>
+        specify the width and height of the affected screen rectangle in pixels.
+        These values may be positive or negative;
+        however if either of these are negative, nothing is drawn.
+        </para>
+
+        <para>
+        Calling one of the DrawTex functions generates a
+        fragment for each pixel that overlaps the screen
+        rectangle bounded by (<parameter>x</parameter>, <parameter>y</parameter>)
+        and (<parameter>x</parameter> + <parameter>width</parameter>),
+        (<parameter>y</parameter> + <parameter>height</parameter>).
+        For each generated fragment, the depth is given by <parameter>Zw</parameter>
+        as defined above, and the color by the current color.
+        </para>
+
+        <para>
+            Texture coordinates for each texture unit are computed as follows:
+        </para>
+
+        <para>
+        Let <parameter>X</parameter> and <parameter>Y</parameter>
+        be the screen x and y coordinates of each sample point associated with the fragment.
+        Let <parameter>Wt</parameter> and <parameter>Ht</parameter> be the width and height in texels of the texture
+        currently bound to the texture unit.
+        (If the texture is a mipmap, let <parameter>Wt</parameter> and <parameter>Ht</parameter>
+        be the dimensions of the level specified by <constant>GL_TEXTURE_BASE_LEVEL</constant>).
+        Let <parameter>Ucr</parameter>, <parameter>Vcr</parameter>,
+        <parameter>Wcr</parameter> and <parameter>Hcr</parameter>
+        be (respectively) the four integers that make up the
+        texture crop rectangle parameter for the currently bound texture.
+        The fragment texture coordinates
+        (<parameter>s</parameter>, <parameter>t</parameter>, <parameter>r</parameter>, <parameter>q</parameter>)
+        are given by:
+        </para>
+
+        <para>
+        <inlineequation><mml:math>
+        <mml:mi>s</mml:mi><mml:mo>=</mml:mo>
+        <mml:mo>(</mml:mo><mml:mi>Ucr</mml:mi><mml:mo>+</mml:mo>
+        <mml:mo>(</mml:mo><mml:mi>X</mml:mi><mml:mo>-</mml:mo><mml:mi>x</mml:mi><mml:mo>)</mml:mo><mml:mo>*</mml:mo>
+        <mml:mo>(</mml:mo><mml:mi>Wcr</mml:mi><mml:mo>/</mml:mo><mml:mi>width</mml:mi><mml:mo>)</mml:mo><mml:mo>)</mml:mo>
+        <mml:mo>/</mml:mo><mml:mi>Wt</mml:mi>
+        </mml:math></inlineequation>
+        </para>
+
+        <para>
+        <inlineequation><mml:math>
+        <mml:mi>t</mml:mi><mml:mo>=</mml:mo>
+        <mml:mo>(</mml:mo><mml:mi>Vcr</mml:mi><mml:mo>+</mml:mo>
+        <mml:mo>(</mml:mo><mml:mi>Y</mml:mi><mml:mo>-</mml:mo><mml:mi>y</mml:mi><mml:mo>)</mml:mo><mml:mo>*</mml:mo>
+        <mml:mo>(</mml:mo><mml:mi>Hcr</mml:mi><mml:mo>/</mml:mo><mml:mi>height</mml:mi><mml:mo>)</mml:mo><mml:mo>)</mml:mo>
+        <mml:mo>/</mml:mo><mml:mi>Ht</mml:mi>
+        </mml:math></inlineequation>
+        </para>
+
+        <para>
+        <inlineequation><mml:math>
+        <mml:mi>r</mml:mi><mml:mo>=</mml:mo><mml:mi>0</mml:mi>
+        </mml:math></inlineequation>
+        </para>
+
+        <para>
+        <inlineequation><mml:math>
+        <mml:mi>q</mml:mi><mml:mo>=</mml:mo><mml:mi>1</mml:mi>
+        </mml:math></inlineequation>
+        </para>
+
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>
+        In the specific case where
+        <parameter>X</parameter>, <parameter>Y</parameter>,
+        <parameter>x</parameter> and <parameter>y</parameter>
+        are all integers,
+        <parameter>Wcr</parameter>/<parameter>width</parameter>
+        and <parameter>Hcr</parameter>/<parameter>height</parameter>
+        are both equal to one, the base level is used for the texture read,
+        and fragments are sampled at pixel centers,
+        implementations are required to ensure that the resulting u, v texture
+        indices are also integers.
+        This results in a one-to-one mapping of texels to fragments.
+        </para>
+
+        <para>
+        Note that <parameter>Wcr</parameter> and/or <parameter>Hcr</parameter> can be negative.
+        The formulas given above for <parameter>s</parameter> and <parameter>t</parameter>
+        still apply in this case.
+        The result is that if <parameter>Wcr</parameter> is negative, the source rectangle
+        for <function>glDrawTexOES</function> operations lies to the left of the reference
+        point (<parameter>Ucr</parameter>, <parameter>Vcr</parameter>)
+        rather than to the right of it,
+        and appears right-to-left reversed on the screen after a
+        call to DrawTex.
+        Similarly, if <parameter>Hcr</parameter> is negative,
+        the source rectangle lies below the reference point
+        (<parameter>Ucr</parameter>, <parameter>Vcr</parameter>)
+        rather than above it, and appears upside-down on the screen.
+        </para>
+
+        <para>
+        Note also that
+        <parameter>s</parameter>, <parameter>t</parameter>, <parameter>r</parameter>, and <parameter>q</parameter>
+        are computed for each fragment as part of <function>glDrawTexOES</function> rendering. This implies
+        that the texture matrix is ignored and has no effect on
+        the rendered result.
+        </para>
+
+        <para>
+        <function>glDrawTexOES</function> is available only if
+        the <constant>GL_OES_draw_texture</constant> extension is supported
+        by your implementation.
+        </para>
+
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>,
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

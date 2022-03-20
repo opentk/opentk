@@ -10,7 +10,7 @@ using System.Xml.Linq;
 
 namespace Generator.Parsing
 {
-    public class Parser
+    public class SpecificationParser
     {
         public static Specification Parse(Stream input)
         {

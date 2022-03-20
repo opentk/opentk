@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glLineWidth">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glLineWidth</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glLineWidth</refdescriptor>
+        <refname>glLineWidth</refname>
+        <refname>glLineWidthx</refname>
+        <refpurpose>specify the width of rasterized lines</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glLineWidth</function></funcdef>
+                <paramdef>GLfloat <parameter>width</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glLineWidthx</function></funcdef>
+                <paramdef>GLfixed <parameter>width</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>width</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the width of rasterized lines. The
+                    initial value is 1.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glLineWidth</function>
+        specifies the rasterized width of both aliased and antialiased
+        lines. Using a line width other than 1 has different effects,
+        depending on whether line antialiasing is enabled. To enable
+        and disable line antialiasing, call
+        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and
+        <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
+        with argument <constant>GL_LINE_SMOOTH</constant>.
+        Line antialiasing is initially disabled.</para>
+
+        <para>If line antialiasing is disabled, the actual width is
+        determined by rounding the supplied width to the nearest
+        integer. (If the rounding results in the value 0, it is as if
+        the line width were 1.) If
+        <inlineequation><mml:math>
+            <mml:mrow>
+            <mml:mo>|</mml:mo>
+                <mml:mrow><mml:mo>&#x394;</mml:mo><mml:mi>x</mml:mi></mml:mrow>
+            <mml:mo>|</mml:mo>
+            </mml:mrow>
+            <mml:mo>&gt;=</mml:mo>
+            <mml:mrow>
+            <mml:mo>|</mml:mo>
+                <mml:mrow><mml:mo>&#x394;</mml:mo><mml:mi>y</mml:mi></mml:mrow>
+            <mml:mo>|</mml:mo>
+            </mml:mrow>
+        </mml:math></inlineequation>,
+        <parameter>i</parameter>
+        pixels are filled in each column that is rasterized, where
+        <parameter>i</parameter> is the rounded value of
+        <parameter>width</parameter>. Otherwise, <parameter>i</parameter>
+        pixels are filled in each row that is rasterized.</para>
+
+        <para>If antialiasing is enabled, line rasterization produces a
+        fragment for each pixel square that intersects the region lying
+        within the rectangle having width equal to the current line
+        width, length equal to the actual length of the line, and
+        centered on the mathematical line segment. The coverage value
+        for each fragment is the window coordinate area of the
+        intersection of the rectangular region with the corresponding
+        pixel square. This value is saved and used in the final
+        rasterization step.</para>
+
+        <para>Not all widths can be supported when line antialiasing is
+        enabled. If an unsupported width is requested, the nearest
+        supported width is used. Only width 1 is guaranteed to be
+        supported; others depend on the implementation. Likewise, there
+        is a range for aliased line widths as well. To query the range
+        of supported widths, call
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with arguments
+        <constant>GL_ALIASED_LINE_WIDTH_RANGE</constant> or
+        <constant>GL_SMOOTH_LINE_WIDTH_RANGE</constant>.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>Nonantialiased line width may be clamped to an
+        implementation-dependent maximum. Call
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with <constant>GL_ALIASED_LINE_WIDTH_RANGE</constant>
+        to determine the maximum width.</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>width</parameter> is less than or equal to 0.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_ALIASED_LINE_WIDTH_RANGE</constant></para>
+
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_SMOOTH_LINE_WIDTH_RANGE</constant></para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

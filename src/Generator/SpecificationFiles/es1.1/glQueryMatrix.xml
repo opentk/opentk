@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glQueryMatrix">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glQueryMatrix</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glQueryMatrix</refdescriptor>
+        <refname>glQueryMatrixxOES</refname>
+        <refpurpose>return the values of the current matrix</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLbitfield <function>glQueryMatrixxOES</function></funcdef>
+                <paramdef>GLfixed * <parameter>mantissa</parameter></paramdef>
+                <paramdef>GLint * <parameter>exponent</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>mantissa</parameter>
+                </term>
+
+                <listitem>
+                    <para>Returns the mantissa values of the current matrix.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>exponent</parameter>
+                </term>
+
+                <listitem>
+                    <para>Returns the exponents of the current matrix.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para><function>glQueryMatrixxOES</function>
+        returns the values of the current matrix.
+        <parameter>mantissa</parameter> returns an array of the 16 mantissa values
+        of the current matrix, and <parameter>exponent</parameter> returns
+        an array of the corresponding 16 exponent values.
+        The matrix value <replaceable>i</replaceable> is then close to
+        <inlineequation><mml:math>
+            <mml:mi>mantissa</mml:mi><mml:mo>[</mml:mo><mml:mi>i</mml:mi><mml:mo>]</mml:mo><mml:mo>*</mml:mo>
+            <mml:msup><mml:mn>2</mml:mn><mml:mrow><mml:mi>exponent</mml:mi><mml:mo>[</mml:mo><mml:mi>i</mml:mi><mml:mo>]</mml:mo></mml:mrow></mml:msup>
+        </mml:math></inlineequation>.</para>
+
+        <para>Use
+        <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry> and
+        <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>
+        to select the desired matrix to return.</para>
+
+        <para>If all entries are valid (not NaN or Inf),
+        <function>glQueryMatrixxOES</function> returns the status value 0.
+        Otherwise, for every component <replaceable>i</replaceable> which is
+        not valid, the <replaceable>i</replaceable>th bit is set.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para><function>glQueryMatrixxOES</function> is available only if
+        the <constant>GL_OES_query_matrix</constant> extension is supported
+        by your implementation.</para>
+
+        <para>The implementation is not required to keep track of overflows.
+        If overflows are not tracked, the returned status value is always
+        0.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para><citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>
+        with argument <constant>GL_EXTENSIONS</constant></para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MATRIX_MODE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MODELVIEW_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PROJECTION_MATRIX</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_TEXTURE_MATRIX</constant>
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+            <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

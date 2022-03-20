@@ -1,0 +1,159 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDepthRange">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDepthRange</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDepthRange</refname>
+        <refpurpose>specify mapping of depth values from normalized device coordinates to window coordinates</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDepthRange</function></funcdef>
+                <paramdef>GLdouble <parameter>nearVal</parameter></paramdef>
+                <paramdef>GLdouble <parameter>farVal</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDepthRangef</function></funcdef>
+                <paramdef>GLfloat <parameter>nearVal</parameter></paramdef>
+                <paramdef>GLfloat <parameter>farVal</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>nearVal</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the mapping of the near clipping plane to window coordinates.
+                    The initial value is 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>farVal</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the mapping of the far clipping plane to window coordinates.
+                    The initial value is 1.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            After clipping and division by <emphasis>w</emphasis>,
+            depth coordinates range from
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: -1: -->
+                <mml:mn>-1</mml:mn>
+            </mml:math></inlineequation>
+            to 1,
+            corresponding to the near and far clipping planes.
+            <function>glDepthRange</function> specifies a linear mapping of the normalized depth coordinates
+            in this range to window depth coordinates.
+            Regardless of the actual depth buffer implementation,
+            window coordinate depth values are treated as though they range
+            from 0 through 1 (like color components).
+            Thus,
+            the values accepted by <function>glDepthRange</function> are both clamped to this range
+            before they are accepted.
+        </para>
+        <para>
+            The setting of (0,1) maps the near plane to 0 and
+            the far plane to 1.
+            With this mapping,
+            the depth buffer range is fully utilized.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            It is not necessary that <parameter>nearVal</parameter> be less than <parameter>farVal</parameter>.
+            Reverse mappings such as
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: nearVal  =  1: -->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">nearVal</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mn>1</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            and
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: farVal  =  0: -->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">farVal</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mn>0</mml:mn>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            are acceptable.
+        </para>
+        <para>
+            The type of the <parameter>nearVal</parameter> and
+            <parameter>farVal</parameter> parameters was changed from
+            GLclampf to GLfloat for <function>glDepthRangef</function>
+            and from GLclampd to GLdouble for
+            <function>glDepthRange</function>. This change is
+            transparent to user code and is described in detail on the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_RANGE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDepthRange</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glDepthRangef</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

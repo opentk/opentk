@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glSeparableFilter2D">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glSeparableFilter2D</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glSeparableFilter2D</refname>
+        <refpurpose>define a separable two-dimensional convolution filter</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glSeparableFilter2D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>row</parameter></paramdef>
+                <paramdef>const void * <parameter>column</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Must be <constant>GL_SEPARABLE_2D</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>internalformat</parameter></term>
+            <listitem>
+                <para>
+                    The internal format of the convolution filter kernel.
+                    The allowable values are
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_ALPHA4</constant>,
+                    <constant>GL_ALPHA8</constant>,
+                    <constant>GL_ALPHA12</constant>,
+                    <constant>GL_ALPHA16</constant>,
+                    <constant>GL_LUMINANCE</constant>,
+                    <constant>GL_LUMINANCE4</constant>,
+                    <constant>GL_LUMINANCE8</constant>,
+                    <constant>GL_LUMINANCE12</constant>,
+                    <constant>GL_LUMINANCE16</constant>,
+                    <constant>GL_LUMINANCE_ALPHA</constant>,
+                    <constant>GL_LUMINANCE4_ALPHA4</constant>,
+                    <constant>GL_LUMINANCE6_ALPHA2</constant>,
+                    <constant>GL_LUMINANCE8_ALPHA8</constant>,
+                    <constant>GL_LUMINANCE12_ALPHA4</constant>,
+                    <constant>GL_LUMINANCE12_ALPHA12</constant>,
+                    <constant>GL_LUMINANCE16_ALPHA16</constant>,
+                    <constant>GL_INTENSITY</constant>,
+                    <constant>GL_INTENSITY4</constant>,
+                    <constant>GL_INTENSITY8</constant>,
+                    <constant>GL_INTENSITY12</constant>,
+                    <constant>GL_INTENSITY16</constant>,
+                    <constant>GL_R3_G3_B2</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_RGB4</constant>,
+                    <constant>GL_RGB5</constant>,
+                    <constant>GL_RGB8</constant>,
+                    <constant>GL_RGB10</constant>,
+                    <constant>GL_RGB12</constant>,
+                    <constant>GL_RGB16</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_RGBA2</constant>,
+                    <constant>GL_RGBA4</constant>,
+                    <constant>GL_RGB5_A1</constant>,
+                    <constant>GL_RGBA8</constant>,
+                    <constant>GL_RGB10_A2</constant>,
+                    <constant>GL_RGBA12</constant>, or
+                    <constant>GL_RGBA16</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>width</parameter></term>
+            <listitem>
+                <para>
+                    The number of elements in the pixel array referenced by <parameter>row</parameter>.
+                    (This is the width of the separable filter kernel.)
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>height</parameter></term>
+            <listitem>
+                <para>
+                    The number of elements in the pixel array referenced by <parameter>column</parameter>.
+                    (This is the height of the separable filter kernel.)
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>format</parameter></term>
+            <listitem>
+                <para>
+                    The format of the pixel data in <parameter>row</parameter> and <parameter>column</parameter>.
+                    The allowable values are
+                    <constant>GL_RED</constant>,
+                    <constant>GL_GREEN</constant>,
+                    <constant>GL_BLUE</constant>,
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_BGR</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_BGRA</constant>,
+                    <constant>GL_INTENSITY</constant>,
+                    <constant>GL_LUMINANCE</constant>, and
+                    <constant>GL_LUMINANCE_ALPHA</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    The type of the pixel data in <parameter>row</parameter> and <parameter>column</parameter>.
+                    Symbolic constants
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_BYTE</constant>,
+                    <constant>GL_BITMAP</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>,
+                    <constant>GL_SHORT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_FLOAT</constant>,
+                    <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+                    <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+                    <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+                    <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+                    <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, and
+                    <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+                    are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>row</parameter></term>
+            <listitem>
+                <para>
+                    Pointer to a one-dimensional array of pixel data that is processed to
+                    build the row filter kernel.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>column</parameter></term>
+            <listitem>
+                <para>
+                    Pointer to a one-dimensional array of pixel data that is processed to
+                    build the column filter kernel.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glSeparableFilter2D</function> builds a two-dimensional separable convolution filter kernel from
+            two arrays of pixels.
+        </para>
+        <para>
+            The pixel arrays specified by (<parameter>width</parameter>, <parameter>format</parameter>, <parameter>type</parameter>, <parameter>row</parameter>)
+            and (<parameter>height</parameter>, <parameter>format</parameter>, <parameter>type</parameter>, <parameter>column</parameter>) are processed just as if
+            they had been passed to <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>,
+            but processing stops after the final expansion to RGBA is completed.
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_PIXEL_UNPACK_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a convolution filter is
+            specified, <parameter>row</parameter> and <parameter>column</parameter> are treated as byte offsets into the buffer object's data store.
+        </para>
+        <para>
+            Next, the R, G, B, and A components of all pixels in both arrays are scaled
+            by the four separable 2D <constant>GL_CONVOLUTION_FILTER_SCALE</constant> parameters and
+            biased by the four separable 2D <constant>GL_CONVOLUTION_FILTER_BIAS</constant> parameters.
+            (The scale and bias parameters are set by <citerefentry><refentrytitle>glConvolutionParameter</refentrytitle></citerefentry>
+            using the <constant>GL_SEPARABLE_2D</constant> target and the names
+            <constant>GL_CONVOLUTION_FILTER_SCALE</constant> and <constant>GL_CONVOLUTION_FILTER_BIAS</constant>.
+            The parameters themselves are vectors of four values that are applied to red,
+            green, blue, and alpha, in that order.)
+            The R, G, B, and A values are not clamped to [0,1] at any time during this
+            process.
+        </para>
+        <para>
+            Each pixel is then converted to the internal format specified by
+            <parameter>internalformat</parameter>.
+            This conversion simply maps the component values of the pixel (R, G, B,
+            and A) to the values included in the internal format (red, green, blue,
+            alpha, luminance, and intensity).  The mapping is as follows:
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="7" align="left">
+                <colspec colwidth="2.5*" />
+                <colspec colwidth="1*" align="center"/>
+                <colspec colwidth="1*"  align="center"/>
+                <colspec colwidth="1*"  align="center"/>
+                <colspec colwidth="1*"  align="center"/>
+                <colspec colwidth="1.5*"  align="center"/>
+                <colspec colwidth="1.5*"  align="center"/>
+                <thead>
+                    <row>
+                        <entry rowsep="1" align="left"><emphasis role="bold">
+                        Internal Format
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Red
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Green
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Blue
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Alpha
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Luminance
+                        </emphasis></entry>
+                        <entry rowsep="1" align="center"><emphasis role="bold">
+                        Intensity
+                        </emphasis></entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE</constant>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LUMINANCE_ALPHA</constant>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_INTENSITY</constant>
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGB</constant>
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                        G
+                        </entry>
+                        <entry align="center">
+                        B
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_RGBA</constant>
+                        </entry>
+                        <entry align="center">
+                        R
+                        </entry>
+                        <entry align="center">
+                        G
+                        </entry>
+                        <entry align="center">
+                        B
+                        </entry>
+                        <entry align="center">
+                        A
+                        </entry>
+                        <entry align="center">
+                        </entry>
+                        <entry align="center">
+                         
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            The red, green, blue, alpha, luminance, and/or intensity components of
+            the resulting pixels are stored in floating-point rather than integer
+            format.
+            They form two one-dimensional filter kernel images.
+            The row image is indexed by coordinate <emphasis>i</emphasis> starting at zero and
+            increasing from left to right.
+            Each location in the row image is derived from element <emphasis>i</emphasis> of <parameter>row</parameter>.
+            The column image is indexed by coordinate <emphasis>j</emphasis> starting at zero
+            and increasing from bottom to top.
+            Each location in the column image is derived from element <emphasis>j</emphasis> of <parameter>column</parameter>.
+        </para>
+        <para>
+            Note that after a convolution is performed, the resulting color
+            components are also scaled by their corresponding
+            <constant>GL_POST_CONVOLUTION_c_SCALE</constant> parameters and biased by their
+            corresponding <constant>GL_POST_CONVOLUTION_c_BIAS</constant> parameters (where
+            <emphasis>c</emphasis> takes on the values <emphasis role="bold">RED</emphasis>, <emphasis role="bold">GREEN</emphasis>, <emphasis role="bold">BLUE</emphasis>, and
+            <emphasis role="bold">ALPHA</emphasis>).
+            These parameters are set by <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glSeparableFilter2D</function> is present only if <code>ARB_imaging</code> is returned when <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>
+            is called with an argument of <constant>GL_EXTENSIONS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>target</parameter> is not
+            <constant>GL_SEPARABLE_2D</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>internalformat</parameter> is not one of the
+            allowable values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>format</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not one of the allowable
+            values.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>width</parameter> is less than zero or greater
+            than the maximum supported value.
+            This value may be queried with <citerefentry><refentrytitle>glGetConvolutionParameter</refentrytitle></citerefentry>
+            using target <constant>GL_SEPARABLE_2D</constant> and name
+            <constant>GL_MAX_CONVOLUTION_WIDTH</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>height</parameter> is less than zero or greater
+            than the maximum supported value.
+            This value may be queried with <citerefentry><refentrytitle>glGetConvolutionParameter</refentrytitle></citerefentry>
+            using target <constant>GL_SEPARABLE_2D</constant> and name
+            <constant>GL_MAX_CONVOLUTION_HEIGHT</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>height</parameter> is one of
+            <constant>GL_UNSIGNED_BYTE_3_3_2</constant>,
+            <constant>GL_UNSIGNED_BYTE_2_3_3_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_6_5</constant>, or
+            <constant>GL_UNSIGNED_SHORT_5_6_5_REV</constant>
+            and <parameter>format</parameter> is not <constant>GL_RGB</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <parameter>height</parameter> is one of
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+            <constant>GL_UNSIGNED_SHORT_4_4_4_4_REV</constant>,
+            <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+            <constant>GL_UNSIGNED_SHORT_1_5_5_5_REV</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8</constant>,
+            <constant>GL_UNSIGNED_INT_8_8_8_8_REV</constant>,
+            <constant>GL_UNSIGNED_INT_10_10_10_2</constant>, or
+            <constant>GL_UNSIGNED_INT_2_10_10_10_REV</constant>
+            and <parameter>format</parameter> is neither <constant>GL_RGBA</constant> nor <constant>GL_BGRA</constant>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the buffer object's data store is currently mapped.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and the data would be unpacked from the buffer 
+            object such that the memory reads required would exceed the data store size.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if a non-zero buffer object name is bound to the
+            <constant>GL_PIXEL_UNPACK_BUFFER</constant> target and <parameter>row</parameter> or 
+            <parameter>column</parameter> is not evenly divisible 
+            into the number of bytes needed to store in memory a datum indicated by <parameter>type</parameter>.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glSeparableFilter2D</function> is executed
+            between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGetConvolutionParameter</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glGetSeparableFilter</refentrytitle></citerefentry>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_PIXEL_UNPACK_BUFFER_BINDING</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glConvolutionFilter1D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionFilter2D</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glConvolutionParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPixelTransfer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glLightModel">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glLightModel</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glLightModel</refdescriptor>
+        <refname>glLightModelf</refname>
+        <refname>glLightModelx</refname>
+        <refname>glLightModelfv</refname>
+        <refname>glLightModelxv</refname>
+        <refpurpose>set the lighting model parameters</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glLightModelf</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfloat <parameter>param</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glLightModelx</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>GLfixed <parameter>param</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>pname</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies a single-valued lighting model parameter.  Must be
+                    <constant>GL_LIGHT_MODEL_TWO_SIDE</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>param</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the value that <parameter>param</parameter>
+                    will be set to.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glLightModelfv</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfloat * <parameter>params</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glLightModelxv</function></funcdef>
+                <paramdef>GLenum <parameter>pname</parameter></paramdef>
+                <paramdef>const GLfixed * <parameter>params</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters2"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>pname</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies a lighting model parameter.
+                    <constant>GL_LIGHT_MODEL_AMBIENT</constant> and
+                    <constant>GL_LIGHT_MODEL_TWO_SIDE</constant> are accepted.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>params</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies a pointer to the value or values that
+                    <parameter>params</parameter> will be set to.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para><function>glLightModel</function> sets the lighting model parameter.
+        <parameter>pname</parameter> names a parameter and
+        <parameter>params</parameter>
+        gives the new value. There are two lighting model parameters:</para>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <constant>GL_LIGHT_MODEL_AMBIENT</constant>
+                </term>
+
+                <listitem>
+                    <para><parameter>params</parameter>
+                    contains four fixed-point or floating-point values that
+                    specify the ambient intensity of the entire scene.
+                    The values are not clamped. The initial value is
+                    (0.2, 0.2, 0.2, 1.0).</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_LIGHT_MODEL_TWO_SIDE</constant>
+                </term>
+
+                <listitem>
+                    <para><parameter>params</parameter>
+                    is a single fixed-point or floating-point value that
+                    specifies whether one- or two-sided lighting calculations
+                    are done for polygons. It has no effect on the lighting
+                    calculations for points or lines. If
+                    <parameter>params</parameter>
+                    is 0, one-sided lighting is specified, and both front- and
+                    back-facing polygons are assigned the same computed color.
+                    Otherwise, two-sided lighting is specified. In this case,
+                    vertices of back-facing polygons have their normals reversed
+                    before the lighting equation is evaluated. Vertices of
+                    front-facing polygons are always lighted with no change to 
+                    their normals. The initial value is 0. Note that there is
+                    only one set of material properties shared by both
+                    front- and back-facing polygons.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+
+        <para>The lighted color of a vertex is the sum of the material
+        emission intensity, the product of the material ambient
+        reflectance and the lighting model full-scene ambient
+        intensity, and the contribution of each enabled light source.
+        Each light source contributes the sum of three terms: ambient,
+        diffuse, and specular. The ambient light source contribution is
+        the product of the material ambient reflectance and the light's
+        ambient intensity. The diffuse light source contribution is the
+        product of the material diffuse reflectance, the light's
+        diffuse intensity, and the dot product of the vertex's normal
+        with the normalized vector from the vertex to the light source.
+        The specular light source contribution is the product of the
+        material specular reflectance, the light's specular intensity,
+        and the dot product of the normalized vertex-to-eye and
+        vertex-to-light vectors, raised to the power of the shininess
+        of the material. All three light source contributions are
+        attenuated equally based on the distance from the vertex to the
+        light source and on light source direction, spread exponent,
+        and spread cutoff angle. All dot products are replaced with 0
+        if they evaluate to a negative value.</para>
+
+        <para>The alpha component of the resulting lighted color is set
+        to the alpha value of the material diffuse reflectance.</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para><constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>pname</parameter> is not an accepted value.</para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glLight</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glMaterial</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

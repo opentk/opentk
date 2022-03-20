@@ -1,0 +1,626 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glEvalMesh">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glEvalMesh</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glEvalMesh</refname>
+        <refpurpose>compute a one- or two-dimensional grid of points or lines</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEvalMesh1</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLint <parameter>i1</parameter></paramdef>
+                <paramdef>GLint <parameter>i2</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    In <function>glEvalMesh1</function>, specifies whether to compute a one-dimensional mesh of points or lines.
+                    Symbolic constants
+                    <constant>GL_POINT</constant> and
+                    <constant>GL_LINE</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>i1</parameter></term>
+            <term><parameter>i2</parameter></term>
+            <listitem>
+                <para>
+                    Specify the first and last integer values for grid domain variable 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glEvalMesh2</function></funcdef>
+                <paramdef>GLenum <parameter>mode</parameter></paramdef>
+                <paramdef>GLint <parameter>i1</parameter></paramdef>
+                <paramdef>GLint <parameter>i2</parameter></paramdef>
+                <paramdef>GLint <parameter>j1</parameter></paramdef>
+                <paramdef>GLint <parameter>j2</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters2"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mode</parameter></term>
+            <listitem>
+                <para>
+                    In <function>glEvalMesh2</function>, specifies whether to compute a two-dimensional mesh of points, lines,
+                    or polygons.
+                    Symbolic constants
+                    <constant>GL_POINT</constant>,
+                    <constant>GL_LINE</constant>, and
+                    <constant>GL_FILL</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>i1</parameter></term>
+            <term><parameter>i2</parameter></term>
+            <listitem>
+                <para>
+                    Specify the first and last integer values for grid domain variable 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>j1</parameter></term>
+            <term><parameter>j2</parameter></term>
+            <listitem>
+                <para>
+                    Specify the first and last integer values for grid domain variable 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">j</mml:mi></mml:math></inlineequation>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <citerefentry><refentrytitle>glMapGrid</refentrytitle></citerefentry> and <function>glEvalMesh</function> are used in tandem to efficiently
+            generate and evaluate a series of evenly-spaced map domain values.
+            <function>glEvalMesh</function> steps through the integer domain of a one- or two-dimensional grid,
+            whose range is the domain of the evaluation maps specified by
+            <citerefentry><refentrytitle>glMap1</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glMap2</refentrytitle></citerefentry>.
+            <parameter>mode</parameter> determines whether the resulting vertices are connected as
+            points,
+            lines,
+            or filled polygons.
+        </para>
+        <para>
+            In the one-dimensional case,
+            <function>glEvalMesh1</function>,
+            the mesh is generated as if the following code fragment were executed:
+        </para>
+        <para>
+            <programlisting>
+glBegin( <parameter>type</parameter> );
+for ( i = <parameter>i1</parameter>; i &lt;= <parameter>i2</parameter>; i += 1 )
+   glEvalCoord1( <mml:math>
+   		      <!-- eqn: i \cdot DELTA u + u sub 1 :-->
+		      <mml:mrow>
+		          <mml:mrow>
+		              <mml:mn>i</mml:mn>
+			      <mml:mo>&CenterDot;</mml:mo>
+			      <mml:mo>&Delta;</mml:mo>
+		              <mml:mi mathvariant="italic">u</mml:mi>
+		          </mml:mrow>
+		          <mml:mo>+</mml:mo>
+		          <mml:msub>
+		              <mml:mi mathvariant="italic">u</mml:mi>
+		              <mml:mn>1</mml:mn>
+		          </mml:msub>
+		      </mml:mrow>
+		  </mml:math> );
+glEnd();
+            </programlisting>
+            where
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: DELTA u  =  (u sub 2  -  u sub 1 )  /  n:-->
+                <mml:mrow>
+                    <mml:mrow>
+                        <mml:mo>&Delta;</mml:mo>
+                        <mml:mi mathvariant="italic">u</mml:mi>
+                    </mml:mrow>
+                    <mml:mo>=</mml:mo>
+                    <mml:mfrac>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub>
+				    <mml:mi mathvariant="italic">u</mml:mi>
+                                    <mml:mn>2</mml:mn>
+                                </mml:msub>
+                                <mml:mo>-</mml:mo>
+                                <mml:msub>
+				    <mml:mi mathvariant="italic">u</mml:mi>
+                                    <mml:mn>1</mml:mn>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mi mathvariant="italic">n</mml:mi>
+                    </mml:mfrac>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: u sub 1:-->
+                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                <mml:mn>1</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and 
+            <inlineequation><mml:math>
+                <!-- eqn: u sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>
+            are the arguments to the most recent
+            <citerefentry><refentrytitle>glMapGrid1</refentrytitle></citerefentry> command.
+            <emphasis>type</emphasis> is <constant>GL_POINTS</constant> if <parameter>mode</parameter> is <constant>GL_POINT</constant>,
+            or <constant>GL_LINES</constant> if <parameter>mode</parameter> is <constant>GL_LINE</constant>.
+        </para>
+        <para>
+            The one absolute numeric requirement is that if 
+            <inlineequation><mml:math>
+                <!-- eqn: i  =  n:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mi mathvariant="italic">n</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            then the
+            value computed from 
+            <inlineequation><mml:math>
+                <!-- eqn: i cdot DELTA u  +  u sub 1:-->
+                <mml:mrow>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">i</mml:mi>
+                        <mml:mo>&CenterDot;</mml:mo>
+                        <mml:mrow>
+                            <mml:mo>&Delta;</mml:mo>
+                            <mml:mi mathvariant="italic">u</mml:mi>
+                        </mml:mrow>
+                    </mml:mrow>
+                    <mml:mo>+</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                    <mml:mn>1</mml:mn>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            is exactly 
+            <inlineequation><mml:math>
+                <!-- eqn: u sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>.
+        </para>
+        <para>
+            In the two-dimensional case, <function>glEvalMesh2</function>, let
+            .cp
+            <informalequation><mml:math>
+                <!-- eqn: DELTA u  =    ( u sub 2  -  u sub 1 )  /  n:-->
+                <mml:mrow>
+                    <mml:mrow>
+                        <mml:mo>&Delta;</mml:mo>
+                        <mml:mi mathvariant="italic">u</mml:mi>
+                    </mml:mrow>
+                    <mml:mo>=</mml:mo>
+                    <mml:mfrac>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                                <mml:mn>2</mml:mn>
+                                </mml:msub>
+                                <mml:mo>-</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                                <mml:mn>1</mml:mn>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mi mathvariant="italic">n</mml:mi>
+                    </mml:mfrac>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            <informalequation><mml:math>
+                <!-- eqn: DELTA v  =    ( v sub 2  -  v sub 1 )  /  m:-->
+                <mml:mrow>
+                    <mml:mrow>
+                        <mml:mo>&Delta;</mml:mo>
+                        <mml:mi mathvariant="italic">v</mml:mi>
+                    </mml:mrow>
+                    <mml:mo>=</mml:mo>
+                    <mml:mfrac>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:msub><mml:mi mathvariant="italic">v</mml:mi>
+                                <mml:mn>2</mml:mn>
+                                </mml:msub>
+                                <mml:mo>-</mml:mo>
+                                <mml:msub><mml:mi mathvariant="italic">v</mml:mi>
+                                <mml:mn>1</mml:mn>
+                                </mml:msub>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mi mathvariant="italic">m</mml:mi>
+                    </mml:mfrac>
+                </mml:mrow>
+            </mml:math></informalequation>
+        </para>
+        <para>
+            where 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: u sub 1:-->
+                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                <mml:mn>1</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: u sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>, 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">m</mml:mi></mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: v sub 1:-->
+                <mml:msub><mml:mi mathvariant="italic">v</mml:mi>
+                <mml:mn>1</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and 
+            <inlineequation><mml:math>
+                <!-- eqn: v sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">v</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>
+            are the
+            arguments to the most recent <citerefentry><refentrytitle>glMapGrid2</refentrytitle></citerefentry> command.  Then, if
+            <parameter>mode</parameter> is <constant>GL_FILL</constant>, the <function>glEvalMesh2</function> command is equivalent
+            to:
+        </para>
+        <para>
+            <programlisting>
+for ( j = <parameter>j1</parameter>; j &lt; <parameter>j2</parameter>; j += 1 ) {
+   glBegin( GL_QUAD_STRIP );
+   for ( i = <parameter>i1</parameter>; i &lt;= <parameter>i2</parameter>; i += 1 ) {
+      glEvalCoord2( <mml:math>
+			<!-- i \cdot DELTA u + u sub 1 :-->
+		        <mml:mrow>
+			    <mml:mrow>
+			        <mml:mn>i</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			    <mml:mo>,</mml:mo>
+			    <!-- j \cdot DELTA v + v sub 1 :-->
+			    <mml:mrow>
+			        <mml:mn>j</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			</mml:mrow>
+		    </mml:math> );
+      glEvalCoord2( <mml:math>
+			<!-- i \cdot DELTA u + u sub 1, :-->
+		        <mml:mrow>
+			    <mml:mrow>
+			        <mml:mn>i</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			    <mml:mo>,</mml:mo>
+			    <!-- (j + 1) \cdot DELTA v + v sub 1 :-->
+			    <mml:mrow>
+			        <mml:mrow>
+				    <mml:mfenced open="(" close=")">
+				        <mml:mrow>
+			                    <mml:mn>j</mml:mn>
+				            <mml:mo>+</mml:mo>
+			                    <mml:mn>1</mml:mn>
+				        </mml:mrow>
+				    </mml:mfenced>
+				</mml:mrow>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			</mml:mrow>
+		    </mml:math> );
+   }
+   glEnd();
+}
+            </programlisting>
+        </para>
+        <para>
+            If <parameter>mode</parameter> is <constant>GL_LINE</constant>, then a call to <function>glEvalMesh2</function> is equivalent to:
+        </para>
+        <para>
+            <programlisting>
+for ( j = <parameter>j1</parameter>; j &lt;= <parameter>j2</parameter>; j += 1 ) {
+   glBegin( GL_LINE_STRIP );
+   for ( i = <parameter>i1</parameter>; i &lt;= <parameter>i2</parameter>; i += 1 )
+      glEvalCoord2( <mml:math>
+			<!-- i \cdot DELTA u + u sub 1 :-->
+		        <mml:mrow>
+			    <mml:mrow>
+			        <mml:mn>i</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			    <mml:mo>,</mml:mo>
+			    <!-- i \cdot DELTA v + v sub 1 :-->
+			    <mml:mrow>
+			        <mml:mn>j</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			</mml:mrow>
+		    </mml:math> );
+   glEnd();
+}
+
+for ( i = <parameter>i1</parameter>;  i &lt;= <parameter>i2</parameter>; i += 1 ) {
+   glBegin( GL_LINE_STRIP );
+   for ( j = <parameter>j1</parameter>; j &lt;= <parameter>j1</parameter>; j += 1 )
+      glEvalCoord2( <mml:math>
+			<!-- i \cdot DELTA u + u sub 1 :-->
+		        <mml:mrow>
+			    <mml:mrow>
+			        <mml:mn>i</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			    <mml:mo>,</mml:mo>
+			    <!-- i \cdot DELTA v + v sub 1 :-->
+			    <mml:mrow>
+			        <mml:mn>j</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			</mml:mrow>
+		    </mml:math> );
+   glEnd();
+}
+            </programlisting>
+        </para>
+        <para>
+            And finally, if <parameter>mode</parameter> is <constant>GL_POINT</constant>, then a call to
+            <function>glEvalMesh2</function> is equivalent to:
+        </para>
+        <para>
+            <programlisting>
+glBegin( GL_POINTS );
+for ( j = <parameter>j1</parameter>; j &lt;= <parameter>j2</parameter>; j += 1 )
+   for ( i = <parameter>i1</parameter>; i &lt;= <parameter>i2</parameter>; i += 1 )
+      glEvalCoord2( <mml:math>
+			<!-- i \cdot DELTA u + u sub 1 :-->
+		        <mml:mrow>
+			    <mml:mrow>
+			        <mml:mn>i</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">u</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			    <mml:mo>,</mml:mo>
+			    <!-- i \cdot DELTA v + v sub 1 :-->
+			    <mml:mrow>
+			        <mml:mn>j</mml:mn>
+				<mml:mo>&CenterDot;</mml:mo>
+			        <mml:mo>&Delta;</mml:mo>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+			    </mml:mrow>
+		            <mml:mo>+</mml:mo>
+		            <mml:msub>
+		                <mml:mi mathvariant="italic">v</mml:mi>
+		                <mml:mn>1</mml:mn>
+		            </mml:msub>
+			</mml:mrow>
+		    </mml:math> );
+glEnd();
+            </programlisting>
+        </para>
+        <para>
+            In all three cases, the only absolute numeric requirements are that if 
+            <inlineequation><mml:math>
+                <!-- eqn: i = n:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">i</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mi mathvariant="italic">n</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            then the value computed from 
+            <inlineequation><mml:math>
+                <!-- eqn: i cdot DELTA u  +  u sub 1:-->
+                <mml:mrow>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">i</mml:mi>
+                        <mml:mo>&CenterDot;</mml:mo>
+                        <mml:mrow>
+                            <mml:mo>&Delta;</mml:mo>
+                            <mml:mi mathvariant="italic">u</mml:mi>
+                        </mml:mrow>
+                    </mml:mrow>
+                    <mml:mo>+</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                    <mml:mn>1</mml:mn>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            is exactly
+            <inlineequation><mml:math>
+                <!-- eqn: u sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">u</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>,
+            and if 
+            <inlineequation><mml:math>
+                <!-- eqn: j = m:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">j</mml:mi>
+                    <mml:mo>=</mml:mo>
+                    <mml:mi mathvariant="italic">m</mml:mi>
+                </mml:mrow>
+            </mml:math></inlineequation>,
+            then the value computed from
+            <inlineequation><mml:math>
+                <!-- eqn: j  cdot  DELTA v  +  v sub 1:-->
+                <mml:mrow>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">j</mml:mi>
+                        <mml:mo>&CenterDot;</mml:mo>
+                        <mml:mrow>
+                            <mml:mo>&Delta;</mml:mo>
+                            <mml:mi mathvariant="italic">v</mml:mi>
+                        </mml:mrow>
+                    </mml:mrow>
+                    <mml:mo>+</mml:mo>
+                    <mml:msub><mml:mi mathvariant="italic">v</mml:mi>
+                    <mml:mn>1</mml:mn>
+                    </mml:msub>
+                </mml:mrow>
+            </mml:math></inlineequation>
+            is exactly 
+            <inlineequation><mml:math>
+                <!-- eqn: v sub 2:-->
+                <mml:msub><mml:mi mathvariant="italic">v</mml:mi>
+                <mml:mn>2</mml:mn>
+                </mml:msub>
+            </mml:math></inlineequation>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>mode</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glEvalMesh</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAP1_GRID_DOMAIN</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAP2_GRID_DOMAIN</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAP1_GRID_SEGMENTS</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAP2_GRID_SEGMENTS</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEvalPoint</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMap1</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMap2</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMapGrid</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>
