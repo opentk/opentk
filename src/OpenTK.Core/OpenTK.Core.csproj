@@ -6,13 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+    <!--<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>OpenTK.Windowing.GraphicsLibraryFramework</_Parameter1>
     </AssemblyAttribute>
 
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>OpenTK.Windowing.Desktop</_Parameter1>
-    </AssemblyAttribute>
+    </AssemblyAttribute>-->
   </ItemGroup>
 
   <PropertyGroup>

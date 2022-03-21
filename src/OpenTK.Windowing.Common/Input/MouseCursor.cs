@@ -92,7 +92,7 @@ namespace OpenTK.Windowing.Common.Input
         /// <summary>
         ///     Gets the shape for standard preset cursors.
         /// </summary>
-        internal StandardShape Shape { get; }
+        public StandardShape Shape { get; }
 
         /// <summary>
         /// Gets the x-coordinate of the cursor hotspot.
@@ -107,7 +107,7 @@ namespace OpenTK.Windowing.Common.Input
         /// <summary>
         ///     Standard cursor shapes.
         /// </summary>
-        internal enum StandardShape
+        public enum StandardShape
         {
             /// <summary>
             ///     Default standard shape for user-created cursors.

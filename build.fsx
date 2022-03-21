@@ -190,6 +190,8 @@ let rewriteBindsForTfm tfm =
     let args = [ "-a"; targetPath ] |> asArgs
     DotNet.runWithDefaultOptions framework projFile args |> ignore
 
+// FIXME: We want to propegate errors from rewriteBindsForTfm
+// becase a failure for for example "netstandard2.1" doesn't fail the build.
 Target.create "RewriteBindings" (fun _ ->
     rewriteBindsForTfm "netstandard2.1"
     rewriteBindsForTfm "netcoreapp3.1")
@@ -219,7 +221,43 @@ Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ig
 Target.create "AssemblyInfo" (fun _ ->
     //TODO: Create and update the Directory.Build.props file with the version information taken from the releaseNotes value.
     // see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2019#directorybuildprops-and-directorybuildtargets
-    Trace.traceError "Unimplemented.")
+
+    let getAssemblyInfoAttributes (projectName:string) =
+        [ AssemblyInfo.Title (projectName)
+          AssemblyInfo.Product project
+          AssemblyInfo.Description summary
+          AssemblyInfo.Version release.AssemblyVersion
+          AssemblyInfo.FileVersion release.AssemblyVersion
+          AssemblyInfo.CLSCompliant true
+          AssemblyInfo.Copyright copyright
+        ]
+
+    let getProjectDetails (projectPath:string) =
+        let projectName = System.IO.Path.GetFileNameWithoutExtension(projectPath)
+        ( projectPath,
+          projectName,
+          System.IO.Path.GetDirectoryName(projectPath),
+          (getAssemblyInfoAttributes projectName)
+        )
+
+    // Helper active pattern for project types
+    let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
+        match projFileName with
+        | f when f.EndsWith "fsproj" -> Fsproj
+        | f when f.EndsWith "csproj" -> Csproj
+        | f when f.EndsWith "vbproj" -> Vbproj
+        | _                           -> failwith (sprintf "Project file %s not supported. Unknown project type." projFileName)
+
+    releaseProjects
+    |> Seq.map getProjectDetails
+    |> Seq.iter (fun (projFileName, projectName, folderName, attributes) ->
+        match projFileName with
+        | Fsproj -> AssemblyInfoFile.createFSharp (folderName @@ "AssemblyInfo.fs") attributes
+        | Csproj -> AssemblyInfoFile.createCSharp ((folderName @@ "Properties") @@ "AssemblyInfo.cs") attributes
+        | Vbproj -> AssemblyInfoFile.createVisualBasic ((folderName @@ "My Project") @@ "AssemblyInfo.vb") attributes
+        )
+    //Trace.traceError "Not implemented"
+)
 
 Target.create "Build"( fun _ ->
     let setOptions a =
