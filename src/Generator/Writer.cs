@@ -305,7 +305,7 @@ namespace Generator.Writing
         /// <param name="documentation"></param>
         private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation)
         {
-            writer.WriteLine($"/// <summary> [requires: {string.Join(" | ", documentation.AddedIn)}] {documentation.Purpose} </summary>");
+            writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> {documentation.Purpose} </summary>");
 
             foreach (ParameterDocumentation parameter in documentation.Parameters)
             {

@@ -4474,7 +4474,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 string source;
                 fixed (int* length_ptr = &length)
                 {
-                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(length_ptr);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(*length_ptr);
                     ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
                     source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)source_ptr);
@@ -4485,7 +4485,7 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 fixed (int* length_ptr = &length)
                 {
-                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(length_ptr);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(*length_ptr);
                     ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
                     source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)source_ptr);

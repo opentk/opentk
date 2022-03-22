@@ -9940,8 +9940,8 @@ namespace OpenTK.Graphics.OpenGLES3
                 fixed (uint* counterDataTypeEnum_ptr = &counterDataTypeEnum)
                 fixed (ulong* rawCounterMaxValue_ptr = &rawCounterMaxValue)
                 {
-                    var counterName_ptr = (byte*)Marshal.AllocCoTaskMem(counterNameLength);
-                    var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem(counterDescLength);
+                    var counterName_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterNameLength);
+                    var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterDescLength);
                     GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName_ptr, counterDescLength, counterDesc_ptr, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue_ptr);
                     counterDesc = Marshal.PtrToStringUTF8((IntPtr)counterDesc_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)counterDesc_ptr);
@@ -9981,7 +9981,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 fixed (uint* noInstances_ptr = &noInstances)
                 fixed (uint* capsMask_ptr = &capsMask)
                 {
-                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem(queryNameLength);
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
                     queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
@@ -9995,7 +9995,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 fixed (uint* noInstances_ptr = &noInstances)
                 fixed (uint* capsMask_ptr = &capsMask)
                 {
-                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem(queryNameLength);
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
                     queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
@@ -11772,7 +11772,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 string source;
                 fixed (int* length_ptr = &length)
                 {
-                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(length_ptr);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(*length_ptr);
                     ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
                     source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)source_ptr);
@@ -11783,7 +11783,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (int* length_ptr = &length)
                 {
-                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(length_ptr);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(*length_ptr);
                     ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
                     source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)source_ptr);
