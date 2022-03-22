@@ -529,7 +529,6 @@ namespace OpenTK.Graphics.OpenGLES1
         ContextFlagDebugBitKhr = 2,
         StackOverflowKhr = 1283,
         StackUnderflowKhr = 1284,
-        DisplayList = 33511,
         AllCompletedNv = 34034,
         FenceStatusNv = 34035,
         FenceConditionNv = 34036,

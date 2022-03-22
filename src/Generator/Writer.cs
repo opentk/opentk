@@ -53,7 +53,7 @@ namespace Generator.Writing
             string directoryPath,
             string glNamespace,
             Dictionary<string, GLVendorFunctions> groups,
-            Dictionary<NativeFunction, CommandDocumentation> documentation)
+            Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -80,8 +80,8 @@ namespace Generator.Writing
                         foreach (var function in group.NativeFunctions)
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
-                            documentation.TryGetValue(function, out CommandDocumentation? commandDocumentation);
-                            WriteNativeMethod(writer, function, postfixName, commandDocumentation);
+                            documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
+                            WriteNativeMethod(writer, function, postfixName, functionDocumentation);
                         }
 
                         scope?.Dispose();
@@ -92,7 +92,7 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, CommandDocumentation? documentation)
+        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
@@ -303,9 +303,9 @@ namespace Generator.Writing
         /// </summary>
         /// <param name="writer"></param>
         /// <param name="documentation"></param>
-        private static void WriteDocumentation(IndentedTextWriter writer, CommandDocumentation documentation)
+        private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation)
         {
-            writer.WriteLine($"/// <summary> {documentation.Purpose} </summary>");
+            writer.WriteLine($"/// <summary> [requires: {string.Join(" | ", documentation.AddedIn)}] {documentation.Purpose} </summary>");
 
             foreach (ParameterDocumentation parameter in documentation.Parameters)
             {
