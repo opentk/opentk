@@ -378,7 +378,7 @@
                 <listitem>
                     <para>
                         <parameter>data</parameter> returns one value, the maximum supported texture image units that
-                        can be used to access texture maps from the compute shader. The value may be at least 16.
+                        can be used to access texture maps from the compute shader. The value must be at least 16.
                         See <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
                     </para>
                 </listitem>

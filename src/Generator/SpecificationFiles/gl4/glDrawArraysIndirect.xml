@@ -73,13 +73,13 @@
             that takes the form (in C):
             <programlisting>    typedef  struct {
         uint  count;
-        uint  primCount;
+        uint  instanceCount;
         uint  first;
         uint  baseInstance;
     } DrawArraysIndirectCommand;
 
     const DrawArraysIndirectCommand *cmd = (const DrawArraysIndirectCommand *)indirect;
-    glDrawArraysInstancedBaseInstance(mode, cmd-&gt;first, cmd-&gt;count, cmd-&gt;primCount, cmd-&gt;baseInstance);</programlisting>
+    glDrawArraysInstancedBaseInstance(mode, cmd-&gt;first, cmd-&gt;count, cmd-&gt;instanceCount, cmd-&gt;baseInstance);</programlisting>
         </para>
         <para>
             If a buffer is bound to the <constant>GL_DRAW_INDIRECT_BUFFER</constant> binding at the time

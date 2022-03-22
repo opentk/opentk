@@ -500,12 +500,12 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -514,7 +514,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -523,7 +523,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -4469,11 +4469,26 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetProgramsQCOM(programs_ptr, maxPrograms, numPrograms_ptr);
                 }
             }
-            public static unsafe void ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, byte* source, ref int length)
+            public static unsafe string ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, ref int length)
+            {
+                string source;
+                fixed (int* length_ptr = &length)
+                {
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(length_ptr);
+                    ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
+                }
+                return source;
+            }
+            public static unsafe void ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, out string source, ref int length)
             {
                 fixed (int* length_ptr = &length)
                 {
-                    ExtGetProgramBinarySourceQCOM(program, shadertype, source, length_ptr);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(length_ptr);
+                    ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
                 }
             }
         }

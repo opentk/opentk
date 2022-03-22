@@ -1095,6 +1095,9 @@ namespace OpenTK.Graphics.OpenGLES3
         SmaphsProgramBinaryDmp = 37458,
         DmpProgramBinaryDmp = 37459,
         ShaderBinaryDmp = 37456,
+        SurfaceCompressionExt = 38592,
+        SurfaceCompressionFixedRateNoneExt = 38593,
+        SurfaceCompressionFixedRateDefaultExt = 38594,
         SamplerExternal2dY2yExt = 35815,
         TextureExternalOes = 36197,
         TextureBindingExternalOes = 36199,
@@ -1458,6 +1461,19 @@ namespace OpenTK.Graphics.OpenGLES3
         Rgb10Ext = 32850,
         R32fExt = 33326,
         Rg32fExt = 33328,
+        NumSurfaceCompressionFixedRatesExt = 36718,
+        SurfaceCompressionFixedRate1bpcExt = 38596,
+        SurfaceCompressionFixedRate2bpcExt = 38597,
+        SurfaceCompressionFixedRate3bpcExt = 38598,
+        SurfaceCompressionFixedRate4bpcExt = 38599,
+        SurfaceCompressionFixedRate5bpcExt = 38600,
+        SurfaceCompressionFixedRate6bpcExt = 38601,
+        SurfaceCompressionFixedRate7bpcExt = 38602,
+        SurfaceCompressionFixedRate8bpcExt = 38603,
+        SurfaceCompressionFixedRate9bpcExt = 38604,
+        SurfaceCompressionFixedRate10bpcExt = 38605,
+        SurfaceCompressionFixedRate11bpcExt = 38606,
+        SurfaceCompressionFixedRate12bpcExt = 38607,
         UnsignedInt2101010RevExt = 33640,
         TextureViewMinLevelExt = 33499,
         TextureViewNumLevelsExt = 33500,
@@ -3055,6 +3071,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TransformFeedbackBufferBinding = 35983,
         DrawFramebufferBinding = 36006,
         ReadFramebufferBinding = 36010,
+        MaxColorAttachments = 36063,
         VertexArrayBinding = 34229,
         UniformBufferBinding = 35368,
         UniformBufferStart = 35369,
@@ -3136,7 +3153,10 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureBindingBuffer = 35884,
         TextureBufferOffsetAlignment = 37279,
         TextureBinding2dMultisampleArray = 37125,
+        FetchPerSampleArm = 36709,
+        FragmentShaderFramebufferFetchMrtArm = 36710,
         BlendEquationExt = 32777,
+        MaxColorAttachmentsExt = 36063,
         NumDeviceUuidsExt = 38294,
         DeviceUuidExt = 38295,
         DriverUuidExt = 38296,
@@ -3145,6 +3165,7 @@ namespace OpenTK.Graphics.OpenGLES3
         DrawBufferExt = 3073,
         ReadBufferExt = 3074,
         MaxTimelineSemaphoreValueDifferenceNv = 38326,
+        MaxColorAttachmentsNv = 36063,
         ShadingRateImagePerPrimitiveNv = 38321,
         ShadingRateImagePaletteCountNv = 38322,
         ReadBufferNv = 3074,
@@ -3167,6 +3188,7 @@ namespace OpenTK.Graphics.OpenGLES3
         PolygonOffsetFill = 32823,
         SampleAlphaToCoverage = 32926,
         SampleCoverage = 32928,
+        TextureCubeMap = 34067,
         RasterizerDiscard = 35977,
         PrimitiveRestartFixedIndex = 36201,
         SampleMask = 36433,
@@ -3174,6 +3196,7 @@ namespace OpenTK.Graphics.OpenGLES3
         VertexArray = 32884,
         DebugOutput = 37600,
         SampleShading = 35894,
+        FetchPerSampleArm = 36709,
         ShadingRateImagePerPrimitiveNv = 38321,
         ShadingRatePreserveAspectRatioQcom = 38565,
     }
@@ -3234,6 +3257,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureCubeMapNegativeY = 34072,
         TextureCubeMapPositiveZ = 34073,
         TextureCubeMapNegativeZ = 34074,
+        Renderbuffer = 36161,
         Texture3d = 32879,
         Texture2dArray = 35866,
         Texture2dMultisample = 37120,
@@ -3296,6 +3320,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureAlphaSize = 32863,
         TextureBorderColor = 4100,
         TextureUnnormalizedCoordinatesArm = 36714,
+        SurfaceCompressionExt = 38592,
         TextureBorderColorNv = 4100,
     }
     public enum SamplerParameterF : uint
@@ -3876,6 +3901,7 @@ namespace OpenTK.Graphics.OpenGLES3
         Rgba = 6408,
         Rgba4 = 32854,
         Rgb5A1 = 32855,
+        Rgb565 = 36194,
         DepthComponent16 = 33189,
         StencilIndex8 = 36168,
         Red = 6403,
@@ -4056,6 +4082,7 @@ namespace OpenTK.Graphics.OpenGLES3
         CompressedSrgbAlphaS3tcDxt1Nv = 35917,
         CompressedSrgbAlphaS3tcDxt3Nv = 35918,
         CompressedSrgbAlphaS3tcDxt5Nv = 35919,
+        Etc1Rgb8Oes = 36196,
         DepthComponent24Oes = 33190,
         Alpha8Oes = 32828,
         DepthComponent16Oes = 33189,
@@ -4064,6 +4091,7 @@ namespace OpenTK.Graphics.OpenGLES3
         Luminance8Oes = 32832,
         Rgba4Oes = 32854,
         Rgb5A1Oes = 32855,
+        Rgb565Oes = 36194,
         Rgb8Oes = 32849,
         Rgba8Oes = 32856,
         StencilIndex1Oes = 36166,
@@ -4090,6 +4118,11 @@ namespace OpenTK.Graphics.OpenGLES3
         CompressedSrgb8Alpha8Astc6x6x6Oes = 37865,
         StencilIndexOes = 6401,
         StencilIndex8Oes = 36168,
+    }
+    public enum DepthStencilTextureMode : uint
+    {
+        DepthComponent = 6402,
+        StencilIndex = 6401,
     }
     public enum CombinerComponentUsageNV : uint
     {
@@ -4160,6 +4193,7 @@ namespace OpenTK.Graphics.OpenGLES3
     {
         Rgba4 = 32854,
         Rgb5A1 = 32855,
+        Rgb565 = 36194,
         DepthComponent16 = 33189,
         StencilIndex8 = 36168,
         Rgb8 = 32849,
@@ -4329,6 +4363,7 @@ namespace OpenTK.Graphics.OpenGLES3
         CompressedSrgbAlphaS3tcDxt1Nv = 35917,
         CompressedSrgbAlphaS3tcDxt3Nv = 35918,
         CompressedSrgbAlphaS3tcDxt5Nv = 35919,
+        Etc1Rgb8Oes = 36196,
         DepthComponent24Oes = 33190,
         Alpha8Oes = 32828,
         DepthComponent16Oes = 33189,
@@ -4337,6 +4372,7 @@ namespace OpenTK.Graphics.OpenGLES3
         Luminance8Oes = 32832,
         Rgba4Oes = 32854,
         Rgb5A1Oes = 32855,
+        Rgb565Oes = 36194,
         Rgb8Oes = 32849,
         Rgba8Oes = 32856,
         StencilIndex1Oes = 36166,
@@ -4380,6 +4416,7 @@ namespace OpenTK.Graphics.OpenGLES3
         NumSampleCounts = 37760,
         ImageFormatCompatibilityType = 37063,
         TextureCompressed = 34465,
+        NumSurfaceCompressionFixedRatesExt = 36718,
     }
     public enum BufferTargetARB : uint
     {
@@ -4432,6 +4469,44 @@ namespace OpenTK.Graphics.OpenGLES3
         FramebufferUndefined = 33305,
         FramebufferIncompleteMultisample = 36182,
         FramebufferIncompleteLayerTargets = 36264,
+    }
+    public enum FramebufferAttachment : uint
+    {
+        ColorAttachment0 = 36064,
+        DepthAttachment = 36096,
+        StencilAttachment = 36128,
+        DepthStencilAttachment = 33306,
+        ColorAttachment1 = 36065,
+        ColorAttachment2 = 36066,
+        ColorAttachment3 = 36067,
+        ColorAttachment4 = 36068,
+        ColorAttachment5 = 36069,
+        ColorAttachment6 = 36070,
+        ColorAttachment7 = 36071,
+        ColorAttachment8 = 36072,
+        ColorAttachment9 = 36073,
+        ColorAttachment10 = 36074,
+        ColorAttachment11 = 36075,
+        ColorAttachment12 = 36076,
+        ColorAttachment13 = 36077,
+        ColorAttachment14 = 36078,
+        ColorAttachment15 = 36079,
+        ColorAttachment16 = 36080,
+        ColorAttachment17 = 36081,
+        ColorAttachment18 = 36082,
+        ColorAttachment19 = 36083,
+        ColorAttachment20 = 36084,
+        ColorAttachment21 = 36085,
+        ColorAttachment22 = 36086,
+        ColorAttachment23 = 36087,
+        ColorAttachment24 = 36088,
+        ColorAttachment25 = 36089,
+        ColorAttachment26 = 36090,
+        ColorAttachment27 = 36091,
+        ColorAttachment28 = 36092,
+        ColorAttachment29 = 36093,
+        ColorAttachment30 = 36094,
+        ColorAttachment31 = 36095,
     }
     public enum VertexBufferObjectParameter : uint
     {
@@ -4580,6 +4655,10 @@ namespace OpenTK.Graphics.OpenGLES3
         FenceStatusNv = 34035,
         FenceConditionNv = 34036,
     }
+    public enum RegisterCombinerPname : uint
+    {
+        Src1AlphaExt = 34185,
+    }
     public enum VertexAttribEnum : uint
     {
         CurrentVertexAttrib = 34342,
@@ -4691,6 +4770,10 @@ namespace OpenTK.Graphics.OpenGLES3
         TessControlShader = 36488,
         TessEvaluationShader = 36487,
     }
+    public enum ContainerType : uint
+    {
+        ProgramObjectExt = 35648,
+    }
     public enum ShaderParameterName : uint
     {
         ShaderType = 35663,
@@ -4761,43 +4844,6 @@ namespace OpenTK.Graphics.OpenGLES3
         RenderbufferSamplesExt = 36011,
         RenderbufferSamplesImg = 37171,
         RenderbufferSamplesNv = 36011,
-    }
-    public enum FramebufferAttachment : uint
-    {
-        ColorAttachment0 = 36064,
-        DepthAttachment = 36096,
-        StencilAttachment = 36128,
-        ColorAttachment1 = 36065,
-        ColorAttachment2 = 36066,
-        ColorAttachment3 = 36067,
-        ColorAttachment4 = 36068,
-        ColorAttachment5 = 36069,
-        ColorAttachment6 = 36070,
-        ColorAttachment7 = 36071,
-        ColorAttachment8 = 36072,
-        ColorAttachment9 = 36073,
-        ColorAttachment10 = 36074,
-        ColorAttachment11 = 36075,
-        ColorAttachment12 = 36076,
-        ColorAttachment13 = 36077,
-        ColorAttachment14 = 36078,
-        ColorAttachment15 = 36079,
-        ColorAttachment16 = 36080,
-        ColorAttachment17 = 36081,
-        ColorAttachment18 = 36082,
-        ColorAttachment19 = 36083,
-        ColorAttachment20 = 36084,
-        ColorAttachment21 = 36085,
-        ColorAttachment22 = 36086,
-        ColorAttachment23 = 36087,
-        ColorAttachment24 = 36088,
-        ColorAttachment25 = 36089,
-        ColorAttachment26 = 36090,
-        ColorAttachment27 = 36091,
-        ColorAttachment28 = 36092,
-        ColorAttachment29 = 36093,
-        ColorAttachment30 = 36094,
-        ColorAttachment31 = 36095,
     }
     public enum DrawBufferModeATI : uint
     {
@@ -5026,6 +5072,27 @@ namespace OpenTK.Graphics.OpenGLES3
         ShadingRate2x2PixelsQcom = 38569,
         ShadingRate4x2PixelsQcom = 38572,
         ShadingRate4x4PixelsQcom = 38574,
+    }
+    public enum TexStorageAttribs : uint
+    {
+        SurfaceCompressionExt = 38592,
+        SurfaceCompressionFixedRateDefaultExt = 38594,
+        SurfaceCompressionFixedRate1bpcExt = 38596,
+        SurfaceCompressionFixedRate2bpcExt = 38597,
+        SurfaceCompressionFixedRate3bpcExt = 38598,
+        SurfaceCompressionFixedRate4bpcExt = 38599,
+        SurfaceCompressionFixedRate5bpcExt = 38600,
+        SurfaceCompressionFixedRate6bpcExt = 38601,
+        SurfaceCompressionFixedRate7bpcExt = 38602,
+        SurfaceCompressionFixedRate8bpcExt = 38603,
+        SurfaceCompressionFixedRate9bpcExt = 38604,
+        SurfaceCompressionFixedRate10bpcExt = 38605,
+        SurfaceCompressionFixedRate11bpcExt = 38606,
+        SurfaceCompressionFixedRate12bpcExt = 38607,
+    }
+    public enum TexStorageAttribss : uint
+    {
+        SurfaceCompressionFixedRateNoneExt = 38593,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 }

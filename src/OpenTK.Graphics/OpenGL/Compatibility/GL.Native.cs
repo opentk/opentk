@@ -4089,7 +4089,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             _CompressedTexImage1D_fnptr(target, level, internalformat, width, border, imageSize, data);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage3D_fnptr = &CompressedTexSubImage3D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTexSubImage3D_fnptr = &CompressedTexSubImage3D_Lazy;
         /// <summary> [requires: v1.3] Specify a three-dimensional texture subimage in a compressed format. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glCompressedTexSubImage3D function. Must be GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, or GL_TEXTURE_CUBE_MAP_ARRAY.</param>
         /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -4102,15 +4102,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
         /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
         /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-        public static void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage3D_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+        public static void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data) => _CompressedTexSubImage3D_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
         [UnmanagedCallersOnly]
-        private static void CompressedTexSubImage3D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data)
+        private static void CompressedTexSubImage3D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data)
         {
-            _CompressedTexSubImage3D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage3D");
+            _CompressedTexSubImage3D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage3D");
             _CompressedTexSubImage3D_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage2D_fnptr = &CompressedTexSubImage2D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTexSubImage2D_fnptr = &CompressedTexSubImage2D_Lazy;
         /// <summary> [requires: v1.3] Specify a two-dimensional texture subimage in a compressed format. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glCompressedTexSubImage2D function. Must be GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z.</param>
         /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -4121,15 +4121,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
         /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
         /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-        public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
+        public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => _CompressedTexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
         [UnmanagedCallersOnly]
-        private static void CompressedTexSubImage2D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data)
+        private static void CompressedTexSubImage2D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data)
         {
-            _CompressedTexSubImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage2D");
+            _CompressedTexSubImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage2D");
             _CompressedTexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage1D_fnptr = &CompressedTexSubImage1D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, int, int, InternalFormat, int, void*, void> _CompressedTexSubImage1D_fnptr = &CompressedTexSubImage1D_Lazy;
         /// <summary> [requires: v1.3] Specify a one-dimensional texture subimage in a compressed    format. </summary>
         /// <param name="target">Specifies the target, to which the texture is bound, for glCompressedTexSubImage1D function. Must be GL_TEXTURE_1D.</param>
         /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -4138,11 +4138,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
         /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
         /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-        public static void CompressedTexSubImage1D(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage1D_fnptr(target, level, xoffset, width, format, imageSize, data);
+        public static void CompressedTexSubImage1D(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data) => _CompressedTexSubImage1D_fnptr(target, level, xoffset, width, format, imageSize, data);
         [UnmanagedCallersOnly]
-        private static void CompressedTexSubImage1D_Lazy(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data)
+        private static void CompressedTexSubImage1D_Lazy(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data)
         {
-            _CompressedTexSubImage1D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage1D");
+            _CompressedTexSubImage1D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage1D");
             _CompressedTexSubImage1D_fnptr(target, level, xoffset, width, format, imageSize, data);
         }
         
@@ -12161,7 +12161,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             _TextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
         }
         
-        private static delegate* unmanaged<TextureHandle, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage1D_fnptr = &CompressedTextureSubImage1D_Lazy;
+        private static delegate* unmanaged<TextureHandle, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage1D_fnptr = &CompressedTextureSubImage1D_Lazy;
         /// <summary> [requires: v4.5 | GL_ARB_direct_state_access] Specify a one-dimensional texture subimage in a compressed    format. </summary>
         /// <param name="texture">Specifies the texture object name for glCompressedTextureSubImage1D function.</param>
         /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -12170,15 +12170,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
         /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
         /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-        public static void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data) => _CompressedTextureSubImage1D_fnptr(texture, level, xoffset, width, format, imageSize, data);
+        public static void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data) => _CompressedTextureSubImage1D_fnptr(texture, level, xoffset, width, format, imageSize, data);
         [UnmanagedCallersOnly]
-        private static void CompressedTextureSubImage1D_Lazy(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data)
+        private static void CompressedTextureSubImage1D_Lazy(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data)
         {
-            _CompressedTextureSubImage1D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage1D");
+            _CompressedTextureSubImage1D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage1D");
             _CompressedTextureSubImage1D_fnptr(texture, level, xoffset, width, format, imageSize, data);
         }
         
-        private static delegate* unmanaged<TextureHandle, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage2D_fnptr = &CompressedTextureSubImage2D_Lazy;
+        private static delegate* unmanaged<TextureHandle, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage2D_fnptr = &CompressedTextureSubImage2D_Lazy;
         /// <summary> [requires: v4.5 | GL_ARB_direct_state_access] Specify a two-dimensional texture subimage in a compressed format. </summary>
         /// <param name="texture">Specifies the texture object name for glCompressedTextureSubImage2D function.</param>
         /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -12189,15 +12189,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
         /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
         /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-        public static void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data) => _CompressedTextureSubImage2D_fnptr(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+        public static void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => _CompressedTextureSubImage2D_fnptr(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
         [UnmanagedCallersOnly]
-        private static void CompressedTextureSubImage2D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data)
+        private static void CompressedTextureSubImage2D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data)
         {
-            _CompressedTextureSubImage2D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage2D");
+            _CompressedTextureSubImage2D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage2D");
             _CompressedTextureSubImage2D_fnptr(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
         }
         
-        private static delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage3D_fnptr = &CompressedTextureSubImage3D_Lazy;
+        private static delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage3D_fnptr = &CompressedTextureSubImage3D_Lazy;
         /// <summary> [requires: v4.5 | GL_ARB_direct_state_access] Specify a three-dimensional texture subimage in a compressed format. </summary>
         /// <param name="texture">Specifies the texture object name for glCompressedTextureSubImage3D function.</param>
         /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -12210,11 +12210,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
         /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
         /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-        public static void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data) => _CompressedTextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+        public static void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data) => _CompressedTextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
         [UnmanagedCallersOnly]
-        private static void CompressedTextureSubImage3D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data)
+        private static void CompressedTextureSubImage3D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data)
         {
-            _CompressedTextureSubImage3D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage3D");
+            _CompressedTextureSubImage3D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage3D");
             _CompressedTextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
         }
         
@@ -15483,7 +15483,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 _TextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
             }
             
-            private static delegate* unmanaged<TextureHandle, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage1D_fnptr = &CompressedTextureSubImage1D_Lazy;
+            private static delegate* unmanaged<TextureHandle, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage1D_fnptr = &CompressedTextureSubImage1D_Lazy;
             /// <summary> [requires: v4.5 | GL_ARB_direct_state_access] Specify a one-dimensional texture subimage in a compressed    format. </summary>
             /// <param name="texture">Specifies the texture object name for glCompressedTextureSubImage1D function.</param>
             /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -15492,15 +15492,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
             /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
             /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-            public static void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data) => _CompressedTextureSubImage1D_fnptr(texture, level, xoffset, width, format, imageSize, data);
+            public static void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data) => _CompressedTextureSubImage1D_fnptr(texture, level, xoffset, width, format, imageSize, data);
             [UnmanagedCallersOnly]
-            private static void CompressedTextureSubImage1D_Lazy(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data)
+            private static void CompressedTextureSubImage1D_Lazy(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data)
             {
-                _CompressedTextureSubImage1D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage1D");
+                _CompressedTextureSubImage1D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage1D");
                 _CompressedTextureSubImage1D_fnptr(texture, level, xoffset, width, format, imageSize, data);
             }
             
-            private static delegate* unmanaged<TextureHandle, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage2D_fnptr = &CompressedTextureSubImage2D_Lazy;
+            private static delegate* unmanaged<TextureHandle, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage2D_fnptr = &CompressedTextureSubImage2D_Lazy;
             /// <summary> [requires: v4.5 | GL_ARB_direct_state_access] Specify a two-dimensional texture subimage in a compressed format. </summary>
             /// <param name="texture">Specifies the texture object name for glCompressedTextureSubImage2D function.</param>
             /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -15511,15 +15511,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
             /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
             /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-            public static void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data) => _CompressedTextureSubImage2D_fnptr(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
+            public static void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => _CompressedTextureSubImage2D_fnptr(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
             [UnmanagedCallersOnly]
-            private static void CompressedTextureSubImage2D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data)
+            private static void CompressedTextureSubImage2D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data)
             {
-                _CompressedTextureSubImage2D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage2D");
+                _CompressedTextureSubImage2D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage2D");
                 _CompressedTextureSubImage2D_fnptr(texture, level, xoffset, yoffset, width, height, format, imageSize, data);
             }
             
-            private static delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage3D_fnptr = &CompressedTextureSubImage3D_Lazy;
+            private static delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage3D_fnptr = &CompressedTextureSubImage3D_Lazy;
             /// <summary> [requires: v4.5 | GL_ARB_direct_state_access] Specify a three-dimensional texture subimage in a compressed format. </summary>
             /// <param name="texture">Specifies the texture object name for glCompressedTextureSubImage3D function.</param>
             /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
@@ -15532,11 +15532,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="format">Specifies the format of the compressed image data stored at address data.</param>
             /// <param name="imageSize">Specifies the number of unsigned bytes of image data starting at the address specified by data.</param>
             /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-            public static void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data) => _CompressedTextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+            public static void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data) => _CompressedTextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
             [UnmanagedCallersOnly]
-            private static void CompressedTextureSubImage3D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data)
+            private static void CompressedTextureSubImage3D_Lazy(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data)
             {
-                _CompressedTextureSubImage3D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage3D");
+                _CompressedTextureSubImage3D_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage3D");
                 _CompressedTextureSubImage3D_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
             }
             
@@ -20798,33 +20798,33 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 _CompressedTexImage1DARB_fnptr(target, level, internalformat, width, border, imageSize, data);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage3DARB_fnptr = &CompressedTexSubImage3DARB_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTexSubImage3DARB_fnptr = &CompressedTexSubImage3DARB_Lazy;
             /// <summary> [requires: GL_ARB_texture_compression]  </summary>
-            public static void CompressedTexSubImage3DARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage3DARB_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+            public static void CompressedTexSubImage3DARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data) => _CompressedTexSubImage3DARB_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
             [UnmanagedCallersOnly]
-            private static void CompressedTexSubImage3DARB_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data)
+            private static void CompressedTexSubImage3DARB_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data)
             {
-                _CompressedTexSubImage3DARB_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage3DARB");
+                _CompressedTexSubImage3DARB_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage3DARB");
                 _CompressedTexSubImage3DARB_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage2DARB_fnptr = &CompressedTexSubImage2DARB_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTexSubImage2DARB_fnptr = &CompressedTexSubImage2DARB_Lazy;
             /// <summary> [requires: GL_ARB_texture_compression]  </summary>
-            public static void CompressedTexSubImage2DARB(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage2DARB_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
+            public static void CompressedTexSubImage2DARB(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => _CompressedTexSubImage2DARB_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
             [UnmanagedCallersOnly]
-            private static void CompressedTexSubImage2DARB_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data)
+            private static void CompressedTexSubImage2DARB_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data)
             {
-                _CompressedTexSubImage2DARB_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage2DARB");
+                _CompressedTexSubImage2DARB_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage2DARB");
                 _CompressedTexSubImage2DARB_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage1DARB_fnptr = &CompressedTexSubImage1DARB_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, int, int, InternalFormat, int, void*, void> _CompressedTexSubImage1DARB_fnptr = &CompressedTexSubImage1DARB_Lazy;
             /// <summary> [requires: GL_ARB_texture_compression]  </summary>
-            public static void CompressedTexSubImage1DARB(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage1DARB_fnptr(target, level, xoffset, width, format, imageSize, data);
+            public static void CompressedTexSubImage1DARB(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data) => _CompressedTexSubImage1DARB_fnptr(target, level, xoffset, width, format, imageSize, data);
             [UnmanagedCallersOnly]
-            private static void CompressedTexSubImage1DARB_Lazy(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* data)
+            private static void CompressedTexSubImage1DARB_Lazy(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data)
             {
-                _CompressedTexSubImage1DARB_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage1DARB");
+                _CompressedTexSubImage1DARB_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage1DARB");
                 _CompressedTexSubImage1DARB_fnptr(target, level, xoffset, width, format, imageSize, data);
             }
             
@@ -25368,33 +25368,33 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 _CompressedTextureImage1DEXT_fnptr(texture, target, level, internalformat, width, border, imageSize, bits);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage3DEXT_fnptr = &CompressedTextureSubImage3DEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage3DEXT_fnptr = &CompressedTextureSubImage3DEXT_Lazy;
             /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
-            public static void CompressedTextureSubImage3DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* bits) => _CompressedTextureSubImage3DEXT_fnptr(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits);
+            public static void CompressedTextureSubImage3DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits) => _CompressedTextureSubImage3DEXT_fnptr(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits);
             [UnmanagedCallersOnly]
-            private static void CompressedTextureSubImage3DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* bits)
+            private static void CompressedTextureSubImage3DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits)
             {
-                _CompressedTextureSubImage3DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage3DEXT");
+                _CompressedTextureSubImage3DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage3DEXT");
                 _CompressedTextureSubImage3DEXT_fnptr(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage2DEXT_fnptr = &CompressedTextureSubImage2DEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage2DEXT_fnptr = &CompressedTextureSubImage2DEXT_Lazy;
             /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
-            public static void CompressedTextureSubImage2DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* bits) => _CompressedTextureSubImage2DEXT_fnptr(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits);
+            public static void CompressedTextureSubImage2DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits) => _CompressedTextureSubImage2DEXT_fnptr(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits);
             [UnmanagedCallersOnly]
-            private static void CompressedTextureSubImage2DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* bits)
+            private static void CompressedTextureSubImage2DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits)
             {
-                _CompressedTextureSubImage2DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage2DEXT");
+                _CompressedTextureSubImage2DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage2DEXT");
                 _CompressedTextureSubImage2DEXT_fnptr(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, PixelFormat, int, void*, void> _CompressedTextureSubImage1DEXT_fnptr = &CompressedTextureSubImage1DEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, InternalFormat, int, void*, void> _CompressedTextureSubImage1DEXT_fnptr = &CompressedTextureSubImage1DEXT_Lazy;
             /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
-            public static void CompressedTextureSubImage1DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* bits) => _CompressedTextureSubImage1DEXT_fnptr(texture, target, level, xoffset, width, format, imageSize, bits);
+            public static void CompressedTextureSubImage1DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits) => _CompressedTextureSubImage1DEXT_fnptr(texture, target, level, xoffset, width, format, imageSize, bits);
             [UnmanagedCallersOnly]
-            private static void CompressedTextureSubImage1DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* bits)
+            private static void CompressedTextureSubImage1DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits)
             {
-                _CompressedTextureSubImage1DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage1DEXT");
+                _CompressedTextureSubImage1DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTextureSubImage1DEXT");
                 _CompressedTextureSubImage1DEXT_fnptr(texture, target, level, xoffset, width, format, imageSize, bits);
             }
             
@@ -25438,33 +25438,33 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 _CompressedMultiTexImage1DEXT_fnptr(texunit, target, level, internalformat, width, border, imageSize, bits);
             }
             
-            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedMultiTexSubImage3DEXT_fnptr = &CompressedMultiTexSubImage3DEXT_Lazy;
+            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedMultiTexSubImage3DEXT_fnptr = &CompressedMultiTexSubImage3DEXT_Lazy;
             /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
-            public static void CompressedMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* bits) => _CompressedMultiTexSubImage3DEXT_fnptr(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits);
+            public static void CompressedMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits) => _CompressedMultiTexSubImage3DEXT_fnptr(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits);
             [UnmanagedCallersOnly]
-            private static void CompressedMultiTexSubImage3DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* bits)
+            private static void CompressedMultiTexSubImage3DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits)
             {
-                _CompressedMultiTexSubImage3DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedMultiTexSubImage3DEXT");
+                _CompressedMultiTexSubImage3DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedMultiTexSubImage3DEXT");
                 _CompressedMultiTexSubImage3DEXT_fnptr(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits);
             }
             
-            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedMultiTexSubImage2DEXT_fnptr = &CompressedMultiTexSubImage2DEXT_Lazy;
+            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedMultiTexSubImage2DEXT_fnptr = &CompressedMultiTexSubImage2DEXT_Lazy;
             /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
-            public static void CompressedMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* bits) => _CompressedMultiTexSubImage2DEXT_fnptr(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits);
+            public static void CompressedMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits) => _CompressedMultiTexSubImage2DEXT_fnptr(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits);
             [UnmanagedCallersOnly]
-            private static void CompressedMultiTexSubImage2DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* bits)
+            private static void CompressedMultiTexSubImage2DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits)
             {
-                _CompressedMultiTexSubImage2DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedMultiTexSubImage2DEXT");
+                _CompressedMultiTexSubImage2DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedMultiTexSubImage2DEXT");
                 _CompressedMultiTexSubImage2DEXT_fnptr(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits);
             }
             
-            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, PixelFormat, int, void*, void> _CompressedMultiTexSubImage1DEXT_fnptr = &CompressedMultiTexSubImage1DEXT_Lazy;
+            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, InternalFormat, int, void*, void> _CompressedMultiTexSubImage1DEXT_fnptr = &CompressedMultiTexSubImage1DEXT_Lazy;
             /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
-            public static void CompressedMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* bits) => _CompressedMultiTexSubImage1DEXT_fnptr(texunit, target, level, xoffset, width, format, imageSize, bits);
+            public static void CompressedMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits) => _CompressedMultiTexSubImage1DEXT_fnptr(texunit, target, level, xoffset, width, format, imageSize, bits);
             [UnmanagedCallersOnly]
-            private static void CompressedMultiTexSubImage1DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, void* bits)
+            private static void CompressedMultiTexSubImage1DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits)
             {
-                _CompressedMultiTexSubImage1DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedMultiTexSubImage1DEXT");
+                _CompressedMultiTexSubImage1DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedMultiTexSubImage1DEXT");
                 _CompressedMultiTexSubImage1DEXT_fnptr(texunit, target, level, xoffset, width, format, imageSize, bits);
             }
             
@@ -26909,7 +26909,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
             
             private static delegate* unmanaged<TextureHandle, All, int, SizedInternalFormat, int, void> _TextureStorage1DEXT_fnptr = &TextureStorage1DEXT_Lazy;
-            /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
+            /// <summary> [requires: GL_EXT_direct_state_access | GL_EXT_texture_storage]  </summary>
             public static void TextureStorage1DEXT(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width) => _TextureStorage1DEXT_fnptr(texture, target, levels, internalformat, width);
             [UnmanagedCallersOnly]
             private static void TextureStorage1DEXT_Lazy(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width)
@@ -26919,7 +26919,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
             
             private static delegate* unmanaged<TextureHandle, All, int, SizedInternalFormat, int, int, void> _TextureStorage2DEXT_fnptr = &TextureStorage2DEXT_Lazy;
-            /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
+            /// <summary> [requires: GL_EXT_direct_state_access | GL_EXT_texture_storage]  </summary>
             public static void TextureStorage2DEXT(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => _TextureStorage2DEXT_fnptr(texture, target, levels, internalformat, width, height);
             [UnmanagedCallersOnly]
             private static void TextureStorage2DEXT_Lazy(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width, int height)
@@ -26929,7 +26929,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
             
             private static delegate* unmanaged<TextureHandle, All, int, SizedInternalFormat, int, int, int, void> _TextureStorage3DEXT_fnptr = &TextureStorage3DEXT_Lazy;
-            /// <summary> [requires: GL_EXT_direct_state_access]  </summary>
+            /// <summary> [requires: GL_EXT_direct_state_access | GL_EXT_texture_storage]  </summary>
             public static void TextureStorage3DEXT(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => _TextureStorage3DEXT_fnptr(texture, target, levels, internalformat, width, height, depth);
             [UnmanagedCallersOnly]
             private static void TextureStorage3DEXT_Lazy(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth)
@@ -28926,6 +28926,36 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 _TextureNormalEXT_fnptr = (delegate* unmanaged<TextureNormalModeEXT, void>)GLLoader.BindingsContext.GetProcAddress("glTextureNormalEXT");
                 _TextureNormalEXT_fnptr(mode);
+            }
+            
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, void> _TexStorage1DEXT_fnptr = &TexStorage1DEXT_Lazy;
+            /// <summary> [requires: GL_EXT_texture_storage]  </summary>
+            public static void TexStorage1DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => _TexStorage1DEXT_fnptr(target, levels, internalformat, width);
+            [UnmanagedCallersOnly]
+            private static void TexStorage1DEXT_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width)
+            {
+                _TexStorage1DEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage1DEXT");
+                _TexStorage1DEXT_fnptr(target, levels, internalformat, width);
+            }
+            
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, void> _TexStorage2DEXT_fnptr = &TexStorage2DEXT_Lazy;
+            /// <summary> [requires: GL_EXT_texture_storage]  </summary>
+            public static void TexStorage2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height) => _TexStorage2DEXT_fnptr(target, levels, internalformat, width, height);
+            [UnmanagedCallersOnly]
+            private static void TexStorage2DEXT_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height)
+            {
+                _TexStorage2DEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage2DEXT");
+                _TexStorage2DEXT_fnptr(target, levels, internalformat, width, height);
+            }
+            
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, void> _TexStorage3DEXT_fnptr = &TexStorage3DEXT_Lazy;
+            /// <summary> [requires: GL_EXT_texture_storage]  </summary>
+            public static void TexStorage3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => _TexStorage3DEXT_fnptr(target, levels, internalformat, width, height, depth);
+            [UnmanagedCallersOnly]
+            private static void TexStorage3DEXT_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth)
+            {
+                _TexStorage3DEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage3DEXT");
+                _TexStorage3DEXT_fnptr(target, levels, internalformat, width, height, depth);
             }
             
             private static delegate* unmanaged<QueryHandle, QueryObjectParameterName, long*, void> _GetQueryObjecti64vEXT_fnptr = &GetQueryObjecti64vEXT_Lazy;

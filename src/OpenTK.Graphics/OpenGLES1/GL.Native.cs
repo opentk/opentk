@@ -696,7 +696,7 @@ namespace OpenTK.Graphics.OpenGLES1
             _CompressedTexImage2D_fnptr(target, level, internalformat, width, height, border, imageSize, data);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage2D_fnptr = &CompressedTexSubImage2D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void> _CompressedTexSubImage2D_fnptr = &CompressedTexSubImage2D_Lazy;
         /// <summary> [requires: v1.0] Specify a two-dimensional compressed texture subimage. </summary>
         /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
         /// <param name="level">Specifies the level-of-detail number.</param>
@@ -707,11 +707,11 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="format">Specifies the format of the pixel data. Currently, there is no supported format.</param>
         /// <param name="imageSize">Specifies the size of the compressed pixel data in bytes.</param>
         /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
-        public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
+        public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => _CompressedTexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
         [UnmanagedCallersOnly]
-        private static void CompressedTexSubImage2D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data)
+        private static void CompressedTexSubImage2D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data)
         {
-            _CompressedTexSubImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage2D");
+            _CompressedTexSubImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, InternalFormat, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glCompressedTexSubImage2D");
             _CompressedTexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
         }
         

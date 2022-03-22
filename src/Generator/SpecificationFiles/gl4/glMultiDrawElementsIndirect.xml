@@ -104,7 +104,7 @@
         uint  count;
         uint  instanceCount;
         uint  firstIndex;
-        uint  baseVertex;
+        int  baseVertex;
         uint  baseInstance;
     } DrawElementsIndirectCommand;</programlisting>
         </para>
