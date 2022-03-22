@@ -9,6 +9,7 @@ namespace OpenTK.Graphics.OpenGLES1
 {
     public static unsafe partial class GL
     {
+        /// <summary> Specify a plane against which all geometry is    clipped. </summary>
         public static unsafe void ClipPlanef(ClipPlaneName p, ReadOnlySpan<float> eqn)
         {
             fixed (float* eqn_ptr = eqn)
@@ -16,6 +17,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanef(p, eqn_ptr);
             }
         }
+        /// <summary> Specify a plane against which all geometry is    clipped. </summary>
         public static unsafe void ClipPlanef(ClipPlaneName p, float[] eqn)
         {
             fixed (float* eqn_ptr = eqn)
@@ -23,6 +25,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanef(p, eqn_ptr);
             }
         }
+        /// <summary> Specify a plane against which all geometry is    clipped. </summary>
         public static unsafe void ClipPlanef(ClipPlaneName p, in float eqn)
         {
             fixed (float* eqn_ptr = &eqn)
@@ -51,6 +54,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogfv(pname, parameters_ptr);
             }
         }
+        /// <summary> Return the coefficients of the specified clipping    plane. </summary>
+        /// <param name="plane">Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. Symbolic names of the form GL_CLIP_PLANE i, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Returns four fixed-point or floating-point values that are the coefficients of the plane equation of plane in eye coordinates in the order p1, p2, p3, and p4. The initial value is (0, 0, 0, 0).</param>
         public static unsafe void GetClipPlanef(ClipPlaneName plane, Span<float> equation)
         {
             fixed (float* equation_ptr = equation)
@@ -58,6 +64,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanef(plane, equation_ptr);
             }
         }
+        /// <summary> Return the coefficients of the specified clipping    plane. </summary>
+        /// <param name="plane">Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. Symbolic names of the form GL_CLIP_PLANE i, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Returns four fixed-point or floating-point values that are the coefficients of the plane equation of plane in eye coordinates in the order p1, p2, p3, and p4. The initial value is (0, 0, 0, 0).</param>
         public static unsafe void GetClipPlanef(ClipPlaneName plane, float[] equation)
         {
             fixed (float* equation_ptr = equation)
@@ -65,6 +74,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanef(plane, equation_ptr);
             }
         }
+        /// <summary> Return the coefficients of the specified clipping    plane. </summary>
+        /// <param name="plane">Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. Symbolic names of the form GL_CLIP_PLANE i, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Returns four fixed-point or floating-point values that are the coefficients of the plane equation of plane in eye coordinates in the order p1, p2, p3, and p4. The initial value is (0, 0, 0, 0).</param>
         public static unsafe void GetClipPlanef(ClipPlaneName plane, ref float equation)
         {
             fixed (float* equation_ptr = &equation)
@@ -72,6 +84,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanef(plane, equation_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetFloat(GetPName pname, Span<float> data)
         {
             fixed (float* data_ptr = data)
@@ -79,6 +93,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFloatv(pname, data_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetFloat(GetPName pname, float[] data)
         {
             fixed (float* data_ptr = data)
@@ -86,6 +102,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFloatv(pname, data_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetFloat(GetPName pname, ref float data)
         {
             fixed (float* data_ptr = &data)
@@ -93,6 +111,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFloatv(pname, data_ptr);
             }
         }
+        /// <summary> Return light source parameter values. </summary>
+        /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
+        /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
         public static unsafe void GetLightf(LightName light, LightParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -100,6 +121,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightfv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Return light source parameter values. </summary>
+        /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
+        /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
         public static unsafe void GetLightf(LightName light, LightParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -107,6 +131,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightfv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Return light source parameter values. </summary>
+        /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
+        /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
         public static unsafe void GetLightf(LightName light, LightParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -114,6 +141,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightfv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Return material parameters values. </summary>
+        /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
+        /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         public static unsafe void GetMaterialf(MaterialFace face, MaterialParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -121,6 +151,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialfv(face, pname, parameters_ptr);
             }
         }
+        /// <summary> Return material parameters values. </summary>
+        /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
+        /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         public static unsafe void GetMaterialf(MaterialFace face, MaterialParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -128,6 +161,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialfv(face, pname, parameters_ptr);
             }
         }
+        /// <summary> Return material parameters values. </summary>
+        /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
+        /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         public static unsafe void GetMaterialf(MaterialFace face, MaterialParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -135,6 +171,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialfv(face, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -142,6 +181,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvfv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -149,6 +191,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvfv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -156,6 +201,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvfv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -163,6 +211,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterfv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -170,6 +221,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterfv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -219,6 +273,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightfv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Replace the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Specifies a pointer to 16 consecutive values, which are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void LoadMatrixf(ReadOnlySpan<float> m)
         {
             fixed (float* m_ptr = m)
@@ -226,6 +282,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixf(m_ptr);
             }
         }
+        /// <summary> Replace the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Specifies a pointer to 16 consecutive values, which are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void LoadMatrixf(float[] m)
         {
             fixed (float* m_ptr = m)
@@ -233,6 +291,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixf(m_ptr);
             }
         }
+        /// <summary> Replace the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Specifies a pointer to 16 consecutive values, which are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void LoadMatrixf(in float m)
         {
             fixed (float* m_ptr = &m)
@@ -261,6 +321,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialfv(face, pname, parameters_ptr);
             }
         }
+        /// <summary> Multiply the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Points to 16 consecutive values that are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void MultMatrixf(ReadOnlySpan<float> m)
         {
             fixed (float* m_ptr = m)
@@ -268,6 +330,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixf(m_ptr);
             }
         }
+        /// <summary> Multiply the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Points to 16 consecutive values that are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void MultMatrixf(float[] m)
         {
             fixed (float* m_ptr = m)
@@ -275,6 +339,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixf(m_ptr);
             }
         }
+        /// <summary> Multiply the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Points to 16 consecutive values that are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void MultMatrixf(in float m)
         {
             fixed (float* m_ptr = &m)
@@ -345,11 +411,20 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterfv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Creates and initializes a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
+        /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
+        /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STATIC_DRAW or GL_DYNAMIC_DRAW. </param>
         public static unsafe void BufferData(BufferTargetARB target, nint size, IntPtr data, BufferUsageARB usage)
         {
             void* data_vptr = (void*)data;
             BufferData(target, size, data_vptr, usage);
         }
+        /// <summary> Creates and initializes a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
+        /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STATIC_DRAW or GL_DYNAMIC_DRAW. </param>
         public static unsafe void BufferData<T1>(BufferTargetARB target, ReadOnlySpan<T1> data, BufferUsageARB usage)
             where T1 : unmanaged
         {
@@ -359,6 +434,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
+        /// <summary> Creates and initializes a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
+        /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STATIC_DRAW or GL_DYNAMIC_DRAW. </param>
         public static unsafe void BufferData<T1>(BufferTargetARB target, T1[] data, BufferUsageARB usage)
             where T1 : unmanaged
         {
@@ -368,6 +447,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
+        /// <summary> Creates and initializes a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="size">Specifies the size in bytes of the buffer object's new data store.</param>
+        /// <param name="data">Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.</param>
+        /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STATIC_DRAW or GL_DYNAMIC_DRAW. </param>
         public static unsafe void BufferData<T1>(BufferTargetARB target, nint size, in T1 data, BufferUsageARB usage)
             where T1 : unmanaged
         {
@@ -376,11 +460,20 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
+        /// <summary> Updates a subset of a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="offset">Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.</param>
+        /// <param name="size">Specifies the size in bytes of the data store region being replaced.</param>
+        /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store.</param>
         public static unsafe void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, IntPtr data)
         {
             void* data_vptr = (void*)data;
             BufferSubData(target, offset, size, data_vptr);
         }
+        /// <summary> Updates a subset of a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="offset">Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.</param>
+        /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store.</param>
         public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
@@ -390,6 +483,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
+        /// <summary> Updates a subset of a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="offset">Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.</param>
+        /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store.</param>
         public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, T1[] data)
             where T1 : unmanaged
         {
@@ -399,6 +496,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
+        /// <summary> Updates a subset of a buffer object's data store.. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="offset">Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes.</param>
+        /// <param name="size">Specifies the size in bytes of the data store region being replaced.</param>
+        /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store.</param>
         public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, nint size, in T1 data)
             where T1 : unmanaged
         {
@@ -407,6 +509,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
+        /// <summary> Specify a plane against which all geometry is    clipped. </summary>
+        /// <param name="plane">Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Specifies the address of an array of four fixed-point or floating-point values. These are the coefficients of a plane equation in object coordinates: p1, p2, p3, and p4, in that order.</param>
         public static unsafe void ClipPlanex(ClipPlaneName plane, ReadOnlySpan<int> equation)
         {
             fixed (int* equation_ptr = equation)
@@ -414,6 +519,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanex(plane, equation_ptr);
             }
         }
+        /// <summary> Specify a plane against which all geometry is    clipped. </summary>
+        /// <param name="plane">Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Specifies the address of an array of four fixed-point or floating-point values. These are the coefficients of a plane equation in object coordinates: p1, p2, p3, and p4, in that order.</param>
         public static unsafe void ClipPlanex(ClipPlaneName plane, int[] equation)
         {
             fixed (int* equation_ptr = equation)
@@ -421,6 +529,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanex(plane, equation_ptr);
             }
         }
+        /// <summary> Specify a plane against which all geometry is    clipped. </summary>
+        /// <param name="plane">Specifies which clipping plane is being positioned. Symbolic names of the form GL_CLIP_PLANEi, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Specifies the address of an array of four fixed-point or floating-point values. These are the coefficients of a plane equation in object coordinates: p1, p2, p3, and p4, in that order.</param>
         public static unsafe void ClipPlanex(ClipPlaneName plane, in int equation)
         {
             fixed (int* equation_ptr = &equation)
@@ -428,10 +539,20 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanex(plane, equation_ptr);
             }
         }
+        /// <summary> Set the current color. </summary>
+        /// <param name="red">Specify new red, green, blue, and alpha values for the current color.</param>
+        /// <param name="green">Specify new red, green, blue, and alpha values for the current color.</param>
+        /// <param name="blue">Specify new red, green, blue, and alpha values for the current color.</param>
+        /// <param name="alpha">Specify new red, green, blue, and alpha values for the current color.</param>
         public static unsafe void Color4(byte red, byte green, byte blue, byte alpha)
         {
             Color4ub(red, green, blue, alpha);
         }
+        /// <summary> Enable and disable writing of color buffer        components. </summary>
+        /// <param name="red">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
+        /// <param name="green">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
+        /// <param name="blue">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
+        /// <param name="alpha">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
         public static unsafe void ColorMask(bool red, bool green, bool blue, bool alpha)
         {
             byte red_byte = (byte)(red ? 1 : 0);
@@ -440,11 +561,21 @@ namespace OpenTK.Graphics.OpenGLES1
             byte alpha_byte = (byte)(alpha ? 1 : 0);
             ColorMask(red_byte, green_byte, blue_byte, alpha_byte);
         }
+        /// <summary> Define an array of colors. </summary>
+        /// <param name="size">Specifies the number of components per color. Must be 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each color component in the array. Symbolic constants GL_UNSIGNED_BYTE and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first component of the first color element in the array.</param>
         public static unsafe void ColorPointer(int size, ColorPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             ColorPointer(size, type, stride, pointer_vptr);
         }
+        /// <summary> Define an array of colors. </summary>
+        /// <param name="size">Specifies the number of components per color. Must be 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each color component in the array. Symbolic constants GL_UNSIGNED_BYTE and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first component of the first color element in the array.</param>
         public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -453,6 +584,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 ColorPointer(size, type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of colors. </summary>
+        /// <param name="size">Specifies the number of components per color. Must be 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each color component in the array. Symbolic constants GL_UNSIGNED_BYTE and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first component of the first color element in the array.</param>
         public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -461,6 +597,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 ColorPointer(size, type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of colors. </summary>
+        /// <param name="size">Specifies the number of components per color. Must be 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each color component in the array. Symbolic constants GL_UNSIGNED_BYTE and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive colors. If stride is 0, the colors are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first component of the first color element in the array.</param>
         public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -469,11 +610,28 @@ namespace OpenTK.Graphics.OpenGLES1
                 ColorPointer(size, type, stride, pointer_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional compressed texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. For paletted formats, where all mipmap levels are loaded at once, this parameter is overloaded to represent the negative of the greatest mipmap level included in data. </param>
+        /// <param name="internalformat">Specifies the color components in the texture. The following symbolic constants are accepted: GL_PALETTE4_RGB8_OES, GL_PALETTE4_RGBA8_OES, GL_PALETTE4_R5_G6_B5_OES, GL_PALETTE4_RGBA4_OES, GL_PALETTE4_RGB5_A1_OES, GL_PALETTE8_RGB8_OES, GL_PALETTE8_RGBA8_OES, GL_PALETTE8_R5_G6_B5_OES, GL_PALETTE8_RGBA4_OES, and GL_PALETTE8_RGB5_A1_OES.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="imageSize">Specifies the size of the compressed image data in bytes.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_vptr);
         }
+        /// <summary> Specify a two-dimensional compressed texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. For paletted formats, where all mipmap levels are loaded at once, this parameter is overloaded to represent the negative of the greatest mipmap level included in data. </param>
+        /// <param name="internalformat">Specifies the color components in the texture. The following symbolic constants are accepted: GL_PALETTE4_RGB8_OES, GL_PALETTE4_RGBA8_OES, GL_PALETTE4_R5_G6_B5_OES, GL_PALETTE4_RGBA4_OES, GL_PALETTE4_RGB5_A1_OES, GL_PALETTE8_RGB8_OES, GL_PALETTE8_RGBA8_OES, GL_PALETTE8_R5_G6_B5_OES, GL_PALETTE8_RGBA4_OES, and GL_PALETTE8_RGB5_A1_OES.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
@@ -483,6 +641,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional compressed texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. For paletted formats, where all mipmap levels are loaded at once, this parameter is overloaded to represent the negative of the greatest mipmap level included in data. </param>
+        /// <param name="internalformat">Specifies the color components in the texture. The following symbolic constants are accepted: GL_PALETTE4_RGB8_OES, GL_PALETTE4_RGBA8_OES, GL_PALETTE4_R5_G6_B5_OES, GL_PALETTE4_RGBA4_OES, GL_PALETTE4_RGB5_A1_OES, GL_PALETTE8_RGB8_OES, GL_PALETTE8_RGBA8_OES, GL_PALETTE8_R5_G6_B5_OES, GL_PALETTE8_RGBA4_OES, and GL_PALETTE8_RGB5_A1_OES.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, T1[] data)
             where T1 : unmanaged
         {
@@ -492,6 +658,15 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional compressed texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. For paletted formats, where all mipmap levels are loaded at once, this parameter is overloaded to represent the negative of the greatest mipmap level included in data. </param>
+        /// <param name="internalformat">Specifies the color components in the texture. The following symbolic constants are accepted: GL_PALETTE4_RGB8_OES, GL_PALETTE4_RGBA8_OES, GL_PALETTE4_R5_G6_B5_OES, GL_PALETTE4_RGBA4_OES, GL_PALETTE4_RGB5_A1_OES, GL_PALETTE8_RGB8_OES, GL_PALETTE8_RGBA8_OES, GL_PALETTE8_R5_G6_B5_OES, GL_PALETTE8_RGBA4_OES, and GL_PALETTE8_RGB5_A1_OES.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="imageSize">Specifies the size of the compressed image data in bytes.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, in T1 data)
             where T1 : unmanaged
         {
@@ -500,11 +675,30 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional compressed texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the format of the pixel data. Currently, there is no supported format.</param>
+        /// <param name="imageSize">Specifies the size of the compressed pixel data in bytes.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
+        /// <summary> Specify a two-dimensional compressed texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the format of the pixel data. Currently, there is no supported format.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
@@ -514,6 +708,15 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional compressed texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the format of the pixel data. Currently, there is no supported format.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] data)
             where T1 : unmanaged
         {
@@ -523,6 +726,16 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional compressed texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the format of the pixel data. Currently, there is no supported format.</param>
+        /// <param name="imageSize">Specifies the size of the compressed pixel data in bytes.</param>
+        /// <param name="data">Specifies a pointer to the compressed image data in memory.</param>
         public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
@@ -531,6 +744,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
+        /// <summary> Delete named buffer objects. </summary>
+        /// <param name="buffers">Specifies an array of buffer object names to be deleted.</param>
         public static unsafe void DeleteBuffer(in BufferHandle buffers)
         {
             int n = 1;
@@ -539,6 +754,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_handle);
             }
         }
+        /// <summary> Delete named buffer objects. </summary>
+        /// <param name="buffers">Specifies an array of buffer object names to be deleted.</param>
         public static unsafe void DeleteBuffers(ReadOnlySpan<BufferHandle> buffers)
         {
             int n = (int)(buffers.Length);
@@ -547,6 +764,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_ptr);
             }
         }
+        /// <summary> Delete named buffer objects. </summary>
+        /// <param name="buffers">Specifies an array of buffer object names to be deleted.</param>
         public static unsafe void DeleteBuffers(BufferHandle[] buffers)
         {
             int n = (int)(buffers.Length);
@@ -555,6 +774,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_ptr);
             }
         }
+        /// <summary> Delete named buffer objects. </summary>
+        /// <param name="n">Specifies the number of buffer objects to be deleted.</param>
+        /// <param name="buffers">Specifies an array of buffer object names to be deleted.</param>
         public static unsafe void DeleteBuffers(int n, in BufferHandle buffers)
         {
             fixed (BufferHandle* buffers_ptr = &buffers)
@@ -562,6 +784,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_ptr);
             }
         }
+        /// <summary> Delete named textures. </summary>
+        /// <param name="textures">Specifies an array of textures to be deleted.</param>
         public static unsafe void DeleteTexture(in TextureHandle textures)
         {
             int n = 1;
@@ -570,6 +794,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_handle);
             }
         }
+        /// <summary> Delete named textures. </summary>
+        /// <param name="textures">Specifies an array of textures to be deleted.</param>
         public static unsafe void DeleteTextures(ReadOnlySpan<TextureHandle> textures)
         {
             int n = (int)(textures.Length);
@@ -578,6 +804,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_ptr);
             }
         }
+        /// <summary> Delete named textures. </summary>
+        /// <param name="textures">Specifies an array of textures to be deleted.</param>
         public static unsafe void DeleteTextures(TextureHandle[] textures)
         {
             int n = (int)(textures.Length);
@@ -586,6 +814,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_ptr);
             }
         }
+        /// <summary> Delete named textures. </summary>
+        /// <param name="n">Specifies the number of textures to be deleted.</param>
+        /// <param name="textures">Specifies an array of textures to be deleted.</param>
         public static unsafe void DeleteTextures(int n, in TextureHandle textures)
         {
             fixed (TextureHandle* textures_ptr = &textures)
@@ -593,11 +824,17 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_ptr);
             }
         }
+        /// <summary> Enable or disable writing into the depth buffer. </summary>
+        /// <param name="flag">Specifies whether the depth buffer is enabled for writing. If flag is GL_FALSE, depth buffer writing is disabled, otherwise it is enabled. The initial value is GL_TRUE.</param>
         public static unsafe void DepthMask(bool flag)
         {
             byte flag_byte = (byte)(flag ? 1 : 0);
             DepthMask(flag_byte);
         }
+        /// <summary> Render primitives from array data. </summary>
+        /// <param name="mode">Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, and GL_TRIANGLES are accepted.</param>
+        /// <param name="count">Specifies the number of elements to be rendered.</param>
+        /// <param name="type">Specifies the type of the values in indices. Must be either GL_UNSIGNED_BYTE or GL_UNSIGNED_SHORT.</param>
         public static unsafe void DrawElements(PrimitiveType mode, int count, DrawElementsType type, nint offset)
         {
             void* indices = (void*)offset;
@@ -624,6 +861,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogxv(pname, param_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetBoolean(GetPName pname, Span<byte> data)
         {
             fixed (byte* data_ptr = data)
@@ -631,6 +870,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBooleanv(pname, data_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetBoolean(GetPName pname, byte[] data)
         {
             fixed (byte* data_ptr = data)
@@ -638,6 +879,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBooleanv(pname, data_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetBoolean(GetPName pname, ref byte data)
         {
             fixed (byte* data_ptr = &data)
@@ -645,6 +888,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBooleanv(pname, data_ptr);
             }
         }
+        /// <summary> Return parameters of a buffer object. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="pname"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_SIZE or GL_BUFFER_USAGE. </param>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -652,6 +898,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return parameters of a buffer object. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="pname"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_SIZE or GL_BUFFER_USAGE. </param>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -659,6 +908,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return parameters of a buffer object. </summary>
+        /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
+        /// <param name="pname"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_SIZE or GL_BUFFER_USAGE. </param>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -666,6 +918,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return the coefficients of the specified clipping    plane. </summary>
+        /// <param name="plane">Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. Symbolic names of the form GL_CLIP_PLANE i, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Returns four fixed-point or floating-point values that are the coefficients of the plane equation of plane in eye coordinates in the order p1, p2, p3, and p4. The initial value is (0, 0, 0, 0).</param>
         public static unsafe void GetClipPlanex(ClipPlaneName plane, Span<int> equation)
         {
             fixed (int* equation_ptr = equation)
@@ -673,6 +928,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanex(plane, equation_ptr);
             }
         }
+        /// <summary> Return the coefficients of the specified clipping    plane. </summary>
+        /// <param name="plane">Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. Symbolic names of the form GL_CLIP_PLANE i, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Returns four fixed-point or floating-point values that are the coefficients of the plane equation of plane in eye coordinates in the order p1, p2, p3, and p4. The initial value is (0, 0, 0, 0).</param>
         public static unsafe void GetClipPlanex(ClipPlaneName plane, int[] equation)
         {
             fixed (int* equation_ptr = equation)
@@ -680,6 +938,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanex(plane, equation_ptr);
             }
         }
+        /// <summary> Return the coefficients of the specified clipping    plane. </summary>
+        /// <param name="plane">Specifies a clipping plane. The number of clipping planes depends on the implementation, but at least six clipping planes are supported. Symbolic names of the form GL_CLIP_PLANE i, where i is an integer between 0 and GL_MAX_CLIP_PLANES -1 , are accepted.</param>
+        /// <param name="equation">Returns four fixed-point or floating-point values that are the coefficients of the plane equation of plane in eye coordinates in the order p1, p2, p3, and p4. The initial value is (0, 0, 0, 0).</param>
         public static unsafe void GetClipPlanex(ClipPlaneName plane, ref int equation)
         {
             fixed (int* equation_ptr = &equation)
@@ -687,6 +948,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanex(plane, equation_ptr);
             }
         }
+        /// <summary> Generate buffer object names. </summary>
         public static unsafe BufferHandle GenBuffer()
         {
             BufferHandle buffers;
@@ -704,6 +966,8 @@ namespace OpenTK.Graphics.OpenGLES1
             GenBuffers(n, buffers_handle);
             return buffers;
         }
+        /// <summary> Generate buffer object names. </summary>
+        /// <param name="buffers">Specifies an array in which the generated buffer object names are stored.</param>
         public static unsafe void GenBuffer(out BufferHandle buffers)
         {
             int n = 1;
@@ -719,6 +983,8 @@ namespace OpenTK.Graphics.OpenGLES1
             BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
             GenBuffers(n, buffers_handle);
         }
+        /// <summary> Generate buffer object names. </summary>
+        /// <param name="buffers">Specifies an array in which the generated buffer object names are stored.</param>
         public static unsafe void GenBuffers(Span<BufferHandle> buffers)
         {
             int n = (int)(buffers.Length);
@@ -727,6 +993,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenBuffers(n, buffers_ptr);
             }
         }
+        /// <summary> Generate buffer object names. </summary>
+        /// <param name="buffers">Specifies an array in which the generated buffer object names are stored.</param>
         public static unsafe void GenBuffers(BufferHandle[] buffers)
         {
             int n = (int)(buffers.Length);
@@ -735,6 +1003,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenBuffers(n, buffers_ptr);
             }
         }
+        /// <summary> Generate buffer object names. </summary>
+        /// <param name="n">Specifies the number of buffer object names to be generated.</param>
+        /// <param name="buffers">Specifies an array in which the generated buffer object names are stored.</param>
         public static unsafe void GenBuffers(int n, ref BufferHandle buffers)
         {
             fixed (BufferHandle* buffers_ptr = &buffers)
@@ -742,6 +1013,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenBuffers(n, buffers_ptr);
             }
         }
+        /// <summary> Generate texture names. </summary>
         public static unsafe TextureHandle GenTexture()
         {
             TextureHandle textures;
@@ -759,6 +1031,8 @@ namespace OpenTK.Graphics.OpenGLES1
             GenTextures(n, textures_handle);
             return textures;
         }
+        /// <summary> Generate texture names. </summary>
+        /// <param name="textures">Specifies an array in which the generated texture names are stored.</param>
         public static unsafe void GenTexture(out TextureHandle textures)
         {
             int n = 1;
@@ -774,6 +1048,8 @@ namespace OpenTK.Graphics.OpenGLES1
             TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
             GenTextures(n, textures_handle);
         }
+        /// <summary> Generate texture names. </summary>
+        /// <param name="textures">Specifies an array in which the generated texture names are stored.</param>
         public static unsafe void GenTextures(Span<TextureHandle> textures)
         {
             int n = (int)(textures.Length);
@@ -782,6 +1058,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenTextures(n, textures_ptr);
             }
         }
+        /// <summary> Generate texture names. </summary>
+        /// <param name="textures">Specifies an array in which the generated texture names are stored.</param>
         public static unsafe void GenTextures(TextureHandle[] textures)
         {
             int n = (int)(textures.Length);
@@ -790,6 +1068,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenTextures(n, textures_ptr);
             }
         }
+        /// <summary> Generate texture names. </summary>
+        /// <param name="n">Specifies the number of texture names to be generated.</param>
+        /// <param name="textures">Specifies an array in which the generated texture names are stored.</param>
         public static unsafe void GenTextures(int n, ref TextureHandle textures)
         {
             fixed (TextureHandle* textures_ptr = &textures)
@@ -797,6 +1078,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenTextures(n, textures_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetFixedv(GetPName pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -804,6 +1087,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFixedv(pname, parameters_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetInteger(GetPName pname, Span<int> data)
         {
             fixed (int* data_ptr = data)
@@ -811,6 +1096,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetIntegerv(pname, data_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetInteger(GetPName pname, int[] data)
         {
             fixed (int* data_ptr = data)
@@ -818,6 +1105,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetIntegerv(pname, data_ptr);
             }
         }
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         public static unsafe void GetInteger(GetPName pname, ref int data)
         {
             fixed (int* data_ptr = &data)
@@ -825,6 +1114,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetIntegerv(pname, data_ptr);
             }
         }
+        /// <summary> Return light source parameter values. </summary>
+        /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
+        /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
         public static unsafe void GetLightx(LightName light, LightParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -832,6 +1124,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightxv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Return light source parameter values. </summary>
+        /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
+        /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
         public static unsafe void GetLightx(LightName light, LightParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -839,6 +1134,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightxv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Return light source parameter values. </summary>
+        /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
+        /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
         public static unsafe void GetLightx(LightName light, LightParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -846,6 +1144,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightxv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Return material parameters values. </summary>
+        /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
+        /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         public static unsafe void GetMaterialx(MaterialFace face, MaterialParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -853,6 +1154,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialxv(face, pname, parameters_ptr);
             }
         }
+        /// <summary> Return material parameters values. </summary>
+        /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
+        /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         public static unsafe void GetMaterialx(MaterialFace face, MaterialParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -860,6 +1164,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialxv(face, pname, parameters_ptr);
             }
         }
+        /// <summary> Return material parameters values. </summary>
+        /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
+        /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         public static unsafe void GetMaterialx(MaterialFace face, MaterialParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -867,10 +1174,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialxv(face, pname, parameters_ptr);
             }
         }
+        /// <summary> Return the address of the specified pointer. </summary>
+        /// <param name="pname"> Specifies the array or buffer pointer to be returned. Accepted symbolic names are GL_COLOR_ARRAY_POINTER, GL_MATRIX_INDEX_ARRAY_POINTER_OES, GL_NORMAL_ARRAY_POINTER, GL_POINT_SIZE_ARRAY_POINTER_OES, GL_TEXTURE_COORD_ARRAY_POINTER, and GL_VERTEX_ARRAY_POINTER., and GL_WEIGHT_ARRAY_POINTER_OES. </param>
         public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
         {
             GetPointerv(pname, parameters);
         }
+        /// <summary> Return a string describing the current GL        connection. </summary>
+        /// <param name="name">Specifies a symbolic constant, one of GL_VENDOR, GL_RENDERER, GL_VERSION, or GL_EXTENSIONS.</param>
         public static unsafe string? GetString(StringName name)
         {
             byte* returnValue;
@@ -879,6 +1190,9 @@ namespace OpenTK.Graphics.OpenGLES1
             returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             return returnValue_str;
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -886,6 +1200,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnviv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -893,6 +1210,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnviv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -900,6 +1220,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnviv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -907,6 +1230,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvxv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -914,6 +1240,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvxv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture environment parameters. </summary>
+        /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
         public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -921,6 +1250,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvxv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -928,6 +1260,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -935,6 +1270,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -942,6 +1280,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -949,6 +1290,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterxv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -956,6 +1300,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterxv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
         public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1005,6 +1352,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightxv(light, pname, parameters_ptr);
             }
         }
+        /// <summary> Replace the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Specifies a pointer to 16 consecutive values, which are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void LoadMatrixx(ReadOnlySpan<int> m)
         {
             fixed (int* m_ptr = m)
@@ -1012,6 +1361,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixx(m_ptr);
             }
         }
+        /// <summary> Replace the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Specifies a pointer to 16 consecutive values, which are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void LoadMatrixx(int[] m)
         {
             fixed (int* m_ptr = m)
@@ -1019,6 +1370,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixx(m_ptr);
             }
         }
+        /// <summary> Replace the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Specifies a pointer to 16 consecutive values, which are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void LoadMatrixx(in int m)
         {
             fixed (int* m_ptr = &m)
@@ -1047,6 +1400,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialxv(face, pname, param_ptr);
             }
         }
+        /// <summary> Multiply the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Points to 16 consecutive values that are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void MultMatrixx(ReadOnlySpan<int> m)
         {
             fixed (int* m_ptr = m)
@@ -1054,6 +1409,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixx(m_ptr);
             }
         }
+        /// <summary> Multiply the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Points to 16 consecutive values that are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void MultMatrixx(int[] m)
         {
             fixed (int* m_ptr = m)
@@ -1061,6 +1418,8 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixx(m_ptr);
             }
         }
+        /// <summary> Multiply the current matrix with the specifiedmatrix. </summary>
+        /// <param name="m">Points to 16 consecutive values that are used as the elements of a 4x4 column-major matrix.</param>
         public static unsafe void MultMatrixx(in int m)
         {
             fixed (int* m_ptr = &m)
@@ -1068,11 +1427,19 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixx(m_ptr);
             }
         }
+        /// <summary> Define an array of normals. </summary>
+        /// <param name="type">Specifies the data type of each coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.</param>
         public static unsafe void NormalPointer(NormalPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             NormalPointer(type, stride, pointer_vptr);
         }
+        /// <summary> Define an array of normals. </summary>
+        /// <param name="type">Specifies the data type of each coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.</param>
         public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -1081,6 +1448,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 NormalPointer(type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of normals. </summary>
+        /// <param name="type">Specifies the data type of each coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.</param>
         public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -1089,6 +1460,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 NormalPointer(type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of normals. </summary>
+        /// <param name="type">Specifies the data type of each coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive normals. If stride is 0, the normals are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first normal in the array. The initial value is 0.</param>
         public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -1118,11 +1493,27 @@ namespace OpenTK.Graphics.OpenGLES1
                 PointParameterxv(pname, parameters_ptr);
             }
         }
+        /// <summary> Read a block of pixels from the color buffer. </summary>
+        /// <param name="x">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="y">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="width">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="height">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be either GL_RGBA or the value of GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES.</param>
+        /// <param name="type">Specifies the data type of the pixel data. Must be either GL_UNSIGNED_BYTE or the value of GL_IMPLEMENTATION_COLOR_READ_TYPE_OES.</param>
+        /// <param name="pixels">Returns the pixel data.</param>
         public static unsafe void ReadPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             ReadPixels(x, y, width, height, format, type, pixels_vptr);
         }
+        /// <summary> Read a block of pixels from the color buffer. </summary>
+        /// <param name="x">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="y">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="width">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="height">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be either GL_RGBA or the value of GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES.</param>
+        /// <param name="type">Specifies the data type of the pixel data. Must be either GL_UNSIGNED_BYTE or the value of GL_IMPLEMENTATION_COLOR_READ_TYPE_OES.</param>
+        /// <param name="pixels">Returns the pixel data.</param>
         public static unsafe void ReadPixels<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, Span<T1> pixels)
             where T1 : unmanaged
         {
@@ -1131,6 +1522,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
+        /// <summary> Read a block of pixels from the color buffer. </summary>
+        /// <param name="x">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="y">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="width">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="height">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be either GL_RGBA or the value of GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES.</param>
+        /// <param name="type">Specifies the data type of the pixel data. Must be either GL_UNSIGNED_BYTE or the value of GL_IMPLEMENTATION_COLOR_READ_TYPE_OES.</param>
+        /// <param name="pixels">Returns the pixel data.</param>
         public static unsafe void ReadPixels<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
@@ -1139,6 +1538,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
+        /// <summary> Read a block of pixels from the color buffer. </summary>
+        /// <param name="x">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="y">Specify the window coordinates of the first pixel that is read from the color buffer. This location is the lower left corner of a rectangular block of pixels.</param>
+        /// <param name="width">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="height">Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be either GL_RGBA or the value of GL_IMPLEMENTATION_COLOR_READ_FORMAT_OES.</param>
+        /// <param name="type">Specifies the data type of the pixel data. Must be either GL_UNSIGNED_BYTE or the value of GL_IMPLEMENTATION_COLOR_READ_TYPE_OES.</param>
+        /// <param name="pixels">Returns the pixel data.</param>
         public static unsafe void ReadPixels<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, ref T1 pixels)
             where T1 : unmanaged
         {
@@ -1147,21 +1554,37 @@ namespace OpenTK.Graphics.OpenGLES1
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
+        /// <summary> Specify mask to modify multisampled pixel fragments. </summary>
+        /// <param name="value">Specifies the coverage of the modification mask. The value is clamped to the range [0, 1], where 0 represents no coverage and 1 full coverage. The initial value is 1.</param>
+        /// <param name="invert">Specifies whether the modification mask implied by value is inverted or not. The initial value is GL_FALSE. </param>
         public static unsafe void SampleCoverage(float value, bool invert)
         {
             byte invert_byte = (byte)(invert ? 1 : 0);
             SampleCoverage(value, invert_byte);
         }
+        /// <summary> Specify mask to modify multisampled pixel fragments. </summary>
+        /// <param name="value">Specifies the coverage of the modification mask. The value is clamped to the range [0, 1], where 0 represents no coverage and 1 full coverage. The initial value is 1.</param>
+        /// <param name="invert">Specifies whether the modification mask implied by value is inverted or not. The initial value is GL_FALSE. </param>
         public static unsafe void SampleCoveragex(int value, bool invert)
         {
             byte invert_byte = (byte)(invert ? 1 : 0);
             SampleCoveragex(value, invert_byte);
         }
+        /// <summary> Define an array of texture coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per array element. Must be 2, 3 or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each texture coordinate. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive array elements. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first element in the array. The initial value is 0.</param>
         public static unsafe void TexCoordPointer(int size, TexCoordPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             TexCoordPointer(size, type, stride, pointer_vptr);
         }
+        /// <summary> Define an array of texture coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per array element. Must be 2, 3 or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each texture coordinate. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive array elements. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first element in the array. The initial value is 0.</param>
         public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -1170,6 +1593,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexCoordPointer(size, type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of texture coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per array element. Must be 2, 3 or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each texture coordinate. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive array elements. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first element in the array. The initial value is 0.</param>
         public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -1178,6 +1606,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexCoordPointer(size, type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of texture coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per array element. Must be 2, 3 or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each texture coordinate. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive array elements. If stride is 0, the array elements are understood to be tightly packed. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first element in the array. The initial value is 0.</param>
         public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -1228,11 +1661,31 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnvxv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. Must be greater or equal 0.</param>
+        /// <param name="internalformat">Specifies the color components in the texture. Must be same as format. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, or GL_LUMINANCE_ALPHA.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be same as internalformat. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
+        /// <summary> Specify a two-dimensional texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. Must be greater or equal 0.</param>
+        /// <param name="internalformat">Specifies the color components in the texture. Must be same as format. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, or GL_LUMINANCE_ALPHA.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be same as internalformat. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
@@ -1241,6 +1694,16 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. Must be greater or equal 0.</param>
+        /// <param name="internalformat">Specifies the color components in the texture. Must be same as format. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, or GL_LUMINANCE_ALPHA.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be same as internalformat. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
@@ -1249,6 +1712,16 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional texture image. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. Must be greater or equal 0.</param>
+        /// <param name="internalformat">Specifies the color components in the texture. Must be same as format. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, or GL_LUMINANCE_ALPHA.</param>
+        /// <param name="width">Specifies the width of the texture image. Must be 2n for some integer n. All implementations support texture images that are at least 64 texels wide.</param>
+        /// <param name="height">Specifies the height of the texture image. Must be 2m for some integer m. All implementations support texture images that are at least 64 texels high.</param>
+        /// <param name="border">Specifies the width of the border. Must be 0.</param>
+        /// <param name="format">Specifies the format of the pixel data. Must be same as internalformat. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
@@ -1299,11 +1772,31 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterxv(target, pname, parameters_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the of the pixel data. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_vptr);
         }
+        /// <summary> Specify a two-dimensional texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the of the pixel data. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
@@ -1312,6 +1805,16 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the of the pixel data. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
@@ -1320,6 +1823,16 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_ptr);
             }
         }
+        /// <summary> Specify a two-dimensional texture subimage. </summary>
+        /// <param name="target">Specifies the target texture. Must be GL_TEXTURE_2D.</param>
+        /// <param name="level">Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image.</param>
+        /// <param name="xoffset">Specifies a texel offset in the x direction within the texture array.</param>
+        /// <param name="yoffset">Specifies a texel offset in the y direction within the texture array.</param>
+        /// <param name="width">Specifies the width of the texture subimage.</param>
+        /// <param name="height">Specifies the height of the texture subimage.</param>
+        /// <param name="format">Specifies the of the pixel data. The following symbolic values are accepted: GL_ALPHA, GL_RGB, GL_RGBA, GL_LUMINANCE, and GL_LUMINANCE_ALPHA.</param>
+        /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
+        /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
@@ -1328,11 +1841,21 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_ptr);
             }
         }
+        /// <summary> Define an array of vertex coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per vertex. Must be 2, 3, or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each vertex coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED, are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.</param>
         public static unsafe void VertexPointer(int size, VertexPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             VertexPointer(size, type, stride, pointer_vptr);
         }
+        /// <summary> Define an array of vertex coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per vertex. Must be 2, 3, or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each vertex coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED, are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.</param>
         public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -1341,6 +1864,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 VertexPointer(size, type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of vertex coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per vertex. Must be 2, 3, or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each vertex coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED, are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.</param>
         public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -1349,6 +1877,11 @@ namespace OpenTK.Graphics.OpenGLES1
                 VertexPointer(size, type, stride, pointer_ptr);
             }
         }
+        /// <summary> Define an array of vertex coordinates. </summary>
+        /// <param name="size">Specifies the number of coordinates per vertex. Must be 2, 3, or 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each vertex coordinate in the array. Symbolic constants GL_BYTE, GL_SHORT, and GL_FIXED, are accepted. However, the initial value is GL_FLOAT.</param>
+        /// <param name="stride">Specifies the byte offset between consecutive vertices. If stride is 0, the vertices are understood to be tightly packed in the array. The initial value is 0.</param>
+        /// <param name="pointer">Specifies a pointer to the first coordinate of the first vertex in the array. The initial value is 0.</param>
         public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -1972,6 +2505,8 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
+            /// <summary> Return the address of the specified pointer. </summary>
+            /// <param name="pname"> Specifies the array or buffer pointer to be returned. Accepted symbolic names are GL_COLOR_ARRAY_POINTER, GL_MATRIX_INDEX_ARRAY_POINTER_OES, GL_NORMAL_ARRAY_POINTER, GL_POINT_SIZE_ARRAY_POINTER_OES, GL_TEXTURE_COORD_ARRAY_POINTER, and GL_VERTEX_ARRAY_POINTER., and GL_WEIGHT_ARRAY_POINTER_OES. </param>
             public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
             {
                 GetPointerv(pname, parameters);
@@ -3943,11 +4478,21 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
                 }
             }
+            /// <summary> Define an array of matrix indices. </summary>
+            /// <param name="size"> Specifies the number of matrix indices per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each matrix index in the array. Symbolic constant GL_UNSIGNED_BYTE is accepted. The initial value is GL_UNSIGNED_BYTE. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive matrix indices. If stride is 0, the matrix indices are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first matrix index of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void MatrixIndexPointerOES(int size, MatrixIndexPointerTypeARB type, int stride, IntPtr pointer)
             {
                 void* pointer_vptr = (void*)pointer;
                 MatrixIndexPointerOES(size, type, stride, pointer_vptr);
             }
+            /// <summary> Define an array of matrix indices. </summary>
+            /// <param name="size"> Specifies the number of matrix indices per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each matrix index in the array. Symbolic constant GL_UNSIGNED_BYTE is accepted. The initial value is GL_UNSIGNED_BYTE. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive matrix indices. If stride is 0, the matrix indices are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first matrix index of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void MatrixIndexPointerOES<T1>(int size, MatrixIndexPointerTypeARB type, int stride, ReadOnlySpan<T1> pointer)
                 where T1 : unmanaged
             {
@@ -3956,6 +4501,11 @@ namespace OpenTK.Graphics.OpenGLES1
                     MatrixIndexPointerOES(size, type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of matrix indices. </summary>
+            /// <param name="size"> Specifies the number of matrix indices per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each matrix index in the array. Symbolic constant GL_UNSIGNED_BYTE is accepted. The initial value is GL_UNSIGNED_BYTE. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive matrix indices. If stride is 0, the matrix indices are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first matrix index of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void MatrixIndexPointerOES<T1>(int size, MatrixIndexPointerTypeARB type, int stride, T1[] pointer)
                 where T1 : unmanaged
             {
@@ -3964,6 +4514,11 @@ namespace OpenTK.Graphics.OpenGLES1
                     MatrixIndexPointerOES(size, type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of matrix indices. </summary>
+            /// <param name="size"> Specifies the number of matrix indices per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each matrix index in the array. Symbolic constant GL_UNSIGNED_BYTE is accepted. The initial value is GL_UNSIGNED_BYTE. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive matrix indices. If stride is 0, the matrix indices are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first matrix index of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void MatrixIndexPointerOES<T1>(int size, MatrixIndexPointerTypeARB type, int stride, in T1 pointer)
                 where T1 : unmanaged
             {
@@ -3972,11 +4527,21 @@ namespace OpenTK.Graphics.OpenGLES1
                     MatrixIndexPointerOES(size, type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of weights. </summary>
+            /// <param name="size"> Specifies the number of weights per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each weight in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT as well. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive weights. If stride is 0, the weights are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first weight of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void WeightPointerOES(int size, All type, int stride, IntPtr pointer)
             {
                 void* pointer_vptr = (void*)pointer;
                 WeightPointerOES(size, type, stride, pointer_vptr);
             }
+            /// <summary> Define an array of weights. </summary>
+            /// <param name="size"> Specifies the number of weights per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each weight in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT as well. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive weights. If stride is 0, the weights are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first weight of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void WeightPointerOES<T1>(int size, All type, int stride, ReadOnlySpan<T1> pointer)
                 where T1 : unmanaged
             {
@@ -3985,6 +4550,11 @@ namespace OpenTK.Graphics.OpenGLES1
                     WeightPointerOES(size, type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of weights. </summary>
+            /// <param name="size"> Specifies the number of weights per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each weight in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT as well. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive weights. If stride is 0, the weights are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first weight of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void WeightPointerOES<T1>(int size, All type, int stride, T1[] pointer)
                 where T1 : unmanaged
             {
@@ -3993,6 +4563,11 @@ namespace OpenTK.Graphics.OpenGLES1
                     WeightPointerOES(size, type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of weights. </summary>
+            /// <param name="size"> Specifies the number of weights per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
+            /// <param name="type"> Specifies the data type of each weight in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT as well. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive weights. If stride is 0, the weights are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the first weight of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void WeightPointerOES<T1>(int size, All type, int stride, in T1 pointer)
                 where T1 : unmanaged
             {
@@ -4001,11 +4576,19 @@ namespace OpenTK.Graphics.OpenGLES1
                     WeightPointerOES(size, type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of point sizes. </summary>
+            /// <param name="type"> Specifies the data type of each point size in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive point sizes. If stride is 0, the point sizes are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the point size of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void PointSizePointerOES(All type, int stride, IntPtr pointer)
             {
                 void* pointer_vptr = (void*)pointer;
                 PointSizePointerOES(type, stride, pointer_vptr);
             }
+            /// <summary> Define an array of point sizes. </summary>
+            /// <param name="type"> Specifies the data type of each point size in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive point sizes. If stride is 0, the point sizes are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the point size of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void PointSizePointerOES<T1>(All type, int stride, ReadOnlySpan<T1> pointer)
                 where T1 : unmanaged
             {
@@ -4014,6 +4597,10 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointSizePointerOES(type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of point sizes. </summary>
+            /// <param name="type"> Specifies the data type of each point size in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive point sizes. If stride is 0, the point sizes are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the point size of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void PointSizePointerOES<T1>(All type, int stride, T1[] pointer)
                 where T1 : unmanaged
             {
@@ -4022,6 +4609,10 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointSizePointerOES(type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Define an array of point sizes. </summary>
+            /// <param name="type"> Specifies the data type of each point size in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
+            /// <param name="stride"> Specifies the byte offset between consecutive point sizes. If stride is 0, the point sizes are understood to be tightly packed in the array. The initial value is 0. </param>
+            /// <param name="pointer"> Specifies a pointer to the point size of the first vertex in the array. The initial value is 0. </param>
             public static unsafe void PointSizePointerOES<T1>(All type, int stride, in T1 pointer)
                 where T1 : unmanaged
             {
@@ -4030,6 +4621,9 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointSizePointerOES(type, stride, pointer_ptr);
                 }
             }
+            /// <summary> Return the values of the current matrix. </summary>
+            /// <param name="mantissa">Returns the mantissa values of the current matrix.</param>
+            /// <param name="exponent">Returns the exponents of the current matrix.</param>
             public static unsafe All QueryMatrixxOES(Span<int> mantissa, Span<int> exponent)
             {
                 All returnValue;
@@ -4042,6 +4636,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
+            /// <summary> Return the values of the current matrix. </summary>
+            /// <param name="mantissa">Returns the mantissa values of the current matrix.</param>
+            /// <param name="exponent">Returns the exponents of the current matrix.</param>
             public static unsafe All QueryMatrixxOES(int[] mantissa, int[] exponent)
             {
                 All returnValue;
@@ -4054,6 +4651,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
+            /// <summary> Return the values of the current matrix. </summary>
+            /// <param name="mantissa">Returns the mantissa values of the current matrix.</param>
+            /// <param name="exponent">Returns the exponents of the current matrix.</param>
             public static unsafe All QueryMatrixxOES(ref int mantissa, ref int exponent)
             {
                 All returnValue;

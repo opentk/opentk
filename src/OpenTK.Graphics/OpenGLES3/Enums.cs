@@ -1581,7 +1581,6 @@ namespace OpenTK.Graphics.OpenGLES3
         ContextFlagDebugBitKhr = 2,
         StackOverflowKhr = 1283,
         StackUnderflowKhr = 1284,
-        DisplayList = 33511,
         ContextFlagNoErrorBitKhr = 8,
         ContextRobustAccess = 37107,
         ContextRobustAccessKhr = 37107,
@@ -2012,17 +2011,6 @@ namespace OpenTK.Graphics.OpenGLES3
         RelativeConicCurveToNv = 27,
         FontNumGlyphIndicesBitNv = 536870912,
         StandardFontFormatNv = 37740,
-        _2BytesNv = 5127,
-        _3BytesNv = 5128,
-        _4BytesNv = 5129,
-        EyeLinearNv = 9216,
-        ObjectLinearNv = 9217,
-        ConstantNv = 34166,
-        PathFogGenModeNv = 37036,
-        PrimaryColor = 34167,
-        PrimaryColorNv = 34092,
-        SecondaryColorNv = 34093,
-        PathGenColorFormatNv = 37042,
         PathProjectionNv = 5889,
         PathModelviewNv = 5888,
         PathModelviewStackDepthNv = 2979,
@@ -4573,11 +4561,6 @@ namespace OpenTK.Graphics.OpenGLES3
         Texture30 = 34014,
         Texture31 = 34015,
     }
-    public enum CombinerRegisterNV : uint
-    {
-        PrimaryColorNv = 34092,
-        SecondaryColorNv = 34093,
-    }
     public enum UniformBlockPName : uint
     {
         UniformBlockBinding = 35391,
@@ -4596,12 +4579,6 @@ namespace OpenTK.Graphics.OpenGLES3
     {
         FenceStatusNv = 34035,
         FenceConditionNv = 34036,
-    }
-    public enum PathColor : uint
-    {
-        PrimaryColor = 34167,
-        PrimaryColorNv = 34092,
-        SecondaryColorNv = 34093,
     }
     public enum VertexAttribEnum : uint
     {

@@ -1737,7 +1737,6 @@ namespace OpenTK.Graphics.OpenGL
         MaxVertexAttribRelativeOffset = 33497,
         MaxVertexAttribBindings = 33498,
         VertexBindingBuffer = 36687,
-        DisplayList = 33511,
         MaxVertexAttribStride = 33509,
         PrimitiveRestartForPatchesSupported = 33313,
         TextureBufferBinding = 35882,
@@ -1777,18 +1776,6 @@ namespace OpenTK.Graphics.OpenGL
         LoseContextOnReset = 33362,
         NoResetNotification = 33377,
         ContextFlagRobustAccessBit = 4,
-        ColorTable = 32976,
-        PostConvolutionColorTable = 32977,
-        PostColorMatrixColorTable = 32978,
-        ProxyColorTable = 32979,
-        ProxyPostConvolutionColorTable = 32980,
-        ProxyPostColorMatrixColorTable = 32981,
-        Convolution1d = 32784,
-        Convolution2d = 32785,
-        Separable2d = 32786,
-        Histogram = 32804,
-        ProxyHistogram = 32805,
-        Minmax = 32814,
         ContextReleaseBehavior = 33531,
         ContextReleaseBehaviorFlush = 33532,
         ShaderBinaryFormatSpirV = 38225,
@@ -2157,58 +2144,6 @@ namespace OpenTK.Graphics.OpenGL
         UnsignedInt64Vec3Arb = 36854,
         UnsignedInt64Vec4Arb = 36855,
         HalfFloatArb = 5131,
-        ConvolutionBorderMode = 32787,
-        ConvolutionFilterScale = 32788,
-        ConvolutionFilterBias = 32789,
-        Reduce = 32790,
-        ConvolutionFormat = 32791,
-        ConvolutionWidth = 32792,
-        ConvolutionHeight = 32793,
-        MaxConvolutionWidth = 32794,
-        MaxConvolutionHeight = 32795,
-        PostConvolutionRedScale = 32796,
-        PostConvolutionGreenScale = 32797,
-        PostConvolutionBlueScale = 32798,
-        PostConvolutionAlphaScale = 32799,
-        PostConvolutionRedBias = 32800,
-        PostConvolutionGreenBias = 32801,
-        PostConvolutionBlueBias = 32802,
-        PostConvolutionAlphaBias = 32803,
-        HistogramWidth = 32806,
-        HistogramFormat = 32807,
-        HistogramRedSize = 32808,
-        HistogramGreenSize = 32809,
-        HistogramBlueSize = 32810,
-        HistogramAlphaSize = 32811,
-        HistogramLuminanceSize = 32812,
-        HistogramSink = 32813,
-        MinmaxFormat = 32815,
-        MinmaxSink = 32816,
-        TableTooLarge = 32817,
-        ColorMatrix = 32945,
-        ColorMatrixStackDepth = 32946,
-        MaxColorMatrixStackDepth = 32947,
-        PostColorMatrixRedScale = 32948,
-        PostColorMatrixGreenScale = 32949,
-        PostColorMatrixBlueScale = 32950,
-        PostColorMatrixAlphaScale = 32951,
-        PostColorMatrixRedBias = 32952,
-        PostColorMatrixGreenBias = 32953,
-        PostColorMatrixBlueBias = 32954,
-        PostColorMatrixAlphaBias = 32955,
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
-        ConstantBorder = 33105,
-        ReplicateBorder = 33107,
-        ConvolutionBorderColor = 33108,
         ParameterBufferArb = 33006,
         ParameterBufferBindingArb = 33007,
         VertexAttribArrayDivisorArb = 35070,
@@ -4250,16 +4185,6 @@ namespace OpenTK.Graphics.OpenGL
         RelativeConicCurveToNv = 27,
         FontNumGlyphIndicesBitNv = 536870912,
         StandardFontFormatNv = 37740,
-        _2BytesNv = 5127,
-        _3BytesNv = 5128,
-        _4BytesNv = 5129,
-        EyeLinearNv = 9216,
-        ObjectLinearNv = 9217,
-        ConstantNv = 34166,
-        PathFogGenModeNv = 37036,
-        PrimaryColorNv = 34092,
-        SecondaryColorNv = 34093,
-        PathGenColorFormatNv = 37042,
         PathProjectionNv = 5889,
         PathModelviewNv = 5888,
         PathModelviewStackDepthNv = 2979,
@@ -4307,6 +4232,8 @@ namespace OpenTK.Graphics.OpenGL
         VariableGNv = 34089,
         ConstantColor0Nv = 34090,
         ConstantColor1Nv = 34091,
+        PrimaryColorNv = 34092,
+        SecondaryColorNv = 34093,
         Spare0Nv = 34094,
         Spare1Nv = 34095,
         DiscardNv = 34096,
@@ -5426,7 +5353,6 @@ namespace OpenTK.Graphics.OpenGL
         StackOverflow = 1283,
         StackUnderflow = 1284,
         InvalidFramebufferOperation = 1286,
-        TableTooLarge = 32817,
         InvalidFramebufferOperationExt = 1286,
         TableTooLargeExt = 32817,
         TextureTooLargeExt = 32869,
@@ -6471,9 +6397,6 @@ namespace OpenTK.Graphics.OpenGL
         PrimitiveRestartFixedIndex = 36201,
         DebugOutputSynchronous = 33346,
         DebugOutput = 37600,
-        ColorTable = 32976,
-        PostConvolutionColorTable = 32977,
-        PostColorMatrixColorTable = 32978,
         Convolution1dExt = 32784,
         Convolution2dExt = 32785,
         Separable2dExt = 32786,
@@ -6689,22 +6612,6 @@ namespace OpenTK.Graphics.OpenGL
         AlphaBias = 3357,
         DepthScale = 3358,
         DepthBias = 3359,
-        PostConvolutionRedScale = 32796,
-        PostConvolutionGreenScale = 32797,
-        PostConvolutionBlueScale = 32798,
-        PostConvolutionAlphaScale = 32799,
-        PostConvolutionRedBias = 32800,
-        PostConvolutionGreenBias = 32801,
-        PostConvolutionBlueBias = 32802,
-        PostConvolutionAlphaBias = 32803,
-        PostColorMatrixRedScale = 32948,
-        PostColorMatrixGreenScale = 32949,
-        PostColorMatrixBlueScale = 32950,
-        PostColorMatrixAlphaScale = 32951,
-        PostColorMatrixRedBias = 32952,
-        PostColorMatrixGreenBias = 32953,
-        PostColorMatrixBlueBias = 32954,
-        PostColorMatrixAlphaBias = 32955,
         PostConvolutionRedScaleExt = 32796,
         PostConvolutionGreenScaleExt = 32797,
         PostConvolutionBlueScaleExt = 32798,
@@ -8477,38 +8384,17 @@ namespace OpenTK.Graphics.OpenGL
         AlphaMinSgix = 33568,
         AlphaMaxSgix = 33569,
     }
-    public enum ConvolutionTarget : uint
-    {
-        Convolution1d = 32784,
-        Convolution2d = 32785,
-    }
     public enum ConvolutionTargetEXT : uint
     {
-        Convolution1d = 32784,
-        Convolution2d = 32785,
         Convolution1dExt = 32784,
         Convolution2dExt = 32785,
     }
-    public enum SeparableTarget : uint
-    {
-        Separable2d = 32786,
-    }
     public enum SeparableTargetEXT : uint
     {
-        Separable2d = 32786,
         Separable2dExt = 32786,
     }
     public enum GetConvolutionParameter : uint
     {
-        ConvolutionBorderMode = 32787,
-        ConvolutionFilterScale = 32788,
-        ConvolutionFilterBias = 32789,
-        ConvolutionFormat = 32791,
-        ConvolutionWidth = 32792,
-        ConvolutionHeight = 32793,
-        MaxConvolutionWidth = 32794,
-        MaxConvolutionHeight = 32795,
-        ConvolutionBorderColor = 33108,
         ConvolutionBorderModeExt = 32787,
         ConvolutionFilterScaleExt = 32788,
         ConvolutionFilterBiasExt = 32789,
@@ -8520,40 +8406,21 @@ namespace OpenTK.Graphics.OpenGL
     }
     public enum ConvolutionParameterEXT : uint
     {
-        ConvolutionBorderMode = 32787,
-        ConvolutionFilterScale = 32788,
-        ConvolutionFilterBias = 32789,
         ConvolutionBorderModeExt = 32787,
         ConvolutionFilterScaleExt = 32788,
         ConvolutionFilterBiasExt = 32789,
     }
     public enum ConvolutionBorderModeEXT : uint
     {
-        Reduce = 32790,
         ReduceExt = 32790,
-    }
-    public enum HistogramTarget : uint
-    {
-        Histogram = 32804,
-        ProxyHistogram = 32805,
     }
     public enum HistogramTargetEXT : uint
     {
-        Histogram = 32804,
-        ProxyHistogram = 32805,
         HistogramExt = 32804,
         ProxyHistogramExt = 32805,
     }
     public enum GetHistogramParameterPNameEXT : uint
     {
-        HistogramWidth = 32806,
-        HistogramFormat = 32807,
-        HistogramRedSize = 32808,
-        HistogramGreenSize = 32809,
-        HistogramBlueSize = 32810,
-        HistogramAlphaSize = 32811,
-        HistogramLuminanceSize = 32812,
-        HistogramSink = 32813,
         HistogramWidthExt = 32806,
         HistogramFormatExt = 32807,
         HistogramRedSizeExt = 32808,
@@ -8563,19 +8430,12 @@ namespace OpenTK.Graphics.OpenGL
         HistogramLuminanceSizeExt = 32812,
         HistogramSinkExt = 32813,
     }
-    public enum MinmaxTarget : uint
-    {
-        Minmax = 32814,
-    }
     public enum MinmaxTargetEXT : uint
     {
-        Minmax = 32814,
         MinmaxExt = 32814,
     }
     public enum GetMinmaxParameterPNameEXT : uint
     {
-        MinmaxFormat = 32815,
-        MinmaxSink = 32816,
         MinmaxFormatExt = 32815,
         MinmaxSinkExt = 32816,
     }
@@ -8682,12 +8542,6 @@ namespace OpenTK.Graphics.OpenGL
     }
     public enum ColorTableTargetSGI : uint
     {
-        ColorTable = 32976,
-        PostConvolutionColorTable = 32977,
-        PostColorMatrixColorTable = 32978,
-        ProxyColorTable = 32979,
-        ProxyPostConvolutionColorTable = 32980,
-        ProxyPostColorMatrixColorTable = 32981,
         ColorTableSgi = 32976,
         PostConvolutionColorTableSgi = 32977,
         PostColorMatrixColorTableSgi = 32978,
@@ -8699,25 +8553,9 @@ namespace OpenTK.Graphics.OpenGL
     }
     public enum ColorTableTarget : uint
     {
-        ColorTable = 32976,
-        PostConvolutionColorTable = 32977,
-        PostColorMatrixColorTable = 32978,
-        ProxyColorTable = 32979,
-        ProxyPostConvolutionColorTable = 32980,
-        ProxyPostColorMatrixColorTable = 32981,
     }
     public enum GetColorTableParameterPNameSGI : uint
     {
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
         ColorTableScaleSgi = 32982,
         ColorTableBiasSgi = 32983,
         ColorTableFormatSgi = 32984,
@@ -8731,16 +8569,6 @@ namespace OpenTK.Graphics.OpenGL
     }
     public enum ColorTableParameterPNameSGI : uint
     {
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
         ColorTableScaleSgi = 32982,
         ColorTableBiasSgi = 32983,
         ColorTableFormatSgi = 32984,
@@ -8751,32 +8579,6 @@ namespace OpenTK.Graphics.OpenGL
         ColorTableAlphaSizeSgi = 32989,
         ColorTableLuminanceSizeSgi = 32990,
         ColorTableIntensitySizeSgi = 32991,
-    }
-    public enum GetColorTableParameterPName : uint
-    {
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
-    }
-    public enum ColorTableParameterPName : uint
-    {
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
     }
     public enum BufferTargetARB : uint
     {

@@ -8,6 +8,8 @@ namespace OpenTK.Graphics.OpenGLES3
     public static unsafe partial class GL
     {
         private static delegate* unmanaged<TextureUnit, void> _ActiveTexture_fnptr = &ActiveTexture_Lazy;
+        /// <summary> Select active texture unit. </summary>
+        /// <param name="texture"> Specifies which texture unit to make active. The number of texture units is implementation-dependent, but must be at least 32. texture must be one of GL_TEXTUREi, where i ranges from zero to the value of GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS minus one. The initial value is GL_TEXTURE0. </param>
         public static void ActiveTexture(TextureUnit texture) => _ActiveTexture_fnptr(texture);
         [UnmanagedCallersOnly]
         private static void ActiveTexture_Lazy(TextureUnit texture)
@@ -17,6 +19,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ShaderHandle, void> _AttachShader_fnptr = &AttachShader_Lazy;
+        /// <summary> Attaches a shader object to a program object. </summary>
+        /// <param name="program">Specifies the program object to which a shader object will be attached.</param>
+        /// <param name="shader">Specifies the shader object that is to be attached.</param>
         public static void AttachShader(ProgramHandle program, ShaderHandle shader) => _AttachShader_fnptr(program, shader);
         [UnmanagedCallersOnly]
         private static void AttachShader_Lazy(ProgramHandle program, ShaderHandle shader)
@@ -26,6 +31,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, uint, byte*, void> _BindAttribLocation_fnptr = &BindAttribLocation_Lazy;
+        /// <summary> Associates a generic vertex attribute index with a named attribute variable. </summary>
+        /// <param name="program">Specifies the handle of the program object in which the association is to be made.</param>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be bound.</param>
+        /// <param name="name">Specifies a null terminated string containing the name of the vertex shader attribute variable to which index is to be bound.</param>
         public static void BindAttribLocation(ProgramHandle program, uint index, byte* name) => _BindAttribLocation_fnptr(program, index, name);
         [UnmanagedCallersOnly]
         private static void BindAttribLocation_Lazy(ProgramHandle program, uint index, byte* name)
@@ -35,6 +44,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, BufferHandle, void> _BindBuffer_fnptr = &BindBuffer_Lazy;
+        /// <summary> Bind a named buffer object. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound, which must be one of the buffer binding targets in the following table: </param>
+        /// <param name="buffer"> Specifies the name of a buffer object. </param>
         public static void BindBuffer(BufferTargetARB target, BufferHandle buffer) => _BindBuffer_fnptr(target, buffer);
         [UnmanagedCallersOnly]
         private static void BindBuffer_Lazy(BufferTargetARB target, BufferHandle buffer)
@@ -44,6 +56,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferHandle, void> _BindFramebuffer_fnptr = &BindFramebuffer_Lazy;
+        /// <summary> Bind a framebuffer to a framebuffer target. </summary>
+        /// <param name="target"> Specifies the framebuffer target of the binding operation. </param>
+        /// <param name="framebuffer"> Specifies the name of the framebuffer object to bind. </param>
         public static void BindFramebuffer(FramebufferTarget target, FramebufferHandle framebuffer) => _BindFramebuffer_fnptr(target, framebuffer);
         [UnmanagedCallersOnly]
         private static void BindFramebuffer_Lazy(FramebufferTarget target, FramebufferHandle framebuffer)
@@ -53,6 +68,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<RenderbufferTarget, RenderbufferHandle, void> _BindRenderbuffer_fnptr = &BindRenderbuffer_Lazy;
+        /// <summary> Bind a renderbuffer to a renderbuffer target. </summary>
+        /// <param name="target"> Specifies the renderbuffer target of the binding operation. target must be GL_RENDERBUFFER. </param>
+        /// <param name="renderbuffer"> Specifies the name of the renderbuffer object to bind. </param>
         public static void BindRenderbuffer(RenderbufferTarget target, RenderbufferHandle renderbuffer) => _BindRenderbuffer_fnptr(target, renderbuffer);
         [UnmanagedCallersOnly]
         private static void BindRenderbuffer_Lazy(RenderbufferTarget target, RenderbufferHandle renderbuffer)
@@ -62,6 +80,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, TextureHandle, void> _BindTexture_fnptr = &BindTexture_Lazy;
+        /// <summary> Bind a named texture to a texturing target. </summary>
+        /// <param name="target"> Specifies the target to which the texture is bound. Must be either GL_TEXTURE_2D, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_BUFFER. </param>
+        /// <param name="texture"> Specifies the name of a texture. </param>
         public static void BindTexture(TextureTarget target, TextureHandle texture) => _BindTexture_fnptr(target, texture);
         [UnmanagedCallersOnly]
         private static void BindTexture_Lazy(TextureTarget target, TextureHandle texture)
@@ -71,6 +92,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, float, float, float, void> _BlendColor_fnptr = &BlendColor_Lazy;
+        /// <summary> Set the blend color. </summary>
+        /// <param name="red"> specify the components of GL_BLEND_COLOR </param>
+        /// <param name="green"> specify the components of GL_BLEND_COLOR </param>
+        /// <param name="blue"> specify the components of GL_BLEND_COLOR </param>
+        /// <param name="alpha"> specify the components of GL_BLEND_COLOR </param>
         public static void BlendColor(float red, float green, float blue, float alpha) => _BlendColor_fnptr(red, green, blue, alpha);
         [UnmanagedCallersOnly]
         private static void BlendColor_Lazy(float red, float green, float blue, float alpha)
@@ -80,6 +106,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BlendEquationModeEXT, void> _BlendEquation_fnptr = &BlendEquation_Lazy;
+        /// <summary> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
+        /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         public static void BlendEquation(BlendEquationModeEXT mode) => _BlendEquation_fnptr(mode);
         [UnmanagedCallersOnly]
         private static void BlendEquation_Lazy(BlendEquationModeEXT mode)
@@ -89,6 +117,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BlendEquationModeEXT, BlendEquationModeEXT, void> _BlendEquationSeparate_fnptr = &BlendEquationSeparate_Lazy;
+        /// <summary> Set the RGB blend equation and the alpha blend equation separately. </summary>
+        /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
+        /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         public static void BlendEquationSeparate(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => _BlendEquationSeparate_fnptr(modeRGB, modeAlpha);
         [UnmanagedCallersOnly]
         private static void BlendEquationSeparate_Lazy(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha)
@@ -98,6 +129,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BlendingFactor, BlendingFactor, void> _BlendFunc_fnptr = &BlendFunc_Lazy;
+        /// <summary> Specify pixel arithmetic. </summary>
+        /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
+        /// <param name="dfactor"> Specifies how the red, green, blue, and alpha destination blending factors are computed. The following symbolic constants are accepted: GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA. GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA, and GL_ONE_MINUS_CONSTANT_ALPHA. The initial value is GL_ZERO. </param>
         public static void BlendFunc(BlendingFactor sfactor, BlendingFactor dfactor) => _BlendFunc_fnptr(sfactor, dfactor);
         [UnmanagedCallersOnly]
         private static void BlendFunc_Lazy(BlendingFactor sfactor, BlendingFactor dfactor)
@@ -107,6 +141,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BlendingFactor, BlendingFactor, BlendingFactor, BlendingFactor, void> _BlendFuncSeparate_fnptr = &BlendFuncSeparate_Lazy;
+        /// <summary> Specify pixel arithmetic for RGB and alpha components separately. </summary>
+        /// <param name="srcRGB"> Specifies how the red, green, and blue blending factors are computed. The initial value is GL_ONE. </param>
+        /// <param name="dstRGB"> Specifies how the red, green, and blue destination blending factors are computed. The initial value is GL_ZERO. </param>
+        /// <param name="srcAlpha"> Specified how the alpha source blending factor is computed. The initial value is GL_ONE. </param>
+        /// <param name="dstAlpha"> Specified how the alpha destination blending factor is computed. The initial value is GL_ZERO. </param>
         public static void BlendFuncSeparate(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => _BlendFuncSeparate_fnptr(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
         [UnmanagedCallersOnly]
         private static void BlendFuncSeparate_Lazy(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha)
@@ -116,6 +155,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, nint, void*, BufferUsageARB, void> _BufferData_fnptr = &BufferData_Lazy;
+        /// <summary> Creates and initializes a buffer object's data store. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glBufferData, which must be one of the buffer binding targets in the following table: </param>
+        /// <param name="size"> Specifies the size in bytes of the buffer object's new data store. </param>
+        /// <param name="data"> Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied. </param>
+        /// <param name="usage"> Specifies the expected usage pattern of the data store. The symbolic constant must be GL_STREAM_DRAW, GL_STREAM_READ, GL_STREAM_COPY, GL_STATIC_DRAW, GL_STATIC_READ, GL_STATIC_COPY, GL_DYNAMIC_DRAW, GL_DYNAMIC_READ, or GL_DYNAMIC_COPY. </param>
         public static void BufferData(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => _BufferData_fnptr(target, size, data, usage);
         [UnmanagedCallersOnly]
         private static void BufferData_Lazy(BufferTargetARB target, nint size, void* data, BufferUsageARB usage)
@@ -125,6 +169,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, IntPtr, nint, void*, void> _BufferSubData_fnptr = &BufferSubData_Lazy;
+        /// <summary> Updates a subset of a buffer object's data store. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glBufferSubData, which must be one of the buffer binding targets in the following table: </param>
+        /// <param name="offset"> Specifies the offset into the buffer object's data store where data replacement will begin, measured in bytes. </param>
+        /// <param name="size"> Specifies the size in bytes of the data store region being replaced. </param>
+        /// <param name="data"> Specifies a pointer to the new data that will be copied into the data store. </param>
         public static void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => _BufferSubData_fnptr(target, offset, size, data);
         [UnmanagedCallersOnly]
         private static void BufferSubData_Lazy(BufferTargetARB target, IntPtr offset, nint size, void* data)
@@ -134,6 +183,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferStatus> _CheckFramebufferStatus_fnptr = &CheckFramebufferStatus_Lazy;
+        /// <summary> Check the completeness status of a framebuffer. </summary>
+        /// <param name="target"> Specify the target of the framebuffer completeness check. </param>
         public static FramebufferStatus CheckFramebufferStatus(FramebufferTarget target) => _CheckFramebufferStatus_fnptr(target);
         [UnmanagedCallersOnly]
         private static FramebufferStatus CheckFramebufferStatus_Lazy(FramebufferTarget target)
@@ -143,6 +194,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ClearBufferMask, void> _Clear_fnptr = &Clear_Lazy;
+        /// <summary> Clear buffers to preset values. </summary>
+        /// <param name="mask"> Bitwise OR of masks that indicate the buffers to be cleared. The three masks are GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, and GL_STENCIL_BUFFER_BIT. </param>
         public static void Clear(ClearBufferMask mask) => _Clear_fnptr(mask);
         [UnmanagedCallersOnly]
         private static void Clear_Lazy(ClearBufferMask mask)
@@ -152,6 +205,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, float, float, float, void> _ClearColor_fnptr = &ClearColor_Lazy;
+        /// <summary> Specify clear values for the color buffers. </summary>
+        /// <param name="red"> Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0. </param>
+        /// <param name="green"> Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0. </param>
+        /// <param name="blue"> Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0. </param>
+        /// <param name="alpha"> Specify the red, green, blue, and alpha values used when the color buffers are cleared. The initial values are all 0. </param>
         public static void ClearColor(float red, float green, float blue, float alpha) => _ClearColor_fnptr(red, green, blue, alpha);
         [UnmanagedCallersOnly]
         private static void ClearColor_Lazy(float red, float green, float blue, float alpha)
@@ -161,6 +219,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, void> _ClearDepthf_fnptr = &ClearDepthf_Lazy;
+        /// <summary> Specify the clear value for the depth buffer. </summary>
+        /// <param name="depth"> Specifies the depth value used when the depth buffer is cleared. The initial value is 1. </param>
         public static void ClearDepthf(float d) => _ClearDepthf_fnptr(d);
         [UnmanagedCallersOnly]
         private static void ClearDepthf_Lazy(float d)
@@ -170,6 +230,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, void> _ClearStencil_fnptr = &ClearStencil_Lazy;
+        /// <summary> Specify the clear value for the stencil buffer. </summary>
+        /// <param name="s"> Specifies the index used when the stencil buffer is cleared. The initial value is 0. </param>
         public static void ClearStencil(int s) => _ClearStencil_fnptr(s);
         [UnmanagedCallersOnly]
         private static void ClearStencil_Lazy(int s)
@@ -179,6 +241,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<byte, byte, byte, byte, void> _ColorMask_fnptr = &ColorMask_Lazy;
+        /// <summary> Enable and disable writing of frame buffer color components. </summary>
+        /// <param name="red"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="green"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         public static void ColorMask(byte red, byte green, byte blue, byte alpha) => _ColorMask_fnptr(red, green, blue, alpha);
         [UnmanagedCallersOnly]
         private static void ColorMask_Lazy(byte red, byte green, byte blue, byte alpha)
@@ -188,6 +255,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderHandle, void> _CompileShader_fnptr = &CompileShader_Lazy;
+        /// <summary> Compiles a shader object. </summary>
+        /// <param name="shader">Specifies the shader object to be compiled.</param>
         public static void CompileShader(ShaderHandle shader) => _CompileShader_fnptr(shader);
         [UnmanagedCallersOnly]
         private static void CompileShader_Lazy(ShaderHandle shader)
@@ -197,6 +266,15 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, int, void*, void> _CompressedTexImage2D_fnptr = &CompressedTexImage2D_Lazy;
+        /// <summary> Specify a two-dimensional texture image in a compressed format. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="internalformat"> Specifies the format of the compressed image data stored at address data. </param>
+        /// <param name="width"> Specifies the width of the texture image. All implementations support 2D and cube-mapped texture images that are at least 2048 texels wide. </param>
+        /// <param name="height"> Specifies the height of the texture image. All implementations support 2D and cube-mapped texture images that are at least 2048 texels high. </param>
+        /// <param name="border"> This value must be 0. </param>
+        /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
+        /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
         public static void CompressedTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* data) => _CompressedTexImage2D_fnptr(target, level, internalformat, width, height, border, imageSize, data);
         [UnmanagedCallersOnly]
         private static void CompressedTexImage2D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* data)
@@ -206,6 +284,16 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage2D_fnptr = &CompressedTexSubImage2D_Lazy;
+        /// <summary> Specify a two-dimensional texture subimage in a compressed format. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="xoffset"> Specifies a texel offset in the x direction within the texture array. </param>
+        /// <param name="yoffset"> Specifies a texel offset in the y direction within the texture array. </param>
+        /// <param name="width"> Specifies the width of the texture subimage. </param>
+        /// <param name="height"> Specifies the height of the texture subimage. </param>
+        /// <param name="format"> Specifies the format of the compressed image data stored at address data. </param>
+        /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
+        /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
         public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, imageSize, data);
         [UnmanagedCallersOnly]
         private static void CompressedTexSubImage2D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, void* data)
@@ -215,6 +303,15 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, int, int, void> _CopyTexImage2D_fnptr = &CopyTexImage2D_Lazy;
+        /// <summary> Copy pixels into a 2D texture image. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="internalformat"> Specifies the internal format of the texture. Must be one of the following symbolic constants: GL_ALPHA, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB, GL_RGBA, GL_R8, GL_RG8, GL_RGB565, GL_RGB8, GL_RGBA4, GL_RGB5_A1, GL_RGBA8, GL_RGB10_A2, GL_SRGB8, GL_SRGB8_ALPHA8, GL_R8I, GL_R8UI, GL_R16I, GL_R16UI, GL_R32I, GL_R32UI, GL_RG8I, GL_RG8UI, GL_RG16I, GL_RG16UI, GL_RG32I, GL_RG32UI, GL_RGBA8I, GL_RGBA8UI, GL_RGB10_A2UI, GL_RGBA16I, GL_RGBA16UI, GL_RGBA32I, GL_RGBA32UI. </param>
+        /// <param name="x"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
+        /// <param name="y"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
+        /// <param name="width"> Specifies the width of the texture image. </param>
+        /// <param name="height"> Specifies the height of the texture image. </param>
+        /// <param name="border"> Specifies the width of the border. Must be 0. </param>
         public static void CopyTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => _CopyTexImage2D_fnptr(target, level, internalformat, x, y, width, height, border);
         [UnmanagedCallersOnly]
         private static void CopyTexImage2D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border)
@@ -224,6 +321,15 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, void> _CopyTexSubImage2D_fnptr = &CopyTexSubImage2D_Lazy;
+        /// <summary> Copy a two-dimensional texture subimage. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="xoffset"> Specifies a texel offset in the x direction within the texture array. </param>
+        /// <param name="yoffset"> Specifies a texel offset in the y direction within the texture array. </param>
+        /// <param name="x"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
+        /// <param name="y"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
+        /// <param name="width"> Specifies the width of the texture subimage. </param>
+        /// <param name="height"> Specifies the height of the texture subimage. </param>
         public static void CopyTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => _CopyTexSubImage2D_fnptr(target, level, xoffset, yoffset, x, y, width, height);
         [UnmanagedCallersOnly]
         private static void CopyTexSubImage2D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height)
@@ -233,6 +339,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int> _CreateProgram_fnptr = &CreateProgram_Lazy;
+        /// <summary> Creates a program object. </summary>
         public static ProgramHandle CreateProgram() => (ProgramHandle) _CreateProgram_fnptr();
         [UnmanagedCallersOnly]
         private static int CreateProgram_Lazy()
@@ -242,6 +349,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderType, int> _CreateShader_fnptr = &CreateShader_Lazy;
+        /// <summary> Creates a shader object. </summary>
+        /// <param name="shaderType"> Specifies the type of shader to be created. Must be one of GL_COMPUTE_SHADER, GL_VERTEX_SHADER, GL_TESS_CONTROL_SHADER, GL_TESS_EVALUATION_SHADER, GL_GEOMETRY_SHADER, or GL_FRAGMENT_SHADER. </param>
         public static ShaderHandle CreateShader(ShaderType type) => (ShaderHandle) _CreateShader_fnptr(type);
         [UnmanagedCallersOnly]
         private static int CreateShader_Lazy(ShaderType type)
@@ -251,6 +360,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<CullFaceMode, void> _CullFace_fnptr = &CullFace_Lazy;
+        /// <summary> Specify whether front- or back-facing polygons can be culled. </summary>
+        /// <param name="mode"> Specifies whether front- or back-facing polygons are candidates for culling. Symbolic constants GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK are accepted. The initial value is GL_BACK. </param>
         public static void CullFace(CullFaceMode mode) => _CullFace_fnptr(mode);
         [UnmanagedCallersOnly]
         private static void CullFace_Lazy(CullFaceMode mode)
@@ -260,6 +371,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, BufferHandle*, void> _DeleteBuffers_fnptr = &DeleteBuffers_Lazy;
+        /// <summary> Delete named buffer objects. </summary>
+        /// <param name="n"> Specifies the number of buffer objects to be deleted. </param>
+        /// <param name="buffers"> Specifies an array of buffer objects to be deleted. </param>
         public static void DeleteBuffers(int n, BufferHandle* buffers) => _DeleteBuffers_fnptr(n, buffers);
         [UnmanagedCallersOnly]
         private static void DeleteBuffers_Lazy(int n, BufferHandle* buffers)
@@ -269,6 +383,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, FramebufferHandle*, void> _DeleteFramebuffers_fnptr = &DeleteFramebuffers_Lazy;
+        /// <summary> Delete framebuffer objects. </summary>
+        /// <param name="n"> Specifies the number of framebuffer objects to be deleted. </param>
+        /// <param name="framebuffers"> A pointer to an array containing n framebuffer objects to be deleted. </param>
         public static void DeleteFramebuffers(int n, FramebufferHandle* framebuffers) => _DeleteFramebuffers_fnptr(n, framebuffers);
         [UnmanagedCallersOnly]
         private static void DeleteFramebuffers_Lazy(int n, FramebufferHandle* framebuffers)
@@ -278,6 +395,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, void> _DeleteProgram_fnptr = &DeleteProgram_Lazy;
+        /// <summary> Deletes a program object. </summary>
+        /// <param name="program">Specifies the program object to be deleted.</param>
         public static void DeleteProgram(ProgramHandle program) => _DeleteProgram_fnptr(program);
         [UnmanagedCallersOnly]
         private static void DeleteProgram_Lazy(ProgramHandle program)
@@ -287,6 +406,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, RenderbufferHandle*, void> _DeleteRenderbuffers_fnptr = &DeleteRenderbuffers_Lazy;
+        /// <summary> Delete renderbuffer objects. </summary>
+        /// <param name="n"> Specifies the number of renderbuffer objects to be deleted. </param>
+        /// <param name="renderbuffers"> A pointer to an array containing n renderbuffer objects to be deleted. </param>
         public static void DeleteRenderbuffers(int n, RenderbufferHandle* renderbuffers) => _DeleteRenderbuffers_fnptr(n, renderbuffers);
         [UnmanagedCallersOnly]
         private static void DeleteRenderbuffers_Lazy(int n, RenderbufferHandle* renderbuffers)
@@ -296,6 +418,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderHandle, void> _DeleteShader_fnptr = &DeleteShader_Lazy;
+        /// <summary> Deletes a shader object. </summary>
+        /// <param name="shader">Specifies the shader object to be deleted.</param>
         public static void DeleteShader(ShaderHandle shader) => _DeleteShader_fnptr(shader);
         [UnmanagedCallersOnly]
         private static void DeleteShader_Lazy(ShaderHandle shader)
@@ -305,6 +429,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, TextureHandle*, void> _DeleteTextures_fnptr = &DeleteTextures_Lazy;
+        /// <summary> Delete named textures. </summary>
+        /// <param name="n"> Specifies the number of textures to be deleted. </param>
+        /// <param name="textures"> Specifies an array of textures to be deleted. </param>
         public static void DeleteTextures(int n, TextureHandle* textures) => _DeleteTextures_fnptr(n, textures);
         [UnmanagedCallersOnly]
         private static void DeleteTextures_Lazy(int n, TextureHandle* textures)
@@ -314,6 +441,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<DepthFunction, void> _DepthFunc_fnptr = &DepthFunc_Lazy;
+        /// <summary> Specify the value used for depth buffer comparisons. </summary>
+        /// <param name="func"> Specifies the depth comparison function. Symbolic constants GL_NEVER, GL_LESS, GL_EQUAL, GL_LEQUAL, GL_GREATER, GL_NOTEQUAL, GL_GEQUAL, and GL_ALWAYS are accepted. The initial value is GL_LESS. </param>
         public static void DepthFunc(DepthFunction func) => _DepthFunc_fnptr(func);
         [UnmanagedCallersOnly]
         private static void DepthFunc_Lazy(DepthFunction func)
@@ -323,6 +452,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<byte, void> _DepthMask_fnptr = &DepthMask_Lazy;
+        /// <summary> Enable or disable writing into the depth buffer. </summary>
+        /// <param name="flag"> Specifies whether the depth buffer is enabled for writing. If flag is GL_FALSE, depth buffer writing is disabled. Otherwise, it is enabled. Initially, depth buffer writing is enabled. </param>
         public static void DepthMask(byte flag) => _DepthMask_fnptr(flag);
         [UnmanagedCallersOnly]
         private static void DepthMask_Lazy(byte flag)
@@ -332,6 +463,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, float, void> _DepthRangef_fnptr = &DepthRangef_Lazy;
+        /// <summary> Specify mapping of depth values from normalized device coordinates to window coordinates. </summary>
+        /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
+        /// <param name="f"> Specifies the mapping of the far clipping plane to window coordinates. The initial value is 1. </param>
         public static void DepthRangef(float n, float f) => _DepthRangef_fnptr(n, f);
         [UnmanagedCallersOnly]
         private static void DepthRangef_Lazy(float n, float f)
@@ -341,6 +475,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ShaderHandle, void> _DetachShader_fnptr = &DetachShader_Lazy;
+        /// <summary> Detaches a shader object from a program object to which it is attached. </summary>
+        /// <param name="program">Specifies the program object from which to detach the shader object.</param>
+        /// <param name="shader">Specifies the shader object to be detached.</param>
         public static void DetachShader(ProgramHandle program, ShaderHandle shader) => _DetachShader_fnptr(program, shader);
         [UnmanagedCallersOnly]
         private static void DetachShader_Lazy(ProgramHandle program, ShaderHandle shader)
@@ -350,6 +487,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<EnableCap, void> _Disable_fnptr = &Disable_Lazy;
+        /// <summary> Enable or disable server-side GL capabilities. </summary>
+        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         public static void Disable(EnableCap cap) => _Disable_fnptr(cap);
         [UnmanagedCallersOnly]
         private static void Disable_Lazy(EnableCap cap)
@@ -359,6 +498,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, void> _DisableVertexAttribArray_fnptr = &DisableVertexAttribArray_Lazy;
+        /// <summary> Enable or disable a generic vertex attribute array. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be enabled or disabled.</param>
         public static void DisableVertexAttribArray(uint index) => _DisableVertexAttribArray_fnptr(index);
         [UnmanagedCallersOnly]
         private static void DisableVertexAttribArray_Lazy(uint index)
@@ -368,6 +509,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, int, int, void> _DrawArrays_fnptr = &DrawArrays_Lazy;
+        /// <summary> Render primitives from array data. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="first"> Specifies the starting index in the enabled arrays. </param>
+        /// <param name="count"> Specifies the number of indices to be rendered. </param>
         public static void DrawArrays(PrimitiveType mode, int first, int count) => _DrawArrays_fnptr(mode, first, count);
         [UnmanagedCallersOnly]
         private static void DrawArrays_Lazy(PrimitiveType mode, int first, int count)
@@ -377,6 +522,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, int, DrawElementsType, void*, void> _DrawElements_fnptr = &DrawElements_Lazy;
+        /// <summary> Render primitives from array data. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="count"> Specifies the number of elements to be rendered. </param>
+        /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
+        /// <param name="indices"> Specifies a byte offset (cast to a pointer type) into the buffer bound to GL_ELEMENT_ARRAY_BUFFER to start reading indices from. If no buffer is bound, specifies a pointer to the location where the indices are stored. </param>
         public static void DrawElements(PrimitiveType mode, int count, DrawElementsType type, void* indices) => _DrawElements_fnptr(mode, count, type, indices);
         [UnmanagedCallersOnly]
         private static void DrawElements_Lazy(PrimitiveType mode, int count, DrawElementsType type, void* indices)
@@ -386,6 +536,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<EnableCap, void> _Enable_fnptr = &Enable_Lazy;
+        /// <summary> Enable or disable server-side GL capabilities. </summary>
+        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         public static void Enable(EnableCap cap) => _Enable_fnptr(cap);
         [UnmanagedCallersOnly]
         private static void Enable_Lazy(EnableCap cap)
@@ -395,6 +547,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, void> _EnableVertexAttribArray_fnptr = &EnableVertexAttribArray_Lazy;
+        /// <summary> Enable or disable a generic vertex attribute array. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be enabled or disabled.</param>
         public static void EnableVertexAttribArray(uint index) => _EnableVertexAttribArray_fnptr(index);
         [UnmanagedCallersOnly]
         private static void EnableVertexAttribArray_Lazy(uint index)
@@ -404,6 +558,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _Finish_fnptr = &Finish_Lazy;
+        /// <summary> Block until all GL execution is complete. </summary>
         public static void Finish() => _Finish_fnptr();
         [UnmanagedCallersOnly]
         private static void Finish_Lazy()
@@ -413,6 +568,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _Flush_fnptr = &Flush_Lazy;
+        /// <summary> Force execution of GL commands in finite time. </summary>
         public static void Flush() => _Flush_fnptr();
         [UnmanagedCallersOnly]
         private static void Flush_Lazy()
@@ -422,6 +578,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferAttachment, RenderbufferTarget, RenderbufferHandle, void> _FramebufferRenderbuffer_fnptr = &FramebufferRenderbuffer_Lazy;
+        /// <summary> Attach a renderbuffer as a logical buffer to the currently bound framebuffer object. </summary>
+        /// <param name="target"> Specifies the framebuffer target. target must be GL_DRAW_FRAMEBUFFER, GL_READ_FRAMEBUFFER, or GL_FRAMEBUFFER. GL_FRAMEBUFFER is equivalent to GL_DRAW_FRAMEBUFFER. </param>
+        /// <param name="attachment"> Specifies the attachment point of the framebuffer. </param>
+        /// <param name="renderbuffertarget"> Specifies the renderbuffer target and must be GL_RENDERBUFFER. </param>
+        /// <param name="renderbuffer"> Specifies the name of an existing renderbuffer object of type renderbuffertarget to attach. </param>
         public static void FramebufferRenderbuffer(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, RenderbufferHandle renderbuffer) => _FramebufferRenderbuffer_fnptr(target, attachment, renderbuffertarget, renderbuffer);
         [UnmanagedCallersOnly]
         private static void FramebufferRenderbuffer_Lazy(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, RenderbufferHandle renderbuffer)
@@ -431,6 +592,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferAttachment, TextureTarget, TextureHandle, int, void> _FramebufferTexture2D_fnptr = &FramebufferTexture2D_Lazy;
+        /// <summary> Attach a level of a texture object as a logical buffer to the currently bound framebuffer object. </summary>
+        /// <param name="target"> Specifies the framebuffer target. target must be GL_DRAW_FRAMEBUFFER, GL_READ_FRAMEBUFFER, or GL_FRAMEBUFFER. GL_FRAMEBUFFER is equivalent to GL_DRAW_FRAMEBUFFER. </param>
+        /// <param name="attachment"> Specifies the attachment point of the framebuffer. attachment must be GL_COLOR_ATTACHMENTi, GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT or GL_DEPTH_STENCIL_ATTACHMENT. </param>
+        /// <param name="textarget"> Specifies a 2D texture target, 2D multisample texture target, or for cube map textures, which face is to be attached. </param>
+        /// <param name="texture"> Specifies the texture object to attach to the framebuffer attachment point named by attachment. </param>
+        /// <param name="level"> Specifies the mipmap level of texture to attach. </param>
         public static void FramebufferTexture2D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, TextureHandle texture, int level) => _FramebufferTexture2D_fnptr(target, attachment, textarget, texture, level);
         [UnmanagedCallersOnly]
         private static void FramebufferTexture2D_Lazy(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, TextureHandle texture, int level)
@@ -440,6 +607,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FrontFaceDirection, void> _FrontFace_fnptr = &FrontFace_Lazy;
+        /// <summary> Define front- and back-facing polygons. </summary>
+        /// <param name="mode"> Specifies the orientation of front-facing polygons. GL_CW and GL_CCW are accepted. The initial value is GL_CCW. </param>
         public static void FrontFace(FrontFaceDirection mode) => _FrontFace_fnptr(mode);
         [UnmanagedCallersOnly]
         private static void FrontFace_Lazy(FrontFaceDirection mode)
@@ -449,6 +618,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, BufferHandle*, void> _GenBuffers_fnptr = &GenBuffers_Lazy;
+        /// <summary> Generate buffer object names. </summary>
+        /// <param name="n"> Specifies the number of buffer object names to be generated. </param>
+        /// <param name="buffers"> Specifies an array in which the generated buffer object names are stored. </param>
         public static void GenBuffers(int n, BufferHandle* buffers) => _GenBuffers_fnptr(n, buffers);
         [UnmanagedCallersOnly]
         private static void GenBuffers_Lazy(int n, BufferHandle* buffers)
@@ -458,6 +630,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, void> _GenerateMipmap_fnptr = &GenerateMipmap_Lazy;
+        /// <summary> Generate mipmaps for a specified texture target. </summary>
+        /// <param name="target"> Specifies the target to which the texture whose mimaps to generate is bound. target must be GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_CUBE_MAP or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         public static void GenerateMipmap(TextureTarget target) => _GenerateMipmap_fnptr(target);
         [UnmanagedCallersOnly]
         private static void GenerateMipmap_Lazy(TextureTarget target)
@@ -467,6 +641,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, FramebufferHandle*, void> _GenFramebuffers_fnptr = &GenFramebuffers_Lazy;
+        /// <summary> Generate framebuffer object names. </summary>
+        /// <param name="n"> Specifies the number of framebuffer object names to generate. </param>
+        /// <param name="framebuffers"> Specifies an array in which the generated framebuffer object names are stored. </param>
         public static void GenFramebuffers(int n, FramebufferHandle* framebuffers) => _GenFramebuffers_fnptr(n, framebuffers);
         [UnmanagedCallersOnly]
         private static void GenFramebuffers_Lazy(int n, FramebufferHandle* framebuffers)
@@ -476,6 +653,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, RenderbufferHandle*, void> _GenRenderbuffers_fnptr = &GenRenderbuffers_Lazy;
+        /// <summary> Generate renderbuffer object names. </summary>
+        /// <param name="n"> Specifies the number of renderbuffer object names to generate. </param>
+        /// <param name="renderbuffers"> Specifies an array in which the generated renderbuffer object names are stored. </param>
         public static void GenRenderbuffers(int n, RenderbufferHandle* renderbuffers) => _GenRenderbuffers_fnptr(n, renderbuffers);
         [UnmanagedCallersOnly]
         private static void GenRenderbuffers_Lazy(int n, RenderbufferHandle* renderbuffers)
@@ -485,6 +665,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, TextureHandle*, void> _GenTextures_fnptr = &GenTextures_Lazy;
+        /// <summary> Generate texture names. </summary>
+        /// <param name="n"> Specifies the number of texture names to be generated. </param>
+        /// <param name="textures"> Specifies an array in which the generated texture names are stored. </param>
         public static void GenTextures(int n, TextureHandle* textures) => _GenTextures_fnptr(n, textures);
         [UnmanagedCallersOnly]
         private static void GenTextures_Lazy(int n, TextureHandle* textures)
@@ -494,6 +677,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, uint, int, int*, int*, AttributeType*, byte*, void> _GetActiveAttrib_fnptr = &GetActiveAttrib_Lazy;
+        /// <summary> Returns information about an active attribute variable for the specified program object. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="index">Specifies the index of the attribute variable to be queried.</param>
+        /// <param name="bufSize">Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.</param>
+        /// <param name="length">Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.</param>
+        /// <param name="size">Returns the size of the attribute variable.</param>
+        /// <param name="type">Returns the data type of the attribute variable.</param>
+        /// <param name="name">Returns a null terminated string containing the name of the attribute variable.</param>
         public static void GetActiveAttrib(ProgramHandle program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name) => _GetActiveAttrib_fnptr(program, index, bufSize, length, size, type, name);
         [UnmanagedCallersOnly]
         private static void GetActiveAttrib_Lazy(ProgramHandle program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name)
@@ -503,6 +694,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, uint, int, int*, int*, UniformType*, byte*, void> _GetActiveUniform_fnptr = &GetActiveUniform_Lazy;
+        /// <summary> Returns information about an active uniform variable for the specified program object. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="index">Specifies the index of the uniform variable to be queried.</param>
+        /// <param name="bufSize">Specifies the maximum number of characters OpenGL is allowed to write in the character buffer indicated by name.</param>
+        /// <param name="length">Returns the number of characters actually written by OpenGL in the string indicated by name (excluding the null terminator) if a value other than NULL is passed.</param>
+        /// <param name="size">Returns the size of the uniform variable.</param>
+        /// <param name="type">Returns the data type of the uniform variable.</param>
+        /// <param name="name">Returns a null terminated string containing the name of the uniform variable.</param>
         public static void GetActiveUniform(ProgramHandle program, uint index, int bufSize, int* length, int* size, UniformType* type, byte* name) => _GetActiveUniform_fnptr(program, index, bufSize, length, size, type, name);
         [UnmanagedCallersOnly]
         private static void GetActiveUniform_Lazy(ProgramHandle program, uint index, int bufSize, int* length, int* size, UniformType* type, byte* name)
@@ -512,6 +711,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int*, ShaderHandle*, void> _GetAttachedShaders_fnptr = &GetAttachedShaders_Lazy;
+        /// <summary> Returns the handles of the shader objects attached to a program object. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="maxCount">Specifies the size of the array for storing the returned object names.</param>
+        /// <param name="count">Returns the number of names actually returned in shaders.</param>
+        /// <param name="shaders">Specifies an array that is used to return the names of attached shader objects.</param>
         public static void GetAttachedShaders(ProgramHandle program, int maxCount, int* count, ShaderHandle* shaders) => _GetAttachedShaders_fnptr(program, maxCount, count, shaders);
         [UnmanagedCallersOnly]
         private static void GetAttachedShaders_Lazy(ProgramHandle program, int maxCount, int* count, ShaderHandle* shaders)
@@ -521,6 +725,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, byte*, int> _GetAttribLocation_fnptr = &GetAttribLocation_Lazy;
+        /// <summary> Returns the location of an attribute variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="name">Points to a null terminated string containing the name of the attribute variable whose location is to be queried.</param>
         public static int GetAttribLocation(ProgramHandle program, byte* name) => _GetAttribLocation_fnptr(program, name);
         [UnmanagedCallersOnly]
         private static int GetAttribLocation_Lazy(ProgramHandle program, byte* name)
@@ -530,6 +737,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetPName, byte*, void> _GetBooleanv_fnptr = &GetBooleanv_Lazy;
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
+        /// <param name="data"> Returns the value or values of the specified parameter. </param>
         public static void GetBooleanv(GetPName pname, byte* data) => _GetBooleanv_fnptr(pname, data);
         [UnmanagedCallersOnly]
         private static void GetBooleanv_Lazy(GetPName pname, byte* data)
@@ -539,6 +749,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, BufferPNameARB, int*, void> _GetBufferParameteriv_fnptr = &GetBufferParameteriv_Lazy;
+        /// <summary> Return parameters of a buffer object. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
+        /// <param name="value"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_ACCESS_FLAGS, GL_BUFFER_MAPPED, GL_BUFFER_MAP_LENGTH, GL_BUFFER_MAP_OFFSET, GL_BUFFER_SIZE, or GL_BUFFER_USAGE. </param>
+        /// <param name="data"> Returns the requested parameter. </param>
         public static void GetBufferParameteriv(BufferTargetARB target, BufferPNameARB pname, int* parameters) => _GetBufferParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetBufferParameteriv_Lazy(BufferTargetARB target, BufferPNameARB pname, int* parameters)
@@ -548,6 +762,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ErrorCode> _GetError_fnptr = &GetError_Lazy;
+        /// <summary> Return error information. </summary>
         public static ErrorCode GetError() => _GetError_fnptr();
         [UnmanagedCallersOnly]
         private static ErrorCode GetError_Lazy()
@@ -557,6 +772,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetPName, float*, void> _GetFloatv_fnptr = &GetFloatv_Lazy;
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
+        /// <param name="data"> Returns the value or values of the specified parameter. </param>
         public static void GetFloatv(GetPName pname, float* data) => _GetFloatv_fnptr(pname, data);
         [UnmanagedCallersOnly]
         private static void GetFloatv_Lazy(GetPName pname, float* data)
@@ -566,6 +784,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*, void> _GetFramebufferAttachmentParameteriv_fnptr = &GetFramebufferAttachmentParameteriv_Lazy;
+        /// <summary> Retrieve information about attachments of a bound framebuffer object. </summary>
+        /// <param name="target"> Specifies the target of the query operation. </param>
+        /// <param name="attachment"> Specifies the attachment within target </param>
+        /// <param name="pname"> Specifies the parameter of attachment to query. </param>
+        /// <param name="params"> Specifies the address of a variable receive the value of pname for attachment. </param>
         public static void GetFramebufferAttachmentParameteriv(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => _GetFramebufferAttachmentParameteriv_fnptr(target, attachment, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetFramebufferAttachmentParameteriv_Lazy(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters)
@@ -575,6 +798,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetPName, int*, void> _GetIntegerv_fnptr = &GetIntegerv_Lazy;
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
+        /// <param name="data"> Returns the value or values of the specified parameter. </param>
         public static void GetIntegerv(GetPName pname, int* data) => _GetIntegerv_fnptr(pname, data);
         [UnmanagedCallersOnly]
         private static void GetIntegerv_Lazy(GetPName pname, int* data)
@@ -584,6 +810,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ProgramPropertyARB, int*, void> _GetProgramiv_fnptr = &GetProgramiv_Lazy;
+        /// <summary> Returns a parameter from a program object. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_ATTACHED_SHADERS, GL_COMPUTE_WORK_GROUP_SIZE, GL_DELETE_STATUS, GL_GEOMETRY_LINKED_INPUT_TYPE, GL_GEOMETRY_LINKED_OUTPUT_TYPE, GL_GEOMETRY_LINKED_VERTICES_OUT, GL_GEOMETRY_SHADER_INVOCATIONS, GL_INFO_LOG_LENGTH, GL_LINK_STATUS, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_PROGRAM_SEPARABLE, GL_TESS_CONTROL_OUTPUT_VERTICES, GL_TESS_GEN_MODE, GL_TESS_GEN_POINT_MODE, GL_TESS_GEN_SPACING, GL_TESS_GEN_VERTEX_ORDER, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH and GL_VALIDATE_STATUS.</param>
+        /// <param name="params">Returns the requested object parameter.</param>
         public static void GetProgramiv(ProgramHandle program, ProgramPropertyARB pname, int* parameters) => _GetProgramiv_fnptr(program, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramiv_Lazy(ProgramHandle program, ProgramPropertyARB pname, int* parameters)
@@ -593,6 +823,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int*, byte*, void> _GetProgramInfoLog_fnptr = &GetProgramInfoLog_Lazy;
+        /// <summary> Returns the information log for a program object. </summary>
+        /// <param name="program">Specifies the program object whose information log is to be queried.</param>
+        /// <param name="maxLength">Specifies the size of the character buffer for storing the returned information log.</param>
+        /// <param name="length">Returns the length of the string returned in infoLog (excluding the null terminator).</param>
+        /// <param name="infoLog">Specifies an array of characters that is used to return the information log.</param>
         public static void GetProgramInfoLog(ProgramHandle program, int bufSize, int* length, byte* infoLog) => _GetProgramInfoLog_fnptr(program, bufSize, length, infoLog);
         [UnmanagedCallersOnly]
         private static void GetProgramInfoLog_Lazy(ProgramHandle program, int bufSize, int* length, byte* infoLog)
@@ -602,6 +837,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<RenderbufferTarget, RenderbufferParameterName, int*, void> _GetRenderbufferParameteriv_fnptr = &GetRenderbufferParameteriv_Lazy;
+        /// <summary> Retrieve information about a bound renderbuffer object. </summary>
+        /// <param name="target"> Specifies the target of the query operation. target must be GL_RENDERBUFFER. </param>
+        /// <param name="pname"> Specifies the parameter whose value to retrieve from the renderbuffer bound to target. </param>
+        /// <param name="params"> Specifies the address of an array to receive the value of the queried parameter. </param>
         public static void GetRenderbufferParameteriv(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => _GetRenderbufferParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetRenderbufferParameteriv_Lazy(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters)
@@ -611,6 +850,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderHandle, ShaderParameterName, int*, void> _GetShaderiv_fnptr = &GetShaderiv_Lazy;
+        /// <summary> Returns a parameter from a shader object. </summary>
+        /// <param name="shader">Specifies the shader object to be queried.</param>
+        /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_SHADER_TYPE, GL_DELETE_STATUS, GL_COMPILE_STATUS, GL_INFO_LOG_LENGTH, GL_SHADER_SOURCE_LENGTH.</param>
+        /// <param name="params">Returns the requested object parameter.</param>
         public static void GetShaderiv(ShaderHandle shader, ShaderParameterName pname, int* parameters) => _GetShaderiv_fnptr(shader, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetShaderiv_Lazy(ShaderHandle shader, ShaderParameterName pname, int* parameters)
@@ -620,6 +863,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderHandle, int, int*, byte*, void> _GetShaderInfoLog_fnptr = &GetShaderInfoLog_Lazy;
+        /// <summary> Returns the information log for a shader object. </summary>
+        /// <param name="shader">Specifies the shader object whose information log is to be queried.</param>
+        /// <param name="maxLength">Specifies the size of the character buffer for storing the returned information log.</param>
+        /// <param name="length">Returns the length of the string returned in infoLog (excluding the null terminator).</param>
+        /// <param name="infoLog">Specifies an array of characters that is used to return the information log.</param>
         public static void GetShaderInfoLog(ShaderHandle shader, int bufSize, int* length, byte* infoLog) => _GetShaderInfoLog_fnptr(shader, bufSize, length, infoLog);
         [UnmanagedCallersOnly]
         private static void GetShaderInfoLog_Lazy(ShaderHandle shader, int bufSize, int* length, byte* infoLog)
@@ -629,6 +877,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderType, PrecisionType, int*, int*, void> _GetShaderPrecisionFormat_fnptr = &GetShaderPrecisionFormat_Lazy;
+        /// <summary> Retrieve the range and precision for numeric formats supported by the shader compiler. </summary>
+        /// <param name="shaderType"> Specifies the type of shader whose precision to query. shaderType must be GL_VERTEX_SHADER or GL_FRAGMENT_SHADER. </param>
+        /// <param name="precisionType"> Specifies the numeric format whose precision and range to query. </param>
+        /// <param name="range"> Specifies the address of array of two integers into which encodings of the implementation's numeric range are returned. </param>
+        /// <param name="precision"> Specifies the address of an integer into which the numeric precision of the implementation is written. </param>
         public static void GetShaderPrecisionFormat(ShaderType shadertype, PrecisionType precisiontype, int* range, int* precision) => _GetShaderPrecisionFormat_fnptr(shadertype, precisiontype, range, precision);
         [UnmanagedCallersOnly]
         private static void GetShaderPrecisionFormat_Lazy(ShaderType shadertype, PrecisionType precisiontype, int* range, int* precision)
@@ -638,6 +891,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderHandle, int, int*, byte*, void> _GetShaderSource_fnptr = &GetShaderSource_Lazy;
+        /// <summary> Returns the source code string from a shader object. </summary>
+        /// <param name="shader">Specifies the shader object to be queried.</param>
+        /// <param name="bufSize">Specifies the size of the character buffer for storing the returned source code string.</param>
+        /// <param name="length">Returns the length of the string returned in source (excluding the null terminator).</param>
+        /// <param name="source">Specifies an array of characters that is used to return the source code string.</param>
         public static void GetShaderSource(ShaderHandle shader, int bufSize, int* length, byte* source) => _GetShaderSource_fnptr(shader, bufSize, length, source);
         [UnmanagedCallersOnly]
         private static void GetShaderSource_Lazy(ShaderHandle shader, int bufSize, int* length, byte* source)
@@ -647,6 +905,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<StringName, byte*> _GetString__fnptr = &GetString__Lazy;
+        /// <summary> Return a string describing the current GL connection. </summary>
+        /// <param name="name"> Specifies a symbolic constant, one of GL_EXTENSIONS, GL_RENDERER, GL_SHADING_LANGUAGE_VERSION, GL_VENDOR, or GL_VERSION. glGetStringi accepts only the GL_EXTENSIONS token. </param>
         public static byte* GetString_(StringName name) => _GetString__fnptr(name);
         [UnmanagedCallersOnly]
         private static byte* GetString__Lazy(StringName name)
@@ -656,6 +916,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, GetTextureParameter, float*, void> _GetTexParameterfv_fnptr = &GetTexParameterfv_Lazy;
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the texture parameters. </param>
         public static void GetTexParameterfv(TextureTarget target, GetTextureParameter pname, float* parameters) => _GetTexParameterfv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterfv_Lazy(TextureTarget target, GetTextureParameter pname, float* parameters)
@@ -665,6 +929,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, GetTextureParameter, int*, void> _GetTexParameteriv_fnptr = &GetTexParameteriv_Lazy;
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the texture parameters. </param>
         public static void GetTexParameteriv(TextureTarget target, GetTextureParameter pname, int* parameters) => _GetTexParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameteriv_Lazy(TextureTarget target, GetTextureParameter pname, int* parameters)
@@ -674,6 +942,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, float*, void> _GetUniformfv_fnptr = &GetUniformfv_Lazy;
+        /// <summary> Returns the value of a uniform variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+        /// <param name="params">Returns the value of the specified uniform variable.</param>
         public static void GetUniformfv(ProgramHandle program, int location, float* parameters) => _GetUniformfv_fnptr(program, location, parameters);
         [UnmanagedCallersOnly]
         private static void GetUniformfv_Lazy(ProgramHandle program, int location, float* parameters)
@@ -683,6 +955,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int*, void> _GetUniformiv_fnptr = &GetUniformiv_Lazy;
+        /// <summary> Returns the value of a uniform variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+        /// <param name="params">Returns the value of the specified uniform variable.</param>
         public static void GetUniformiv(ProgramHandle program, int location, int* parameters) => _GetUniformiv_fnptr(program, location, parameters);
         [UnmanagedCallersOnly]
         private static void GetUniformiv_Lazy(ProgramHandle program, int location, int* parameters)
@@ -692,6 +968,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, byte*, int> _GetUniformLocation_fnptr = &GetUniformLocation_Lazy;
+        /// <summary> Returns the location of a uniform variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="name">Points to a null terminated string containing the name of the uniform variable whose location is to be queried.</param>
         public static int GetUniformLocation(ProgramHandle program, byte* name) => _GetUniformLocation_fnptr(program, name);
         [UnmanagedCallersOnly]
         private static int GetUniformLocation_Lazy(ProgramHandle program, byte* name)
@@ -701,6 +980,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, VertexAttribPropertyARB, float*, void> _GetVertexAttribfv_fnptr = &GetVertexAttribfv_Lazy;
+        /// <summary> Return a generic vertex attribute parameter. </summary>
+        /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
+        /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
+        /// <param name="params">Returns the requested data.</param>
         public static void GetVertexAttribfv(uint index, VertexAttribPropertyARB pname, float* parameters) => _GetVertexAttribfv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribfv_Lazy(uint index, VertexAttribPropertyARB pname, float* parameters)
@@ -710,6 +993,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, VertexAttribPropertyARB, int*, void> _GetVertexAttribiv_fnptr = &GetVertexAttribiv_Lazy;
+        /// <summary> Return a generic vertex attribute parameter. </summary>
+        /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
+        /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
+        /// <param name="params">Returns the requested data.</param>
         public static void GetVertexAttribiv(uint index, VertexAttribPropertyARB pname, int* parameters) => _GetVertexAttribiv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribiv_Lazy(uint index, VertexAttribPropertyARB pname, int* parameters)
@@ -719,6 +1006,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, VertexAttribPointerPropertyARB, void**, void> _GetVertexAttribPointerv_fnptr = &GetVertexAttribPointerv_Lazy;
+        /// <summary> Return the address of the specified generic vertex attribute pointer. </summary>
+        /// <param name="index">Specifies the generic vertex attribute parameter to be returned.</param>
+        /// <param name="pname">Specifies the symbolic name of the generic vertex attribute parameter to be returned. Must be GL_VERTEX_ATTRIB_ARRAY_POINTER.</param>
+        /// <param name="pointer">Returns the pointer value.</param>
         public static void GetVertexAttribPointerv(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => _GetVertexAttribPointerv_fnptr(index, pname, pointer);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribPointerv_Lazy(uint index, VertexAttribPointerPropertyARB pname, void** pointer)
@@ -728,6 +1019,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<HintTarget, HintMode, void> _Hint_fnptr = &Hint_Lazy;
+        /// <summary> Specify implementation-specific hints. </summary>
+        /// <param name="target"> Specifies a symbolic constant indicating the behavior to be controlled. GL_FRAGMENT_SHADER_DERIVATIVE_HINT, and GL_GENERATE_MIPMAP_HINT are accepted. </param>
+        /// <param name="mode"> Specifies a symbolic constant indicating the desired behavior. GL_FASTEST, GL_NICEST, and GL_DONT_CARE are accepted. </param>
         public static void Hint(HintTarget target, HintMode mode) => _Hint_fnptr(target, mode);
         [UnmanagedCallersOnly]
         private static void Hint_Lazy(HintTarget target, HintMode mode)
@@ -737,6 +1031,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferHandle, byte> _IsBuffer_fnptr = &IsBuffer_Lazy;
+        /// <summary> Determine if a name corresponds to a buffer object. </summary>
+        /// <param name="buffer"> Specifies a value that may be the name of a buffer object. </param>
         public static byte IsBuffer(BufferHandle buffer) => _IsBuffer_fnptr(buffer);
         [UnmanagedCallersOnly]
         private static byte IsBuffer_Lazy(BufferHandle buffer)
@@ -746,6 +1042,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<EnableCap, byte> _IsEnabled_fnptr = &IsEnabled_Lazy;
+        /// <summary> Test whether a capability is enabled. </summary>
+        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         public static byte IsEnabled(EnableCap cap) => _IsEnabled_fnptr(cap);
         [UnmanagedCallersOnly]
         private static byte IsEnabled_Lazy(EnableCap cap)
@@ -755,6 +1053,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferHandle, byte> _IsFramebuffer_fnptr = &IsFramebuffer_Lazy;
+        /// <summary> Determine if a name corresponds to a framebuffer object. </summary>
+        /// <param name="framebuffer"> Specifies a value that may be the name of a framebuffer object. </param>
         public static byte IsFramebuffer(FramebufferHandle framebuffer) => _IsFramebuffer_fnptr(framebuffer);
         [UnmanagedCallersOnly]
         private static byte IsFramebuffer_Lazy(FramebufferHandle framebuffer)
@@ -764,6 +1064,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, byte> _IsProgram_fnptr = &IsProgram_Lazy;
+        /// <summary> Determines if a name corresponds to a program object. </summary>
+        /// <param name="program">Specifies a potential program object.</param>
         public static byte IsProgram(ProgramHandle program) => _IsProgram_fnptr(program);
         [UnmanagedCallersOnly]
         private static byte IsProgram_Lazy(ProgramHandle program)
@@ -773,6 +1075,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<RenderbufferHandle, byte> _IsRenderbuffer_fnptr = &IsRenderbuffer_Lazy;
+        /// <summary> Determine if a name corresponds to a renderbuffer object. </summary>
+        /// <param name="renderbuffer"> Specifies a value that may be the name of a renderbuffer object. </param>
         public static byte IsRenderbuffer(RenderbufferHandle renderbuffer) => _IsRenderbuffer_fnptr(renderbuffer);
         [UnmanagedCallersOnly]
         private static byte IsRenderbuffer_Lazy(RenderbufferHandle renderbuffer)
@@ -782,6 +1086,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderHandle, byte> _IsShader_fnptr = &IsShader_Lazy;
+        /// <summary> Determines if a name corresponds to a shader object. </summary>
+        /// <param name="shader">Specifies a potential shader object.</param>
         public static byte IsShader(ShaderHandle shader) => _IsShader_fnptr(shader);
         [UnmanagedCallersOnly]
         private static byte IsShader_Lazy(ShaderHandle shader)
@@ -791,6 +1097,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureHandle, byte> _IsTexture_fnptr = &IsTexture_Lazy;
+        /// <summary> Determine if a name corresponds to a texture. </summary>
+        /// <param name="texture"> Specifies a value that may be the name of a texture. </param>
         public static byte IsTexture(TextureHandle texture) => _IsTexture_fnptr(texture);
         [UnmanagedCallersOnly]
         private static byte IsTexture_Lazy(TextureHandle texture)
@@ -800,6 +1108,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, void> _LineWidth_fnptr = &LineWidth_Lazy;
+        /// <summary> Specify the width of rasterized lines. </summary>
+        /// <param name="width"> Specifies the width of rasterized lines. The initial value is 1. </param>
         public static void LineWidth(float width) => _LineWidth_fnptr(width);
         [UnmanagedCallersOnly]
         private static void LineWidth_Lazy(float width)
@@ -809,6 +1119,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, void> _LinkProgram_fnptr = &LinkProgram_Lazy;
+        /// <summary> Links a program object. </summary>
+        /// <param name="program">Specifies the handle of the program object to be linked.</param>
         public static void LinkProgram(ProgramHandle program) => _LinkProgram_fnptr(program);
         [UnmanagedCallersOnly]
         private static void LinkProgram_Lazy(ProgramHandle program)
@@ -818,6 +1130,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PixelStoreParameter, int, void> _PixelStorei_fnptr = &PixelStorei_Lazy;
+        /// <summary> Set pixel storage modes. </summary>
+        /// <param name="pname"> Specifies the symbolic name of the parameter to be set. Four values affect the packing of pixel data into memory: GL_PACK_ROW_LENGTH, GL_PACK_SKIP_PIXELS, GL_PACK_SKIP_ROWS, and GL_PACK_ALIGNMENT. Six more affect the unpacking of pixel data from memory: GL_UNPACK_ROW_LENGTH, GL_UNPACK_IMAGE_HEIGHT, GL_UNPACK_SKIP_PIXELS, GL_UNPACK_SKIP_ROWS, GL_UNPACK_SKIP_IMAGES, and GL_UNPACK_ALIGNMENT. </param>
+        /// <param name="param"> Specifies the value that pname is set to. </param>
         public static void PixelStorei(PixelStoreParameter pname, int param) => _PixelStorei_fnptr(pname, param);
         [UnmanagedCallersOnly]
         private static void PixelStorei_Lazy(PixelStoreParameter pname, int param)
@@ -827,6 +1142,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, float, void> _PolygonOffset_fnptr = &PolygonOffset_Lazy;
+        /// <summary> Set the scale and units used to calculate depth values. </summary>
+        /// <param name="factor"> Specifies a scale factor that is used to create a variable depth offset for each polygon. The initial value is 0. </param>
+        /// <param name="units"> Is multiplied by an implementation-specific value to create a constant depth offset. The initial value is 0. </param>
         public static void PolygonOffset(float factor, float units) => _PolygonOffset_fnptr(factor, units);
         [UnmanagedCallersOnly]
         private static void PolygonOffset_Lazy(float factor, float units)
@@ -836,6 +1154,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, int, PixelFormat, PixelType, void*, void> _ReadPixels_fnptr = &ReadPixels_Lazy;
+        /// <summary> Read a block of pixels from the frame buffer. </summary>
+        /// <param name="x"> Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels. </param>
+        /// <param name="y"> Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels. </param>
+        /// <param name="width"> Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel. </param>
+        /// <param name="height"> Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel. </param>
+        /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RGBA, and GL_RGBA_INTEGER. An implementation-chosen format will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_FORMAT. </param>
+        /// <param name="type"> Specifies the data type of the pixel data. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_INT, GL_UNSIGNED_INT_2_10_10_10_REV, GL_INT, or GL_FLOAT. An implementation-chosen type will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_TYPE. </param>
+        /// <param name="data"> Returns the pixel data. </param>
         public static void ReadPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, void* pixels) => _ReadPixels_fnptr(x, y, width, height, format, type, pixels);
         [UnmanagedCallersOnly]
         private static void ReadPixels_Lazy(int x, int y, int width, int height, PixelFormat format, PixelType type, void* pixels)
@@ -845,6 +1171,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _ReleaseShaderCompiler_fnptr = &ReleaseShaderCompiler_Lazy;
+        /// <summary> Release resources consumed by the implementation's shader compiler. </summary>
         public static void ReleaseShaderCompiler() => _ReleaseShaderCompiler_fnptr();
         [UnmanagedCallersOnly]
         private static void ReleaseShaderCompiler_Lazy()
@@ -854,6 +1181,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<RenderbufferTarget, InternalFormat, int, int, void> _RenderbufferStorage_fnptr = &RenderbufferStorage_Lazy;
+        /// <summary> Establish data storage, format and dimensions of a renderbuffer object's image. </summary>
+        /// <param name="target"> Specifies a binding to which the target of the allocation and must be GL_RENDERBUFFER. </param>
+        /// <param name="internalformat"> Specifies the internal format to use for the renderbuffer object's image. </param>
+        /// <param name="width"> Specifies the width of the renderbuffer, in pixels. </param>
+        /// <param name="height"> Specifies the height of the renderbuffer, in pixels. </param>
         public static void RenderbufferStorage(RenderbufferTarget target, InternalFormat internalformat, int width, int height) => _RenderbufferStorage_fnptr(target, internalformat, width, height);
         [UnmanagedCallersOnly]
         private static void RenderbufferStorage_Lazy(RenderbufferTarget target, InternalFormat internalformat, int width, int height)
@@ -863,6 +1195,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, byte, void> _SampleCoverage_fnptr = &SampleCoverage_Lazy;
+        /// <summary> Specify multisample coverage parameters. </summary>
+        /// <param name="value"> Specify a single floating-point sample coverage value. The value is clamped to the range 0 1 . The initial value is 1.0. </param>
+        /// <param name="invert"> Specify a single boolean value representing if the coverage masks should be inverted. GL_TRUE and GL_FALSE are accepted. The initial value is GL_FALSE. </param>
         public static void SampleCoverage(float value, byte invert) => _SampleCoverage_fnptr(value, invert);
         [UnmanagedCallersOnly]
         private static void SampleCoverage_Lazy(float value, byte invert)
@@ -872,6 +1207,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, int, void> _Scissor_fnptr = &Scissor_Lazy;
+        /// <summary> Define the scissor box. </summary>
+        /// <param name="x"> Specify the lower left corner of the scissor box. Initially (0, 0). </param>
+        /// <param name="y"> Specify the lower left corner of the scissor box. Initially (0, 0). </param>
+        /// <param name="width"> Specify the width and height of the scissor box. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
+        /// <param name="height"> Specify the width and height of the scissor box. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
         public static void Scissor(int x, int y, int width, int height) => _Scissor_fnptr(x, y, width, height);
         [UnmanagedCallersOnly]
         private static void Scissor_Lazy(int x, int y, int width, int height)
@@ -881,6 +1221,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, ShaderHandle*, ShaderBinaryFormat, void*, int, void> _ShaderBinary_fnptr = &ShaderBinary_Lazy;
+        /// <summary> Load pre-compiled shader binaries. </summary>
+        /// <param name="count"> Specifies the number of shader object handles contained in shaders. </param>
+        /// <param name="shaders"> Specifies the address of an array of shader handles into which to load pre-compiled shader binaries. </param>
+        /// <param name="binaryFormat"> Specifies the format of the shader binaries contained in binary. </param>
+        /// <param name="binary"> Specifies the address of an array of bytes containing pre-compiled binary shader code. </param>
+        /// <param name="length"> Specifies the length of the array whose address is given in binary. </param>
         public static void ShaderBinary(int count, ShaderHandle* shaders, ShaderBinaryFormat binaryFormat, void* binary, int length) => _ShaderBinary_fnptr(count, shaders, binaryFormat, binary, length);
         [UnmanagedCallersOnly]
         private static void ShaderBinary_Lazy(int count, ShaderHandle* shaders, ShaderBinaryFormat binaryFormat, void* binary, int length)
@@ -890,6 +1236,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderHandle, int, byte**, int*, void> _ShaderSource_fnptr = &ShaderSource_Lazy;
+        /// <summary> Replaces the source code in a shader object. </summary>
+        /// <param name="shader">Specifies the handle of the shader object whose source code is to be replaced.</param>
+        /// <param name="count">Specifies the number of elements in the string and length arrays.</param>
+        /// <param name="string">Specifies an array of pointers to strings containing the source code to be loaded into the shader.</param>
+        /// <param name="length">Specifies an array of string lengths.</param>
         public static void ShaderSource(ShaderHandle shader, int count, byte** str, int* length) => _ShaderSource_fnptr(shader, count, str, length);
         [UnmanagedCallersOnly]
         private static void ShaderSource_Lazy(ShaderHandle shader, int count, byte** str, int* length)
@@ -899,6 +1250,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<StencilFunction, int, uint, void> _StencilFunc_fnptr = &StencilFunc_Lazy;
+        /// <summary> Set front and back function and reference value for stencil testing. </summary>
+        /// <param name="func"> Specifies the test function. Eight symbolic constants are valid: GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS. </param>
+        /// <param name="ref"> Specifies the reference value for the stencil test. Stencil comparison operations and queries of ref clamp its value to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
+        /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's. </param>
         public static void StencilFunc(StencilFunction func, int reference, uint mask) => _StencilFunc_fnptr(func, reference, mask);
         [UnmanagedCallersOnly]
         private static void StencilFunc_Lazy(StencilFunction func, int reference, uint mask)
@@ -908,6 +1263,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<StencilFaceDirection, StencilFunction, int, uint, void> _StencilFuncSeparate_fnptr = &StencilFuncSeparate_Lazy;
+        /// <summary> Set front and/or back function and reference value for stencil testing. </summary>
+        /// <param name="face"> Specifies whether front and/or back stencil state is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
+        /// <param name="func"> Specifies the test function. Eight symbolic constants are valid: GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS. </param>
+        /// <param name="ref"> Specifies the reference value for the stencil test. Stencil comparison operations and queries of ref clamp its value to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
+        /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's. </param>
         public static void StencilFuncSeparate(StencilFaceDirection face, StencilFunction func, int reference, uint mask) => _StencilFuncSeparate_fnptr(face, func, reference, mask);
         [UnmanagedCallersOnly]
         private static void StencilFuncSeparate_Lazy(StencilFaceDirection face, StencilFunction func, int reference, uint mask)
@@ -917,6 +1277,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, void> _StencilMask_fnptr = &StencilMask_Lazy;
+        /// <summary> Control the front and back writing of individual bits in the stencil planes. </summary>
+        /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. </param>
         public static void StencilMask(uint mask) => _StencilMask_fnptr(mask);
         [UnmanagedCallersOnly]
         private static void StencilMask_Lazy(uint mask)
@@ -926,6 +1288,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<StencilFaceDirection, uint, void> _StencilMaskSeparate_fnptr = &StencilMaskSeparate_Lazy;
+        /// <summary> Control the front and/or back writing of individual bits in the stencil planes. </summary>
+        /// <param name="face"> Specifies whether the front and/or back stencil writemask is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
+        /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. </param>
         public static void StencilMaskSeparate(StencilFaceDirection face, uint mask) => _StencilMaskSeparate_fnptr(face, mask);
         [UnmanagedCallersOnly]
         private static void StencilMaskSeparate_Lazy(StencilFaceDirection face, uint mask)
@@ -935,6 +1300,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<StencilOp, StencilOp, StencilOp, void> _StencilOp_fnptr = &StencilOp_Lazy;
+        /// <summary> Set front and back stencil test actions. </summary>
+        /// <param name="sfail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
+        /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
+        /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         public static void StencilOp(StencilOp fail, StencilOp zfail, StencilOp zpass) => _StencilOp_fnptr(fail, zfail, zpass);
         [UnmanagedCallersOnly]
         private static void StencilOp_Lazy(StencilOp fail, StencilOp zfail, StencilOp zpass)
@@ -944,6 +1313,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<StencilFaceDirection, StencilOp, StencilOp, StencilOp, void> _StencilOpSeparate_fnptr = &StencilOpSeparate_Lazy;
+        /// <summary> Set front and/or back stencil test actions. </summary>
+        /// <param name="face"> Specifies whether front and/or back stencil state is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
+        /// <param name="sfail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
+        /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
+        /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         public static void StencilOpSeparate(StencilFaceDirection face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => _StencilOpSeparate_fnptr(face, sfail, dpfail, dppass);
         [UnmanagedCallersOnly]
         private static void StencilOpSeparate_Lazy(StencilFaceDirection face, StencilOp sfail, StencilOp dpfail, StencilOp dppass)
@@ -953,6 +1327,16 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage2D_fnptr = &TexImage2D_Lazy;
+        /// <summary> Specify a two-dimensional texture image. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="internalFormat"> Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, or one of the sized internal formats given in Table 2, below. </param>
+        /// <param name="width"> Specifies the width of the texture image. All implementations support texture images that are at least 2048 texels wide. </param>
+        /// <param name="height"> Specifies the height of the texture image. All implementations support texture images that are at least 2048 texels high. </param>
+        /// <param name="border"> This value must be 0. </param>
+        /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL,GL_STENCIL_INDEX, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
+        /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
+        /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         public static void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage2D_fnptr(target, level, internalformat, width, height, border, format, type, pixels);
         [UnmanagedCallersOnly]
         private static void TexImage2D_Lazy(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
@@ -962,6 +1346,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, TextureParameterName, float, void> _TexParameterf_fnptr = &TexParameterf_Lazy;
+        /// <summary> Set texture parameters. </summary>
+        /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
+        /// <param name="param"> Specifies the value of pname. </param>
         public static void TexParameterf(TextureTarget target, TextureParameterName pname, float param) => _TexParameterf_fnptr(target, pname, param);
         [UnmanagedCallersOnly]
         private static void TexParameterf_Lazy(TextureTarget target, TextureParameterName pname, float param)
@@ -971,6 +1359,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, TextureParameterName, float*, void> _TexParameterfv_fnptr = &TexParameterfv_Lazy;
+        /// <summary> Set texture parameters. </summary>
+        /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
+        /// <param name="params"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void TexParameterfv(TextureTarget target, TextureParameterName pname, float* parameters) => _TexParameterfv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameterfv_Lazy(TextureTarget target, TextureParameterName pname, float* parameters)
@@ -980,6 +1372,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, TextureParameterName, int, void> _TexParameteri_fnptr = &TexParameteri_Lazy;
+        /// <summary> Set texture parameters. </summary>
+        /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
+        /// <param name="param"> Specifies the value of pname. </param>
         public static void TexParameteri(TextureTarget target, TextureParameterName pname, int param) => _TexParameteri_fnptr(target, pname, param);
         [UnmanagedCallersOnly]
         private static void TexParameteri_Lazy(TextureTarget target, TextureParameterName pname, int param)
@@ -989,6 +1385,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, TextureParameterName, int*, void> _TexParameteriv_fnptr = &TexParameteriv_Lazy;
+        /// <summary> Set texture parameters. </summary>
+        /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
+        /// <param name="params"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void TexParameteriv(TextureTarget target, TextureParameterName pname, int* parameters) => _TexParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameteriv_Lazy(TextureTarget target, TextureParameterName pname, int* parameters)
@@ -998,6 +1398,16 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexSubImage2D_fnptr = &TexSubImage2D_Lazy;
+        /// <summary> Specify a two-dimensional texture subimage. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="xoffset"> Specifies a texel offset in the x direction within the texture array. </param>
+        /// <param name="yoffset"> Specifies a texel offset in the y direction within the texture array. </param>
+        /// <param name="width"> Specifies the width of the texture subimage. </param>
+        /// <param name="height"> Specifies the height of the texture subimage. </param>
+        /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
+        /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
+        /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         public static void TexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => _TexSubImage2D_fnptr(target, level, xoffset, yoffset, width, height, format, type, pixels);
         [UnmanagedCallersOnly]
         private static void TexSubImage2D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels)
@@ -1007,6 +1417,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, float, void> _Uniform1f_fnptr = &Uniform1f_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform1f(int location, float v0) => _Uniform1f_fnptr(location, v0);
         [UnmanagedCallersOnly]
         private static void Uniform1f_Lazy(int location, float v0)
@@ -1016,6 +1429,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, float*, void> _Uniform1fv_fnptr = &Uniform1fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform1fv(int location, int count, float* value) => _Uniform1fv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform1fv_Lazy(int location, int count, float* value)
@@ -1025,6 +1442,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, void> _Uniform1i_fnptr = &Uniform1i_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform1i(int location, int v0) => _Uniform1i_fnptr(location, v0);
         [UnmanagedCallersOnly]
         private static void Uniform1i_Lazy(int location, int v0)
@@ -1034,6 +1454,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int*, void> _Uniform1iv_fnptr = &Uniform1iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform1iv(int location, int count, int* value) => _Uniform1iv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform1iv_Lazy(int location, int count, int* value)
@@ -1043,6 +1467,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, float, float, void> _Uniform2f_fnptr = &Uniform2f_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform2f(int location, float v0, float v1) => _Uniform2f_fnptr(location, v0, v1);
         [UnmanagedCallersOnly]
         private static void Uniform2f_Lazy(int location, float v0, float v1)
@@ -1052,6 +1480,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, float*, void> _Uniform2fv_fnptr = &Uniform2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform2fv(int location, int count, float* value) => _Uniform2fv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform2fv_Lazy(int location, int count, float* value)
@@ -1061,6 +1493,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, void> _Uniform2i_fnptr = &Uniform2i_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform2i(int location, int v0, int v1) => _Uniform2i_fnptr(location, v0, v1);
         [UnmanagedCallersOnly]
         private static void Uniform2i_Lazy(int location, int v0, int v1)
@@ -1070,6 +1506,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int*, void> _Uniform2iv_fnptr = &Uniform2iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform2iv(int location, int count, int* value) => _Uniform2iv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform2iv_Lazy(int location, int count, int* value)
@@ -1079,6 +1519,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, float, float, float, void> _Uniform3f_fnptr = &Uniform3f_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform3f(int location, float v0, float v1, float v2) => _Uniform3f_fnptr(location, v0, v1, v2);
         [UnmanagedCallersOnly]
         private static void Uniform3f_Lazy(int location, float v0, float v1, float v2)
@@ -1088,6 +1533,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, float*, void> _Uniform3fv_fnptr = &Uniform3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform3fv(int location, int count, float* value) => _Uniform3fv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform3fv_Lazy(int location, int count, float* value)
@@ -1097,6 +1546,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, int, void> _Uniform3i_fnptr = &Uniform3i_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform3i(int location, int v0, int v1, int v2) => _Uniform3i_fnptr(location, v0, v1, v2);
         [UnmanagedCallersOnly]
         private static void Uniform3i_Lazy(int location, int v0, int v1, int v2)
@@ -1106,6 +1560,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int*, void> _Uniform3iv_fnptr = &Uniform3iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform3iv(int location, int count, int* value) => _Uniform3iv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform3iv_Lazy(int location, int count, int* value)
@@ -1115,6 +1573,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, float, float, float, float, void> _Uniform4f_fnptr = &Uniform4f_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform4f(int location, float v0, float v1, float v2, float v3) => _Uniform4f_fnptr(location, v0, v1, v2, v3);
         [UnmanagedCallersOnly]
         private static void Uniform4f_Lazy(int location, float v0, float v1, float v2, float v3)
@@ -1124,6 +1588,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, float*, void> _Uniform4fv_fnptr = &Uniform4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform4fv(int location, int count, float* value) => _Uniform4fv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform4fv_Lazy(int location, int count, float* value)
@@ -1133,6 +1601,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, int, int, void> _Uniform4i_fnptr = &Uniform4i_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform4i(int location, int v0, int v1, int v2, int v3) => _Uniform4i_fnptr(location, v0, v1, v2, v3);
         [UnmanagedCallersOnly]
         private static void Uniform4i_Lazy(int location, int v0, int v1, int v2, int v3)
@@ -1142,6 +1616,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int*, void> _Uniform4iv_fnptr = &Uniform4iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform4iv(int location, int count, int* value) => _Uniform4iv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform4iv_Lazy(int location, int count, int* value)
@@ -1151,6 +1629,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2fv_fnptr = &UniformMatrix2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix2fv(int location, int count, byte transpose, float* value) => _UniformMatrix2fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix2fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1160,6 +1643,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3fv_fnptr = &UniformMatrix3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix3fv(int location, int count, byte transpose, float* value) => _UniformMatrix3fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix3fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1169,6 +1657,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4fv_fnptr = &UniformMatrix4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix4fv(int location, int count, byte transpose, float* value) => _UniformMatrix4fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix4fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1178,6 +1671,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, void> _UseProgram_fnptr = &UseProgram_Lazy;
+        /// <summary> Installs a program object as part of current rendering state. </summary>
+        /// <param name="program">Specifies the handle of the program object whose executables are to be used as part of current rendering state.</param>
         public static void UseProgram(ProgramHandle program) => _UseProgram_fnptr(program);
         [UnmanagedCallersOnly]
         private static void UseProgram_Lazy(ProgramHandle program)
@@ -1187,6 +1682,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, void> _ValidateProgram_fnptr = &ValidateProgram_Lazy;
+        /// <summary> Validates a program object. </summary>
+        /// <param name="program">Specifies the handle of the program object to be validated.</param>
         public static void ValidateProgram(ProgramHandle program) => _ValidateProgram_fnptr(program);
         [UnmanagedCallersOnly]
         private static void ValidateProgram_Lazy(ProgramHandle program)
@@ -1196,6 +1693,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float, void> _VertexAttrib1f_fnptr = &VertexAttrib1f_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         public static void VertexAttrib1f(uint index, float x) => _VertexAttrib1f_fnptr(index, x);
         [UnmanagedCallersOnly]
         private static void VertexAttrib1f_Lazy(uint index, float x)
@@ -1205,6 +1705,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float*, void> _VertexAttrib1fv_fnptr = &VertexAttrib1fv_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
         public static void VertexAttrib1fv(uint index, float* v) => _VertexAttrib1fv_fnptr(index, v);
         [UnmanagedCallersOnly]
         private static void VertexAttrib1fv_Lazy(uint index, float* v)
@@ -1214,6 +1717,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float, float, void> _VertexAttrib2f_fnptr = &VertexAttrib2f_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         public static void VertexAttrib2f(uint index, float x, float y) => _VertexAttrib2f_fnptr(index, x, y);
         [UnmanagedCallersOnly]
         private static void VertexAttrib2f_Lazy(uint index, float x, float y)
@@ -1223,6 +1730,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float*, void> _VertexAttrib2fv_fnptr = &VertexAttrib2fv_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
         public static void VertexAttrib2fv(uint index, float* v) => _VertexAttrib2fv_fnptr(index, v);
         [UnmanagedCallersOnly]
         private static void VertexAttrib2fv_Lazy(uint index, float* v)
@@ -1232,6 +1742,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float, float, float, void> _VertexAttrib3f_fnptr = &VertexAttrib3f_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         public static void VertexAttrib3f(uint index, float x, float y, float z) => _VertexAttrib3f_fnptr(index, x, y, z);
         [UnmanagedCallersOnly]
         private static void VertexAttrib3f_Lazy(uint index, float x, float y, float z)
@@ -1241,6 +1756,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float*, void> _VertexAttrib3fv_fnptr = &VertexAttrib3fv_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
         public static void VertexAttrib3fv(uint index, float* v) => _VertexAttrib3fv_fnptr(index, v);
         [UnmanagedCallersOnly]
         private static void VertexAttrib3fv_Lazy(uint index, float* v)
@@ -1250,6 +1768,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float, float, float, float, void> _VertexAttrib4f_fnptr = &VertexAttrib4f_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         public static void VertexAttrib4f(uint index, float x, float y, float z, float w) => _VertexAttrib4f_fnptr(index, x, y, z, w);
         [UnmanagedCallersOnly]
         private static void VertexAttrib4f_Lazy(uint index, float x, float y, float z, float w)
@@ -1259,6 +1783,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, float*, void> _VertexAttrib4fv_fnptr = &VertexAttrib4fv_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
         public static void VertexAttrib4fv(uint index, float* v) => _VertexAttrib4fv_fnptr(index, v);
         [UnmanagedCallersOnly]
         private static void VertexAttrib4fv_Lazy(uint index, float* v)
@@ -1268,6 +1795,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, int, VertexAttribPointerType, byte, int, void*, void> _VertexAttribPointer_fnptr = &VertexAttribPointer_Lazy;
+        /// <summary> Define an array of generic vertex attribute data. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="size">Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each component in the array. The symbolic constants GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT, and GL_UNSIGNED_INT are accepted by both functions. Additionally GL_HALF_FLOAT, GL_FLOAT, GL_FIXED, GL_INT_2_10_10_10_REV, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted by glVertexAttribPointer. The initial value is GL_FLOAT.</param>
+        /// <param name="normalized">For glVertexAttribPointer, specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed. This parameter is ignored if type is GL_FIXED.</param>
+        /// <param name="stride"> Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0. </param>
+        /// <param name="pointer"> Specifies a pointer to the first generic vertex attribute in the array. If a non-zero buffer is currently bound to the GL_ARRAY_BUFFER target, pointer specifies an offset of into the array in the data store of that buffer. The initial value is 0. </param>
         public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, byte normalized, int stride, void* pointer) => _VertexAttribPointer_fnptr(index, size, type, normalized, stride, pointer);
         [UnmanagedCallersOnly]
         private static void VertexAttribPointer_Lazy(uint index, int size, VertexAttribPointerType type, byte normalized, int stride, void* pointer)
@@ -1277,6 +1811,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, int, void> _Viewport_fnptr = &Viewport_Lazy;
+        /// <summary> Set the viewport. </summary>
+        /// <param name="x"> Specify the lower left corner of the viewport rectangle, in pixels. The initial value is (0,0). </param>
+        /// <param name="y"> Specify the lower left corner of the viewport rectangle, in pixels. The initial value is (0,0). </param>
+        /// <param name="width"> Specify the width and height of the viewport. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
+        /// <param name="height"> Specify the width and height of the viewport. When a GL context is first attached to a window, width and height are set to the dimensions of that window. </param>
         public static void Viewport(int x, int y, int width, int height) => _Viewport_fnptr(x, y, width, height);
         [UnmanagedCallersOnly]
         private static void Viewport_Lazy(int x, int y, int width, int height)
@@ -1286,6 +1825,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ReadBufferMode, void> _ReadBuffer_fnptr = &ReadBuffer_Lazy;
+        /// <summary> Select a color buffer source for pixels. </summary>
+        /// <param name="src"> Specifies a color buffer. Accepted values are GL_BACK, GL_NONE, and GL_COLOR_ATTACHMENTi. </param>
         public static void ReadBuffer(ReadBufferMode src) => _ReadBuffer_fnptr(src);
         [UnmanagedCallersOnly]
         private static void ReadBuffer_Lazy(ReadBufferMode src)
@@ -1295,6 +1836,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, uint, uint, int, DrawElementsType, void*, void> _DrawRangeElements_fnptr = &DrawRangeElements_Lazy;
+        /// <summary> Render primitives from array data. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="start"> Specifies the minimum array index contained in indices. </param>
+        /// <param name="end"> Specifies the maximum array index contained in indices. </param>
+        /// <param name="count"> Specifies the number of elements to be rendered. </param>
+        /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
+        /// <param name="indices"> Specifies a byte offset (cast to a pointer type) into the buffer bound to GL_ELEMENT_ARRAY_BUFFER to start reading indices from. If no buffer is bound, specifies a pointer to the location where the indices are stored. </param>
         public static void DrawRangeElements(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices) => _DrawRangeElements_fnptr(mode, start, end, count, type, indices);
         [UnmanagedCallersOnly]
         private static void DrawRangeElements_Lazy(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices)
@@ -1304,6 +1852,17 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage3D_fnptr = &TexImage3D_Lazy;
+        /// <summary> Specify a three-dimensional texture image. </summary>
+        /// <param name="target"> Specifies the target texture. Must be one of GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n th mipmap reduction image. </param>
+        /// <param name="internalFormat"> Specifies the number of color components in the texture. Must be one of base internal formats given in Table 1, or one of the sized internal formats given in Table 2, below. </param>
+        /// <param name="width"> Specifies the width of the texture image. All implementations support 3D texture images that are at least 256 texels wide. </param>
+        /// <param name="height"> Specifies the height of the texture image. All implementations support 3D texture images that are at least 256 texels high. </param>
+        /// <param name="depth"> Specifies the depth of the texture image, or the number of layers in a texture array. All implementations support 3D texture images that are at least 256 texels deep, and texture arrays that are at least 256 layers deep. </param>
+        /// <param name="border"> This value must be 0. </param>
+        /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_STENCIL_INDEX, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
+        /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
+        /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         public static void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage3D_fnptr(target, level, internalformat, width, height, depth, border, format, type, pixels);
         [UnmanagedCallersOnly]
         private static void TexImage3D_Lazy(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
@@ -1313,6 +1872,18 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexSubImage3D_fnptr = &TexSubImage3D_Lazy;
+        /// <summary> Specify a three-dimensional texture subimage. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="xoffset"> Specifies a texel offset in the x direction within the texture array. </param>
+        /// <param name="yoffset"> Specifies a texel offset in the y direction within the texture array. </param>
+        /// <param name="zoffset"> Specifies a texel offset in the z direction within the texture array. </param>
+        /// <param name="width"> Specifies the width of the texture subimage. </param>
+        /// <param name="height"> Specifies the height of the texture subimage. </param>
+        /// <param name="depth"> Specifies the depth of the texture subimage. </param>
+        /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RED, GL_RED_INTEGER, GL_RG, GL_RG_INTEGER, GL_RGB, GL_RGB_INTEGER, GL_RGBA, GL_RGBA_INTEGER, GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_LUMINANCE_ALPHA, GL_LUMINANCE, and GL_ALPHA. </param>
+        /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
+        /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         public static void TexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => _TexSubImage3D_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
         [UnmanagedCallersOnly]
         private static void TexSubImage3D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels)
@@ -1322,6 +1893,16 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, int, void> _CopyTexSubImage3D_fnptr = &CopyTexSubImage3D_Lazy;
+        /// <summary> Copy a three-dimensional texture subimage. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="xoffset"> Specifies a texel offset in the x direction within the texture array. </param>
+        /// <param name="yoffset"> Specifies a texel offset in the y direction within the texture array. </param>
+        /// <param name="zoffset"> Specifies a texel offset in the z direction within the texture array. </param>
+        /// <param name="x"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
+        /// <param name="y"> Specify the window coordinates of the lower left corner of the rectangular region of pixels to be copied. </param>
+        /// <param name="width"> Specifies the width of the texture subimage. </param>
+        /// <param name="height"> Specifies the height of the texture subimage. </param>
         public static void CopyTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => _CopyTexSubImage3D_fnptr(target, level, xoffset, yoffset, zoffset, x, y, width, height);
         [UnmanagedCallersOnly]
         private static void CopyTexSubImage3D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height)
@@ -1331,6 +1912,16 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, int, int, void*, void> _CompressedTexImage3D_fnptr = &CompressedTexImage3D_Lazy;
+        /// <summary> Specify a three-dimensional texture image in a compressed format. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="internalformat"> Specifies the format of the compressed image data stored at address data. </param>
+        /// <param name="width"> Specifies the width of the texture image. </param>
+        /// <param name="height"> Specifies the height of the texture image. </param>
+        /// <param name="depth"> Specifies the depth of the texture image. </param>
+        /// <param name="border"> This value must be 0. </param>
+        /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
+        /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
         public static void CompressedTexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* data) => _CompressedTexImage3D_fnptr(target, level, internalformat, width, height, depth, border, imageSize, data);
         [UnmanagedCallersOnly]
         private static void CompressedTexImage3D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* data)
@@ -1340,6 +1931,18 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, PixelFormat, int, void*, void> _CompressedTexSubImage3D_fnptr = &CompressedTexSubImage3D_Lazy;
+        /// <summary> Specify a three-dimensional texture subimage in a compressed format. </summary>
+        /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="xoffset"> Specifies a texel offset in the x direction within the texture array. </param>
+        /// <param name="yoffset"> Specifies a texel offset in the y direction within the texture array. </param>
+        /// <param name="zoffset"> Specifies a texel offset in the z direction within the texture array. </param>
+        /// <param name="width"> Specifies the width of the texture subimage. </param>
+        /// <param name="height"> Specifies the height of the texture subimage. </param>
+        /// <param name="depth"> Specifies the depth of the texture subimage. </param>
+        /// <param name="format"> Specifies the format of the compressed image data stored at address data. </param>
+        /// <param name="imageSize"> Specifies the number of unsigned bytes of image data starting at the address specified by data. </param>
+        /// <param name="data"> Specifies a pointer to the compressed image data in memory. </param>
         public static void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data) => _CompressedTexSubImage3D_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
         [UnmanagedCallersOnly]
         private static void CompressedTexSubImage3D_Lazy(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, void* data)
@@ -1349,6 +1952,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, QueryHandle*, void> _GenQueries_fnptr = &GenQueries_Lazy;
+        /// <summary> Generate query object names. </summary>
+        /// <param name="n"> Specifies the number of query object names to be generated. </param>
+        /// <param name="ids"> Specifies an array in which the generated query object names are stored. </param>
         public static void GenQueries(int n, QueryHandle* ids) => _GenQueries_fnptr(n, ids);
         [UnmanagedCallersOnly]
         private static void GenQueries_Lazy(int n, QueryHandle* ids)
@@ -1358,6 +1964,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, QueryHandle*, void> _DeleteQueries_fnptr = &DeleteQueries_Lazy;
+        /// <summary> Delete named query objects. </summary>
+        /// <param name="n"> Specifies the number of query objects to be deleted. </param>
+        /// <param name="ids"> Specifies an array of query objects to be deleted. </param>
         public static void DeleteQueries(int n, QueryHandle* ids) => _DeleteQueries_fnptr(n, ids);
         [UnmanagedCallersOnly]
         private static void DeleteQueries_Lazy(int n, QueryHandle* ids)
@@ -1367,6 +1976,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<QueryHandle, byte> _IsQuery_fnptr = &IsQuery_Lazy;
+        /// <summary> Determine if a name corresponds to a query object. </summary>
+        /// <param name="id"> Specifies a value that may be the name of a query object. </param>
         public static byte IsQuery(QueryHandle id) => _IsQuery_fnptr(id);
         [UnmanagedCallersOnly]
         private static byte IsQuery_Lazy(QueryHandle id)
@@ -1376,6 +1987,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<QueryTarget, QueryHandle, void> _BeginQuery_fnptr = &BeginQuery_Lazy;
+        /// <summary> Delimit the boundaries of a query object. </summary>
+        /// <param name="target"> Specifies the target type of query object established between glBeginQuery and the subsequent glEndQuery. The symbolic constant must be one of GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE, GL_PRIMITIVES_GENERATED, or GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN. </param>
+        /// <param name="id"> Specifies the name of a query object. </param>
         public static void BeginQuery(QueryTarget target, QueryHandle id) => _BeginQuery_fnptr(target, id);
         [UnmanagedCallersOnly]
         private static void BeginQuery_Lazy(QueryTarget target, QueryHandle id)
@@ -1385,6 +1999,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<QueryTarget, void> _EndQuery_fnptr = &EndQuery_Lazy;
+        /// <summary> Delimit the boundaries of a query object. </summary>
+        /// <param name="target"> Specifies the target type of query object established between glBeginQuery and the subsequent glEndQuery. The symbolic constant must be one of GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE, GL_PRIMITIVES_GENERATED, or GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN. </param>
         public static void EndQuery(QueryTarget target) => _EndQuery_fnptr(target);
         [UnmanagedCallersOnly]
         private static void EndQuery_Lazy(QueryTarget target)
@@ -1394,6 +2010,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<QueryTarget, QueryParameterName, int*, void> _GetQueryiv_fnptr = &GetQueryiv_Lazy;
+        /// <summary> Return parameters of a query object target. </summary>
+        /// <param name="target"> Specifies a query object target. Must be GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE, GL_PRIMITIVES_GENERATED, or GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object target parameter. Must be GL_CURRENT_QUERY. </param>
+        /// <param name="params"> Returns the requested data. </param>
         public static void GetQueryiv(QueryTarget target, QueryParameterName pname, int* parameters) => _GetQueryiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryiv_Lazy(QueryTarget target, QueryParameterName pname, int* parameters)
@@ -1403,6 +2023,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<QueryHandle, QueryObjectParameterName, uint*, void> _GetQueryObjectuiv_fnptr = &GetQueryObjectuiv_Lazy;
+        /// <summary> Return parameters of a query object. </summary>
+        /// <param name="id"> Specifies the name of a query object. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
+        /// <param name="params"> Returns the requested data. </param>
         public static void GetQueryObjectuiv(QueryHandle id, QueryObjectParameterName pname, uint* parameters) => _GetQueryObjectuiv_fnptr(id, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryObjectuiv_Lazy(QueryHandle id, QueryObjectParameterName pname, uint* parameters)
@@ -1412,6 +2036,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, byte> _UnmapBuffer_fnptr = &UnmapBuffer_Lazy;
+        /// <summary> Map a section of a buffer object's data store. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
         public static byte UnmapBuffer(BufferTargetARB target) => _UnmapBuffer_fnptr(target);
         [UnmanagedCallersOnly]
         private static byte UnmapBuffer_Lazy(BufferTargetARB target)
@@ -1421,6 +2047,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, BufferPointerNameARB, void**, void> _GetBufferPointerv_fnptr = &GetBufferPointerv_Lazy;
+        /// <summary> Return the pointer to a mapped buffer object's data store. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferPointerv, which must be one of the buffer binding targets in the following table: </param>
+        /// <param name="pname"> Specifies the pointer to be returned. The symbolic constant must be GL_BUFFER_MAP_POINTER. </param>
+        /// <param name="params"> Returns the pointer value specified by pname. </param>
         public static void GetBufferPointerv(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => _GetBufferPointerv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetBufferPointerv_Lazy(BufferTargetARB target, BufferPointerNameARB pname, void** parameters)
@@ -1430,6 +2060,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, DrawBufferMode*, void> _DrawBuffers_fnptr = &DrawBuffers_Lazy;
+        /// <summary> Specifies a list of color buffers to be drawn into. </summary>
+        /// <param name="n">Specifies the number of buffers in bufs.</param>
+        /// <param name="bufs">Points to an array of symbolic constants specifying the buffers into which fragment colors or data values will be written.</param>
         public static void DrawBuffers(int n, DrawBufferMode* bufs) => _DrawBuffers_fnptr(n, bufs);
         [UnmanagedCallersOnly]
         private static void DrawBuffers_Lazy(int n, DrawBufferMode* bufs)
@@ -1439,6 +2072,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2x3fv_fnptr = &UniformMatrix2x3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix2x3fv(int location, int count, byte transpose, float* value) => _UniformMatrix2x3fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix2x3fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1448,6 +2086,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3x2fv_fnptr = &UniformMatrix3x2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix3x2fv(int location, int count, byte transpose, float* value) => _UniformMatrix3x2fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix3x2fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1457,6 +2100,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2x4fv_fnptr = &UniformMatrix2x4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix2x4fv(int location, int count, byte transpose, float* value) => _UniformMatrix2x4fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix2x4fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1466,6 +2114,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4x2fv_fnptr = &UniformMatrix4x2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix4x2fv(int location, int count, byte transpose, float* value) => _UniformMatrix4x2fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix4x2fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1475,6 +2128,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3x4fv_fnptr = &UniformMatrix3x4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix3x4fv(int location, int count, byte transpose, float* value) => _UniformMatrix3x4fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix3x4fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1484,6 +2142,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4x3fv_fnptr = &UniformMatrix4x3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void UniformMatrix4x3fv(int location, int count, byte transpose, float* value) => _UniformMatrix4x3fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void UniformMatrix4x3fv_Lazy(int location, int count, byte transpose, float* value)
@@ -1493,6 +2156,17 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, int, int, int, int, int, ClearBufferMask, BlitFramebufferFilter, void> _BlitFramebuffer_fnptr = &BlitFramebuffer_Lazy;
+        /// <summary> Copy a block of pixels from the read framebuffer to the draw framebuffer. </summary>
+        /// <param name="srcX0"> Specify the bounds of the source rectangle within the read buffer of the read framebuffer. </param>
+        /// <param name="srcY0"> Specify the bounds of the source rectangle within the read buffer of the read framebuffer. </param>
+        /// <param name="srcX1"> Specify the bounds of the source rectangle within the read buffer of the read framebuffer. </param>
+        /// <param name="srcY1"> Specify the bounds of the source rectangle within the read buffer of the read framebuffer. </param>
+        /// <param name="dstX0"> Specify the bounds of the destination rectangle within the write buffer of the write framebuffer. </param>
+        /// <param name="dstY0"> Specify the bounds of the destination rectangle within the write buffer of the write framebuffer. </param>
+        /// <param name="dstX1"> Specify the bounds of the destination rectangle within the write buffer of the write framebuffer. </param>
+        /// <param name="dstY1"> Specify the bounds of the destination rectangle within the write buffer of the write framebuffer. </param>
+        /// <param name="mask"> The bitwise OR of the flags indicating which buffers are to be copied. The allowed flags are GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT and GL_STENCIL_BUFFER_BIT. </param>
+        /// <param name="filter"> Specifies the interpolation to be applied if the image is stretched. Must be GL_NEAREST or GL_LINEAR. </param>
         public static void BlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => _BlitFramebuffer_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
         [UnmanagedCallersOnly]
         private static void BlitFramebuffer_Lazy(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter)
@@ -1502,6 +2176,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<RenderbufferTarget, int, InternalFormat, int, int, void> _RenderbufferStorageMultisample_fnptr = &RenderbufferStorageMultisample_Lazy;
+        /// <summary> Establish data storage, format, dimensions and sample count of a renderbuffer object's image. </summary>
+        /// <param name="target"> Specifies a binding to which the target of the allocation and must be GL_RENDERBUFFER. </param>
+        /// <param name="samples"> Specifies the number of samples to be used for the renderbuffer object's storage. </param>
+        /// <param name="internalformat"> Specifies the internal format to use for the renderbuffer object's image. </param>
+        /// <param name="width"> Specifies the width of the renderbuffer, in pixels. </param>
+        /// <param name="height"> Specifies the height of the renderbuffer, in pixels. </param>
         public static void RenderbufferStorageMultisample(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => _RenderbufferStorageMultisample_fnptr(target, samples, internalformat, width, height);
         [UnmanagedCallersOnly]
         private static void RenderbufferStorageMultisample_Lazy(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height)
@@ -1511,6 +2191,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferAttachment, TextureHandle, int, int, void> _FramebufferTextureLayer_fnptr = &FramebufferTextureLayer_Lazy;
+        /// <summary> Attach a single layer of a texture to a framebuffer. </summary>
+        /// <param name="target"> Specifies the framebuffer target. target must be GL_DRAW_FRAMEBUFFER, GL_READ_FRAMEBUFFER, or GL_FRAMEBUFFER. GL_FRAMEBUFFER is equivalent to GL_DRAW_FRAMEBUFFER. </param>
+        /// <param name="attachment"> Specifies the attachment point of the framebuffer. attachment must be GL_COLOR_ATTACHMENTi, GL_DEPTH_ATTACHMENT, GL_STENCIL_ATTACHMENT or GL_DEPTH_STENCIL_ATTACHMENT. </param>
+        /// <param name="texture"> Specifies the texture object to attach to the framebuffer attachment point named by attachment. </param>
+        /// <param name="level"> Specifies the mipmap level of texture to attach. </param>
+        /// <param name="layer"> Specifies the layer of texture to attach. </param>
         public static void FramebufferTextureLayer(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int level, int layer) => _FramebufferTextureLayer_fnptr(target, attachment, texture, level, layer);
         [UnmanagedCallersOnly]
         private static void FramebufferTextureLayer_Lazy(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int level, int layer)
@@ -1520,6 +2206,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, IntPtr, nint, MapBufferAccessMask, void*> _MapBufferRange_fnptr = &MapBufferRange_Lazy;
+        /// <summary> Map a section of a buffer object's data store. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
+        /// <param name="offset"> Specifies the starting offset within the buffer of the range to be mapped. </param>
+        /// <param name="length"> Specifies the length of the range to be mapped. </param>
+        /// <param name="access"> Specifies a combination of access flags indicating the desired access to the range. </param>
         public static void* MapBufferRange(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => _MapBufferRange_fnptr(target, offset, length, access);
         [UnmanagedCallersOnly]
         private static void* MapBufferRange_Lazy(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access)
@@ -1529,6 +2220,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, IntPtr, nint, void> _FlushMappedBufferRange_fnptr = &FlushMappedBufferRange_Lazy;
+        /// <summary> Indicate modifications to a range of a mapped buffer. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glFlushMappedBufferRange, which must be one of the buffer binding targets in the following table: </param>
+        /// <param name="offset"> Specifies the start of the buffer subrange, in basic machine units. </param>
+        /// <param name="length"> Specifies the length of the buffer subrange, in basic machine units. </param>
         public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint length) => _FlushMappedBufferRange_fnptr(target, offset, length);
         [UnmanagedCallersOnly]
         private static void FlushMappedBufferRange_Lazy(BufferTargetARB target, IntPtr offset, nint length)
@@ -1538,6 +2233,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<VertexArrayHandle, void> _BindVertexArray_fnptr = &BindVertexArray_Lazy;
+        /// <summary> Bind a vertex array object. </summary>
+        /// <param name="array"> Specifies the name of the vertex array to bind. </param>
         public static void BindVertexArray(VertexArrayHandle array) => _BindVertexArray_fnptr(array);
         [UnmanagedCallersOnly]
         private static void BindVertexArray_Lazy(VertexArrayHandle array)
@@ -1547,6 +2244,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, VertexArrayHandle*, void> _DeleteVertexArrays_fnptr = &DeleteVertexArrays_Lazy;
+        /// <summary> Delete vertex array objects. </summary>
+        /// <param name="n"> Specifies the number of vertex array objects to be deleted. </param>
+        /// <param name="arrays"> Specifies the address of an array containing the n names of the objects to be deleted. </param>
         public static void DeleteVertexArrays(int n, VertexArrayHandle* arrays) => _DeleteVertexArrays_fnptr(n, arrays);
         [UnmanagedCallersOnly]
         private static void DeleteVertexArrays_Lazy(int n, VertexArrayHandle* arrays)
@@ -1556,6 +2256,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, VertexArrayHandle*, void> _GenVertexArrays_fnptr = &GenVertexArrays_Lazy;
+        /// <summary> Generate vertex array object names. </summary>
+        /// <param name="n"> Specifies the number of vertex array object names to generate. </param>
+        /// <param name="arrays"> Specifies an array in which the generated vertex array object names are stored. </param>
         public static void GenVertexArrays(int n, VertexArrayHandle* arrays) => _GenVertexArrays_fnptr(n, arrays);
         [UnmanagedCallersOnly]
         private static void GenVertexArrays_Lazy(int n, VertexArrayHandle* arrays)
@@ -1565,6 +2268,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<VertexArrayHandle, byte> _IsVertexArray_fnptr = &IsVertexArray_Lazy;
+        /// <summary> Determine if a name corresponds to a vertex array object. </summary>
+        /// <param name="array"> Specifies a value that may be the name of a vertex array object. </param>
         public static byte IsVertexArray(VertexArrayHandle array) => _IsVertexArray_fnptr(array);
         [UnmanagedCallersOnly]
         private static byte IsVertexArray_Lazy(VertexArrayHandle array)
@@ -1574,6 +2279,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetPName, uint, int*, void> _GetIntegeri_v_fnptr = &GetIntegeri_v_Lazy;
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
+        /// <param name="index"> Specifies the index of the particular element being queried. </param>
+        /// <param name="data"> Returns the value or values of the specified parameter. </param>
         public static void GetIntegeri_v(GetPName target, uint index, int* data) => _GetIntegeri_v_fnptr(target, index, data);
         [UnmanagedCallersOnly]
         private static void GetIntegeri_v_Lazy(GetPName target, uint index, int* data)
@@ -1583,6 +2292,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, void> _BeginTransformFeedback_fnptr = &BeginTransformFeedback_Lazy;
+        /// <summary> Start transform feedback operation. </summary>
+        /// <param name="primitiveMode"> Specify the output type of the primitives that will be recorded into the buffer objects that are bound for transform feedback. </param>
         public static void BeginTransformFeedback(PrimitiveType primitiveMode) => _BeginTransformFeedback_fnptr(primitiveMode);
         [UnmanagedCallersOnly]
         private static void BeginTransformFeedback_Lazy(PrimitiveType primitiveMode)
@@ -1592,6 +2303,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _EndTransformFeedback_fnptr = &EndTransformFeedback_Lazy;
+        /// <summary> Start transform feedback operation. </summary>
         public static void EndTransformFeedback() => _EndTransformFeedback_fnptr();
         [UnmanagedCallersOnly]
         private static void EndTransformFeedback_Lazy()
@@ -1601,6 +2313,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, uint, BufferHandle, IntPtr, nint, void> _BindBufferRange_fnptr = &BindBufferRange_Lazy;
+        /// <summary> Bind a range within a buffer object to an indexed buffer target. </summary>
+        /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_SHADER_STORAGE_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER or GL_UNIFORM_BUFFER. </param>
+        /// <param name="index"> Specify the index of the binding point within the array specified by target. </param>
+        /// <param name="buffer"> The name of a buffer object to bind to the specified binding point. </param>
+        /// <param name="offset"> The starting offset in basic machine units into the buffer object buffer. </param>
+        /// <param name="size"> The amount of data in machine units that can be read from the buffet object while used as an indexed target. </param>
         public static void BindBufferRange(BufferTargetARB target, uint index, BufferHandle buffer, IntPtr offset, nint size) => _BindBufferRange_fnptr(target, index, buffer, offset, size);
         [UnmanagedCallersOnly]
         private static void BindBufferRange_Lazy(BufferTargetARB target, uint index, BufferHandle buffer, IntPtr offset, nint size)
@@ -1610,6 +2328,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, uint, BufferHandle, void> _BindBufferBase_fnptr = &BindBufferBase_Lazy;
+        /// <summary> Bind a buffer object to an indexed buffer target. </summary>
+        /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_SHADER_STORAGE_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER or GL_UNIFORM_BUFFER. </param>
+        /// <param name="index"> Specify the index of the binding point within the array specified by target. </param>
+        /// <param name="buffer"> The name of a buffer object to bind to the specified binding point. </param>
         public static void BindBufferBase(BufferTargetARB target, uint index, BufferHandle buffer) => _BindBufferBase_fnptr(target, index, buffer);
         [UnmanagedCallersOnly]
         private static void BindBufferBase_Lazy(BufferTargetARB target, uint index, BufferHandle buffer)
@@ -1619,6 +2341,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, byte**, TransformFeedbackBufferMode, void> _TransformFeedbackVaryings_fnptr = &TransformFeedbackVaryings_Lazy;
+        /// <summary> Specify values to record in transform feedback buffers. </summary>
+        /// <param name="program"> The name of the target program object. </param>
+        /// <param name="count"> The number of varying variables used for transform feedback. </param>
+        /// <param name="varyings"> An array of count zero-terminated strings specifying the names of the varying variables to use for transform feedback. </param>
+        /// <param name="bufferMode"> Identifies the mode used to capture the varying variables when transform feedback is active. bufferMode must be GL_INTERLEAVED_ATTRIBS or GL_SEPARATE_ATTRIBS. </param>
         public static void TransformFeedbackVaryings(ProgramHandle program, int count, byte** varyings, TransformFeedbackBufferMode bufferMode) => _TransformFeedbackVaryings_fnptr(program, count, varyings, bufferMode);
         [UnmanagedCallersOnly]
         private static void TransformFeedbackVaryings_Lazy(ProgramHandle program, int count, byte** varyings, TransformFeedbackBufferMode bufferMode)
@@ -1628,6 +2355,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, uint, int, int*, int*, AttributeType*, byte*, void> _GetTransformFeedbackVarying_fnptr = &GetTransformFeedbackVarying_Lazy;
+        /// <summary> Retrieve information about varying variables selected for transform feedback. </summary>
+        /// <param name="program"> The name of the target program object. </param>
+        /// <param name="index"> The index of the varying variable whose information to retrieve. </param>
+        /// <param name="bufSize"> The maximum number of characters, including the null terminator, that may be written into name. </param>
+        /// <param name="length"> The address of a variable which will receive the number of characters written into name, excluding the null-terminator. If length is NULL no length is returned. </param>
+        /// <param name="size"> The address of a variable that will receive the size of the varying. </param>
+        /// <param name="type"> The address of a variable that will receive the type of the varying. </param>
+        /// <param name="name"> The address of a buffer into which will be written the name of the varying. </param>
         public static void GetTransformFeedbackVarying(ProgramHandle program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name) => _GetTransformFeedbackVarying_fnptr(program, index, bufSize, length, size, type, name);
         [UnmanagedCallersOnly]
         private static void GetTransformFeedbackVarying_Lazy(ProgramHandle program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name)
@@ -1637,6 +2372,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, int, VertexAttribIType, int, void*, void> _VertexAttribIPointer_fnptr = &VertexAttribIPointer_Lazy;
+        /// <summary> Define an array of generic vertex attribute data. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="size">Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4. The initial value is 4.</param>
+        /// <param name="type">Specifies the data type of each component in the array. The symbolic constants GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT, and GL_UNSIGNED_INT are accepted by both functions. Additionally GL_HALF_FLOAT, GL_FLOAT, GL_FIXED, GL_INT_2_10_10_10_REV, and GL_UNSIGNED_INT_2_10_10_10_REV are accepted by glVertexAttribPointer. The initial value is GL_FLOAT.</param>
+        /// <param name="stride"> Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0. </param>
+        /// <param name="pointer"> Specifies a pointer to the first generic vertex attribute in the array. If a non-zero buffer is currently bound to the GL_ARRAY_BUFFER target, pointer specifies an offset of into the array in the data store of that buffer. The initial value is 0. </param>
         public static void VertexAttribIPointer(uint index, int size, VertexAttribIType type, int stride, void* pointer) => _VertexAttribIPointer_fnptr(index, size, type, stride, pointer);
         [UnmanagedCallersOnly]
         private static void VertexAttribIPointer_Lazy(uint index, int size, VertexAttribIType type, int stride, void* pointer)
@@ -1646,6 +2387,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, VertexAttribEnum, int*, void> _GetVertexAttribIiv_fnptr = &GetVertexAttribIiv_Lazy;
+        /// <summary> Return a generic vertex attribute parameter. </summary>
+        /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
+        /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
+        /// <param name="params">Returns the requested data.</param>
         public static void GetVertexAttribIiv(uint index, VertexAttribEnum pname, int* parameters) => _GetVertexAttribIiv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribIiv_Lazy(uint index, VertexAttribEnum pname, int* parameters)
@@ -1655,6 +2400,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, VertexAttribEnum, uint*, void> _GetVertexAttribIuiv_fnptr = &GetVertexAttribIuiv_Lazy;
+        /// <summary> Return a generic vertex attribute parameter. </summary>
+        /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
+        /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_CURRENT_VERTEX_ATTRIB, GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, or GL_VERTEX_ATTRIB_BINDING.</param>
+        /// <param name="params">Returns the requested data.</param>
         public static void GetVertexAttribIuiv(uint index, VertexAttribEnum pname, uint* parameters) => _GetVertexAttribIuiv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribIuiv_Lazy(uint index, VertexAttribEnum pname, uint* parameters)
@@ -1664,6 +2413,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, int, int, int, int, void> _VertexAttribI4i_fnptr = &VertexAttribI4i_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         public static void VertexAttribI4i(uint index, int x, int y, int z, int w) => _VertexAttribI4i_fnptr(index, x, y, z, w);
         [UnmanagedCallersOnly]
         private static void VertexAttribI4i_Lazy(uint index, int x, int y, int z, int w)
@@ -1673,6 +2428,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, uint, uint, uint, uint, void> _VertexAttribI4ui_fnptr = &VertexAttribI4ui_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified vertex attribute. </param>
         public static void VertexAttribI4ui(uint index, uint x, uint y, uint z, uint w) => _VertexAttribI4ui_fnptr(index, x, y, z, w);
         [UnmanagedCallersOnly]
         private static void VertexAttribI4ui_Lazy(uint index, uint x, uint y, uint z, uint w)
@@ -1682,6 +2443,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, int*, void> _VertexAttribI4iv_fnptr = &VertexAttribI4iv_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
         public static void VertexAttribI4iv(uint index, int* v) => _VertexAttribI4iv_fnptr(index, v);
         [UnmanagedCallersOnly]
         private static void VertexAttribI4iv_Lazy(uint index, int* v)
@@ -1691,6 +2455,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, uint*, void> _VertexAttribI4uiv_fnptr = &VertexAttribI4uiv_Lazy;
+        /// <summary> Specifies the value of a generic vertex attribute. </summary>
+        /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
+        /// <param name="v"> For the vector commands (glVertexAttrib*v), specifies a pointer to an array of values to be used for the generic vertex attribute. </param>
         public static void VertexAttribI4uiv(uint index, uint* v) => _VertexAttribI4uiv_fnptr(index, v);
         [UnmanagedCallersOnly]
         private static void VertexAttribI4uiv_Lazy(uint index, uint* v)
@@ -1700,6 +2467,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, uint*, void> _GetUniformuiv_fnptr = &GetUniformuiv_Lazy;
+        /// <summary> Returns the value of a uniform variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+        /// <param name="params">Returns the value of the specified uniform variable.</param>
         public static void GetUniformuiv(ProgramHandle program, int location, uint* parameters) => _GetUniformuiv_fnptr(program, location, parameters);
         [UnmanagedCallersOnly]
         private static void GetUniformuiv_Lazy(ProgramHandle program, int location, uint* parameters)
@@ -1709,6 +2480,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, byte*, int> _GetFragDataLocation_fnptr = &GetFragDataLocation_Lazy;
+        /// <summary> Query the bindings of color numbers to user-defined varying out variables. </summary>
+        /// <param name="program"> The name of the program containing varying out variable whose binding to query </param>
+        /// <param name="name"> The name of the user-defined varying out variable whose binding to query </param>
         public static int GetFragDataLocation(ProgramHandle program, byte* name) => _GetFragDataLocation_fnptr(program, name);
         [UnmanagedCallersOnly]
         private static int GetFragDataLocation_Lazy(ProgramHandle program, byte* name)
@@ -1718,6 +2492,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, uint, void> _Uniform1ui_fnptr = &Uniform1ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform1ui(int location, uint v0) => _Uniform1ui_fnptr(location, v0);
         [UnmanagedCallersOnly]
         private static void Uniform1ui_Lazy(int location, uint v0)
@@ -1727,6 +2504,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, uint, uint, void> _Uniform2ui_fnptr = &Uniform2ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform2ui(int location, uint v0, uint v1) => _Uniform2ui_fnptr(location, v0, v1);
         [UnmanagedCallersOnly]
         private static void Uniform2ui_Lazy(int location, uint v0, uint v1)
@@ -1736,6 +2517,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, uint, uint, uint, void> _Uniform3ui_fnptr = &Uniform3ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform3ui(int location, uint v0, uint v1, uint v2) => _Uniform3ui_fnptr(location, v0, v1, v2);
         [UnmanagedCallersOnly]
         private static void Uniform3ui_Lazy(int location, uint v0, uint v1, uint v2)
@@ -1745,6 +2531,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, uint, uint, uint, uint, void> _Uniform4ui_fnptr = &Uniform4ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void Uniform4ui(int location, uint v0, uint v1, uint v2, uint v3) => _Uniform4ui_fnptr(location, v0, v1, v2, v3);
         [UnmanagedCallersOnly]
         private static void Uniform4ui_Lazy(int location, uint v0, uint v1, uint v2, uint v3)
@@ -1754,6 +2546,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, uint*, void> _Uniform1uiv_fnptr = &Uniform1uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform1uiv(int location, int count, uint* value) => _Uniform1uiv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform1uiv_Lazy(int location, int count, uint* value)
@@ -1763,6 +2559,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, uint*, void> _Uniform2uiv_fnptr = &Uniform2uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform2uiv(int location, int count, uint* value) => _Uniform2uiv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform2uiv_Lazy(int location, int count, uint* value)
@@ -1772,6 +2572,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, uint*, void> _Uniform3uiv_fnptr = &Uniform3uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform3uiv(int location, int count, uint* value) => _Uniform3uiv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform3uiv_Lazy(int location, int count, uint* value)
@@ -1781,6 +2585,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, uint*, void> _Uniform4uiv_fnptr = &Uniform4uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for the current program object. </summary>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void Uniform4uiv(int location, int count, uint* value) => _Uniform4uiv_fnptr(location, count, value);
         [UnmanagedCallersOnly]
         private static void Uniform4uiv_Lazy(int location, int count, uint* value)
@@ -1790,6 +2598,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<Buffer, int, int*, void> _ClearBufferiv_fnptr = &ClearBufferiv_Lazy;
+        /// <summary> Clear individual buffers of the currently bound draw framebuffer. </summary>
+        /// <param name="buffer"> Specify the buffer to clear. </param>
+        /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
+        /// <param name="value"> For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to. </param>
         public static void ClearBufferiv(Buffer buffer, int drawbuffer, int* value) => _ClearBufferiv_fnptr(buffer, drawbuffer, value);
         [UnmanagedCallersOnly]
         private static void ClearBufferiv_Lazy(Buffer buffer, int drawbuffer, int* value)
@@ -1799,6 +2611,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<Buffer, int, uint*, void> _ClearBufferuiv_fnptr = &ClearBufferuiv_Lazy;
+        /// <summary> Clear individual buffers of the currently bound draw framebuffer. </summary>
+        /// <param name="buffer"> Specify the buffer to clear. </param>
+        /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
+        /// <param name="value"> For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to. </param>
         public static void ClearBufferuiv(Buffer buffer, int drawbuffer, uint* value) => _ClearBufferuiv_fnptr(buffer, drawbuffer, value);
         [UnmanagedCallersOnly]
         private static void ClearBufferuiv_Lazy(Buffer buffer, int drawbuffer, uint* value)
@@ -1808,6 +2624,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<Buffer, int, float*, void> _ClearBufferfv_fnptr = &ClearBufferfv_Lazy;
+        /// <summary> Clear individual buffers of the currently bound draw framebuffer. </summary>
+        /// <param name="buffer"> Specify the buffer to clear. </param>
+        /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
+        /// <param name="value"> For color buffers, a pointer to a four-element vector specifying R, G, B and A values to clear the buffer to. For depth buffers, a pointer to a single depth value to clear the buffer to. For stencil buffers, a pointer to a single stencil value to clear the buffer to. </param>
         public static void ClearBufferfv(Buffer buffer, int drawbuffer, float* value) => _ClearBufferfv_fnptr(buffer, drawbuffer, value);
         [UnmanagedCallersOnly]
         private static void ClearBufferfv_Lazy(Buffer buffer, int drawbuffer, float* value)
@@ -1817,6 +2637,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<Buffer, int, float, int, void> _ClearBufferfi_fnptr = &ClearBufferfi_Lazy;
+        /// <summary> Clear individual buffers of the currently bound draw framebuffer. </summary>
+        /// <param name="buffer"> Specify the buffer to clear. </param>
+        /// <param name="drawBuffer"> Specify a particular draw buffer to clear. </param>
+        /// <param name="depth"> The value to clear a depth render buffer to. </param>
+        /// <param name="stencil"> The value to clear a stencil render buffer to. </param>
         public static void ClearBufferfi(Buffer buffer, int drawbuffer, float depth, int stencil) => _ClearBufferfi_fnptr(buffer, drawbuffer, depth, stencil);
         [UnmanagedCallersOnly]
         private static void ClearBufferfi_Lazy(Buffer buffer, int drawbuffer, float depth, int stencil)
@@ -1826,6 +2651,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<StringName, uint, byte*> _GetStringi__fnptr = &GetStringi__Lazy;
+        /// <summary> Return a string describing the current GL connection. </summary>
+        /// <param name="name"> Specifies a symbolic constant, one of GL_EXTENSIONS, GL_RENDERER, GL_SHADING_LANGUAGE_VERSION, GL_VENDOR, or GL_VERSION. glGetStringi accepts only the GL_EXTENSIONS token. </param>
+        /// <param name="index"> For glGetStringi, specifies the index of the string to return. </param>
         public static byte* GetStringi_(StringName name, uint index) => _GetStringi__fnptr(name, index);
         [UnmanagedCallersOnly]
         private static byte* GetStringi__Lazy(StringName name, uint index)
@@ -1835,6 +2663,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<CopyBufferSubDataTarget, CopyBufferSubDataTarget, IntPtr, IntPtr, nint, void> _CopyBufferSubData_fnptr = &CopyBufferSubData_Lazy;
+        /// <summary> Copy part of the data store of a buffer object to the data store of another buffer object. </summary>
+        /// <param name="readtarget"> Specifies the target from whose data store data should be read. </param>
+        /// <param name="writetarget"> Specifies the target to whose data store data should be written. </param>
+        /// <param name="readoffset"> Specifies the offset, in basic machine units, within the data store of readtarget from which data should be read. </param>
+        /// <param name="writeoffset"> Specifies the offset, in basic machine units, within the data store of writetarget to which data should be written. </param>
+        /// <param name="size"> Specifies the size, in basic machine units, of the data to be copied from readtarget to writetarget. </param>
         public static void CopyBufferSubData(CopyBufferSubDataTarget readTarget, CopyBufferSubDataTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, nint size) => _CopyBufferSubData_fnptr(readTarget, writeTarget, readOffset, writeOffset, size);
         [UnmanagedCallersOnly]
         private static void CopyBufferSubData_Lazy(CopyBufferSubDataTarget readTarget, CopyBufferSubDataTarget writeTarget, IntPtr readOffset, IntPtr writeOffset, nint size)
@@ -1844,6 +2678,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, byte**, uint*, void> _GetUniformIndices_fnptr = &GetUniformIndices_Lazy;
+        /// <summary> Retrieve the index of a named uniform block. </summary>
+        /// <param name="program"> Specifies the name of a program containing uniforms whose indices to query. </param>
+        /// <param name="uniformCount"> Specifies the number of uniforms whose indices to query. </param>
+        /// <param name="uniformNames"> Specifies the address of an array of pointers to buffers containing the names of the queried uniforms. </param>
+        /// <param name="uniformIndices"> Specifies the address of an array that will receive the indices of the uniforms. </param>
         public static void GetUniformIndices(ProgramHandle program, int uniformCount, byte** uniformNames, uint* uniformIndices) => _GetUniformIndices_fnptr(program, uniformCount, uniformNames, uniformIndices);
         [UnmanagedCallersOnly]
         private static void GetUniformIndices_Lazy(ProgramHandle program, int uniformCount, byte** uniformNames, uint* uniformIndices)
@@ -1853,6 +2692,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, uint*, UniformPName, int*, void> _GetActiveUniformsiv_fnptr = &GetActiveUniformsiv_Lazy;
+        /// <summary> Returns information about several active uniform variables for the specified program object. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="uniformCount">Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.</param>
+        /// <param name="uniformIndices">Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.</param>
+        /// <param name="pname">Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.</param>
+        /// <param name="params">Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.</param>
         public static void GetActiveUniformsiv(ProgramHandle program, int uniformCount, uint* uniformIndices, UniformPName pname, int* parameters) => _GetActiveUniformsiv_fnptr(program, uniformCount, uniformIndices, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetActiveUniformsiv_Lazy(ProgramHandle program, int uniformCount, uint* uniformIndices, UniformPName pname, int* parameters)
@@ -1862,6 +2707,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, byte*, uint> _GetUniformBlockIndex_fnptr = &GetUniformBlockIndex_Lazy;
+        /// <summary> Retrieve the index of a named uniform block. </summary>
+        /// <param name="program"> Specifies the name of a program containing the uniform block. </param>
+        /// <param name="uniformBlockName"> Specifies the address an array of characters containing the name of the uniform block whose index to retrieve. </param>
         public static uint GetUniformBlockIndex(ProgramHandle program, byte* uniformBlockName) => _GetUniformBlockIndex_fnptr(program, uniformBlockName);
         [UnmanagedCallersOnly]
         private static uint GetUniformBlockIndex_Lazy(ProgramHandle program, byte* uniformBlockName)
@@ -1871,6 +2719,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, uint, UniformBlockPName, int*, void> _GetActiveUniformBlockiv_fnptr = &GetActiveUniformBlockiv_Lazy;
+        /// <summary> Query information about an active uniform block. </summary>
+        /// <param name="program"> Specifies the name of a program containing the uniform block. </param>
+        /// <param name="uniformBlockIndex"> Specifies the index of the uniform block within program. </param>
+        /// <param name="pname"> Specifies the name of the parameter to query. </param>
+        /// <param name="params"> Specifies the address of a variable to receive the result of the query. </param>
         public static void GetActiveUniformBlockiv(ProgramHandle program, uint uniformBlockIndex, UniformBlockPName pname, int* parameters) => _GetActiveUniformBlockiv_fnptr(program, uniformBlockIndex, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetActiveUniformBlockiv_Lazy(ProgramHandle program, uint uniformBlockIndex, UniformBlockPName pname, int* parameters)
@@ -1880,6 +2733,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, uint, int, int*, byte*, void> _GetActiveUniformBlockName_fnptr = &GetActiveUniformBlockName_Lazy;
+        /// <summary> Retrieve the name of an active uniform block. </summary>
+        /// <param name="program"> Specifies the name of a program containing the uniform block. </param>
+        /// <param name="uniformBlockIndex"> Specifies the index of the uniform block within program. </param>
+        /// <param name="bufSize"> Specifies the size of the buffer addressed by uniformBlockName. </param>
+        /// <param name="length"> Specifies the address of a variable to receive the number of characters that were written to uniformBlockName. </param>
+        /// <param name="uniformBlockName"> Specifies the address an array of characters to receive the name of the uniform block at uniformBlockIndex. </param>
         public static void GetActiveUniformBlockName(ProgramHandle program, uint uniformBlockIndex, int bufSize, int* length, byte* uniformBlockName) => _GetActiveUniformBlockName_fnptr(program, uniformBlockIndex, bufSize, length, uniformBlockName);
         [UnmanagedCallersOnly]
         private static void GetActiveUniformBlockName_Lazy(ProgramHandle program, uint uniformBlockIndex, int bufSize, int* length, byte* uniformBlockName)
@@ -1889,6 +2748,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, uint, uint, void> _UniformBlockBinding_fnptr = &UniformBlockBinding_Lazy;
+        /// <summary> Assign a binding point to an active uniform block. </summary>
+        /// <param name="program"> The name of a program object containing the active uniform block whose binding to assign. </param>
+        /// <param name="uniformBlockIndex"> The index of the active uniform block within program whose binding to assign. </param>
+        /// <param name="uniformBlockBinding"> Specifies the binding point to which to bind the uniform block with index uniformBlockIndex within program. </param>
         public static void UniformBlockBinding(ProgramHandle program, uint uniformBlockIndex, uint uniformBlockBinding) => _UniformBlockBinding_fnptr(program, uniformBlockIndex, uniformBlockBinding);
         [UnmanagedCallersOnly]
         private static void UniformBlockBinding_Lazy(ProgramHandle program, uint uniformBlockIndex, uint uniformBlockBinding)
@@ -1898,6 +2761,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, int, int, int, void> _DrawArraysInstanced_fnptr = &DrawArraysInstanced_Lazy;
+        /// <summary> Draw multiple instances of a range of elements. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="first"> Specifies the starting index in the enabled arrays. </param>
+        /// <param name="count"> Specifies the number of indices to be rendered. </param>
+        /// <param name="primcount"> Specifies the number of instances of the specified range of indices to be rendered. </param>
         public static void DrawArraysInstanced(PrimitiveType mode, int first, int count, int instancecount) => _DrawArraysInstanced_fnptr(mode, first, count, instancecount);
         [UnmanagedCallersOnly]
         private static void DrawArraysInstanced_Lazy(PrimitiveType mode, int first, int count, int instancecount)
@@ -1907,6 +2775,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, int, DrawElementsType, void*, int, void> _DrawElementsInstanced_fnptr = &DrawElementsInstanced_Lazy;
+        /// <summary> Draw multiple instances of a set of elements. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="count"> Specifies the number of elements to be rendered. </param>
+        /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
+        /// <param name="indices"> Specifies a byte offset (cast to a pointer type) into the buffer bound to GL_ELEMENT_ARRAY_BUFFER to start reading indices from. If no buffer is bound, specifies a pointer to the location where the indices are stored. </param>
+        /// <param name="primcount"> Specifies the number of instances of the specified range of indices to be rendered. </param>
         public static void DrawElementsInstanced(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount) => _DrawElementsInstanced_fnptr(mode, count, type, indices, instancecount);
         [UnmanagedCallersOnly]
         private static void DrawElementsInstanced_Lazy(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount)
@@ -1916,6 +2790,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SyncCondition, SyncBehaviorFlags, IntPtr> _FenceSync_fnptr = &FenceSync_Lazy;
+        /// <summary> Create a new sync object and insert it into the GL command stream. </summary>
+        /// <param name="condition"> Specifies the condition that must be met to set the sync object's state to signaled. condition must be GL_SYNC_GPU_COMMANDS_COMPLETE. </param>
+        /// <param name="flags"> Specifies a bitwise combination of flags controlling the behavior of the sync object. No flags are presently defined for this operation and flags must be zero. flags is a placeholder for anticipated future extensions of fence sync object capabilities. </param>
         public static GLSync FenceSync(SyncCondition condition, SyncBehaviorFlags flags) => (GLSync) _FenceSync_fnptr(condition, flags);
         [UnmanagedCallersOnly]
         private static IntPtr FenceSync_Lazy(SyncCondition condition, SyncBehaviorFlags flags)
@@ -1925,6 +2802,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GLSync, byte> _IsSync_fnptr = &IsSync_Lazy;
+        /// <summary> Determine if a name corresponds to a sync object. </summary>
+        /// <param name="sync"> Specifies a value that may be the name of a sync object. </param>
         public static byte IsSync(GLSync sync) => _IsSync_fnptr(sync);
         [UnmanagedCallersOnly]
         private static byte IsSync_Lazy(GLSync sync)
@@ -1934,6 +2813,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GLSync, void> _DeleteSync_fnptr = &DeleteSync_Lazy;
+        /// <summary> Delete a sync object. </summary>
+        /// <param name="sync"> The sync object to be deleted. </param>
         public static void DeleteSync(GLSync sync) => _DeleteSync_fnptr(sync);
         [UnmanagedCallersOnly]
         private static void DeleteSync_Lazy(GLSync sync)
@@ -1943,6 +2824,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GLSync, SyncObjectMask, ulong, SyncStatus> _ClientWaitSync_fnptr = &ClientWaitSync_Lazy;
+        /// <summary> Block and wait for a sync object to become signaled. </summary>
+        /// <param name="sync"> The sync object whose status to wait on. </param>
+        /// <param name="flags"> A bitfield controlling the command flushing behavior. flags may be GL_SYNC_FLUSH_COMMANDS_BIT. </param>
+        /// <param name="timeout"> The timeout, specified in nanoseconds, for which the implementation should wait for sync to become signaled. </param>
         public static SyncStatus ClientWaitSync(GLSync sync, SyncObjectMask flags, ulong timeout) => _ClientWaitSync_fnptr(sync, flags, timeout);
         [UnmanagedCallersOnly]
         private static SyncStatus ClientWaitSync_Lazy(GLSync sync, SyncObjectMask flags, ulong timeout)
@@ -1952,6 +2837,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GLSync, SyncBehaviorFlags, ulong, void> _WaitSync_fnptr = &WaitSync_Lazy;
+        /// <summary> Instruct the GL server to block until the specified sync object becomes signaled. </summary>
+        /// <param name="sync"> Specifies the sync object whose status to wait on. </param>
+        /// <param name="flags"> A bitfield controlling the command flushing behavior. flags must be zero. </param>
+        /// <param name="timeout"> Specifies the timeout that the server should wait before continuing. timeout must be GL_TIMEOUT_IGNORED. </param>
         public static void WaitSync(GLSync sync, SyncBehaviorFlags flags, ulong timeout) => _WaitSync_fnptr(sync, flags, timeout);
         [UnmanagedCallersOnly]
         private static void WaitSync_Lazy(GLSync sync, SyncBehaviorFlags flags, ulong timeout)
@@ -1961,6 +2850,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetPName, long*, void> _GetInteger64v_fnptr = &GetInteger64v_Lazy;
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
+        /// <param name="data"> Returns the value or values of the specified parameter. </param>
         public static void GetInteger64v(GetPName pname, long* data) => _GetInteger64v_fnptr(pname, data);
         [UnmanagedCallersOnly]
         private static void GetInteger64v_Lazy(GetPName pname, long* data)
@@ -1970,6 +2862,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GLSync, SyncParameterName, int, int*, int*, void> _GetSynciv_fnptr = &GetSynciv_Lazy;
+        /// <summary> Query the properties of a sync object. </summary>
+        /// <param name="sync"> Specifies the sync object whose properties to query. </param>
+        /// <param name="pname"> Specifies the parameter whose value to retrieve from the sync object specified in sync. </param>
+        /// <param name="bufSize"> Specifies the size of the buffer whose address is given in values. </param>
+        /// <param name="length"> Specifies the address of an variable to receive the number of integers placed in values. </param>
+        /// <param name="values"> Specifies the address of an array to receive the values of the queried parameter. </param>
         public static void GetSynciv(GLSync sync, SyncParameterName pname, int count, int* length, int* values) => _GetSynciv_fnptr(sync, pname, count, length, values);
         [UnmanagedCallersOnly]
         private static void GetSynciv_Lazy(GLSync sync, SyncParameterName pname, int count, int* length, int* values)
@@ -1979,6 +2877,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetPName, uint, long*, void> _GetInteger64i_v_fnptr = &GetInteger64i_v_Lazy;
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
+        /// <param name="index"> Specifies the index of the particular element being queried. </param>
+        /// <param name="data"> Returns the value or values of the specified parameter. </param>
         public static void GetInteger64i_v(GetPName target, uint index, long* data) => _GetInteger64i_v_fnptr(target, index, data);
         [UnmanagedCallersOnly]
         private static void GetInteger64i_v_Lazy(GetPName target, uint index, long* data)
@@ -1988,6 +2890,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, BufferPNameARB, long*, void> _GetBufferParameteri64v_fnptr = &GetBufferParameteri64v_Lazy;
+        /// <summary> Return parameters of a buffer object. </summary>
+        /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferParameteriv and glGetBufferParameteri64v. Must be one of the buffer binding targets in the following table: </param>
+        /// <param name="value"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_ACCESS_FLAGS, GL_BUFFER_MAPPED, GL_BUFFER_MAP_LENGTH, GL_BUFFER_MAP_OFFSET, GL_BUFFER_SIZE, or GL_BUFFER_USAGE. </param>
+        /// <param name="data"> Returns the requested parameter. </param>
         public static void GetBufferParameteri64v(BufferTargetARB target, BufferPNameARB pname, long* parameters) => _GetBufferParameteri64v_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetBufferParameteri64v_Lazy(BufferTargetARB target, BufferPNameARB pname, long* parameters)
@@ -1997,6 +2903,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, SamplerHandle*, void> _GenSamplers_fnptr = &GenSamplers_Lazy;
+        /// <summary> Generate sampler object names. </summary>
+        /// <param name="n"> Specifies the number of sampler object names to generate. </param>
+        /// <param name="samplers"> Specifies an array in which the generated sampler object names are stored. </param>
         public static void GenSamplers(int count, SamplerHandle* samplers) => _GenSamplers_fnptr(count, samplers);
         [UnmanagedCallersOnly]
         private static void GenSamplers_Lazy(int count, SamplerHandle* samplers)
@@ -2006,6 +2915,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, SamplerHandle*, void> _DeleteSamplers_fnptr = &DeleteSamplers_Lazy;
+        /// <summary> Delete named sampler objects. </summary>
+        /// <param name="n"> Specifies the number of sampler objects to be deleted. </param>
+        /// <param name="samplers"> Specifies an array of sampler objects to be deleted. </param>
         public static void DeleteSamplers(int count, SamplerHandle* samplers) => _DeleteSamplers_fnptr(count, samplers);
         [UnmanagedCallersOnly]
         private static void DeleteSamplers_Lazy(int count, SamplerHandle* samplers)
@@ -2015,6 +2927,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, byte> _IsSampler_fnptr = &IsSampler_Lazy;
+        /// <summary> Determine if a name corresponds to a sampler object. </summary>
+        /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
         public static byte IsSampler(SamplerHandle sampler) => _IsSampler_fnptr(sampler);
         [UnmanagedCallersOnly]
         private static byte IsSampler_Lazy(SamplerHandle sampler)
@@ -2024,6 +2938,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, SamplerHandle, void> _BindSampler_fnptr = &BindSampler_Lazy;
+        /// <summary> Bind a named sampler to a texturing target. </summary>
+        /// <param name="unit"> Specifies the index of the texture unit to which the sampler is bound. </param>
+        /// <param name="sampler"> Specifies the name of a sampler. </param>
         public static void BindSampler(uint unit, SamplerHandle sampler) => _BindSampler_fnptr(unit, sampler);
         [UnmanagedCallersOnly]
         private static void BindSampler_Lazy(uint unit, SamplerHandle sampler)
@@ -2033,6 +2950,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterI, int, void> _SamplerParameteri_fnptr = &SamplerParameteri_Lazy;
+        /// <summary> Set sampler parameters. </summary>
+        /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+        /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
         public static void SamplerParameteri(SamplerHandle sampler, SamplerParameterI pname, int param) => _SamplerParameteri_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameteri_Lazy(SamplerHandle sampler, SamplerParameterI pname, int param)
@@ -2042,6 +2963,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterI, int*, void> _SamplerParameteriv_fnptr = &SamplerParameteriv_Lazy;
+        /// <summary> Set sampler parameters. </summary>
+        /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameteriv(SamplerHandle sampler, SamplerParameterI pname, int* param) => _SamplerParameteriv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameteriv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* param)
@@ -2051,6 +2976,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterF, float, void> _SamplerParameterf_fnptr = &SamplerParameterf_Lazy;
+        /// <summary> Set sampler parameters. </summary>
+        /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+        /// <param name="param"> For the scalar commands, specifies the value of pname. </param>
         public static void SamplerParameterf(SamplerHandle sampler, SamplerParameterF pname, float param) => _SamplerParameterf_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameterf_Lazy(SamplerHandle sampler, SamplerParameterF pname, float param)
@@ -2060,6 +2989,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterF, float*, void> _SamplerParameterfv_fnptr = &SamplerParameterfv_Lazy;
+        /// <summary> Set sampler parameters. </summary>
+        /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameterfv(SamplerHandle sampler, SamplerParameterF pname, float* param) => _SamplerParameterfv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameterfv_Lazy(SamplerHandle sampler, SamplerParameterF pname, float* param)
@@ -2069,6 +3002,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterI, int*, void> _GetSamplerParameteriv_fnptr = &GetSamplerParameteriv_Lazy;
+        /// <summary> Return sampler parameter values. </summary>
+        /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
+        /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the sampler parameters. </param>
         public static void GetSamplerParameteriv(SamplerHandle sampler, SamplerParameterI pname, int* parameters) => _GetSamplerParameteriv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameteriv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* parameters)
@@ -2078,6 +3015,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterF, float*, void> _GetSamplerParameterfv_fnptr = &GetSamplerParameterfv_Lazy;
+        /// <summary> Return sampler parameter values. </summary>
+        /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
+        /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the sampler parameters. </param>
         public static void GetSamplerParameterfv(SamplerHandle sampler, SamplerParameterF pname, float* parameters) => _GetSamplerParameterfv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameterfv_Lazy(SamplerHandle sampler, SamplerParameterF pname, float* parameters)
@@ -2087,6 +3028,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, uint, void> _VertexAttribDivisor_fnptr = &VertexAttribDivisor_Lazy;
+        /// <summary> Modify the rate at which generic vertex attributes advance during instanced rendering. </summary>
+        /// <param name="index"> Specify the index of the generic vertex attribute. </param>
+        /// <param name="divisor"> Specify the number of instances that will pass between updates of the generic attribute at slot index. </param>
         public static void VertexAttribDivisor(uint index, uint divisor) => _VertexAttribDivisor_fnptr(index, divisor);
         [UnmanagedCallersOnly]
         private static void VertexAttribDivisor_Lazy(uint index, uint divisor)
@@ -2096,6 +3040,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BindTransformFeedbackTarget, TransformFeedbackHandle, void> _BindTransformFeedback_fnptr = &BindTransformFeedback_Lazy;
+        /// <summary> Bind a transform feedback object. </summary>
+        /// <param name="target"> Specifies the target to which to bind the transform feedback object id. target must be GL_TRANSFORM_FEEDBACK. </param>
+        /// <param name="id"> Specifies the name of a transform feedback object reserved by glGenTransformFeedbacks. </param>
         public static void BindTransformFeedback(BindTransformFeedbackTarget target, TransformFeedbackHandle id) => _BindTransformFeedback_fnptr(target, id);
         [UnmanagedCallersOnly]
         private static void BindTransformFeedback_Lazy(BindTransformFeedbackTarget target, TransformFeedbackHandle id)
@@ -2105,6 +3052,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, TransformFeedbackHandle*, void> _DeleteTransformFeedbacks_fnptr = &DeleteTransformFeedbacks_Lazy;
+        /// <summary> Delete transform feedback objects. </summary>
+        /// <param name="n"> Specifies the number of transform feedback objects to delete. </param>
+        /// <param name="ids"> Specifies an array of names of transform feedback objects to delete. </param>
         public static void DeleteTransformFeedbacks(int n, TransformFeedbackHandle* ids) => _DeleteTransformFeedbacks_fnptr(n, ids);
         [UnmanagedCallersOnly]
         private static void DeleteTransformFeedbacks_Lazy(int n, TransformFeedbackHandle* ids)
@@ -2114,6 +3064,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, TransformFeedbackHandle*, void> _GenTransformFeedbacks_fnptr = &GenTransformFeedbacks_Lazy;
+        /// <summary> Reserve transform feedback object names. </summary>
+        /// <param name="n"> Specifies the number of transform feedback object names to reserve. </param>
+        /// <param name="ids"> Specifies an array of into which the reserved names will be written. </param>
         public static void GenTransformFeedbacks(int n, TransformFeedbackHandle* ids) => _GenTransformFeedbacks_fnptr(n, ids);
         [UnmanagedCallersOnly]
         private static void GenTransformFeedbacks_Lazy(int n, TransformFeedbackHandle* ids)
@@ -2123,6 +3076,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TransformFeedbackHandle, byte> _IsTransformFeedback_fnptr = &IsTransformFeedback_Lazy;
+        /// <summary> Determine if a name corresponds to a transform feedback object. </summary>
+        /// <param name="id"> Specifies a value that may be the name of a transform feedback object. </param>
         public static byte IsTransformFeedback(TransformFeedbackHandle id) => _IsTransformFeedback_fnptr(id);
         [UnmanagedCallersOnly]
         private static byte IsTransformFeedback_Lazy(TransformFeedbackHandle id)
@@ -2132,6 +3087,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _PauseTransformFeedback_fnptr = &PauseTransformFeedback_Lazy;
+        /// <summary> Pause transform feedback operations. </summary>
         public static void PauseTransformFeedback() => _PauseTransformFeedback_fnptr();
         [UnmanagedCallersOnly]
         private static void PauseTransformFeedback_Lazy()
@@ -2141,6 +3097,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _ResumeTransformFeedback_fnptr = &ResumeTransformFeedback_Lazy;
+        /// <summary> Resume transform feedback operations. </summary>
         public static void ResumeTransformFeedback() => _ResumeTransformFeedback_fnptr();
         [UnmanagedCallersOnly]
         private static void ResumeTransformFeedback_Lazy()
@@ -2150,6 +3107,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int*, All*, void*, void> _GetProgramBinary_fnptr = &GetProgramBinary_Lazy;
+        /// <summary> Return a binary representation of a program object's compiled and linked executable source. </summary>
+        /// <param name="program"> Specifies the name of a program object whose binary representation to retrieve. </param>
+        /// <param name="bufsize">!!missing documentation!!</param>
+        /// <param name="length"> Specifies the address of a variable to receive the number of bytes written into binary. </param>
+        /// <param name="binaryFormat"> Specifies the address of a variable to receive a token indicating the format of the binary data returned by the GL. </param>
+        /// <param name="binary"> Specifies the address an array into which the GL will return program's binary representation. </param>
         public static void GetProgramBinary(ProgramHandle program, int bufSize, int* length, All* binaryFormat, void* binary) => _GetProgramBinary_fnptr(program, bufSize, length, binaryFormat, binary);
         [UnmanagedCallersOnly]
         private static void GetProgramBinary_Lazy(ProgramHandle program, int bufSize, int* length, All* binaryFormat, void* binary)
@@ -2159,6 +3122,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, All, void*, int, void> _ProgramBinary_fnptr = &ProgramBinary_Lazy;
+        /// <summary> Load a program object with a program binary. </summary>
+        /// <param name="program"> Specifies the name of a program object into which to load a program binary. </param>
+        /// <param name="binaryFormat"> Specifies the format of the binary data in binary. </param>
+        /// <param name="binary"> Specifies the address of an array containing the binary to be loaded into program. </param>
+        /// <param name="length"> Specifies the number of bytes contained in binary. </param>
         public static void ProgramBinary(ProgramHandle program, All binaryFormat, void* binary, int length) => _ProgramBinary_fnptr(program, binaryFormat, binary, length);
         [UnmanagedCallersOnly]
         private static void ProgramBinary_Lazy(ProgramHandle program, All binaryFormat, void* binary, int length)
@@ -2168,6 +3136,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ProgramParameterPName, int, void> _ProgramParameteri_fnptr = &ProgramParameteri_Lazy;
+        /// <summary> Specify a parameter for a program object. </summary>
+        /// <param name="program"> Specifies the name of a program object whose parameter to modify. </param>
+        /// <param name="pname"> Specifies the name of the parameter to modify. </param>
+        /// <param name="value"> Specifies the new value of the parameter specified by pname for program. </param>
         public static void ProgramParameteri(ProgramHandle program, ProgramParameterPName pname, int value) => _ProgramParameteri_fnptr(program, pname, value);
         [UnmanagedCallersOnly]
         private static void ProgramParameteri_Lazy(ProgramHandle program, ProgramParameterPName pname, int value)
@@ -2177,6 +3149,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, int, InvalidateFramebufferAttachment*, void> _InvalidateFramebuffer_fnptr = &InvalidateFramebuffer_Lazy;
+        /// <summary> Invalidate the contents of attachments within a framebuffer. </summary>
+        /// <param name="target"> Specifies the target of the invalidate operation. </param>
+        /// <param name="numAttachments"> Specifies how many attachments are supplied in the attachments list. </param>
+        /// <param name="attachments"> A list of numAttachments attachments to invalidate. </param>
         public static void InvalidateFramebuffer(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments) => _InvalidateFramebuffer_fnptr(target, numAttachments, attachments);
         [UnmanagedCallersOnly]
         private static void InvalidateFramebuffer_Lazy(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments)
@@ -2186,6 +3162,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, int, InvalidateFramebufferAttachment*, int, int, int, int, void> _InvalidateSubFramebuffer_fnptr = &InvalidateSubFramebuffer_Lazy;
+        /// <summary> Invalidate portions of the contents of attachments within a framebuffer. </summary>
+        /// <param name="target"> Specifies the target of the invalidate operation. </param>
+        /// <param name="numAttachments"> Specifies how many attachments are supplied in the attachments list. </param>
+        /// <param name="attachments"> A list of numAttachments attachments to invalidate. </param>
+        /// <param name="x"> Specifies the left origin of the pixel rectangle to invalidate, with lower left hand corner at (0,0). </param>
+        /// <param name="y"> Specifies the bottom origin of the pixel rectangle to invalidate, with lower left hand corner at (0,0). </param>
+        /// <param name="width"> Specifies the width of the pixel rectangle to invalidate. </param>
+        /// <param name="height"> Specifies the height of the pixel rectangle to invalidate. </param>
         public static void InvalidateSubFramebuffer(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments, int x, int y, int width, int height) => _InvalidateSubFramebuffer_fnptr(target, numAttachments, attachments, x, y, width, height);
         [UnmanagedCallersOnly]
         private static void InvalidateSubFramebuffer_Lazy(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments, int x, int y, int width, int height)
@@ -2195,6 +3179,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, void> _TexStorage2D_fnptr = &TexStorage2D_Lazy;
+        /// <summary> Simultaneously specify storage for all levels of a two-dimensional texture. </summary>
+        /// <param name="target"> Specify the target of the operation. target must be one of GL_TEXTURE_2D, or GL_TEXTURE_CUBE_MAP. </param>
+        /// <param name="levels"> Specify the number of texture levels. </param>
+        /// <param name="internalformat"> Specifies the sized internal format to be used to store texture image data. </param>
+        /// <param name="width"> Specifies the width of the texture, in texels. </param>
+        /// <param name="height"> Specifies the height of the texture, in texels. </param>
         public static void TexStorage2D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height) => _TexStorage2D_fnptr(target, levels, internalformat, width, height);
         [UnmanagedCallersOnly]
         private static void TexStorage2D_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height)
@@ -2204,6 +3194,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, void> _TexStorage3D_fnptr = &TexStorage3D_Lazy;
+        /// <summary> Simultaneously specify storage for all levels of a three-dimensional, two-dimensional array, or cube map array texture. </summary>
+        /// <param name="target"> Specify the target of the operation. target must be one of GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="levels"> Specify the number of texture levels. </param>
+        /// <param name="internalformat"> Specifies the sized internal format to be used to store texture image data. </param>
+        /// <param name="width"> Specifies the width of the texture, in texels. </param>
+        /// <param name="height"> Specifies the height of the texture, in texels. </param>
+        /// <param name="depth"> Specifies the depth of the texture, in texels. </param>
         public static void TexStorage3D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => _TexStorage3D_fnptr(target, levels, internalformat, width, height, depth);
         [UnmanagedCallersOnly]
         private static void TexStorage3D_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth)
@@ -2213,6 +3210,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, InternalFormat, InternalFormatPName, int, int*, void> _GetInternalformativ_fnptr = &GetInternalformativ_Lazy;
+        /// <summary> Retrieve information about implementation-dependent support for internal formats. </summary>
+        /// <param name="target"> Indicates the usage of the internal format. target must be GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE, or GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
+        /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
+        /// <param name="pname"> Specifies the type of information to query. </param>
+        /// <param name="bufSize"> Specifies the maximum number of integers that may be written to params by the function. </param>
+        /// <param name="params"> Specifies the address of a variable into which to write the retrieved information. </param>
         public static void GetInternalformativ(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters) => _GetInternalformativ_fnptr(target, internalformat, pname, count, parameters);
         [UnmanagedCallersOnly]
         private static void GetInternalformativ_Lazy(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters)
@@ -2222,6 +3225,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, uint, uint, void> _DispatchCompute_fnptr = &DispatchCompute_Lazy;
+        /// <summary> Launch one or more compute work groups. </summary>
+        /// <param name="num_groups_x"> The number of work groups to be launched in the X dimension. </param>
+        /// <param name="num_groups_y"> The number of work groups to be launched in the Y dimension. </param>
+        /// <param name="num_groups_z"> The number of work groups to be launched in the Z dimension. </param>
         public static void DispatchCompute(uint num_groups_x, uint num_groups_y, uint num_groups_z) => _DispatchCompute_fnptr(num_groups_x, num_groups_y, num_groups_z);
         [UnmanagedCallersOnly]
         private static void DispatchCompute_Lazy(uint num_groups_x, uint num_groups_y, uint num_groups_z)
@@ -2231,6 +3238,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<IntPtr, void> _DispatchComputeIndirect_fnptr = &DispatchComputeIndirect_Lazy;
+        /// <summary> Launch one or more compute work groups using parameters stored in a buffer. </summary>
+        /// <param name="indirect"> The offset into the buffer object currently bound to the GL_DISPATCH_INDIRECT_BUFFER buffer target at which the dispatch parameters are stored. </param>
         public static void DispatchComputeIndirect(IntPtr indirect) => _DispatchComputeIndirect_fnptr(indirect);
         [UnmanagedCallersOnly]
         private static void DispatchComputeIndirect_Lazy(IntPtr indirect)
@@ -2240,6 +3249,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, void*, void> _DrawArraysIndirect_fnptr = &DrawArraysIndirect_Lazy;
+        /// <summary> Render primitives from array data, taking parameters from memory. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="indirect"> Specifies the address of a structure containing the draw parameters. </param>
         public static void DrawArraysIndirect(PrimitiveType mode, void* indirect) => _DrawArraysIndirect_fnptr(mode, indirect);
         [UnmanagedCallersOnly]
         private static void DrawArraysIndirect_Lazy(PrimitiveType mode, void* indirect)
@@ -2249,6 +3261,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, DrawElementsType, void*, void> _DrawElementsIndirect_fnptr = &DrawElementsIndirect_Lazy;
+        /// <summary> Render indexed primitives from array data, taking parameters from memory. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_LINE_STRIP_ADJACENCY, GL_LINES_ADJACENCY, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_TRIANGLE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, and GL_PATCHES are accepted. </param>
+        /// <param name="type"> Specifies the type of data in the buffer bound to the GL_ELEMENT_ARRAY_BUFFER binding. </param>
+        /// <param name="indirect"> Specifies the address of a structure containing the draw parameters. </param>
         public static void DrawElementsIndirect(PrimitiveType mode, DrawElementsType type, void* indirect) => _DrawElementsIndirect_fnptr(mode, type, indirect);
         [UnmanagedCallersOnly]
         private static void DrawElementsIndirect_Lazy(PrimitiveType mode, DrawElementsType type, void* indirect)
@@ -2258,6 +3274,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferParameterName, int, void> _FramebufferParameteri_fnptr = &FramebufferParameteri_Lazy;
+        /// <summary> Set a named parameter of a framebuffer. </summary>
+        /// <param name="target"> The target of the operation, which must be GL_READ_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER or GL_FRAMEBUFFER. </param>
+        /// <param name="pname"> A token indicating the parameter to be modified. </param>
+        /// <param name="param"> The new value for the parameter named pname. </param>
         public static void FramebufferParameteri(FramebufferTarget target, FramebufferParameterName pname, int param) => _FramebufferParameteri_fnptr(target, pname, param);
         [UnmanagedCallersOnly]
         private static void FramebufferParameteri_Lazy(FramebufferTarget target, FramebufferParameterName pname, int param)
@@ -2267,6 +3287,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferAttachmentParameterName, int*, void> _GetFramebufferParameteriv_fnptr = &GetFramebufferParameteriv_Lazy;
+        /// <summary> Retrieve a named parameter from a framebuffer. </summary>
+        /// <param name="target"> The target of the operation, which must be GL_READ_FRAMEBUFFER, GL_DRAW_FRAMEBUFFER or GL_FRAMEBUFFER. </param>
+        /// <param name="pname"> A token indicating the parameter to be retrieved. </param>
+        /// <param name="params"> The address of a variable to receive the value of the parameter named pname. </param>
         public static void GetFramebufferParameteriv(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters) => _GetFramebufferParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetFramebufferParameteriv_Lazy(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters)
@@ -2276,6 +3300,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ProgramInterface, ProgramInterfacePName, int*, void> _GetProgramInterfaceiv_fnptr = &GetProgramInterfaceiv_Lazy;
+        /// <summary> Query a property of an interface in a program. </summary>
+        /// <param name="program"> The name of a program object whose interface to query. </param>
+        /// <param name="programInterface"> A token identifying the interface within program to query. </param>
+        /// <param name="pname"> The name of the parameter within programInterface to query. </param>
+        /// <param name="params"> The address of a variable to retrieve the value of pname for the program interface. </param>
         public static void GetProgramInterfaceiv(ProgramHandle program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters) => _GetProgramInterfaceiv_fnptr(program, programInterface, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramInterfaceiv_Lazy(ProgramHandle program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters)
@@ -2285,6 +3314,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ProgramInterface, byte*, uint> _GetProgramResourceIndex_fnptr = &GetProgramResourceIndex_Lazy;
+        /// <summary> Query the index of a named resource within a program. </summary>
+        /// <param name="program"> The name of a program object whose resources to query. </param>
+        /// <param name="programInterface"> A token identifying the interface within program containing the resource named name. </param>
+        /// <param name="name"> The name of the resource to query the index of. </param>
         public static uint GetProgramResourceIndex(ProgramHandle program, ProgramInterface programInterface, byte* name) => _GetProgramResourceIndex_fnptr(program, programInterface, name);
         [UnmanagedCallersOnly]
         private static uint GetProgramResourceIndex_Lazy(ProgramHandle program, ProgramInterface programInterface, byte* name)
@@ -2294,6 +3327,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ProgramInterface, uint, int, int*, byte*, void> _GetProgramResourceName_fnptr = &GetProgramResourceName_Lazy;
+        /// <summary> Query the name of an indexed resource within a program. </summary>
+        /// <param name="program"> The name of a program object whose resources to query. </param>
+        /// <param name="programInterface"> A token identifying the interface within program containing the indexed resource. </param>
+        /// <param name="index"> The index of the resource within programInterface of program. </param>
+        /// <param name="bufSize"> The size of the character array whose address is given by name. </param>
+        /// <param name="length"> The address of a variable which will receive the length of the resource name. </param>
+        /// <param name="name"> The address of a character array into which will be written the name of the resource. </param>
         public static void GetProgramResourceName(ProgramHandle program, ProgramInterface programInterface, uint index, int bufSize, int* length, byte* name) => _GetProgramResourceName_fnptr(program, programInterface, index, bufSize, length, name);
         [UnmanagedCallersOnly]
         private static void GetProgramResourceName_Lazy(ProgramHandle program, ProgramInterface programInterface, uint index, int bufSize, int* length, byte* name)
@@ -2303,6 +3343,15 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ProgramInterface, uint, int, ProgramResourceProperty*, int, int*, int*, void> _GetProgramResourceiv_fnptr = &GetProgramResourceiv_Lazy;
+        /// <summary> Retrieve values for multiple properties of a single active resource within a program object. </summary>
+        /// <param name="program"> The name of a program object whose resources to query. </param>
+        /// <param name="programInterface"> A token identifying the interface within program containing the resource named name. </param>
+        /// <param name="index">!!missing documentation!!</param>
+        /// <param name="propCount">!!missing documentation!!</param>
+        /// <param name="props">!!missing documentation!!</param>
+        /// <param name="bufSize">!!missing documentation!!</param>
+        /// <param name="length">!!missing documentation!!</param>
+        /// <param name="params">!!missing documentation!!</param>
         public static void GetProgramResourceiv(ProgramHandle program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty* props, int count, int* length, int* parameters) => _GetProgramResourceiv_fnptr(program, programInterface, index, propCount, props, count, length, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramResourceiv_Lazy(ProgramHandle program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty* props, int count, int* length, int* parameters)
@@ -2312,6 +3361,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, ProgramInterface, byte*, int> _GetProgramResourceLocation_fnptr = &GetProgramResourceLocation_Lazy;
+        /// <summary> Query the location of a named resource within a program. </summary>
+        /// <param name="program"> The name of a program object whose resources to query. </param>
+        /// <param name="programInterface"> A token identifying the interface within program containing the resource named name. </param>
+        /// <param name="name"> The name of the resource to query the location of. </param>
         public static int GetProgramResourceLocation(ProgramHandle program, ProgramInterface programInterface, byte* name) => _GetProgramResourceLocation_fnptr(program, programInterface, name);
         [UnmanagedCallersOnly]
         private static int GetProgramResourceLocation_Lazy(ProgramHandle program, ProgramInterface programInterface, byte* name)
@@ -2321,6 +3374,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramPipelineHandle, UseProgramStageMask, ProgramHandle, void> _UseProgramStages_fnptr = &UseProgramStages_Lazy;
+        /// <summary> Bind stages of a program object to a program pipeline. </summary>
+        /// <param name="pipeline"> Specifies the program pipeline object to which to bind stages from program. </param>
+        /// <param name="stages"> Specifies a set of program stages to bind to the program pipeline object. </param>
+        /// <param name="program"> Specifies the program object containing the shader executables to use in pipeline. </param>
         public static void UseProgramStages(ProgramPipelineHandle pipeline, UseProgramStageMask stages, ProgramHandle program) => _UseProgramStages_fnptr(pipeline, stages, program);
         [UnmanagedCallersOnly]
         private static void UseProgramStages_Lazy(ProgramPipelineHandle pipeline, UseProgramStageMask stages, ProgramHandle program)
@@ -2330,6 +3387,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramPipelineHandle, ProgramHandle, void> _ActiveShaderProgram_fnptr = &ActiveShaderProgram_Lazy;
+        /// <summary> Set the active program object for a program pipeline object. </summary>
+        /// <param name="pipeline"> Specifies the program pipeline object to set the active program object for. </param>
+        /// <param name="program"> Specifies the program object to set as the active program pipeline object pipeline. </param>
         public static void ActiveShaderProgram(ProgramPipelineHandle pipeline, ProgramHandle program) => _ActiveShaderProgram_fnptr(pipeline, program);
         [UnmanagedCallersOnly]
         private static void ActiveShaderProgram_Lazy(ProgramPipelineHandle pipeline, ProgramHandle program)
@@ -2339,6 +3399,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ShaderType, int, byte**, int> _CreateShaderProgramv_fnptr = &CreateShaderProgramv_Lazy;
+        /// <summary> Create a stand-alone program from an array of null-terminated source code strings. </summary>
+        /// <param name="type"> Specifies the type of shader to create. </param>
+        /// <param name="count"> Specifies the number of source code strings in the array strings. </param>
+        /// <param name="strings"> Specifies the address of an array of pointers to source code strings from which to create the program object. </param>
         public static ProgramHandle CreateShaderProgramv(ShaderType type, int count, byte** strings) => (ProgramHandle) _CreateShaderProgramv_fnptr(type, count, strings);
         [UnmanagedCallersOnly]
         private static int CreateShaderProgramv_Lazy(ShaderType type, int count, byte** strings)
@@ -2348,6 +3412,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramPipelineHandle, void> _BindProgramPipeline_fnptr = &BindProgramPipeline_Lazy;
+        /// <summary> Bind a program pipeline to the current context. </summary>
+        /// <param name="pipeline"> Specifies the name of the pipeline object to bind to the context. </param>
         public static void BindProgramPipeline(ProgramPipelineHandle pipeline) => _BindProgramPipeline_fnptr(pipeline);
         [UnmanagedCallersOnly]
         private static void BindProgramPipeline_Lazy(ProgramPipelineHandle pipeline)
@@ -2357,6 +3423,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, ProgramPipelineHandle*, void> _DeleteProgramPipelines_fnptr = &DeleteProgramPipelines_Lazy;
+        /// <summary> Delete program pipeline objects. </summary>
+        /// <param name="n"> Specifies the number of program pipeline objects to delete. </param>
+        /// <param name="pipelines"> Specifies an array of names of program pipeline objects to delete. </param>
         public static void DeleteProgramPipelines(int n, ProgramPipelineHandle* pipelines) => _DeleteProgramPipelines_fnptr(n, pipelines);
         [UnmanagedCallersOnly]
         private static void DeleteProgramPipelines_Lazy(int n, ProgramPipelineHandle* pipelines)
@@ -2366,6 +3435,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, ProgramPipelineHandle*, void> _GenProgramPipelines_fnptr = &GenProgramPipelines_Lazy;
+        /// <summary> Reserve program pipeline object names. </summary>
+        /// <param name="n"> Specifies the number of program pipeline object names to reserve. </param>
+        /// <param name="pipelines"> Specifies an array of into which the reserved names will be written. </param>
         public static void GenProgramPipelines(int n, ProgramPipelineHandle* pipelines) => _GenProgramPipelines_fnptr(n, pipelines);
         [UnmanagedCallersOnly]
         private static void GenProgramPipelines_Lazy(int n, ProgramPipelineHandle* pipelines)
@@ -2375,6 +3447,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramPipelineHandle, byte> _IsProgramPipeline_fnptr = &IsProgramPipeline_Lazy;
+        /// <summary> Determine if a name corresponds to a program pipeline object. </summary>
+        /// <param name="pipeline"> Specifies a value that may be the name of a program pipeline object. </param>
         public static byte IsProgramPipeline(ProgramPipelineHandle pipeline) => _IsProgramPipeline_fnptr(pipeline);
         [UnmanagedCallersOnly]
         private static byte IsProgramPipeline_Lazy(ProgramPipelineHandle pipeline)
@@ -2384,6 +3458,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramPipelineHandle, PipelineParameterName, int*, void> _GetProgramPipelineiv_fnptr = &GetProgramPipelineiv_Lazy;
+        /// <summary> Retrieve properties of a program pipeline object. </summary>
+        /// <param name="pipeline"> Specifies the name of a program pipeline object whose parameter retrieve. </param>
+        /// <param name="pname"> Specifies the name of the parameter to retrieve. </param>
+        /// <param name="params"> Specifies the address of a variable into which will be written the value or values of pname for pipeline. </param>
         public static void GetProgramPipelineiv(ProgramPipelineHandle pipeline, PipelineParameterName pname, int* parameters) => _GetProgramPipelineiv_fnptr(pipeline, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramPipelineiv_Lazy(ProgramPipelineHandle pipeline, PipelineParameterName pname, int* parameters)
@@ -2393,6 +3471,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, void> _ProgramUniform1i_fnptr = &ProgramUniform1i_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform1i(ProgramHandle program, int location, int v0) => _ProgramUniform1i_fnptr(program, location, v0);
         [UnmanagedCallersOnly]
         private static void ProgramUniform1i_Lazy(ProgramHandle program, int location, int v0)
@@ -2402,6 +3484,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int, void> _ProgramUniform2i_fnptr = &ProgramUniform2i_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform2i(ProgramHandle program, int location, int v0, int v1) => _ProgramUniform2i_fnptr(program, location, v0, v1);
         [UnmanagedCallersOnly]
         private static void ProgramUniform2i_Lazy(ProgramHandle program, int location, int v0, int v1)
@@ -2411,6 +3498,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int, int, void> _ProgramUniform3i_fnptr = &ProgramUniform3i_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform3i(ProgramHandle program, int location, int v0, int v1, int v2) => _ProgramUniform3i_fnptr(program, location, v0, v1, v2);
         [UnmanagedCallersOnly]
         private static void ProgramUniform3i_Lazy(ProgramHandle program, int location, int v0, int v1, int v2)
@@ -2420,6 +3513,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int, int, int, void> _ProgramUniform4i_fnptr = &ProgramUniform4i_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform4i(ProgramHandle program, int location, int v0, int v1, int v2, int v3) => _ProgramUniform4i_fnptr(program, location, v0, v1, v2, v3);
         [UnmanagedCallersOnly]
         private static void ProgramUniform4i_Lazy(ProgramHandle program, int location, int v0, int v1, int v2, int v3)
@@ -2429,6 +3529,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, uint, void> _ProgramUniform1ui_fnptr = &ProgramUniform1ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform1ui(ProgramHandle program, int location, uint v0) => _ProgramUniform1ui_fnptr(program, location, v0);
         [UnmanagedCallersOnly]
         private static void ProgramUniform1ui_Lazy(ProgramHandle program, int location, uint v0)
@@ -2438,6 +3542,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, uint, uint, void> _ProgramUniform2ui_fnptr = &ProgramUniform2ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform2ui(ProgramHandle program, int location, uint v0, uint v1) => _ProgramUniform2ui_fnptr(program, location, v0, v1);
         [UnmanagedCallersOnly]
         private static void ProgramUniform2ui_Lazy(ProgramHandle program, int location, uint v0, uint v1)
@@ -2447,6 +3556,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, uint, uint, uint, void> _ProgramUniform3ui_fnptr = &ProgramUniform3ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform3ui(ProgramHandle program, int location, uint v0, uint v1, uint v2) => _ProgramUniform3ui_fnptr(program, location, v0, v1, v2);
         [UnmanagedCallersOnly]
         private static void ProgramUniform3ui_Lazy(ProgramHandle program, int location, uint v0, uint v1, uint v2)
@@ -2456,6 +3571,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, uint, uint, uint, uint, void> _ProgramUniform4ui_fnptr = &ProgramUniform4ui_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform4ui(ProgramHandle program, int location, uint v0, uint v1, uint v2, uint v3) => _ProgramUniform4ui_fnptr(program, location, v0, v1, v2, v3);
         [UnmanagedCallersOnly]
         private static void ProgramUniform4ui_Lazy(ProgramHandle program, int location, uint v0, uint v1, uint v2, uint v3)
@@ -2465,6 +3587,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, float, void> _ProgramUniform1f_fnptr = &ProgramUniform1f_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform1f(ProgramHandle program, int location, float v0) => _ProgramUniform1f_fnptr(program, location, v0);
         [UnmanagedCallersOnly]
         private static void ProgramUniform1f_Lazy(ProgramHandle program, int location, float v0)
@@ -2474,6 +3600,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, float, float, void> _ProgramUniform2f_fnptr = &ProgramUniform2f_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform2f(ProgramHandle program, int location, float v0, float v1) => _ProgramUniform2f_fnptr(program, location, v0, v1);
         [UnmanagedCallersOnly]
         private static void ProgramUniform2f_Lazy(ProgramHandle program, int location, float v0, float v1)
@@ -2483,6 +3614,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, float, float, float, void> _ProgramUniform3f_fnptr = &ProgramUniform3f_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform3f(ProgramHandle program, int location, float v0, float v1, float v2) => _ProgramUniform3f_fnptr(program, location, v0, v1, v2);
         [UnmanagedCallersOnly]
         private static void ProgramUniform3f_Lazy(ProgramHandle program, int location, float v0, float v1, float v2)
@@ -2492,6 +3629,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, float, float, float, float, void> _ProgramUniform4f_fnptr = &ProgramUniform4f_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="v0"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v1"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v2"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
+        /// <param name="v3"> For the scalar commands, specifies the new values to be used for the specified uniform variable. </param>
         public static void ProgramUniform4f(ProgramHandle program, int location, float v0, float v1, float v2, float v3) => _ProgramUniform4f_fnptr(program, location, v0, v1, v2, v3);
         [UnmanagedCallersOnly]
         private static void ProgramUniform4f_Lazy(ProgramHandle program, int location, float v0, float v1, float v2, float v3)
@@ -2501,6 +3645,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int*, void> _ProgramUniform1iv_fnptr = &ProgramUniform1iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform1iv(ProgramHandle program, int location, int count, int* value) => _ProgramUniform1iv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform1iv_Lazy(ProgramHandle program, int location, int count, int* value)
@@ -2510,6 +3659,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int*, void> _ProgramUniform2iv_fnptr = &ProgramUniform2iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform2iv(ProgramHandle program, int location, int count, int* value) => _ProgramUniform2iv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform2iv_Lazy(ProgramHandle program, int location, int count, int* value)
@@ -2519,6 +3673,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int*, void> _ProgramUniform3iv_fnptr = &ProgramUniform3iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform3iv(ProgramHandle program, int location, int count, int* value) => _ProgramUniform3iv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform3iv_Lazy(ProgramHandle program, int location, int count, int* value)
@@ -2528,6 +3687,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int*, void> _ProgramUniform4iv_fnptr = &ProgramUniform4iv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform4iv(ProgramHandle program, int location, int count, int* value) => _ProgramUniform4iv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform4iv_Lazy(ProgramHandle program, int location, int count, int* value)
@@ -2537,6 +3701,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, uint*, void> _ProgramUniform1uiv_fnptr = &ProgramUniform1uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform1uiv(ProgramHandle program, int location, int count, uint* value) => _ProgramUniform1uiv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform1uiv_Lazy(ProgramHandle program, int location, int count, uint* value)
@@ -2546,6 +3715,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, uint*, void> _ProgramUniform2uiv_fnptr = &ProgramUniform2uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform2uiv(ProgramHandle program, int location, int count, uint* value) => _ProgramUniform2uiv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform2uiv_Lazy(ProgramHandle program, int location, int count, uint* value)
@@ -2555,6 +3729,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, uint*, void> _ProgramUniform3uiv_fnptr = &ProgramUniform3uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform3uiv(ProgramHandle program, int location, int count, uint* value) => _ProgramUniform3uiv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform3uiv_Lazy(ProgramHandle program, int location, int count, uint* value)
@@ -2564,6 +3743,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, uint*, void> _ProgramUniform4uiv_fnptr = &ProgramUniform4uiv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform4uiv(ProgramHandle program, int location, int count, uint* value) => _ProgramUniform4uiv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform4uiv_Lazy(ProgramHandle program, int location, int count, uint* value)
@@ -2573,6 +3757,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, float*, void> _ProgramUniform1fv_fnptr = &ProgramUniform1fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform1fv(ProgramHandle program, int location, int count, float* value) => _ProgramUniform1fv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform1fv_Lazy(ProgramHandle program, int location, int count, float* value)
@@ -2582,6 +3771,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, float*, void> _ProgramUniform2fv_fnptr = &ProgramUniform2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform2fv(ProgramHandle program, int location, int count, float* value) => _ProgramUniform2fv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform2fv_Lazy(ProgramHandle program, int location, int count, float* value)
@@ -2591,6 +3785,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, float*, void> _ProgramUniform3fv_fnptr = &ProgramUniform3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform3fv(ProgramHandle program, int location, int count, float* value) => _ProgramUniform3fv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform3fv_Lazy(ProgramHandle program, int location, int count, float* value)
@@ -2600,6 +3799,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, float*, void> _ProgramUniform4fv_fnptr = &ProgramUniform4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniform4fv(ProgramHandle program, int location, int count, float* value) => _ProgramUniform4fv_fnptr(program, location, count, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniform4fv_Lazy(ProgramHandle program, int location, int count, float* value)
@@ -2609,6 +3813,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2fv_fnptr = &ProgramUniformMatrix2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix2fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix2fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2618,6 +3828,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3fv_fnptr = &ProgramUniformMatrix3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix3fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix3fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2627,6 +3843,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4fv_fnptr = &ProgramUniformMatrix4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix4fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix4fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2636,6 +3858,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2x3fv_fnptr = &ProgramUniformMatrix2x3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix2x3fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2x3fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix2x3fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2645,6 +3873,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3x2fv_fnptr = &ProgramUniformMatrix3x2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix3x2fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3x2fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix3x2fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2654,6 +3888,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2x4fv_fnptr = &ProgramUniformMatrix2x4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix2x4fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2x4fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix2x4fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2663,6 +3903,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4x2fv_fnptr = &ProgramUniformMatrix4x2fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix4x2fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4x2fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix4x2fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2672,6 +3918,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3x4fv_fnptr = &ProgramUniformMatrix3x4fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix3x4fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3x4fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix3x4fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2681,6 +3933,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4x3fv_fnptr = &ProgramUniformMatrix4x3fv_Lazy;
+        /// <summary> Specify the value of a uniform variable for a specified program object. </summary>
+        /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
+        /// <param name="count"> For the vector commands (glProgramUniform*v), specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
+        /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
+        /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         public static void ProgramUniformMatrix4x3fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4x3fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
         private static void ProgramUniformMatrix4x3fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
@@ -2690,6 +3948,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramPipelineHandle, void> _ValidateProgramPipeline_fnptr = &ValidateProgramPipeline_Lazy;
+        /// <summary> Validate a program pipeline object against current GL state. </summary>
+        /// <param name="pipeline"> Specifies the name of a program pipeline object to validate. </param>
         public static void ValidateProgramPipeline(ProgramPipelineHandle pipeline) => _ValidateProgramPipeline_fnptr(pipeline);
         [UnmanagedCallersOnly]
         private static void ValidateProgramPipeline_Lazy(ProgramPipelineHandle pipeline)
@@ -2699,6 +3959,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramPipelineHandle, int, int*, byte*, void> _GetProgramPipelineInfoLog_fnptr = &GetProgramPipelineInfoLog_Lazy;
+        /// <summary> Retrieve the info log string from a program pipeline object. </summary>
+        /// <param name="pipeline"> Specifies the name of a program pipeline object from which to retrieve the info log. </param>
+        /// <param name="bufSize"> Specifies the maximum number of characters, including the null terminator, that may be written into infoLog. </param>
+        /// <param name="length"> Specifies the address of a variable into which will be written the number of characters written into infoLog. </param>
+        /// <param name="infoLog"> Specifies the address of an array of characters into which will be written the info log for pipeline. </param>
         public static void GetProgramPipelineInfoLog(ProgramPipelineHandle pipeline, int bufSize, int* length, byte* infoLog) => _GetProgramPipelineInfoLog_fnptr(pipeline, bufSize, length, infoLog);
         [UnmanagedCallersOnly]
         private static void GetProgramPipelineInfoLog_Lazy(ProgramPipelineHandle pipeline, int bufSize, int* length, byte* infoLog)
@@ -2708,6 +3973,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, TextureHandle, int, byte, int, BufferAccessARB, InternalFormat, void> _BindImageTexture_fnptr = &BindImageTexture_Lazy;
+        /// <summary> Bind a level of a texture to an image unit. </summary>
+        /// <param name="unit"> Specifies the index of the image unit to which to bind the texture </param>
+        /// <param name="texture"> Specifies the name of the texture to bind to the image unit. </param>
+        /// <param name="level"> Specifies the level of the texture that is to be bound. </param>
+        /// <param name="layered"> Specifies whether a layered texture binding is to be established. </param>
+        /// <param name="layer"> If layered is GL_FALSE, specifies the layer of texture to be bound to the image unit. Ignored otherwise. </param>
+        /// <param name="access"> Specifies a token indicating the type of access that will be performed on the image. </param>
+        /// <param name="format"> Specifies the format that the elements of the image will be treated as for the purposes of formatted loads and stores. </param>
         public static void BindImageTexture(uint unit, TextureHandle texture, int level, byte layered, int layer, BufferAccessARB access, InternalFormat format) => _BindImageTexture_fnptr(unit, texture, level, layered, layer, access, format);
         [UnmanagedCallersOnly]
         private static void BindImageTexture_Lazy(uint unit, TextureHandle texture, int level, byte layered, int layer, BufferAccessARB access, InternalFormat format)
@@ -2717,6 +3990,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<BufferTargetARB, uint, byte*, void> _GetBooleani_v_fnptr = &GetBooleani_v_Lazy;
+        /// <summary> Return the value or values of a selected parameter. </summary>
+        /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
+        /// <param name="index"> Specifies the index of the particular element being queried. </param>
+        /// <param name="data"> Returns the value or values of the specified parameter. </param>
         public static void GetBooleani_v(BufferTargetARB target, uint index, byte* data) => _GetBooleani_v_fnptr(target, index, data);
         [UnmanagedCallersOnly]
         private static void GetBooleani_v_Lazy(BufferTargetARB target, uint index, byte* data)
@@ -2726,6 +4003,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<MemoryBarrierMask, void> _MemoryBarrier_fnptr = &MemoryBarrier_Lazy;
+        /// <summary> Defines a barrier ordering memory transactions. </summary>
+        /// <param name="barriers"> Specifies the barriers to insert. Must be a bitwise combination of GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT, GL_ELEMENT_ARRAY_BARRIER_BIT, GL_UNIFORM_BARRIER_BIT, GL_TEXTURE_FETCH_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT, GL_COMMAND_BARRIER_BIT, GL_PIXEL_BUFFER_BARRIER_BIT, GL_TEXTURE_UPDATE_BARRIER_BIT, GL_BUFFER_UPDATE_BARRIER_BIT, GL_FRAMEBUFFER_BARRIER_BIT, GL_TRANSFORM_FEEDBACK_BARRIER_BIT, GL_ATOMIC_COUNTER_BARRIER_BIT, or GL_SHADER_STORAGE_BARRIER_BIT. If the special value GL_ALL_BARRIER_BITS is specified, all supported barriers will be inserted. </param>
         public static void MemoryBarrier(MemoryBarrierMask barriers) => _MemoryBarrier_fnptr(barriers);
         [UnmanagedCallersOnly]
         private static void MemoryBarrier_Lazy(MemoryBarrierMask barriers)
@@ -2735,6 +4014,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<MemoryBarrierMask, void> _MemoryBarrierByRegion_fnptr = &MemoryBarrierByRegion_Lazy;
+        /// <summary> Defines a barrier ordering memory transactions. </summary>
+        /// <param name="barriers"> Specifies the barriers to insert. Must be a bitwise combination of GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT, GL_ELEMENT_ARRAY_BARRIER_BIT, GL_UNIFORM_BARRIER_BIT, GL_TEXTURE_FETCH_BARRIER_BIT, GL_SHADER_IMAGE_ACCESS_BARRIER_BIT, GL_COMMAND_BARRIER_BIT, GL_PIXEL_BUFFER_BARRIER_BIT, GL_TEXTURE_UPDATE_BARRIER_BIT, GL_BUFFER_UPDATE_BARRIER_BIT, GL_FRAMEBUFFER_BARRIER_BIT, GL_TRANSFORM_FEEDBACK_BARRIER_BIT, GL_ATOMIC_COUNTER_BARRIER_BIT, or GL_SHADER_STORAGE_BARRIER_BIT. If the special value GL_ALL_BARRIER_BITS is specified, all supported barriers will be inserted. </param>
         public static void MemoryBarrierByRegion(MemoryBarrierMask barriers) => _MemoryBarrierByRegion_fnptr(barriers);
         [UnmanagedCallersOnly]
         private static void MemoryBarrierByRegion_Lazy(MemoryBarrierMask barriers)
@@ -2744,6 +4025,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, byte, void> _TexStorage2DMultisample_fnptr = &TexStorage2DMultisample_Lazy;
+        /// <summary> Specify storage for a two-dimensional multisample texture. </summary>
+        /// <param name="target"> Specify the target of the operation. target must be GL_TEXTURE_2D_MULTISAMPLE. </param>
+        /// <param name="samples"> Specify the number of samples in the texture. </param>
+        /// <param name="internalformat"> Specifies the sized internal format to be used to store texture image data. </param>
+        /// <param name="width"> Specifies the width of the texture, in texels. </param>
+        /// <param name="height"> Specifies the height of the texture, in texels. </param>
+        /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
         public static void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, byte fixedsamplelocations) => _TexStorage2DMultisample_fnptr(target, samples, internalformat, width, height, fixedsamplelocations);
         [UnmanagedCallersOnly]
         private static void TexStorage2DMultisample_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, byte fixedsamplelocations)
@@ -2753,6 +4041,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetMultisamplePNameNV, uint, float*, void> _GetMultisamplefv_fnptr = &GetMultisamplefv_Lazy;
+        /// <summary> Retrieve the location of a sample. </summary>
+        /// <param name="pname"> Specifies the sample parameter name. pname must be GL_SAMPLE_POSITION. </param>
+        /// <param name="index"> Specifies the index of the sample whose position to query. </param>
+        /// <param name="val"> Specifies the address of an array to receive the position of the sample. </param>
         public static void GetMultisamplefv(GetMultisamplePNameNV pname, uint index, float* val) => _GetMultisamplefv_fnptr(pname, index, val);
         [UnmanagedCallersOnly]
         private static void GetMultisamplefv_Lazy(GetMultisamplePNameNV pname, uint index, float* val)
@@ -2762,6 +4054,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, All, void> _SampleMaski_fnptr = &SampleMaski_Lazy;
+        /// <summary> Set the value of a sub-word of the sample mask. </summary>
+        /// <param name="maskNumber"> Specifies which 32-bit sub-word of the sample mask to update. </param>
+        /// <param name="mask"> Specifies the new value of the mask sub-word. </param>
         public static void SampleMaski(uint maskNumber, All mask) => _SampleMaski_fnptr(maskNumber, mask);
         [UnmanagedCallersOnly]
         private static void SampleMaski_Lazy(uint maskNumber, All mask)
@@ -2771,6 +4066,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, GetTextureParameter, int*, void> _GetTexLevelParameteriv_fnptr = &GetTexLevelParameteriv_Lazy;
+        /// <summary> Return texture parameter values for a specific level of detail. </summary>
+        /// <param name="target"> Specifies the symbolic name of the target texture, one of GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_BUFFER. </param>
+        /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_SAMPLES, GL_TEXTURE_FIXED_SAMPLE_LOCATIONS, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_STENCIL_SIZE, GL_TEXTURE_SHARED_SIZE, GL_TEXTURE_RED_TYPE, GL_TEXTURE_GREEN_TYPE, GL_TEXTURE_BLUE_TYPE, GL_TEXTURE_ALPHA_TYPE, GL_TEXTURE_DEPTH_TYPE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_BUFFER_DATA_STORE_BINDING, GL_TEXTURE_BUFFER_OFFSET, and GL_TEXTURE_BUFFER_SIZE are accepted. </param>
+        /// <param name="params"> Returns the requested data. </param>
         public static void GetTexLevelParameteriv(TextureTarget target, int level, GetTextureParameter pname, int* parameters) => _GetTexLevelParameteriv_fnptr(target, level, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexLevelParameteriv_Lazy(TextureTarget target, int level, GetTextureParameter pname, int* parameters)
@@ -2780,6 +4080,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, GetTextureParameter, float*, void> _GetTexLevelParameterfv_fnptr = &GetTexLevelParameterfv_Lazy;
+        /// <summary> Return texture parameter values for a specific level of detail. </summary>
+        /// <param name="target"> Specifies the symbolic name of the target texture, one of GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_BUFFER. </param>
+        /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_SAMPLES, GL_TEXTURE_FIXED_SAMPLE_LOCATIONS, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_STENCIL_SIZE, GL_TEXTURE_SHARED_SIZE, GL_TEXTURE_RED_TYPE, GL_TEXTURE_GREEN_TYPE, GL_TEXTURE_BLUE_TYPE, GL_TEXTURE_ALPHA_TYPE, GL_TEXTURE_DEPTH_TYPE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_BUFFER_DATA_STORE_BINDING, GL_TEXTURE_BUFFER_OFFSET, and GL_TEXTURE_BUFFER_SIZE are accepted. </param>
+        /// <param name="params"> Returns the requested data. </param>
         public static void GetTexLevelParameterfv(TextureTarget target, int level, GetTextureParameter pname, float* parameters) => _GetTexLevelParameterfv_fnptr(target, level, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexLevelParameterfv_Lazy(TextureTarget target, int level, GetTextureParameter pname, float* parameters)
@@ -2789,6 +4094,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, BufferHandle, IntPtr, int, void> _BindVertexBuffer_fnptr = &BindVertexBuffer_Lazy;
+        /// <summary> Bind a buffer to a vertex buffer bind point. </summary>
+        /// <param name="bindingindex"> The index of the vertex buffer binding point to which to bind the buffer. </param>
+        /// <param name="buffer"> The name of an existing buffer to bind to the vertex buffer binding point. </param>
+        /// <param name="offset"> The offset of the first element of the buffer. </param>
+        /// <param name="stride"> The distance between elements within the buffer. </param>
         public static void BindVertexBuffer(uint bindingindex, BufferHandle buffer, IntPtr offset, int stride) => _BindVertexBuffer_fnptr(bindingindex, buffer, offset, stride);
         [UnmanagedCallersOnly]
         private static void BindVertexBuffer_Lazy(uint bindingindex, BufferHandle buffer, IntPtr offset, int stride)
@@ -2798,6 +4108,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, int, VertexAttribType, byte, uint, void> _VertexAttribFormat_fnptr = &VertexAttribFormat_Lazy;
+        /// <summary> Specify the organization of vertex arrays. </summary>
+        /// <param name="attribindex"> The generic vertex attribute array being described. </param>
+        /// <param name="size"> The number of values per vertex that are stored in the array. </param>
+        /// <param name="type"> The type of the data stored in the array. </param>
+        /// <param name="normalized"> Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed. This parameter is ignored if type is GL_FIXED. </param>
+        /// <param name="relativeoffset"> An offset to the first element relative to the start of the vertex buffer binding. </param>
         public static void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, byte normalized, uint relativeoffset) => _VertexAttribFormat_fnptr(attribindex, size, type, normalized, relativeoffset);
         [UnmanagedCallersOnly]
         private static void VertexAttribFormat_Lazy(uint attribindex, int size, VertexAttribType type, byte normalized, uint relativeoffset)
@@ -2807,6 +4123,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, int, VertexAttribIType, uint, void> _VertexAttribIFormat_fnptr = &VertexAttribIFormat_Lazy;
+        /// <summary> Specify the organization of vertex arrays. </summary>
+        /// <param name="attribindex"> The generic vertex attribute array being described. </param>
+        /// <param name="size"> The number of values per vertex that are stored in the array. </param>
+        /// <param name="type"> The type of the data stored in the array. </param>
+        /// <param name="relativeoffset"> An offset to the first element relative to the start of the vertex buffer binding. </param>
         public static void VertexAttribIFormat(uint attribindex, int size, VertexAttribIType type, uint relativeoffset) => _VertexAttribIFormat_fnptr(attribindex, size, type, relativeoffset);
         [UnmanagedCallersOnly]
         private static void VertexAttribIFormat_Lazy(uint attribindex, int size, VertexAttribIType type, uint relativeoffset)
@@ -2816,6 +4137,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, uint, void> _VertexAttribBinding_fnptr = &VertexAttribBinding_Lazy;
+        /// <summary> Associate a vertex attribute and a vertex buffer binding. </summary>
+        /// <param name="attribindex"> The index of the attribute to associate with a vertex buffer binding. </param>
+        /// <param name="bindingindex"> The index of the vertex buffer binding with which to associate the generic vertex attribute. </param>
         public static void VertexAttribBinding(uint attribindex, uint bindingindex) => _VertexAttribBinding_fnptr(attribindex, bindingindex);
         [UnmanagedCallersOnly]
         private static void VertexAttribBinding_Lazy(uint attribindex, uint bindingindex)
@@ -2825,6 +4149,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, uint, void> _VertexBindingDivisor_fnptr = &VertexBindingDivisor_Lazy;
+        /// <summary> Modify the rate at which generic vertex attributes advance. </summary>
+        /// <param name="bindingindex"> The index of the binding whose divisor to modify. </param>
+        /// <param name="divisor"> The new value for the instance step rate to apply. </param>
         public static void VertexBindingDivisor(uint bindingindex, uint divisor) => _VertexBindingDivisor_fnptr(bindingindex, divisor);
         [UnmanagedCallersOnly]
         private static void VertexBindingDivisor_Lazy(uint bindingindex, uint divisor)
@@ -2834,6 +4161,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _BlendBarrier_fnptr = &BlendBarrier_Lazy;
+        /// <summary> Specifies a boundary between advanced blending passes. </summary>
         public static void BlendBarrier() => _BlendBarrier_fnptr();
         [UnmanagedCallersOnly]
         private static void BlendBarrier_Lazy()
@@ -2843,6 +4171,22 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, CopyImageSubDataTarget, int, int, int, int, uint, CopyImageSubDataTarget, int, int, int, int, int, int, int, void> _CopyImageSubData_fnptr = &CopyImageSubData_Lazy;
+        /// <summary> Perform a raw data copy between two images. </summary>
+        /// <param name="srcName"> The name of a texture or renderbuffer object from which to copy. </param>
+        /// <param name="srcTarget"> The target representing the namespace of the source name srcName. </param>
+        /// <param name="srcLevel"> The mipmap level to read from the source. </param>
+        /// <param name="srcX"> The X coordinate of the left edge of the souce region to copy. </param>
+        /// <param name="srcY"> The Y coordinate of the top edge of the souce region to copy. </param>
+        /// <param name="srcZ"> The Z coordinate of the near edge of the souce region to copy. </param>
+        /// <param name="dstName"> The name of a texture or renderbuffer object to which to copy. </param>
+        /// <param name="dstTarget"> The target representing the namespace of the destination name dstName. </param>
+        /// <param name="dstLevel">!!missing documentation!!</param>
+        /// <param name="dstX"> The X coordinate of the left edge of the destination region. </param>
+        /// <param name="dstY"> The Y coordinate of the top edge of the destination region. </param>
+        /// <param name="dstZ"> The Z coordinate of the near edge of the destination region. </param>
+        /// <param name="srcWidth"> The width of the region to be copied. </param>
+        /// <param name="srcHeight"> The height of the region to be copied. </param>
+        /// <param name="srcDepth"> The depth of the region to be copied. </param>
         public static void CopyImageSubData(uint srcName, CopyImageSubDataTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, CopyImageSubDataTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) => _CopyImageSubData_fnptr(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
         [UnmanagedCallersOnly]
         private static void CopyImageSubData_Lazy(uint srcName, CopyImageSubDataTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, CopyImageSubDataTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth)
@@ -2852,6 +4196,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
+        /// <summary> Control the reporting of debug messages in a debug context. </summary>
+        /// <param name="source"> The source of debug messages to enable or disable. </param>
+        /// <param name="type"> The type of debug messages to enable or disable. </param>
+        /// <param name="severity"> The severity of debug messages to enable or disable. </param>
+        /// <param name="count"> The length of the array ids. </param>
+        /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
+        /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
         public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
         [UnmanagedCallersOnly]
         private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled)
@@ -2861,6 +4212,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<DebugSource, DebugType, uint, DebugSeverity, int, byte*, void> _DebugMessageInsert_fnptr = &DebugMessageInsert_Lazy;
+        /// <summary> Inject an application-supplied message into the debug message queue. </summary>
+        /// <param name="source"> The source of the debug message to insert. </param>
+        /// <param name="type"> The type of the debug message insert. </param>
+        /// <param name="id"> The user-supplied identifier of the message to insert. </param>
+        /// <param name="severity"> The severity of the debug messages to insert. </param>
+        /// <param name="length"> The length string contained in the character array whose address is given by message. </param>
+        /// <param name="message"> The address of a character array containing the message to insert. </param>
         public static void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => _DebugMessageInsert_fnptr(source, type, id, severity, length, buf);
         [UnmanagedCallersOnly]
         private static void DebugMessageInsert_Lazy(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf)
@@ -2870,6 +4228,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<IntPtr, void*, void> _DebugMessageCallback_fnptr = &DebugMessageCallback_Lazy;
+        /// <summary> Specify a callback to receive debugging messages from the GL. </summary>
+        /// <param name="callback"> The address of a callback function that will be called when a debug message is generated. </param>
+        /// <param name="userParam"> A user supplied pointer that will be passed on each invocation of callback. </param>
         public static void DebugMessageCallback(IntPtr callback, void* userParam) => _DebugMessageCallback_fnptr(callback, userParam);
         [UnmanagedCallersOnly]
         private static void DebugMessageCallback_Lazy(IntPtr callback, void* userParam)
@@ -2879,6 +4240,15 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*, uint> _GetDebugMessageLog_fnptr = &GetDebugMessageLog_Lazy;
+        /// <summary> Retrieve messages from the debug message log. </summary>
+        /// <param name="count"> The number of debug messages to retrieve from the log. </param>
+        /// <param name="bufSize"> The size of the buffer whose address is given by messageLog. </param>
+        /// <param name="sources"> The address of an array of variables to receive the sources of the retrieved messages. </param>
+        /// <param name="types"> The address of an array of variables to receive the types of the retrieved messages. </param>
+        /// <param name="ids"> The address of an array of unsigned integers to receive the ids of the retrieved messages. </param>
+        /// <param name="severities"> The address of an array of variables to receive the severites of the retrieved messages. </param>
+        /// <param name="lengths"> The address of an array of variables to receive the lengths of the received messages. </param>
+        /// <param name="messageLog"> The address of an array of characters that will receive the messages. </param>
         public static uint GetDebugMessageLog(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog) => _GetDebugMessageLog_fnptr(count, bufSize, sources, types, ids, severities, lengths, messageLog);
         [UnmanagedCallersOnly]
         private static uint GetDebugMessageLog_Lazy(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog)
@@ -2888,6 +4258,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<DebugSource, uint, int, byte*, void> _PushDebugGroup_fnptr = &PushDebugGroup_Lazy;
+        /// <summary> Push a named debug group into the command stream. </summary>
+        /// <param name="source"> The source of the debug message. </param>
+        /// <param name="id"> The identifier of the message. </param>
+        /// <param name="length"> The length of the message to be sent to the debug output stream. </param>
+        /// <param name="message"> The a string containing the message to be sent to the debug output stream. </param>
         public static void PushDebugGroup(DebugSource source, uint id, int length, byte* message) => _PushDebugGroup_fnptr(source, id, length, message);
         [UnmanagedCallersOnly]
         private static void PushDebugGroup_Lazy(DebugSource source, uint id, int length, byte* message)
@@ -2897,6 +4272,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void> _PopDebugGroup_fnptr = &PopDebugGroup_Lazy;
+        /// <summary> Pop the active debug group. </summary>
         public static void PopDebugGroup() => _PopDebugGroup_fnptr();
         [UnmanagedCallersOnly]
         private static void PopDebugGroup_Lazy()
@@ -2906,6 +4282,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ObjectIdentifier, uint, int, byte*, void> _ObjectLabel_fnptr = &ObjectLabel_Lazy;
+        /// <summary> Label a named object identified within a namespace. </summary>
+        /// <param name="identifier"> The namespace from which the name of the object is allocated. </param>
+        /// <param name="name"> The name of the object to label. </param>
+        /// <param name="length"> The length of the label to be used for the object. </param>
+        /// <param name="label"> The address of a string containing the label to assign to the object. </param>
         public static void ObjectLabel(ObjectIdentifier identifier, uint name, int length, byte* label) => _ObjectLabel_fnptr(identifier, name, length, label);
         [UnmanagedCallersOnly]
         private static void ObjectLabel_Lazy(ObjectIdentifier identifier, uint name, int length, byte* label)
@@ -2915,6 +4296,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ObjectIdentifier, uint, int, int*, byte*, void> _GetObjectLabel_fnptr = &GetObjectLabel_Lazy;
+        /// <summary> Retrieve the label of a named object identified within a namespace. </summary>
+        /// <param name="identifier"> The namespace from which the name of the object is allocated. </param>
+        /// <param name="name"> The name of the object whose label to retrieve. </param>
+        /// <param name="bifSize">!!missing documentation!!</param>
+        /// <param name="length"> The address of a variable to receive the length of the object label. </param>
+        /// <param name="label"> The address of a string that will receive the object label. </param>
         public static void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, int* length, byte* label) => _GetObjectLabel_fnptr(identifier, name, bufSize, length, label);
         [UnmanagedCallersOnly]
         private static void GetObjectLabel_Lazy(ObjectIdentifier identifier, uint name, int bufSize, int* length, byte* label)
@@ -2924,6 +4311,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void*, int, byte*, void> _ObjectPtrLabel_fnptr = &ObjectPtrLabel_Lazy;
+        /// <summary> Label a sync object identified by a pointer. </summary>
+        /// <param name="ptr"> A pointer identifying a sync object. </param>
+        /// <param name="length"> The length of the label to be used for the object. </param>
+        /// <param name="label"> The address of a string containing the label to assign to the object. </param>
         public static void ObjectPtrLabel(void* ptr, int length, byte* label) => _ObjectPtrLabel_fnptr(ptr, length, label);
         [UnmanagedCallersOnly]
         private static void ObjectPtrLabel_Lazy(void* ptr, int length, byte* label)
@@ -2933,6 +4324,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<void*, int, int*, byte*, void> _GetObjectPtrLabel_fnptr = &GetObjectPtrLabel_Lazy;
+        /// <summary> Retrieve the label of a sync object identified by a pointer. </summary>
+        /// <param name="ptr"> The name of the sync object whose label to retrieve. </param>
+        /// <param name="bifSize">!!missing documentation!!</param>
+        /// <param name="length"> The address of a variable to receive the length of the object label. </param>
+        /// <param name="label"> The address of a string that will receive the object label. </param>
         public static void GetObjectPtrLabel(void* ptr, int bufSize, int* length, byte* label) => _GetObjectPtrLabel_fnptr(ptr, bufSize, length, label);
         [UnmanagedCallersOnly]
         private static void GetObjectPtrLabel_Lazy(void* ptr, int bufSize, int* length, byte* label)
@@ -2942,6 +4338,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GetPointervPName, void**, void> _GetPointerv_fnptr = &GetPointerv_Lazy;
+        /// <summary> Return the address of the specified pointer. </summary>
+        /// <param name="pname"> Specifies the pointer to be returned. Must be one of GL_DEBUG_CALLBACK_FUNCTION or GL_DEBUG_CALLBACK_USER_PARAM. </param>
+        /// <param name="params"> Returns the pointer value specified by pname. </param>
         public static void GetPointerv(GetPointervPName pname, void** parameters) => _GetPointerv_fnptr(pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetPointerv_Lazy(GetPointervPName pname, void** parameters)
@@ -2951,6 +4350,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<EnableCap, uint, void> _Enablei_fnptr = &Enablei_Lazy;
+        /// <summary> Enable or disable server-side GL capabilities. </summary>
+        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
+        /// <param name="index"> Specifies the index of the switch to disable (for glEnablei and glDisablei only). </param>
         public static void Enablei(EnableCap target, uint index) => _Enablei_fnptr(target, index);
         [UnmanagedCallersOnly]
         private static void Enablei_Lazy(EnableCap target, uint index)
@@ -2960,6 +4362,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<EnableCap, uint, void> _Disablei_fnptr = &Disablei_Lazy;
+        /// <summary> Enable or disable server-side GL capabilities. </summary>
+        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
+        /// <param name="index"> Specifies the index of the switch to disable (for glEnablei and glDisablei only). </param>
         public static void Disablei(EnableCap target, uint index) => _Disablei_fnptr(target, index);
         [UnmanagedCallersOnly]
         private static void Disablei_Lazy(EnableCap target, uint index)
@@ -2969,6 +4374,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, BlendEquationModeEXT, void> _BlendEquationi_fnptr = &BlendEquationi_Lazy;
+        /// <summary> Specify the equation used for both the RGB blend equation and the Alpha blend equation. </summary>
+        /// <param name="buf"> for glBlendEquationi, specifies the index of the draw buffer for which to set the blend equation. </param>
+        /// <param name="mode"> specifies how source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         public static void BlendEquationi(uint buf, BlendEquationModeEXT mode) => _BlendEquationi_fnptr(buf, mode);
         [UnmanagedCallersOnly]
         private static void BlendEquationi_Lazy(uint buf, BlendEquationModeEXT mode)
@@ -2978,6 +4386,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, BlendEquationModeEXT, BlendEquationModeEXT, void> _BlendEquationSeparatei_fnptr = &BlendEquationSeparatei_Lazy;
+        /// <summary> Set the RGB blend equation and the alpha blend equation separately. </summary>
+        /// <param name="buf"> for glBlendEquationSeparatei, specifies the index of the draw buffer for which to set the blend equations. </param>
+        /// <param name="modeRGB"> specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
+        /// <param name="modeAlpha"> specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be GL_FUNC_ADD, GL_FUNC_SUBTRACT, GL_FUNC_REVERSE_SUBTRACT, GL_MIN, GL_MAX. </param>
         public static void BlendEquationSeparatei(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => _BlendEquationSeparatei_fnptr(buf, modeRGB, modeAlpha);
         [UnmanagedCallersOnly]
         private static void BlendEquationSeparatei_Lazy(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha)
@@ -2987,6 +4399,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, BlendingFactor, BlendingFactor, void> _BlendFunci_fnptr = &BlendFunci_Lazy;
+        /// <summary> Specify pixel arithmetic. </summary>
+        /// <param name="buf"> For glBlendFunci, specifies the index of the draw buffer for which to set the blend function. </param>
+        /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The initial value is GL_ONE. </param>
+        /// <param name="dfactor"> Specifies how the red, green, blue, and alpha destination blending factors are computed. The following symbolic constants are accepted: GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA. GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA, and GL_ONE_MINUS_CONSTANT_ALPHA. The initial value is GL_ZERO. </param>
         public static void BlendFunci(uint buf, BlendingFactor src, BlendingFactor dst) => _BlendFunci_fnptr(buf, src, dst);
         [UnmanagedCallersOnly]
         private static void BlendFunci_Lazy(uint buf, BlendingFactor src, BlendingFactor dst)
@@ -2996,6 +4412,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, BlendingFactor, BlendingFactor, BlendingFactor, BlendingFactor, void> _BlendFuncSeparatei_fnptr = &BlendFuncSeparatei_Lazy;
+        /// <summary> Specify pixel arithmetic for RGB and alpha components separately. </summary>
+        /// <param name="buf"> For glBlendFuncSeparatei, specifies the index of the draw buffer for which to set the blend functions. </param>
+        /// <param name="srcRGB"> Specifies how the red, green, and blue blending factors are computed. The initial value is GL_ONE. </param>
+        /// <param name="dstRGB"> Specifies how the red, green, and blue destination blending factors are computed. The initial value is GL_ZERO. </param>
+        /// <param name="srcAlpha"> Specified how the alpha source blending factor is computed. The initial value is GL_ONE. </param>
+        /// <param name="dstAlpha"> Specified how the alpha destination blending factor is computed. The initial value is GL_ZERO. </param>
         public static void BlendFuncSeparatei(uint buf, BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => _BlendFuncSeparatei_fnptr(buf, srcRGB, dstRGB, srcAlpha, dstAlpha);
         [UnmanagedCallersOnly]
         private static void BlendFuncSeparatei_Lazy(uint buf, BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha)
@@ -3005,6 +4427,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<uint, byte, byte, byte, byte, void> _ColorMaski_fnptr = &ColorMaski_Lazy;
+        /// <summary> Enable and disable writing of frame buffer color components. </summary>
+        /// <param name="buf"> For glColorMaski, specifies the index of the draw buffer whose color mask to set. </param>
+        /// <param name="red"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="green"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
+        /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         public static void ColorMaski(uint index, byte r, byte g, byte b, byte a) => _ColorMaski_fnptr(index, r, g, b, a);
         [UnmanagedCallersOnly]
         private static void ColorMaski_Lazy(uint index, byte r, byte g, byte b, byte a)
@@ -3014,6 +4442,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<EnableCap, uint, byte> _IsEnabledi_fnptr = &IsEnabledi_Lazy;
+        /// <summary> Test whether a capability is enabled. </summary>
+        /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
+        /// <param name="index"> Specifies the index of the capability. </param>
         public static byte IsEnabledi(EnableCap target, uint index) => _IsEnabledi_fnptr(target, index);
         [UnmanagedCallersOnly]
         private static byte IsEnabledi_Lazy(EnableCap target, uint index)
@@ -3023,6 +4454,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, int, DrawElementsType, void*, int, void> _DrawElementsBaseVertex_fnptr = &DrawElementsBaseVertex_Lazy;
+        /// <summary> Render primitives from array data with a per-element offset. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="count"> Specifies the number of elements to be rendered. </param>
+        /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
+        /// <param name="indices"> Specifies a pointer to the location where the indices are stored. </param>
+        /// <param name="basevertex"> Specifies a constant that should be added to each element of indices when chosing elements from the enabled vertex arrays. </param>
         public static void DrawElementsBaseVertex(PrimitiveType mode, int count, DrawElementsType type, void* indices, int basevertex) => _DrawElementsBaseVertex_fnptr(mode, count, type, indices, basevertex);
         [UnmanagedCallersOnly]
         private static void DrawElementsBaseVertex_Lazy(PrimitiveType mode, int count, DrawElementsType type, void* indices, int basevertex)
@@ -3032,6 +4469,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, uint, uint, int, DrawElementsType, void*, int, void> _DrawRangeElementsBaseVertex_fnptr = &DrawRangeElementsBaseVertex_Lazy;
+        /// <summary> Render primitives from array data with a per-element offset. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="start"> Specifies the minimum array index contained in indices. </param>
+        /// <param name="end"> Specifies the maximum array index contained in indices. </param>
+        /// <param name="count"> Specifies the number of elements to be rendered. </param>
+        /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
+        /// <param name="indices"> Specifies a pointer to the location where the indices are stored. </param>
+        /// <param name="basevertex"> Specifies a constant that should be added to each element of indices when chosing elements from the enabled vertex arrays. </param>
         public static void DrawRangeElementsBaseVertex(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices, int basevertex) => _DrawRangeElementsBaseVertex_fnptr(mode, start, end, count, type, indices, basevertex);
         [UnmanagedCallersOnly]
         private static void DrawRangeElementsBaseVertex_Lazy(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices, int basevertex)
@@ -3041,6 +4486,13 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PrimitiveType, int, DrawElementsType, void*, int, int, void> _DrawElementsInstancedBaseVertex_fnptr = &DrawElementsInstancedBaseVertex_Lazy;
+        /// <summary> Render multiple instances of a set of primitives from array data with a per-element offset. </summary>
+        /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>
+        /// <param name="count"> Specifies the number of elements to be rendered. </param>
+        /// <param name="type"> Specifies the type of the values in indices. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT, or GL_UNSIGNED_INT. </param>
+        /// <param name="indices"> Specifies a pointer to the location where the indices are stored. </param>
+        /// <param name="primcount"> Specifies the number of instances of the indexed geometry that should be drawn. </param>
+        /// <param name="basevertex"> Specifies a constant that should be added to each element of indices when chosing elements from the enabled vertex arrays. </param>
         public static void DrawElementsInstancedBaseVertex(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount, int basevertex) => _DrawElementsInstancedBaseVertex_fnptr(mode, count, type, indices, instancecount, basevertex);
         [UnmanagedCallersOnly]
         private static void DrawElementsInstancedBaseVertex_Lazy(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount, int basevertex)
@@ -3050,6 +4502,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<FramebufferTarget, FramebufferAttachment, TextureHandle, int, void> _FramebufferTexture_fnptr = &FramebufferTexture_Lazy;
+        /// <summary> Attach a level of a texture object as a logical buffer of a framebuffer object. </summary>
+        /// <param name="target"> Specifies the target to which the framebuffer is bound. </param>
+        /// <param name="attachment"> Specifies the attachment point of the framebuffer. </param>
+        /// <param name="texture"> Specifies the name of an existing texture object to attach. </param>
+        /// <param name="level"> Specifies the mipmap level of the texture object to attach. </param>
         public static void FramebufferTexture(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int level) => _FramebufferTexture_fnptr(target, attachment, texture, level);
         [UnmanagedCallersOnly]
         private static void FramebufferTexture_Lazy(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int level)
@@ -3059,6 +4516,15 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, float, float, float, float, float, float, float, void> _PrimitiveBoundingBox_fnptr = &PrimitiveBoundingBox_Lazy;
+        /// <summary> Set the bounding box for a primitive. </summary>
+        /// <param name="minX"> Specify the minimum clip space cooridnate of the bounding box. The initial value is (-1, -1, -1, -1). </param>
+        /// <param name="minY"> Specify the minimum clip space cooridnate of the bounding box. The initial value is (-1, -1, -1, -1). </param>
+        /// <param name="minZ"> Specify the minimum clip space cooridnate of the bounding box. The initial value is (-1, -1, -1, -1). </param>
+        /// <param name="minW"> Specify the minimum clip space cooridnate of the bounding box. The initial value is (-1, -1, -1, -1). </param>
+        /// <param name="maxX"> Specify the maximum clip space cooridnate of the bounding box. The initial value is (1, 1, 1, 1). </param>
+        /// <param name="maxY"> Specify the maximum clip space cooridnate of the bounding box. The initial value is (1, 1, 1, 1). </param>
+        /// <param name="maxZ"> Specify the maximum clip space cooridnate of the bounding box. The initial value is (1, 1, 1, 1). </param>
+        /// <param name="maxW"> Specify the maximum clip space cooridnate of the bounding box. The initial value is (1, 1, 1, 1). </param>
         public static void PrimitiveBoundingBox(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW) => _PrimitiveBoundingBox_fnptr(minX, minY, minZ, minW, maxX, maxY, maxZ, maxW);
         [UnmanagedCallersOnly]
         private static void PrimitiveBoundingBox_Lazy(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW)
@@ -3068,6 +4534,7 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<GraphicsResetStatus> _GetGraphicsResetStatus_fnptr = &GetGraphicsResetStatus_Lazy;
+        /// <summary> Check if the rendering context has not been lost due to software or hardware issues. </summary>
         public static GraphicsResetStatus GetGraphicsResetStatus() => _GetGraphicsResetStatus_fnptr();
         [UnmanagedCallersOnly]
         private static GraphicsResetStatus GetGraphicsResetStatus_Lazy()
@@ -3077,6 +4544,15 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<int, int, int, int, PixelFormat, PixelType, int, void*, void> _ReadnPixels_fnptr = &ReadnPixels_Lazy;
+        /// <summary> Read a block of pixels from the frame buffer. </summary>
+        /// <param name="x"> Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels. </param>
+        /// <param name="y"> Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels. </param>
+        /// <param name="width"> Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel. </param>
+        /// <param name="height"> Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel. </param>
+        /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RGBA, and GL_RGBA_INTEGER. An implementation-chosen format will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_FORMAT. </param>
+        /// <param name="type"> Specifies the data type of the pixel data. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_INT, GL_UNSIGNED_INT_2_10_10_10_REV, GL_INT, or GL_FLOAT. An implementation-chosen type will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_TYPE. </param>
+        /// <param name="bufSize"> Specifies the size of the buffer data for glReadnPixels function. </param>
+        /// <param name="data"> Returns the pixel data. </param>
         public static void ReadnPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => _ReadnPixels_fnptr(x, y, width, height, format, type, bufSize, data);
         [UnmanagedCallersOnly]
         private static void ReadnPixels_Lazy(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data)
@@ -3086,6 +4562,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, float*, void> _GetnUniformfv_fnptr = &GetnUniformfv_Lazy;
+        /// <summary> Returns the value of a uniform variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+        /// <param name="bufSize">Specifies the size of the buffer params. </param>
+        /// <param name="params">Returns the value of the specified uniform variable.</param>
         public static void GetnUniformfv(ProgramHandle program, int location, int bufSize, float* parameters) => _GetnUniformfv_fnptr(program, location, bufSize, parameters);
         [UnmanagedCallersOnly]
         private static void GetnUniformfv_Lazy(ProgramHandle program, int location, int bufSize, float* parameters)
@@ -3095,6 +4576,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, int*, void> _GetnUniformiv_fnptr = &GetnUniformiv_Lazy;
+        /// <summary> Returns the value of a uniform variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+        /// <param name="bufSize">Specifies the size of the buffer params. </param>
+        /// <param name="params">Returns the value of the specified uniform variable.</param>
         public static void GetnUniformiv(ProgramHandle program, int location, int bufSize, int* parameters) => _GetnUniformiv_fnptr(program, location, bufSize, parameters);
         [UnmanagedCallersOnly]
         private static void GetnUniformiv_Lazy(ProgramHandle program, int location, int bufSize, int* parameters)
@@ -3104,6 +4590,11 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<ProgramHandle, int, int, uint*, void> _GetnUniformuiv_fnptr = &GetnUniformuiv_Lazy;
+        /// <summary> Returns the value of a uniform variable. </summary>
+        /// <param name="program">Specifies the program object to be queried.</param>
+        /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+        /// <param name="bufSize">Specifies the size of the buffer params. </param>
+        /// <param name="params">Returns the value of the specified uniform variable.</param>
         public static void GetnUniformuiv(ProgramHandle program, int location, int bufSize, uint* parameters) => _GetnUniformuiv_fnptr(program, location, bufSize, parameters);
         [UnmanagedCallersOnly]
         private static void GetnUniformuiv_Lazy(ProgramHandle program, int location, int bufSize, uint* parameters)
@@ -3113,6 +4604,8 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<float, void> _MinSampleShading_fnptr = &MinSampleShading_Lazy;
+        /// <summary> Specifies minimum rate at which sample shading takes place. </summary>
+        /// <param name="value"> Specifies the rate at which samples are shaded within each covered pixel. </param>
         public static void MinSampleShading(float value) => _MinSampleShading_fnptr(value);
         [UnmanagedCallersOnly]
         private static void MinSampleShading_Lazy(float value)
@@ -3122,6 +4615,9 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<PatchParameterName, int, void> _PatchParameteri_fnptr = &PatchParameteri_Lazy;
+        /// <summary> Specifies the parameters for patch primitives. </summary>
+        /// <param name="pname"> Specifies the name of the parameter to set. The symbolc constants GL_PATCH_VERTICES is accepted. </param>
+        /// <param name="value"> Specifies the new value for the parameter given by pname. </param>
         public static void PatchParameteri(PatchParameterName pname, int value) => _PatchParameteri_fnptr(pname, value);
         [UnmanagedCallersOnly]
         private static void PatchParameteri_Lazy(PatchParameterName pname, int value)
@@ -3131,6 +4627,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, TextureParameterName, int*, void> _TexParameterIiv_fnptr = &TexParameterIiv_Lazy;
+        /// <summary> Set texture parameters. </summary>
+        /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
+        /// <param name="params"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void TexParameterIiv(TextureTarget target, TextureParameterName pname, int* parameters) => _TexParameterIiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameterIiv_Lazy(TextureTarget target, TextureParameterName pname, int* parameters)
@@ -3140,6 +4640,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, TextureParameterName, uint*, void> _TexParameterIuiv_fnptr = &TexParameterIuiv_Lazy;
+        /// <summary> Set texture parameters. </summary>
+        /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R. </param>
+        /// <param name="params"> For the vector commands, specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void TexParameterIuiv(TextureTarget target, TextureParameterName pname, uint* parameters) => _TexParameterIuiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameterIuiv_Lazy(TextureTarget target, TextureParameterName pname, uint* parameters)
@@ -3149,6 +4653,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, GetTextureParameter, int*, void> _GetTexParameterIiv_fnptr = &GetTexParameterIiv_Lazy;
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the texture parameters. </param>
         public static void GetTexParameterIiv(TextureTarget target, GetTextureParameter pname, int* parameters) => _GetTexParameterIiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterIiv_Lazy(TextureTarget target, GetTextureParameter pname, int* parameters)
@@ -3158,6 +4666,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, GetTextureParameter, uint*, void> _GetTexParameterIuiv_fnptr = &GetTexParameterIuiv_Lazy;
+        /// <summary> Return texture parameter values. </summary>
+        /// <param name="target"> Specifies the symbolic name of the target texture. GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted. </param>
+        /// <param name="pname"> Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE,GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the texture parameters. </param>
         public static void GetTexParameterIuiv(TextureTarget target, GetTextureParameter pname, uint* parameters) => _GetTexParameterIuiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterIuiv_Lazy(TextureTarget target, GetTextureParameter pname, uint* parameters)
@@ -3167,6 +4679,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterI, int*, void> _SamplerParameterIiv_fnptr = &SamplerParameterIiv_Lazy;
+        /// <summary> Set sampler parameters. </summary>
+        /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameterIiv(SamplerHandle sampler, SamplerParameterI pname, int* param) => _SamplerParameterIiv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameterIiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* param)
@@ -3176,6 +4692,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterI, uint*, void> _SamplerParameterIuiv_fnptr = &SamplerParameterIuiv_Lazy;
+        /// <summary> Set sampler parameters. </summary>
+        /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
+        /// <param name="pname"> Specifies the symbolic name of a single-valued sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC. </param>
+        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameterIuiv(SamplerHandle sampler, SamplerParameterI pname, uint* param) => _SamplerParameterIuiv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameterIuiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, uint* param)
@@ -3185,6 +4705,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterI, int*, void> _GetSamplerParameterIiv_fnptr = &GetSamplerParameterIiv_Lazy;
+        /// <summary> Return sampler parameter values. </summary>
+        /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
+        /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the sampler parameters. </param>
         public static void GetSamplerParameterIiv(SamplerHandle sampler, SamplerParameterI pname, int* parameters) => _GetSamplerParameterIiv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameterIiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* parameters)
@@ -3194,6 +4718,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<SamplerHandle, SamplerParameterI, uint*, void> _GetSamplerParameterIuiv_fnptr = &GetSamplerParameterIuiv_Lazy;
+        /// <summary> Return sampler parameter values. </summary>
+        /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
+        /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, and GL_TEXTURE_BORDER_COLOR are accepted. </param>
+        /// <param name="params"> Returns the sampler parameters. </param>
         public static void GetSamplerParameterIuiv(SamplerHandle sampler, SamplerParameterI pname, uint* parameters) => _GetSamplerParameterIuiv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameterIuiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, uint* parameters)
@@ -3203,6 +4731,10 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, SizedInternalFormat, BufferHandle, void> _TexBuffer_fnptr = &TexBuffer_Lazy;
+        /// <summary> Attach a buffer object's data store to a buffer texture object. </summary>
+        /// <param name="target"> Specifies the target to which the texture is bound for glTexBuffer. Must be GL_TEXTURE_BUFFER. </param>
+        /// <param name="internalFormat"> Specifies the internal format of the data in the store belonging to buffer. </param>
+        /// <param name="buffer"> Specifies the name of the buffer object whose storage to attach to the active buffer texture. </param>
         public static void TexBuffer(TextureTarget target, SizedInternalFormat internalformat, BufferHandle buffer) => _TexBuffer_fnptr(target, internalformat, buffer);
         [UnmanagedCallersOnly]
         private static void TexBuffer_Lazy(TextureTarget target, SizedInternalFormat internalformat, BufferHandle buffer)
@@ -3212,6 +4744,12 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, SizedInternalFormat, BufferHandle, IntPtr, nint, void> _TexBufferRange_fnptr = &TexBufferRange_Lazy;
+        /// <summary> Attach a range of a buffer object's data store to a buffer texture object. </summary>
+        /// <param name="target"> Specifies the target to which the texture object is bound for glTexBufferRange. Must be GL_TEXTURE_BUFFER. </param>
+        /// <param name="internalFormat"> Specifies the internal format of the data in the store belonging to buffer. </param>
+        /// <param name="buffer"> Specifies the name of the buffer object whose storage to attach to the active buffer texture. </param>
+        /// <param name="offset"> Specifies the offset of the start of the range of the buffer's data store to attach. </param>
+        /// <param name="size"> Specifies the size of the range of the buffer's data store to attach. </param>
         public static void TexBufferRange(TextureTarget target, SizedInternalFormat internalformat, BufferHandle buffer, IntPtr offset, nint size) => _TexBufferRange_fnptr(target, internalformat, buffer, offset, size);
         [UnmanagedCallersOnly]
         private static void TexBufferRange_Lazy(TextureTarget target, SizedInternalFormat internalformat, BufferHandle buffer, IntPtr offset, nint size)
@@ -3221,6 +4759,14 @@ namespace OpenTK.Graphics.OpenGLES3
         }
         
         private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, byte, void> _TexStorage3DMultisample_fnptr = &TexStorage3DMultisample_Lazy;
+        /// <summary> Specify storage for a two-dimensional multisample array texture. </summary>
+        /// <param name="target"> Specifies the target to which the texture object is bound for glTexStorage3DMultisample. Must be GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
+        /// <param name="samples"> Specify the number of samples in the texture. </param>
+        /// <param name="internalformat"> Specifies the sized internal format to be used to store texture image data. </param>
+        /// <param name="width"> Specifies the width of the texture, in texels. </param>
+        /// <param name="height"> Specifies the height of the texture, in texels. </param>
+        /// <param name="depth"> Specifies the depth of the texture, in layers. </param>
+        /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
         public static void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, byte fixedsamplelocations) => _TexStorage3DMultisample_fnptr(target, samples, internalformat, width, height, depth, fixedsamplelocations);
         [UnmanagedCallersOnly]
         private static void TexStorage3DMultisample_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, byte fixedsamplelocations)
@@ -6537,69 +8083,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 _GetProgramResourcefvNV_fnptr(program, programInterface, index, propCount, props, count, length, parameters);
             }
             
-            private static delegate* unmanaged<PathColor, PathGenMode, PathColorFormat, float*, void> _PathColorGenNV_fnptr = &PathColorGenNV_Lazy;
-            public static void PathColorGenNV(PathColor color, PathGenMode genMode, PathColorFormat colorFormat, float* coeffs) => _PathColorGenNV_fnptr(color, genMode, colorFormat, coeffs);
-            [UnmanagedCallersOnly]
-            private static void PathColorGenNV_Lazy(PathColor color, PathGenMode genMode, PathColorFormat colorFormat, float* coeffs)
-            {
-                _PathColorGenNV_fnptr = (delegate* unmanaged<PathColor, PathGenMode, PathColorFormat, float*, void>)GLLoader.BindingsContext.GetProcAddress("glPathColorGenNV");
-                _PathColorGenNV_fnptr(color, genMode, colorFormat, coeffs);
-            }
-            
-            private static delegate* unmanaged<PathColor, PathGenMode, int, float*, void> _PathTexGenNV_fnptr = &PathTexGenNV_Lazy;
-            public static void PathTexGenNV(PathColor texCoordSet, PathGenMode genMode, int components, float* coeffs) => _PathTexGenNV_fnptr(texCoordSet, genMode, components, coeffs);
-            [UnmanagedCallersOnly]
-            private static void PathTexGenNV_Lazy(PathColor texCoordSet, PathGenMode genMode, int components, float* coeffs)
-            {
-                _PathTexGenNV_fnptr = (delegate* unmanaged<PathColor, PathGenMode, int, float*, void>)GLLoader.BindingsContext.GetProcAddress("glPathTexGenNV");
-                _PathTexGenNV_fnptr(texCoordSet, genMode, components, coeffs);
-            }
-            
-            private static delegate* unmanaged<PathGenMode, void> _PathFogGenNV_fnptr = &PathFogGenNV_Lazy;
-            public static void PathFogGenNV(PathGenMode genMode) => _PathFogGenNV_fnptr(genMode);
-            [UnmanagedCallersOnly]
-            private static void PathFogGenNV_Lazy(PathGenMode genMode)
-            {
-                _PathFogGenNV_fnptr = (delegate* unmanaged<PathGenMode, void>)GLLoader.BindingsContext.GetProcAddress("glPathFogGenNV");
-                _PathFogGenNV_fnptr(genMode);
-            }
-            
-            private static delegate* unmanaged<PathColor, PathGenMode, int*, void> _GetPathColorGenivNV_fnptr = &GetPathColorGenivNV_Lazy;
-            public static void GetPathColorGenivNV(PathColor color, PathGenMode pname, int* value) => _GetPathColorGenivNV_fnptr(color, pname, value);
-            [UnmanagedCallersOnly]
-            private static void GetPathColorGenivNV_Lazy(PathColor color, PathGenMode pname, int* value)
-            {
-                _GetPathColorGenivNV_fnptr = (delegate* unmanaged<PathColor, PathGenMode, int*, void>)GLLoader.BindingsContext.GetProcAddress("glGetPathColorGenivNV");
-                _GetPathColorGenivNV_fnptr(color, pname, value);
-            }
-            
-            private static delegate* unmanaged<PathColor, PathGenMode, float*, void> _GetPathColorGenfvNV_fnptr = &GetPathColorGenfvNV_Lazy;
-            public static void GetPathColorGenfvNV(PathColor color, PathGenMode pname, float* value) => _GetPathColorGenfvNV_fnptr(color, pname, value);
-            [UnmanagedCallersOnly]
-            private static void GetPathColorGenfvNV_Lazy(PathColor color, PathGenMode pname, float* value)
-            {
-                _GetPathColorGenfvNV_fnptr = (delegate* unmanaged<PathColor, PathGenMode, float*, void>)GLLoader.BindingsContext.GetProcAddress("glGetPathColorGenfvNV");
-                _GetPathColorGenfvNV_fnptr(color, pname, value);
-            }
-            
-            private static delegate* unmanaged<TextureUnit, PathGenMode, int*, void> _GetPathTexGenivNV_fnptr = &GetPathTexGenivNV_Lazy;
-            public static void GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname, int* value) => _GetPathTexGenivNV_fnptr(texCoordSet, pname, value);
-            [UnmanagedCallersOnly]
-            private static void GetPathTexGenivNV_Lazy(TextureUnit texCoordSet, PathGenMode pname, int* value)
-            {
-                _GetPathTexGenivNV_fnptr = (delegate* unmanaged<TextureUnit, PathGenMode, int*, void>)GLLoader.BindingsContext.GetProcAddress("glGetPathTexGenivNV");
-                _GetPathTexGenivNV_fnptr(texCoordSet, pname, value);
-            }
-            
-            private static delegate* unmanaged<TextureUnit, PathGenMode, float*, void> _GetPathTexGenfvNV_fnptr = &GetPathTexGenfvNV_Lazy;
-            public static void GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname, float* value) => _GetPathTexGenfvNV_fnptr(texCoordSet, pname, value);
-            [UnmanagedCallersOnly]
-            private static void GetPathTexGenfvNV_Lazy(TextureUnit texCoordSet, PathGenMode pname, float* value)
-            {
-                _GetPathTexGenfvNV_fnptr = (delegate* unmanaged<TextureUnit, PathGenMode, float*, void>)GLLoader.BindingsContext.GetProcAddress("glGetPathTexGenfvNV");
-                _GetPathTexGenfvNV_fnptr(texCoordSet, pname, value);
-            }
-            
             private static delegate* unmanaged<MatrixMode, double, double, double, double, double, double, void> _MatrixFrustumEXT_fnptr = &MatrixFrustumEXT_Lazy;
             public static void MatrixFrustumEXT(MatrixMode mode, double left, double right, double bottom, double top, double zNear, double zFar) => _MatrixFrustumEXT_fnptr(mode, left, right, bottom, top, zNear, zFar);
             [UnmanagedCallersOnly]
@@ -7222,6 +8705,13 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
+            /// <summary> Control the reporting of debug messages in a debug context. </summary>
+            /// <param name="source"> The source of debug messages to enable or disable. </param>
+            /// <param name="type"> The type of debug messages to enable or disable. </param>
+            /// <param name="severity"> The severity of debug messages to enable or disable. </param>
+            /// <param name="count"> The length of the array ids. </param>
+            /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
+            /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
             public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
             [UnmanagedCallersOnly]
             private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled)
@@ -7231,6 +8721,13 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<DebugSource, DebugType, uint, DebugSeverity, int, byte*, void> _DebugMessageInsert_fnptr = &DebugMessageInsert_Lazy;
+            /// <summary> Inject an application-supplied message into the debug message queue. </summary>
+            /// <param name="source"> The source of the debug message to insert. </param>
+            /// <param name="type"> The type of the debug message insert. </param>
+            /// <param name="id"> The user-supplied identifier of the message to insert. </param>
+            /// <param name="severity"> The severity of the debug messages to insert. </param>
+            /// <param name="length"> The length string contained in the character array whose address is given by message. </param>
+            /// <param name="message"> The address of a character array containing the message to insert. </param>
             public static void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => _DebugMessageInsert_fnptr(source, type, id, severity, length, buf);
             [UnmanagedCallersOnly]
             private static void DebugMessageInsert_Lazy(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf)
@@ -7240,6 +8737,9 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<IntPtr, void*, void> _DebugMessageCallback_fnptr = &DebugMessageCallback_Lazy;
+            /// <summary> Specify a callback to receive debugging messages from the GL. </summary>
+            /// <param name="callback"> The address of a callback function that will be called when a debug message is generated. </param>
+            /// <param name="userParam"> A user supplied pointer that will be passed on each invocation of callback. </param>
             public static void DebugMessageCallback(IntPtr callback, void* userParam) => _DebugMessageCallback_fnptr(callback, userParam);
             [UnmanagedCallersOnly]
             private static void DebugMessageCallback_Lazy(IntPtr callback, void* userParam)
@@ -7249,6 +8749,15 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*, uint> _GetDebugMessageLog_fnptr = &GetDebugMessageLog_Lazy;
+            /// <summary> Retrieve messages from the debug message log. </summary>
+            /// <param name="count"> The number of debug messages to retrieve from the log. </param>
+            /// <param name="bufSize"> The size of the buffer whose address is given by messageLog. </param>
+            /// <param name="sources"> The address of an array of variables to receive the sources of the retrieved messages. </param>
+            /// <param name="types"> The address of an array of variables to receive the types of the retrieved messages. </param>
+            /// <param name="ids"> The address of an array of unsigned integers to receive the ids of the retrieved messages. </param>
+            /// <param name="severities"> The address of an array of variables to receive the severites of the retrieved messages. </param>
+            /// <param name="lengths"> The address of an array of variables to receive the lengths of the received messages. </param>
+            /// <param name="messageLog"> The address of an array of characters that will receive the messages. </param>
             public static uint GetDebugMessageLog(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog) => _GetDebugMessageLog_fnptr(count, bufSize, sources, types, ids, severities, lengths, messageLog);
             [UnmanagedCallersOnly]
             private static uint GetDebugMessageLog_Lazy(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog)
@@ -7258,6 +8767,11 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<DebugSource, uint, int, byte*, void> _PushDebugGroup_fnptr = &PushDebugGroup_Lazy;
+            /// <summary> Push a named debug group into the command stream. </summary>
+            /// <param name="source"> The source of the debug message. </param>
+            /// <param name="id"> The identifier of the message. </param>
+            /// <param name="length"> The length of the message to be sent to the debug output stream. </param>
+            /// <param name="message"> The a string containing the message to be sent to the debug output stream. </param>
             public static void PushDebugGroup(DebugSource source, uint id, int length, byte* message) => _PushDebugGroup_fnptr(source, id, length, message);
             [UnmanagedCallersOnly]
             private static void PushDebugGroup_Lazy(DebugSource source, uint id, int length, byte* message)
@@ -7267,6 +8781,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<void> _PopDebugGroup_fnptr = &PopDebugGroup_Lazy;
+            /// <summary> Pop the active debug group. </summary>
             public static void PopDebugGroup() => _PopDebugGroup_fnptr();
             [UnmanagedCallersOnly]
             private static void PopDebugGroup_Lazy()
@@ -7276,6 +8791,11 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<ObjectIdentifier, uint, int, byte*, void> _ObjectLabel_fnptr = &ObjectLabel_Lazy;
+            /// <summary> Label a named object identified within a namespace. </summary>
+            /// <param name="identifier"> The namespace from which the name of the object is allocated. </param>
+            /// <param name="name"> The name of the object to label. </param>
+            /// <param name="length"> The length of the label to be used for the object. </param>
+            /// <param name="label"> The address of a string containing the label to assign to the object. </param>
             public static void ObjectLabel(ObjectIdentifier identifier, uint name, int length, byte* label) => _ObjectLabel_fnptr(identifier, name, length, label);
             [UnmanagedCallersOnly]
             private static void ObjectLabel_Lazy(ObjectIdentifier identifier, uint name, int length, byte* label)
@@ -7285,6 +8805,12 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<ObjectIdentifier, uint, int, int*, byte*, void> _GetObjectLabel_fnptr = &GetObjectLabel_Lazy;
+            /// <summary> Retrieve the label of a named object identified within a namespace. </summary>
+            /// <param name="identifier"> The namespace from which the name of the object is allocated. </param>
+            /// <param name="name"> The name of the object whose label to retrieve. </param>
+            /// <param name="bifSize">!!missing documentation!!</param>
+            /// <param name="length"> The address of a variable to receive the length of the object label. </param>
+            /// <param name="label"> The address of a string that will receive the object label. </param>
             public static void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, int* length, byte* label) => _GetObjectLabel_fnptr(identifier, name, bufSize, length, label);
             [UnmanagedCallersOnly]
             private static void GetObjectLabel_Lazy(ObjectIdentifier identifier, uint name, int bufSize, int* length, byte* label)
@@ -7294,6 +8820,10 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<void*, int, byte*, void> _ObjectPtrLabel_fnptr = &ObjectPtrLabel_Lazy;
+            /// <summary> Label a sync object identified by a pointer. </summary>
+            /// <param name="ptr"> A pointer identifying a sync object. </param>
+            /// <param name="length"> The length of the label to be used for the object. </param>
+            /// <param name="label"> The address of a string containing the label to assign to the object. </param>
             public static void ObjectPtrLabel(void* ptr, int length, byte* label) => _ObjectPtrLabel_fnptr(ptr, length, label);
             [UnmanagedCallersOnly]
             private static void ObjectPtrLabel_Lazy(void* ptr, int length, byte* label)
@@ -7303,6 +8833,11 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<void*, int, int*, byte*, void> _GetObjectPtrLabel_fnptr = &GetObjectPtrLabel_Lazy;
+            /// <summary> Retrieve the label of a sync object identified by a pointer. </summary>
+            /// <param name="ptr"> The name of the sync object whose label to retrieve. </param>
+            /// <param name="bifSize">!!missing documentation!!</param>
+            /// <param name="length"> The address of a variable to receive the length of the object label. </param>
+            /// <param name="label"> The address of a string that will receive the object label. </param>
             public static void GetObjectPtrLabel(void* ptr, int bufSize, int* length, byte* label) => _GetObjectPtrLabel_fnptr(ptr, bufSize, length, label);
             [UnmanagedCallersOnly]
             private static void GetObjectPtrLabel_Lazy(void* ptr, int bufSize, int* length, byte* label)
@@ -7312,6 +8847,9 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<GetPointervPName, void**, void> _GetPointerv_fnptr = &GetPointerv_Lazy;
+            /// <summary> Return the address of the specified pointer. </summary>
+            /// <param name="pname"> Specifies the pointer to be returned. Must be one of GL_DEBUG_CALLBACK_FUNCTION or GL_DEBUG_CALLBACK_USER_PARAM. </param>
+            /// <param name="params"> Returns the pointer value specified by pname. </param>
             public static void GetPointerv(GetPointervPName pname, void** parameters) => _GetPointerv_fnptr(pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetPointerv_Lazy(GetPointervPName pname, void** parameters)
@@ -7420,6 +8958,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<GraphicsResetStatus> _GetGraphicsResetStatus_fnptr = &GetGraphicsResetStatus_Lazy;
+            /// <summary> Check if the rendering context has not been lost due to software or hardware issues. </summary>
             public static GraphicsResetStatus GetGraphicsResetStatus() => _GetGraphicsResetStatus_fnptr();
             [UnmanagedCallersOnly]
             private static GraphicsResetStatus GetGraphicsResetStatus_Lazy()
@@ -7429,6 +8968,15 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<int, int, int, int, PixelFormat, PixelType, int, void*, void> _ReadnPixels_fnptr = &ReadnPixels_Lazy;
+            /// <summary> Read a block of pixels from the frame buffer. </summary>
+            /// <param name="x"> Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels. </param>
+            /// <param name="y"> Specify the window coordinates of the first pixel that is read from the frame buffer. This location is the lower left corner of a rectangular block of pixels. </param>
+            /// <param name="width"> Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel. </param>
+            /// <param name="height"> Specify the dimensions of the pixel rectangle. width and height of one correspond to a single pixel. </param>
+            /// <param name="format"> Specifies the format of the pixel data. The following symbolic values are accepted: GL_RGBA, and GL_RGBA_INTEGER. An implementation-chosen format will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_FORMAT. </param>
+            /// <param name="type"> Specifies the data type of the pixel data. Must be one of GL_UNSIGNED_BYTE, GL_UNSIGNED_INT, GL_UNSIGNED_INT_2_10_10_10_REV, GL_INT, or GL_FLOAT. An implementation-chosen type will also be accepted. This can be queried with glGet and GL_IMPLEMENTATION_COLOR_READ_TYPE. </param>
+            /// <param name="bufSize"> Specifies the size of the buffer data for glReadnPixels function. </param>
+            /// <param name="data"> Returns the pixel data. </param>
             public static void ReadnPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => _ReadnPixels_fnptr(x, y, width, height, format, type, bufSize, data);
             [UnmanagedCallersOnly]
             private static void ReadnPixels_Lazy(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data)
@@ -7438,6 +8986,11 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<ProgramHandle, int, int, float*, void> _GetnUniformfv_fnptr = &GetnUniformfv_Lazy;
+            /// <summary> Returns the value of a uniform variable. </summary>
+            /// <param name="program">Specifies the program object to be queried.</param>
+            /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+            /// <param name="bufSize">Specifies the size of the buffer params. </param>
+            /// <param name="params">Returns the value of the specified uniform variable.</param>
             public static void GetnUniformfv(ProgramHandle program, int location, int bufSize, float* parameters) => _GetnUniformfv_fnptr(program, location, bufSize, parameters);
             [UnmanagedCallersOnly]
             private static void GetnUniformfv_Lazy(ProgramHandle program, int location, int bufSize, float* parameters)
@@ -7447,6 +9000,11 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<ProgramHandle, int, int, int*, void> _GetnUniformiv_fnptr = &GetnUniformiv_Lazy;
+            /// <summary> Returns the value of a uniform variable. </summary>
+            /// <param name="program">Specifies the program object to be queried.</param>
+            /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+            /// <param name="bufSize">Specifies the size of the buffer params. </param>
+            /// <param name="params">Returns the value of the specified uniform variable.</param>
             public static void GetnUniformiv(ProgramHandle program, int location, int bufSize, int* parameters) => _GetnUniformiv_fnptr(program, location, bufSize, parameters);
             [UnmanagedCallersOnly]
             private static void GetnUniformiv_Lazy(ProgramHandle program, int location, int bufSize, int* parameters)
@@ -7456,6 +9014,11 @@ namespace OpenTK.Graphics.OpenGLES3
             }
             
             private static delegate* unmanaged<ProgramHandle, int, int, uint*, void> _GetnUniformuiv_fnptr = &GetnUniformuiv_Lazy;
+            /// <summary> Returns the value of a uniform variable. </summary>
+            /// <param name="program">Specifies the program object to be queried.</param>
+            /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
+            /// <param name="bufSize">Specifies the size of the buffer params. </param>
+            /// <param name="params">Returns the value of the specified uniform variable.</param>
             public static void GetnUniformuiv(ProgramHandle program, int location, int bufSize, uint* parameters) => _GetnUniformuiv_fnptr(program, location, bufSize, parameters);
             [UnmanagedCallersOnly]
             private static void GetnUniformuiv_Lazy(ProgramHandle program, int location, int bufSize, uint* parameters)

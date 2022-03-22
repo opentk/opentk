@@ -43,7 +43,7 @@ namespace Generator.Writing
                 }
 
                 WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors, api.Documentation);
-                WriteOverloads(directoryPath, apiNamespace, api.Vendors);
+                WriteOverloads(directoryPath, apiNamespace, api.Vendors, api.Documentation);
 
                 WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
             }
@@ -188,7 +188,8 @@ namespace Generator.Writing
         private static void WriteOverloads(
             string directoryPath,
             string glNamespace,
-            Dictionary<string, GLVendorFunctions> groups)
+            Dictionary<string, GLVendorFunctions> groups,
+            Dictionary<NativeFunction, CommandDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -219,7 +220,8 @@ namespace Generator.Writing
                             foreach (var overload in nativeFunctionOverloads)
                             {
                                 bool postfixNativeCall = group.NativeFunctionsWithPostfix.Contains(overload.NativeFunction);
-                                WriteOverloadMethod(writer, overload, postfixNativeCall);
+                                documentation.TryGetValue(overload.NativeFunction, out CommandDocumentation? documenation);
+                                WriteOverloadMethod(writer, overload, postfixNativeCall, documenation);
                             }
                         }
 
@@ -229,8 +231,13 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
+        private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall, CommandDocumentation? documenation)
         {
+            if (documenation != null)
+            {
+                WriteDocumentation(writer, documenation with { Parameters = documenation.Parameters.Where(p => overload.InputParameters.Any(p1 => p1.Name == p.Name)).ToArray() }) ;
+            }
+
             string parameterString =
                 string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
@@ -298,11 +305,6 @@ namespace Generator.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="documentation"></param>
         private static void WriteDocumentation(IndentedTextWriter writer, CommandDocumentation documentation)
         {
             writer.WriteLine($"/// <summary> {documentation.Purpose} </summary>");
