@@ -529,7 +529,6 @@ namespace OpenTK.Graphics.OpenGLES1
         ContextFlagDebugBitKhr = 2,
         StackOverflowKhr = 1283,
         StackUnderflowKhr = 1284,
-        DisplayList = 33511,
         AllCompletedNv = 34034,
         FenceStatusNv = 34035,
         FenceConditionNv = 34036,
@@ -1123,6 +1122,7 @@ namespace OpenTK.Graphics.OpenGLES1
         MaxDebugGroupStackDepth = 33388,
         DebugGroupStackDepth = 33389,
         MaxLabelLength = 33512,
+        TextureBindingCubeMapOes = 34068,
     }
     public enum VertexShaderTextureUnitParameter : uint
     {
@@ -1171,6 +1171,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Light7 = 16391,
         DebugOutputSynchronous = 33346,
         DebugOutput = 37600,
+        TextureCubeMapOes = 34067,
     }
     public enum LightModelParameter : uint
     {
@@ -1227,6 +1228,7 @@ namespace OpenTK.Graphics.OpenGLES1
     public enum TextureTarget : uint
     {
         Texture2d = 3553,
+        TextureCubeMapOes = 34067,
     }
     public enum GetPointervPName : uint
     {
@@ -1582,10 +1584,12 @@ namespace OpenTK.Graphics.OpenGLES1
         Rg32fExt = 33328,
         R16fExt = 33325,
         Rg16fExt = 33327,
+        Etc1Rgb8Oes = 36196,
         DepthComponent24Oes = 33190,
         DepthComponent32Oes = 33191,
         Rgba4Oes = 32854,
         Rgb5A1Oes = 32855,
+        Rgb565Oes = 36194,
         DepthComponent16Oes = 33189,
         DepthStencilOes = 34041,
         Depth24Stencil8Oes = 35056,
@@ -1688,10 +1692,12 @@ namespace OpenTK.Graphics.OpenGLES1
         Rg32fExt = 33328,
         R16fExt = 33325,
         Rg16fExt = 33327,
+        Etc1Rgb8Oes = 36196,
         DepthComponent24Oes = 33190,
         DepthComponent32Oes = 33191,
         Rgba4Oes = 32854,
         Rgb5A1Oes = 32855,
+        Rgb565Oes = 36194,
         DepthComponent16Oes = 33189,
         Depth24Stencil8Oes = 35056,
         Alpha8Oes = 32828,
@@ -1775,6 +1781,9 @@ namespace OpenTK.Graphics.OpenGLES1
     public enum FramebufferStatus : uint
     {
     }
+    public enum FramebufferAttachment : uint
+    {
+    }
     public enum VertexBufferObjectParameter : uint
     {
         BufferSize = 34660,
@@ -1833,6 +1842,30 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         PrimaryColor = 34167,
     }
+    public enum RegisterCombinerPname : uint
+    {
+        Combine = 34160,
+        CombineRgb = 34161,
+        CombineAlpha = 34162,
+        RgbScale = 34163,
+        AddSigned = 34164,
+        Interpolate = 34165,
+        Constant = 34166,
+        PrimaryColor = 34167,
+        Previous = 34168,
+        Operand0Rgb = 34192,
+        Operand1Rgb = 34193,
+        Operand2Rgb = 34194,
+        Operand0Alpha = 34200,
+        Operand1Alpha = 34201,
+        Operand2Alpha = 34202,
+        Src0Rgb = 34176,
+        Src1Rgb = 34177,
+        Src2Rgb = 34178,
+        Src0Alpha = 34184,
+        Src1Alpha = 34185,
+        Src2Alpha = 34186,
+    }
     public enum CopyBufferSubDataTarget : uint
     {
         ArrayBuffer = 34962,
@@ -1880,9 +1913,6 @@ namespace OpenTK.Graphics.OpenGLES1
         RenderbufferAlphaSizeOes = 36179,
         RenderbufferDepthSizeOes = 36180,
         RenderbufferStencilSizeOes = 36181,
-    }
-    public enum FramebufferAttachment : uint
-    {
     }
     public enum RenderbufferTarget : uint
     {

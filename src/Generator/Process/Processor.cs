@@ -45,6 +45,17 @@ namespace Generator.Process
                 HashCode.Combine(GroupName);
         };
 
+        record RequireEntryInfo(
+            string Vendor,
+            // FIXME: Make this just one string?
+            Version? IntroducedInVersion,
+            string? IntroducedInExtension,
+            RequireEntry Entry);
+
+        record RemoveEntryInfo(
+            Version RemovedInVersion,
+            RemoveEntry Entry);
+
         public static OutputData ProcessSpec(Specification spec, Documentation docs)
         {
             // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions.
@@ -126,18 +137,18 @@ namespace Generator.Process
                 _ => throw new Exception($"Extension '{extension.Name}' doesn't have a proper api tag."),
             }));
 
-            List<(string vendor, RequireEntry entry)> glRequires = GetRequireEntries(features, extensions, GLAPI.GL);
-            List<(string vendor, RequireEntry entry)> gles1Requires = GetRequireEntries(features, extensions, GLAPI.GLES1);
-            List<(string vendor, RequireEntry entry)> gles3Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
-            List<RemoveEntry> glRemoves = GetRemoveEntries(features, GLAPI.GL);
+            List<RequireEntryInfo> glRequires = GetRequireEntries(features, extensions, GLAPI.GL);
+            List<RequireEntryInfo> gles1Requires = GetRequireEntries(features, extensions, GLAPI.GLES1);
+            List<RequireEntryInfo> gles3Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
+            List<RemoveEntryInfo> glRemoves = GetRemoveEntries(features, GLAPI.GL);
             // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later. // 2021-03-04
-            List<RemoveEntry> gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
+            List<RemoveEntryInfo> gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
 
             ProcessedGLInformation info = new ProcessedGLInformation(allFunctions, allEnumsPerAPI, allEnumGroups.ToList());
 
             GLOutputApi gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
-            GLOutputApi glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntry>(), info);
-            GLOutputApi gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntry>(), info);
+            GLOutputApi glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntryInfo>(), info);
+            GLOutputApi gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntryInfo>(), info);
             GLOutputApi gles3 = GetOutputApiFromRequireTags(OutputApi.GLES3, gles3Requires, gles3Removes, info);
 
             return new OutputData(new List<GLOutputApi>()
@@ -146,9 +157,9 @@ namespace Generator.Process
             });
         }
 
-        private static List<(string vendor, RequireEntry entry)> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
+        private static List<RequireEntryInfo> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
         {
-            List<(string vendor, RequireEntry entry)> requireEntries = new List<(string vendor, RequireEntry entry)>();
+            List<RequireEntryInfo> requireEntries = new List<RequireEntryInfo>();
 
             foreach (Feature feature in features)
             {
@@ -156,7 +167,7 @@ namespace Generator.Process
                 {
                     foreach (RequireEntry require in feature.Requires)
                     {
-                        requireEntries.Add(("", require));
+                        requireEntries.Add(new RequireEntryInfo("", feature.Version, null, require));
                     }
                 }
             }
@@ -167,7 +178,7 @@ namespace Generator.Process
                 {
                     foreach (RequireEntry require in extension.Requires)
                     {
-                        requireEntries.Add((extension.Vendor, require));
+                        requireEntries.Add(new RequireEntryInfo(extension.Vendor, null, extension.Name, require));
                     }
                 }
             }
@@ -175,9 +186,9 @@ namespace Generator.Process
             return requireEntries;
         }
 
-        private static List<RemoveEntry> GetRemoveEntries(List<Feature> features, GLAPI api)
+        private static List<RemoveEntryInfo> GetRemoveEntries(List<Feature> features, GLAPI api)
         {
-            List<RemoveEntry> removeEntries = new List<RemoveEntry>();
+            List<RemoveEntryInfo> removeEntries = new List<RemoveEntryInfo>();
 
             foreach (Feature feature in features)
             {
@@ -185,7 +196,7 @@ namespace Generator.Process
                 {
                     foreach (RemoveEntry remove in feature.Removes)
                     {
-                        removeEntries.Add(remove);
+                        removeEntries.Add(new RemoveEntryInfo(feature.Version, remove));
                     }
                 }
             }
@@ -195,8 +206,8 @@ namespace Generator.Process
 
         private static GLOutputApi GetOutputApiFromRequireTags(
             OutputApi api,
-            List<(string vendor, RequireEntry requireEntry)> requireEntries,
-            List<RemoveEntry> removeEntries,
+            List<RequireEntryInfo> requireEntries,
+            List<RemoveEntryInfo> removeEntries,
             ProcessedGLInformation glInformation)
         {
             HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
@@ -212,15 +223,43 @@ namespace Generator.Process
             Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = glInformation.AllEnumsPerAPI;
             List<EnumGroupInfo> allEnumGroups = glInformation.AllEnumGroups;
 
+            Dictionary<NativeFunction, List<string>> functionsAddedIn = new Dictionary<NativeFunction, List<string>>();
+            // FIXME: Fill this with actual information...
+            // This will need us to pass a list of remove entries to this function even for compatibility.
+            Dictionary<NativeFunction, List<string>> functionsRemovedIn = new Dictionary<NativeFunction, List<string>>();
+
             // Go through all the functions that are required for this version and add them here.
-            foreach ((string vendor, RequireEntry requireEntry) in requireEntries)
+            foreach ((string vendor, Version? introducedInVersion, string? introducedInExtension, RequireEntry requireEntry) in requireEntries)
             {
+                if (introducedInVersion != null && introducedInExtension != null)
+                {
+                    throw new Exception("This requires entry has both version and extension information, there is probably something weird going on?");
+                }
+
+                string? addedInString = null;
+                // FIXME: Maybe we keep the version separate from the extension strings we can more easily
+                // do something like "<version> or <extension_name>".
+                if (introducedInVersion != null)
+                {
+                    addedInString = $"v{introducedInVersion.Major}.{introducedInVersion.Minor}";
+                }
+
+                if (introducedInExtension != null)
+                {
+                    addedInString = introducedInExtension;
+                }
+
+                if (addedInString == null)
+                {
+                    throw new Exception($"This requires entry does not have information on wether it is introduced in a GL version or extension.");
+                }
+
                 // Skip all of the compatibility profile requires if we are not doing GLCompat
                 if (requireEntry.Profile == GLProfile.Compatibility && api != OutputApi.GLCompat)
                 {
                     continue;
                 }
-
+                
                 foreach (string command in requireEntry.Commands)
                 {
                     if (allFunctions.TryGetValue(command, out OverloadedFunction? function))
@@ -228,6 +267,14 @@ namespace Generator.Process
                         functionsByVendor.AddToNestedHashSet(vendor, function);
 
                         groupsReferencedByFunctions.UnionWith(function.NativeFunction.ReferencedEnumGroups);
+
+                        if (functionsAddedIn.TryGetValue(function.NativeFunction, out List<string>? addedIn) == false)
+                        {
+                            addedIn = new List<string>();
+                            functionsAddedIn.Add(function.NativeFunction,  addedIn);
+                        }
+
+                        addedIn.Add(addedInString);
                     }
                     else
                     {
@@ -266,9 +313,9 @@ namespace Generator.Process
                 }
             }
 
-            foreach (RemoveEntry remove in removeEntries)
+            foreach ((Version removedInVersion, RemoveEntry removeEntry) in removeEntries)
             {
-                foreach (string command in remove.Commands)
+                foreach (string command in removeEntry.Commands)
                 {
                     foreach (HashSet<OverloadedFunction> functions in functionsByVendor.Values)
                     {
@@ -277,14 +324,26 @@ namespace Generator.Process
                 }
             }
 
-            Dictionary<NativeFunction, CommandDocumentation> documentation = new Dictionary<NativeFunction, CommandDocumentation>();
+            Dictionary<NativeFunction, FunctionDocumentation> documentation = new Dictionary<NativeFunction, FunctionDocumentation>();
             foreach (var (vendor, functions) in functionsByVendor)
             {
                 foreach (var function in functions)
                 {
                     if (function.Documentation.TryGetValue(api, out CommandDocumentation? commandDocumentation))
                     {
-                        documentation[function.NativeFunction] = commandDocumentation;
+                        if (functionsAddedIn.TryGetValue(function.NativeFunction, out List<string>? addedIn) == false)
+                        {
+                            throw new Exception($"{function.NativeFunction.EntryPoint} has no \"added in\" data.");
+                        }
+
+                        // FIXME: Added and removed information.
+                        documentation[function.NativeFunction] = new FunctionDocumentation(
+                            commandDocumentation.Name,
+                            commandDocumentation.Purpose,
+                            commandDocumentation.Parameters,
+                            addedIn,
+                            null
+                            );
                     }
                     else
                     {
@@ -294,6 +353,18 @@ namespace Generator.Process
                         }
                         else
                         {
+                            if (functionsAddedIn.TryGetValue(function.NativeFunction, out List<string>? addedIn) == false)
+                            {
+                                throw new Exception($"{function.NativeFunction.EntryPoint} has no \"added in\" data.");
+                            }
+
+                            documentation[function.NativeFunction] = new FunctionDocumentation(
+                                function.NativeFunction.EntryPoint,
+                                "",
+                                Array.Empty<ParameterDocumentation>(),
+                                addedIn,
+                                null
+                                );
                             // Extensions don't have documentation (yet?)
                         }
                     }
@@ -463,7 +534,6 @@ namespace Generator.Process
                             Logger.Warning($"[{version}][{function.EntryPoint}] Function parameter '{function.Parameters[i].Name}' doesn't have the same name in the documentation. ('{commandDoc.Parameters[i].Name}')");
                         }
                     }
-
 
                     commandDocs.Add(version, commandDoc);
                 }

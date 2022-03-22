@@ -666,12 +666,12 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexImage1D(target, level, internalformat, width, border, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
         }
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -680,7 +680,7 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -689,7 +689,7 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -697,12 +697,12 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -711,7 +711,7 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -720,7 +720,7 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -728,12 +728,12 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage1D(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage1D(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data_vptr);
         }
-        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -742,7 +742,7 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -751,7 +751,7 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -4665,321 +4665,6 @@ namespace OpenTK.Graphics.OpenGL
                 VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
             }
         }
-        public static unsafe void VertexP2ui(VertexPointerType type, ReadOnlySpan<uint> value)
-        {
-            fixed (uint* value_ptr = value)
-            {
-                VertexP2uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP2ui(VertexPointerType type, uint[] value)
-        {
-            fixed (uint* value_ptr = value)
-            {
-                VertexP2uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP2ui(VertexPointerType type, in uint value)
-        {
-            fixed (uint* value_ptr = &value)
-            {
-                VertexP2uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP3ui(VertexPointerType type, ReadOnlySpan<uint> value)
-        {
-            fixed (uint* value_ptr = value)
-            {
-                VertexP3uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP3ui(VertexPointerType type, uint[] value)
-        {
-            fixed (uint* value_ptr = value)
-            {
-                VertexP3uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP3ui(VertexPointerType type, in uint value)
-        {
-            fixed (uint* value_ptr = &value)
-            {
-                VertexP3uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP4ui(VertexPointerType type, ReadOnlySpan<uint> value)
-        {
-            fixed (uint* value_ptr = value)
-            {
-                VertexP4uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP4ui(VertexPointerType type, uint[] value)
-        {
-            fixed (uint* value_ptr = value)
-            {
-                VertexP4uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void VertexP4ui(VertexPointerType type, in uint value)
-        {
-            fixed (uint* value_ptr = &value)
-            {
-                VertexP4uiv(type, value_ptr);
-            }
-        }
-        public static unsafe void TexCoordP1ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP1uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP1ui(TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP1uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP1ui(TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                TexCoordP1uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP2ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP2uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP2ui(TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP2uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP2ui(TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                TexCoordP2uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP3ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP3uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP3ui(TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP3uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP3ui(TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                TexCoordP3uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP4ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP4uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP4ui(TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                TexCoordP4uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void TexCoordP4ui(TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                TexCoordP4uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP1uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP1uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                MultiTexCoordP1uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP2uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP2uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                MultiTexCoordP2uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP3uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP3uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                MultiTexCoordP3uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP4uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                MultiTexCoordP4uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                MultiTexCoordP4uiv(texture, type, coords_ptr);
-            }
-        }
-        public static unsafe void NormalP3ui(NormalPointerType type, ReadOnlySpan<uint> coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                NormalP3uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void NormalP3ui(NormalPointerType type, uint[] coords)
-        {
-            fixed (uint* coords_ptr = coords)
-            {
-                NormalP3uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void NormalP3ui(NormalPointerType type, in uint coords)
-        {
-            fixed (uint* coords_ptr = &coords)
-            {
-                NormalP3uiv(type, coords_ptr);
-            }
-        }
-        public static unsafe void ColorP3ui(ColorPointerType type, ReadOnlySpan<uint> color)
-        {
-            fixed (uint* color_ptr = color)
-            {
-                ColorP3uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void ColorP3ui(ColorPointerType type, uint[] color)
-        {
-            fixed (uint* color_ptr = color)
-            {
-                ColorP3uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void ColorP3ui(ColorPointerType type, in uint color)
-        {
-            fixed (uint* color_ptr = &color)
-            {
-                ColorP3uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void ColorP4ui(ColorPointerType type, ReadOnlySpan<uint> color)
-        {
-            fixed (uint* color_ptr = color)
-            {
-                ColorP4uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void ColorP4ui(ColorPointerType type, uint[] color)
-        {
-            fixed (uint* color_ptr = color)
-            {
-                ColorP4uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void ColorP4ui(ColorPointerType type, in uint color)
-        {
-            fixed (uint* color_ptr = &color)
-            {
-                ColorP4uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void SecondaryColorP3ui(ColorPointerType type, ReadOnlySpan<uint> color)
-        {
-            fixed (uint* color_ptr = color)
-            {
-                SecondaryColorP3uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void SecondaryColorP3ui(ColorPointerType type, uint[] color)
-        {
-            fixed (uint* color_ptr = color)
-            {
-                SecondaryColorP3uiv(type, color_ptr);
-            }
-        }
-        public static unsafe void SecondaryColorP3ui(ColorPointerType type, in uint color)
-        {
-            fixed (uint* color_ptr = &color)
-            {
-                SecondaryColorP3uiv(type, color_ptr);
-            }
-        }
         public static unsafe void DrawArraysIndirect(PrimitiveType mode, IntPtr indirect)
         {
             void* indirect_vptr = (void*)indirect;
@@ -7111,17 +6796,15 @@ namespace OpenTK.Graphics.OpenGL
                 GetVertexAttribLdv(index, pname, parameters_ptr);
             }
         }
-        public static unsafe void ViewportArray(uint first, ReadOnlySpan<float> v)
+        public static unsafe void ViewportArray(uint first, int count, ReadOnlySpan<float> v)
         {
-            int count = (int)(v.Length / 4);
             fixed (float* v_ptr = v)
             {
                 ViewportArrayv(first, count, v_ptr);
             }
         }
-        public static unsafe void ViewportArray(uint first, float[] v)
+        public static unsafe void ViewportArray(uint first, int count, float[] v)
         {
-            int count = (int)(v.Length / 4);
             fixed (float* v_ptr = v)
             {
                 ViewportArrayv(first, count, v_ptr);
@@ -7155,17 +6838,15 @@ namespace OpenTK.Graphics.OpenGL
                 ViewportIndexedfv(index, v_ptr);
             }
         }
-        public static unsafe void ScissorArray(uint first, ReadOnlySpan<int> v)
+        public static unsafe void ScissorArray(uint first, int count, ReadOnlySpan<int> v)
         {
-            int count = (int)(v.Length / 4);
             fixed (int* v_ptr = v)
             {
                 ScissorArrayv(first, count, v_ptr);
             }
         }
-        public static unsafe void ScissorArray(uint first, int[] v)
+        public static unsafe void ScissorArray(uint first, int count, int[] v)
         {
-            int count = (int)(v.Length / 4);
             fixed (int* v_ptr = v)
             {
                 ScissorArrayv(first, count, v_ptr);
@@ -8474,24 +8155,6 @@ namespace OpenTK.Graphics.OpenGL
             void* data_vptr = (void*)data;
             NamedBufferData(buffer, size, data_vptr, usage);
         }
-        public static unsafe void NamedBufferData<T1>(BufferHandle buffer, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                NamedBufferData(buffer, size, data_ptr, usage);
-            }
-        }
-        public static unsafe void NamedBufferData<T1>(BufferHandle buffer, T1[] data, VertexBufferObjectUsage usage)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                NamedBufferData(buffer, size, data_ptr, usage);
-            }
-        }
         public static unsafe void NamedBufferData<T1>(BufferHandle buffer, nint size, in T1 data, VertexBufferObjectUsage usage)
             where T1 : unmanaged
         {
@@ -8505,19 +8168,17 @@ namespace OpenTK.Graphics.OpenGL
             void* data_vptr = (void*)data;
             NamedBufferSubData(buffer, offset, size, data_vptr);
         }
-        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, ReadOnlySpan<T1> data)
+        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
-            nint size = (nint)(data.Length * sizeof(T1));
             fixed (void* data_ptr = data)
             {
                 NamedBufferSubData(buffer, offset, size, data_ptr);
             }
         }
-        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
             where T1 : unmanaged
         {
-            nint size = (nint)(data.Length * sizeof(T1));
             fixed (void* data_ptr = data)
             {
                 NamedBufferSubData(buffer, offset, size, data_ptr);
@@ -8579,24 +8240,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             void* data_vptr = (void*)data;
             GetNamedBufferSubData(buffer, offset, size, data_vptr);
-        }
-        public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, Span<T1> data)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                GetNamedBufferSubData(buffer, offset, size, data_ptr);
-            }
-        }
-        public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                GetNamedBufferSubData(buffer, offset, size, data_ptr);
-            }
         }
         public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ref T1 data)
             where T1 : unmanaged
@@ -8887,12 +8530,12 @@ namespace OpenTK.Graphics.OpenGL
                 TextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels_ptr);
             }
         }
-        public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data_vptr);
         }
-        public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -8900,12 +8543,12 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
-        public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -8913,12 +8556,12 @@ namespace OpenTK.Graphics.OpenGL
                 CompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
         }
-        public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -9502,286 +9145,6 @@ namespace OpenTK.Graphics.OpenGL
             fixed (void* data_ptr = &data)
             {
                 ReadnPixels(x, y, width, height, format, type, bufSize, data_ptr);
-            }
-        }
-        public static unsafe void GetnMapd(MapTarget target, MapQuery query, int bufSize, Span<double> v)
-        {
-            fixed (double* v_ptr = v)
-            {
-                GetnMapdv(target, query, bufSize, v_ptr);
-            }
-        }
-        public static unsafe void GetnMapd(MapTarget target, MapQuery query, int bufSize, double[] v)
-        {
-            fixed (double* v_ptr = v)
-            {
-                GetnMapdv(target, query, bufSize, v_ptr);
-            }
-        }
-        public static unsafe void GetnMapd(MapTarget target, MapQuery query, int bufSize, ref double v)
-        {
-            fixed (double* v_ptr = &v)
-            {
-                GetnMapdv(target, query, bufSize, v_ptr);
-            }
-        }
-        public static unsafe void GetnMapf(MapTarget target, MapQuery query, int bufSize, ref float v)
-        {
-            fixed (float* v_ptr = &v)
-            {
-                GetnMapfv(target, query, bufSize, v_ptr);
-            }
-        }
-        public static unsafe void GetnMapi(MapTarget target, MapQuery query, int bufSize, ref int v)
-        {
-            fixed (int* v_ptr = &v)
-            {
-                GetnMapiv(target, query, bufSize, v_ptr);
-            }
-        }
-        public static unsafe void GetnPixelMapf(PixelMap map, int bufSize, Span<float> values)
-        {
-            fixed (float* values_ptr = values)
-            {
-                GetnPixelMapfv(map, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnPixelMapf(PixelMap map, int bufSize, float[] values)
-        {
-            fixed (float* values_ptr = values)
-            {
-                GetnPixelMapfv(map, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnPixelMapf(PixelMap map, int bufSize, ref float values)
-        {
-            fixed (float* values_ptr = &values)
-            {
-                GetnPixelMapfv(map, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnPixelMapui(PixelMap map, int bufSize, ref uint values)
-        {
-            fixed (uint* values_ptr = &values)
-            {
-                GetnPixelMapuiv(map, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnPixelMap(PixelMap map, int bufSize, ref ushort values)
-        {
-            fixed (ushort* values_ptr = &values)
-            {
-                GetnPixelMapusv(map, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnPolygonStipple(Span<byte> pattern)
-        {
-            int bufSize = (int)(pattern.Length);
-            fixed (byte* pattern_ptr = pattern)
-            {
-                GetnPolygonStipple(bufSize, pattern_ptr);
-            }
-        }
-        public static unsafe void GetnPolygonStipple(byte[] pattern)
-        {
-            int bufSize = (int)(pattern.Length);
-            fixed (byte* pattern_ptr = pattern)
-            {
-                GetnPolygonStipple(bufSize, pattern_ptr);
-            }
-        }
-        public static unsafe void GetnPolygonStipple(int bufSize, ref byte pattern)
-        {
-            fixed (byte* pattern_ptr = &pattern)
-            {
-                GetnPolygonStipple(bufSize, pattern_ptr);
-            }
-        }
-        public static unsafe void GetnColorTable(ColorTableTarget target, PixelFormat format, PixelType type, int bufSize, IntPtr table)
-        {
-            void* table_vptr = (void*)table;
-            GetnColorTable(target, format, type, bufSize, table_vptr);
-        }
-        public static unsafe void GetnColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, Span<T1> table)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(table.Length * sizeof(T1));
-            fixed (void* table_ptr = table)
-            {
-                GetnColorTable(target, format, type, bufSize, table_ptr);
-            }
-        }
-        public static unsafe void GetnColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, T1[] table)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(table.Length * sizeof(T1));
-            fixed (void* table_ptr = table)
-            {
-                GetnColorTable(target, format, type, bufSize, table_ptr);
-            }
-        }
-        public static unsafe void GetnColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, int bufSize, ref T1 table)
-            where T1 : unmanaged
-        {
-            fixed (void* table_ptr = &table)
-            {
-                GetnColorTable(target, format, type, bufSize, table_ptr);
-            }
-        }
-        public static unsafe void GetnConvolutionFilter(ConvolutionTarget target, PixelFormat format, PixelType type, int bufSize, IntPtr image)
-        {
-            void* image_vptr = (void*)image;
-            GetnConvolutionFilter(target, format, type, bufSize, image_vptr);
-        }
-        public static unsafe void GetnConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, Span<T1> image)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(image.Length * sizeof(T1));
-            fixed (void* image_ptr = image)
-            {
-                GetnConvolutionFilter(target, format, type, bufSize, image_ptr);
-            }
-        }
-        public static unsafe void GetnConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, T1[] image)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(image.Length * sizeof(T1));
-            fixed (void* image_ptr = image)
-            {
-                GetnConvolutionFilter(target, format, type, bufSize, image_ptr);
-            }
-        }
-        public static unsafe void GetnConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, int bufSize, ref T1 image)
-            where T1 : unmanaged
-        {
-            fixed (void* image_ptr = &image)
-            {
-                GetnConvolutionFilter(target, format, type, bufSize, image_ptr);
-            }
-        }
-        public static unsafe void GetnSeparableFilter(SeparableTarget target, PixelFormat format, PixelType type, int rowBufSize, IntPtr row, int columnBufSize, IntPtr column, IntPtr span)
-        {
-            void* row_vptr = (void*)row;
-            void* column_vptr = (void*)column;
-            void* span_vptr = (void*)span;
-            GetnSeparableFilter(target, format, type, rowBufSize, row_vptr, columnBufSize, column_vptr, span_vptr);
-        }
-        public static unsafe void GetnSeparableFilter<T1, T2, T3>(SeparableTarget target, PixelFormat format, PixelType type, Span<T3> row, Span<T2> column, Span<T1> span)
-            where T1 : unmanaged
-            where T2 : unmanaged
-            where T3 : unmanaged
-        {
-            int rowBufSize = (int)(row.Length * sizeof(T3));
-            fixed (void* row_ptr = row)
-            {
-                int columnBufSize = (int)(column.Length * sizeof(T2));
-                fixed (void* column_ptr = column)
-                {
-                    fixed (void* span_ptr = span)
-                    {
-                        GetnSeparableFilter(target, format, type, rowBufSize, row_ptr, columnBufSize, column_ptr, span_ptr);
-                    }
-                }
-            }
-        }
-        public static unsafe void GetnSeparableFilter<T1, T2, T3>(SeparableTarget target, PixelFormat format, PixelType type, T3[] row, T2[] column, T1[] span)
-            where T1 : unmanaged
-            where T2 : unmanaged
-            where T3 : unmanaged
-        {
-            int rowBufSize = (int)(row.Length * sizeof(T3));
-            fixed (void* row_ptr = row)
-            {
-                int columnBufSize = (int)(column.Length * sizeof(T2));
-                fixed (void* column_ptr = column)
-                {
-                    fixed (void* span_ptr = span)
-                    {
-                        GetnSeparableFilter(target, format, type, rowBufSize, row_ptr, columnBufSize, column_ptr, span_ptr);
-                    }
-                }
-            }
-        }
-        public static unsafe void GetnSeparableFilter<T1, T2, T3>(SeparableTarget target, PixelFormat format, PixelType type, int rowBufSize, ref T1 row, int columnBufSize, ref T2 column, ref T3 span)
-            where T1 : unmanaged
-            where T2 : unmanaged
-            where T3 : unmanaged
-        {
-            fixed (void* row_ptr = &row)
-            fixed (void* column_ptr = &column)
-            fixed (void* span_ptr = &span)
-            {
-                GetnSeparableFilter(target, format, type, rowBufSize, row_ptr, columnBufSize, column_ptr, span_ptr);
-            }
-        }
-        public static unsafe void GetnHistogram(HistogramTarget target, bool reset, PixelFormat format, PixelType type, int bufSize, IntPtr values)
-        {
-            void* values_vptr = (void*)values;
-            byte reset_byte = (byte)(reset ? 1 : 0);
-            GetnHistogram(target, reset_byte, format, type, bufSize, values_vptr);
-        }
-        public static unsafe void GetnHistogram<T1>(HistogramTarget target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(values.Length * sizeof(T1));
-            fixed (void* values_ptr = values)
-            {
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnHistogram(target, reset_byte, format, type, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnHistogram<T1>(HistogramTarget target, bool reset, PixelFormat format, PixelType type, T1[] values)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(values.Length * sizeof(T1));
-            fixed (void* values_ptr = values)
-            {
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnHistogram(target, reset_byte, format, type, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnHistogram<T1>(HistogramTarget target, bool reset, PixelFormat format, PixelType type, int bufSize, ref T1 values)
-            where T1 : unmanaged
-        {
-            fixed (void* values_ptr = &values)
-            {
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnHistogram(target, reset_byte, format, type, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnMinmax(MinmaxTarget target, bool reset, PixelFormat format, PixelType type, int bufSize, IntPtr values)
-        {
-            void* values_vptr = (void*)values;
-            byte reset_byte = (byte)(reset ? 1 : 0);
-            GetnMinmax(target, reset_byte, format, type, bufSize, values_vptr);
-        }
-        public static unsafe void GetnMinmax<T1>(MinmaxTarget target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(values.Length * sizeof(T1));
-            fixed (void* values_ptr = values)
-            {
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnMinmax(target, reset_byte, format, type, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnMinmax<T1>(MinmaxTarget target, bool reset, PixelFormat format, PixelType type, T1[] values)
-            where T1 : unmanaged
-        {
-            int bufSize = (int)(values.Length * sizeof(T1));
-            fixed (void* values_ptr = values)
-            {
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnMinmax(target, reset_byte, format, type, bufSize, values_ptr);
-            }
-        }
-        public static unsafe void GetnMinmax<T1>(MinmaxTarget target, bool reset, PixelFormat format, PixelType type, int bufSize, ref T1 values)
-            where T1 : unmanaged
-        {
-            fixed (void* values_ptr = &values)
-            {
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnMinmax(target, reset_byte, format, type, bufSize, values_ptr);
             }
         }
         public static unsafe void SpecializeShader(ShaderHandle shader, string pEntryPoint, uint numSpecializationConstants, in uint pConstantIndex, in uint pConstantValue)
@@ -10372,6 +9735,22 @@ namespace OpenTK.Graphics.OpenGL
                 void* indirect_vptr = (void*)indirect;
                 MultiDrawArraysIndirectAMD(mode, indirect_vptr, primcount, stride);
             }
+            public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, ReadOnlySpan<T1> indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawArraysIndirectAMD(mode, indirect_ptr, primcount, stride);
+                }
+            }
+            public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, T1[] indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawArraysIndirectAMD(mode, indirect_ptr, primcount, stride);
+                }
+            }
             public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, in T1 indirect, int primcount, int stride)
                 where T1 : unmanaged
             {
@@ -10384,6 +9763,22 @@ namespace OpenTK.Graphics.OpenGL
             {
                 void* indirect_vptr = (void*)indirect;
                 MultiDrawElementsIndirectAMD(mode, type, indirect_vptr, primcount, stride);
+            }
+            public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, ReadOnlySpan<T1> indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawElementsIndirectAMD(mode, type, indirect_ptr, primcount, stride);
+                }
+            }
+            public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, T1[] indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawElementsIndirectAMD(mode, type, indirect_ptr, primcount, stride);
+                }
             }
             public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, int primcount, int stride)
                 where T1 : unmanaged
@@ -11804,24 +11199,6 @@ namespace OpenTK.Graphics.OpenGL
                 void* data_vptr = (void*)data;
                 NamedBufferData(buffer, size, data_vptr, usage);
             }
-            public static unsafe void NamedBufferData<T1>(BufferHandle buffer, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    NamedBufferData(buffer, size, data_ptr, usage);
-                }
-            }
-            public static unsafe void NamedBufferData<T1>(BufferHandle buffer, T1[] data, VertexBufferObjectUsage usage)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    NamedBufferData(buffer, size, data_ptr, usage);
-                }
-            }
             public static unsafe void NamedBufferData<T1>(BufferHandle buffer, nint size, in T1 data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
@@ -11835,19 +11212,17 @@ namespace OpenTK.Graphics.OpenGL
                 void* data_vptr = (void*)data;
                 NamedBufferSubData(buffer, offset, size, data_vptr);
             }
-            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, ReadOnlySpan<T1> data)
+            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubData(buffer, offset, size, data_ptr);
                 }
             }
-            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubData(buffer, offset, size, data_ptr);
@@ -11909,24 +11284,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 void* data_vptr = (void*)data;
                 GetNamedBufferSubData(buffer, offset, size, data_vptr);
-            }
-            public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, Span<T1> data)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    GetNamedBufferSubData(buffer, offset, size, data_ptr);
-                }
-            }
-            public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    GetNamedBufferSubData(buffer, offset, size, data_ptr);
-                }
             }
             public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ref T1 data)
                 where T1 : unmanaged
@@ -12217,12 +11574,12 @@ namespace OpenTK.Graphics.OpenGL
                     TextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data_vptr);
             }
-            public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -12230,12 +11587,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
             }
-            public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -12243,12 +11600,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
             }
-            public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -14217,599 +13574,6 @@ namespace OpenTK.Graphics.OpenGL
                     ProgramUniform4ui64vARB(program, location, count, value_ptr);
                 }
             }
-            public static unsafe void ColorTable(ColorTableTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, IntPtr table)
-            {
-                void* table_vptr = (void*)table;
-                ColorTable(target, internalformat, width, format, type, table_vptr);
-            }
-            public static unsafe void ColorTable<T1>(ColorTableTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, ReadOnlySpan<T1> table)
-                where T1 : unmanaged
-            {
-                fixed (void* table_ptr = table)
-                {
-                    ColorTable(target, internalformat, width, format, type, table_ptr);
-                }
-            }
-            public static unsafe void ColorTable<T1>(ColorTableTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, T1[] table)
-                where T1 : unmanaged
-            {
-                fixed (void* table_ptr = table)
-                {
-                    ColorTable(target, internalformat, width, format, type, table_ptr);
-                }
-            }
-            public static unsafe void ColorTable<T1>(ColorTableTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, in T1 table)
-                where T1 : unmanaged
-            {
-                fixed (void* table_ptr = &table)
-                {
-                    ColorTable(target, internalformat, width, format, type, table_ptr);
-                }
-            }
-            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPNameSGI pname, ReadOnlySpan<float> parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    ColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPNameSGI pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    ColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ColorTableParameterf(ColorTableTarget target, ColorTableParameterPNameSGI pname, in float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
-                    ColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ColorTableParameteri(ColorTableTarget target, ColorTableParameterPNameSGI pname, ReadOnlySpan<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    ColorTableParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ColorTableParameteri(ColorTableTarget target, ColorTableParameterPNameSGI pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    ColorTableParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ColorTableParameteri(ColorTableTarget target, ColorTableParameterPNameSGI pname, in int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    ColorTableParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetColorTable(ColorTableTarget target, PixelFormat format, PixelType type, IntPtr table)
-            {
-                void* table_vptr = (void*)table;
-                GetColorTable(target, format, type, table_vptr);
-            }
-            public static unsafe void GetColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, Span<T1> table)
-                where T1 : unmanaged
-            {
-                fixed (void* table_ptr = table)
-                {
-                    GetColorTable(target, format, type, table_ptr);
-                }
-            }
-            public static unsafe void GetColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, T1[] table)
-                where T1 : unmanaged
-            {
-                fixed (void* table_ptr = table)
-                {
-                    GetColorTable(target, format, type, table_ptr);
-                }
-            }
-            public static unsafe void GetColorTable<T1>(ColorTableTarget target, PixelFormat format, PixelType type, ref T1 table)
-                where T1 : unmanaged
-            {
-                fixed (void* table_ptr = &table)
-                {
-                    GetColorTable(target, format, type, table_ptr);
-                }
-            }
-            public static unsafe void GetColorTableParameterf(ColorTableTarget target, GetColorTableParameterPNameSGI pname, Span<float> parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetColorTableParameterf(ColorTableTarget target, GetColorTableParameterPNameSGI pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetColorTableParameterf(ColorTableTarget target, GetColorTableParameterPNameSGI pname, ref float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
-                    GetColorTableParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetColorTableParameteri(ColorTableTarget target, GetColorTableParameterPNameSGI pname, Span<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetColorTableParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetColorTableParameteri(ColorTableTarget target, GetColorTableParameterPNameSGI pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetColorTableParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetColorTableParameteri(ColorTableTarget target, GetColorTableParameterPNameSGI pname, ref int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetColorTableParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ColorSubTable(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, IntPtr data)
-            {
-                void* data_vptr = (void*)data;
-                ColorSubTable(target, start, count, format, type, data_vptr);
-            }
-            public static unsafe void ColorSubTable<T1>(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, ReadOnlySpan<T1> data)
-                where T1 : unmanaged
-            {
-                fixed (void* data_ptr = data)
-                {
-                    ColorSubTable(target, start, count, format, type, data_ptr);
-                }
-            }
-            public static unsafe void ColorSubTable<T1>(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, T1[] data)
-                where T1 : unmanaged
-            {
-                fixed (void* data_ptr = data)
-                {
-                    ColorSubTable(target, start, count, format, type, data_ptr);
-                }
-            }
-            public static unsafe void ColorSubTable<T1>(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, in T1 data)
-                where T1 : unmanaged
-            {
-                fixed (void* data_ptr = &data)
-                {
-                    ColorSubTable(target, start, count, format, type, data_ptr);
-                }
-            }
-            public static unsafe void ConvolutionFilter1D(ConvolutionTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, IntPtr image)
-            {
-                void* image_vptr = (void*)image;
-                ConvolutionFilter1D(target, internalformat, width, format, type, image_vptr);
-            }
-            public static unsafe void ConvolutionFilter1D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, ReadOnlySpan<T1> image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = image)
-                {
-                    ConvolutionFilter1D(target, internalformat, width, format, type, image_ptr);
-                }
-            }
-            public static unsafe void ConvolutionFilter1D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, T1[] image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = image)
-                {
-                    ConvolutionFilter1D(target, internalformat, width, format, type, image_ptr);
-                }
-            }
-            public static unsafe void ConvolutionFilter1D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, in T1 image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = &image)
-                {
-                    ConvolutionFilter1D(target, internalformat, width, format, type, image_ptr);
-                }
-            }
-            public static unsafe void ConvolutionFilter2D(ConvolutionTarget target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, IntPtr image)
-            {
-                void* image_vptr = (void*)image;
-                ConvolutionFilter2D(target, internalformat, width, height, format, type, image_vptr);
-            }
-            public static unsafe void ConvolutionFilter2D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, ReadOnlySpan<T1> image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = image)
-                {
-                    ConvolutionFilter2D(target, internalformat, width, height, format, type, image_ptr);
-                }
-            }
-            public static unsafe void ConvolutionFilter2D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, T1[] image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = image)
-                {
-                    ConvolutionFilter2D(target, internalformat, width, height, format, type, image_ptr);
-                }
-            }
-            public static unsafe void ConvolutionFilter2D<T1>(ConvolutionTarget target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, in T1 image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = &image)
-                {
-                    ConvolutionFilter2D(target, internalformat, width, height, format, type, image_ptr);
-                }
-            }
-            public static unsafe void ConvolutionParameterf(ConvolutionTarget target, ConvolutionParameterEXT pname, ReadOnlySpan<float> parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    ConvolutionParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ConvolutionParameterf(ConvolutionTarget target, ConvolutionParameterEXT pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    ConvolutionParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ConvolutionParameterf(ConvolutionTarget target, ConvolutionParameterEXT pname, in float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
-                    ConvolutionParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ConvolutionParameteri(ConvolutionTarget target, ConvolutionParameterEXT pname, ReadOnlySpan<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    ConvolutionParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ConvolutionParameteri(ConvolutionTarget target, ConvolutionParameterEXT pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    ConvolutionParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void ConvolutionParameteri(ConvolutionTarget target, ConvolutionParameterEXT pname, in int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    ConvolutionParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionFilter(ConvolutionTarget target, PixelFormat format, PixelType type, IntPtr image)
-            {
-                void* image_vptr = (void*)image;
-                GetConvolutionFilter(target, format, type, image_vptr);
-            }
-            public static unsafe void GetConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, Span<T1> image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = image)
-                {
-                    GetConvolutionFilter(target, format, type, image_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, T1[] image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = image)
-                {
-                    GetConvolutionFilter(target, format, type, image_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionFilter<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, ref T1 image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = &image)
-                {
-                    GetConvolutionFilter(target, format, type, image_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionParameterf(ConvolutionTarget target, ConvolutionParameterEXT pname, Span<float> parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetConvolutionParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionParameterf(ConvolutionTarget target, ConvolutionParameterEXT pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetConvolutionParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionParameterf(ConvolutionTarget target, ConvolutionParameterEXT pname, ref float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
-                    GetConvolutionParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameterEXT pname, Span<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetConvolutionParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameterEXT pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetConvolutionParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetConvolutionParameteri(ConvolutionTarget target, ConvolutionParameterEXT pname, ref int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetConvolutionParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetSeparableFilter(SeparableTargetEXT target, PixelFormat format, PixelType type, IntPtr row, IntPtr column, IntPtr span)
-            {
-                void* row_vptr = (void*)row;
-                void* column_vptr = (void*)column;
-                void* span_vptr = (void*)span;
-                GetSeparableFilter(target, format, type, row_vptr, column_vptr, span_vptr);
-            }
-            public static unsafe void GetSeparableFilter<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, Span<T3> row, Span<T2> column, Span<T1> span)
-                where T1 : unmanaged
-                where T2 : unmanaged
-                where T3 : unmanaged
-            {
-                fixed (void* row_ptr = row)
-                {
-                    fixed (void* column_ptr = column)
-                    {
-                        fixed (void* span_ptr = span)
-                        {
-                            GetSeparableFilter(target, format, type, row_ptr, column_ptr, span_ptr);
-                        }
-                    }
-                }
-            }
-            public static unsafe void GetSeparableFilter<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, T3[] row, T2[] column, T1[] span)
-                where T1 : unmanaged
-                where T2 : unmanaged
-                where T3 : unmanaged
-            {
-                fixed (void* row_ptr = row)
-                {
-                    fixed (void* column_ptr = column)
-                    {
-                        fixed (void* span_ptr = span)
-                        {
-                            GetSeparableFilter(target, format, type, row_ptr, column_ptr, span_ptr);
-                        }
-                    }
-                }
-            }
-            public static unsafe void GetSeparableFilter<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, ref T1 row, ref T2 column, ref T3 span)
-                where T1 : unmanaged
-                where T2 : unmanaged
-                where T3 : unmanaged
-            {
-                fixed (void* row_ptr = &row)
-                fixed (void* column_ptr = &column)
-                fixed (void* span_ptr = &span)
-                {
-                    GetSeparableFilter(target, format, type, row_ptr, column_ptr, span_ptr);
-                }
-            }
-            public static unsafe void SeparableFilter2D(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, IntPtr row, IntPtr column)
-            {
-                void* row_vptr = (void*)row;
-                void* column_vptr = (void*)column;
-                SeparableFilter2D(target, internalformat, width, height, format, type, row_vptr, column_vptr);
-            }
-            public static unsafe void SeparableFilter2D<T1, T2>(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, ReadOnlySpan<T2> row, ReadOnlySpan<T1> column)
-                where T1 : unmanaged
-                where T2 : unmanaged
-            {
-                fixed (void* row_ptr = row)
-                {
-                    fixed (void* column_ptr = column)
-                    {
-                        SeparableFilter2D(target, internalformat, width, height, format, type, row_ptr, column_ptr);
-                    }
-                }
-            }
-            public static unsafe void SeparableFilter2D<T1, T2>(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, T2[] row, T1[] column)
-                where T1 : unmanaged
-                where T2 : unmanaged
-            {
-                fixed (void* row_ptr = row)
-                {
-                    fixed (void* column_ptr = column)
-                    {
-                        SeparableFilter2D(target, internalformat, width, height, format, type, row_ptr, column_ptr);
-                    }
-                }
-            }
-            public static unsafe void SeparableFilter2D<T1, T2>(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, in T1 row, in T2 column)
-                where T1 : unmanaged
-                where T2 : unmanaged
-            {
-                fixed (void* row_ptr = &row)
-                fixed (void* column_ptr = &column)
-                {
-                    SeparableFilter2D(target, internalformat, width, height, format, type, row_ptr, column_ptr);
-                }
-            }
-            public static unsafe void GetHistogram(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
-            {
-                void* values_vptr = (void*)values;
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetHistogram(target, reset_byte, format, type, values_vptr);
-            }
-            public static unsafe void GetHistogram<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetHistogram(target, reset_byte, format, type, values_ptr);
-                }
-            }
-            public static unsafe void GetHistogram<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, T1[] values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetHistogram(target, reset_byte, format, type, values_ptr);
-                }
-            }
-            public static unsafe void GetHistogram<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, ref T1 values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = &values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetHistogram(target, reset_byte, format, type, values_ptr);
-                }
-            }
-            public static unsafe void GetHistogramParameterf(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<float> parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetHistogramParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetHistogramParameterf(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetHistogramParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetHistogramParameterf(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
-                    GetHistogramParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetHistogramParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetHistogramParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetHistogramParameteri(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetHistogramParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetMinmax(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
-            {
-                void* values_vptr = (void*)values;
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetMinmax(target, reset_byte, format, type, values_vptr);
-            }
-            public static unsafe void GetMinmax<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetMinmax(target, reset_byte, format, type, values_ptr);
-                }
-            }
-            public static unsafe void GetMinmax<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, T1[] values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetMinmax(target, reset_byte, format, type, values_ptr);
-                }
-            }
-            public static unsafe void GetMinmax<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, ref T1 values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = &values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetMinmax(target, reset_byte, format, type, values_ptr);
-                }
-            }
-            public static unsafe void GetMinmaxParameterf(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, Span<float> parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetMinmaxParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetMinmaxParameterf(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, float[] parameters)
-            {
-                fixed (float* parameters_ptr = parameters)
-                {
-                    GetMinmaxParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetMinmaxParameterf(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, ref float parameters)
-            {
-                fixed (float* parameters_ptr = &parameters)
-                {
-                    GetMinmaxParameterfv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, Span<int> parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetMinmaxParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, int[] parameters)
-            {
-                fixed (int* parameters_ptr = parameters)
-                {
-                    GetMinmaxParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void GetMinmaxParameteri(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, ref int parameters)
-            {
-                fixed (int* parameters_ptr = &parameters)
-                {
-                    GetMinmaxParameteriv(target, pname, parameters_ptr);
-                }
-            }
-            public static unsafe void Histogram(HistogramTargetEXT target, int width, InternalFormat internalformat, bool sink)
-            {
-                byte sink_byte = (byte)(sink ? 1 : 0);
-                Histogram(target, width, internalformat, sink_byte);
-            }
-            public static unsafe void Minmax(MinmaxTargetEXT target, InternalFormat internalformat, bool sink)
-            {
-                byte sink_byte = (byte)(sink ? 1 : 0);
-                Minmax(target, internalformat, sink_byte);
-            }
             public static unsafe void MultiDrawArraysIndirectCountARB(PrimitiveType mode, IntPtr indirect, IntPtr drawcount, int maxdrawcount, int stride)
             {
                 void* indirect_vptr = (void*)indirect;
@@ -16050,354 +14814,6 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (double* parameters_ptr = &parameters)
                 {
                     GetnUniformdvARB(program, location, bufSize, parameters_ptr);
-                }
-            }
-            public static unsafe void GetnMapdvARB(MapTarget target, MapQuery query, Span<double> v)
-            {
-                int bufSize = (int)(v.Length * 8);
-                fixed (double* v_ptr = v)
-                {
-                    GetnMapdvARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapdvARB(MapTarget target, MapQuery query, double[] v)
-            {
-                int bufSize = (int)(v.Length * 8);
-                fixed (double* v_ptr = v)
-                {
-                    GetnMapdvARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapdvARB(MapTarget target, MapQuery query, int bufSize, ref double v)
-            {
-                fixed (double* v_ptr = &v)
-                {
-                    GetnMapdvARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapfvARB(MapTarget target, MapQuery query, Span<float> v)
-            {
-                int bufSize = (int)(v.Length);
-                fixed (float* v_ptr = v)
-                {
-                    GetnMapfvARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapfvARB(MapTarget target, MapQuery query, float[] v)
-            {
-                int bufSize = (int)(v.Length);
-                fixed (float* v_ptr = v)
-                {
-                    GetnMapfvARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapfvARB(MapTarget target, MapQuery query, int bufSize, ref float v)
-            {
-                fixed (float* v_ptr = &v)
-                {
-                    GetnMapfvARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapivARB(MapTarget target, MapQuery query, Span<int> v)
-            {
-                int bufSize = (int)(v.Length);
-                fixed (int* v_ptr = v)
-                {
-                    GetnMapivARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapivARB(MapTarget target, MapQuery query, int[] v)
-            {
-                int bufSize = (int)(v.Length);
-                fixed (int* v_ptr = v)
-                {
-                    GetnMapivARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnMapivARB(MapTarget target, MapQuery query, int bufSize, ref int v)
-            {
-                fixed (int* v_ptr = &v)
-                {
-                    GetnMapivARB(target, query, bufSize, v_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapfvARB(PixelMap map, Span<float> values)
-            {
-                int bufSize = (int)(values.Length * 4);
-                fixed (float* values_ptr = values)
-                {
-                    GetnPixelMapfvARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapfvARB(PixelMap map, float[] values)
-            {
-                int bufSize = (int)(values.Length * 4);
-                fixed (float* values_ptr = values)
-                {
-                    GetnPixelMapfvARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapfvARB(PixelMap map, int bufSize, ref float values)
-            {
-                fixed (float* values_ptr = &values)
-                {
-                    GetnPixelMapfvARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapuivARB(PixelMap map, Span<uint> values)
-            {
-                int bufSize = (int)(values.Length);
-                fixed (uint* values_ptr = values)
-                {
-                    GetnPixelMapuivARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapuivARB(PixelMap map, uint[] values)
-            {
-                int bufSize = (int)(values.Length);
-                fixed (uint* values_ptr = values)
-                {
-                    GetnPixelMapuivARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapuivARB(PixelMap map, int bufSize, ref uint values)
-            {
-                fixed (uint* values_ptr = &values)
-                {
-                    GetnPixelMapuivARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapusvARB(PixelMap map, Span<ushort> values)
-            {
-                int bufSize = (int)(values.Length);
-                fixed (ushort* values_ptr = values)
-                {
-                    GetnPixelMapusvARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapusvARB(PixelMap map, ushort[] values)
-            {
-                int bufSize = (int)(values.Length);
-                fixed (ushort* values_ptr = values)
-                {
-                    GetnPixelMapusvARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPixelMapusvARB(PixelMap map, int bufSize, ref ushort values)
-            {
-                fixed (ushort* values_ptr = &values)
-                {
-                    GetnPixelMapusvARB(map, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnPolygonStippleARB(Span<byte> pattern)
-            {
-                int bufSize = (int)(pattern.Length);
-                fixed (byte* pattern_ptr = pattern)
-                {
-                    GetnPolygonStippleARB(bufSize, pattern_ptr);
-                }
-            }
-            public static unsafe void GetnPolygonStippleARB(byte[] pattern)
-            {
-                int bufSize = (int)(pattern.Length);
-                fixed (byte* pattern_ptr = pattern)
-                {
-                    GetnPolygonStippleARB(bufSize, pattern_ptr);
-                }
-            }
-            public static unsafe void GetnPolygonStippleARB(int bufSize, ref byte pattern)
-            {
-                fixed (byte* pattern_ptr = &pattern)
-                {
-                    GetnPolygonStippleARB(bufSize, pattern_ptr);
-                }
-            }
-            public static unsafe void GetnColorTableARB(ColorTableTarget target, PixelFormat format, PixelType type, int bufSize, IntPtr table)
-            {
-                void* table_vptr = (void*)table;
-                GetnColorTableARB(target, format, type, bufSize, table_vptr);
-            }
-            public static unsafe void GetnColorTableARB<T1>(ColorTableTarget target, PixelFormat format, PixelType type, Span<T1> table)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(table.Length * sizeof(T1));
-                fixed (void* table_ptr = table)
-                {
-                    GetnColorTableARB(target, format, type, bufSize, table_ptr);
-                }
-            }
-            public static unsafe void GetnColorTableARB<T1>(ColorTableTarget target, PixelFormat format, PixelType type, T1[] table)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(table.Length * sizeof(T1));
-                fixed (void* table_ptr = table)
-                {
-                    GetnColorTableARB(target, format, type, bufSize, table_ptr);
-                }
-            }
-            public static unsafe void GetnColorTableARB<T1>(ColorTableTarget target, PixelFormat format, PixelType type, int bufSize, ref T1 table)
-                where T1 : unmanaged
-            {
-                fixed (void* table_ptr = &table)
-                {
-                    GetnColorTableARB(target, format, type, bufSize, table_ptr);
-                }
-            }
-            public static unsafe void GetnConvolutionFilterARB(ConvolutionTarget target, PixelFormat format, PixelType type, int bufSize, IntPtr image)
-            {
-                void* image_vptr = (void*)image;
-                GetnConvolutionFilterARB(target, format, type, bufSize, image_vptr);
-            }
-            public static unsafe void GetnConvolutionFilterARB<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, Span<T1> image)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(image.Length * sizeof(T1));
-                fixed (void* image_ptr = image)
-                {
-                    GetnConvolutionFilterARB(target, format, type, bufSize, image_ptr);
-                }
-            }
-            public static unsafe void GetnConvolutionFilterARB<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, T1[] image)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(image.Length * sizeof(T1));
-                fixed (void* image_ptr = image)
-                {
-                    GetnConvolutionFilterARB(target, format, type, bufSize, image_ptr);
-                }
-            }
-            public static unsafe void GetnConvolutionFilterARB<T1>(ConvolutionTarget target, PixelFormat format, PixelType type, int bufSize, ref T1 image)
-                where T1 : unmanaged
-            {
-                fixed (void* image_ptr = &image)
-                {
-                    GetnConvolutionFilterARB(target, format, type, bufSize, image_ptr);
-                }
-            }
-            public static unsafe void GetnSeparableFilterARB(SeparableTargetEXT target, PixelFormat format, PixelType type, int rowBufSize, IntPtr row, int columnBufSize, IntPtr column, IntPtr span)
-            {
-                void* row_vptr = (void*)row;
-                void* column_vptr = (void*)column;
-                void* span_vptr = (void*)span;
-                GetnSeparableFilterARB(target, format, type, rowBufSize, row_vptr, columnBufSize, column_vptr, span_vptr);
-            }
-            public static unsafe void GetnSeparableFilterARB<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, Span<T3> row, Span<T2> column, Span<T1> span)
-                where T1 : unmanaged
-                where T2 : unmanaged
-                where T3 : unmanaged
-            {
-                int rowBufSize = (int)(row.Length * sizeof(T3));
-                fixed (void* row_ptr = row)
-                {
-                    int columnBufSize = (int)(column.Length * sizeof(T2));
-                    fixed (void* column_ptr = column)
-                    {
-                        fixed (void* span_ptr = span)
-                        {
-                            GetnSeparableFilterARB(target, format, type, rowBufSize, row_ptr, columnBufSize, column_ptr, span_ptr);
-                        }
-                    }
-                }
-            }
-            public static unsafe void GetnSeparableFilterARB<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, T3[] row, T2[] column, T1[] span)
-                where T1 : unmanaged
-                where T2 : unmanaged
-                where T3 : unmanaged
-            {
-                int rowBufSize = (int)(row.Length * sizeof(T3));
-                fixed (void* row_ptr = row)
-                {
-                    int columnBufSize = (int)(column.Length * sizeof(T2));
-                    fixed (void* column_ptr = column)
-                    {
-                        fixed (void* span_ptr = span)
-                        {
-                            GetnSeparableFilterARB(target, format, type, rowBufSize, row_ptr, columnBufSize, column_ptr, span_ptr);
-                        }
-                    }
-                }
-            }
-            public static unsafe void GetnSeparableFilterARB<T1, T2, T3>(SeparableTargetEXT target, PixelFormat format, PixelType type, int rowBufSize, ref T1 row, int columnBufSize, ref T2 column, ref T3 span)
-                where T1 : unmanaged
-                where T2 : unmanaged
-                where T3 : unmanaged
-            {
-                fixed (void* row_ptr = &row)
-                fixed (void* column_ptr = &column)
-                fixed (void* span_ptr = &span)
-                {
-                    GetnSeparableFilterARB(target, format, type, rowBufSize, row_ptr, columnBufSize, column_ptr, span_ptr);
-                }
-            }
-            public static unsafe void GetnHistogramARB(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, int bufSize, IntPtr values)
-            {
-                void* values_vptr = (void*)values;
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnHistogramARB(target, reset_byte, format, type, bufSize, values_vptr);
-            }
-            public static unsafe void GetnHistogramARB<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(values.Length * sizeof(T1));
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetnHistogramARB(target, reset_byte, format, type, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnHistogramARB<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, T1[] values)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(values.Length * sizeof(T1));
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetnHistogramARB(target, reset_byte, format, type, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnHistogramARB<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, int bufSize, ref T1 values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = &values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetnHistogramARB(target, reset_byte, format, type, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnMinmaxARB(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, int bufSize, IntPtr values)
-            {
-                void* values_vptr = (void*)values;
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetnMinmaxARB(target, reset_byte, format, type, bufSize, values_vptr);
-            }
-            public static unsafe void GetnMinmaxARB<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(values.Length * sizeof(T1));
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetnMinmaxARB(target, reset_byte, format, type, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnMinmaxARB<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, T1[] values)
-                where T1 : unmanaged
-            {
-                int bufSize = (int)(values.Length * sizeof(T1));
-                fixed (void* values_ptr = values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetnMinmaxARB(target, reset_byte, format, type, bufSize, values_ptr);
-                }
-            }
-            public static unsafe void GetnMinmaxARB<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, int bufSize, ref T1 values)
-                where T1 : unmanaged
-            {
-                fixed (void* values_ptr = &values)
-                {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetnMinmaxARB(target, reset_byte, format, type, bufSize, values_ptr);
                 }
             }
             public static unsafe void FramebufferSampleLocationsfvARB(FramebufferTarget target, uint start, int count, in float v)
@@ -18961,12 +17377,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexImage1DARB(target, level, internalformat, width, border, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage3DARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTexSubImage3DARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
             }
-            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> data)
+            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -18975,7 +17391,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] data)
+            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -18984,7 +17400,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -18992,12 +17408,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage2DARB(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTexSubImage2DARB(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
             }
-            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> data)
+            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -19006,7 +17422,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] data)
+            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -19015,7 +17431,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -19023,12 +17439,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage1DARB(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTexSubImage1DARB(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data_vptr);
             }
-            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> data)
+            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -19037,7 +17453,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] data)
+            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -19046,7 +17462,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data_ptr);
                 }
             }
-            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -20967,332 +19383,15 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
                 }
             }
-            public static unsafe void VertexP2ui(VertexPointerType type, ReadOnlySpan<uint> value)
+            public static unsafe void ViewportArray(uint first, int count, ReadOnlySpan<float> v)
             {
-                fixed (uint* value_ptr = value)
-                {
-                    VertexP2uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP2ui(VertexPointerType type, uint[] value)
-            {
-                fixed (uint* value_ptr = value)
-                {
-                    VertexP2uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP2ui(VertexPointerType type, in uint value)
-            {
-                fixed (uint* value_ptr = &value)
-                {
-                    VertexP2uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP3ui(VertexPointerType type, ReadOnlySpan<uint> value)
-            {
-                fixed (uint* value_ptr = value)
-                {
-                    VertexP3uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP3ui(VertexPointerType type, uint[] value)
-            {
-                fixed (uint* value_ptr = value)
-                {
-                    VertexP3uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP3ui(VertexPointerType type, in uint value)
-            {
-                fixed (uint* value_ptr = &value)
-                {
-                    VertexP3uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP4ui(VertexPointerType type, ReadOnlySpan<uint> value)
-            {
-                fixed (uint* value_ptr = value)
-                {
-                    VertexP4uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP4ui(VertexPointerType type, uint[] value)
-            {
-                fixed (uint* value_ptr = value)
-                {
-                    VertexP4uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void VertexP4ui(VertexPointerType type, in uint value)
-            {
-                fixed (uint* value_ptr = &value)
-                {
-                    VertexP4uiv(type, value_ptr);
-                }
-            }
-            public static unsafe void TexCoordP1ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP1uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP1ui(TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP1uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP1ui(TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    TexCoordP1uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP2ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP2uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP2ui(TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP2uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP2ui(TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    TexCoordP2uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP3ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP3uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP3ui(TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP3uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP3ui(TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    TexCoordP3uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP4ui(TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP4uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP4ui(TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    TexCoordP4uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void TexCoordP4ui(TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    TexCoordP4uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP1uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP1uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP1ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    MultiTexCoordP1uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP2uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP2uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP2ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    MultiTexCoordP2uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP3uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP3uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP3ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    MultiTexCoordP3uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP4uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    MultiTexCoordP4uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void MultiTexCoordP4ui(TextureUnit texture, TexCoordPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    MultiTexCoordP4uiv(texture, type, coords_ptr);
-                }
-            }
-            public static unsafe void NormalP3ui(NormalPointerType type, ReadOnlySpan<uint> coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    NormalP3uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void NormalP3ui(NormalPointerType type, uint[] coords)
-            {
-                fixed (uint* coords_ptr = coords)
-                {
-                    NormalP3uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void NormalP3ui(NormalPointerType type, in uint coords)
-            {
-                fixed (uint* coords_ptr = &coords)
-                {
-                    NormalP3uiv(type, coords_ptr);
-                }
-            }
-            public static unsafe void ColorP3ui(ColorPointerType type, ReadOnlySpan<uint> color)
-            {
-                fixed (uint* color_ptr = color)
-                {
-                    ColorP3uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void ColorP3ui(ColorPointerType type, uint[] color)
-            {
-                fixed (uint* color_ptr = color)
-                {
-                    ColorP3uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void ColorP3ui(ColorPointerType type, in uint color)
-            {
-                fixed (uint* color_ptr = &color)
-                {
-                    ColorP3uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void ColorP4ui(ColorPointerType type, ReadOnlySpan<uint> color)
-            {
-                fixed (uint* color_ptr = color)
-                {
-                    ColorP4uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void ColorP4ui(ColorPointerType type, uint[] color)
-            {
-                fixed (uint* color_ptr = color)
-                {
-                    ColorP4uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void ColorP4ui(ColorPointerType type, in uint color)
-            {
-                fixed (uint* color_ptr = &color)
-                {
-                    ColorP4uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void SecondaryColorP3ui(ColorPointerType type, ReadOnlySpan<uint> color)
-            {
-                fixed (uint* color_ptr = color)
-                {
-                    SecondaryColorP3uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void SecondaryColorP3ui(ColorPointerType type, uint[] color)
-            {
-                fixed (uint* color_ptr = color)
-                {
-                    SecondaryColorP3uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void SecondaryColorP3ui(ColorPointerType type, in uint color)
-            {
-                fixed (uint* color_ptr = &color)
-                {
-                    SecondaryColorP3uiv(type, color_ptr);
-                }
-            }
-            public static unsafe void ViewportArray(uint first, ReadOnlySpan<float> v)
-            {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayv(first, count, v_ptr);
                 }
             }
-            public static unsafe void ViewportArray(uint first, float[] v)
+            public static unsafe void ViewportArray(uint first, int count, float[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayv(first, count, v_ptr);
@@ -21326,17 +19425,15 @@ namespace OpenTK.Graphics.OpenGL
                     ViewportIndexedfv(index, v_ptr);
                 }
             }
-            public static unsafe void ScissorArray(uint first, ReadOnlySpan<int> v)
+            public static unsafe void ScissorArray(uint first, int count, ReadOnlySpan<int> v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayv(first, count, v_ptr);
                 }
             }
-            public static unsafe void ScissorArray(uint first, int[] v)
+            public static unsafe void ScissorArray(uint first, int count, int[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayv(first, count, v_ptr);
@@ -24332,12 +22429,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureImage1DEXT(texture, target, level, internalformat, width, border, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage3DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedTextureSubImage3DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedTextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_vptr);
             }
-            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24346,7 +22443,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24355,7 +22452,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -24363,12 +22460,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage2DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedTextureSubImage2DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedTextureSubImage2DEXT(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits_vptr);
             }
-            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24377,7 +22474,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage2DEXT(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24386,7 +22483,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage2DEXT(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -24394,12 +22491,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage2DEXT(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage1DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedTextureSubImage1DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedTextureSubImage1DEXT(texture, target, level, xoffset, width, format, imageSize, bits_vptr);
             }
-            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24408,7 +22505,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage1DEXT(texture, target, level, xoffset, width, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24417,7 +22514,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedTextureSubImage1DEXT(texture, target, level, xoffset, width, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -24547,12 +22644,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexImage1DEXT(texunit, target, level, internalformat, width, border, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedMultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_vptr);
             }
-            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24561,7 +22658,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24570,7 +22667,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -24578,12 +22675,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedMultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits_vptr);
             }
-            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24592,7 +22689,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24601,7 +22698,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -24609,12 +22706,12 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedMultiTexSubImage1DEXT(texunit, target, level, xoffset, width, format, imageSize, bits_vptr);
             }
-            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24623,7 +22720,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage1DEXT(texunit, target, level, xoffset, width, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -24632,7 +22729,7 @@ namespace OpenTK.Graphics.OpenGL
                     CompressedMultiTexSubImage1DEXT(texunit, target, level, xoffset, width, format, imageSize, bits_ptr);
                 }
             }
-            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -24758,19 +22855,17 @@ namespace OpenTK.Graphics.OpenGL
                 void* data_vptr = (void*)data;
                 NamedBufferDataEXT(buffer, size, data_vptr, usage);
             }
-            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
+            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, nint size, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferDataEXT(buffer, size, data_ptr, usage);
                 }
             }
-            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, T1[] data, VertexBufferObjectUsage usage)
+            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, nint size, T1[] data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferDataEXT(buffer, size, data_ptr, usage);
@@ -24789,19 +22884,17 @@ namespace OpenTK.Graphics.OpenGL
                 void* data_vptr = (void*)data;
                 NamedBufferSubDataEXT(buffer, offset, size, data_vptr);
             }
-            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, ReadOnlySpan<T1> data)
+            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubDataEXT(buffer, offset, size, data_ptr);
                 }
             }
-            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubDataEXT(buffer, offset, size, data_ptr);
@@ -24841,19 +22934,17 @@ namespace OpenTK.Graphics.OpenGL
                 void* data_vptr = (void*)data;
                 GetNamedBufferSubDataEXT(buffer, offset, size, data_vptr);
             }
-            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, Span<T1> data)
+            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, Span<T1> data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     GetNamedBufferSubDataEXT(buffer, offset, size, data_ptr);
                 }
             }
-            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     GetNamedBufferSubDataEXT(buffer, offset, size, data_ptr);
@@ -32894,132 +30985,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetProgramResourcefvNV(program, programInterface, index, propCount, props_ptr, count, length_ptr, parameters_ptr);
                 }
             }
-            public static unsafe void PathColorGenNV(PathColor color, PathGenMode genMode, PathColorFormat colorFormat, ReadOnlySpan<float> coeffs)
-            {
-                fixed (float* coeffs_ptr = coeffs)
-                {
-                    PathColorGenNV(color, genMode, colorFormat, coeffs_ptr);
-                }
-            }
-            public static unsafe void PathColorGenNV(PathColor color, PathGenMode genMode, PathColorFormat colorFormat, float[] coeffs)
-            {
-                fixed (float* coeffs_ptr = coeffs)
-                {
-                    PathColorGenNV(color, genMode, colorFormat, coeffs_ptr);
-                }
-            }
-            public static unsafe void PathColorGenNV(PathColor color, PathGenMode genMode, PathColorFormat colorFormat, in float coeffs)
-            {
-                fixed (float* coeffs_ptr = &coeffs)
-                {
-                    PathColorGenNV(color, genMode, colorFormat, coeffs_ptr);
-                }
-            }
-            public static unsafe void PathTexGenNV(PathColor texCoordSet, PathGenMode genMode, int components, ReadOnlySpan<float> coeffs)
-            {
-                fixed (float* coeffs_ptr = coeffs)
-                {
-                    PathTexGenNV(texCoordSet, genMode, components, coeffs_ptr);
-                }
-            }
-            public static unsafe void PathTexGenNV(PathColor texCoordSet, PathGenMode genMode, int components, float[] coeffs)
-            {
-                fixed (float* coeffs_ptr = coeffs)
-                {
-                    PathTexGenNV(texCoordSet, genMode, components, coeffs_ptr);
-                }
-            }
-            public static unsafe void PathTexGenNV(PathColor texCoordSet, PathGenMode genMode, int components, in float coeffs)
-            {
-                fixed (float* coeffs_ptr = &coeffs)
-                {
-                    PathTexGenNV(texCoordSet, genMode, components, coeffs_ptr);
-                }
-            }
-            public static unsafe void GetPathColorGenivNV(PathColor color, PathGenMode pname, Span<int> value)
-            {
-                fixed (int* value_ptr = value)
-                {
-                    GetPathColorGenivNV(color, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathColorGenivNV(PathColor color, PathGenMode pname, int[] value)
-            {
-                fixed (int* value_ptr = value)
-                {
-                    GetPathColorGenivNV(color, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathColorGenivNV(PathColor color, PathGenMode pname, ref int value)
-            {
-                fixed (int* value_ptr = &value)
-                {
-                    GetPathColorGenivNV(color, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathColorGenfvNV(PathColor color, PathGenMode pname, Span<float> value)
-            {
-                fixed (float* value_ptr = value)
-                {
-                    GetPathColorGenfvNV(color, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathColorGenfvNV(PathColor color, PathGenMode pname, float[] value)
-            {
-                fixed (float* value_ptr = value)
-                {
-                    GetPathColorGenfvNV(color, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathColorGenfvNV(PathColor color, PathGenMode pname, ref float value)
-            {
-                fixed (float* value_ptr = &value)
-                {
-                    GetPathColorGenfvNV(color, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname, Span<int> value)
-            {
-                fixed (int* value_ptr = value)
-                {
-                    GetPathTexGenivNV(texCoordSet, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname, int[] value)
-            {
-                fixed (int* value_ptr = value)
-                {
-                    GetPathTexGenivNV(texCoordSet, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathTexGenivNV(TextureUnit texCoordSet, PathGenMode pname, ref int value)
-            {
-                fixed (int* value_ptr = &value)
-                {
-                    GetPathTexGenivNV(texCoordSet, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname, Span<float> value)
-            {
-                fixed (float* value_ptr = value)
-                {
-                    GetPathTexGenfvNV(texCoordSet, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname, float[] value)
-            {
-                fixed (float* value_ptr = value)
-                {
-                    GetPathTexGenfvNV(texCoordSet, pname, value_ptr);
-                }
-            }
-            public static unsafe void GetPathTexGenfvNV(TextureUnit texCoordSet, PathGenMode pname, ref float value)
-            {
-                fixed (float* value_ptr = &value)
-                {
-                    GetPathTexGenfvNV(texCoordSet, pname, value_ptr);
-                }
-            }
             public static unsafe void MatrixLoadTransposefEXT(MatrixMode mode, ReadOnlySpan<float> m)
             {
                 fixed (float* m_ptr = m)
@@ -33966,7 +31931,25 @@ namespace OpenTK.Graphics.OpenGL
                 Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                 return returnValue;
             }
-            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, Span<int> length, Span<int> size, Span<All> type, byte* name)
+            public static unsafe string GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, Span<int> length, Span<int> size, Span<All> type)
+            {
+                string name;
+                fixed (int* length_ptr = length)
+                {
+                    fixed (int* size_ptr = size)
+                    {
+                        fixed (All* type_ptr = type)
+                        {
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
+                        }
+                    }
+                }
+                return name;
+            }
+            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, Span<int> length, Span<int> size, Span<All> type, out string name)
             {
                 fixed (int* length_ptr = length)
                 {
@@ -33974,12 +31957,33 @@ namespace OpenTK.Graphics.OpenGL
                     {
                         fixed (All* type_ptr = type)
                         {
-                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name);
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                         }
                     }
                 }
             }
-            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, int[] length, int[] size, All[] type, byte* name)
+            public static unsafe string GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, int[] length, int[] size, All[] type)
+            {
+                string name;
+                fixed (int* length_ptr = length)
+                {
+                    fixed (int* size_ptr = size)
+                    {
+                        fixed (All* type_ptr = type)
+                        {
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
+                        }
+                    }
+                }
+                return name;
+            }
+            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, int[] length, int[] size, All[] type, out string name)
             {
                 fixed (int* length_ptr = length)
                 {
@@ -33987,18 +31991,38 @@ namespace OpenTK.Graphics.OpenGL
                     {
                         fixed (All* type_ptr = type)
                         {
-                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name);
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                         }
                     }
                 }
             }
-            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, ref int length, ref int size, ref All type, byte* name)
+            public static unsafe string GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, ref int length, ref int size, ref All type)
+            {
+                string name;
+                fixed (int* length_ptr = &length)
+                fixed (int* size_ptr = &size)
+                fixed (All* type_ptr = &type)
+                {
+                    var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                    name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)name_ptr);
+                }
+                return name;
+            }
+            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, ref int length, ref int size, ref All type, out string name)
             {
                 fixed (int* length_ptr = &length)
                 fixed (int* size_ptr = &size)
                 fixed (All* type_ptr = &type)
                 {
-                    GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name);
+                    var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                    name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                 }
             }
             public static unsafe void GetTransformFeedbackVaryingNV(ProgramHandle program, uint index, Span<int> location)
@@ -36408,7 +34432,7 @@ namespace OpenTK.Graphics.OpenGL
                     GetNextPerfQueryIdINTEL(queryId, nextQueryId_ptr);
                 }
             }
-            public static unsafe void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, byte* counterName, uint counterDescLength, byte* counterDesc, ref uint counterOffset, ref uint counterDataSize, ref uint counterTypeEnum, ref uint counterDataTypeEnum, ref ulong rawCounterMaxValue)
+            public static unsafe void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, out string counterName, uint counterDescLength, out string counterDesc, ref uint counterOffset, ref uint counterDataSize, ref uint counterTypeEnum, ref uint counterDataTypeEnum, ref ulong rawCounterMaxValue)
             {
                 fixed (uint* counterOffset_ptr = &counterOffset)
                 fixed (uint* counterDataSize_ptr = &counterDataSize)
@@ -36416,7 +34440,13 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (uint* counterDataTypeEnum_ptr = &counterDataTypeEnum)
                 fixed (ulong* rawCounterMaxValue_ptr = &rawCounterMaxValue)
                 {
-                    GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName, counterDescLength, counterDesc, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue_ptr);
+                    var counterName_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterNameLength);
+                    var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterDescLength);
+                    GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName_ptr, counterDescLength, counterDesc_ptr, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue_ptr);
+                    counterDesc = Marshal.PtrToStringUTF8((IntPtr)counterDesc_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)counterDesc_ptr);
+                    counterName = Marshal.PtrToStringUTF8((IntPtr)counterName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)counterName_ptr);
                 }
             }
             public static unsafe void GetPerfQueryDataINTEL(uint queryHandle, uint flags, int dataSize, IntPtr data, ref uint bytesWritten)
@@ -36443,14 +34473,32 @@ namespace OpenTK.Graphics.OpenGL
                     GetPerfQueryIdByNameINTEL(queryName, queryId_ptr);
                 }
             }
-            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            {
+                string queryName;
+                fixed (uint* dataSize_ptr = &dataSize)
+                fixed (uint* noCounters_ptr = &noCounters)
+                fixed (uint* noInstances_ptr = &noInstances)
+                fixed (uint* capsMask_ptr = &capsMask)
+                {
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
+                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
+                }
+                return queryName;
+            }
+            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
             {
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
                 fixed (uint* capsMask_ptr = &capsMask)
                 {
-                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
+                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
                 }
             }
         }

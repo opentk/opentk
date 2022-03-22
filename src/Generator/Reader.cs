@@ -40,7 +40,7 @@ namespace Generator
 
         public static FileStream ReadSpecFromGithub()
         {
-            string url = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/otk5/xml/gl.xml";
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml";
             string filePath = Path.Combine(TempDirectory, "gl.xml");
 
             FileStream stream;
