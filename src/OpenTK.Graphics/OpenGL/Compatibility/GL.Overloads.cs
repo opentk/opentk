@@ -4184,13 +4184,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -4200,7 +4200,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -4210,7 +4210,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -4219,13 +4219,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -4235,7 +4235,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -4245,7 +4245,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -4254,13 +4254,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage1D"/>
-        public static unsafe void CompressedTexSubImage1D(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage1D(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTexSubImage1D"/>
-        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -4270,7 +4270,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage1D"/>
-        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -4280,7 +4280,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage1D"/>
-        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage1D<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -12438,18 +12438,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ViewportArrayv"/>
-        public static unsafe void ViewportArray(uint first, ReadOnlySpan<float> v)
+        public static unsafe void ViewportArray(uint first, int count, ReadOnlySpan<float> v)
         {
-            int count = (int)(v.Length / 4);
             fixed (float* v_ptr = v)
             {
                 ViewportArrayv(first, count, v_ptr);
             }
         }
         /// <inheritdoc cref="ViewportArrayv"/>
-        public static unsafe void ViewportArray(uint first, float[] v)
+        public static unsafe void ViewportArray(uint first, int count, float[] v)
         {
-            int count = (int)(v.Length / 4);
             fixed (float* v_ptr = v)
             {
                 ViewportArrayv(first, count, v_ptr);
@@ -12488,18 +12486,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="ScissorArrayv"/>
-        public static unsafe void ScissorArray(uint first, ReadOnlySpan<int> v)
+        public static unsafe void ScissorArray(uint first, int count, ReadOnlySpan<int> v)
         {
-            int count = (int)(v.Length / 4);
             fixed (int* v_ptr = v)
             {
                 ScissorArrayv(first, count, v_ptr);
             }
         }
         /// <inheritdoc cref="ScissorArrayv"/>
-        public static unsafe void ScissorArray(uint first, int[] v)
+        public static unsafe void ScissorArray(uint first, int count, int[] v)
         {
-            int count = (int)(v.Length / 4);
             fixed (int* v_ptr = v)
             {
                 ScissorArrayv(first, count, v_ptr);
@@ -13956,26 +13952,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             NamedBufferData(buffer, size, data_vptr, usage);
         }
         /// <inheritdoc cref="NamedBufferData"/>
-        public static unsafe void NamedBufferData<T1>(BufferHandle buffer, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                NamedBufferData(buffer, size, data_ptr, usage);
-            }
-        }
-        /// <inheritdoc cref="NamedBufferData"/>
-        public static unsafe void NamedBufferData<T1>(BufferHandle buffer, T1[] data, VertexBufferObjectUsage usage)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                NamedBufferData(buffer, size, data_ptr, usage);
-            }
-        }
-        /// <inheritdoc cref="NamedBufferData"/>
         public static unsafe void NamedBufferData<T1>(BufferHandle buffer, nint size, in T1 data, VertexBufferObjectUsage usage)
             where T1 : unmanaged
         {
@@ -13991,20 +13967,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             NamedBufferSubData(buffer, offset, size, data_vptr);
         }
         /// <inheritdoc cref="NamedBufferSubData"/>
-        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, ReadOnlySpan<T1> data)
+        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
-            nint size = (nint)(data.Length * sizeof(T1));
             fixed (void* data_ptr = data)
             {
                 NamedBufferSubData(buffer, offset, size, data_ptr);
             }
         }
         /// <inheritdoc cref="NamedBufferSubData"/>
-        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+        public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
             where T1 : unmanaged
         {
-            nint size = (nint)(data.Length * sizeof(T1));
             fixed (void* data_ptr = data)
             {
                 NamedBufferSubData(buffer, offset, size, data_ptr);
@@ -14075,26 +14049,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         {
             void* data_vptr = (void*)data;
             GetNamedBufferSubData(buffer, offset, size, data_vptr);
-        }
-        /// <inheritdoc cref="GetNamedBufferSubData"/>
-        public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, Span<T1> data)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                GetNamedBufferSubData(buffer, offset, size, data_ptr);
-            }
-        }
-        /// <inheritdoc cref="GetNamedBufferSubData"/>
-        public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
-            where T1 : unmanaged
-        {
-            nint size = (nint)(data.Length * sizeof(T1));
-            fixed (void* data_ptr = data)
-            {
-                GetNamedBufferSubData(buffer, offset, size, data_ptr);
-            }
         }
         /// <inheritdoc cref="GetNamedBufferSubData"/>
         public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ref T1 data)
@@ -14420,13 +14374,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTextureSubImage1D"/>
-        public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTextureSubImage1D"/>
-        public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -14435,13 +14389,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTextureSubImage2D"/>
-        public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTextureSubImage2D"/>
-        public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -14450,13 +14404,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CompressedTextureSubImage3D"/>
-        public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTextureSubImage3D"/>
-        public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -16088,6 +16042,24 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 MultiDrawArraysIndirectAMD(mode, indirect_vptr, primcount, stride);
             }
             /// <inheritdoc cref="MultiDrawArraysIndirectAMD"/>
+            public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, ReadOnlySpan<T1> indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawArraysIndirectAMD(mode, indirect_ptr, primcount, stride);
+                }
+            }
+            /// <inheritdoc cref="MultiDrawArraysIndirectAMD"/>
+            public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, T1[] indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawArraysIndirectAMD(mode, indirect_ptr, primcount, stride);
+                }
+            }
+            /// <inheritdoc cref="MultiDrawArraysIndirectAMD"/>
             public static unsafe void MultiDrawArraysIndirectAMD<T1>(PrimitiveType mode, in T1 indirect, int primcount, int stride)
                 where T1 : unmanaged
             {
@@ -16101,6 +16073,24 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 void* indirect_vptr = (void*)indirect;
                 MultiDrawElementsIndirectAMD(mode, type, indirect_vptr, primcount, stride);
+            }
+            /// <inheritdoc cref="MultiDrawElementsIndirectAMD"/>
+            public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, ReadOnlySpan<T1> indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawElementsIndirectAMD(mode, type, indirect_ptr, primcount, stride);
+                }
+            }
+            /// <inheritdoc cref="MultiDrawElementsIndirectAMD"/>
+            public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, T1[] indirect, int primcount, int stride)
+                where T1 : unmanaged
+            {
+                fixed (void* indirect_ptr = indirect)
+                {
+                    MultiDrawElementsIndirectAMD(mode, type, indirect_ptr, primcount, stride);
+                }
             }
             /// <inheritdoc cref="MultiDrawElementsIndirectAMD"/>
             public static unsafe void MultiDrawElementsIndirectAMD<T1>(PrimitiveType mode, DrawElementsType type, in T1 indirect, int primcount, int stride)
@@ -17687,26 +17677,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 NamedBufferData(buffer, size, data_vptr, usage);
             }
             /// <inheritdoc cref="NamedBufferData"/>
-            public static unsafe void NamedBufferData<T1>(BufferHandle buffer, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    NamedBufferData(buffer, size, data_ptr, usage);
-                }
-            }
-            /// <inheritdoc cref="NamedBufferData"/>
-            public static unsafe void NamedBufferData<T1>(BufferHandle buffer, T1[] data, VertexBufferObjectUsage usage)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    NamedBufferData(buffer, size, data_ptr, usage);
-                }
-            }
-            /// <inheritdoc cref="NamedBufferData"/>
             public static unsafe void NamedBufferData<T1>(BufferHandle buffer, nint size, in T1 data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
@@ -17722,20 +17692,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 NamedBufferSubData(buffer, offset, size, data_vptr);
             }
             /// <inheritdoc cref="NamedBufferSubData"/>
-            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, ReadOnlySpan<T1> data)
+            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubData(buffer, offset, size, data_ptr);
                 }
             }
             /// <inheritdoc cref="NamedBufferSubData"/>
-            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+            public static unsafe void NamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubData(buffer, offset, size, data_ptr);
@@ -17806,26 +17774,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 void* data_vptr = (void*)data;
                 GetNamedBufferSubData(buffer, offset, size, data_vptr);
-            }
-            /// <inheritdoc cref="GetNamedBufferSubData"/>
-            public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, Span<T1> data)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    GetNamedBufferSubData(buffer, offset, size, data_ptr);
-                }
-            }
-            /// <inheritdoc cref="GetNamedBufferSubData"/>
-            public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
-                where T1 : unmanaged
-            {
-                nint size = (nint)(data.Length * sizeof(T1));
-                fixed (void* data_ptr = data)
-                {
-                    GetNamedBufferSubData(buffer, offset, size, data_ptr);
-                }
             }
             /// <inheritdoc cref="GetNamedBufferSubData"/>
             public static unsafe void GetNamedBufferSubData<T1>(BufferHandle buffer, IntPtr offset, nint size, ref T1 data)
@@ -18151,13 +18099,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage1D"/>
-            public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTextureSubImage1D(texture, level, xoffset, width, format, imageSize, data_vptr);
             }
             /// <inheritdoc cref="CompressedTextureSubImage1D"/>
-            public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage1D<T1>(TextureHandle texture, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -18166,13 +18114,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage2D"/>
-            public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTextureSubImage2D(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTextureSubImage2D(texture, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
             }
             /// <inheritdoc cref="CompressedTextureSubImage2D"/>
-            public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage2D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -18181,13 +18129,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage3D"/>
-            public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTextureSubImage3D(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTextureSubImage3D(texture, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
             }
             /// <inheritdoc cref="CompressedTextureSubImage3D"/>
-            public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTextureSubImage3D<T1>(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -25719,13 +25667,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage3DARB"/>
-            public static unsafe void CompressedTexSubImage3DARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTexSubImage3DARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
             }
             /// <inheritdoc cref="CompressedTexSubImage3DARB"/>
-            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> data)
+            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -25735,7 +25683,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage3DARB"/>
-            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] data)
+            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -25745,7 +25693,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage3DARB"/>
-            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage3DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -25754,13 +25702,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage2DARB"/>
-            public static unsafe void CompressedTexSubImage2DARB(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTexSubImage2DARB(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
             }
             /// <inheritdoc cref="CompressedTexSubImage2DARB"/>
-            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> data)
+            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -25770,7 +25718,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage2DARB"/>
-            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] data)
+            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -25780,7 +25728,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage2DARB"/>
-            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage2DARB<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -25789,13 +25737,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage1DARB"/>
-            public static unsafe void CompressedTexSubImage1DARB(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTexSubImage1DARB(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data_vptr);
             }
             /// <inheritdoc cref="CompressedTexSubImage1DARB"/>
-            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> data)
+            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -25805,7 +25753,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage1DARB"/>
-            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] data)
+            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -25815,7 +25763,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage1DARB"/>
-            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage1DARB<T1>(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -28344,18 +28292,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ViewportArrayv"/>
-            public static unsafe void ViewportArray(uint first, ReadOnlySpan<float> v)
+            public static unsafe void ViewportArray(uint first, int count, ReadOnlySpan<float> v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayv(first, count, v_ptr);
                 }
             }
             /// <inheritdoc cref="ViewportArrayv"/>
-            public static unsafe void ViewportArray(uint first, float[] v)
+            public static unsafe void ViewportArray(uint first, int count, float[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayv(first, count, v_ptr);
@@ -28394,18 +28340,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ScissorArrayv"/>
-            public static unsafe void ScissorArray(uint first, ReadOnlySpan<int> v)
+            public static unsafe void ScissorArray(uint first, int count, ReadOnlySpan<int> v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayv(first, count, v_ptr);
                 }
             }
             /// <inheritdoc cref="ScissorArrayv"/>
-            public static unsafe void ScissorArray(uint first, int[] v)
+            public static unsafe void ScissorArray(uint first, int count, int[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayv(first, count, v_ptr);
@@ -31813,13 +31757,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage3DEXT"/>
-            public static unsafe void CompressedTextureSubImage3DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedTextureSubImage3DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedTextureSubImage3DEXT(texture, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_vptr);
             }
             /// <inheritdoc cref="CompressedTextureSubImage3DEXT"/>
-            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -31829,7 +31773,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage3DEXT"/>
-            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -31839,7 +31783,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage3DEXT"/>
-            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -31848,13 +31792,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage2DEXT"/>
-            public static unsafe void CompressedTextureSubImage2DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedTextureSubImage2DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedTextureSubImage2DEXT(texture, target, level, xoffset, yoffset, width, height, format, imageSize, bits_vptr);
             }
             /// <inheritdoc cref="CompressedTextureSubImage2DEXT"/>
-            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -31864,7 +31808,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage2DEXT"/>
-            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -31874,7 +31818,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage2DEXT"/>
-            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -31883,13 +31827,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage1DEXT"/>
-            public static unsafe void CompressedTextureSubImage1DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedTextureSubImage1DEXT(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedTextureSubImage1DEXT(texture, target, level, xoffset, width, format, imageSize, bits_vptr);
             }
             /// <inheritdoc cref="CompressedTextureSubImage1DEXT"/>
-            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -31899,7 +31843,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage1DEXT"/>
-            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -31909,7 +31853,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedTextureSubImage1DEXT"/>
-            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedTextureSubImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -32056,13 +32000,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage3DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedMultiTexSubImage3DEXT(texunit, target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, bits_vptr);
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage3DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -32072,7 +32016,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage3DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -32082,7 +32026,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage3DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -32091,13 +32035,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage2DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedMultiTexSubImage2DEXT(texunit, target, level, xoffset, yoffset, width, height, format, imageSize, bits_vptr);
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage2DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -32107,7 +32051,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage2DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -32117,7 +32061,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage2DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -32126,13 +32070,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage1DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, IntPtr bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, IntPtr bits)
             {
                 void* bits_vptr = (void*)bits;
                 CompressedMultiTexSubImage1DEXT(texunit, target, level, xoffset, width, format, imageSize, bits_vptr);
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage1DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, ReadOnlySpan<T1> bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, ReadOnlySpan<T1> bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -32142,7 +32086,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage1DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, T1[] bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, T1[] bits)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(bits.Length * sizeof(T1));
@@ -32152,7 +32096,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CompressedMultiTexSubImage1DEXT"/>
-            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, int imageSize, in T1 bits)
+            public static unsafe void CompressedMultiTexSubImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, in T1 bits)
                 where T1 : unmanaged
             {
                 fixed (void* bits_ptr = &bits)
@@ -32296,20 +32240,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 NamedBufferDataEXT(buffer, size, data_vptr, usage);
             }
             /// <inheritdoc cref="NamedBufferDataEXT"/>
-            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
+            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, nint size, ReadOnlySpan<T1> data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferDataEXT(buffer, size, data_ptr, usage);
                 }
             }
             /// <inheritdoc cref="NamedBufferDataEXT"/>
-            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, T1[] data, VertexBufferObjectUsage usage)
+            public static unsafe void NamedBufferDataEXT<T1>(BufferHandle buffer, nint size, T1[] data, VertexBufferObjectUsage usage)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferDataEXT(buffer, size, data_ptr, usage);
@@ -32331,20 +32273,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 NamedBufferSubDataEXT(buffer, offset, size, data_vptr);
             }
             /// <inheritdoc cref="NamedBufferSubDataEXT"/>
-            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, ReadOnlySpan<T1> data)
+            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubDataEXT(buffer, offset, size, data_ptr);
                 }
             }
             /// <inheritdoc cref="NamedBufferSubDataEXT"/>
-            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+            public static unsafe void NamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     NamedBufferSubDataEXT(buffer, offset, size, data_ptr);
@@ -32390,20 +32330,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 GetNamedBufferSubDataEXT(buffer, offset, size, data_vptr);
             }
             /// <inheritdoc cref="GetNamedBufferSubDataEXT"/>
-            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, Span<T1> data)
+            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, Span<T1> data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     GetNamedBufferSubDataEXT(buffer, offset, size, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetNamedBufferSubDataEXT"/>
-            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, T1[] data)
+            public static unsafe void GetNamedBufferSubDataEXT<T1>(BufferHandle buffer, IntPtr offset, nint size, T1[] data)
                 where T1 : unmanaged
             {
-                nint size = (nint)(data.Length * sizeof(T1));
                 fixed (void* data_ptr = data)
                 {
                     GetNamedBufferSubDataEXT(buffer, offset, size, data_ptr);
@@ -42724,7 +42662,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="GetActiveVaryingNV"/>
-            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, Span<int> length, Span<int> size, Span<All> type, byte* name)
+            public static unsafe string GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, Span<int> length, Span<int> size, Span<All> type)
+            {
+                string name;
+                fixed (int* length_ptr = length)
+                {
+                    fixed (int* size_ptr = size)
+                    {
+                        fixed (All* type_ptr = type)
+                        {
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
+                        }
+                    }
+                }
+                return name;
+            }
+            /// <inheritdoc cref="GetActiveVaryingNV"/>
+            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, Span<int> length, Span<int> size, Span<All> type, out string name)
             {
                 fixed (int* length_ptr = length)
                 {
@@ -42732,13 +42689,35 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     {
                         fixed (All* type_ptr = type)
                         {
-                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name);
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="GetActiveVaryingNV"/>
-            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, int[] length, int[] size, All[] type, byte* name)
+            public static unsafe string GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, int[] length, int[] size, All[] type)
+            {
+                string name;
+                fixed (int* length_ptr = length)
+                {
+                    fixed (int* size_ptr = size)
+                    {
+                        fixed (All* type_ptr = type)
+                        {
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
+                        }
+                    }
+                }
+                return name;
+            }
+            /// <inheritdoc cref="GetActiveVaryingNV"/>
+            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, int[] length, int[] size, All[] type, out string name)
             {
                 fixed (int* length_ptr = length)
                 {
@@ -42746,19 +42725,40 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     {
                         fixed (All* type_ptr = type)
                         {
-                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name);
+                            var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                            GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                            name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                            Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="GetActiveVaryingNV"/>
-            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, ref int length, ref int size, ref All type, byte* name)
+            public static unsafe string GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, ref int length, ref int size, ref All type)
+            {
+                string name;
+                fixed (int* length_ptr = &length)
+                fixed (int* size_ptr = &size)
+                fixed (All* type_ptr = &type)
+                {
+                    var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                    name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)name_ptr);
+                }
+                return name;
+            }
+            /// <inheritdoc cref="GetActiveVaryingNV"/>
+            public static unsafe void GetActiveVaryingNV(ProgramHandle program, uint index, int bufSize, ref int length, ref int size, ref All type, out string name)
             {
                 fixed (int* length_ptr = &length)
                 fixed (int* size_ptr = &size)
                 fixed (All* type_ptr = &type)
                 {
-                    GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name);
+                    var name_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetActiveVaryingNV(program, index, bufSize, length_ptr, size_ptr, type_ptr, name_ptr);
+                    name = Marshal.PtrToStringUTF8((IntPtr)name_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                 }
             }
             /// <inheritdoc cref="GetTransformFeedbackVaryingNV"/>
@@ -45480,7 +45480,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetPerfCounterInfoINTEL"/>
-            public static unsafe void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, byte* counterName, uint counterDescLength, byte* counterDesc, ref uint counterOffset, ref uint counterDataSize, ref uint counterTypeEnum, ref uint counterDataTypeEnum, ref ulong rawCounterMaxValue)
+            public static unsafe void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, out string counterName, uint counterDescLength, out string counterDesc, ref uint counterOffset, ref uint counterDataSize, ref uint counterTypeEnum, ref uint counterDataTypeEnum, ref ulong rawCounterMaxValue)
             {
                 fixed (uint* counterOffset_ptr = &counterOffset)
                 fixed (uint* counterDataSize_ptr = &counterDataSize)
@@ -45488,7 +45488,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 fixed (uint* counterDataTypeEnum_ptr = &counterDataTypeEnum)
                 fixed (ulong* rawCounterMaxValue_ptr = &rawCounterMaxValue)
                 {
-                    GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName, counterDescLength, counterDesc, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue_ptr);
+                    var counterName_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterNameLength);
+                    var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterDescLength);
+                    GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName_ptr, counterDescLength, counterDesc_ptr, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue_ptr);
+                    counterDesc = Marshal.PtrToStringUTF8((IntPtr)counterDesc_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)counterDesc_ptr);
+                    counterName = Marshal.PtrToStringUTF8((IntPtr)counterName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)counterName_ptr);
                 }
             }
             /// <inheritdoc cref="GetPerfQueryDataINTEL"/>
@@ -45519,14 +45525,33 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetPerfQueryInfoINTEL"/>
-            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            {
+                string queryName;
+                fixed (uint* dataSize_ptr = &dataSize)
+                fixed (uint* noCounters_ptr = &noCounters)
+                fixed (uint* noInstances_ptr = &noInstances)
+                fixed (uint* capsMask_ptr = &capsMask)
+                {
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
+                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
+                }
+                return queryName;
+            }
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL"/>
+            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
             {
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
                 fixed (uint* capsMask_ptr = &capsMask)
                 {
-                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
+                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
                 }
             }
         }

@@ -1248,7 +1248,7 @@
                 <listitem>
                     <para>
                         <parameter>data</parameter> returns one value,
-                        the maximum number of components of outputs written by a geometry shader, which must be at least 128.
+                        the maximum number of components of outputs written by a geometry shader, which must be at least 64.
                     </para>
                 </listitem>
             </varlistentry>
@@ -1441,7 +1441,7 @@
                 <listitem>
                     <para>
                         <parameter>data</parameter> returns one value,
-                        the maximum number of components of inputs read by a tesselation control shader, which must be at least 128.
+                        the maximum number of components of inputs read by a tesselation control shader, which must be at least 64.
                     </para>
                 </listitem>
             </varlistentry>
@@ -1450,7 +1450,7 @@
                 <listitem>
                     <para>
                         <parameter>data</parameter> returns one value,
-                        the maximum number of components of outputs written by a tesselation control shader, which must be at least 128.
+                        the maximum number of components of outputs written by a tesselation control shader, which must be at least 64.
                     </para>
                 </listitem>
             </varlistentry>
@@ -1534,7 +1534,7 @@
                 <listitem>
                     <para>
                         <parameter>data</parameter> returns one value,
-                        the maximum number of components of inputs read by a tesselation evaluation shader, which must be at least 128.
+                        the maximum number of components of inputs read by a tesselation evaluation shader, which must be at least 64.
                     </para>
                 </listitem>
             </varlistentry>
@@ -1543,7 +1543,7 @@
                 <listitem>
                     <para>
                         <parameter>data</parameter> returns one value,
-                        the maximum number of components of outputs written by a tesselation evaluation shader, which must be at least 128.
+                        the maximum number of components of outputs written by a tesselation evaluation shader, which must be at least 64.
                     </para>
                 </listitem>
             </varlistentry>
@@ -1601,7 +1601,7 @@
                 <listitem>
                     <para>
                         <parameter>data</parameter> returns one value,
-                        the maximum number of components of per-patch outputs written by a tesselation control shader, which must be at least 128.
+                        the maximum number of components of per-patch outputs written by a tesselation control shader, which must be at least 120.
                     </para>
                 </listitem>
             </varlistentry>

@@ -44,7 +44,7 @@ namespace Generator.Writing
                 }
 
                 WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors, api.Documentation);
-                WriteOverloads(directoryPath, apiNamespace, api.Vendors, api.Documentation);
+                WriteOverloads(directoryPath, apiNamespace, api.Vendors);
 
                 WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
             }
@@ -54,7 +54,7 @@ namespace Generator.Writing
             string directoryPath,
             string glNamespace,
             Dictionary<string, GLVendorFunctions> groups,
-            Dictionary<NativeFunction, CommandDocumentation> documentation)
+            Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -81,8 +81,8 @@ namespace Generator.Writing
                         foreach (var function in group.NativeFunctions)
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
-                            documentation.TryGetValue(function, out CommandDocumentation? commandDocumentation);
-                            WriteNativeMethod(writer, function, postfixName, commandDocumentation);
+                            documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
+                            WriteNativeMethod(writer, function, postfixName, functionDocumentation);
                         }
 
                         scope?.Dispose();
@@ -93,7 +93,7 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, CommandDocumentation? documentation)
+        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
@@ -189,8 +189,7 @@ namespace Generator.Writing
         private static void WriteOverloads(
             string directoryPath,
             string glNamespace,
-            Dictionary<string, GLVendorFunctions> groups,
-            Dictionary<NativeFunction, CommandDocumentation> documentation)
+            Dictionary<string, GLVendorFunctions> groups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -221,8 +220,7 @@ namespace Generator.Writing
                             foreach (var overload in nativeFunctionOverloads)
                             {
                                 bool postfixNativeCall = group.NativeFunctionsWithPostfix.Contains(overload.NativeFunction);
-                                documentation.TryGetValue(overload.NativeFunction, out CommandDocumentation? documenation);
-                                WriteOverloadMethod(writer, overload, postfixNativeCall, documenation);
+                                WriteOverloadMethod(writer, overload, postfixNativeCall);
                             }
                         }
 
@@ -232,7 +230,7 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall, CommandDocumentation? documenation)
+        private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
         {
             writer.WriteLine($"/// <inheritdoc cref=\"{overload.NativeFunction.FunctionName}\"/>");
 
@@ -303,9 +301,10 @@ namespace Generator.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
-        private static void WriteDocumentation(IndentedTextWriter writer, CommandDocumentation documentation)
+
+        private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation)
         {
-            writer.WriteLine($"/// <summary> {documentation.Purpose} </summary>");
+            writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> {documentation.Purpose} </summary>");
 
             foreach (ParameterDocumentation parameter in documentation.Parameters)
             {

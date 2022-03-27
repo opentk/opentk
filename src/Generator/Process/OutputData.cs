@@ -14,8 +14,15 @@ namespace Generator.Writing
         OutputApi Api,
         Dictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
-        Dictionary<NativeFunction, CommandDocumentation> Documentation);
+        Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
+    public record FunctionDocumentation(
+        string Name,
+        string Purpose,
+        ParameterDocumentation[] Parameters,
+        List<string> AddedIn,
+        List<string>? RemovedIn
+        );
 
     public record GLVendorFunctions(
         List<NativeFunction> NativeFunctions,

@@ -128,7 +128,7 @@
     <citerefentry><refentrytitle>glGetUniformLocation</refentrytitle></citerefentry>
     can be used to obtain the location of a uniform variable. This
     location value can then be passed to
-    <function>glGetUniform</function> or <function>glGentUniform</function> 
+    <function>glGetUniform</function> or <function>glGetnUniform</function>
     in order to query the current
     value of the uniform variable. After a program object has been
     linked successfully, the index values for uniform variables

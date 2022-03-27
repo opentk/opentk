@@ -1398,7 +1398,7 @@
     </refsect1>
     <refsect1 xml:id="notes"><title>Notes</title>
         <para>
-            Incoming (source) alpha is correctly thought of as a material opacity,
+            Incoming (source) alpha would typically be used as a material opacity,
             ranging from 1.0
             (<inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
                 <!-- eqn: K sub A: -->

@@ -84,9 +84,9 @@
         </para>
             <programlisting>    typedef  struct {
         uint  count;
-        uint  primCount;
+        uint  instanceCount;
         uint  firstIndex;
-        uint  baseVertex;
+        int  baseVertex;
         uint  baseInstance;
     } DrawElementsIndirectCommand;</programlisting>
         <para>
@@ -99,7 +99,7 @@
                                                       cmd-&gt;count,
                                                       type,
                                                       cmd-&gt;firstIndex * size-of-type,
-                                                      cmd-&gt;primCount,
+                                                      cmd-&gt;instanceCount,
                                                       cmd-&gt;baseVertex,
                                                       cmd-&gt;baseInstance);
     }</programlisting>

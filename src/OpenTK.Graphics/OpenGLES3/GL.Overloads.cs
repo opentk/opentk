@@ -131,13 +131,13 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -147,7 +147,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -157,7 +157,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage2D"/>
-        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -2177,13 +2177,13 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+        public static unsafe void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -2193,7 +2193,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
             int imageSize = (int)(data.Length * sizeof(T1));
@@ -2203,7 +2203,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="CompressedTexSubImage3D"/>
-        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+        public static unsafe void CompressedTexSubImage3D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
             fixed (void* data_ptr = &data)
@@ -6103,27 +6103,75 @@ namespace OpenTK.Graphics.OpenGLES3
                 DrawElementsInstancedANGLE(mode, count, type, indices, primcount);
             }
             /// <inheritdoc cref="GetTranslatedShaderSourceANGLE"/>
-            public static unsafe void GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, Span<int> length, byte* source)
+            public static unsafe string GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, Span<int> length)
+            {
+                string source;
+                fixed (int* length_ptr = length)
+                {
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
+                }
+                return source;
+            }
+            /// <inheritdoc cref="GetTranslatedShaderSourceANGLE"/>
+            public static unsafe void GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, Span<int> length, out string source)
             {
                 fixed (int* length_ptr = length)
                 {
-                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
                 }
             }
             /// <inheritdoc cref="GetTranslatedShaderSourceANGLE"/>
-            public static unsafe void GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, int[] length, byte* source)
+            public static unsafe string GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, int[] length)
+            {
+                string source;
+                fixed (int* length_ptr = length)
+                {
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
+                }
+                return source;
+            }
+            /// <inheritdoc cref="GetTranslatedShaderSourceANGLE"/>
+            public static unsafe void GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, int[] length, out string source)
             {
                 fixed (int* length_ptr = length)
                 {
-                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
                 }
             }
             /// <inheritdoc cref="GetTranslatedShaderSourceANGLE"/>
-            public static unsafe void GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, ref int length, byte* source)
+            public static unsafe string GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, ref int length)
+            {
+                string source;
+                fixed (int* length_ptr = &length)
+                {
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
+                }
+                return source;
+            }
+            /// <inheritdoc cref="GetTranslatedShaderSourceANGLE"/>
+            public static unsafe void GetTranslatedShaderSourceANGLE(ShaderHandle shader, int bufSize, ref int length, out string source)
             {
                 fixed (int* length_ptr = &length)
                 {
-                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(bufSize);
+                    GetTranslatedShaderSourceANGLE(shader, bufSize, length_ptr, source_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
                 }
             }
         }
@@ -8306,6 +8354,22 @@ namespace OpenTK.Graphics.OpenGLES3
                 fixed (uint* parameters_ptr = &parameters)
                 {
                     GetSamplerParameterIuivEXT(sampler, pname, parameters_ptr);
+                }
+            }
+            /// <inheritdoc cref="TexStorageAttribs2DEXT"/>
+            public static unsafe void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, in int attrib_list)
+            {
+                fixed (int* attrib_list_ptr = &attrib_list)
+                {
+                    TexStorageAttribs2DEXT(target, levels, internalformat, width, height, attrib_list_ptr);
+                }
+            }
+            /// <inheritdoc cref="TexStorageAttribs3DEXT"/>
+            public static unsafe void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, in int attrib_list)
+            {
+                fixed (int* attrib_list_ptr = &attrib_list)
+                {
+                    TexStorageAttribs3DEXT(target, levels, internalformat, width, height, depth, attrib_list_ptr);
                 }
             }
             /// <inheritdoc cref="WindowRectanglesEXT"/>
@@ -10852,18 +10916,16 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="ViewportArrayvNV"/>
-            public static unsafe void ViewportArrayvNV(uint first, ReadOnlySpan<float> v)
+            public static unsafe void ViewportArrayvNV(uint first, int count, ReadOnlySpan<float> v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayvNV(first, count, v_ptr);
                 }
             }
             /// <inheritdoc cref="ViewportArrayvNV"/>
-            public static unsafe void ViewportArrayvNV(uint first, float[] v)
+            public static unsafe void ViewportArrayvNV(uint first, int count, float[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayvNV(first, count, v_ptr);
@@ -10902,18 +10964,16 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="ScissorArrayvNV"/>
-            public static unsafe void ScissorArrayvNV(uint first, ReadOnlySpan<int> v)
+            public static unsafe void ScissorArrayvNV(uint first, int count, ReadOnlySpan<int> v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayvNV(first, count, v_ptr);
                 }
             }
             /// <inheritdoc cref="ScissorArrayvNV"/>
-            public static unsafe void ScissorArrayvNV(uint first, int[] v)
+            public static unsafe void ScissorArrayvNV(uint first, int count, int[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayvNV(first, count, v_ptr);
@@ -11066,7 +11126,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="GetPerfCounterInfoINTEL"/>
-            public static unsafe void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, byte* counterName, uint counterDescLength, byte* counterDesc, ref uint counterOffset, ref uint counterDataSize, ref uint counterTypeEnum, ref uint counterDataTypeEnum, ref ulong rawCounterMaxValue)
+            public static unsafe void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, out string counterName, uint counterDescLength, out string counterDesc, ref uint counterOffset, ref uint counterDataSize, ref uint counterTypeEnum, ref uint counterDataTypeEnum, ref ulong rawCounterMaxValue)
             {
                 fixed (uint* counterOffset_ptr = &counterOffset)
                 fixed (uint* counterDataSize_ptr = &counterDataSize)
@@ -11074,7 +11134,13 @@ namespace OpenTK.Graphics.OpenGLES3
                 fixed (uint* counterDataTypeEnum_ptr = &counterDataTypeEnum)
                 fixed (ulong* rawCounterMaxValue_ptr = &rawCounterMaxValue)
                 {
-                    GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName, counterDescLength, counterDesc, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue_ptr);
+                    var counterName_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterNameLength);
+                    var counterDesc_ptr = (byte*)Marshal.AllocCoTaskMem((int)counterDescLength);
+                    GetPerfCounterInfoINTEL(queryId, counterId, counterNameLength, counterName_ptr, counterDescLength, counterDesc_ptr, counterOffset_ptr, counterDataSize_ptr, counterTypeEnum_ptr, counterDataTypeEnum_ptr, rawCounterMaxValue_ptr);
+                    counterDesc = Marshal.PtrToStringUTF8((IntPtr)counterDesc_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)counterDesc_ptr);
+                    counterName = Marshal.PtrToStringUTF8((IntPtr)counterName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)counterName_ptr);
                 }
             }
             /// <inheritdoc cref="GetPerfQueryDataINTEL"/>
@@ -11105,14 +11171,33 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="GetPerfQueryInfoINTEL"/>
-            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            {
+                string queryName;
+                fixed (uint* dataSize_ptr = &dataSize)
+                fixed (uint* noCounters_ptr = &noCounters)
+                fixed (uint* noInstances_ptr = &noInstances)
+                fixed (uint* capsMask_ptr = &capsMask)
+                {
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
+                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
+                }
+                return queryName;
+            }
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL"/>
+            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
             {
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
                 fixed (uint* capsMask_ptr = &capsMask)
                 {
-                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
+                    GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
+                    queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
                 }
             }
         }
@@ -12403,13 +12488,13 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage3DOES"/>
-            public static unsafe void CompressedTexSubImage3DOES(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, IntPtr data)
+            public static unsafe void CompressedTexSubImage3DOES(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 CompressedTexSubImage3DOES(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data_vptr);
             }
             /// <inheritdoc cref="CompressedTexSubImage3DOES"/>
-            public static unsafe void CompressedTexSubImage3DOES<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, ReadOnlySpan<T1> data)
+            public static unsafe void CompressedTexSubImage3DOES<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, ReadOnlySpan<T1> data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -12419,7 +12504,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage3DOES"/>
-            public static unsafe void CompressedTexSubImage3DOES<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, T1[] data)
+            public static unsafe void CompressedTexSubImage3DOES<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, T1[] data)
                 where T1 : unmanaged
             {
                 int imageSize = (int)(data.Length * sizeof(T1));
@@ -12429,7 +12514,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CompressedTexSubImage3DOES"/>
-            public static unsafe void CompressedTexSubImage3DOES<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, int imageSize, in T1 data)
+            public static unsafe void CompressedTexSubImage3DOES<T1>(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, in T1 data)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -12688,18 +12773,16 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="ViewportArrayvOES"/>
-            public static unsafe void ViewportArrayvOES(uint first, ReadOnlySpan<float> v)
+            public static unsafe void ViewportArrayvOES(uint first, int count, ReadOnlySpan<float> v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayvOES(first, count, v_ptr);
                 }
             }
             /// <inheritdoc cref="ViewportArrayvOES"/>
-            public static unsafe void ViewportArrayvOES(uint first, float[] v)
+            public static unsafe void ViewportArrayvOES(uint first, int count, float[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (float* v_ptr = v)
                 {
                     ViewportArrayvOES(first, count, v_ptr);
@@ -12738,18 +12821,16 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="ScissorArrayvOES"/>
-            public static unsafe void ScissorArrayvOES(uint first, ReadOnlySpan<int> v)
+            public static unsafe void ScissorArrayvOES(uint first, int count, ReadOnlySpan<int> v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayvOES(first, count, v_ptr);
                 }
             }
             /// <inheritdoc cref="ScissorArrayvOES"/>
-            public static unsafe void ScissorArrayvOES(uint first, int[] v)
+            public static unsafe void ScissorArrayvOES(uint first, int count, int[] v)
             {
-                int count = (int)(v.Length / 4);
                 fixed (int* v_ptr = v)
                 {
                     ScissorArrayvOES(first, count, v_ptr);
@@ -13080,11 +13161,27 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM"/>
-            public static unsafe void ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, byte* source, ref int length)
+            public static unsafe string ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, ref int length)
+            {
+                string source;
+                fixed (int* length_ptr = &length)
+                {
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(*length_ptr);
+                    ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
+                }
+                return source;
+            }
+            /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM"/>
+            public static unsafe void ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, out string source, ref int length)
             {
                 fixed (int* length_ptr = &length)
                 {
-                    ExtGetProgramBinarySourceQCOM(program, shadertype, source, length_ptr);
+                    var source_ptr = (byte*)Marshal.AllocCoTaskMem(*length_ptr);
+                    ExtGetProgramBinarySourceQCOM(program, shadertype, source_ptr, length_ptr);
+                    source = Marshal.PtrToStringUTF8((IntPtr)source_ptr)!;
+                    Marshal.FreeCoTaskMem((IntPtr)source_ptr);
                 }
             }
             /// <inheritdoc cref="FramebufferFoveationConfigQCOM"/>
