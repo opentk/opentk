@@ -10,7 +10,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<AlphaFunction, float, void> _AlphaFunc_fnptr = &AlphaFunc_Lazy;
         /// <summary> Specify the alpha test function. </summary>
         /// <param name="func">Specifies the alpha comparison function. Symbolic constants GL_NEVER, GL_LESS, GL_EQUAL, GL_LEQUAL, GL_GREATER, GL_NOTEQUAL, GL_GEQUAL, and GL_ALWAYS are accepted. The initial value is GL_ALWAYS. </param>
-        /// <param name="ref">Specifies the reference value that incoming alpha values are compared to. This value is clamped to the range [0, 1], where 0 represents the lowest possible alpha value and 1 the highest possible value. The initial reference value is 0. </param>
+        /// <param name="reference">Specifies the reference value that incoming alpha values are compared to. This value is clamped to the range [0, 1], where 0 represents the lowest possible alpha value and 1 the highest possible value. The initial reference value is 0. </param>
         public static void AlphaFunc(AlphaFunction func, float reference) => _AlphaFunc_fnptr(func, reference);
         [UnmanagedCallersOnly]
         private static void AlphaFunc_Lazy(AlphaFunction func, float reference)
@@ -134,7 +134,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<GetPName, float*, void> _GetFloatv_fnptr = &GetFloatv_Lazy;
         /// <summary> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
-        /// <param name="params">Returns the value or values of the specified parameter.</param>
+        /// <param name="parameters">Returns the value or values of the specified parameter.</param>
         public static void GetFloatv(GetPName pname, float* data) => _GetFloatv_fnptr(pname, data);
         [UnmanagedCallersOnly]
         private static void GetFloatv_Lazy(GetPName pname, float* data)
@@ -147,7 +147,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return light source parameter values. </summary>
         /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
         /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetLightfv(LightName light, LightParameter pname, float* parameters) => _GetLightfv_fnptr(light, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetLightfv_Lazy(LightName light, LightParameter pname, float* parameters)
@@ -160,7 +160,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return material parameters values. </summary>
         /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
         /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetMaterialfv(MaterialFace face, MaterialParameter pname, float* parameters) => _GetMaterialfv_fnptr(face, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetMaterialfv_Lazy(MaterialFace face, MaterialParameter pname, float* parameters)
@@ -173,7 +173,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return texture environment parameters. </summary>
         /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetTexEnvfv(TextureEnvTarget target, TextureEnvParameter pname, float* parameters) => _GetTexEnvfv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexEnvfv_Lazy(TextureEnvTarget target, TextureEnvParameter pname, float* parameters)
@@ -186,7 +186,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return texture parameter values. </summary>
         /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
-        /// <param name="params">Returns texture parameters.</param>
+        /// <param name="parameters">Returns texture parameters.</param>
         public static void GetTexParameterfv(TextureTarget target, GetTextureParameter pname, float* parameters) => _GetTexParameterfv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterfv_Lazy(TextureTarget target, GetTextureParameter pname, float* parameters)
@@ -479,7 +479,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<AlphaFunction, int, void> _AlphaFuncx_fnptr = &AlphaFuncx_Lazy;
         /// <summary> Specify the alpha test function. </summary>
         /// <param name="func">Specifies the alpha comparison function. Symbolic constants GL_NEVER, GL_LESS, GL_EQUAL, GL_LEQUAL, GL_GREATER, GL_NOTEQUAL, GL_GEQUAL, and GL_ALWAYS are accepted. The initial value is GL_ALWAYS. </param>
-        /// <param name="ref">Specifies the reference value that incoming alpha values are compared to. This value is clamped to the range [0, 1], where 0 represents the lowest possible alpha value and 1 the highest possible value. The initial reference value is 0. </param>
+        /// <param name="reference">Specifies the reference value that incoming alpha values are compared to. This value is clamped to the range [0, 1], where 0 represents the lowest possible alpha value and 1 the highest possible value. The initial reference value is 0. </param>
         public static void AlphaFuncx(AlphaFunction func, int reference) => _AlphaFuncx_fnptr(func, reference);
         [UnmanagedCallersOnly]
         private static void AlphaFuncx_Lazy(AlphaFunction func, int reference)
@@ -962,7 +962,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<GetPName, byte*, void> _GetBooleanv_fnptr = &GetBooleanv_Lazy;
         /// <summary> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
-        /// <param name="params">Returns the value or values of the specified parameter.</param>
+        /// <param name="parameters">Returns the value or values of the specified parameter.</param>
         public static void GetBooleanv(GetPName pname, byte* data) => _GetBooleanv_fnptr(pname, data);
         [UnmanagedCallersOnly]
         private static void GetBooleanv_Lazy(GetPName pname, byte* data)
@@ -975,7 +975,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return parameters of a buffer object. </summary>
         /// <param name="target"> Specifies the target buffer object. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
         /// <param name="pname"> Specifies the symbolic name of a buffer object parameter. Accepted values are GL_BUFFER_SIZE or GL_BUFFER_USAGE. </param>
-        /// <param name="params">Returns the requested parameter.</param>
+        /// <param name="parameters">Returns the requested parameter.</param>
         public static void GetBufferParameteriv(BufferTargetARB target, BufferPNameARB pname, int* parameters) => _GetBufferParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetBufferParameteriv_Lazy(BufferTargetARB target, BufferPNameARB pname, int* parameters)
@@ -1033,7 +1033,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<GetPName, int*, void> _GetFixedv_fnptr = &GetFixedv_Lazy;
         /// <summary> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
-        /// <param name="params">Returns the value or values of the specified parameter.</param>
+        /// <param name="parameters">Returns the value or values of the specified parameter.</param>
         public static void GetFixedv(GetPName pname, int* parameters) => _GetFixedv_fnptr(pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetFixedv_Lazy(GetPName pname, int* parameters)
@@ -1045,7 +1045,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<GetPName, int*, void> _GetIntegerv_fnptr = &GetIntegerv_Lazy;
         /// <summary> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
-        /// <param name="params">Returns the value or values of the specified parameter.</param>
+        /// <param name="parameters">Returns the value or values of the specified parameter.</param>
         public static void GetIntegerv(GetPName pname, int* data) => _GetIntegerv_fnptr(pname, data);
         [UnmanagedCallersOnly]
         private static void GetIntegerv_Lazy(GetPName pname, int* data)
@@ -1058,7 +1058,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return light source parameter values. </summary>
         /// <param name="light"> Specifies a light source. The number of possible lights depends on the implementation, but at least eight lights are supported. They are identified by symbolic names of the form GL_LIGHTi where 0<i< GL_MAX_LIGHTS </param>
         /// <param name="pname"> Specifies a light source parameter for light. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_POSITION, GL_SPOT_DIRECTION, GL_SPOT_EXPONENT, GL_SPOT_CUTOFF, GL_CONSTANT_ATTENUATION, GL_LINEAR_ATTENUATION, and GL_QUADRATIC_ATTENUATION. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetLightxv(LightName light, LightParameter pname, int* parameters) => _GetLightxv_fnptr(light, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetLightxv_Lazy(LightName light, LightParameter pname, int* parameters)
@@ -1071,7 +1071,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return material parameters values. </summary>
         /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
         /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetMaterialxv(MaterialFace face, MaterialParameter pname, int* parameters) => _GetMaterialxv_fnptr(face, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetMaterialxv_Lazy(MaterialFace face, MaterialParameter pname, int* parameters)
@@ -1083,7 +1083,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<GetPointervPName, void**, void> _GetPointerv_fnptr = &GetPointerv_Lazy;
         /// <summary> Return the address of the specified pointer. </summary>
         /// <param name="pname"> Specifies the array or buffer pointer to be returned. Accepted symbolic names are GL_COLOR_ARRAY_POINTER, GL_MATRIX_INDEX_ARRAY_POINTER_OES, GL_NORMAL_ARRAY_POINTER, GL_POINT_SIZE_ARRAY_POINTER_OES, GL_TEXTURE_COORD_ARRAY_POINTER, and GL_VERTEX_ARRAY_POINTER., and GL_WEIGHT_ARRAY_POINTER_OES. </param>
-        /// <param name="params"> Returns the pointer value specified by pname. </param>
+        /// <param name="parameters"> Returns the pointer value specified by pname. </param>
         public static void GetPointerv(GetPointervPName pname, void** parameters) => _GetPointerv_fnptr(pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetPointerv_Lazy(GetPointervPName pname, void** parameters)
@@ -1107,7 +1107,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return texture environment parameters. </summary>
         /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetTexEnviv(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => _GetTexEnviv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexEnviv_Lazy(TextureEnvTarget target, TextureEnvParameter pname, int* parameters)
@@ -1120,7 +1120,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return texture environment parameters. </summary>
         /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
         /// <param name="pname"> Specifies the symbolic name of a texture environment parameter. Accepted values are GL_TEXTURE_ENV_MODE, GL_TEXTURE_ENV_COLOR, GL_COMBINE_RGB, GL_COMBINE_ALPHA, GL_SRC0_RGB, GL_SRC1_RGB, GL_SRC2_RGB, GL_SRC0_ALPHA, GL_SRC1_ALPHA, GL_SRC2_ALPHA, GL_OPERAND0_RGB, GL_OPERAND1_RGB, GL_OPERAND2_RGB, GL_OPERAND0_ALPHA, GL_OPERAND1_ALPHA, GL_OPERAND2_ALPHA, GL_RGB_SCALE, GL_ALPHA_SCALE, or GL_COORD_REPLACE_OES. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetTexEnvxv(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => _GetTexEnvxv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexEnvxv_Lazy(TextureEnvTarget target, TextureEnvParameter pname, int* parameters)
@@ -1133,7 +1133,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return texture parameter values. </summary>
         /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
-        /// <param name="params">Returns texture parameters.</param>
+        /// <param name="parameters">Returns texture parameters.</param>
         public static void GetTexParameteriv(TextureTarget target, GetTextureParameter pname, int* parameters) => _GetTexParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameteriv_Lazy(TextureTarget target, GetTextureParameter pname, int* parameters)
@@ -1146,7 +1146,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> Return texture parameter values. </summary>
         /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>
         /// <param name="pname"> Specifies the symbolic name of a texture parameter. Which can be one of the following: GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_GENERATE_MIPMAP. </param>
-        /// <param name="params">Returns texture parameters.</param>
+        /// <param name="parameters">Returns texture parameters.</param>
         public static void GetTexParameterxv(TextureTarget target, GetTextureParameter pname, int* parameters) => _GetTexParameterxv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterxv_Lazy(TextureTarget target, GetTextureParameter pname, int* parameters)
@@ -1559,7 +1559,7 @@ namespace OpenTK.Graphics.OpenGLES1
         private static delegate* unmanaged<StencilFunction, int, uint, void> _StencilFunc_fnptr = &StencilFunc_Lazy;
         /// <summary> Set function and reference value for stencil        testing. </summary>
         /// <param name="func">Specifies the test function. Eight tokens are valid: GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS.</param>
-        /// <param name="ref">Specifies the reference value for the stencil test. ref is clamped to the range [ 0 , 2n-1 ] , where n is the number of bitplanes in the stencil buffer. The initial value is 0.</param>
+        /// <param name="reference">Specifies the reference value for the stencil test. ref is clamped to the range [ 0 , 2n-1 ] , where n is the number of bitplanes in the stencil buffer. The initial value is 0.</param>
         /// <param name="mask">Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's.</param>
         public static void StencilFunc(StencilFunction func, int reference, uint mask) => _StencilFunc_fnptr(func, reference, mask);
         [UnmanagedCallersOnly]
@@ -2193,7 +2193,7 @@ namespace OpenTK.Graphics.OpenGLES1
             private static delegate* unmanaged<GetPointervPName, void**, void> _GetPointerv_fnptr = &GetPointerv_Lazy;
             /// <summary> Return the address of the specified pointer. </summary>
             /// <param name="pname"> Specifies the array or buffer pointer to be returned. Accepted symbolic names are GL_COLOR_ARRAY_POINTER, GL_MATRIX_INDEX_ARRAY_POINTER_OES, GL_NORMAL_ARRAY_POINTER, GL_POINT_SIZE_ARRAY_POINTER_OES, GL_TEXTURE_COORD_ARRAY_POINTER, and GL_VERTEX_ARRAY_POINTER., and GL_WEIGHT_ARRAY_POINTER_OES. </param>
-            /// <param name="params"> Returns the pointer value specified by pname. </param>
+            /// <param name="parameters"> Returns the pointer value specified by pname. </param>
             public static void GetPointerv(GetPointervPName pname, void** parameters) => _GetPointerv_fnptr(pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetPointerv_Lazy(GetPointervPName pname, void** parameters)

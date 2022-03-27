@@ -95,7 +95,7 @@ namespace Generator.Parsing
                         {
                             if (parametersDescriptions.ContainsKey(parameter.Value) == false)
                             {
-                                parametersDescriptions.Add(parameter.Value, desc);
+                                parametersDescriptions.Add(NameMangler.MangleParameterName(parameter.Value), desc);
                             }
                         }
                     }
@@ -110,7 +110,7 @@ namespace Generator.Parsing
                 List<ParameterDocumentation> parameters = new List<ParameterDocumentation>();
                 foreach (var parameter in prototype.ElementsIgnoreNamespace("parameter"))
                 {
-                    string parameterName = parameter.Value;
+                    string parameterName = NameMangler.MangleParameterName(parameter.Value);
                     if (parameterName == "void")
                     {
                         Logger.Warning("void!!!!!!!!!");

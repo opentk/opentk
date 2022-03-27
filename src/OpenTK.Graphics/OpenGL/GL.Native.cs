@@ -106,7 +106,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glTexParameter functions. Must be one of GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_RECTANGLE.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TexParameterfv(TextureTarget target, TextureParameterName pname, float* parameters) => _TexParameterfv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameterfv_Lazy(TextureTarget target, TextureParameterName pname, float* parameters)
@@ -132,7 +132,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glTexParameter functions. Must be one of GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_RECTANGLE.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TexParameteriv(TextureTarget target, TextureParameterName pname, int* parameters) => _TexParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameteriv_Lazy(TextureTarget target, TextureParameterName pname, int* parameters)
@@ -340,7 +340,7 @@ namespace OpenTK.Graphics.OpenGL
         private static delegate* unmanaged<StencilFunction, int, uint, void> _StencilFunc_fnptr = &StencilFunc_Lazy;
         /// <summary> Set front and back function and reference value for stencil testing. </summary>
         /// <param name="func"> Specifies the test function. Eight symbolic constants are valid: GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS. </param>
-        /// <param name="ref"> Specifies the reference value for the stencil test. ref is clamped to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
+        /// <param name="reference"> Specifies the reference value for the stencil test. ref is clamped to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
         /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's. </param>
         public static void StencilFunc(StencilFunction func, int reference, uint mask) => _StencilFunc_fnptr(func, reference, mask);
         [UnmanagedCallersOnly]
@@ -514,7 +514,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glGetTexParameterfv, glGetTexParameteriv, glGetTexParameterIiv, and glGetTexParameterIuiv functions. GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_RECTANGLE, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTexParameterfv(TextureTarget target, GetTextureParameter pname, float* parameters) => _GetTexParameterfv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterfv_Lazy(TextureTarget target, GetTextureParameter pname, float* parameters)
@@ -527,7 +527,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glGetTexParameterfv, glGetTexParameteriv, glGetTexParameterIiv, and glGetTexParameterIuiv functions. GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_RECTANGLE, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTexParameteriv(TextureTarget target, GetTextureParameter pname, int* parameters) => _GetTexParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameteriv_Lazy(TextureTarget target, GetTextureParameter pname, int* parameters)
@@ -541,7 +541,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="target">Specifies the target to which the texture is bound for glGetTexLevelParameterfv and glGetTexLevelParameteriv functions. Must be one of the following values: GL_TEXTURE_1D, GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, GL_PROXY_TEXTURE_1D, GL_PROXY_TEXTURE_2D, GL_PROXY_TEXTURE_3D, GL_PROXY_TEXTURE_1D_ARRAY, GL_PROXY_TEXTURE_2D_ARRAY, GL_PROXY_TEXTURE_RECTANGLE, GL_PROXY_TEXTURE_2D_MULTISAMPLE, GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_PROXY_TEXTURE_CUBE_MAP, or GL_TEXTURE_BUFFER.</param>
         /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, and GL_TEXTURE_BUFFER_OFFSET are accepted.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetTexLevelParameterfv(TextureTarget target, int level, GetTextureParameter pname, float* parameters) => _GetTexLevelParameterfv_fnptr(target, level, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexLevelParameterfv_Lazy(TextureTarget target, int level, GetTextureParameter pname, float* parameters)
@@ -555,7 +555,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="target">Specifies the target to which the texture is bound for glGetTexLevelParameterfv and glGetTexLevelParameteriv functions. Must be one of the following values: GL_TEXTURE_1D, GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, GL_PROXY_TEXTURE_1D, GL_PROXY_TEXTURE_2D, GL_PROXY_TEXTURE_3D, GL_PROXY_TEXTURE_1D_ARRAY, GL_PROXY_TEXTURE_2D_ARRAY, GL_PROXY_TEXTURE_RECTANGLE, GL_PROXY_TEXTURE_2D_MULTISAMPLE, GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_PROXY_TEXTURE_CUBE_MAP, or GL_TEXTURE_BUFFER.</param>
         /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, and GL_TEXTURE_BUFFER_OFFSET are accepted.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetTexLevelParameteriv(TextureTarget target, int level, GetTextureParameter pname, int* parameters) => _GetTexLevelParameteriv_fnptr(target, level, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexLevelParameteriv_Lazy(TextureTarget target, int level, GetTextureParameter pname, int* parameters)
@@ -1073,7 +1073,7 @@ namespace OpenTK.Graphics.OpenGL
         private static delegate* unmanaged<PointParameterNameARB, float*, void> _PointParameterfv_fnptr = &PointParameterfv_Lazy;
         /// <summary> Specify point parameters. </summary>
         /// <param name="pname"> Specifies a single-valued point parameter. GL_POINT_FADE_THRESHOLD_SIZE, and GL_POINT_SPRITE_COORD_ORIGIN are accepted. </param>
-        /// <param name="params"> For glPointParameterfv and glPointParameteriv, specifies a pointer to an array where the value or values to be assigned to pname are stored. </param>
+        /// <param name="parameters"> For glPointParameterfv and glPointParameteriv, specifies a pointer to an array where the value or values to be assigned to pname are stored. </param>
         public static void PointParameterfv(PointParameterNameARB pname, float* parameters) => _PointParameterfv_fnptr(pname, parameters);
         [UnmanagedCallersOnly]
         private static void PointParameterfv_Lazy(PointParameterNameARB pname, float* parameters)
@@ -1097,7 +1097,7 @@ namespace OpenTK.Graphics.OpenGL
         private static delegate* unmanaged<PointParameterNameARB, int*, void> _PointParameteriv_fnptr = &PointParameteriv_Lazy;
         /// <summary> Specify point parameters. </summary>
         /// <param name="pname"> Specifies a single-valued point parameter. GL_POINT_FADE_THRESHOLD_SIZE, and GL_POINT_SPRITE_COORD_ORIGIN are accepted. </param>
-        /// <param name="params"> For glPointParameterfv and glPointParameteriv, specifies a pointer to an array where the value or values to be assigned to pname are stored. </param>
+        /// <param name="parameters"> For glPointParameterfv and glPointParameteriv, specifies a pointer to an array where the value or values to be assigned to pname are stored. </param>
         public static void PointParameteriv(PointParameterNameARB pname, int* parameters) => _PointParameteriv_fnptr(pname, parameters);
         [UnmanagedCallersOnly]
         private static void PointParameteriv_Lazy(PointParameterNameARB pname, int* parameters)
@@ -1193,7 +1193,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return parameters of a query object target. </summary>
         /// <param name="target"> Specifies a query object target. Must be GL_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE GL_PRIMITIVES_GENERATED, GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, GL_TIME_ELAPSED, or GL_TIMESTAMP. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object target parameter. Accepted values are GL_CURRENT_QUERY or GL_QUERY_COUNTER_BITS. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetQueryiv(QueryTarget target, QueryParameterName pname, int* parameters) => _GetQueryiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryiv_Lazy(QueryTarget target, QueryParameterName pname, int* parameters)
@@ -1206,7 +1206,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
-        /// <param name="params"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
+        /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         public static void GetQueryObjectiv(QueryHandle id, QueryObjectParameterName pname, int* parameters) => _GetQueryObjectiv_fnptr(id, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryObjectiv_Lazy(QueryHandle id, QueryObjectParameterName pname, int* parameters)
@@ -1219,7 +1219,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
-        /// <param name="params"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
+        /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         public static void GetQueryObjectuiv(QueryHandle id, QueryObjectParameterName pname, uint* parameters) => _GetQueryObjectuiv_fnptr(id, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryObjectuiv_Lazy(QueryHandle id, QueryObjectParameterName pname, uint* parameters)
@@ -1357,7 +1357,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return the pointer to a mapped buffer object's data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferPointerv, which must be one of the buffer binding targets in the following table: </param>
         /// <param name="pname"> Specifies the name of the pointer to be returned. Must be GL_BUFFER_MAP_POINTER. </param>
-        /// <param name="params"> Returns the pointer value specified by pname. </param>
+        /// <param name="parameters"> Returns the pointer value specified by pname. </param>
         public static void GetBufferPointerv(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => _GetBufferPointerv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetBufferPointerv_Lazy(BufferTargetARB target, BufferPointerNameARB pname, void** parameters)
@@ -1408,7 +1408,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set front and/or back function and reference value for stencil testing. </summary>
         /// <param name="face"> Specifies whether front and/or back stencil state is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
         /// <param name="func"> Specifies the test function. Eight symbolic constants are valid: GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, and GL_ALWAYS. The initial value is GL_ALWAYS. </param>
-        /// <param name="ref"> Specifies the reference value for the stencil test. ref is clamped to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
+        /// <param name="reference"> Specifies the reference value for the stencil test. ref is clamped to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
         /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's. </param>
         public static void StencilFuncSeparate(StencilFaceDirection face, StencilFunction func, int reference, uint mask) => _StencilFuncSeparate_fnptr(face, func, reference, mask);
         [UnmanagedCallersOnly]
@@ -1607,7 +1607,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Returns a parameter from a program object. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_DELETE_STATUS, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_INFO_LOG_LENGTH, GL_ATTACHED_SHADERS, GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_COMPUTE_WORK_GROUP_SIZE GL_PROGRAM_BINARY_LENGTH, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH, GL_GEOMETRY_VERTICES_OUT, GL_GEOMETRY_INPUT_TYPE, and GL_GEOMETRY_OUTPUT_TYPE.</param>
-        /// <param name="params">Returns the requested object parameter.</param>
+        /// <param name="parameters">Returns the requested object parameter.</param>
         public static void GetProgramiv(ProgramHandle program, ProgramPropertyARB pname, int* parameters) => _GetProgramiv_fnptr(program, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramiv_Lazy(ProgramHandle program, ProgramPropertyARB pname, int* parameters)
@@ -1634,7 +1634,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Returns a parameter from a shader object. </summary>
         /// <param name="shader">Specifies the shader object to be queried.</param>
         /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_SHADER_TYPE, GL_DELETE_STATUS, GL_COMPILE_STATUS, GL_INFO_LOG_LENGTH, GL_SHADER_SOURCE_LENGTH.</param>
-        /// <param name="params">Returns the requested object parameter.</param>
+        /// <param name="parameters">Returns the requested object parameter.</param>
         public static void GetShaderiv(ShaderHandle shader, ShaderParameterName pname, int* parameters) => _GetShaderiv_fnptr(shader, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetShaderiv_Lazy(ShaderHandle shader, ShaderParameterName pname, int* parameters)
@@ -1687,7 +1687,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Returns the value of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetUniformfv(ProgramHandle program, int location, float* parameters) => _GetUniformfv_fnptr(program, location, parameters);
         [UnmanagedCallersOnly]
         private static void GetUniformfv_Lazy(ProgramHandle program, int location, float* parameters)
@@ -1700,7 +1700,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Returns the value of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetUniformiv(ProgramHandle program, int location, int* parameters) => _GetUniformiv_fnptr(program, location, parameters);
         [UnmanagedCallersOnly]
         private static void GetUniformiv_Lazy(ProgramHandle program, int location, int* parameters)
@@ -1713,7 +1713,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_LONG, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, GL_VERTEX_ATTRIB_BINDING, GL_VERTEX_ATTRIB_RELATIVE_OFFSET or GL_CURRENT_VERTEX_ATTRIB.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetVertexAttribdv(uint index, VertexAttribPropertyARB pname, double* parameters) => _GetVertexAttribdv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribdv_Lazy(uint index, VertexAttribPropertyARB pname, double* parameters)
@@ -1726,7 +1726,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_LONG, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, GL_VERTEX_ATTRIB_BINDING, GL_VERTEX_ATTRIB_RELATIVE_OFFSET or GL_CURRENT_VERTEX_ATTRIB.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetVertexAttribfv(uint index, VertexAttribPropertyARB pname, float* parameters) => _GetVertexAttribfv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribfv_Lazy(uint index, VertexAttribPropertyARB pname, float* parameters)
@@ -1739,7 +1739,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_LONG, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, GL_VERTEX_ATTRIB_BINDING, GL_VERTEX_ATTRIB_RELATIVE_OFFSET or GL_CURRENT_VERTEX_ATTRIB.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetVertexAttribiv(uint index, VertexAttribPropertyARB pname, int* parameters) => _GetVertexAttribiv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribiv_Lazy(uint index, VertexAttribPropertyARB pname, int* parameters)
@@ -1798,7 +1798,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Replaces the source code in a shader object. </summary>
         /// <param name="shader">Specifies the handle of the shader object whose source code is to be replaced.</param>
         /// <param name="count">Specifies the number of elements in the string and length arrays.</param>
-        /// <param name="string">Specifies an array of pointers to strings containing the source code to be loaded into the shader.</param>
+        /// <param name="str">Specifies an array of pointers to strings containing the source code to be loaded into the shader.</param>
         /// <param name="length">Specifies an array of string lengths.</param>
         public static void ShaderSource(ShaderHandle shader, int count, byte** str, int* length) => _ShaderSource_fnptr(shader, count, str, length);
         [UnmanagedCallersOnly]
@@ -2847,7 +2847,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_LONG, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, GL_VERTEX_ATTRIB_BINDING, GL_VERTEX_ATTRIB_RELATIVE_OFFSET or GL_CURRENT_VERTEX_ATTRIB.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetVertexAttribIiv(uint index, VertexAttribEnum pname, int* parameters) => _GetVertexAttribIiv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribIiv_Lazy(uint index, VertexAttribEnum pname, int* parameters)
@@ -2860,7 +2860,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_LONG, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, GL_VERTEX_ATTRIB_BINDING, GL_VERTEX_ATTRIB_RELATIVE_OFFSET or GL_CURRENT_VERTEX_ATTRIB.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetVertexAttribIuiv(uint index, VertexAttribEnum pname, uint* parameters) => _GetVertexAttribIuiv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribIuiv_Lazy(uint index, VertexAttribEnum pname, uint* parameters)
@@ -3125,7 +3125,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Returns the value of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetUniformuiv(ProgramHandle program, int location, uint* parameters) => _GetUniformuiv_fnptr(program, location, parameters);
         [UnmanagedCallersOnly]
         private static void GetUniformuiv_Lazy(ProgramHandle program, int location, uint* parameters)
@@ -3269,7 +3269,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glTexParameter functions. Must be one of GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_RECTANGLE.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TexParameterIiv(TextureTarget target, TextureParameterName pname, int* parameters) => _TexParameterIiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameterIiv_Lazy(TextureTarget target, TextureParameterName pname, int* parameters)
@@ -3282,7 +3282,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glTexParameter functions. Must be one of GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, or GL_TEXTURE_RECTANGLE.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TexParameterIuiv(TextureTarget target, TextureParameterName pname, uint* parameters) => _TexParameterIuiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TexParameterIuiv_Lazy(TextureTarget target, TextureParameterName pname, uint* parameters)
@@ -3295,7 +3295,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glGetTexParameterfv, glGetTexParameteriv, glGetTexParameterIiv, and glGetTexParameterIuiv functions. GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_RECTANGLE, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTexParameterIiv(TextureTarget target, GetTextureParameter pname, int* parameters) => _GetTexParameterIiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterIiv_Lazy(TextureTarget target, GetTextureParameter pname, int* parameters)
@@ -3308,7 +3308,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="target">Specifies the target to which the texture is bound for glGetTexParameterfv, glGetTexParameteriv, glGetTexParameterIiv, and glGetTexParameterIuiv functions. GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_RECTANGLE, and GL_TEXTURE_CUBE_MAP_ARRAY are accepted.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTexParameterIuiv(TextureTarget target, GetTextureParameter pname, uint* parameters) => _GetTexParameterIuiv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTexParameterIuiv_Lazy(TextureTarget target, GetTextureParameter pname, uint* parameters)
@@ -3447,7 +3447,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Query a named parameter of a renderbuffer object. </summary>
         /// <param name="target"> Specifies the target to which the renderbuffer object is bound for glGetRenderbufferParameteriv. target must be GL_RENDERBUFFER. </param>
         /// <param name="pname"> Specifies the parameter of the renderbuffer object to query. </param>
-        /// <param name="params"> Returns the value of parameter pname for the renderbuffer object. </param>
+        /// <param name="parameters"> Returns the value of parameter pname for the renderbuffer object. </param>
         public static void GetRenderbufferParameteriv(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => _GetRenderbufferParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetRenderbufferParameteriv_Lazy(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters)
@@ -3579,7 +3579,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="target"> Specifies the target to which the framebuffer object is bound for glGetFramebufferAttachmentParameteriv. </param>
         /// <param name="attachment"> Specifies the attachment of the framebuffer object to query. </param>
         /// <param name="pname"> Specifies the parameter of attachment to query. </param>
-        /// <param name="params"> Returns the value of parameter pname for attachment. </param>
+        /// <param name="parameters"> Returns the value of parameter pname for attachment. </param>
         public static void GetFramebufferAttachmentParameteriv(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => _GetFramebufferAttachmentParameteriv_fnptr(target, attachment, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetFramebufferAttachmentParameteriv_Lazy(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters)
@@ -3810,7 +3810,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="uniformCount">Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.</param>
         /// <param name="uniformIndices">Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.</param>
         /// <param name="pname">Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.</param>
-        /// <param name="params">Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.</param>
+        /// <param name="parameters">Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.</param>
         public static void GetActiveUniformsiv(ProgramHandle program, int uniformCount, uint* uniformIndices, UniformPName pname, int* parameters) => _GetActiveUniformsiv_fnptr(program, uniformCount, uniformIndices, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetActiveUniformsiv_Lazy(ProgramHandle program, int uniformCount, uint* uniformIndices, UniformPName pname, int* parameters)
@@ -3851,7 +3851,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="program"> Specifies the name of a program containing the uniform block. </param>
         /// <param name="uniformBlockIndex"> Specifies the index of the uniform block within program. </param>
         /// <param name="pname"> Specifies the name of the parameter to query. </param>
-        /// <param name="params"> Specifies the address of a variable to receive the result of the query. </param>
+        /// <param name="parameters"> Specifies the address of a variable to receive the result of the query. </param>
         public static void GetActiveUniformBlockiv(ProgramHandle program, uint uniformBlockIndex, UniformBlockPName pname, int* parameters) => _GetActiveUniformBlockiv_fnptr(program, uniformBlockIndex, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetActiveUniformBlockiv_Lazy(ProgramHandle program, uint uniformBlockIndex, UniformBlockPName pname, int* parameters)
@@ -4238,7 +4238,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameteriv(SamplerHandle sampler, SamplerParameterI pname, int* param) => _SamplerParameteriv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameteriv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* param)
@@ -4264,7 +4264,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameterfv(SamplerHandle sampler, SamplerParameterF pname, float* param) => _SamplerParameterfv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameterfv_Lazy(SamplerHandle sampler, SamplerParameterF pname, float* param)
@@ -4277,7 +4277,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameterIiv(SamplerHandle sampler, SamplerParameterI pname, int* param) => _SamplerParameterIiv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameterIiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* param)
@@ -4290,7 +4290,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set sampler parameters. </summary>
         /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-        /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+        /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
         public static void SamplerParameterIuiv(SamplerHandle sampler, SamplerParameterI pname, uint* param) => _SamplerParameterIuiv_fnptr(sampler, pname, param);
         [UnmanagedCallersOnly]
         private static void SamplerParameterIuiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, uint* param)
@@ -4303,7 +4303,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-        /// <param name="params"> Returns the sampler parameters. </param>
+        /// <param name="parameters"> Returns the sampler parameters. </param>
         public static void GetSamplerParameteriv(SamplerHandle sampler, SamplerParameterI pname, int* parameters) => _GetSamplerParameteriv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameteriv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* parameters)
@@ -4316,7 +4316,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-        /// <param name="params"> Returns the sampler parameters. </param>
+        /// <param name="parameters"> Returns the sampler parameters. </param>
         public static void GetSamplerParameterIiv(SamplerHandle sampler, SamplerParameterI pname, int* parameters) => _GetSamplerParameterIiv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameterIiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* parameters)
@@ -4329,7 +4329,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-        /// <param name="params"> Returns the sampler parameters. </param>
+        /// <param name="parameters"> Returns the sampler parameters. </param>
         public static void GetSamplerParameterfv(SamplerHandle sampler, SamplerParameterF pname, float* parameters) => _GetSamplerParameterfv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameterfv_Lazy(SamplerHandle sampler, SamplerParameterF pname, float* parameters)
@@ -4342,7 +4342,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return sampler parameter values. </summary>
         /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
         /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-        /// <param name="params"> Returns the sampler parameters. </param>
+        /// <param name="parameters"> Returns the sampler parameters. </param>
         public static void GetSamplerParameterIuiv(SamplerHandle sampler, SamplerParameterI pname, uint* parameters) => _GetSamplerParameterIuiv_fnptr(sampler, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetSamplerParameterIuiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, uint* parameters)
@@ -4367,7 +4367,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
-        /// <param name="params"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
+        /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         public static void GetQueryObjecti64v(QueryHandle id, QueryObjectParameterName pname, long* parameters) => _GetQueryObjecti64v_fnptr(id, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryObjecti64v_Lazy(QueryHandle id, QueryObjectParameterName pname, long* parameters)
@@ -4380,7 +4380,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
-        /// <param name="params"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
+        /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         public static void GetQueryObjectui64v(QueryHandle id, QueryObjectParameterName pname, ulong* parameters) => _GetQueryObjectui64v_fnptr(id, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryObjectui64v_Lazy(QueryHandle id, QueryObjectParameterName pname, ulong* parameters)
@@ -4739,7 +4739,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Returns the value of a uniform variable. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetUniformdv(ProgramHandle program, int location, double* parameters) => _GetUniformdv_fnptr(program, location, parameters);
         [UnmanagedCallersOnly]
         private static void GetUniformdv_Lazy(ProgramHandle program, int location, double* parameters)
@@ -5007,7 +5007,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="target"> Specifies a query object target. Must be GL_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE GL_PRIMITIVES_GENERATED, GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, GL_TIME_ELAPSED, or GL_TIMESTAMP. </param>
         /// <param name="index"> Specifies the index of the query object target. </param>
         /// <param name="pname"> Specifies the symbolic name of a query object target parameter. Accepted values are GL_CURRENT_QUERY or GL_QUERY_COUNTER_BITS. </param>
-        /// <param name="params"> Returns the requested data. </param>
+        /// <param name="parameters"> Returns the requested data. </param>
         public static void GetQueryIndexediv(QueryTarget target, uint index, QueryParameterName pname, int* parameters) => _GetQueryIndexediv_fnptr(target, index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetQueryIndexediv_Lazy(QueryTarget target, uint index, QueryParameterName pname, int* parameters)
@@ -5208,7 +5208,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Retrieve properties of a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies the name of a program pipeline object whose parameter retrieve. </param>
         /// <param name="pname"> Specifies the name of the parameter to retrieve. </param>
-        /// <param name="params"> Specifies the address of a variable into which will be written the value or values of pname for pipeline. </param>
+        /// <param name="parameters"> Specifies the address of a variable into which will be written the value or values of pname for pipeline. </param>
         public static void GetProgramPipelineiv(ProgramPipelineHandle pipeline, PipelineParameterName pname, int* parameters) => _GetProgramPipelineiv_fnptr(pipeline, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramPipelineiv_Lazy(ProgramPipelineHandle pipeline, PipelineParameterName pname, int* parameters)
@@ -5993,7 +5993,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return a generic vertex attribute parameter. </summary>
         /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
         /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_LONG, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, GL_VERTEX_ATTRIB_BINDING, GL_VERTEX_ATTRIB_RELATIVE_OFFSET or GL_CURRENT_VERTEX_ATTRIB.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetVertexAttribLdv(uint index, VertexAttribEnum pname, double* parameters) => _GetVertexAttribLdv_fnptr(index, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetVertexAttribLdv_Lazy(uint index, VertexAttribEnum pname, double* parameters)
@@ -6188,7 +6188,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
         /// <param name="pname"> Specifies the type of information to query. </param>
         /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
-        /// <param name="params"> Specifies the address of a variable into which to write the retrieved information. </param>
+        /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
         public static void GetInternalformativ(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters) => _GetInternalformativ_fnptr(target, internalformat, pname, count, parameters);
         [UnmanagedCallersOnly]
         private static void GetInternalformativ_Lazy(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters)
@@ -6202,7 +6202,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="program"> The name of a program object from which to retrieve information. </param>
         /// <param name="bufferIndex"> Specifies index of an active atomic counter buffer. </param>
         /// <param name="pname"> Specifies which parameter of the atomic counter buffer to retrieve. </param>
-        /// <param name="params"> Specifies the address of a variable into which to write the retrieved information. </param>
+        /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
         public static void GetActiveAtomicCounterBufferiv(ProgramHandle program, uint bufferIndex, AtomicCounterBufferPName pname, int* parameters) => _GetActiveAtomicCounterBufferiv_fnptr(program, bufferIndex, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetActiveAtomicCounterBufferiv_Lazy(ProgramHandle program, uint bufferIndex, AtomicCounterBufferPName pname, int* parameters)
@@ -6409,7 +6409,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Query a named parameter of a framebuffer object. </summary>
         /// <param name="target"> Specifies the target to which the framebuffer object is bound for glGetFramebufferParameteriv. </param>
         /// <param name="pname"> Specifies the parameter of the framebuffer object to query. </param>
-        /// <param name="params"> Returns the value of parameter pname for the framebuffer object. </param>
+        /// <param name="parameters"> Returns the value of parameter pname for the framebuffer object. </param>
         public static void GetFramebufferParameteriv(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters) => _GetFramebufferParameteriv_fnptr(target, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetFramebufferParameteriv_Lazy(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters)
@@ -6424,7 +6424,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
         /// <param name="pname"> Specifies the type of information to query. </param>
         /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
-        /// <param name="params"> Specifies the address of a variable into which to write the retrieved information. </param>
+        /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
         public static void GetInternalformati64v(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, long* parameters) => _GetInternalformati64v_fnptr(target, internalformat, pname, count, parameters);
         [UnmanagedCallersOnly]
         private static void GetInternalformati64v_Lazy(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, long* parameters)
@@ -6551,7 +6551,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="program"> The name of a program object whose interface to query. </param>
         /// <param name="programInterface"> A token identifying the interface within program to query. </param>
         /// <param name="pname"> The name of the parameter within programInterface to query. </param>
-        /// <param name="params"> The address of a variable to retrieve the value of pname for the program interface. </param>
+        /// <param name="parameters"> The address of a variable to retrieve the value of pname for the program interface. </param>
         public static void GetProgramInterfaceiv(ProgramHandle program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters) => _GetProgramInterfaceiv_fnptr(program, programInterface, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramInterfaceiv_Lazy(ProgramHandle program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters)
@@ -6598,7 +6598,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="props">!!missing documentation!!</param>
         /// <param name="bufSize">!!missing documentation!!</param>
         /// <param name="length">!!missing documentation!!</param>
-        /// <param name="params">!!missing documentation!!</param>
+        /// <param name="parameters">!!missing documentation!!</param>
         public static void GetProgramResourceiv(ProgramHandle program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty* props, int count, int* length, int* parameters) => _GetProgramResourceiv_fnptr(program, programInterface, index, propCount, props, count, length, parameters);
         [UnmanagedCallersOnly]
         private static void GetProgramResourceiv_Lazy(ProgramHandle program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty* props, int count, int* length, int* parameters)
@@ -7317,7 +7317,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return parameters of a buffer object. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferParameteriv and glGetNamedBufferParameteri64v. </param>
         /// <param name="pname">!!missing documentation!!</param>
-        /// <param name="params">!!missing documentation!!</param>
+        /// <param name="parameters">!!missing documentation!!</param>
         public static void GetNamedBufferParameteriv(BufferHandle buffer, BufferPNameARB pname, int* parameters) => _GetNamedBufferParameteriv_fnptr(buffer, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetNamedBufferParameteriv_Lazy(BufferHandle buffer, BufferPNameARB pname, int* parameters)
@@ -7330,7 +7330,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return parameters of a buffer object. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferParameteriv and glGetNamedBufferParameteri64v. </param>
         /// <param name="pname">!!missing documentation!!</param>
-        /// <param name="params">!!missing documentation!!</param>
+        /// <param name="parameters">!!missing documentation!!</param>
         public static void GetNamedBufferParameteri64v(BufferHandle buffer, BufferPNameARB pname, long* parameters) => _GetNamedBufferParameteri64v_fnptr(buffer, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetNamedBufferParameteri64v_Lazy(BufferHandle buffer, BufferPNameARB pname, long* parameters)
@@ -7343,7 +7343,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return the pointer to a mapped buffer object's data store. </summary>
         /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferPointerv. </param>
         /// <param name="pname"> Specifies the name of the pointer to be returned. Must be GL_BUFFER_MAP_POINTER. </param>
-        /// <param name="params"> Returns the pointer value specified by pname. </param>
+        /// <param name="parameters"> Returns the pointer value specified by pname. </param>
         public static void GetNamedBufferPointerv(BufferHandle buffer, BufferPointerNameARB pname, void** parameters) => _GetNamedBufferPointerv_fnptr(buffer, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetNamedBufferPointerv_Lazy(BufferHandle buffer, BufferPointerNameARB pname, void** parameters)
@@ -7610,7 +7610,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="framebuffer"> Specifies the name of the framebuffer object for glGetNamedFramebufferAttachmentParameteriv. </param>
         /// <param name="attachment"> Specifies the attachment of the framebuffer object to query. </param>
         /// <param name="pname"> Specifies the parameter of attachment to query. </param>
-        /// <param name="params"> Returns the value of parameter pname for attachment. </param>
+        /// <param name="parameters"> Returns the value of parameter pname for attachment. </param>
         public static void GetNamedFramebufferAttachmentParameteriv(FramebufferHandle framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => _GetNamedFramebufferAttachmentParameteriv_fnptr(framebuffer, attachment, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetNamedFramebufferAttachmentParameteriv_Lazy(FramebufferHandle framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters)
@@ -7664,7 +7664,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Query a named parameter of a renderbuffer object. </summary>
         /// <param name="renderbuffer"> Specifies the name of the renderbuffer object for glGetNamedRenderbufferParameteriv. </param>
         /// <param name="pname"> Specifies the parameter of the renderbuffer object to query. </param>
-        /// <param name="params"> Returns the value of parameter pname for the renderbuffer object. </param>
+        /// <param name="parameters"> Returns the value of parameter pname for the renderbuffer object. </param>
         public static void GetNamedRenderbufferParameteriv(RenderbufferHandle renderbuffer, RenderbufferParameterName pname, int* parameters) => _GetNamedRenderbufferParameteriv_fnptr(renderbuffer, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetNamedRenderbufferParameteriv_Lazy(RenderbufferHandle renderbuffer, RenderbufferParameterName pname, int* parameters)
@@ -7976,7 +7976,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TextureParameterfv(TextureHandle texture, TextureParameterName pname, float* param) => _TextureParameterfv_fnptr(texture, pname, param);
         [UnmanagedCallersOnly]
         private static void TextureParameterfv_Lazy(TextureHandle texture, TextureParameterName pname, float* param)
@@ -8002,7 +8002,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TextureParameterIiv(TextureHandle texture, TextureParameterName pname, int* parameters) => _TextureParameterIiv_fnptr(texture, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TextureParameterIiv_Lazy(TextureHandle texture, TextureParameterName pname, int* parameters)
@@ -8015,7 +8015,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TextureParameterIuiv(TextureHandle texture, TextureParameterName pname, uint* parameters) => _TextureParameterIuiv_fnptr(texture, pname, parameters);
         [UnmanagedCallersOnly]
         private static void TextureParameterIuiv_Lazy(TextureHandle texture, TextureParameterName pname, uint* parameters)
@@ -8028,7 +8028,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Set texture parameters. </summary>
         /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
         /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-        /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+        /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
         public static void TextureParameteriv(TextureHandle texture, TextureParameterName pname, int* param) => _TextureParameteriv_fnptr(texture, pname, param);
         [UnmanagedCallersOnly]
         private static void TextureParameteriv_Lazy(TextureHandle texture, TextureParameterName pname, int* param)
@@ -8095,7 +8095,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="texture">Specifies the texture object name for glGetTextureLevelParameterfv and glGetTextureLevelParameteriv functions.</param>
         /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, and GL_TEXTURE_BUFFER_OFFSET are accepted.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetTextureLevelParameterfv(TextureHandle texture, int level, GetTextureParameter pname, float* parameters) => _GetTextureLevelParameterfv_fnptr(texture, level, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTextureLevelParameterfv_Lazy(TextureHandle texture, int level, GetTextureParameter pname, float* parameters)
@@ -8109,7 +8109,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="texture">Specifies the texture object name for glGetTextureLevelParameterfv and glGetTextureLevelParameteriv functions.</param>
         /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, and GL_TEXTURE_BUFFER_OFFSET are accepted.</param>
-        /// <param name="params">Returns the requested data.</param>
+        /// <param name="parameters">Returns the requested data.</param>
         public static void GetTextureLevelParameteriv(TextureHandle texture, int level, GetTextureParameter pname, int* parameters) => _GetTextureLevelParameteriv_fnptr(texture, level, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTextureLevelParameteriv_Lazy(TextureHandle texture, int level, GetTextureParameter pname, int* parameters)
@@ -8122,7 +8122,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTextureParameterfv(TextureHandle texture, GetTextureParameter pname, float* parameters) => _GetTextureParameterfv_fnptr(texture, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTextureParameterfv_Lazy(TextureHandle texture, GetTextureParameter pname, float* parameters)
@@ -8135,7 +8135,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTextureParameterIiv(TextureHandle texture, GetTextureParameter pname, int* parameters) => _GetTextureParameterIiv_fnptr(texture, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTextureParameterIiv_Lazy(TextureHandle texture, GetTextureParameter pname, int* parameters)
@@ -8148,7 +8148,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTextureParameterIuiv(TextureHandle texture, GetTextureParameter pname, uint* parameters) => _GetTextureParameterIuiv_fnptr(texture, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTextureParameterIuiv_Lazy(TextureHandle texture, GetTextureParameter pname, uint* parameters)
@@ -8161,7 +8161,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <summary> Return texture parameter values. </summary>
         /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
         /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-        /// <param name="params">Returns the texture parameters.</param>
+        /// <param name="parameters">Returns the texture parameters.</param>
         public static void GetTextureParameteriv(TextureHandle texture, GetTextureParameter pname, int* parameters) => _GetTextureParameteriv_fnptr(texture, pname, parameters);
         [UnmanagedCallersOnly]
         private static void GetTextureParameteriv_Lazy(TextureHandle texture, GetTextureParameter pname, int* parameters)
@@ -8553,7 +8553,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="bufSize">Specifies the size of the buffer params.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetnUniformdv(ProgramHandle program, int location, int bufSize, double* parameters) => _GetnUniformdv_fnptr(program, location, bufSize, parameters);
         [UnmanagedCallersOnly]
         private static void GetnUniformdv_Lazy(ProgramHandle program, int location, int bufSize, double* parameters)
@@ -8567,7 +8567,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="bufSize">Specifies the size of the buffer params.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetnUniformfv(ProgramHandle program, int location, int bufSize, float* parameters) => _GetnUniformfv_fnptr(program, location, bufSize, parameters);
         [UnmanagedCallersOnly]
         private static void GetnUniformfv_Lazy(ProgramHandle program, int location, int bufSize, float* parameters)
@@ -8581,7 +8581,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="bufSize">Specifies the size of the buffer params.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetnUniformiv(ProgramHandle program, int location, int bufSize, int* parameters) => _GetnUniformiv_fnptr(program, location, bufSize, parameters);
         [UnmanagedCallersOnly]
         private static void GetnUniformiv_Lazy(ProgramHandle program, int location, int bufSize, int* parameters)
@@ -8595,7 +8595,7 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="program">Specifies the program object to be queried.</param>
         /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
         /// <param name="bufSize">Specifies the size of the buffer params.</param>
-        /// <param name="params">Returns the value of the specified uniform variable.</param>
+        /// <param name="parameters">Returns the value of the specified uniform variable.</param>
         public static void GetnUniformuiv(ProgramHandle program, int location, int bufSize, uint* parameters) => _GetnUniformuiv_fnptr(program, location, bufSize, parameters);
         [UnmanagedCallersOnly]
         private static void GetnUniformuiv_Lazy(ProgramHandle program, int location, int bufSize, uint* parameters)
@@ -10399,7 +10399,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return parameters of a buffer object. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferParameteriv and glGetNamedBufferParameteri64v. </param>
             /// <param name="pname">!!missing documentation!!</param>
-            /// <param name="params">!!missing documentation!!</param>
+            /// <param name="parameters">!!missing documentation!!</param>
             public static void GetNamedBufferParameteriv(BufferHandle buffer, BufferPNameARB pname, int* parameters) => _GetNamedBufferParameteriv_fnptr(buffer, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetNamedBufferParameteriv_Lazy(BufferHandle buffer, BufferPNameARB pname, int* parameters)
@@ -10412,7 +10412,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return parameters of a buffer object. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferParameteriv and glGetNamedBufferParameteri64v. </param>
             /// <param name="pname">!!missing documentation!!</param>
-            /// <param name="params">!!missing documentation!!</param>
+            /// <param name="parameters">!!missing documentation!!</param>
             public static void GetNamedBufferParameteri64v(BufferHandle buffer, BufferPNameARB pname, long* parameters) => _GetNamedBufferParameteri64v_fnptr(buffer, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetNamedBufferParameteri64v_Lazy(BufferHandle buffer, BufferPNameARB pname, long* parameters)
@@ -10425,7 +10425,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return the pointer to a mapped buffer object's data store. </summary>
             /// <param name="buffer"> Specifies the name of the buffer object for glGetNamedBufferPointerv. </param>
             /// <param name="pname"> Specifies the name of the pointer to be returned. Must be GL_BUFFER_MAP_POINTER. </param>
-            /// <param name="params"> Returns the pointer value specified by pname. </param>
+            /// <param name="parameters"> Returns the pointer value specified by pname. </param>
             public static void GetNamedBufferPointerv(BufferHandle buffer, BufferPointerNameARB pname, void** parameters) => _GetNamedBufferPointerv_fnptr(buffer, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetNamedBufferPointerv_Lazy(BufferHandle buffer, BufferPointerNameARB pname, void** parameters)
@@ -10692,7 +10692,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="framebuffer"> Specifies the name of the framebuffer object for glGetNamedFramebufferAttachmentParameteriv. </param>
             /// <param name="attachment"> Specifies the attachment of the framebuffer object to query. </param>
             /// <param name="pname"> Specifies the parameter of attachment to query. </param>
-            /// <param name="params"> Returns the value of parameter pname for attachment. </param>
+            /// <param name="parameters"> Returns the value of parameter pname for attachment. </param>
             public static void GetNamedFramebufferAttachmentParameteriv(FramebufferHandle framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => _GetNamedFramebufferAttachmentParameteriv_fnptr(framebuffer, attachment, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetNamedFramebufferAttachmentParameteriv_Lazy(FramebufferHandle framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters)
@@ -10746,7 +10746,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Query a named parameter of a renderbuffer object. </summary>
             /// <param name="renderbuffer"> Specifies the name of the renderbuffer object for glGetNamedRenderbufferParameteriv. </param>
             /// <param name="pname"> Specifies the parameter of the renderbuffer object to query. </param>
-            /// <param name="params"> Returns the value of parameter pname for the renderbuffer object. </param>
+            /// <param name="parameters"> Returns the value of parameter pname for the renderbuffer object. </param>
             public static void GetNamedRenderbufferParameteriv(RenderbufferHandle renderbuffer, RenderbufferParameterName pname, int* parameters) => _GetNamedRenderbufferParameteriv_fnptr(renderbuffer, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetNamedRenderbufferParameteriv_Lazy(RenderbufferHandle renderbuffer, RenderbufferParameterName pname, int* parameters)
@@ -11058,7 +11058,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set texture parameters. </summary>
             /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
             /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-            /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+            /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
             public static void TextureParameterfv(TextureHandle texture, TextureParameterName pname, float* param) => _TextureParameterfv_fnptr(texture, pname, param);
             [UnmanagedCallersOnly]
             private static void TextureParameterfv_Lazy(TextureHandle texture, TextureParameterName pname, float* param)
@@ -11084,7 +11084,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set texture parameters. </summary>
             /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
             /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-            /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+            /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
             public static void TextureParameterIiv(TextureHandle texture, TextureParameterName pname, int* parameters) => _TextureParameterIiv_fnptr(texture, pname, parameters);
             [UnmanagedCallersOnly]
             private static void TextureParameterIiv_Lazy(TextureHandle texture, TextureParameterName pname, int* parameters)
@@ -11097,7 +11097,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set texture parameters. </summary>
             /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
             /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-            /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+            /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
             public static void TextureParameterIuiv(TextureHandle texture, TextureParameterName pname, uint* parameters) => _TextureParameterIuiv_fnptr(texture, pname, parameters);
             [UnmanagedCallersOnly]
             private static void TextureParameterIuiv_Lazy(TextureHandle texture, TextureParameterName pname, uint* parameters)
@@ -11110,7 +11110,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set texture parameters. </summary>
             /// <param name="texture">Specifies the texture object name for glTextureParameter functions.</param>
             /// <param name="pname">Specifies the symbolic name of a single-valued texture parameter. pname can be one of the following: GL_DEPTH_STENCIL_TEXTURE_MODE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, or GL_TEXTURE_WRAP_R.</param>
-            /// <param name="params">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
+            /// <param name="parameters">For the vector commands, specifies a pointer to an array where the value or values of pname are stored.</param>
             public static void TextureParameteriv(TextureHandle texture, TextureParameterName pname, int* param) => _TextureParameteriv_fnptr(texture, pname, param);
             [UnmanagedCallersOnly]
             private static void TextureParameteriv_Lazy(TextureHandle texture, TextureParameterName pname, int* param)
@@ -11177,7 +11177,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="texture">Specifies the texture object name for glGetTextureLevelParameterfv and glGetTextureLevelParameteriv functions.</param>
             /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
             /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, and GL_TEXTURE_BUFFER_OFFSET are accepted.</param>
-            /// <param name="params">Returns the requested data.</param>
+            /// <param name="parameters">Returns the requested data.</param>
             public static void GetTextureLevelParameterfv(TextureHandle texture, int level, GetTextureParameter pname, float* parameters) => _GetTextureLevelParameterfv_fnptr(texture, level, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetTextureLevelParameterfv_Lazy(TextureHandle texture, int level, GetTextureParameter pname, float* parameters)
@@ -11191,7 +11191,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="texture">Specifies the texture object name for glGetTextureLevelParameterfv and glGetTextureLevelParameteriv functions.</param>
             /// <param name="level"> Specifies the level-of-detail number of the desired image. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
             /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_TEXTURE_WIDTH, GL_TEXTURE_HEIGHT, GL_TEXTURE_DEPTH, GL_TEXTURE_INTERNAL_FORMAT, GL_TEXTURE_RED_SIZE, GL_TEXTURE_GREEN_SIZE, GL_TEXTURE_BLUE_SIZE, GL_TEXTURE_ALPHA_SIZE, GL_TEXTURE_DEPTH_SIZE, GL_TEXTURE_COMPRESSED, GL_TEXTURE_COMPRESSED_IMAGE_SIZE, and GL_TEXTURE_BUFFER_OFFSET are accepted.</param>
-            /// <param name="params">Returns the requested data.</param>
+            /// <param name="parameters">Returns the requested data.</param>
             public static void GetTextureLevelParameteriv(TextureHandle texture, int level, GetTextureParameter pname, int* parameters) => _GetTextureLevelParameteriv_fnptr(texture, level, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetTextureLevelParameteriv_Lazy(TextureHandle texture, int level, GetTextureParameter pname, int* parameters)
@@ -11204,7 +11204,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return texture parameter values. </summary>
             /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
             /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-            /// <param name="params">Returns the texture parameters.</param>
+            /// <param name="parameters">Returns the texture parameters.</param>
             public static void GetTextureParameterfv(TextureHandle texture, GetTextureParameter pname, float* parameters) => _GetTextureParameterfv_fnptr(texture, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetTextureParameterfv_Lazy(TextureHandle texture, GetTextureParameter pname, float* parameters)
@@ -11217,7 +11217,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return texture parameter values. </summary>
             /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
             /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-            /// <param name="params">Returns the texture parameters.</param>
+            /// <param name="parameters">Returns the texture parameters.</param>
             public static void GetTextureParameterIiv(TextureHandle texture, GetTextureParameter pname, int* parameters) => _GetTextureParameterIiv_fnptr(texture, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetTextureParameterIiv_Lazy(TextureHandle texture, GetTextureParameter pname, int* parameters)
@@ -11230,7 +11230,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return texture parameter values. </summary>
             /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
             /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-            /// <param name="params">Returns the texture parameters.</param>
+            /// <param name="parameters">Returns the texture parameters.</param>
             public static void GetTextureParameterIuiv(TextureHandle texture, GetTextureParameter pname, uint* parameters) => _GetTextureParameterIuiv_fnptr(texture, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetTextureParameterIuiv_Lazy(TextureHandle texture, GetTextureParameter pname, uint* parameters)
@@ -11243,7 +11243,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return texture parameter values. </summary>
             /// <param name="texture">Specifies the texture object name for glGetTextureParameterfv, glGetTextureParameteriv, glGetTextureParameterIiv, and glGetTextureParameterIuiv functions.</param>
             /// <param name="pname">Specifies the symbolic name of a texture parameter. GL_DEPTH_STENCIL_TEXTURE_MODE, GL_IMAGE_FORMAT_COMPATIBILITY_TYPE, GL_TEXTURE_BASE_LEVEL, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, GL_TEXTURE_COMPARE_FUNC, GL_TEXTURE_IMMUTABLE_FORMAT, GL_TEXTURE_IMMUTABLE_LEVELS, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MAX_LEVEL, GL_TEXTURE_MAX_LOD, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_SWIZZLE_R, GL_TEXTURE_SWIZZLE_G, GL_TEXTURE_SWIZZLE_B, GL_TEXTURE_SWIZZLE_A, GL_TEXTURE_SWIZZLE_RGBA, GL_TEXTURE_TARGET, GL_TEXTURE_VIEW_MIN_LAYER, GL_TEXTURE_VIEW_MIN_LEVEL, GL_TEXTURE_VIEW_NUM_LAYERS, GL_TEXTURE_VIEW_NUM_LEVELS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, and GL_TEXTURE_WRAP_R are accepted.</param>
-            /// <param name="params">Returns the texture parameters.</param>
+            /// <param name="parameters">Returns the texture parameters.</param>
             public static void GetTextureParameteriv(TextureHandle texture, GetTextureParameter pname, int* parameters) => _GetTextureParameteriv_fnptr(texture, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetTextureParameteriv_Lazy(TextureHandle texture, GetTextureParameter pname, int* parameters)
@@ -11877,7 +11877,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Query a named parameter of a framebuffer object. </summary>
             /// <param name="target"> Specifies the target to which the framebuffer object is bound for glGetFramebufferParameteriv. </param>
             /// <param name="pname"> Specifies the parameter of the framebuffer object to query. </param>
-            /// <param name="params"> Returns the value of parameter pname for the framebuffer object. </param>
+            /// <param name="parameters"> Returns the value of parameter pname for the framebuffer object. </param>
             public static void GetFramebufferParameteriv(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters) => _GetFramebufferParameteriv_fnptr(target, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetFramebufferParameteriv_Lazy(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters)
@@ -11951,7 +11951,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Query a named parameter of a renderbuffer object. </summary>
             /// <param name="target"> Specifies the target to which the renderbuffer object is bound for glGetRenderbufferParameteriv. target must be GL_RENDERBUFFER. </param>
             /// <param name="pname"> Specifies the parameter of the renderbuffer object to query. </param>
-            /// <param name="params"> Returns the value of parameter pname for the renderbuffer object. </param>
+            /// <param name="parameters"> Returns the value of parameter pname for the renderbuffer object. </param>
             public static void GetRenderbufferParameteriv(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => _GetRenderbufferParameteriv_fnptr(target, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetRenderbufferParameteriv_Lazy(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters)
@@ -12083,7 +12083,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="target"> Specifies the target to which the framebuffer object is bound for glGetFramebufferAttachmentParameteriv. </param>
             /// <param name="attachment"> Specifies the attachment of the framebuffer object to query. </param>
             /// <param name="pname"> Specifies the parameter of attachment to query. </param>
-            /// <param name="params"> Returns the value of parameter pname for attachment. </param>
+            /// <param name="parameters"> Returns the value of parameter pname for attachment. </param>
             public static void GetFramebufferAttachmentParameteriv(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => _GetFramebufferAttachmentParameteriv_fnptr(target, attachment, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetFramebufferAttachmentParameteriv_Lazy(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters)
@@ -12439,7 +12439,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Returns the value of a uniform variable. </summary>
             /// <param name="program">Specifies the program object to be queried.</param>
             /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
-            /// <param name="params">Returns the value of the specified uniform variable.</param>
+            /// <param name="parameters">Returns the value of the specified uniform variable.</param>
             public static void GetUniformdv(ProgramHandle program, int location, double* parameters) => _GetUniformdv_fnptr(program, location, parameters);
             [UnmanagedCallersOnly]
             private static void GetUniformdv_Lazy(ProgramHandle program, int location, double* parameters)
@@ -12830,7 +12830,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
             /// <param name="pname"> Specifies the type of information to query. </param>
             /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
-            /// <param name="params"> Specifies the address of a variable into which to write the retrieved information. </param>
+            /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
             public static void GetInternalformativ(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters) => _GetInternalformativ_fnptr(target, internalformat, pname, count, parameters);
             [UnmanagedCallersOnly]
             private static void GetInternalformativ_Lazy(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, int* parameters)
@@ -12845,7 +12845,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="internalformat"> Specifies the internal format about which to retrieve information. </param>
             /// <param name="pname"> Specifies the type of information to query. </param>
             /// <param name="bufSize"> Specifies the maximum number of integers of the specified width that may be written to params by the function. </param>
-            /// <param name="params"> Specifies the address of a variable into which to write the retrieved information. </param>
+            /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
             public static void GetInternalformati64v(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, long* parameters) => _GetInternalformati64v_fnptr(target, internalformat, pname, count, parameters);
             [UnmanagedCallersOnly]
             private static void GetInternalformati64v_Lazy(TextureTarget target, InternalFormat internalformat, InternalFormatPName pname, int count, long* parameters)
@@ -13551,7 +13551,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="program"> The name of a program object whose interface to query. </param>
             /// <param name="programInterface"> A token identifying the interface within program to query. </param>
             /// <param name="pname"> The name of the parameter within programInterface to query. </param>
-            /// <param name="params"> The address of a variable to retrieve the value of pname for the program interface. </param>
+            /// <param name="parameters"> The address of a variable to retrieve the value of pname for the program interface. </param>
             public static void GetProgramInterfaceiv(ProgramHandle program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters) => _GetProgramInterfaceiv_fnptr(program, programInterface, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetProgramInterfaceiv_Lazy(ProgramHandle program, ProgramInterface programInterface, ProgramInterfacePName pname, int* parameters)
@@ -13598,7 +13598,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="props">!!missing documentation!!</param>
             /// <param name="bufSize">!!missing documentation!!</param>
             /// <param name="length">!!missing documentation!!</param>
-            /// <param name="params">!!missing documentation!!</param>
+            /// <param name="parameters">!!missing documentation!!</param>
             public static void GetProgramResourceiv(ProgramHandle program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty* props, int count, int* length, int* parameters) => _GetProgramResourceiv_fnptr(program, programInterface, index, propCount, props, count, length, parameters);
             [UnmanagedCallersOnly]
             private static void GetProgramResourceiv_Lazy(ProgramHandle program, ProgramInterface programInterface, uint index, int propCount, ProgramResourceProperty* props, int count, int* length, int* parameters)
@@ -13816,7 +13816,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             public static void SamplerParameteriv(SamplerHandle sampler, SamplerParameterI pname, int* param) => _SamplerParameteriv_fnptr(sampler, pname, param);
             [UnmanagedCallersOnly]
             private static void SamplerParameteriv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* param)
@@ -13842,7 +13842,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             public static void SamplerParameterfv(SamplerHandle sampler, SamplerParameterF pname, float* param) => _SamplerParameterfv_fnptr(sampler, pname, param);
             [UnmanagedCallersOnly]
             private static void SamplerParameterfv_Lazy(SamplerHandle sampler, SamplerParameterF pname, float* param)
@@ -13855,7 +13855,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             public static void SamplerParameterIiv(SamplerHandle sampler, SamplerParameterI pname, int* param) => _SamplerParameterIiv_fnptr(sampler, pname, param);
             [UnmanagedCallersOnly]
             private static void SamplerParameterIiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* param)
@@ -13868,7 +13868,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Set sampler parameters. </summary>
             /// <param name="sampler"> Specifies the sampler object whose parameter to modify. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. pname can be one of the following: GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MAG_FILTER, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS GL_TEXTURE_COMPARE_MODE, or GL_TEXTURE_COMPARE_FUNC. </param>
-            /// <param name="params"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
+            /// <param name="parameters"> For the vector commands (glSamplerParameter*v), specifies a pointer to an array where the value or values of pname are stored. </param>
             public static void SamplerParameterIuiv(SamplerHandle sampler, SamplerParameterI pname, uint* param) => _SamplerParameterIuiv_fnptr(sampler, pname, param);
             [UnmanagedCallersOnly]
             private static void SamplerParameterIuiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, uint* param)
@@ -13881,7 +13881,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return sampler parameter values. </summary>
             /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-            /// <param name="params"> Returns the sampler parameters. </param>
+            /// <param name="parameters"> Returns the sampler parameters. </param>
             public static void GetSamplerParameteriv(SamplerHandle sampler, SamplerParameterI pname, int* parameters) => _GetSamplerParameteriv_fnptr(sampler, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetSamplerParameteriv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* parameters)
@@ -13894,7 +13894,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return sampler parameter values. </summary>
             /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-            /// <param name="params"> Returns the sampler parameters. </param>
+            /// <param name="parameters"> Returns the sampler parameters. </param>
             public static void GetSamplerParameterIiv(SamplerHandle sampler, SamplerParameterI pname, int* parameters) => _GetSamplerParameterIiv_fnptr(sampler, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetSamplerParameterIiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, int* parameters)
@@ -13907,7 +13907,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return sampler parameter values. </summary>
             /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-            /// <param name="params"> Returns the sampler parameters. </param>
+            /// <param name="parameters"> Returns the sampler parameters. </param>
             public static void GetSamplerParameterfv(SamplerHandle sampler, SamplerParameterF pname, float* parameters) => _GetSamplerParameterfv_fnptr(sampler, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetSamplerParameterfv_Lazy(SamplerHandle sampler, SamplerParameterF pname, float* parameters)
@@ -13920,7 +13920,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return sampler parameter values. </summary>
             /// <param name="sampler"> Specifies name of the sampler object from which to retrieve parameters. </param>
             /// <param name="pname"> Specifies the symbolic name of a sampler parameter. GL_TEXTURE_MAG_FILTER, GL_TEXTURE_MIN_FILTER, GL_TEXTURE_MIN_LOD, GL_TEXTURE_MAX_LOD, GL_TEXTURE_LOD_BIAS, GL_TEXTURE_WRAP_S, GL_TEXTURE_WRAP_T, GL_TEXTURE_WRAP_R, GL_TEXTURE_BORDER_COLOR, GL_TEXTURE_COMPARE_MODE, and GL_TEXTURE_COMPARE_FUNC are accepted. </param>
-            /// <param name="params"> Returns the sampler parameters. </param>
+            /// <param name="parameters"> Returns the sampler parameters. </param>
             public static void GetSamplerParameterIuiv(SamplerHandle sampler, SamplerParameterI pname, uint* parameters) => _GetSamplerParameterIuiv_fnptr(sampler, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetSamplerParameterIuiv_Lazy(SamplerHandle sampler, SamplerParameterI pname, uint* parameters)
@@ -14017,7 +14017,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Retrieve properties of a program pipeline object. </summary>
             /// <param name="pipeline"> Specifies the name of a program pipeline object whose parameter retrieve. </param>
             /// <param name="pname"> Specifies the name of the parameter to retrieve. </param>
-            /// <param name="params"> Specifies the address of a variable into which will be written the value or values of pname for pipeline. </param>
+            /// <param name="parameters"> Specifies the address of a variable into which will be written the value or values of pname for pipeline. </param>
             public static void GetProgramPipelineiv(ProgramPipelineHandle pipeline, PipelineParameterName pname, int* parameters) => _GetProgramPipelineiv_fnptr(pipeline, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetProgramPipelineiv_Lazy(ProgramPipelineHandle pipeline, PipelineParameterName pname, int* parameters)
@@ -14686,7 +14686,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="program"> The name of a program object from which to retrieve information. </param>
             /// <param name="bufferIndex"> Specifies index of an active atomic counter buffer. </param>
             /// <param name="pname"> Specifies which parameter of the atomic counter buffer to retrieve. </param>
-            /// <param name="params"> Specifies the address of a variable into which to write the retrieved information. </param>
+            /// <param name="parameters"> Specifies the address of a variable into which to write the retrieved information. </param>
             public static void GetActiveAtomicCounterBufferiv(ProgramHandle program, uint bufferIndex, AtomicCounterBufferPName pname, int* parameters) => _GetActiveAtomicCounterBufferiv_fnptr(program, bufferIndex, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetActiveAtomicCounterBufferiv_Lazy(ProgramHandle program, uint bufferIndex, AtomicCounterBufferPName pname, int* parameters)
@@ -15668,7 +15668,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
-            /// <param name="params"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
+            /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
             public static void GetQueryObjecti64v(QueryHandle id, QueryObjectParameterName pname, long* parameters) => _GetQueryObjecti64v_fnptr(id, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetQueryObjecti64v_Lazy(QueryHandle id, QueryObjectParameterName pname, long* parameters)
@@ -15681,7 +15681,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
-            /// <param name="params"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
+            /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
             public static void GetQueryObjectui64v(QueryHandle id, QueryObjectParameterName pname, ulong* parameters) => _GetQueryObjectui64v_fnptr(id, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetQueryObjectui64v_Lazy(QueryHandle id, QueryObjectParameterName pname, ulong* parameters)
@@ -15812,7 +15812,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="target"> Specifies a query object target. Must be GL_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE GL_PRIMITIVES_GENERATED, GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN, GL_TIME_ELAPSED, or GL_TIMESTAMP. </param>
             /// <param name="index"> Specifies the index of the query object target. </param>
             /// <param name="pname"> Specifies the symbolic name of a query object target parameter. Accepted values are GL_CURRENT_QUERY or GL_QUERY_COUNTER_BITS. </param>
-            /// <param name="params"> Returns the requested data. </param>
+            /// <param name="parameters"> Returns the requested data. </param>
             public static void GetQueryIndexediv(QueryTarget target, uint index, QueryParameterName pname, int* parameters) => _GetQueryIndexediv_fnptr(target, index, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetQueryIndexediv_Lazy(QueryTarget target, uint index, QueryParameterName pname, int* parameters)
@@ -15904,7 +15904,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="uniformCount">Specifies both the number of elements in the array of indices uniformIndices and the number of parameters written to params upon successful return.</param>
             /// <param name="uniformIndices">Specifies the address of an array of uniformCount integers containing the indices of uniforms within program whose parameter pname should be queried.</param>
             /// <param name="pname">Specifies the property of each uniform in uniformIndices that should be written into the corresponding element of params.</param>
-            /// <param name="params">Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.</param>
+            /// <param name="parameters">Specifies the address of an array of uniformCount integers which are to receive the value of pname for each uniform in uniformIndices.</param>
             public static void GetActiveUniformsiv(ProgramHandle program, int uniformCount, uint* uniformIndices, UniformPName pname, int* parameters) => _GetActiveUniformsiv_fnptr(program, uniformCount, uniformIndices, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetActiveUniformsiv_Lazy(ProgramHandle program, int uniformCount, uint* uniformIndices, UniformPName pname, int* parameters)
@@ -15945,7 +15945,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="program"> Specifies the name of a program containing the uniform block. </param>
             /// <param name="uniformBlockIndex"> Specifies the index of the uniform block within program. </param>
             /// <param name="pname"> Specifies the name of the parameter to query. </param>
-            /// <param name="params"> Specifies the address of a variable to receive the result of the query. </param>
+            /// <param name="parameters"> Specifies the address of a variable to receive the result of the query. </param>
             public static void GetActiveUniformBlockiv(ProgramHandle program, uint uniformBlockIndex, UniformBlockPName pname, int* parameters) => _GetActiveUniformBlockiv_fnptr(program, uniformBlockIndex, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetActiveUniformBlockiv_Lazy(ProgramHandle program, uint uniformBlockIndex, UniformBlockPName pname, int* parameters)
@@ -16190,7 +16190,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <summary> Return a generic vertex attribute parameter. </summary>
             /// <param name="index">Specifies the generic vertex attribute parameter to be queried.</param>
             /// <param name="pname">Specifies the symbolic name of the vertex attribute parameter to be queried. Accepted values are GL_VERTEX_ATTRIB_ARRAY_BUFFER_BINDING, GL_VERTEX_ATTRIB_ARRAY_ENABLED, GL_VERTEX_ATTRIB_ARRAY_SIZE, GL_VERTEX_ATTRIB_ARRAY_STRIDE, GL_VERTEX_ATTRIB_ARRAY_TYPE, GL_VERTEX_ATTRIB_ARRAY_NORMALIZED, GL_VERTEX_ATTRIB_ARRAY_INTEGER, GL_VERTEX_ATTRIB_ARRAY_LONG, GL_VERTEX_ATTRIB_ARRAY_DIVISOR, GL_VERTEX_ATTRIB_BINDING, GL_VERTEX_ATTRIB_RELATIVE_OFFSET or GL_CURRENT_VERTEX_ATTRIB.</param>
-            /// <param name="params">Returns the requested data.</param>
+            /// <param name="parameters">Returns the requested data.</param>
             public static void GetVertexAttribLdv(uint index, VertexAttribEnum pname, double* parameters) => _GetVertexAttribLdv_fnptr(index, pname, parameters);
             [UnmanagedCallersOnly]
             private static void GetVertexAttribLdv_Lazy(uint index, VertexAttribEnum pname, double* parameters)
@@ -28694,7 +28694,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="program">Specifies the program object to be queried.</param>
             /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
             /// <param name="bufSize">Specifies the size of the buffer params.</param>
-            /// <param name="params">Returns the value of the specified uniform variable.</param>
+            /// <param name="parameters">Returns the value of the specified uniform variable.</param>
             public static void GetnUniformfv(ProgramHandle program, int location, int bufSize, float* parameters) => _GetnUniformfv_fnptr(program, location, bufSize, parameters);
             [UnmanagedCallersOnly]
             private static void GetnUniformfv_Lazy(ProgramHandle program, int location, int bufSize, float* parameters)
@@ -28708,7 +28708,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="program">Specifies the program object to be queried.</param>
             /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
             /// <param name="bufSize">Specifies the size of the buffer params.</param>
-            /// <param name="params">Returns the value of the specified uniform variable.</param>
+            /// <param name="parameters">Returns the value of the specified uniform variable.</param>
             public static void GetnUniformiv(ProgramHandle program, int location, int bufSize, int* parameters) => _GetnUniformiv_fnptr(program, location, bufSize, parameters);
             [UnmanagedCallersOnly]
             private static void GetnUniformiv_Lazy(ProgramHandle program, int location, int bufSize, int* parameters)
@@ -28722,7 +28722,7 @@ namespace OpenTK.Graphics.OpenGL
             /// <param name="program">Specifies the program object to be queried.</param>
             /// <param name="location">Specifies the location of the uniform variable to be queried.</param>
             /// <param name="bufSize">Specifies the size of the buffer params.</param>
-            /// <param name="params">Returns the value of the specified uniform variable.</param>
+            /// <param name="parameters">Returns the value of the specified uniform variable.</param>
             public static void GetnUniformuiv(ProgramHandle program, int location, int bufSize, uint* parameters) => _GetnUniformuiv_fnptr(program, location, bufSize, parameters);
             [UnmanagedCallersOnly]
             private static void GetnUniformuiv_Lazy(ProgramHandle program, int location, int bufSize, uint* parameters)

@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.CodeDom.Compiler;
 using Generator.Parsing;
+using Generator.Utility;
 
 namespace Generator.Writing
 {
@@ -233,10 +234,7 @@ namespace Generator.Writing
 
         private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall, CommandDocumentation? documenation)
         {
-            if (documenation != null)
-            {
-                WriteDocumentation(writer, documenation with { Parameters = documenation.Parameters.Where(p => overload.InputParameters.Any(p1 => p1.Name == p.Name)).ToArray() }) ;
-            }
+            writer.WriteLine($"/// <inheritdoc cref=\"{overload.NativeFunction.FunctionName}\"/>");
 
             string parameterString =
                 string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
