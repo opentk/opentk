@@ -310,6 +310,7 @@ namespace Generator.Writing
             {
                 writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameter.Description}</param>");
             }
+            writer.WriteLine($"/// <remarks><see href=\"{documentation.RefPagesLink}\" /></remarks>");
         }
 
         private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)

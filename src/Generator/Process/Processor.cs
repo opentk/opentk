@@ -271,7 +271,7 @@ namespace Generator.Process
                         if (functionsAddedIn.TryGetValue(function.NativeFunction, out List<string>? addedIn) == false)
                         {
                             addedIn = new List<string>();
-                            functionsAddedIn.Add(function.NativeFunction,  addedIn);
+                            functionsAddedIn.Add(function.NativeFunction, addedIn);
                         }
 
                         addedIn.Add(addedInString);
@@ -341,6 +341,7 @@ namespace Generator.Process
                             commandDocumentation.Name,
                             commandDocumentation.Purpose,
                             commandDocumentation.Parameters,
+                            commandDocumentation.RefPagesLink,
                             addedIn,
                             null
                             );
@@ -362,6 +363,7 @@ namespace Generator.Process
                                 function.NativeFunction.EntryPoint,
                                 "",
                                 Array.Empty<ParameterDocumentation>(),
+                                "",
                                 addedIn,
                                 null
                                 );

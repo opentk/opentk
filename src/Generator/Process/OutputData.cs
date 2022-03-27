@@ -20,6 +20,7 @@ namespace Generator.Writing
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
+        string RefPagesLink,
         List<string> AddedIn,
         List<string>? RemovedIn
         );
