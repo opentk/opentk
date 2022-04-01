@@ -345,7 +345,7 @@ namespace OpenTK.Mathematics
             result.X = Math.Min(a.X, b.X);
             result.Y = Math.Min(a.Y, b.Y);
             result.Z = Math.Min(a.Z, b.Z);
-            return a;
+            return result;
         }
 
         /// <summary>
