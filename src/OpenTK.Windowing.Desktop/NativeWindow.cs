@@ -39,6 +39,8 @@ namespace OpenTK.Windowing.Desktop
         // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
         private List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
 
+        private char _lastReportedHighSurrogate;
+
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
         private unsafe Cursor* _glfwCursor;
@@ -1289,7 +1291,26 @@ namespace OpenTK.Windowing.Desktop
         {
             try
             {
-                OnTextInput(new TextInputEventArgs((int)codepoint));
+                var signedCodepoint = (int)codepoint;
+                if (codepoint <= char.MaxValue)
+                {
+                    var c = (char)codepoint;
+
+                    // If GLFW sent us a high surrogate code unit we store it...
+                    if (char.IsHighSurrogate(c))
+                    {
+                        _lastReportedHighSurrogate = c;
+                        return;
+                    }
+
+                    // ... to recall it when GLFW sends the matching low surrogate code unit.
+                    if (char.IsLowSurrogate(c))
+                    {
+                        signedCodepoint = char.ConvertToUtf32(_lastReportedHighSurrogate, c);
+                    }
+                }
+
+                OnTextInput(new TextInputEventArgs(signedCodepoint));
             }
             catch (Exception e)
             {
