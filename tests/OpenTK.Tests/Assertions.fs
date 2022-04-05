@@ -93,6 +93,10 @@ type internal Assert =
         if neqTolerance a.X b.X tol.X || neqTolerance a.Y b.Y tol.Y || neqTolerance a.Z b.Z tol.Z then
             raise <| new Xunit.Sdk.EqualException(a,b)
 
+    static member ApproximatelyEqualDelta(a : Vector2, b : Vector2, tol : Vector2) =
+        if neqTolerance a.X b.X tol.X || neqTolerance a.Y b.Y tol.Y then
+            raise <| new Xunit.Sdk.EqualException(a,b)
+
     static member NotApproximatelyEqualEpsilon(a : float32, b : float32) =
         if approxEqSingleEpsilon a b then raise <| new Xunit.Sdk.EqualException(a,b)
 

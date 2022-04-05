@@ -109,15 +109,26 @@ module Box2 =
             let v = new Vector2(Math.Abs(v1.X), Math.Abs(v1.Y))
             
             b.Scale(v, v2)
+
+            let epsilon = new Vector2(
+                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v.X))) - 4.0f), 0.0001f),
+                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v.Y))) - 4.0f), 0.0001f)
+            )
             
-            Assert.ApproximatelyEqualEpsilon(v * f, b.Size, (float32)0.001)
+            Assert.ApproximatelyEqualDelta(v * f, b.Size, epsilon)
             
         [<Property>]
         let ``Scaling from the center of a box should have the same result as multiplying the size`` (b1 : Box2, v1 : Vector2) =
             let v2 = b1.Size * v1
+
             b1.Scale(v1, b1.Center)
+
+            let epsilon = new Vector2(
+                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v1.X))) - 4.0f), 0.0001f),
+                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v1.Y))) - 4.0f), 0.0001f)
+            )
             
-            Assert.ApproximatelyEqualEpsilon(b1.Size, v2, (float32)0.001)
+            Assert.ApproximatelyEqualDelta(b1.Size, v2, epsilon)
             
         [<Property>]
         let ``Box2.Scale is equivelant to Box2.Scaled`` (b1 : Box2, v1 : Vector2, v2 : Vector2) =
