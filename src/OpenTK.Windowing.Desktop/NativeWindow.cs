@@ -1423,7 +1423,11 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private unsafe void ProcessInputEvents()
+        /// <summary>
+        /// Updates the input state in preparation for a call to <see cref="GLFW.PollEvents"/> or <see cref="GLFW.WaitEvents"/>.
+        /// Do not call this function if you are calling <see cref="ProcessEvents()"/> or if you are running the window using <see cref="GameWindow.Run()"/>.
+        /// </summary>
+        public unsafe void ProcessInputEvents()
         {
             MouseState.Update();
             KeyboardState.Update();
