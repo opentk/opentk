@@ -134,53 +134,82 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2 to copy components from.</param>
-        public Vector4(Vector2 v)
+        /// <param name="xy">The x and y components of the Vector4.</param>
+        /// <param name="z">The z component of the Vector4.</param>
+        /// <param name="w">The w component of the Vector4.</param>
+        public Vector4(Vector2 xy, float z, float w)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = 0.0f;
-            W = 0.0f;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
-        /// <remarks>
-        ///  .<seealso cref="Vector4(Vector3, float)"/>
-        /// </remarks>
-        public Vector4(Vector3 v)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-            W = 0.0f;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
-        /// <param name="w">The w component of the new Vector4.</param>
-        public Vector4(Vector3 v, float w)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
             W = w;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector4 to copy components from.</param>
-        public Vector4(Vector4 v)
+        /// <param name="x">The x component of the Vector4.</param>
+        /// <param name="yz">The y and z components of the Vector4.</param>
+        /// <param name="w">The w component of the Vector4.</param>
+        public Vector4(float x, Vector2 yz, float w)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-            W = v.W;
+            X = x;
+            Y = yz.X;
+            Z = yz.Y;
+            W = w;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4"/> struct.
+        /// </summary>
+        /// <param name="x">The x component of the Vector4.</param>
+        /// <param name="y">The y component of the Vector4.</param>
+        /// <param name="zw">The z and w components of the Vector4.</param>
+        public Vector4(float x, float y, Vector2 zw)
+        {
+            X = x;
+            Y = y;
+            Z = zw.X;
+            W = zw.Y;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4"/> struct.
+        /// </summary>
+        /// <param name="xy">The x and y components of the Vector4.</param>
+        /// <param name="zw">The z and w components of the Vector4.</param>
+        public Vector4(Vector2 xy, Vector2 zw)
+        {
+            X = xy.X;
+            Y = xy.Y;
+            Z = zw.X;
+            W = zw.Y;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4"/> struct.
+        /// </summary>
+        /// <param name="xyz">The x, y and z components of the Vector4.</param>
+        /// <param name="w">The w component of the Vector4.</param>
+        public Vector4(Vector3 xyz, float w)
+        {
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
+            W = w;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Vector4"/> struct.
+        /// </summary>
+        /// <param name="x">The x component of the Vector4.</param>
+        /// <param name="yzw">The y, z and w components of the Vector4.</param>
+        public Vector4(float x, Vector3 yzw)
+        {
+            X = x;
+            Y = yzw.X;
+            Z = yzw.Y;
+            W = yzw.Z;
         }
 
         /// <summary>
