@@ -65,9 +65,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3d"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the Vector3.</param>
-        /// <param name="y">The y component of the Vector3.</param>
-        /// <param name="z">The z component of the Vector3.</param>
+        /// <param name="x">The x component of the Vector3d.</param>
+        /// <param name="y">The y component of the Vector3d.</param>
+        /// <param name="z">The z component of the Vector3d.</param>
         public Vector3d(double x, double y, double z)
         {
             X = x;
@@ -78,34 +78,25 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2d to copy components from.</param>
-        public Vector3d(Vector2d v)
+        /// <param name="xy">The x and y components of the Vector3d.</param>
+        /// <param name="z">The z component of the Vector3d.</param>
+        public Vector3d(Vector2d xy, double z)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = 0.0f;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector3d to copy components from.</param>
-        public Vector3d(Vector3d v)
+        /// <param name="x">The x component of the Vector3d.</param>
+        /// <param name="yz">The y and z components of the Vector3d.</param>
+        public Vector3d(double x, Vector2d yz)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3d"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector4d to copy components from.</param>
-        public Vector3d(Vector4d v)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
+            X = x;
+            Y = yz.X;
+            Z = yz.Y;
         }
 
         /// <summary>
