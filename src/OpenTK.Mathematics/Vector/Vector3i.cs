@@ -70,23 +70,11 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="xy">The x and y components of the Vector3i.</param>
         /// <param name="z">The z component of the Vector3i.</param>
-        public Vector3i(Vector2i xy, int z)
+        public Vector3i(Vector2i xy, int z = default)
         {
             X = xy.X;
             Y = xy.Y;
             Z = z;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3i"/> struct.
-        /// </summary>
-        /// <param name="x">The x component of the Vector3i.</param>
-        /// <param name="yz">The y and z components of the Vector3i.</param>
-        public Vector3i(int x, Vector2i yz)
-        {
-            X = x;
-            Y = yz.X;
-            Z = yz.Y;
         }
 
         /// <summary>

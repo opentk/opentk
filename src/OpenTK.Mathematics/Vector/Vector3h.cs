@@ -107,7 +107,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="xy">The x and y components of the Vector3h.</param>
         /// <param name="z">The z component of the Vector3h.</param>
-        public Vector3h(Vector2h xy, float z)
+        public Vector3h(Vector2h xy, float z = default)
         {
             X = xy.X;
             Y = xy.Y;
@@ -119,35 +119,11 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="xy">The x and y components of the Vector3h.</param>
         /// <param name="z">The z component of the Vector3h.</param>
-        public Vector3h(Vector2h xy, Half z)
+        public Vector3h(Vector2h xy, Half z = default)
         {
             X = xy.X;
             Y = xy.Y;
             Z = z;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// </summary>
-        /// <param name="x">The x component of the Vector3h.</param>
-        /// <param name="yz">The y and z components of the Vector3h.</param>
-        public Vector3h(float x, Vector2h yz)
-        {
-            X = (Half)x;
-            Y = yz.X;
-            Z = yz.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3h"/> struct.
-        /// </summary>
-        /// <param name="x">The x component of the Vector3h.</param>
-        /// <param name="yz">The y and z components of the Vector3h.</param>
-        public Vector3h(Half x, Vector2h yz)
-        {
-            X = x;
-            Y = yz.X;
-            Z = yz.Y;
         }
 
         /// <summary>

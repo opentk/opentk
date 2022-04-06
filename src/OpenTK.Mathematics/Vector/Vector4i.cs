@@ -79,7 +79,7 @@ namespace OpenTK.Mathematics
         /// <param name="xy">The x and y components of the Vector4i.</param>
         /// <param name="z">The z component of the Vector4i.</param>
         /// <param name="w">The w component of the Vector4i.</param>
-        public Vector4i(Vector2i xy, int z, int w)
+        public Vector4i(Vector2i xy, int z = default, int w = default)
         {
             X = xy.X;
             Y = xy.Y;
@@ -90,68 +90,14 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4i"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the Vector4i.</param>
-        /// <param name="yz">The y and z components of the Vector4i.</param>
-        /// <param name="w">The w component of the Vector4i.</param>
-        public Vector4i(int x, Vector2i yz, int w)
-        {
-            X = x;
-            Y = yz.X;
-            Z = yz.Y;
-            W = w;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="x">The x component of the Vector4i.</param>
-        /// <param name="y">The y component of the Vector4i.</param>
-        /// <param name="zw">The z and w components of the Vector4i.</param>
-        public Vector4i(int x, int y, Vector2i zw)
-        {
-            X = x;
-            Y = y;
-            Z = zw.X;
-            W = zw.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="xy">The x and y components of the Vector4i.</param>
-        /// <param name="zw">The z and w components of the Vector4i.</param>
-        public Vector4i(Vector2i xy, Vector2i zw)
-        {
-            X = xy.X;
-            Y = xy.Y;
-            Z = zw.X;
-            W = zw.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
         /// <param name="xyz">The x, y and z components of the Vector4i.</param>
         /// <param name="w">The w component of the Vector4i.</param>
-        public Vector4i(Vector3i xyz, int w)
+        public Vector4i(Vector3i xyz, int w = default)
         {
             X = xyz.X;
             Y = xyz.Y;
             Z = xyz.Z;
             W = w;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="x">The x component of the Vector4i.</param>
-        /// <param name="yzw">The y, z and w components of the Vector4i.</param>
-        public Vector4i(int x, Vector3i yzw)
-        {
-            X = x;
-            Y = yzw.X;
-            Z = yzw.Y;
-            W = yzw.Z;
         }
 
         /// <summary>

@@ -137,7 +137,7 @@ namespace OpenTK.Mathematics
         /// <param name="xy">The x and y components of the Vector4.</param>
         /// <param name="z">The z component of the Vector4.</param>
         /// <param name="w">The w component of the Vector4.</param>
-        public Vector4(Vector2 xy, float z, float w)
+        public Vector4(Vector2 xy, float z = default, float w = default)
         {
             X = xy.X;
             Y = xy.Y;
@@ -148,68 +148,14 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the Vector4.</param>
-        /// <param name="yz">The y and z components of the Vector4.</param>
-        /// <param name="w">The w component of the Vector4.</param>
-        public Vector4(float x, Vector2 yz, float w)
-        {
-            X = x;
-            Y = yz.X;
-            Z = yz.Y;
-            W = w;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
-        /// <param name="x">The x component of the Vector4.</param>
-        /// <param name="y">The y component of the Vector4.</param>
-        /// <param name="zw">The z and w components of the Vector4.</param>
-        public Vector4(float x, float y, Vector2 zw)
-        {
-            X = x;
-            Y = y;
-            Z = zw.X;
-            W = zw.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
-        /// <param name="xy">The x and y components of the Vector4.</param>
-        /// <param name="zw">The z and w components of the Vector4.</param>
-        public Vector4(Vector2 xy, Vector2 zw)
-        {
-            X = xy.X;
-            Y = xy.Y;
-            Z = zw.X;
-            W = zw.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
         /// <param name="xyz">The x, y and z components of the Vector4.</param>
         /// <param name="w">The w component of the Vector4.</param>
-        public Vector4(Vector3 xyz, float w)
+        public Vector4(Vector3 xyz, float w = default)
         {
             X = xyz.X;
             Y = xyz.Y;
             Z = xyz.Z;
             W = w;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
-        /// <param name="x">The x component of the Vector4.</param>
-        /// <param name="yzw">The y, z and w components of the Vector4.</param>
-        public Vector4(float x, Vector3 yzw)
-        {
-            X = x;
-            Y = yzw.X;
-            Z = yzw.Y;
-            W = yzw.Z;
         }
 
         /// <summary>
