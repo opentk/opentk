@@ -78,9 +78,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="x">The x component of the Vector3h.</param>
+        /// <param name="y">The y component of the Vector3h.</param>
+        /// <param name="z">The z component of the Vector3h.</param>
         public Vector3h(Half x, Half y, Half z)
         {
             X = x;
@@ -92,9 +92,9 @@ namespace OpenTK.Mathematics
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// The new Half3 instance will convert the 3 parameters into 16-bit half-precision floating-point.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
+        /// <param name="x">The x component of the Vector3h.</param>
+        /// <param name="y">The y component of the Vector3h.</param>
+        /// <param name="z">The z component of the Vector3h.</param>
         public Vector3h(float x, float y, float z)
         {
             X = (Half)x;
@@ -105,45 +105,49 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
-        public Vector3h(Vector3 v)
+        /// <param name="xy">The x and y components of the Vector3h.</param>
+        /// <param name="z">The z component of the Vector3h.</param>
+        public Vector3h(Vector2h xy, float z)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
+            X = xy.X;
+            Y = xy.Y;
+            Z = (Half)z;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector3"/> to convert.</param>
-        public Vector3h(in Vector3 v)
+        /// <param name="xy">The x and y components of the Vector3h.</param>
+        /// <param name="z">The z component of the Vector3h.</param>
+        public Vector3h(Vector2h xy, Half z)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
-        public Vector3h(Vector3d v)
+        /// <param name="x">The x component of the Vector3h.</param>
+        /// <param name="yz">The y and z components of the Vector3h.</param>
+        public Vector3h(float x, Vector2h yz)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
+            X = (Half)x;
+            Y = yz.X;
+            Z = yz.Y;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector3d"/> to convert.</param>
-        public Vector3h(in Vector3d v)
+        /// <param name="x">The x component of the Vector3h.</param>
+        /// <param name="yz">The y and z components of the Vector3h.</param>
+        public Vector3h(Half x, Vector2h yz)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
+            X = x;
+            Y = yz.X;
+            Z = yz.Y;
         }
 
         /// <summary>
