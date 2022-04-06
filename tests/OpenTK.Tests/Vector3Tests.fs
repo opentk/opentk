@@ -31,20 +31,18 @@ module Vector3 =
         [<Property>]
         let ``(Vector2, float) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32) =
             let v1 = Vector2(x, y)
-            let v2 = Vector3(v1, z)
+
+            let v2 = Vector3(v1)
 
             Assert.Equal(x, v2.X)
             Assert.Equal(y, v2.Y)
-            Assert.Equal(z, v2.Z)
+            Assert.Equal(0.0f, v2.Z)
 
-        [<Property>]
-        let ``(float, Vector2) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32) =
-            let v1 = Vector2(y, z)
-            let v2 = Vector3(x, v1)
+            let v3 = Vector3(v1, z)
 
-            Assert.Equal(x, v2.X)
-            Assert.Equal(y, v2.Y)
-            Assert.Equal(z, v2.Z)
+            Assert.Equal(x, v3.X)
+            Assert.Equal(y, v3.Y)
+            Assert.Equal(z, v3.Z)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Indexing =

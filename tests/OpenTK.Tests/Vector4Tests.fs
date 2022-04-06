@@ -33,63 +33,45 @@ module Vector4 =
         [<Property>]
         let ``(Vector2, float, float) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32, w : float32) =
             let v1 = Vector2(x, y)
-            let v2 = Vector4(v1, z, w)
+
+            let v2 = Vector4(v1)
+
+            Assert.Equal(x, v2.X)
+            Assert.Equal(y, v2.Y)
+            Assert.Equal(0.0f, v2.Z)
+            Assert.Equal(0.0f, v2.W)
+
+            let v3 = Vector4(v1, z)
+
+            Assert.Equal(x, v3.X)
+            Assert.Equal(y, v3.Y)
+            Assert.Equal(z, v3.Z)
+            Assert.Equal(0.0f, v3.W)
+
+            let v4 = Vector4(v1, z, w)
+
+            Assert.Equal(x, v4.X)
+            Assert.Equal(y, v4.Y)
+            Assert.Equal(z, v4.Z)
+            Assert.Equal(w, v4.W)
+
+        [<Property>]
+        let ``(Vector3, float) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32, w : float32) =
+            let v1 = Vector3(x, y, z)
+
+            let v2 = Vector4(v1)
 
             Assert.Equal(x, v2.X)
             Assert.Equal(y, v2.Y)
             Assert.Equal(z, v2.Z)
-            Assert.Equal(w, v2.W)
+            Assert.Equal(0.0f, v2.W)
 
-        [<Property>]
-        let ``(float, Vector2, float) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32, w : float32) =
-            let v1 = Vector2(y, z)
-            let v2 = Vector4(x, v1, w)
-
-            Assert.Equal(x, v2.X)
-            Assert.Equal(y, v2.Y)
-            Assert.Equal(z, v2.Z)
-            Assert.Equal(w, v2.W)
-
-        [<Property>]
-        let ``(float, float, Vector2) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32, w : float32) =
-            let v1 = Vector2(z, w)
-            let v2 = Vector4(x, y, v1)
-
-            Assert.Equal(x, v2.X)
-            Assert.Equal(y, v2.Y)
-            Assert.Equal(z, v2.Z)
-            Assert.Equal(w, v2.W)
-
-        [<Property>]
-        let ``(Vector2, Vector2) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32, w : float32) =
-            let v1 = Vector2(x, y)
-            let v2 = Vector2(z, w)
-            let v3 = Vector4(v1, v2)
+            let v3 = Vector4(v1, w)
 
             Assert.Equal(x, v3.X)
             Assert.Equal(y, v3.Y)
             Assert.Equal(z, v3.Z)
             Assert.Equal(w, v3.W)
-
-        [<Property>]
-        let ``(Vector3, float) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32, w : float32) =
-            let v1 = Vector3(x, y, z)
-            let v2 = Vector4(v1, w)
-
-            Assert.Equal(x, v2.X)
-            Assert.Equal(y, v2.Y)
-            Assert.Equal(z, v2.Z)
-            Assert.Equal(w, v2.W)
-
-        [<Property>]
-        let ``(float, Vector3) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32, w : float32) =
-            let v1 = Vector3(y, z, w)
-            let v2 = Vector4(x, v1)
-
-            Assert.Equal(x, v2.X)
-            Assert.Equal(y, v2.Y)
-            Assert.Equal(z, v2.Z)
-            Assert.Equal(w, v2.W)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Indexing =
