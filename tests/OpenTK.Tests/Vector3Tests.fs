@@ -13,58 +13,38 @@ module Vector3 =
     module Constructors =
         //
         [<Property>]
-        let ``Triple value constructor sets all components to the correct values`` (a, b, c) =
-            let v = Vector3(a, b, c)
+        let ``(float, float, float) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32) =
+            let v = Vector3(x, y, z)
 
-            Assert.Equal(a, v.X)
-            Assert.Equal(b, v.Y)
-            Assert.Equal(c, v.Z)
-
-        [<Property>]
-        let ``Single value constructor sets all components to the correct values`` (a : float32) =
-            let v = Vector3(a)
-
-            Assert.Equal(a, v.X)
-            Assert.Equal(a, v.Y)
-            Assert.Equal(a, v.Z)
+            Assert.Equal(x, v.X)
+            Assert.Equal(y, v.Y)
+            Assert.Equal(z, v.Z)
 
         [<Property>]
-        let ``Vector2 value constructor sets all components to the correct values`` (a, b) =
-            let v1 = Vector2(a, b)
-            let v2 = Vector3(v1)
+        let ``(float) constructor sets all components to the correct values`` (value : float32) =
+            let v = Vector3(value)
 
-            Assert.Equal(v1.X, v2.X)
-            Assert.Equal(v1.Y, v2.Y)
-
-            Assert.Equal(a, v2.X)
-            Assert.Equal(b, v2.Y)
-            Assert.Equal(0.0f, v2.Z)
+            Assert.Equal(value, v.X)
+            Assert.Equal(value, v.Y)
+            Assert.Equal(value, v.Z)
 
         [<Property>]
-        let ``Vector3 value constructor sets all components to the correct values`` (a, b, c) =
-            let v1 = Vector3(a, b, c)
-            let v2 = Vector3(v1)
+        let ``(Vector2, float) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32) =
+            let v1 = Vector2(x, y)
+            let v2 = Vector3(v1, z)
 
-            Assert.Equal(v1.X, v2.X)
-            Assert.Equal(v1.Y, v2.Y)
-            Assert.Equal(v1.Z, v2.Z)
-
-            Assert.Equal(a, v2.X)
-            Assert.Equal(b, v2.Y)
-            Assert.Equal(c, v2.Z)
+            Assert.Equal(x, v2.X)
+            Assert.Equal(y, v2.Y)
+            Assert.Equal(z, v2.Z)
 
         [<Property>]
-        let ``Vector4 value constructor sets all components to the correct values`` (a, b, c, d) =
-            let v1 = Vector4(a, b, c, d)
-            let v2 = Vector3(v1)
+        let ``(float, Vector2) constructor sets all components to the correct values`` (x : float32, y : float32, z : float32) =
+            let v1 = Vector2(y, z)
+            let v2 = Vector3(x, v1)
 
-            Assert.Equal(v1.X, v2.X)
-            Assert.Equal(v1.Y, v2.Y)
-            Assert.Equal(v1.Z, v2.Z)
-
-            Assert.Equal(a, v2.X)
-            Assert.Equal(b, v2.Y)
-            Assert.Equal(c, v2.Z)
+            Assert.Equal(x, v2.X)
+            Assert.Equal(y, v2.Y)
+            Assert.Equal(z, v2.Z)
 
     [<Properties(Arbitrary = [| typeof<OpenTKGen> |])>]
     module Indexing =
