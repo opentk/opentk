@@ -1966,31 +1966,6 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static unsafe explicit operator float*(Vector4 v)
-        {
-            return &v.X;
-        }
-
-        /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static explicit operator IntPtr(Vector4 v)
-        {
-            unsafe
-            {
-                return (IntPtr)(&v.X);
-            }
-        }
-
-        /// <summary>
         /// Converts OpenTK.Vector4 to OpenTK.Vector4d.
         /// </summary>
         /// <param name="vec">The Vector4 to convert.</param>
