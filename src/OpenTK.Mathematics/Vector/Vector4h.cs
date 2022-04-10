@@ -90,10 +90,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
-        /// <param name="w">The W component of the vector.</param>
+        /// <param name="x">The x component of the Vector4h.</param>
+        /// <param name="y">The y component of the Vector4h.</param>
+        /// <param name="z">The z component of the Vector4h.</param>
+        /// <param name="w">The w component of the Vector4h.</param>
         public Vector4h(Half x, Half y, Half z, Half w)
         {
             X = x;
@@ -105,10 +105,10 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
-        /// <param name="z">The Z component of the vector.</param>
-        /// <param name="w">The W component of the vector.</param>
+        /// <param name="x">The x component of the Vector4h.</param>
+        /// <param name="y">The y component of the Vector4h.</param>
+        /// <param name="z">The z component of the Vector4h.</param>
+        /// <param name="w">The w component of the Vector4h.</param>
         public Vector4h(float x, float y, float z, float w)
         {
             X = (Half)x;
@@ -120,49 +120,55 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
-        public Vector4h(Vector4 v)
+        /// <param name="xy">The x and y components of the Vector4h.</param>
+        /// <param name="z">The z component of the Vector4h.</param>
+        /// <param name="w">The w component of the Vector4h.</param>
+        public Vector4h(Vector2h xy, float z = default, float w = default)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
-            W = (Half)v.W;
+            X = xy.X;
+            Y = xy.Y;
+            Z = (Half)z;
+            W = (Half)w;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector4"/> to convert.</param>
-        public Vector4h(in Vector4 v)
+        /// <param name="xy">The x and y components of the Vector4h.</param>
+        /// <param name="z">The z component of the Vector4h.</param>
+        /// <param name="w">The w component of the Vector4h.</param>
+        public Vector4h(Vector2h xy, Half z = default, Half w = default)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
-            W = (Half)v.W;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
+            W = w;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
-        public Vector4h(Vector4d v)
+        /// <param name="xyz">The x, y and z components of the Vector4h.</param>
+        /// <param name="w">The w component of the Vector4h.</param>
+        public Vector4h(Vector3h xyz, float w = default)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
-            W = (Half)v.W;
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
+            W = (Half)w;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4h"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector4d"/> to convert.</param>
-        public Vector4h(in Vector4d v)
+        /// <param name="xyz">The x, y and z components of the Vector4h.</param>
+        /// <param name="w">The w component of the Vector4h.</param>
+        public Vector4h(Vector3h xyz, Half w = default)
         {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-            Z = (Half)v.Z;
-            W = (Half)v.W;
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
+            W = w;
         }
 
         /// <summary>
@@ -1141,28 +1147,6 @@ namespace OpenTK.Mathematics
         public Vector4d ToVector4d()
         {
             return new Vector4d((double)X, (double)Y, (double)Z, (double)W);
-        }
-
-        /// <summary>
-        /// Converts OpenTK.Vector4 to OpenTK.Half4.
-        /// </summary>
-        /// <param name="v4f">The Vector4 to convert.</param>
-        /// <returns>The resulting Half vector.</returns>
-        [Pure]
-        public static explicit operator Vector4h(Vector4 v4f)
-        {
-            return new Vector4h(v4f);
-        }
-
-        /// <summary>
-        /// Converts OpenTK.Vector4d to OpenTK.Half4.
-        /// </summary>
-        /// <param name="v4d">The Vector4d to convert.</param>
-        /// <returns>The resulting Half vector.</returns>
-        [Pure]
-        public static explicit operator Vector4h(Vector4d v4d)
-        {
-            return new Vector4h(v4d);
         }
 
         /// <summary>

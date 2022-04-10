@@ -71,8 +71,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="x">The x component of the Vector2h.</param>
+        /// <param name="y">The y component of the Vector2h.</param>
         public Vector2h(Half x, Half y)
         {
             X = x;
@@ -82,52 +82,12 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2h"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the vector.</param>
-        /// <param name="y">The Y component of the vector.</param>
+        /// <param name="x">The x component of the Vector2h.</param>
+        /// <param name="y">The y component of the Vector2h.</param>
         public Vector2h(float x, float y)
         {
             X = (Half)x;
             Y = (Half)y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2"/> to convert.</param>
-        public Vector2h(Vector2 v)
-        {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2"/> to convert.</param>
-        public Vector2h(in Vector2 v)
-        {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
-        public Vector2h(Vector2d v)
-        {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector2h"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2d"/> to convert.</param>
-        public Vector2h(in Vector2d v)
-        {
-            X = (Half)v.X;
-            Y = (Half)v.Y;
         }
 
         /// <summary>

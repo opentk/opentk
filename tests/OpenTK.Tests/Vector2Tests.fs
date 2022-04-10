@@ -13,14 +13,16 @@ module Vector2 =
     module Constructors =
         //
         [<Property>]
-        let ``Single value constructor sets all components to the same value`` (f : float32) =
-            let v = Vector2(f)
-            Assert.Equal(f,v.X)
-            Assert.Equal(f,v.Y)
+        let ``(float) constructor sets all components to the same value`` (value : float32) =
+            let v = Vector2(value)
+            
+            Assert.Equal(value, v.X)
+            Assert.Equal(value, v.Y)
 
         [<Property>]
-        let ``Two value constructor sets all components correctly`` (x,y) =
+        let ``(float, float) constructor sets all components correctly`` (x : float32, y : float32) =
             let v = Vector2(x,y)
+            
             Assert.Equal(x,v.X)
             Assert.Equal(y,v.Y)
 
