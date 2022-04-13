@@ -120,7 +120,7 @@ namespace OpenTK.Mathematics
         public bool Contains(Vector3i point)
         {
             return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Z && point.Y < _max.Y &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
                    _min.Z < point.Z && point.Z < _max.Z;
         }
 
