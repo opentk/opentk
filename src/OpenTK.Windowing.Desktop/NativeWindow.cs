@@ -767,6 +767,16 @@ namespace OpenTK.Windowing.Desktop
                     GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
                 }
 
+                if (settings.DepthBits.HasValue)
+                {
+                    GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
+                }
+
+                if (settings.StencilBits.HasValue)
+                {
+                    GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
+                }
+
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
                 if (settings.WindowState == WindowState.Fullscreen && _isVisible)
@@ -780,16 +790,6 @@ namespace OpenTK.Windowing.Desktop
                 {
                     WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
                 }
-            }
-
-            if (settings.DepthBits.HasValue)
-            {
-                GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
-            }
-
-            if (settings.StencilBits.HasValue)
-            {
-                GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherweise we will get an exception.
