@@ -246,5 +246,10 @@ namespace OpenTK.Windowing.Desktop
         /// Default value is 8.
         /// </remarks>
         public int? AlphaBits { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the backbuffer should be sRGB capable.
+        /// </summary>
+        public bool SrgbCapable { get; set; }
     }
 }
