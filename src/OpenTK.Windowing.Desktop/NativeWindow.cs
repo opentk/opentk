@@ -1403,6 +1403,23 @@ namespace OpenTK.Windowing.Desktop
             RethrowCallbackExceptionsIfNeeded();
         }
 
+        /// <summary>
+        /// Processes pending window events without a call to <see cref="ProcessInputEvents()"/>.
+        /// </summary>
+        public virtual void ProcessEventsNoInput()
+        {
+            if (IsEventDriven)
+            {
+                GLFW.WaitEvents();
+            }
+            else
+            {
+                GLFW.PollEvents();
+            }
+
+            RethrowCallbackExceptionsIfNeeded();
+        }
+
         private void RethrowCallbackExceptionsIfNeeded()
         {
             if (_callbackExceptions.Count == 1)
