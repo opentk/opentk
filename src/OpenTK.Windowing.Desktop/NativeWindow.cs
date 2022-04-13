@@ -751,6 +751,8 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.WindowHint(WindowHintInt.Samples, settings.NumberOfSamples);
 
+            GLFW.WindowHint(WindowHintBool.SrgbCapable, settings.SrgbCapable);
+
             // We do the work to set the hint bits outside of the CreateWindow conditional
             // so that the window will get the correct fullscreen red/green/blue bits stored
             // in its hidden fields regardless of how it gets created.  (The extra curly
