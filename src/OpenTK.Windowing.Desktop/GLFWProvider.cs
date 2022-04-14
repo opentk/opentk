@@ -32,20 +32,7 @@ namespace OpenTK.Windowing.Desktop
         /// Gets a value indicating whether the <see cref="Thread.CurrentThread"/> is the same as the GLFW main thread.
         /// If <see cref="CheckForMainThread"/> is false this function will always return true.
         /// </summary>
-        public static bool IsOnMainThread
-        {
-            get
-            {
-                if (CheckForMainThread == false)
-                {
-                    return true;
-                }
-                else
-                {
-                    return _mainThread?.ManagedThreadId == Thread.CurrentThread.ManagedThreadId;
-                }
-            }
-        }
+        public static bool IsOnMainThread => CheckForMainThread == false || _mainThread == Thread.CurrentThread;
 
         /// <summary>
         /// Whether or not to check that GLFW is initialzed on the main thread.
