@@ -124,6 +124,10 @@ namespace OpenTK.Convert
             // so we need to keep separate lists for each API. Tokens
             // that are common go to the "default" list.
             var enums = new Dictionary<string, SortedDictionary<string, string>>();
+            // Enum group name -> XElement with the following format
+            // <group name="groupName"> ... </>
+            // where ... are the enum definition XElements.
+            var enumGroupXml = new Dictionary<string, XElement>();
             foreach (var e in enumerations)
             {
                 var api = (e.Attribute("api") ?? new XAttribute("api", "default")).Value;
@@ -132,9 +136,31 @@ namespace OpenTK.Convert
                     enums.Add(api, new SortedDictionary<string, string>());
                 }
 
+                // Parse the group attribute and add those to their groups.
+                string[] groupsArr = e.Attribute("group")?.Value?.Split(",");
+                if (groupsArr != null && groupsArr.Length > 0)
+                {
+                    foreach (var groupName in groupsArr)
+                    {
+                        if (enumGroupXml.TryGetValue(groupName, out var groupXml) == false)
+                        {
+                            groupXml = new XElement("group", new XAttribute("name", groupName));
+                            enumGroupXml.Add(groupName, groupXml);
+                        }
+
+                        groupXml.Add(e);
+                    }
+                }
+
                 enums[api].Add(
                     TrimName(e.Attribute("name").Value),
                     e.Attribute("value").Value);
+            }
+
+            XElement groupsXml = new XElement("groups");
+            foreach (var group in enumGroupXml.Values)
+            {
+                groupsXml.Add(group);
             }
 
             // Now we go through each feature, extension and group
@@ -145,7 +171,7 @@ namespace OpenTK.Convert
             // means that its enums must go to both the gl and gles2 APIs.
             foreach (var feature in
                 features.Concat(extensions)
-                .Concat(groups)
+                .Concat(groupsXml.Elements("group"))
                 .OrderBy(f => TrimName(f.Attribute("name").Value)))
             {
                 var version = feature.Attribute("number") != null ? feature.Attribute("number").Value : null;

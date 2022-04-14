@@ -62277,7 +62277,7 @@
     </function>
     <function name="GetTranslatedShaderSourceANGLE" category="ANGLE_translated_shader_source" extension="ANGLE">
       <param name="shader" type="GLuint" flow="in" />
-      <param name="bufsize" type="GLsizei" flow="in" />
+      <param name="bufSize" type="GLsizei" flow="in" />
       <param name="length" type="GLsizei *" flow="out" count="1" />
       <param name="source" type="GLchar *" flow="out" />
       <returns type="void" />
