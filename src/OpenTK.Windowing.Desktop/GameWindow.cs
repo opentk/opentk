@@ -229,9 +229,8 @@ namespace OpenTK.Windowing.Desktop
             _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
-                // Update input state for this frame.
-                // We will continually poll for events while waiting to dispatch update frame.
-                ProcessInputEvents();
+                // Process events, this will be called continuously while waiting to dispatch render and update frames.
+                ProcessEventsNoInput();
                 DispatchUpdateFrame();
 
                 if (!IsMultiThreaded)
@@ -266,11 +265,12 @@ namespace OpenTK.Windowing.Desktop
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
-                ProcessEventsNoInput();
-
                 _watchUpdate.Restart();
                 UpdateTime = elapsed;
                 OnUpdateFrame(new FrameEventArgs(elapsed));
+
+                // Prepare input for the next update.
+                ProcessInputEvents();
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must

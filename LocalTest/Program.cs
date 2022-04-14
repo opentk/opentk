@@ -2,6 +2,7 @@
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Diagnostics;
 
@@ -13,6 +14,8 @@ namespace LocalTest
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
+                RenderFrequency = 0,
+                UpdateFrequency = 0,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -56,6 +59,13 @@ namespace LocalTest
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             SwapBuffers();
+        }
+        
+        protected override void OnUpdateFrame(FrameEventArgs args)
+        {
+            base.OnUpdateFrame(args);
+
+
         }
     }
 }
