@@ -13,11 +13,6 @@ namespace OpenTK.Windowing.Desktop
         {
             GLFWProvider.EnsureInitialized();
 
-            if (!GLFWProvider.IsOnMainThread)
-            {
-                throw new InvalidOperationException("Only GLFW main thread can access this class.");
-            }
-
             _joystickCallback = (id, state) => JoystickCallback(id, state);
 
             GLFW.SetJoystickCallback(_joystickCallback);
