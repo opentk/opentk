@@ -665,10 +665,6 @@ namespace OpenTK.Windowing.Desktop
         public unsafe NativeWindow(NativeWindowSettings settings)
         {
             GLFWProvider.EnsureInitialized();
-            if (!GLFWProvider.IsOnMainThread)
-            {
-                throw new GLFWException("Can only create windows on the Glfw main thread (the thread that calls Main).");
-            }
 
             _title = settings.Title;
 
