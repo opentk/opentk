@@ -18,7 +18,7 @@
         <PrivateAssets>all</PrivateAssets>
       </PackageReference>
       <PackageReference Condition="'$(TargetFramework)' == 'net472'" Include="System.Memory" Version="4.5" />
-      <PackageReference Include="OpenTK.redist.glfw" Version="3.3.5.18" />
+      <PackageReference Include="OpenTK.redist.glfw" Version="3.3.7.25" />
     </ItemGroup>
 
     <ItemGroup>
