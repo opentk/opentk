@@ -26,11 +26,6 @@ namespace OpenTK.Windowing.Desktop
         {
             GLFWProvider.EnsureInitialized();
 
-            if (!GLFWProvider.IsOnMainThread)
-            {
-                throw new InvalidOperationException("Only GLFW main thread can access this class.");
-            }
-
             _monitorCallback = MonitorCallback;
             GLFW.SetMonitorCallback(_monitorCallback);
         }

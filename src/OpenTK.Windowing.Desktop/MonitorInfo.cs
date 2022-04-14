@@ -128,10 +128,7 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="handle">An opaque handle to a monitor.</param>
         internal MonitorInfo(MonitorHandle handle)
         {
-            if (!GLFWProvider.IsOnMainThread)
-            {
-                throw new NotSupportedException("Only the GLFW thread can construct this object.");
-            }
+            GLFWProvider.EnsureInitialized();
 
             if (handle.Pointer == IntPtr.Zero)
             {
