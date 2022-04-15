@@ -259,7 +259,7 @@ namespace Generator.Process
                 {
                     continue;
                 }
-                
+
                 foreach (string command in requireEntry.Commands)
                 {
                     if (allFunctions.TryGetValue(command, out OverloadedFunction? function))
@@ -363,6 +363,7 @@ namespace Generator.Process
                                 function.NativeFunction.EntryPoint,
                                 "",
                                 Array.Empty<ParameterDocumentation>(),
+                                // TODO: Is it possible to get the extension spec file and link to it here?
                                 "",
                                 addedIn,
                                 null

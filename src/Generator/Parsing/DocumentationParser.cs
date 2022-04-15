@@ -65,8 +65,7 @@ namespace Generator.Parsing
                             refPagesLink += $"es3.0/html{filename}.xhtml";
                             break;
                         default:
-                            refPagesLink = "NOT FOUND";
-                            break;
+                            throw new Exception("API not supported for documentation.");
                     }
 
                     CommandDocumentation[] documentation = ParseFile(xml.Root!, refPagesLink);
@@ -91,7 +90,7 @@ namespace Generator.Parsing
         }
 
 
-        private static CommandDocumentation[] ParseFile(XElement root, string filename)
+        private static CommandDocumentation[] ParseFile(XElement root, string refPagesLink)
         {
             // FIXME:
 
@@ -102,7 +101,7 @@ namespace Generator.Parsing
             purpose = NameMangler.MangleCommandPurpose(purpose);
 
             Dictionary<string, string> parametersDescriptions = new Dictionary<string, string>();
-            
+
             XElement ? refparameters = root.ElementIgnoreNamespace(e => e.AttributeIgnoreNamespace("id")?.Value == "parameters");
             if (refparameters != null)
             {
@@ -147,7 +146,7 @@ namespace Generator.Parsing
                     parameters.Add(new ParameterDocumentation(parameterName, desc ?? "!!missing documentation!!"));
                 }
 
-                documentation.Add(new CommandDocumentation(function.Value, purpose, parameters.ToArray(), filename));
+                documentation.Add(new CommandDocumentation(function.Value, purpose, parameters.ToArray(), refPagesLink));
             }
 
             return documentation.ToArray();
