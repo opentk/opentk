@@ -2834,6 +2834,7 @@
       <token name="TEXTURE_GEN_S" value="0x0C60" deprecated="3.2" />
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -4612,6 +4613,8 @@
       <token name="VIEWPORT" value="0x0BA2" />
       <token name="ZOOM_X" value="0x0D16" deprecated="3.2" />
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -5988,6 +5991,56 @@
       <token name="MAX_SHININESS_NV" value="0x8504" />
       <token name="MAX_SPOT_EXPONENT_NV" value="0x8505" />
     </enum>
+    <enum name="NV_mesh_shader">
+      <token name="MESH_SHADER_NV" value="0x9559" />
+      <token name="TASK_SHADER_NV" value="0x955A" />
+      <token name="MAX_MESH_UNIFORM_BLOCKS_NV" value="0x8E60" />
+      <token name="MAX_MESH_TEXTURE_IMAGE_UNITS_NV" value="0x8E61" />
+      <token name="MAX_MESH_IMAGE_UNIFORMS_NV" value="0x8E62" />
+      <token name="MAX_MESH_UNIFORM_COMPONENTS_NV" value="0x8E63" />
+      <token name="MAX_MESH_ATOMIC_COUNTER_BUFFERS_NV" value="0x8E64" />
+      <token name="MAX_MESH_ATOMIC_COUNTERS_NV" value="0x8E65" />
+      <token name="MAX_MESH_SHADER_STORAGE_BLOCKS_NV" value="0x8E66" />
+      <token name="MAX_COMBINED_MESH_UNIFORM_COMPONENTS_NV" value="0x8E67" />
+      <token name="MAX_TASK_UNIFORM_BLOCKS_NV" value="0x8E68" />
+      <token name="MAX_TASK_TEXTURE_IMAGE_UNITS_NV" value="0x8E69" />
+      <token name="MAX_TASK_IMAGE_UNIFORMS_NV" value="0x8E6A" />
+      <token name="MAX_TASK_UNIFORM_COMPONENTS_NV" value="0x8E6B" />
+      <token name="MAX_TASK_ATOMIC_COUNTER_BUFFERS_NV" value="0x8E6C" />
+      <token name="MAX_TASK_ATOMIC_COUNTERS_NV" value="0x8E6D" />
+      <token name="MAX_TASK_SHADER_STORAGE_BLOCKS_NV" value="0x8E6E" />
+      <token name="MAX_COMBINED_TASK_UNIFORM_COMPONENTS_NV" value="0x8E6F" />
+      <token name="MAX_MESH_WORK_GROUP_INVOCATIONS_NV" value="0x95A2" />
+      <token name="MAX_TASK_WORK_GROUP_INVOCATIONS_NV" value="0x95A3" />
+      <token name="MAX_MESH_TOTAL_MEMORY_SIZE_NV" value="0x9536" />
+      <token name="MAX_TASK_TOTAL_MEMORY_SIZE_NV" value="0x9537" />
+      <token name="MAX_MESH_OUTPUT_VERTICES_NV" value="0x9538" />
+      <token name="MAX_MESH_OUTPUT_PRIMITIVES_NV" value="0x9539" />
+      <token name="MAX_TASK_OUTPUT_COUNT_NV" value="0x953A" />
+      <token name="MAX_DRAW_MESH_TASKS_COUNT_NV" value="0x953D" />
+      <token name="MAX_MESH_VIEWS_NV" value="0x9557" />
+      <token name="MESH_OUTPUT_PER_VERTEX_GRANULARITY_NV" value="0x92DF" />
+      <token name="MESH_OUTPUT_PER_PRIMITIVE_GRANULARITY_NV" value="0x9543" />
+      <token name="MAX_MESH_WORK_GROUP_SIZE_NV" value="0x953B" />
+      <token name="MAX_TASK_WORK_GROUP_SIZE_NV" value="0x953C" />
+      <token name="MESH_WORK_GROUP_SIZE_NV" value="0x953E" />
+      <token name="TASK_WORK_GROUP_SIZE_NV" value="0x953F" />
+      <token name="MESH_VERTICES_OUT_NV" value="0x9579" />
+      <token name="MESH_PRIMITIVES_OUT_NV" value="0x957A" />
+      <token name="MESH_OUTPUT_TYPE_NV" value="0x957B" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_MESH_SHADER_NV" value="0x959C" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_TASK_SHADER_NV" value="0x959D" />
+      <token name="REFERENCED_BY_MESH_SHADER_NV" value="0x95A0" />
+      <token name="REFERENCED_BY_TASK_SHADER_NV" value="0x95A1" />
+      <token name="MESH_SHADER_BIT_NV" value="0x00000040" />
+      <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
+      <token name="MESH_SUBROUTINE_NV" value="0x957C" />
+      <token name="TASK_SUBROUTINE_NV" value="0x957D" />
+      <token name="MESH_SUBROUTINE_UNIFORM_NV" value="0x957E" />
+      <token name="TASK_SUBROUTINE_UNIFORM_NV" value="0x957F" />
+      <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_MESH_SHADER_NV" value="0x959E" />
+      <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TASK_SHADER_NV" value="0x959F" />
+    </enum>
     <enum name="NV_multisample_coverage">
       <token name="SAMPLES_ARB" value="0x80A9" />
       <token name="COLOR_SAMPLES_NV" value="0x8E20" />
@@ -6207,6 +6260,10 @@
       <token name="PRIMITIVE_RESTART_NV" value="0x8558" />
       <token name="PRIMITIVE_RESTART_INDEX_NV" value="0x8559" />
     </enum>
+    <enum name="NV_primitive_shading_rate">
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+    </enum>
     <enum name="NV_query_resource">
       <token name="QUERY_RESOURCE_TYPE_VIDMEM_ALLOC_NV" value="0x9540" />
       <token name="QUERY_RESOURCE_MEMTYPE_VIDMEM_NV" value="0x9542" />
@@ -6277,6 +6334,9 @@
     <enum name="NV_register_combiners2">
       <token name="PER_STAGE_CONSTANTS_NV" value="0x8535" />
     </enum>
+    <enum name="NV_representative_fragment_test">
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+    </enum>
     <enum name="NV_robustness_video_memory_purge">
       <token name="PURGED_CONTEXT_RESET_NV" value="0x92BB" />
     </enum>
@@ -6291,6 +6351,10 @@
       <token name="FRAMEBUFFER_SAMPLE_LOCATION_PIXEL_GRID_NV" value="0x9343" />
     </enum>
     <enum name="NV_sample_mask_override_coverage" />
+    <enum name="NV_scissor_exclusive">
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
+    </enum>
     <enum name="NV_shader_atomic_counters" />
     <enum name="NV_shader_atomic_float" />
     <enum name="NV_shader_atomic_float64" />
@@ -6313,6 +6377,29 @@
       <token name="SM_COUNT_NV" value="0x933B" />
     </enum>
     <enum name="NV_shader_thread_shuffle" />
+    <enum name="NV_shading_rate_image">
+      <token name="SHADING_RATE_IMAGE_NV" value="0x9563" />
+      <token name="SHADING_RATE_NO_INVOCATIONS_NV" value="0x9564" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_PIXEL_NV" value="0x9565" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_1X2_PIXELS_NV" value="0x9566" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X1_PIXELS_NV" value="0x9567" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X2_PIXELS_NV" value="0x9568" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X4_PIXELS_NV" value="0x9569" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_4X2_PIXELS_NV" value="0x956A" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_4X4_PIXELS_NV" value="0x956B" />
+      <token name="SHADING_RATE_2_INVOCATIONS_PER_PIXEL_NV" value="0x956C" />
+      <token name="SHADING_RATE_4_INVOCATIONS_PER_PIXEL_NV" value="0x956D" />
+      <token name="SHADING_RATE_8_INVOCATIONS_PER_PIXEL_NV" value="0x956E" />
+      <token name="SHADING_RATE_16_INVOCATIONS_PER_PIXEL_NV" value="0x956F" />
+      <token name="SHADING_RATE_IMAGE_BINDING_NV" value="0x955B" />
+      <token name="SHADING_RATE_IMAGE_TEXEL_WIDTH_NV" value="0x955C" />
+      <token name="SHADING_RATE_IMAGE_TEXEL_HEIGHT_NV" value="0x955D" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_SIZE_NV" value="0x955E" />
+      <token name="MAX_COARSE_FRAGMENT_SAMPLES_NV" value="0x955F" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_DEFAULT_NV" value="0x95AE" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_PIXEL_MAJOR_NV" value="0x95AF" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_SAMPLE_MAJOR_NV" value="0x95B0" />
+    </enum>
     <enum name="NV_stereo_view_rendering" />
     <enum name="NV_tessellation_program5">
       <token name="MAX_PROGRAM_PATCH_ATTRIBS_NV" value="0x86D8" />
@@ -8095,6 +8182,8 @@
       <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="TESS_EVALUATION_SHADER_BIT_OES" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
+      <token name="MESH_SHADER_BIT_NV" value="0x00000040" />
+      <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
     </enum>
@@ -8556,6 +8645,10 @@
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="samplers" type="GLuint *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="BindShadingRateImageNV" category="NV_shading_rate_image" extension="NV">
+      <param name="texture" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="BindTexGenParameterEXT" category="EXT_vertex_shader" extension="EXT">
@@ -10849,6 +10942,15 @@
       <param name="first" type="GLint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="width" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawMeshTasksIndirectNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawMeshTasksNV" category="NV_mesh_shader" extension="NV">
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="DrawRangeElementArrayAPPLE" category="APPLE_element_array" extension="APPLE">
@@ -13611,6 +13713,19 @@
       <param name="source" type="GLcharARB *" flow="out" count="maxLength" />
       <returns type="void" />
     </function>
+    <function name="GetShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
+      <param name="viewport" type="GLuint" flow="in" />
+      <param name="entry" type="GLuint" flow="in" />
+      <param name="rate" type="GLenum *" flow="out" count="1" />
+      <returns type="void" />
+    </function>
+    <function name="GetShadingRateSampleLocationivNV" category="NV_shading_rate_image" extension="NV">
+      <param name="rate" type="GLenum" flow="in" />
+      <param name="samples" type="GLuint" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <param name="location" type="GLint *" flow="out" count="3" />
+      <returns type="void" />
+    </function>
     <function name="GetSharpenTexFuncSGIS" category="SGIS_sharpen_texture" extension="SGIS">
       <param name="target" type="TextureTarget" flow="in" />
       <param name="points" type="GLfloat *" flow="out" count="COMPSIZE(target)" />
@@ -15401,6 +15516,19 @@
       <param name="indirect" type="void *" flow="in" />
       <param name="drawcount" type="GLintptr" flow="in" />
       <param name="maxdrawcount" type="GLsizei" flow="in" />
+      <param name="stride" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawMeshTasksIndirectCountNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <param name="drawcount" type="GLintptr" flow="in" />
+      <param name="maxdrawcount" type="GLsizei" flow="in" />
+      <param name="stride" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawMeshTasksIndirectNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <param name="drawcount" type="GLsizei" flow="in" />
       <param name="stride" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
@@ -18845,6 +18973,19 @@
       <param name="v" type="GLint *" flow="in" count="COMPSIZE(count)" />
       <returns type="void" />
     </function>
+    <function name="ScissorExclusiveArrayvNV" category="NV_scissor_exclusive" extension="NV">
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="v" type="GLint *" flow="in" count="COMPSIZE(count)" />
+      <returns type="void" />
+    </function>
+    <function name="ScissorExclusiveNV" category="NV_scissor_exclusive" extension="NV">
+      <param name="x" type="WinCoord" flow="in" />
+      <param name="y" type="WinCoord" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="ScissorIndexed" category="ARB_viewport_array" extension="Core">
       <param name="index" type="GLuint" flow="in" />
       <param name="left" type="GLint" flow="in" />
@@ -19087,6 +19228,27 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="storageBlockIndex" type="GLuint" flow="in" />
       <param name="storageBlockBinding" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateImageBarrierNV" category="NV_shading_rate_image" extension="NV">
+      <param name="synchronize" type="Boolean" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
+      <param name="viewport" type="GLuint" flow="in" />
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="rates" type="GLenum *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateSampleOrderCustomNV" category="NV_shading_rate_image" extension="NV">
+      <param name="rate" type="GLenum" flow="in" />
+      <param name="samples" type="GLuint" flow="in" />
+      <param name="locations" type="GLint *" flow="in" count="COMPSIZE(rate,samples)" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateSampleOrderNV" category="NV_shading_rate_image" extension="NV">
+      <param name="order" type="GLenum" flow="in" />
       <returns type="void" />
     </function>
     <function name="SharpenTexFuncSGIS" category="SGIS_sharpen_texture" extension="SGIS">
@@ -33186,6 +33348,7 @@
       <token name="TEXTURE_3D_EXT" value="0x806F" />
       <token name="TEXTURE_4D_SGIS" value="0x8134" />
       <token name="TEXTURE_COLOR_TABLE_SGI" value="0x80BC" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -33813,6 +33976,8 @@
       <token name="VERTEX_PRECLIP_HINT_SGIX" value="0x83EF" />
       <token name="VERTEX_PRECLIP_SGIX" value="0x83EE" />
       <token name="VIEWPORT" value="0x0BA2" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER_EXT" value="0x8090" />
@@ -34831,6 +34996,56 @@
       <token name="SUPERSAMPLE_SCALE_Y_NV" value="0x9373" />
       <token name="CONFORMANT_NV" value="0x9374" />
     </enum>
+    <enum name="NV_mesh_shader">
+      <token name="MESH_SHADER_NV" value="0x9559" />
+      <token name="TASK_SHADER_NV" value="0x955A" />
+      <token name="MAX_MESH_UNIFORM_BLOCKS_NV" value="0x8E60" />
+      <token name="MAX_MESH_TEXTURE_IMAGE_UNITS_NV" value="0x8E61" />
+      <token name="MAX_MESH_IMAGE_UNIFORMS_NV" value="0x8E62" />
+      <token name="MAX_MESH_UNIFORM_COMPONENTS_NV" value="0x8E63" />
+      <token name="MAX_MESH_ATOMIC_COUNTER_BUFFERS_NV" value="0x8E64" />
+      <token name="MAX_MESH_ATOMIC_COUNTERS_NV" value="0x8E65" />
+      <token name="MAX_MESH_SHADER_STORAGE_BLOCKS_NV" value="0x8E66" />
+      <token name="MAX_COMBINED_MESH_UNIFORM_COMPONENTS_NV" value="0x8E67" />
+      <token name="MAX_TASK_UNIFORM_BLOCKS_NV" value="0x8E68" />
+      <token name="MAX_TASK_TEXTURE_IMAGE_UNITS_NV" value="0x8E69" />
+      <token name="MAX_TASK_IMAGE_UNIFORMS_NV" value="0x8E6A" />
+      <token name="MAX_TASK_UNIFORM_COMPONENTS_NV" value="0x8E6B" />
+      <token name="MAX_TASK_ATOMIC_COUNTER_BUFFERS_NV" value="0x8E6C" />
+      <token name="MAX_TASK_ATOMIC_COUNTERS_NV" value="0x8E6D" />
+      <token name="MAX_TASK_SHADER_STORAGE_BLOCKS_NV" value="0x8E6E" />
+      <token name="MAX_COMBINED_TASK_UNIFORM_COMPONENTS_NV" value="0x8E6F" />
+      <token name="MAX_MESH_WORK_GROUP_INVOCATIONS_NV" value="0x95A2" />
+      <token name="MAX_TASK_WORK_GROUP_INVOCATIONS_NV" value="0x95A3" />
+      <token name="MAX_MESH_TOTAL_MEMORY_SIZE_NV" value="0x9536" />
+      <token name="MAX_TASK_TOTAL_MEMORY_SIZE_NV" value="0x9537" />
+      <token name="MAX_MESH_OUTPUT_VERTICES_NV" value="0x9538" />
+      <token name="MAX_MESH_OUTPUT_PRIMITIVES_NV" value="0x9539" />
+      <token name="MAX_TASK_OUTPUT_COUNT_NV" value="0x953A" />
+      <token name="MAX_DRAW_MESH_TASKS_COUNT_NV" value="0x953D" />
+      <token name="MAX_MESH_VIEWS_NV" value="0x9557" />
+      <token name="MESH_OUTPUT_PER_VERTEX_GRANULARITY_NV" value="0x92DF" />
+      <token name="MESH_OUTPUT_PER_PRIMITIVE_GRANULARITY_NV" value="0x9543" />
+      <token name="MAX_MESH_WORK_GROUP_SIZE_NV" value="0x953B" />
+      <token name="MAX_TASK_WORK_GROUP_SIZE_NV" value="0x953C" />
+      <token name="MESH_WORK_GROUP_SIZE_NV" value="0x953E" />
+      <token name="TASK_WORK_GROUP_SIZE_NV" value="0x953F" />
+      <token name="MESH_VERTICES_OUT_NV" value="0x9579" />
+      <token name="MESH_PRIMITIVES_OUT_NV" value="0x957A" />
+      <token name="MESH_OUTPUT_TYPE_NV" value="0x957B" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_MESH_SHADER_NV" value="0x959C" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_TASK_SHADER_NV" value="0x959D" />
+      <token name="REFERENCED_BY_MESH_SHADER_NV" value="0x95A0" />
+      <token name="REFERENCED_BY_TASK_SHADER_NV" value="0x95A1" />
+      <token name="MESH_SHADER_BIT_NV" value="0x00000040" />
+      <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
+      <token name="MESH_SUBROUTINE_NV" value="0x957C" />
+      <token name="TASK_SUBROUTINE_NV" value="0x957D" />
+      <token name="MESH_SUBROUTINE_UNIFORM_NV" value="0x957E" />
+      <token name="TASK_SUBROUTINE_UNIFORM_NV" value="0x957F" />
+      <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_MESH_SHADER_NV" value="0x959E" />
+      <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TASK_SHADER_NV" value="0x959F" />
+    </enum>
     <enum name="NV_path_rendering">
       <token name="PATH_FORMAT_SVG_NV" value="0x9070" />
       <token name="PATH_FORMAT_PS_NV" value="0x9071" />
@@ -34999,6 +35214,13 @@
     <enum name="NV_path_rendering_shared_edge">
       <token name="SHARED_EDGE_NV" value="0xC0" />
     </enum>
+    <enum name="NV_primitive_shading_rate">
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+    </enum>
+    <enum name="NV_representative_fragment_test">
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+    </enum>
     <enum name="NV_sample_locations">
       <token name="SAMPLE_LOCATION_SUBPIXEL_BITS_NV" value="0x933D" />
       <token name="SAMPLE_LOCATION_PIXEL_GRID_WIDTH_NV" value="0x933E" />
@@ -35010,6 +35232,10 @@
       <token name="FRAMEBUFFER_SAMPLE_LOCATION_PIXEL_GRID_NV" value="0x9343" />
     </enum>
     <enum name="NV_sample_mask_override_coverage" />
+    <enum name="NV_scissor_exclusive">
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
+    </enum>
     <enum name="NV_shader_atomic_counters" />
     <enum name="NV_shader_atomic_float" />
     <enum name="NV_shader_atomic_float64" />
@@ -35031,6 +35257,29 @@
       <token name="SM_COUNT_NV" value="0x933B" />
     </enum>
     <enum name="NV_shader_thread_shuffle" />
+    <enum name="NV_shading_rate_image">
+      <token name="SHADING_RATE_IMAGE_NV" value="0x9563" />
+      <token name="SHADING_RATE_NO_INVOCATIONS_NV" value="0x9564" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_PIXEL_NV" value="0x9565" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_1X2_PIXELS_NV" value="0x9566" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X1_PIXELS_NV" value="0x9567" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X2_PIXELS_NV" value="0x9568" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X4_PIXELS_NV" value="0x9569" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_4X2_PIXELS_NV" value="0x956A" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_4X4_PIXELS_NV" value="0x956B" />
+      <token name="SHADING_RATE_2_INVOCATIONS_PER_PIXEL_NV" value="0x956C" />
+      <token name="SHADING_RATE_4_INVOCATIONS_PER_PIXEL_NV" value="0x956D" />
+      <token name="SHADING_RATE_8_INVOCATIONS_PER_PIXEL_NV" value="0x956E" />
+      <token name="SHADING_RATE_16_INVOCATIONS_PER_PIXEL_NV" value="0x956F" />
+      <token name="SHADING_RATE_IMAGE_BINDING_NV" value="0x955B" />
+      <token name="SHADING_RATE_IMAGE_TEXEL_WIDTH_NV" value="0x955C" />
+      <token name="SHADING_RATE_IMAGE_TEXEL_HEIGHT_NV" value="0x955D" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_SIZE_NV" value="0x955E" />
+      <token name="MAX_COARSE_FRAGMENT_SAMPLES_NV" value="0x955F" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_DEFAULT_NV" value="0x95AE" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_PIXEL_MAJOR_NV" value="0x95AF" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_SAMPLE_MAJOR_NV" value="0x95B0" />
+    </enum>
     <enum name="NV_stereo_view_rendering" />
     <enum name="NV_texture_barrier" />
     <enum name="NV_texture_rectangle_compressed" />
@@ -35969,6 +36218,8 @@
       <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="TESS_EVALUATION_SHADER_BIT_OES" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
+      <token name="MESH_SHADER_BIT_NV" value="0x00000040" />
+      <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
     </enum>
@@ -36178,6 +36429,10 @@
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
       <param name="samplers" type="GLuint *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="BindShadingRateImageNV" category="NV_shading_rate_image" extension="NV">
+      <param name="texture" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="BindTextures" category="ARB_multi_bind" extension="Core">
@@ -37426,6 +37681,15 @@
       <param name="type" type="DrawElementsType" flow="in" />
       <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
       <param name="primcount" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawMeshTasksIndirectNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawMeshTasksNV" category="NV_mesh_shader" extension="NV">
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="DrawRangeElementsBaseVertex" category="ARB_draw_elements_base_vertex" extension="Core">
@@ -38955,6 +39219,19 @@
       <param name="precision" type="GLint *" flow="out" count="1" />
       <returns type="void" />
     </function>
+    <function name="GetShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
+      <param name="viewport" type="GLuint" flow="in" />
+      <param name="entry" type="GLuint" flow="in" />
+      <param name="rate" type="GLenum *" flow="out" count="1" />
+      <returns type="void" />
+    </function>
+    <function name="GetShadingRateSampleLocationivNV" category="NV_shading_rate_image" extension="NV">
+      <param name="rate" type="GLenum" flow="in" />
+      <param name="samples" type="GLuint" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <param name="location" type="GLint *" flow="out" count="3" />
+      <returns type="void" />
+    </function>
     <function name="GetStageIndexNV" category="NV_command_list" extension="NV">
       <param name="shadertype" type="ShaderType" flow="in" />
       <returns type="GLushort" />
@@ -39773,6 +40050,19 @@
       <param name="indirect" type="void *" flow="in" />
       <param name="drawcount" type="GLintptr" flow="in" />
       <param name="maxdrawcount" type="GLsizei" flow="in" />
+      <param name="stride" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawMeshTasksIndirectCountNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <param name="drawcount" type="GLintptr" flow="in" />
+      <param name="maxdrawcount" type="GLsizei" flow="in" />
+      <param name="stride" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawMeshTasksIndirectNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <param name="drawcount" type="GLsizei" flow="in" />
       <param name="stride" type="GLsizei" flow="in" />
       <returns type="void" />
     </function>
@@ -41838,6 +42128,19 @@
       <param name="v" type="GLint *" flow="in" count="COMPSIZE(count)" />
       <returns type="void" />
     </function>
+    <function name="ScissorExclusiveArrayvNV" category="NV_scissor_exclusive" extension="NV">
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="v" type="GLint *" flow="in" count="COMPSIZE(count)" />
+      <returns type="void" />
+    </function>
+    <function name="ScissorExclusiveNV" category="NV_scissor_exclusive" extension="NV">
+      <param name="x" type="WinCoord" flow="in" />
+      <param name="y" type="WinCoord" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="ScissorIndexed" category="ARB_viewport_array" extension="Core">
       <param name="index" type="GLuint" flow="in" />
       <param name="left" type="GLint" flow="in" />
@@ -41898,6 +42201,27 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="storageBlockIndex" type="GLuint" flow="in" />
       <param name="storageBlockBinding" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateImageBarrierNV" category="NV_shading_rate_image" extension="NV">
+      <param name="synchronize" type="Boolean" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
+      <param name="viewport" type="GLuint" flow="in" />
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="rates" type="GLenum *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateSampleOrderCustomNV" category="NV_shading_rate_image" extension="NV">
+      <param name="rate" type="GLenum" flow="in" />
+      <param name="samples" type="GLuint" flow="in" />
+      <param name="locations" type="GLint *" flow="in" count="COMPSIZE(rate,samples)" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateSampleOrderNV" category="NV_shading_rate_image" extension="NV">
+      <param name="order" type="GLenum" flow="in" />
       <returns type="void" />
     </function>
     <function name="SignalVkFenceNV" category="NV_draw_vulkan_image" extension="NV">
@@ -50176,6 +50500,7 @@
       <token name="TEXTURE_GEN_S" value="0x0C60" deprecated="3.2" />
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -50984,6 +51309,8 @@
       <token name="VIEWPORT" value="0x0BA2" />
       <token name="ZOOM_X" value="0x0D16" deprecated="3.2" />
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -52952,6 +53279,8 @@
       <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="TESS_EVALUATION_SHADER_BIT_OES" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
+      <token name="MESH_SHADER_BIT_NV" value="0x00000040" />
+      <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
     </enum>
@@ -56492,6 +56821,7 @@
       <token name="TEXTURE_GEN_S" value="0x0C60" deprecated="3.2" />
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -57825,6 +58155,8 @@
       <token name="VIEWPORT" value="0x0BA2" />
       <token name="ZOOM_X" value="0x0D16" deprecated="3.2" />
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -59015,6 +59347,56 @@
       <token name="SUPERSAMPLE_SCALE_Y_NV" value="0x9373" />
       <token name="CONFORMANT_NV" value="0x9374" />
     </enum>
+    <enum name="NV_mesh_shader">
+      <token name="MESH_SHADER_NV" value="0x9559" />
+      <token name="TASK_SHADER_NV" value="0x955A" />
+      <token name="MAX_MESH_UNIFORM_BLOCKS_NV" value="0x8E60" />
+      <token name="MAX_MESH_TEXTURE_IMAGE_UNITS_NV" value="0x8E61" />
+      <token name="MAX_MESH_IMAGE_UNIFORMS_NV" value="0x8E62" />
+      <token name="MAX_MESH_UNIFORM_COMPONENTS_NV" value="0x8E63" />
+      <token name="MAX_MESH_ATOMIC_COUNTER_BUFFERS_NV" value="0x8E64" />
+      <token name="MAX_MESH_ATOMIC_COUNTERS_NV" value="0x8E65" />
+      <token name="MAX_MESH_SHADER_STORAGE_BLOCKS_NV" value="0x8E66" />
+      <token name="MAX_COMBINED_MESH_UNIFORM_COMPONENTS_NV" value="0x8E67" />
+      <token name="MAX_TASK_UNIFORM_BLOCKS_NV" value="0x8E68" />
+      <token name="MAX_TASK_TEXTURE_IMAGE_UNITS_NV" value="0x8E69" />
+      <token name="MAX_TASK_IMAGE_UNIFORMS_NV" value="0x8E6A" />
+      <token name="MAX_TASK_UNIFORM_COMPONENTS_NV" value="0x8E6B" />
+      <token name="MAX_TASK_ATOMIC_COUNTER_BUFFERS_NV" value="0x8E6C" />
+      <token name="MAX_TASK_ATOMIC_COUNTERS_NV" value="0x8E6D" />
+      <token name="MAX_TASK_SHADER_STORAGE_BLOCKS_NV" value="0x8E6E" />
+      <token name="MAX_COMBINED_TASK_UNIFORM_COMPONENTS_NV" value="0x8E6F" />
+      <token name="MAX_MESH_WORK_GROUP_INVOCATIONS_NV" value="0x95A2" />
+      <token name="MAX_TASK_WORK_GROUP_INVOCATIONS_NV" value="0x95A3" />
+      <token name="MAX_MESH_TOTAL_MEMORY_SIZE_NV" value="0x9536" />
+      <token name="MAX_TASK_TOTAL_MEMORY_SIZE_NV" value="0x9537" />
+      <token name="MAX_MESH_OUTPUT_VERTICES_NV" value="0x9538" />
+      <token name="MAX_MESH_OUTPUT_PRIMITIVES_NV" value="0x9539" />
+      <token name="MAX_TASK_OUTPUT_COUNT_NV" value="0x953A" />
+      <token name="MAX_DRAW_MESH_TASKS_COUNT_NV" value="0x953D" />
+      <token name="MAX_MESH_VIEWS_NV" value="0x9557" />
+      <token name="MESH_OUTPUT_PER_VERTEX_GRANULARITY_NV" value="0x92DF" />
+      <token name="MESH_OUTPUT_PER_PRIMITIVE_GRANULARITY_NV" value="0x9543" />
+      <token name="MAX_MESH_WORK_GROUP_SIZE_NV" value="0x953B" />
+      <token name="MAX_TASK_WORK_GROUP_SIZE_NV" value="0x953C" />
+      <token name="MESH_WORK_GROUP_SIZE_NV" value="0x953E" />
+      <token name="TASK_WORK_GROUP_SIZE_NV" value="0x953F" />
+      <token name="MESH_VERTICES_OUT_NV" value="0x9579" />
+      <token name="MESH_PRIMITIVES_OUT_NV" value="0x957A" />
+      <token name="MESH_OUTPUT_TYPE_NV" value="0x957B" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_MESH_SHADER_NV" value="0x959C" />
+      <token name="UNIFORM_BLOCK_REFERENCED_BY_TASK_SHADER_NV" value="0x959D" />
+      <token name="REFERENCED_BY_MESH_SHADER_NV" value="0x95A0" />
+      <token name="REFERENCED_BY_TASK_SHADER_NV" value="0x95A1" />
+      <token name="MESH_SHADER_BIT_NV" value="0x00000040" />
+      <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
+      <token name="MESH_SUBROUTINE_NV" value="0x957C" />
+      <token name="TASK_SUBROUTINE_NV" value="0x957D" />
+      <token name="MESH_SUBROUTINE_UNIFORM_NV" value="0x957E" />
+      <token name="TASK_SUBROUTINE_UNIFORM_NV" value="0x957F" />
+      <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_MESH_SHADER_NV" value="0x959E" />
+      <token name="ATOMIC_COUNTER_BUFFER_REFERENCED_BY_TASK_SHADER_NV" value="0x959F" />
+    </enum>
     <enum name="NV_non_square_matrices">
       <token name="FLOAT_MAT2x3_NV" value="0x8B65" />
       <token name="FLOAT_MAT2x4_NV" value="0x8B66" />
@@ -59206,6 +59588,10 @@
       <token name="LINE_NV" value="0x1B01" />
       <token name="FILL_NV" value="0x1B02" />
     </enum>
+    <enum name="NV_primitive_shading_rate">
+      <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+    </enum>
     <enum name="NV_read_buffer">
       <token name="READ_BUFFER_NV" value="0x0C02" />
     </enum>
@@ -59213,6 +59599,9 @@
     <enum name="NV_read_depth" />
     <enum name="NV_read_depth_stencil" />
     <enum name="NV_read_stencil" />
+    <enum name="NV_representative_fragment_test">
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+    </enum>
     <enum name="NV_sample_locations">
       <token name="SAMPLE_LOCATION_SUBPIXEL_BITS_NV" value="0x933D" />
       <token name="SAMPLE_LOCATION_PIXEL_GRID_WIDTH_NV" value="0x933E" />
@@ -59224,8 +59613,35 @@
       <token name="FRAMEBUFFER_SAMPLE_LOCATION_PIXEL_GRID_NV" value="0x9343" />
     </enum>
     <enum name="NV_sample_mask_override_coverage" />
+    <enum name="NV_scissor_exclusive">
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
+    </enum>
     <enum name="NV_shader_atomic_fp16_vector" />
     <enum name="NV_shader_noperspective_interpolation" />
+    <enum name="NV_shading_rate_image">
+      <token name="SHADING_RATE_IMAGE_NV" value="0x9563" />
+      <token name="SHADING_RATE_NO_INVOCATIONS_NV" value="0x9564" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_PIXEL_NV" value="0x9565" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_1X2_PIXELS_NV" value="0x9566" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X1_PIXELS_NV" value="0x9567" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X2_PIXELS_NV" value="0x9568" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_2X4_PIXELS_NV" value="0x9569" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_4X2_PIXELS_NV" value="0x956A" />
+      <token name="SHADING_RATE_1_INVOCATION_PER_4X4_PIXELS_NV" value="0x956B" />
+      <token name="SHADING_RATE_2_INVOCATIONS_PER_PIXEL_NV" value="0x956C" />
+      <token name="SHADING_RATE_4_INVOCATIONS_PER_PIXEL_NV" value="0x956D" />
+      <token name="SHADING_RATE_8_INVOCATIONS_PER_PIXEL_NV" value="0x956E" />
+      <token name="SHADING_RATE_16_INVOCATIONS_PER_PIXEL_NV" value="0x956F" />
+      <token name="SHADING_RATE_IMAGE_BINDING_NV" value="0x955B" />
+      <token name="SHADING_RATE_IMAGE_TEXEL_WIDTH_NV" value="0x955C" />
+      <token name="SHADING_RATE_IMAGE_TEXEL_HEIGHT_NV" value="0x955D" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_SIZE_NV" value="0x955E" />
+      <token name="MAX_COARSE_FRAGMENT_SAMPLES_NV" value="0x955F" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_DEFAULT_NV" value="0x95AE" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_PIXEL_MAJOR_NV" value="0x95AF" />
+      <token name="SHADING_RATE_SAMPLE_ORDER_SAMPLE_MAJOR_NV" value="0x95B0" />
+    </enum>
     <enum name="NV_shadow_samplers_array">
       <token name="SAMPLER_2D_ARRAY_SHADOW_NV" value="0x8DC4" />
     </enum>
@@ -60638,6 +61054,8 @@
       <token name="TESS_EVALUATION_SHADER_BIT_EXT" value="0x00000010" />
       <token name="TESS_EVALUATION_SHADER_BIT_OES" value="0x00000010" />
       <token name="COMPUTE_SHADER_BIT" value="0x00000020" />
+      <token name="MESH_SHADER_BIT_NV" value="0x00000040" />
+      <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
     </enum>
@@ -60784,6 +61202,10 @@
     </function>
     <function name="BindProgramPipelineEXT" category="EXT_separate_shader_objects" extension="EXT">
       <param name="pipeline" type="GLuint" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="BindShadingRateImageNV" category="NV_shading_rate_image" extension="NV">
+      <param name="texture" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="BindVertexArrayOES" category="OES_vertex_array_object" extension="OES">
@@ -61388,6 +61810,15 @@
       <param name="type" type="PrimitiveType" flow="in" />
       <param name="indices" type="void *" flow="in" count="COMPSIZE(count,type)" />
       <param name="primcount" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawMeshTasksIndirectNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="DrawMeshTasksNV" category="NV_mesh_shader" extension="NV">
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
     <function name="DrawRangeElementsBaseVertexEXT" category="EXT_draw_elements_base_vertex" extension="EXT">
@@ -62225,6 +62656,19 @@
       <param name="params" type="GLuint64 *" flow="out" />
       <returns type="void" />
     </function>
+    <function name="GetShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
+      <param name="viewport" type="GLuint" flow="in" />
+      <param name="entry" type="GLuint" flow="in" />
+      <param name="rate" type="GLenum *" flow="out" count="1" />
+      <returns type="void" />
+    </function>
+    <function name="GetShadingRateSampleLocationivNV" category="NV_shading_rate_image" extension="NV">
+      <param name="rate" type="GLenum" flow="in" />
+      <param name="samples" type="GLuint" flow="in" />
+      <param name="index" type="GLuint" flow="in" />
+      <param name="location" type="GLint *" flow="out" count="3" />
+      <returns type="void" />
+    </function>
     <function name="GetSyncivAPPLE" category="APPLE_sync" extension="APPLE">
       <param name="sync" type="GLsync" flow="in" />
       <param name="pname" type="SyncParameterName" flow="in" />
@@ -62653,6 +63097,19 @@
       <param name="mode" type="PrimitiveType" flow="in" />
       <param name="type" type="DrawElementsType" flow="in" />
       <param name="indirect" type="void *" flow="in" count="COMPSIZE(drawcount,stride)" />
+      <param name="drawcount" type="GLsizei" flow="in" />
+      <param name="stride" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawMeshTasksIndirectCountNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
+      <param name="drawcount" type="GLintptr" flow="in" />
+      <param name="maxdrawcount" type="GLsizei" flow="in" />
+      <param name="stride" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="MultiDrawMeshTasksIndirectNV" category="NV_mesh_shader" extension="NV">
+      <param name="indirect" type="GLintptr" flow="in" />
       <param name="drawcount" type="GLsizei" flow="in" />
       <param name="stride" type="GLsizei" flow="in" />
       <returns type="void" />
@@ -63497,6 +63954,19 @@
       <param name="v" type="GLint *" flow="in" count="COMPSIZE(count)" />
       <returns type="void" />
     </function>
+    <function name="ScissorExclusiveArrayvNV" category="NV_scissor_exclusive" extension="NV">
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="v" type="GLint *" flow="in" count="COMPSIZE(count)" />
+      <returns type="void" />
+    </function>
+    <function name="ScissorExclusiveNV" category="NV_scissor_exclusive" extension="NV">
+      <param name="x" type="WinCoord" flow="in" />
+      <param name="y" type="WinCoord" flow="in" />
+      <param name="width" type="GLsizei" flow="in" />
+      <param name="height" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="ScissorIndexedNV" category="NV_viewport_array" extension="NV">
       <param name="index" type="GLuint" flow="in" />
       <param name="left" type="GLint" flow="in" />
@@ -63540,6 +64010,27 @@
     <function name="SetFenceNV" category="NV_fence" extension="NV">
       <param name="fence" type="FenceNV" flow="in" />
       <param name="condition" type="FenceConditionNV" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateImageBarrierNV" category="NV_shading_rate_image" extension="NV">
+      <param name="synchronize" type="Boolean" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
+      <param name="viewport" type="GLuint" flow="in" />
+      <param name="first" type="GLuint" flow="in" />
+      <param name="count" type="GLsizei" flow="in" />
+      <param name="rates" type="GLenum *" flow="in" count="count" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateSampleOrderCustomNV" category="NV_shading_rate_image" extension="NV">
+      <param name="rate" type="GLenum" flow="in" />
+      <param name="samples" type="GLuint" flow="in" />
+      <param name="locations" type="GLint *" flow="in" count="COMPSIZE(rate,samples)" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateSampleOrderNV" category="NV_shading_rate_image" extension="NV">
+      <param name="order" type="GLenum" flow="in" />
       <returns type="void" />
     </function>
     <function name="SignalSemaphoreEXT" category="EXT_semaphore" extension="EXT">
