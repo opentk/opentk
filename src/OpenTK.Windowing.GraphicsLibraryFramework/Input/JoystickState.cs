@@ -92,6 +92,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the hat to check.</param>
         /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Hat GetHat(int index)
         {
             return _hats[index];
@@ -102,6 +103,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the hat to check.</param>
         /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Hat GetHatPrevious(int index)
         {
             return _hatsPrevious[index];
@@ -146,6 +148,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the Axis to check.</param>
         /// <returns>A <see cref="float"/> between -1 and 1 describing the position of the axis.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetAxis(int index)
         {
             return _axes[index];
@@ -156,6 +159,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the Axis to check.</param>
         /// <returns>A <see cref="float"/> between -1 and 1 describing the position of the axis.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetAxisPrevious(int index)
         {
             return _axesPrevious[index];
@@ -215,7 +219,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             }
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void UpdateAxes()
         {
             Utils.Swap(ref _axes, ref _axesPrevious);

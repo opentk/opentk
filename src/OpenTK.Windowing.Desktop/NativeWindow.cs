@@ -37,7 +37,7 @@ namespace OpenTK.Windowing.Desktop
         private Vector2 _lastReportedMousePos;
 
         // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
-        private List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
+        private static List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -1391,24 +1391,16 @@ namespace OpenTK.Windowing.Desktop
         {
             ProcessInputEvents();
 
-            if (IsEventDriven)
-            {
-                GLFW.WaitEvents();
-            }
-            else
-            {
-                GLFW.PollEvents();
-            }
-
-            RethrowCallbackExceptionsIfNeeded();
+            ProcessEventsNoInput(IsEventDriven);
         }
 
         /// <summary>
         /// Processes pending window events without a call to <see cref="ProcessInputEvents()"/>.
         /// </summary>
-        public virtual void ProcessEventsNoInput()
+        /// <param name="isEventDriven">Wheather to call <see cref="GLFW.WaitEvents()"/> or <see cref="GLFW.PollEvents()"/>.</param>
+        public static void ProcessEventsNoInput(bool isEventDriven)
         {
-            if (IsEventDriven)
+            if (isEventDriven)
             {
                 GLFW.WaitEvents();
             }
@@ -1420,7 +1412,7 @@ namespace OpenTK.Windowing.Desktop
             RethrowCallbackExceptionsIfNeeded();
         }
 
-        private void RethrowCallbackExceptionsIfNeeded()
+        private static void RethrowCallbackExceptionsIfNeeded()
         {
             if (_callbackExceptions.Count == 1)
             {

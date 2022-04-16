@@ -230,7 +230,7 @@ namespace OpenTK.Windowing.Desktop
             while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
                 // Process events, this will be called continuously while waiting to dispatch render and update frames.
-                ProcessEventsNoInput();
+                ProcessEventsNoInput(IsEventDriven);
                 DispatchUpdateFrame();
 
                 if (!IsMultiThreaded)
