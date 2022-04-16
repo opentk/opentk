@@ -2874,6 +2874,7 @@
       <use enum="VERSION_4_3" token="DISPATCH_INDIRECT_BUFFER" />
       <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER" />
       <use enum="VERSION_4_4" token="QUERY_BUFFER" />
+      <use enum="VERSION_4_6" token="PARAMETER_BUFFER" />
     </enum>
     <enum name="BufferRangeTarget">
       <use enum="VERSION_3_1" token="UNIFORM_BUFFER" />
@@ -3590,6 +3591,7 @@
       <use enum="VERSION_4_5" token="CONTEXT_RELEASE_BEHAVIOR" />
       <use enum="VERSION_4_5" token="CONTEXT_ROBUST_ACCESS" />
       <use enum="VERSION_4_5" token="RESET_NOTIFICATION_STRATEGY" />
+      <use enum="VERSION_4_6" token="PARAMETER_BUFFER_BINDING" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -4459,34 +4461,65 @@
     </enum>
     <enum name="SizedInternalFormat">
       <use enum="PixelInternalFormat" token="R8" />
+      <use enum="PixelInternalFormat" token="R8_SNORM" />
       <use enum="PixelInternalFormat" token="R16" />
-      <use enum="PixelInternalFormat" token="R16F" />
-      <use enum="PixelInternalFormat" token="R32F" />
-      <use enum="PixelInternalFormat" token="R8I" />
-      <use enum="PixelInternalFormat" token="R16I" />
-      <use enum="PixelInternalFormat" token="R32I" />
-      <use enum="PixelInternalFormat" token="R8UI" />
-      <use enum="PixelInternalFormat" token="R16UI" />
-      <use enum="PixelInternalFormat" token="R32UI" />
+      <use enum="PixelInternalFormat" token="R16_SNORM" />
       <use enum="PixelInternalFormat" token="RG8" />
+      <use enum="PixelInternalFormat" token="RG8_SNORM" />
       <use enum="PixelInternalFormat" token="RG16" />
-      <use enum="PixelInternalFormat" token="RG16F" />
-      <use enum="PixelInternalFormat" token="RG32F" />
-      <use enum="PixelInternalFormat" token="RG8I" />
-      <use enum="PixelInternalFormat" token="RG16I" />
-      <use enum="PixelInternalFormat" token="RG32I" />
-      <use enum="PixelInternalFormat" token="RG8UI" />
-      <use enum="PixelInternalFormat" token="RG16UI" />
-      <use enum="PixelInternalFormat" token="RG32UI" />
+      <use enum="PixelInternalFormat" token="RG16_SNORM" />
+      <use enum="PixelInternalFormat" token="R3_G3_B2" />
+      <use enum="PixelInternalFormat" token="RGB4" />
+      <use enum="PixelInternalFormat" token="RGB5" />
+      <use enum="PixelInternalFormat" token="RGB8" />
+      <use enum="PixelInternalFormat" token="RGB8_SNORM" />
+      <use enum="PixelInternalFormat" token="RGB10" />
+      <use enum="PixelInternalFormat" token="RGB12" />
+      <use enum="PixelInternalFormat" token="RGB16_SNORM" />
+      <use enum="PixelInternalFormat" token="RGBA2" />
+      <use enum="PixelInternalFormat" token="RGBA4" />
+      <use enum="PixelInternalFormat" token="RGB5_A1" />
       <use enum="PixelInternalFormat" token="RGBA8" />
+      <use enum="PixelInternalFormat" token="RGBA8_SNORM" />
+      <use enum="PixelInternalFormat" token="RGB10_A2" />
+      <use enum="PixelInternalFormat" token="RGB10_A2UI" />
+      <use enum="PixelInternalFormat" token="RGBA12" />
       <use enum="PixelInternalFormat" token="RGBA16" />
+      <use enum="PixelInternalFormat" token="SRGB8" />
+      <use enum="PixelInternalFormat" token="SRGB8_ALPHA8" />
+      <use enum="PixelInternalFormat" token="R16F" />
+      <use enum="PixelInternalFormat" token="RG16F" />
+      <use enum="PixelInternalFormat" token="RGB16F" />
       <use enum="PixelInternalFormat" token="RGBA16F" />
+      <use enum="PixelInternalFormat" token="R32F" />
+      <use enum="PixelInternalFormat" token="RG32F" />
+      <use enum="PixelInternalFormat" token="RGB32F" />
       <use enum="PixelInternalFormat" token="RGBA32F" />
+      <use enum="PixelInternalFormat" token="R11F_G11F_B10F" />
+      <use enum="PixelInternalFormat" token="RGB9_E5" />
+      <use enum="PixelInternalFormat" token="R8I" />
+      <use enum="PixelInternalFormat" token="R8UI" />
+      <use enum="PixelInternalFormat" token="R16I" />
+      <use enum="PixelInternalFormat" token="R16UI" />
+      <use enum="PixelInternalFormat" token="R32I" />
+      <use enum="PixelInternalFormat" token="R32UI" />
+      <use enum="PixelInternalFormat" token="RG8I" />
+      <use enum="PixelInternalFormat" token="RG8UI" />
+      <use enum="PixelInternalFormat" token="RG16I" />
+      <use enum="PixelInternalFormat" token="RG16UI" />
+      <use enum="PixelInternalFormat" token="RG32I" />
+      <use enum="PixelInternalFormat" token="RG32UI" />
+      <use enum="PixelInternalFormat" token="RGB8I" />
+      <use enum="PixelInternalFormat" token="RGB8UI" />
+      <use enum="PixelInternalFormat" token="RGB16I" />
+      <use enum="PixelInternalFormat" token="RGB16UI" />
+      <use enum="PixelInternalFormat" token="RGB32I" />
+      <use enum="PixelInternalFormat" token="RGB32UI" />
       <use enum="PixelInternalFormat" token="RGBA8I" />
-      <use enum="PixelInternalFormat" token="RGBA16I" />
-      <use enum="PixelInternalFormat" token="RGBA32I" />
       <use enum="PixelInternalFormat" token="RGBA8UI" />
+      <use enum="PixelInternalFormat" token="RGBA16I" />
       <use enum="PixelInternalFormat" token="RGBA16UI" />
+      <use enum="PixelInternalFormat" token="RGBA32I" />
       <use enum="PixelInternalFormat" token="RGBA32UI" />
     </enum>
     <enum name="StencilFace">
@@ -4684,9 +4717,11 @@
       <use enum="VERSION_1_2" token="TEXTURE_3D" />
       <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
       <use enum="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
       <use enum="VERSION_1_2" token="PROXY_TEXTURE_3D" />
       <use enum="VERSION_1_3" token="PROXY_TEXTURE_CUBE_MAP" />
       <use enum="VERSION_3_0" token="PROXY_TEXTURE_2D_ARRAY" />
+      <use enum="VERSION_4_0" token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="TextureTargetMultisample2d">
       <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
@@ -6614,8 +6649,8 @@
       <use token="UNIFORM_BUFFER" />
     </enum>
     <enum name="BufferTarget">
-      <use  token="ARRAY_BUFFER" />
-      <use  token="ELEMENT_ARRAY_BUFFER" />
+      <use token="ARRAY_BUFFER" />
+      <use token="ELEMENT_ARRAY_BUFFER" />
       <use token="PIXEL_PACK_BUFFER" />
       <use token="PIXEL_UNPACK_BUFFER" />
       <use token="COPY_READ_BUFFER" />
