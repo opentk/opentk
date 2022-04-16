@@ -3656,6 +3656,7 @@
       <use enum="VERSION_4_3" token="TEXTURE_VIEW_MIN_LAYER" />
       <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LEVELS" />
       <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LAYERS" />
+      <use enum="VERSION_4_6" token="TEXTURE_MAX_ANISOTROPY" />
     </enum>
     <enum name="HintTarget">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
