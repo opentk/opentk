@@ -2836,6 +2836,7 @@
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -4616,6 +4617,7 @@
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -33351,6 +33353,7 @@
       <token name="TEXTURE_COLOR_TABLE_SGI" value="0x80BC" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -33980,6 +33983,7 @@
       <token name="VIEWPORT" value="0x0BA2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER_EXT" value="0x8090" />
@@ -50504,6 +50508,7 @@
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -51314,6 +51319,7 @@
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -56826,6 +56832,7 @@
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -58161,6 +58168,7 @@
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
