@@ -56,7 +56,7 @@ namespace Bind
             Overrides = overrides;
         }
 
-        public EnumCollection Process(EnumCollection enums, string apiname)
+        public EnumCollection Process(EnumCollection enums, string apiname, HashSet<string> extensions)
         {
             foreach (var file in Overrides)
             {
@@ -64,7 +64,7 @@ namespace Bind
 
                 var nav = new XPathDocument(file).CreateNavigator();
                 enums = ProcessNames(enums, nav, apiname);
-                enums = ProcessConstants(enums, nav, apiname);
+                enums = ProcessConstants(enums, nav, apiname, extensions);
             }
             return enums;
         }
@@ -118,9 +118,6 @@ namespace Bind
                     e1.CLSCompliant = false;
                     e2.CLSCompliant = false;
                 }
-            }
-            foreach (var e in enums.Values)
-            {
             }
 
             return processed_enums;
@@ -244,7 +241,7 @@ namespace Bind
             return name;
         }
 
-        private EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
+        private EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname, HashSet<string> extensions)
         {
             foreach (var e in enums.Values)
             {
@@ -253,6 +250,13 @@ namespace Bind
                 {
                     c.Name = TranslateConstantName(c.Name, false);
                     c.Value = TranslateConstantValue(c.Value);
+
+                    if (string.IsNullOrEmpty(c.AdddedInExtension) && extensions.Contains(c.Reference))
+                    {
+                        // This is a reference to an extension, put that in a thing so we can use it for documentation.
+                        c.AdddedInExtension = c.Reference;
+                    }
+
                     c.Reference = TranslateEnumName(c.Reference);
                     if (!processed_constants.ContainsKey(c.Name))
                     {

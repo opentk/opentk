@@ -411,16 +411,28 @@ namespace Bind
                 {
                     sw.WriteLine("/// <summary>");
 
-                    if (c.OriginalReference != null && c.OriginalReference.StartsWith("Version"))
+                    string requires_string = "";
+                    if (string.IsNullOrEmpty(c.AdddedInExtension) == false)
                     {
-                        char major = c.OriginalReference["Version".Length];
-                        char minor = c.OriginalReference["Version".Length + 1];
-                        sw.WriteLine($"/// [requires: v{major}.{minor}] Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                        requires_string = "[requires: ";
+
+                        // This constant was added in an extension
+                        if (c.AdddedInExtension.StartsWith("VERSION") && c.AdddedInExtension.Length == "VERSION_X_X".Length)
+                        {
+                            char major = c.AdddedInExtension["VERSION_".Length];
+                            char minor = c.AdddedInExtension["VERSION_X_".Length];
+
+                            requires_string += $"v{major}.{minor}";
+                        }
+                        else
+                        {
+                            requires_string += c.AdddedInExtension;
+                        }
+
+                        requires_string += "] ";
                     }
-                    else
-                    {
-                        sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
-                    }
+
+                    sw.WriteLine($"/// {requires_string}Original was {Settings.ConstantPrefix}{c.OriginalName} = {c.Value}");
                     sw.WriteLine("/// </summary>");
                 }
 
