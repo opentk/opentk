@@ -410,7 +410,17 @@ namespace Bind
                 if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                 {
                     sw.WriteLine("/// <summary>");
-                    sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+
+                    if (c.OriginalReference != null && c.OriginalReference.StartsWith("Version"))
+                    {
+                        char major = c.OriginalReference["Version".Length];
+                        char minor = c.OriginalReference["Version".Length + 1];
+                        sw.WriteLine($"/// [requires: v{major}.{minor}] Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                    }
+                    else
+                    {
+                        sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+                    }
                     sw.WriteLine("/// </summary>");
                 }
 

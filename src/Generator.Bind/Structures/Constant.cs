@@ -72,6 +72,8 @@ namespace Bind.Structures
         /// </summary>
         public string Reference { get; set; }
 
+        public string OriginalReference { get; set; }
+
         public bool Unchecked
         {
             get
@@ -147,6 +149,7 @@ namespace Bind.Structures
                 if (reference != null)
                 {
                     c.Value = reference.Value;
+                    c.OriginalReference = c.Reference;
                     c.Reference = null;
                     return true;
                 }
