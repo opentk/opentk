@@ -2835,6 +2835,7 @@
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -33349,6 +33350,7 @@
       <token name="TEXTURE_4D_SGIS" value="0x8134" />
       <token name="TEXTURE_COLOR_TABLE_SGI" value="0x80BC" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -50501,6 +50503,7 @@
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -56822,6 +56825,7 @@
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
