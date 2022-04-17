@@ -111,8 +111,8 @@ module Box2 =
             b.Scale(v, v2)
 
             let epsilon = new Vector2(
-                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v.X))) - 4.0f), 0.0001f),
-                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v.Y))) - 4.0f), 0.0001f)
+                Assert.EpsilonFromValue4Digits(v.X),
+                Assert.EpsilonFromValue4Digits(v.Y)
             )
             
             Assert.ApproximatelyEqualDelta(v * f, b.Size, epsilon)
@@ -124,8 +124,8 @@ module Box2 =
             b1.Scale(v1, b1.Center)
 
             let epsilon = new Vector2(
-                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v1.X))) - 4.0f), 0.0001f),
-                MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v1.Y))) - 4.0f), 0.0001f)
+                Assert.EpsilonFromValue4Digits(v1.X),
+                Assert.EpsilonFromValue4Digits(v1.Y)
             )
             
             Assert.ApproximatelyEqualDelta(b1.Size, v2, epsilon)

@@ -116,3 +116,6 @@ type internal Assert =
 
     static member ApproximatelyEqual(a : float32, b : float32) =
         if not <| approxEqDelta a b then raise <| new Xunit.Sdk.EqualException(a, b)
+
+    static member EpsilonFromValue4Digits(v : float32) =
+        MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v))) - 4.0f), 0.0001f)
