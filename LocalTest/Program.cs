@@ -65,11 +65,6 @@ namespace LocalTest
         {
             base.OnUpdateFrame(args);
 
-            if (MouseState.IsButtonDown(MouseButton.Left) &&
-                MouseState.WasButtonDown(MouseButton.Left) == false)
-            {
-                Console.WriteLine("Pressed!");
-            }
         }
     }
 }
