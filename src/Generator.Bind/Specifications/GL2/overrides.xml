@@ -4701,6 +4701,7 @@
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
       <use enum="VERSION_4_6" token="TEXTURE_MAX_ANISOTROPY" />
+      <use enum="ARB_seamless_cubemap_per_texture" token="TEXTURE_CUBE_MAP_SEAMLESS" />
     </enum>
     <enum name="TextureTarget1d">
       <use enum="VERSION_1_1" token="TEXTURE_1D" />
