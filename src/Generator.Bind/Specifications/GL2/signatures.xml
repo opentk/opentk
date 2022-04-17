@@ -2837,6 +2837,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -4618,6 +4620,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -33354,6 +33358,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -33984,6 +33990,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER_EXT" value="0x8090" />
@@ -50509,6 +50517,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -51320,6 +51330,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -56833,6 +56845,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -58169,6 +58183,8 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
