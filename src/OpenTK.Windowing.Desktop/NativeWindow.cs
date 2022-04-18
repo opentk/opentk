@@ -1440,7 +1440,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public unsafe void ProcessInputEvents()
         {
-            MouseState.Update();
+            MouseState.Update(WindowPtr);
             KeyboardState.Update();
 
             GLFW.GetCursorPos(WindowPtr, out var x, out var y);
@@ -1454,6 +1454,44 @@ namespace OpenTK.Windowing.Desktop
                 }
 
                 _joystickStates[i].Update();
+            }
+        }
+
+        public unsafe void UpdateInput()
+        {
+            MouseState.Update(WindowPtr);
+            KeyboardState.Update();
+
+            GLFW.GetCursorPos(WindowPtr, out var x, out var y);
+            MouseState.Position = new Vector2((float)x, (float)y);
+
+            for (var i = 0; i < _joystickStates.Length; i++)
+            {
+                if (_joystickStates[i] == null)
+                {
+                    continue;
+                }
+
+                _joystickStates[i].Update();
+            }
+        }
+
+        public unsafe void NewInputFrame()
+        {
+            MouseState.NewFrame();
+            KeyboardState.NewFrame();
+
+            GLFW.GetCursorPos(WindowPtr, out var x, out var y);
+            MouseState.Position = new Vector2((float)x, (float)y);
+
+            for (var i = 0; i < _joystickStates.Length; i++)
+            {
+                if (_joystickStates[i] == null)
+                {
+                    continue;
+                }
+
+                _joystickStates[i].NewFrame();
             }
         }
 

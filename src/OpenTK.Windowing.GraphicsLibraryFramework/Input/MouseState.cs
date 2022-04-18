@@ -146,7 +146,13 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return $"[X={X}, Y={Y}, Buttons={b}]";
         }
 
-        internal void Update()
+        internal unsafe void Update(Window* windowPtr)
+        {
+            GLFW.GetCursorPos(windowPtr, out var x, out var y);
+            Position = new Vector2((float)x, (float)y);
+        }
+
+        internal void NewFrame()
         {
             _buttonsPrevious.SetAll(false);
             _buttonsPrevious.Or(_buttons);

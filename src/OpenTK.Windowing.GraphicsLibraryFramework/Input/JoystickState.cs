@@ -201,41 +201,27 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal unsafe void Update()
         {
-            UpdateHats();
-
-            UpdateAxes();
-
-            UpdateButtons();
-        }
-
-        private unsafe void UpdateButtons()
-        {
-            Utils.Swap(ref _buttons, ref _buttonsPrevious);
-
-            var b = GLFW.GetJoystickButtonsRaw(Id, out int count);
-            for (var j = 0; j < count; j++)
+            var hats = GLFW.GetJoystickHats(Id);
+            for (var j = 0; j < hats.Length; j++)
             {
-                SetButtonDown(j, b[j] == JoystickInputAction.Press);
+                SetHat(j, (Hat)hats[j]);
             }
-        }
-
-        private void UpdateAxes()
-        {
-            Utils.Swap(ref _axes, ref _axesPrevious);
 
             var axes = GLFW.GetJoystickAxes(Id);
             SetAxes(axes);
+
+            var buttons = GLFW.GetJoystickButtons(Id);
+            for (var j = 0; j < buttons.Length; j++)
+            {
+                SetButtonDown(j, buttons[j] == JoystickInputAction.Press);
+            }
         }
 
-        private unsafe void UpdateHats()
+        internal unsafe void NewFrame()
         {
             Utils.Swap(ref _hats, ref _hatsPrevious);
-
-            var h = GLFW.GetJoystickHatsRaw(Id, out int count);
-            for (var j = 0; j < count; j++)
-            {
-                SetHat(j, (Hat)h[j]);
-            }
+            Utils.Swap(ref _axes, ref _axesPrevious);
+            Utils.Swap(ref _buttons, ref _buttonsPrevious);
         }
 
         /// <summary>

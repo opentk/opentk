@@ -2034,22 +2034,16 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe JoystickInputAction[] GetJoystickButtons(int jid)
+        public static unsafe Span<JoystickInputAction> GetJoystickButtons(int jid)
         {
             var ptr = GetJoystickButtonsRaw(jid, out var count);
 
             if (ptr == null)
             {
-                return null;
+                return Span<JoystickInputAction>.Empty;
             }
 
-            var array = new JoystickInputAction[count];
-            for (var i = 0; i < count; i++)
-            {
-                array[i] = ptr[i];
-            }
-
-            return array;
+            return new Span<JoystickInputAction>(ptr, count);
         }
 
         /// <summary>
@@ -2186,22 +2180,16 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe JoystickHats[] GetJoystickHats(int jid)
+        public static unsafe Span<JoystickHats> GetJoystickHats(int jid)
         {
             var ptr = GetJoystickHatsRaw(jid, out var count);
 
             if (ptr == null)
             {
-                return null;
+                return Span<JoystickHats>.Empty;
             }
 
-            var array = new JoystickHats[count];
-            for (var i = 0; i < count; i++)
-            {
-                array[i] = ptr[i];
-            }
-
-            return array;
+            return new Span<JoystickHats>(ptr, count);
         }
 
         /// <summary>

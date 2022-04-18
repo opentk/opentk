@@ -100,6 +100,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         internal void Update()
         {
+        }
+
+        internal void NewFrame()
+        {
             _keysPrevious.SetAll(false);
             _keysPrevious.Or(_keys);
         }
