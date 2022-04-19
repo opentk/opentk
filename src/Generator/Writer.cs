@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.CodeDom.Compiler;
 using Generator.Parsing;
+using Generator.Utility;
 
 namespace Generator.Writing
 {
@@ -231,6 +232,8 @@ namespace Generator.Writing
 
         private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
         {
+            writer.WriteLine($"/// <inheritdoc cref=\"{overload.NativeFunction.FunctionName}\"/>");
+
             string parameterString =
                 string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
@@ -298,11 +301,7 @@ namespace Generator.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="writer"></param>
-        /// <param name="documentation"></param>
+
         private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation)
         {
             writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> {documentation.Purpose} </summary>");
@@ -311,6 +310,7 @@ namespace Generator.Writing
             {
                 writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameter.Description}</param>");
             }
+            writer.WriteLine($"/// <remarks><see href=\"{documentation.RefPagesLink}\" /></remarks>");
         }
 
         private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)

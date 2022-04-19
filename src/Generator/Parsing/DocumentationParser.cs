@@ -3,6 +3,7 @@ using Generator.Utility.Extensions;
 using Generator.Writing;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -24,6 +25,15 @@ namespace Generator.Parsing
 
                 //Logger.Info($"Documentation {folder.Folder}:\n\n");
 
+                OutputApi api = folder.Folder switch
+                {
+                    "es1.1" => OutputApi.GLES1,
+                    "es3" => OutputApi.GLES3,
+                    "gl2.1" => OutputApi.GLCompat,
+                    "gl4" => OutputApi.GL,
+                    _ => throw new NotImplementedException(),
+                };
+
                 foreach (var file in folder.Files)
                 {
                     XmlReaderSettings settings = new XmlReaderSettings { NameTable = new System.Xml.NameTable() };
@@ -37,22 +47,34 @@ namespace Generator.Parsing
                     PropertyInfo? propertyInfo = reader.GetType().GetProperty("DisableUndeclaredEntityCheck", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                     propertyInfo!.SetValue(reader, true);
                     XDocument xml = XDocument.Load(reader);
-                    CommandDocumentation[] documentation = ParseFile(xml.Root!);
+
+                    string refPagesLink = "https://www.khronos.org/registry/OpenGL-Refpages/";
+                    string filename = Path.GetFileNameWithoutExtension(file.Name);
+                    switch (api)
+                    {
+                        case OutputApi.GL:
+                            refPagesLink += $"gl4/html/{filename}.xhtml";
+                            break;
+                        case OutputApi.GLCompat:
+                            refPagesLink += $"gl2.1/xhtml/{filename}.xml";
+                            break;
+                        case OutputApi.GLES1:
+                            refPagesLink += $"es1.1/xhtml/{filename}.xml";
+                            break;
+                        case OutputApi.GLES3:
+                            refPagesLink += $"es3.0/html{filename}.xhtml";
+                            break;
+                        default:
+                            throw new Exception("API not supported for documentation.");
+                    }
+
+                    CommandDocumentation[] documentation = ParseFile(xml.Root!, refPagesLink);
 
                     foreach (var commandDoc in documentation)
                     {
                         docFolder.Add(commandDoc.Name, commandDoc);
                     }
                 }
-
-                OutputApi api = folder.Folder switch
-                {
-                    "es1.1" => OutputApi.GLES1,
-                    "es3" => OutputApi.GLES3,
-                    "gl2.1" => OutputApi.GLCompat,
-                    "gl4" => OutputApi.GL,
-                    _ => throw new NotImplementedException(),
-                };
 
                 versionDocumentation.Add(api, new VersionDocumentation(docFolder));
             }
@@ -68,7 +90,7 @@ namespace Generator.Parsing
         }
 
 
-        private static CommandDocumentation[] ParseFile(XElement root)
+        private static CommandDocumentation[] ParseFile(XElement root, string refPagesLink)
         {
             // FIXME:
 
@@ -79,7 +101,7 @@ namespace Generator.Parsing
             purpose = NameMangler.MangleCommandPurpose(purpose);
 
             Dictionary<string, string> parametersDescriptions = new Dictionary<string, string>();
-            
+
             XElement ? refparameters = root.ElementIgnoreNamespace(e => e.AttributeIgnoreNamespace("id")?.Value == "parameters");
             if (refparameters != null)
             {
@@ -95,7 +117,7 @@ namespace Generator.Parsing
                         {
                             if (parametersDescriptions.ContainsKey(parameter.Value) == false)
                             {
-                                parametersDescriptions.Add(parameter.Value, desc);
+                                parametersDescriptions.Add(NameMangler.MangleParameterName(parameter.Value), desc);
                             }
                         }
                     }
@@ -110,7 +132,7 @@ namespace Generator.Parsing
                 List<ParameterDocumentation> parameters = new List<ParameterDocumentation>();
                 foreach (var parameter in prototype.ElementsIgnoreNamespace("parameter"))
                 {
-                    string parameterName = parameter.Value;
+                    string parameterName = NameMangler.MangleParameterName(parameter.Value);
                     if (parameterName == "void")
                     {
                         Logger.Warning("void!!!!!!!!!");
@@ -122,10 +144,9 @@ namespace Generator.Parsing
                         desc = NameMangler.MangleParameterDescription(desc);
 
                     parameters.Add(new ParameterDocumentation(parameterName, desc ?? "!!missing documentation!!"));
-                    //Logger.Info($"  {parameter}: {desc}");
                 }
 
-                documentation.Add(new CommandDocumentation(function.Value, purpose, parameters.ToArray()));
+                documentation.Add(new CommandDocumentation(function.Value, purpose, parameters.ToArray(), refPagesLink));
             }
 
             return documentation.ToArray();

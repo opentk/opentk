@@ -19,8 +19,8 @@ namespace Generator.Parsing
     public record CommandDocumentation(
         string Name,
         string Purpose,
-        ParameterDocumentation[] Parameters
-        );
+        ParameterDocumentation[] Parameters,
+        string RefPagesLink);
 
     public record ParameterDocumentation(
         string Name,
