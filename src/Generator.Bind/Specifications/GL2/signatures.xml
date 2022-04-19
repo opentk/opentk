@@ -2835,6 +2835,10 @@
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -4615,6 +4619,9 @@
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -13716,11 +13723,11 @@
     <function name="GetShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
       <param name="viewport" type="GLuint" flow="in" />
       <param name="entry" type="GLuint" flow="in" />
-      <param name="rate" type="GLenum *" flow="out" count="1" />
+      <param name="rate" type="NvShadingRateImage *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetShadingRateSampleLocationivNV" category="NV_shading_rate_image" extension="NV">
-      <param name="rate" type="GLenum" flow="in" />
+      <param name="rate" type="NvShadingRateImage" flow="in" />
       <param name="samples" type="GLuint" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="location" type="GLint *" flow="out" count="3" />
@@ -19238,17 +19245,17 @@
       <param name="viewport" type="GLuint" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="rates" type="GLenum *" flow="in" count="count" />
+      <param name="rates" type="NvShadingRateImage *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ShadingRateSampleOrderCustomNV" category="NV_shading_rate_image" extension="NV">
-      <param name="rate" type="GLenum" flow="in" />
+      <param name="rate" type="NvShadingRateImage" flow="in" />
       <param name="samples" type="GLuint" flow="in" />
       <param name="locations" type="GLint *" flow="in" count="COMPSIZE(rate,samples)" />
       <returns type="void" />
     </function>
     <function name="ShadingRateSampleOrderNV" category="NV_shading_rate_image" extension="NV">
-      <param name="order" type="GLenum" flow="in" />
+      <param name="order" type="NvShadingRateImage" flow="in" />
       <returns type="void" />
     </function>
     <function name="SharpenTexFuncSGIS" category="SGIS_sharpen_texture" extension="SGIS">
@@ -33349,6 +33356,10 @@
       <token name="TEXTURE_4D_SGIS" value="0x8134" />
       <token name="TEXTURE_COLOR_TABLE_SGI" value="0x80BC" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -33978,6 +33989,9 @@
       <token name="VIEWPORT" value="0x0BA2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER_EXT" value="0x8090" />
@@ -39222,11 +39236,11 @@
     <function name="GetShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
       <param name="viewport" type="GLuint" flow="in" />
       <param name="entry" type="GLuint" flow="in" />
-      <param name="rate" type="GLenum *" flow="out" count="1" />
+      <param name="rate" type="NvShadingRateImage *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetShadingRateSampleLocationivNV" category="NV_shading_rate_image" extension="NV">
-      <param name="rate" type="GLenum" flow="in" />
+      <param name="rate" type="NvShadingRateImage" flow="in" />
       <param name="samples" type="GLuint" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="location" type="GLint *" flow="out" count="3" />
@@ -42211,17 +42225,17 @@
       <param name="viewport" type="GLuint" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="rates" type="GLenum *" flow="in" count="count" />
+      <param name="rates" type="NvShadingRateImage *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ShadingRateSampleOrderCustomNV" category="NV_shading_rate_image" extension="NV">
-      <param name="rate" type="GLenum" flow="in" />
+      <param name="rate" type="NvShadingRateImage" flow="in" />
       <param name="samples" type="GLuint" flow="in" />
       <param name="locations" type="GLint *" flow="in" count="COMPSIZE(rate,samples)" />
       <returns type="void" />
     </function>
     <function name="ShadingRateSampleOrderNV" category="NV_shading_rate_image" extension="NV">
-      <param name="order" type="GLenum" flow="in" />
+      <param name="order" type="NvShadingRateImage" flow="in" />
       <returns type="void" />
     </function>
     <function name="SignalVkFenceNV" category="NV_draw_vulkan_image" extension="NV">
@@ -50501,6 +50515,10 @@
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -51311,6 +51329,9 @@
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -56822,6 +56843,10 @@
       <token name="TEXTURE_GEN_T" value="0x0C61" deprecated="3.2" />
       <token name="VERTEX_ARRAY" value="0x8074" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
+      <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="ErrorCode">
       <token name="INVALID_ENUM" value="0x0500" />
@@ -58157,6 +58182,9 @@
       <token name="ZOOM_Y" value="0x0D17" deprecated="3.2" />
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
+      <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
+      <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -62659,11 +62687,11 @@
     <function name="GetShadingRateImagePaletteNV" category="NV_shading_rate_image" extension="NV">
       <param name="viewport" type="GLuint" flow="in" />
       <param name="entry" type="GLuint" flow="in" />
-      <param name="rate" type="GLenum *" flow="out" count="1" />
+      <param name="rate" type="NvShadingRateImage *" flow="out" count="1" />
       <returns type="void" />
     </function>
     <function name="GetShadingRateSampleLocationivNV" category="NV_shading_rate_image" extension="NV">
-      <param name="rate" type="GLenum" flow="in" />
+      <param name="rate" type="NvShadingRateImage" flow="in" />
       <param name="samples" type="GLuint" flow="in" />
       <param name="index" type="GLuint" flow="in" />
       <param name="location" type="GLint *" flow="out" count="3" />
@@ -64020,17 +64048,17 @@
       <param name="viewport" type="GLuint" flow="in" />
       <param name="first" type="GLuint" flow="in" />
       <param name="count" type="GLsizei" flow="in" />
-      <param name="rates" type="GLenum *" flow="in" count="count" />
+      <param name="rates" type="NvShadingRateImage *" flow="in" count="count" />
       <returns type="void" />
     </function>
     <function name="ShadingRateSampleOrderCustomNV" category="NV_shading_rate_image" extension="NV">
-      <param name="rate" type="GLenum" flow="in" />
+      <param name="rate" type="NvShadingRateImage" flow="in" />
       <param name="samples" type="GLuint" flow="in" />
       <param name="locations" type="GLint *" flow="in" count="COMPSIZE(rate,samples)" />
       <returns type="void" />
     </function>
     <function name="ShadingRateSampleOrderNV" category="NV_shading_rate_image" extension="NV">
-      <param name="order" type="GLenum" flow="in" />
+      <param name="order" type="NvShadingRateImage" flow="in" />
       <returns type="void" />
     </function>
     <function name="SignalSemaphoreEXT" category="EXT_semaphore" extension="EXT">
