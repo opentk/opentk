@@ -87,7 +87,14 @@ namespace OpenTK.Windowing.Desktop
         /// This can be used to do things such as decreasing visual quality if the user's computer isn't powerful enough
         /// to handle the application.
         /// </summary>
-        protected bool IsRunningSlowly { get; private set; }
+        public bool IsRunningSlowly { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether or not RenderPeriod has consistently failed to reach TargetRenderPeriod.
+        /// This can be used to do things such as decreasing visual quality if the user's computer isn't powerful enough
+        /// to handle the application.
+        /// </summary>
+        public bool IsRenderRunningSlowly { get; private set; }
 
         private double _updateEpsilon; // quantization error for UpdateFrame events
 
@@ -233,10 +240,14 @@ namespace OpenTK.Windowing.Desktop
 
                 double updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
 
+                int updateRunningSlowlyRetries = 4;
+
                 double updateExtraTime = 0;
                 while (elapsedUpdate + updateExtraTime > updatePeriod)
                 {
-                    OnUpdateFrame(new FrameEventArgs(elapsedUpdate));
+                    _watchUpdate.Restart();
+                    UpdateTime = elapsedUpdate;
+                    OnUpdateFrame(new FrameEventArgs(UpdateTime));
 
                     NewInputFrame();
 
@@ -247,29 +258,26 @@ namespace OpenTK.Windowing.Desktop
                     }
 
                     updateExtraTime = elapsedUpdate - updatePeriod;
+
+                    IsRunningSlowly = updateExtraTime >= updatePeriod;
+                    if (IsRunningSlowly)
+                    {
+                        // We are running slowly!
+                        updateRunningSlowlyRetries--;
+                        if (updateRunningSlowlyRetries == 0)
+                        {
+                            // We've been running slowly for a while now.
+                            // So we break out of this loop so we're not stuck here forever.
+                            break;
+                        }
+                    }
+
                     elapsedUpdate = _watchUpdate.Elapsed.TotalSeconds;
                 }
 
                 if (IsMultiThreaded == false)
                 {
-                    double elapsedRender = _watchRender.Elapsed.TotalSeconds;
-
-                    double renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
-
-                    double renderExtraTime = 0;
-                    while (elapsedRender + renderExtraTime > renderPeriod)
-                    {
-                        OnRenderFrame(new FrameEventArgs(elapsedRender));
-
-                        // Only do one update per loop
-                        if (RenderFrequency <= double.Epsilon)
-                        {
-                            break;
-                        }
-
-                        renderExtraTime = elapsedRender - renderPeriod;
-                        elapsedRender = _watchRender.Elapsed.TotalSeconds;
-                    }
+                    DispatchRenderFrame();
                 }
 
                 ProcessEventsNoInput(IsEventDriven);
@@ -279,6 +287,7 @@ namespace OpenTK.Windowing.Desktop
             OnUnload();
         }
 
+        [Obsolete("We don't support a separate render thread any more.")]
         private unsafe void StartRenderThread()
         {
             // If we are starting a render thread we want the context to be current there.
@@ -293,63 +302,46 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private void DispatchUpdateFrame()
-        {
-            var isRunningSlowlyRetries = 4;
-            var elapsed = _watchUpdate.Elapsed.TotalSeconds;
-
-            var updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
-
-            while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
-            {
-                // Prepare input for the next update.
-                //ProcessInputEvents();
-                //ProcessEventsNoInput(IsEventDriven);
-
-                _watchUpdate.Restart();
-                UpdateTime = elapsed;
-                OnUpdateFrame(new FrameEventArgs(elapsed));
-
-                // Calculate difference (positive or negative) between
-                // actual elapsed time and target elapsed time. We must
-                // compensate for this difference.
-                _updateEpsilon += elapsed - updatePeriod;
-
-                if (UpdateFrequency <= double.Epsilon)
-                {
-                    // An UpdateFrequency of zero means we will raise
-                    // UpdateFrame events as fast as possible (one event
-                    // per ProcessEvents() call)
-                    break;
-                }
-
-                IsRunningSlowly = _updateEpsilon >= updatePeriod;
-
-                if (IsRunningSlowly && --isRunningSlowlyRetries == 0)
-                {
-                    // If UpdateFrame consistently takes longer than TargetUpdateFrame
-                    // stop raising events to avoid hanging inside the UpdateFrame loop.
-                    break;
-                }
-
-                elapsed = _watchUpdate.Elapsed.TotalSeconds;
-            }
-        }
-
         private void DispatchRenderFrame()
         {
-            var elapsed = _watchRender.Elapsed.TotalSeconds;
-            var renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
-            if (elapsed > 0 && elapsed >= renderPeriod)
+            double elapsedRender = _watchRender.Elapsed.TotalSeconds;
+
+            double renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
+
+            int renderRunningSlowlyRetries = 4;
+
+            double renderExtraTime = 0;
+            while (elapsedRender + renderExtraTime > renderPeriod)
             {
                 _watchRender.Restart();
-                RenderTime = elapsed;
-                OnRenderFrame(new FrameEventArgs(elapsed));
+                RenderTime = elapsedRender;
+                OnRenderFrame(new FrameEventArgs(RenderTime));
 
                 // Update VSync if set to adaptive
                 if (VSync == VSyncMode.Adaptive)
                 {
                     GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
+                }
+
+                // Only do one update per loop
+                if (RenderFrequency <= double.Epsilon)
+                {
+                    break;
+                }
+
+                renderExtraTime = elapsedRender - renderPeriod;
+                elapsedRender = _watchRender.Elapsed.TotalSeconds;
+
+                if (renderExtraTime >= renderPeriod)
+                {
+                    // We are running slowly!
+                    renderRunningSlowlyRetries--;
+                    if (renderRunningSlowlyRetries == 0)
+                    {
+                        // We've been running slowly for a while now.
+                        // So we break out of this loop so we're not stuck here forever.
+                        break;
+                    }
                 }
             }
         }

@@ -1372,6 +1372,7 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <param name="timeout">The timeout in seconds.</param>
         /// <returns>This function will always return true.</returns>
+        [Obsolete("Use NewInputFrame, ProcessEventsNoInput, and UpdateInput instead.")]
         public bool ProcessEvents(double timeout)
         {
             GLFW.WaitEventsTimeout(timeout);
@@ -1387,11 +1388,23 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Processes pending window events.
         /// </summary>
+        [Obsolete("Use NewInputFrame, ProcessEventsNoInput, and UpdateInput instead.")]
         public virtual void ProcessEvents()
         {
             ProcessInputEvents();
 
             ProcessEventsNoInput(IsEventDriven);
+        }
+
+        /// <summary>
+        /// Waits up to <paramref name="timeout"/> seconds for events and processes these events.
+        /// </summary>
+        /// <param name="timeout">The max amount of time (in seconds) to wait for events.</param>
+        public static void ProcessEventsNoInput(float timeout)
+        {
+            GLFW.WaitEventsTimeout(timeout);
+
+            RethrowCallbackExceptionsIfNeeded();
         }
 
         /// <summary>
@@ -1438,13 +1451,14 @@ namespace OpenTK.Windowing.Desktop
         /// Updates the input state in preparation for a call to <see cref="GLFW.PollEvents"/> or <see cref="GLFW.WaitEvents"/>.
         /// Do not call this function if you are calling <see cref="ProcessEvents()"/> or if you are running the window using <see cref="GameWindow.Run()"/>.
         /// </summary>
+        [Obsolete("Use NewInputFrame and UpdateInput instead.")]
         public unsafe void ProcessInputEvents()
         {
+            MouseState.NewFrame();
             MouseState.Update(WindowPtr);
-            KeyboardState.Update();
 
-            GLFW.GetCursorPos(WindowPtr, out var x, out var y);
-            MouseState.Position = new Vector2((float)x, (float)y);
+            KeyboardState.NewFrame();
+            KeyboardState.Update();
 
             for (var i = 0; i < _joystickStates.Length; i++)
             {
@@ -1453,18 +1467,22 @@ namespace OpenTK.Windowing.Desktop
                     continue;
                 }
 
+                _joystickStates[i].NewFrame();
                 _joystickStates[i].Update();
             }
         }
 
+        /// <summary>
+        /// Updates the "current" input values.
+        /// This function does not change the "previous" values of any input state.
+        /// For example, this function will modify <see cref="MouseState.Position"/> but not <see cref="MouseState.PreviousPosition"/>.
+        /// To witch to a new input frame use <see cref="NewInputFrame"/>.
+        /// </summary>
         public unsafe void UpdateInput()
         {
             MouseState.Update(WindowPtr);
             KeyboardState.Update();
 
-            GLFW.GetCursorPos(WindowPtr, out var x, out var y);
-            MouseState.Position = new Vector2((float)x, (float)y);
-
             for (var i = 0; i < _joystickStates.Length; i++)
             {
                 if (_joystickStates[i] == null)
@@ -1476,6 +1494,11 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
+        /// <summary>
+        /// Starts a new input frame.
+        /// This means that all input values that are currently considered "current" will now be considered "previous" values.
+        /// This affects <see cref="MouseState"/>, <see cref="KeyboardState"/>, and <see cref="JoystickStates"/>.
+        /// </summary>
         public unsafe void NewInputFrame()
         {
             MouseState.NewFrame();
