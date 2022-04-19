@@ -251,10 +251,10 @@ namespace Bind
                     c.Name = TranslateConstantName(c.Name, false);
                     c.Value = TranslateConstantValue(c.Value);
 
-                    if (string.IsNullOrEmpty(c.AdddedInExtension) && extensions.Contains(c.Reference))
+                    if (string.IsNullOrEmpty(c.AddedInExtension) && extensions.Contains(c.Reference))
                     {
                         // This is a reference to an extension, put that in a thing so we can use it for documentation.
-                        c.AdddedInExtension = c.Reference;
+                        c.AddedInExtension = c.Reference;
                     }
 
                     c.Reference = TranslateEnumName(c.Reference);

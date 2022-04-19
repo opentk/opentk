@@ -72,7 +72,7 @@ namespace Bind.Structures
         /// </summary>
         public string Reference { get; set; }
 
-        public string AdddedInExtension { get; set; }
+        public string AddedInExtension { get; set; }
 
         public bool Unchecked
         {

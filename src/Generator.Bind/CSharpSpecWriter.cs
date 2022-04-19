@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Bind.Structures;
 
 namespace Bind
@@ -399,6 +400,8 @@ namespace Bind
             }
         }
 
+        private static readonly Regex _versionRegex = new Regex(@"^VERSION_(?<Major>\d+)_(?<Minor>\d+)$");
+
         private void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
         {
              // Make sure everything is sorted. This will avoid random changes between
@@ -411,28 +414,25 @@ namespace Bind
                 {
                     sw.WriteLine("/// <summary>");
 
-                    string requires_string = "";
-                    if (string.IsNullOrEmpty(c.AdddedInExtension) == false)
+                    string requiresString = "";
+                    if (string.IsNullOrEmpty(c.AddedInExtension) == false)
                     {
-                        requires_string = "[requires: ";
+                        requiresString = "[requires: ";
 
-                        // This constant was added in an extension
-                        if (c.AdddedInExtension.StartsWith("VERSION") && c.AdddedInExtension.Length == "VERSION_X_X".Length)
+                        Match match = _versionRegex.Match(c.AddedInExtension);
+                        if (match.Success)
                         {
-                            char major = c.AdddedInExtension["VERSION_".Length];
-                            char minor = c.AdddedInExtension["VERSION_X_".Length];
-
-                            requires_string += $"v{major}.{minor}";
+                            requiresString += $"v{match.Groups["Major"]}.{match.Groups["Minor"]}";
                         }
                         else
                         {
-                            requires_string += c.AdddedInExtension;
+                            requiresString += c.AddedInExtension;
                         }
 
-                        requires_string += "] ";
+                        requiresString += "] ";
                     }
 
-                    sw.WriteLine($"/// {requires_string}Original was {Settings.ConstantPrefix}{c.OriginalName} = {c.Value}");
+                    sw.WriteLine($"/// {requiresString}Original was {Settings.ConstantPrefix}{c.OriginalName} = {c.Value}");
                     sw.WriteLine("/// </summary>");
                 }
 
