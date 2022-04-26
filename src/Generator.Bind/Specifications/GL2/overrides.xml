@@ -2860,13 +2860,13 @@
       <use enum="VERSION_4_4" token="MAP_PERSISTENT_BIT" />
     </enum>
     <enum name="BufferTarget">
-      <use enum="ARB_copy_buffer" token="COPY_READ_BUFFER" />
-      <use enum="ARB_copy_buffer" token="COPY_WRITE_BUFFER" />
       <token name="ARRAY_BUFFER" value="0x8892" />
       <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
       <token name="PIXEL_PACK_BUFFER" value="0x88EB" />
       <token name="PIXEL_UNPACK_BUFFER" value="0x88EC" />
       <token name="TRANSFORM_FEEDBACK_BUFFER" value="0x8C8E" />
+      <use enum="VERSION_3_1" token="COPY_READ_BUFFER" />
+      <use enum="VERSION_3_1" token="COPY_WRITE_BUFFER" />
       <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
       <use enum="VERSION_3_1" token="UNIFORM_BUFFER" />
       <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER" />

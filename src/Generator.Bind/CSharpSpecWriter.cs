@@ -400,8 +400,6 @@ namespace Bind
             }
         }
 
-        private static readonly Regex _versionRegex = new Regex(@"^VERSION_(?<Major>\d+)_(?<Minor>\d+)$");
-
         private void WriteConstants(BindStreamWriter sw, IEnumerable<Constant> constants)
         {
              // Make sure everything is sorted. This will avoid random changes between
@@ -414,22 +412,43 @@ namespace Bind
                 {
                     sw.WriteLine("/// <summary>");
 
-                    string requiresString = "";
-                    if (string.IsNullOrEmpty(c.AddedInExtension) == false)
+                    StringBuilder requiresString = new StringBuilder();
+                    if (c.AddedInVersion != null || c.AddedInExtensions?.Count > 0)
                     {
-                        requiresString = "[requires: ";
+                        requiresString.Append("[requires: ");
 
-                        Match match = _versionRegex.Match(c.AddedInExtension);
-                        if (match.Success)
+                        int elementsWritten = 0;
+
+                        if (c.AddedInVersion != null)
                         {
-                            requiresString += $"v{match.Groups["Major"]}.{match.Groups["Minor"]}";
-                        }
-                        else
-                        {
-                            requiresString += c.AddedInExtension;
+                            requiresString.Append("v");
+                            requiresString.Append(c.AddedInVersion.Major);
+                            requiresString.Append(".");
+                            requiresString.Append(c.AddedInVersion.Minor);
+                            elementsWritten++;
                         }
 
-                        requiresString += "] ";
+                        bool commaWritten = false;
+                        foreach (var ext in c.AddedInExtensions)
+                        {
+                            if (elementsWritten == 1)
+                            {
+                                requiresString.Append(" or ");
+                            }
+
+                            requiresString.Append(ext);
+                            requiresString.Append(", ");
+                            commaWritten = true;
+
+                            elementsWritten++;
+                        }
+
+                        if (commaWritten)
+                        {
+                            requiresString.Length = requiresString.Length - 2;
+                        }
+                        
+                        requiresString.Append("] ");
                     }
 
                     sw.WriteLine($"/// {requiresString}Original was {Settings.ConstantPrefix}{c.OriginalName} = {c.Value}");

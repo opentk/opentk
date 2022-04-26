@@ -104,6 +104,7 @@ namespace Bind
     {
         public static readonly char[] Separators = { ' ', '\n', ',', '(', ')', ';', '#' };
         public static Regex Extensions { get; private set; }
+        public static Regex ExtensionName { get; private set; }
         public static Regex Acronyms { get; private set; }
 
         // Both GL and ES contains SGI extension enums, even though no function
@@ -133,6 +134,10 @@ namespace Bind
 
                 Extensions = new Regex(
                     String.Join("|", extension_names.ToArray()),
+                    RegexOptions.Compiled);
+
+                ExtensionName = new Regex(
+                    String.Join("_|", extension_names.ToArray()),
                     RegexOptions.Compiled);
 
                 var acronyms = new string[]

@@ -3,6 +3,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -72,7 +73,8 @@ namespace Bind.Structures
         /// </summary>
         public string Reference { get; set; }
 
-        public string AddedInExtension { get; set; }
+        public List<string> AddedInExtensions { get; set; }
+        public Version AddedInVersion { get; set; }
 
         public bool Unchecked
         {
