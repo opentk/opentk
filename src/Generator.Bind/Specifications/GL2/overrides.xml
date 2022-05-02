@@ -1729,6 +1729,15 @@
     </function>
   </replace>
 
+  <!-- For backwards compatibility, see https://github.com/opentk/opentk/pull/1431#issuecomment-1115467424 -->
+  <overload name="gl|glcore">
+    <function name="MultiDrawElementsIndirectCount" extension="Core">
+      <param name="type">
+        <type>All</type>
+      </param>
+    </function>
+  </overload>
+
   <overload name="gl">
     <!-- generated from apitest -->
     <function name="TessellationMode" extension="Amd" obsolete="Use AmdVertexShaderTessellator overload instead">
