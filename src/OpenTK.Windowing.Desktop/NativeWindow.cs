@@ -37,7 +37,7 @@ namespace OpenTK.Windowing.Desktop
         private Vector2 _lastReportedMousePos;
 
         // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
-        private List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
+        private static List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -1383,11 +1383,21 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Processes pending window events.
         /// </summary>
+        [Obsolete("This function wrongly implies that only events from this window are processed, while in fact events for all windows are processed. Use NativeWindow.ProcessWindowEvents() instead.")]
         public virtual void ProcessEvents()
         {
             ProcessInputEvents();
 
-            if (IsEventDriven)
+            ProcessWindowEvents(IsEventDriven);
+        }
+
+        /// <summary>
+        /// Processes pending window events, either by calling <see cref="GLFW.WaitEvents"/> or <see cref="GLFW.PollEvents"/> depending on if <paramref name="waitForEvents"/> is set to true or not.
+        /// </summary>
+        /// <param name="waitForEvents">Whether to call <see cref="GLFW.WaitEvents()"/> or <see cref="GLFW.PollEvents()"/>.</param>
+        public static void ProcessWindowEvents(bool waitForEvents)
+        {
+            if (waitForEvents)
             {
                 GLFW.WaitEvents();
             }
@@ -1399,7 +1409,7 @@ namespace OpenTK.Windowing.Desktop
             RethrowCallbackExceptionsIfNeeded();
         }
 
-        private void RethrowCallbackExceptionsIfNeeded()
+        private static void RethrowCallbackExceptionsIfNeeded()
         {
             if (_callbackExceptions.Count == 1)
             {
