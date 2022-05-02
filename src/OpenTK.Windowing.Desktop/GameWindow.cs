@@ -287,6 +287,7 @@ namespace OpenTK.Windowing.Desktop
                 {
                     // If UpdateFrame consistently takes longer than TargetUpdateFrame
                     // stop raising events to avoid hanging inside the UpdateFrame loop.
+                    _updateEpsilon = 0;
                     break;
                 }
 
