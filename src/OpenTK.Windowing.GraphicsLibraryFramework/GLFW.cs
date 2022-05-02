@@ -3442,7 +3442,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="mode">
         /// Either <see cref="StickyAttributes.StickyKeys"/> or <see cref="StickyAttributes.StickyMouseButtons"/>.
         /// </param>
-        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>Whether sticky keys or sticky mouse buttons are enabled depending on the value of <paramref name="mode"/>.</returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3467,7 +3467,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="mode">
         /// <see cref="CursorStateAttribute.Cursor"/>.
         /// </param>
-        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>The current cursor mode.</returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3492,7 +3492,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="mode">
         /// <see cref="LockKeyModAttribute.LockKeyMods"/>.
         /// </param>
-        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>Whether or not lock key mods are enabled or not.</returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3503,6 +3503,31 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         /// <seealso cref="SetInputMode(Window*, LockKeyModAttribute, bool)"/>
         public static unsafe bool GetInputMode(Window* window, LockKeyModAttribute mode)
+        {
+            return glfwGetInputMode(window, mode) == GLFW_TRUE;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the value of an input option for the specified window.
+        /// The mode must be <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="mode">
+        /// <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </param>
+        /// <returns>Whether raw mouse motion is enabled or disabled for this window.</returns>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SetInputMode(Window*, RawMouseMotionAttribute, bool)"/>
+        public static unsafe bool GetInputMode(Window* window, RawMouseMotionAttribute mode)
         {
             return glfwGetInputMode(window, mode) == GLFW_TRUE;
         }
@@ -4398,6 +4423,34 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         public static unsafe void SetInputMode(Window* window, LockKeyModAttribute mode, bool value)
+        {
+            glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets an input mode option for the specified window.
+        /// The mode must be <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </para>
+        /// <para>
+        /// If the mode is <see cref="RawMouseMotionAttribute.RawMouseMotion"/>, the value must be either GLFW_TRUE to enable raw (unscaled and unaccelerated) mouse motion when the cursor is disabled, or GLFW_FALSE to disable it.
+        /// If raw motion is not supported, attempting to set this will emit GLFW_PLATFORM_ERROR. Call glfwRawMouseMotionSupported to check for support.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose raw mouse motion mode to set.</param>
+        /// <param name="mode">
+        /// The value <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </param>
+        /// <param name="value">Whether raw mouse motion should be enabled or disabled.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void SetInputMode(Window* window, RawMouseMotionAttribute mode, bool value)
         {
             glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
         }

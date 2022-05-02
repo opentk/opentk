@@ -345,6 +345,8 @@ namespace Bind
                         Type = node.GetAttribute("type", String.Empty).Trim()
                     };
 
+                    e.OriginalName = e.Name;
+
                     e.Obsolete = node.GetAttribute("obsolete", String.Empty).Trim();
 
                     if (String.IsNullOrEmpty(e.Name))

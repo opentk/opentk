@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Bind.Structures;
 
 namespace Bind
@@ -410,7 +411,47 @@ namespace Bind
                 if (!Settings.IsEnabled(Settings.Legacy.NoDocumentation))
                 {
                     sw.WriteLine("/// <summary>");
-                    sw.WriteLine("/// Original was " + Settings.ConstantPrefix + c.OriginalName + " = " + c.Value);
+
+                    StringBuilder requiresString = new StringBuilder();
+                    if (c.AddedInVersion != null || c.AddedInExtensions?.Count > 0)
+                    {
+                        requiresString.Append("[requires: ");
+
+                        int elementsWritten = 0;
+
+                        if (c.AddedInVersion != null)
+                        {
+                            requiresString.Append("v");
+                            requiresString.Append(c.AddedInVersion.Major);
+                            requiresString.Append(".");
+                            requiresString.Append(c.AddedInVersion.Minor);
+                            elementsWritten++;
+                        }
+
+                        bool commaWritten = false;
+                        foreach (var ext in c.AddedInExtensions)
+                        {
+                            if (elementsWritten == 1)
+                            {
+                                requiresString.Append(" or ");
+                            }
+
+                            requiresString.Append(ext);
+                            requiresString.Append(", ");
+                            commaWritten = true;
+
+                            elementsWritten++;
+                        }
+
+                        if (commaWritten)
+                        {
+                            requiresString.Length = requiresString.Length - 2;
+                        }
+                        
+                        requiresString.Append("] ");
+                    }
+
+                    sw.WriteLine($"/// {requiresString}Original was {Settings.ConstantPrefix}{c.OriginalName} = {c.Value}");
                     sw.WriteLine("/// </summary>");
                 }
 

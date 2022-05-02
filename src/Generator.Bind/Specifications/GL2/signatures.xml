@@ -31600,7 +31600,7 @@
     </function>
     <function name="MultiDrawElementsIndirectCount" category="VERSION_4_6" extension="Core" version="4.6">
       <param name="mode" type="PrimitiveType" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
       <param name="indirect" type="void *" flow="in" />
       <param name="drawcount" type="GLintptr" flow="in" />
       <param name="maxdrawcount" type="GLsizei" flow="in" />
@@ -49822,7 +49822,7 @@
     </function>
     <function name="MultiDrawElementsIndirectCount" category="VERSION_4_6" extension="Core" version="4.6">
       <param name="mode" type="PrimitiveType" flow="in" />
-      <param name="type" type="GLenum" flow="in" />
+      <param name="type" type="DrawElementsType" flow="in" />
       <param name="indirect" type="void *" flow="in" />
       <param name="drawcount" type="GLintptr" flow="in" />
       <param name="maxdrawcount" type="GLsizei" flow="in" />

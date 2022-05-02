@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.XPath;
 using Bind.Structures;
 using Enum = Bind.Structures.Enum;
@@ -56,16 +57,54 @@ namespace Bind
             Overrides = overrides;
         }
 
-        public EnumCollection Process(EnumCollection enums, string apiname)
+        private static readonly Regex _versionRegex = new Regex(@"^VERSION_(?<Major>\d+)_(?<Minor>\d+)$");
+
+        public EnumCollection Process(EnumCollection enums, string apiname, IReadOnlyCollection<string>/*HashSet*/ extensions)
         {
+            Dictionary<string, List<string>> constantToExtension = new Dictionary<string, List<string>>();
+
             foreach (var file in Overrides)
             {
                 Console.WriteLine("Processing enums in {0}.", file);
 
                 var nav = new XPathDocument(file).CreateNavigator();
                 enums = ProcessNames(enums, nav, apiname);
-                enums = ProcessConstants(enums, nav, apiname);
+                enums = ProcessConstants(enums, nav, apiname, extensions, constantToExtension);
             }
+
+            foreach (var @enum in enums.Values)
+            {
+                foreach (var constant in @enum.ConstantCollection.Values)
+                {
+                    if (constantToExtension.TryGetValue(constant.OriginalName, out List<string> extensionsWithConstant))
+                    {
+                        (int major, int minor) version = (int.MaxValue, int.MaxValue);
+                        foreach (var versionStr in extensionsWithConstant.Where(s => s.StartsWith("VERSION")))
+                        {
+                            Match match = _versionRegex.Match(versionStr);
+                            int major = int.Parse(match.Groups["Major"].Value);
+                            int minor = int.Parse(match.Groups["Minor"].Value);
+
+                            if (major < version.major || (major == version.major && minor < version.minor))
+                            {
+                                version = (major, minor);
+                            }
+                        }
+
+                        if (version.major == int.MaxValue || version.minor == int.MaxValue)
+                        {
+                            constant.AddedInVersion = null;
+                        }
+                        else
+                        {
+                            constant.AddedInVersion = new Version(version.major, version.minor);
+                        }
+
+                        constant.AddedInExtensions = extensionsWithConstant.Where(s => s.StartsWith("VERSION") == false).ToList();
+                    }
+                }
+            }
+
             return enums;
         }
 
@@ -118,9 +157,6 @@ namespace Bind
                     e1.CLSCompliant = false;
                     e2.CLSCompliant = false;
                 }
-            }
-            foreach (var e in enums.Values)
-            {
             }
 
             return processed_enums;
@@ -244,34 +280,79 @@ namespace Bind
             return name;
         }
 
-        private EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname)
+
+        private EnumCollection ProcessConstants(EnumCollection enums, XPathNavigator nav, string apiname, IReadOnlyCollection<string>/*HashSet*/ extensions, Dictionary<string, List<string>> constantToExtension)
         {
-            foreach (var e in enums.Values)
+            foreach (var @enum in enums.Values)
             {
-                var processed_constants = new SortedDictionary<string, Constant>();
-                foreach (Constant c in e.ConstantCollection.Values)
+                bool enumIsExtension = false;
+                if (string.IsNullOrEmpty(@enum.OriginalName) == false)
                 {
-                    c.Name = TranslateConstantName(c.Name, false);
-                    c.Value = TranslateConstantValue(c.Value);
-                    c.Reference = TranslateEnumName(c.Reference);
-                    if (!processed_constants.ContainsKey(c.Name))
+                    // see if this is an extension
+                    Match match = Utilities.ExtensionName.Match(@enum.OriginalName);
+                    enumIsExtension = match.Success;
+
+                    // if it wan't an extension see if it is a version instead.
+                    if (enumIsExtension == false)
                     {
-                        processed_constants.Add(c.Name, c);
+                        match = _versionRegex.Match(@enum.OriginalName);
+                        enumIsExtension = match.Success;
                     }
                 }
-                e.ConstantCollection = processed_constants;
 
-                var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, e.Name));
-                foreach (Constant c in e.ConstantCollection.Values)
+                var processedConstants = new SortedDictionary<string, Constant>();
+                foreach (Constant constant in @enum.ConstantCollection.Values)
                 {
-                    ReplaceConstant(enum_override, c);
-                    ResolveBareAlias(c, enums);
+                    constant.Name = TranslateConstantName(constant.Name, false);
+                    constant.Value = TranslateConstantValue(constant.Value);
+
+                    if (enumIsExtension)
+                    {
+                        if (constantToExtension.TryGetValue(constant.OriginalName, out List<string> extensionsWithEnum) == false)
+                        {
+                            extensionsWithEnum = new List<string>();
+                            constantToExtension.Add(constant.OriginalName, extensionsWithEnum);
+                        }
+
+                        if (extensionsWithEnum.Contains(@enum.OriginalName) == false)
+                        {
+                            extensionsWithEnum.Add(@enum.OriginalName);
+                        }
+                    }
+
+                    if (extensions.Contains(constant.Reference))
+                    {
+                        if (constantToExtension.TryGetValue(constant.OriginalName, out List<string> extensionsWithConstant) == false)
+                        {
+                            extensionsWithConstant = new List<string>();
+                            constantToExtension.Add(constant.OriginalName, extensionsWithConstant);
+                        }
+
+                        if (extensionsWithConstant.Contains(constant.Reference) == false)
+                        {
+                            extensionsWithConstant.Add(constant.Reference);
+                        }
+                    }
+
+                    constant.Reference = TranslateEnumName(constant.Reference);
+                    if (!processedConstants.ContainsKey(constant.Name))
+                    {
+                        processedConstants.Add(constant.Name, constant);
+                    }
+                }
+                @enum.ConstantCollection = processedConstants;
+
+                var enum_override = nav.SelectSingleNode(GetOverridesPath(apiname, @enum.Name));
+                foreach (Constant constant in @enum.ConstantCollection.Values)
+                {
+                    ReplaceConstant(enum_override, constant);
+                    ResolveBareAlias(constant, enums);
                 }
             }
 
-            foreach (var e in enums.Values)
+            foreach (var @enum in enums.Values)
             {
-                ResolveAliases(e, enums);
+                ResolveAliases(@enum, enums);
             }
 
             return enums;

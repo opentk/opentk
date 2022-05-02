@@ -120,11 +120,33 @@ namespace Bind.GL2
                 SpecReader.ReadDelegates(file, Delegates, Profile, Version);
             }
 
+            HashSet<string> extensions = new HashSet<string>();
+            foreach (var (name, list) in Delegates)
+            {
+                var @delegate = list[0];
+                if (string.IsNullOrEmpty(@delegate.Category) == false)
+                {
+                    foreach (var part in @delegate.Category.Split('|'))
+                    {
+                        extensions.Add(part);
+                    }
+                }
+            }
+
+            foreach(var (name, @enum) in Enums)
+            {
+                var match = Utilities.Extensions.Match(name);
+                if (match.Index == 0 && match.Length != 0)
+                {
+                    extensions.Add(name);
+                }
+            }
+
             var enum_processor = new EnumProcessor(this, overrides);
             var func_processor = new FuncProcessor(this, overrides);
             var doc_processor = new DocProcessor(this);
 
-            Enums = enum_processor.Process(Enums, Profile);
+            Enums = enum_processor.Process(Enums, Profile, extensions);
             Wrappers = func_processor.Process(enum_processor, doc_processor, Delegates, Enums, Profile, Version);
         }
     }

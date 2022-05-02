@@ -2860,20 +2860,21 @@
       <use enum="VERSION_4_4" token="MAP_PERSISTENT_BIT" />
     </enum>
     <enum name="BufferTarget">
-      <use enum="ARB_copy_buffer" token="COPY_READ_BUFFER" />
-      <use enum="ARB_copy_buffer" token="COPY_WRITE_BUFFER" />
-      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER" />
       <token name="ARRAY_BUFFER" value="0x8892" />
       <token name="ELEMENT_ARRAY_BUFFER" value="0x8893" />
       <token name="PIXEL_PACK_BUFFER" value="0x88EB" />
       <token name="PIXEL_UNPACK_BUFFER" value="0x88EC" />
       <token name="TRANSFORM_FEEDBACK_BUFFER" value="0x8C8E" />
+      <use enum="VERSION_3_1" token="COPY_READ_BUFFER" />
+      <use enum="VERSION_3_1" token="COPY_WRITE_BUFFER" />
       <use enum="VERSION_3_1" token="TEXTURE_BUFFER" />
+      <use enum="VERSION_3_1" token="UNIFORM_BUFFER" />
       <use enum="VERSION_4_0" token="DRAW_INDIRECT_BUFFER" />
       <use enum="VERSION_4_2" token="ATOMIC_COUNTER_BUFFER" />
       <use enum="VERSION_4_3" token="DISPATCH_INDIRECT_BUFFER" />
       <use enum="VERSION_4_3" token="SHADER_STORAGE_BUFFER" />
       <use enum="VERSION_4_4" token="QUERY_BUFFER" />
+      <use enum="VERSION_4_6" token="PARAMETER_BUFFER" />
     </enum>
     <enum name="BufferRangeTarget">
       <use enum="VERSION_3_1" token="UNIFORM_BUFFER" />
@@ -3039,22 +3040,22 @@
       <use enum="VERSION_4_3" token="DEBUG_TYPE_POP_GROUP" />
     </enum>
     <enum name="DrawBufferMode">
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT0" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT1" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT2" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT3" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT4" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT5" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT6" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT7" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT8" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT9" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT10" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT11" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT12" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT13" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT14" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT15" />
     </enum>
     <enum name="DrawBuffersEnum">
       <use enum="DrawBufferMode" token="NONE" />
@@ -3066,22 +3067,22 @@
       <use enum="DrawBufferMode" token="AUX1" />
       <use enum="DrawBufferMode" token="AUX2" />
       <use enum="DrawBufferMode" token="AUX3" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT0" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT1" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT2" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT3" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT4" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT5" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT6" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT7" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT8" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT9" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT10" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT11" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT12" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT13" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT14" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT15" />
     </enum>
     <enum name="DrawElementsType">
       <use enum="DataType" token="UNSIGNED_BYTE" />
@@ -3131,7 +3132,7 @@
       <use enum="VERSION_4_3" token="PRIMITIVE_RESTART_FIXED_INDEX" />
     </enum>
     <enum name="ErrorCode">
-      <use enum="ARB_framebuffer_object" token="INVALID_FRAMEBUFFER_OPERATION" />
+      <use enum="VERSION_3_0" token="INVALID_FRAMEBUFFER_OPERATION" />
       <token name="INVALID_FRAMEBUFFER_OPERATION_EXT" value="0x0506" />
       <use enum="VERSION_4_5" token="CONTEXT_LOST" />
     </enum>
@@ -3164,25 +3165,25 @@
       <use enum="ARB_half_float_vertex" token="HALF_FLOAT" />
     </enum>
     <enum name="FramebufferAttachment">
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
-      <use enum="ARB_framebuffer_object" token="DEPTH_ATTACHMENT" />
-      <use enum="ARB_framebuffer_object" token="STENCIL_ATTACHMENT" />
-      <use enum="ARB_framebuffer_object" token="DEPTH_STENCIL_ATTACHMENT" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT0" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT1" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT2" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT3" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT4" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT5" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT6" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT7" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT8" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT9" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT10" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT11" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT12" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT13" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT14" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT15" />
+      <use enum="VERSION_3_0" token="DEPTH_ATTACHMENT" />
+      <use enum="VERSION_3_0" token="STENCIL_ATTACHMENT" />
+      <use enum="VERSION_3_0" token="DEPTH_STENCIL_ATTACHMENT" />
       <token name="COLOR_ATTACHMENT0_EXT" value="0x8CE0" />
       <token name="COLOR_ATTACHMENT1_EXT" value="0x8CE1" />
       <token name="COLOR_ATTACHMENT10_EXT" value="0x8CEA" />
@@ -3216,13 +3217,13 @@
     <enum name="FramebufferAttachmentComponentType">
       <use enum="DataType" token="FLOAT" />
       <use enum="DataType" token="INT" />
-      <use enum="ARB_framebuffer_object" token="UNSIGNED_NORMALIZED" />
-      <use enum="ARB_framebuffer_object" token="INDEX" />
+      <use enum="VERSION_3_0" token="UNSIGNED_NORMALIZED" />
+      <use enum="VERSION_3_0" token="INDEX" />
     </enum>
     <enum name="FramebufferAttachmentObjectType">
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_DEFAULT" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_DEFAULT" />
       <use enum="MatrixMode" token="TEXTURE" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER" />
       <token name="NONE" value="0" />
     </enum>
     <enum name="FramebufferDefaultParameter">
@@ -3233,14 +3234,14 @@
       <use enum="VERSION_4_3" token="FRAMEBUFFER_DEFAULT_LAYERS" />
     </enum>
     <enum name="FramebufferErrorCode">
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_COMPLETE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_ATTACHMENT" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_READ_BUFFER" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_UNSUPPORTED" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_UNDEFINED" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_COMPLETE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_INCOMPLETE_ATTACHMENT" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_INCOMPLETE_READ_BUFFER" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_UNSUPPORTED" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_INCOMPLETE_MULTISAMPLE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_UNDEFINED" />
       <token name="FRAMEBUFFER_COMPLETE_EXT" value="0x8CD5" />
       <token name="FRAMEBUFFER_INCOMPLETE_ATTACHMENT_EXT" value="0x8CD6" />
       <token name="FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT" value="0x8CD9" />
@@ -3253,20 +3254,20 @@
       <token name="FRAMEBUFFER_UNSUPPORTED_EXT" value="0x8CDD" />
     </enum>
     <enum name="FramebufferParameterName">
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_RED_SIZE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_GREEN_SIZE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_BLUE_SIZE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_COMPONENT_TYPE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_RED_SIZE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_GREEN_SIZE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_BLUE_SIZE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_ALPHA_SIZE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_STENCIL_SIZE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_CUBE_MAP_FACE" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER" />
       <token name="FRAMEBUFFER_ATTACHMENT_LAYERED" value="0x8DA7" />
       <token name="FRAMEBUFFER_ATTACHMENT_OBJECT_NAME_EXT" value="0x8CD1" />
       <token name="FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE_EXT" value="0x8CD0" />
@@ -3276,9 +3277,9 @@
       <token name="FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL_EXT" value="0x8CD2" />
     </enum>
     <enum name="FramebufferTarget">
-      <use enum="ARB_framebuffer_object" token="READ_FRAMEBUFFER" />
-      <use enum="ARB_framebuffer_object" token="DRAW_FRAMEBUFFER" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER" />
+      <use enum="VERSION_3_0" token="READ_FRAMEBUFFER" />
+      <use enum="VERSION_3_0" token="DRAW_FRAMEBUFFER" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER" />
       <token name="FRAMEBUFFER_EXT" value="0x8D40" />
     </enum>
     <enum name="GenerateMipmapTarget">
@@ -3326,9 +3327,9 @@
       <token name="HISTOGRAM_WIDTH" value="0x8026" />
     </enum>
     <enum name="GetIndexedPName">
-      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_BINDING" />
-      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_START" />
-      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_SIZE" />
+      <use enum="VERSION_3_1" token="UNIFORM_BUFFER_BINDING" />
+      <use enum="VERSION_3_1" token="UNIFORM_BUFFER_START" />
+      <use enum="VERSION_3_1" token="UNIFORM_BUFFER_SIZE" />
       <token name="SAMPLE_MASK_VALUE" value="0x8E52" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_BINDING" value="0x8C8F" />
       <token name="TRANSFORM_FEEDBACK_BUFFER_SIZE" value="0x8C85" />
@@ -3349,25 +3350,25 @@
       <use enum="ClampColorTarget" token="CLAMP_VERTEX_COLOR" />
       <use enum="ClampColorTarget" token="CLAMP_FRAGMENT_COLOR" />
       <use enum="ClampColorTarget" token="CLAMP_READ_COLOR" />
-      <use enum="ARB_framebuffer_object" token="MAX_SAMPLES" />
-      <use enum="ARB_framebuffer_object" token="MAX_COLOR_ATTACHMENTS" />
-      <use enum="ARB_framebuffer_object" token="FRAMEBUFFER_BINDING" />
-      <use enum="ARB_framebuffer_object" token="DRAW_FRAMEBUFFER_BINDING" />
-      <use enum="ARB_framebuffer_object" token="READ_FRAMEBUFFER_BINDING" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_BINDING" />
-      <use enum="ARB_framebuffer_object" token="MAX_RENDERBUFFER_SIZE" />
+      <use enum="VERSION_3_0" token="MAX_SAMPLES" />
+      <use enum="VERSION_3_0" token="MAX_COLOR_ATTACHMENTS" />
+      <use enum="VERSION_3_0" token="FRAMEBUFFER_BINDING" />
+      <use enum="VERSION_3_0" token="DRAW_FRAMEBUFFER_BINDING" />
+      <use enum="VERSION_3_0" token="READ_FRAMEBUFFER_BINDING" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_BINDING" />
+      <use enum="VERSION_3_0" token="MAX_RENDERBUFFER_SIZE" />
       <use enum="ARB_framebuffer_sRGB" token="FRAMEBUFFER_SRGB" />
-      <use enum="ARB_vertex_array_object" token="VERTEX_ARRAY_BINDING" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_VERTEX_UNIFORM_BLOCKS" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_GEOMETRY_UNIFORM_BLOCKS" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_FRAGMENT_UNIFORM_BLOCKS" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_UNIFORM_BLOCKS" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_UNIFORM_BUFFER_BINDINGS" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_UNIFORM_BLOCK_SIZE" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS" />
-      <use enum="ARB_uniform_buffer_object" token="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" />
-      <use enum="ARB_uniform_buffer_object" token="UNIFORM_BUFFER_OFFSET_ALIGNMENT" />
+      <use enum="VERSION_3_0" token="VERTEX_ARRAY_BINDING" />
+      <use enum="VERSION_3_1" token="MAX_VERTEX_UNIFORM_BLOCKS" />
+      <use enum="VERSION_3_1" token="MAX_GEOMETRY_UNIFORM_BLOCKS" />
+      <use enum="VERSION_3_1" token="MAX_FRAGMENT_UNIFORM_BLOCKS" />
+      <use enum="VERSION_3_1" token="MAX_COMBINED_UNIFORM_BLOCKS" />
+      <use enum="VERSION_3_1" token="MAX_UNIFORM_BUFFER_BINDINGS" />
+      <use enum="VERSION_3_1" token="MAX_UNIFORM_BLOCK_SIZE" />
+      <use enum="VERSION_3_1" token="MAX_COMBINED_VERTEX_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_3_1" token="MAX_COMBINED_GEOMETRY_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_3_1" token="MAX_COMBINED_FRAGMENT_UNIFORM_COMPONENTS" />
+      <use enum="VERSION_3_1" token="UNIFORM_BUFFER_OFFSET_ALIGNMENT" />
       <token name="ACTIVE_TEXTURE" value="0x84E0" />
       <token name="ALIASED_LINE_WIDTH_RANGE" value="0x846E" />
       <token name="ALIASED_POINT_SIZE_RANGE" value="0x846D" />
@@ -3590,6 +3591,8 @@
       <use enum="VERSION_4_5" token="CONTEXT_RELEASE_BEHAVIOR" />
       <use enum="VERSION_4_5" token="CONTEXT_ROBUST_ACCESS" />
       <use enum="VERSION_4_5" token="RESET_NOTIFICATION_STRATEGY" />
+      <use enum="VERSION_4_6" token="PARAMETER_BUFFER_BINDING" />
+      <use enum="VERSION_4_6" token="MAX_TEXTURE_MAX_ANISOTROPY" />
     </enum>
     <enum name="GetPointervPName">
       <token name="FOG_COORD_ARRAY_POINTER" value="0x8456" />
@@ -3608,14 +3611,14 @@
       <token name="QUERY_COUNTER_BITS" value="0x8864" />
     </enum>
     <enum name="GetTextureParameter">
-      <use enum="ARB_framebuffer_object" token="TEXTURE_STENCIL_SIZE" />
-      <use enum="ARB_framebuffer_object" token="TEXTURE_RED_TYPE" />
-      <use enum="ARB_framebuffer_object" token="TEXTURE_GREEN_TYPE" />
-      <use enum="ARB_framebuffer_object" token="TEXTURE_BLUE_TYPE" />
-      <use enum="ARB_framebuffer_object" token="TEXTURE_ALPHA_TYPE" />
-      <use enum="ARB_framebuffer_object" token="TEXTURE_LUMINANCE_TYPE" />
-      <use enum="ARB_framebuffer_object" token="TEXTURE_INTENSITY_TYPE" />
-      <use enum="ARB_framebuffer_object" token="TEXTURE_DEPTH_TYPE" />
+      <use enum="VERSION_3_0" token="TEXTURE_STENCIL_SIZE" />
+      <use enum="VERSION_3_0" token="TEXTURE_RED_TYPE" />
+      <use enum="VERSION_3_0" token="TEXTURE_GREEN_TYPE" />
+      <use enum="VERSION_3_0" token="TEXTURE_BLUE_TYPE" />
+      <use enum="VERSION_3_0" token="TEXTURE_ALPHA_TYPE" />
+      <use enum="VERSION_3_0" token="TEXTURE_LUMINANCE_TYPE" />
+      <use enum="VERSION_3_0" token="TEXTURE_INTENSITY_TYPE" />
+      <use enum="VERSION_3_0" token="TEXTURE_DEPTH_TYPE" />
       <token name="DEPTH_TEXTURE_MODE" value="0x884B" />
       <token name="GENERATE_MIPMAP" value="0x8191" />
       <token name="TEXTURE_ALPHA_TYPE" value="0x8C13" />
@@ -3653,6 +3656,7 @@
       <use enum="VERSION_4_3" token="TEXTURE_VIEW_MIN_LAYER" />
       <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LEVELS" />
       <use enum="VERSION_4_3" token="TEXTURE_VIEW_NUM_LAYERS" />
+      <use enum="VERSION_4_6" token="TEXTURE_MAX_ANISOTROPY" />
     </enum>
     <enum name="HintTarget">
       <token name="FRAGMENT_SHADER_DERIVATIVE_HINT" value="0x8B8B" />
@@ -3855,7 +3859,7 @@
     <enum name="PixelFormat">
       <use enum="ARB_texture_rg" token="RG" />
       <use enum="ARB_texture_rg" token="RG_INTEGER" />
-      <use enum="ARB_framebuffer_object" token="DEPTH_STENCIL" />
+      <use enum="VERSION_3_0" token="DEPTH_STENCIL" />
       <token name="ALPHA_INTEGER" value="0x8D97" />
       <token name="BGR" value="0x80E0" />
       <token name="BGR_INTEGER" value="0x8D9A" />
@@ -3983,8 +3987,8 @@
       <use enum="ARB_texture_rg" token="RG16UI" />
       <use enum="ARB_texture_rg" token="RG32I" />
       <use enum="ARB_texture_rg" token="RG32UI" />
-      <use enum="ARB_framebuffer_object" token="DEPTH_STENCIL" />
-      <use enum="ARB_framebuffer_object" token="DEPTH24_STENCIL8" />
+      <use enum="VERSION_3_0" token="DEPTH_STENCIL" />
+      <use enum="VERSION_3_0" token="DEPTH24_STENCIL8" />
       <token name="COMPRESSED_ALPHA" value="0x84E9" />
       <token name="COMPRESSED_INTENSITY" value="0x84EC" />
       <token name="COMPRESSED_LUMINANCE" value="0x84EA" />
@@ -4088,7 +4092,7 @@
       <use enum="VERSION_4_2" token="UNPACK_COMPRESSED_BLOCK_SIZE" />
     </enum>
     <enum name="PixelType">
-      <use enum="ARB_framebuffer_object" token="UNSIGNED_INT_24_8" />
+      <use enum="VERSION_3_0" token="UNSIGNED_INT_24_8" />
       <use enum="ARB_depth_buffer_float" token="FLOAT_32_UNSIGNED_INT_24_8_REV" />
       <token name="HALF_FLOAT" value="0x140B" />
       <token name="UNSIGNED_BYTE_2_3_3_REVERSED" value="0x8362" />
@@ -4270,36 +4274,36 @@
       <use enum="VERSION_4_3" token="ANY_SAMPLES_PASSED_CONSERVATIVE" />
     </enum>
     <enum name="ReadBufferMode">
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT0" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT1" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT2" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT3" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT4" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT5" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT6" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT7" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT8" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT9" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT10" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT11" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT12" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT13" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT14" />
-      <use enum="ARB_framebuffer_object" token="COLOR_ATTACHMENT15" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT0" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT1" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT2" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT3" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT4" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT5" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT6" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT7" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT8" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT9" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT10" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT11" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT12" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT13" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT14" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT15" />
       <use enum="VERSION_1_1" token="NONE" />
       <use enum="VERSION_1_1" token="FRONT_AND_BACK" />
     </enum>
     <enum name="RenderbufferParameterName">
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_SAMPLES" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_WIDTH" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_HEIGHT" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_INTERNAL_FORMAT" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_RED_SIZE" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_GREEN_SIZE" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_BLUE_SIZE" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_ALPHA_SIZE" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_DEPTH_SIZE" />
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER_STENCIL_SIZE" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_SAMPLES" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_WIDTH" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_HEIGHT" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_INTERNAL_FORMAT" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_RED_SIZE" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_GREEN_SIZE" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_BLUE_SIZE" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_ALPHA_SIZE" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_DEPTH_SIZE" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER_STENCIL_SIZE" />
       <token name="RENDERBUFFER_ALPHA_SIZE_EXT" value="0x8D53" />
       <token name="RENDERBUFFER_BLUE_SIZE_EXT" value="0x8D52" />
       <token name="RENDERBUFFER_DEPTH_SIZE_EXT" value="0x8D54" />
@@ -4377,10 +4381,10 @@
       <use enum="PixelFormat" token="DEPTH_STENCIL" />
       <use enum="PixelInternalFormat" token="DEPTH24_STENCIL8" />
       <use enum="PixelInternalFormat" token="DEPTH32F_STENCIL8" />
-      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX1" />
-      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX4" />
-      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX8" />
-      <use enum="ARB_framebuffer_object" token="STENCIL_INDEX16" />
+      <use enum="VERSION_3_0" token="STENCIL_INDEX1" />
+      <use enum="VERSION_3_0" token="STENCIL_INDEX4" />
+      <use enum="VERSION_3_0" token="STENCIL_INDEX8" />
+      <use enum="VERSION_3_0" token="STENCIL_INDEX16" />
       <use enum="PixelInternalFormat" token="R11F_G11F_B10F" />
       <use enum="PixelInternalFormat" token="RGB9_E5" />
       <token name="STENCIL_INDEX1_EXT" value="0x8D46" />
@@ -4390,7 +4394,7 @@
       <use enum="VERSION_3_3" token="RGB10_A2UI" />
     </enum>
     <enum name="RenderbufferTarget">
-      <use enum="ARB_framebuffer_object" token="RENDERBUFFER" />
+      <use enum="VERSION_3_0" token="RENDERBUFFER" />
       <token name="RENDERBUFFER_EXT" value="0x8D41" />
     </enum>
     <enum name="ResetStatus">
@@ -4459,34 +4463,65 @@
     </enum>
     <enum name="SizedInternalFormat">
       <use enum="PixelInternalFormat" token="R8" />
+      <use enum="PixelInternalFormat" token="R8_SNORM" />
       <use enum="PixelInternalFormat" token="R16" />
-      <use enum="PixelInternalFormat" token="R16F" />
-      <use enum="PixelInternalFormat" token="R32F" />
-      <use enum="PixelInternalFormat" token="R8I" />
-      <use enum="PixelInternalFormat" token="R16I" />
-      <use enum="PixelInternalFormat" token="R32I" />
-      <use enum="PixelInternalFormat" token="R8UI" />
-      <use enum="PixelInternalFormat" token="R16UI" />
-      <use enum="PixelInternalFormat" token="R32UI" />
+      <use enum="PixelInternalFormat" token="R16_SNORM" />
       <use enum="PixelInternalFormat" token="RG8" />
+      <use enum="PixelInternalFormat" token="RG8_SNORM" />
       <use enum="PixelInternalFormat" token="RG16" />
-      <use enum="PixelInternalFormat" token="RG16F" />
-      <use enum="PixelInternalFormat" token="RG32F" />
-      <use enum="PixelInternalFormat" token="RG8I" />
-      <use enum="PixelInternalFormat" token="RG16I" />
-      <use enum="PixelInternalFormat" token="RG32I" />
-      <use enum="PixelInternalFormat" token="RG8UI" />
-      <use enum="PixelInternalFormat" token="RG16UI" />
-      <use enum="PixelInternalFormat" token="RG32UI" />
+      <use enum="PixelInternalFormat" token="RG16_SNORM" />
+      <use enum="PixelInternalFormat" token="R3_G3_B2" />
+      <use enum="PixelInternalFormat" token="RGB4" />
+      <use enum="PixelInternalFormat" token="RGB5" />
+      <use enum="PixelInternalFormat" token="RGB8" />
+      <use enum="PixelInternalFormat" token="RGB8_SNORM" />
+      <use enum="PixelInternalFormat" token="RGB10" />
+      <use enum="PixelInternalFormat" token="RGB12" />
+      <use enum="PixelInternalFormat" token="RGB16_SNORM" />
+      <use enum="PixelInternalFormat" token="RGBA2" />
+      <use enum="PixelInternalFormat" token="RGBA4" />
+      <use enum="PixelInternalFormat" token="RGB5_A1" />
       <use enum="PixelInternalFormat" token="RGBA8" />
+      <use enum="PixelInternalFormat" token="RGBA8_SNORM" />
+      <use enum="PixelInternalFormat" token="RGB10_A2" />
+      <use enum="PixelInternalFormat" token="RGB10_A2UI" />
+      <use enum="PixelInternalFormat" token="RGBA12" />
       <use enum="PixelInternalFormat" token="RGBA16" />
+      <use enum="PixelInternalFormat" token="SRGB8" />
+      <use enum="PixelInternalFormat" token="SRGB8_ALPHA8" />
+      <use enum="PixelInternalFormat" token="R16F" />
+      <use enum="PixelInternalFormat" token="RG16F" />
+      <use enum="PixelInternalFormat" token="RGB16F" />
       <use enum="PixelInternalFormat" token="RGBA16F" />
+      <use enum="PixelInternalFormat" token="R32F" />
+      <use enum="PixelInternalFormat" token="RG32F" />
+      <use enum="PixelInternalFormat" token="RGB32F" />
       <use enum="PixelInternalFormat" token="RGBA32F" />
+      <use enum="PixelInternalFormat" token="R11F_G11F_B10F" />
+      <use enum="PixelInternalFormat" token="RGB9_E5" />
+      <use enum="PixelInternalFormat" token="R8I" />
+      <use enum="PixelInternalFormat" token="R8UI" />
+      <use enum="PixelInternalFormat" token="R16I" />
+      <use enum="PixelInternalFormat" token="R16UI" />
+      <use enum="PixelInternalFormat" token="R32I" />
+      <use enum="PixelInternalFormat" token="R32UI" />
+      <use enum="PixelInternalFormat" token="RG8I" />
+      <use enum="PixelInternalFormat" token="RG8UI" />
+      <use enum="PixelInternalFormat" token="RG16I" />
+      <use enum="PixelInternalFormat" token="RG16UI" />
+      <use enum="PixelInternalFormat" token="RG32I" />
+      <use enum="PixelInternalFormat" token="RG32UI" />
+      <use enum="PixelInternalFormat" token="RGB8I" />
+      <use enum="PixelInternalFormat" token="RGB8UI" />
+      <use enum="PixelInternalFormat" token="RGB16I" />
+      <use enum="PixelInternalFormat" token="RGB16UI" />
+      <use enum="PixelInternalFormat" token="RGB32I" />
+      <use enum="PixelInternalFormat" token="RGB32UI" />
       <use enum="PixelInternalFormat" token="RGBA8I" />
-      <use enum="PixelInternalFormat" token="RGBA16I" />
-      <use enum="PixelInternalFormat" token="RGBA32I" />
       <use enum="PixelInternalFormat" token="RGBA8UI" />
+      <use enum="PixelInternalFormat" token="RGBA16I" />
       <use enum="PixelInternalFormat" token="RGBA16UI" />
+      <use enum="PixelInternalFormat" token="RGBA32I" />
       <use enum="PixelInternalFormat" token="RGBA32UI" />
     </enum>
     <enum name="StencilFace">
@@ -4665,6 +4700,8 @@
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_B" />
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_A" />
       <use enum="VERSION_3_3" token="TEXTURE_SWIZZLE_RGBA" />
+      <use enum="VERSION_4_6" token="TEXTURE_MAX_ANISOTROPY" />
+      <use enum="ARB_seamless_cubemap_per_texture" token="TEXTURE_CUBE_MAP_SEAMLESS" />
     </enum>
     <enum name="TextureTarget1d">
       <use enum="VERSION_1_1" token="TEXTURE_1D" />
@@ -4684,9 +4721,11 @@
       <use enum="VERSION_1_2" token="TEXTURE_3D" />
       <use enum="VERSION_1_3" token="TEXTURE_CUBE_MAP" />
       <use enum="VERSION_3_0" token="TEXTURE_2D_ARRAY" />
+      <use enum="VERSION_4_0" token="TEXTURE_CUBE_MAP_ARRAY" />
       <use enum="VERSION_1_2" token="PROXY_TEXTURE_3D" />
       <use enum="VERSION_1_3" token="PROXY_TEXTURE_CUBE_MAP" />
       <use enum="VERSION_3_0" token="PROXY_TEXTURE_2D_ARRAY" />
+      <use enum="VERSION_4_0" token="PROXY_TEXTURE_CUBE_MAP_ARRAY" />
     </enum>
     <enum name="TextureTargetMultisample2d">
       <use enum="VERSION_3_2" token="TEXTURE_2D_MULTISAMPLE" />
@@ -6614,13 +6653,13 @@
       <use token="UNIFORM_BUFFER" />
     </enum>
     <enum name="BufferTarget">
-      <use  token="ARRAY_BUFFER" />
-      <use  token="ELEMENT_ARRAY_BUFFER" />
+      <use token="ARRAY_BUFFER" />
+      <use token="ELEMENT_ARRAY_BUFFER" />
       <use token="PIXEL_PACK_BUFFER" />
       <use token="PIXEL_UNPACK_BUFFER" />
-      <use token="COPY_READ_BUFFER" />
-      <use token="COPY_WRITE_BUFFER" />
-      <use token="UNIFORM_BUFFER" />
+      <use enum="VERSION_3_1" token="COPY_READ_BUFFER" />
+      <use enum="VERSION_3_1" token="COPY_WRITE_BUFFER" />
+      <use enum="VERSION_3_1" token="UNIFORM_BUFFER" />
       <use token="TRANSFORM_FEEDBACK_BUFFER" />
     </enum>
     <enum name="BufferUsageHint">
@@ -6731,22 +6770,22 @@
     <enum name="DrawBufferMode">
       <use token="NONE" />
       <use token="BACK" />
-      <use token="COLOR_ATTACHMENT0" />
-      <use token="COLOR_ATTACHMENT1" />
-      <use token="COLOR_ATTACHMENT2" />
-      <use token="COLOR_ATTACHMENT3" />
-      <use token="COLOR_ATTACHMENT4" />
-      <use token="COLOR_ATTACHMENT5" />
-      <use token="COLOR_ATTACHMENT6" />
-      <use token="COLOR_ATTACHMENT7" />
-      <use token="COLOR_ATTACHMENT8" />
-      <use token="COLOR_ATTACHMENT9" />
-      <use token="COLOR_ATTACHMENT10" />
-      <use token="COLOR_ATTACHMENT11" />
-      <use token="COLOR_ATTACHMENT12" />
-      <use token="COLOR_ATTACHMENT13" />
-      <use token="COLOR_ATTACHMENT14" />
-      <use token="COLOR_ATTACHMENT15" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT0" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT1" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT2" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT3" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT4" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT5" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT6" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT7" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT8" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT9" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT10" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT11" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT12" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT13" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT14" />
+      <use enum="VERSION_3_0" token="COLOR_ATTACHMENT15" />
     </enum>
     <enum name="DrawElementsType">
       <use token="UNSIGNED_BYTE" />

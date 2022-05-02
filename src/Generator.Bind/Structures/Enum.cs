@@ -29,6 +29,8 @@ namespace Bind.Structures
             set { _name = value; }
         }
 
+        public string OriginalName { get; set; }
+
         // Typically 'long' or 'int'. Default is 'int'.
         public string Type
         {
