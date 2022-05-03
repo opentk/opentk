@@ -220,9 +220,6 @@
     <function name="VertexArrayAttribFormat">
       <param name="type"><type>VertexAttribType</type></param>
     </function>
-    <function name="VertexArrayAttribIFormat">
-      <param name="type"><type>VertexAttribType</type></param>
-    </function>
 
   </replace>
 

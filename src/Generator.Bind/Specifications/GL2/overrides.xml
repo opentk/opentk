@@ -1729,11 +1729,22 @@
     </function>
   </replace>
 
-  <!-- For backwards compatibility, see https://github.com/opentk/opentk/pull/1431#issuecomment-1115467424 -->
   <overload name="gl|glcore">
+    <!-- For backwards compatibility, see https://github.com/opentk/opentk/pull/1431#issuecomment-1115467424 -->
     <function name="MultiDrawElementsIndirectCount" extension="Core">
       <param name="type">
         <type>All</type>
+      </param>
+    </function>
+    <!-- For backwards compatibility, see https://github.com/opentk/opentk/pull/1438#issuecomment-1115895014 -->
+    <function name="VertexArrayAttribIFormat" extension="Core">
+      <param name="type">
+        <type>VertexAttribType</type>
+      </param>
+    </function>
+    <function name="VertexArrayAttribLFormat" extension="Core">
+      <param name="type">
+        <type>VertexAttribType</type>
       </param>
     </function>
   </overload>

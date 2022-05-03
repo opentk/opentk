@@ -21519,7 +21519,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribIntegerType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -21527,7 +21527,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribDoubleType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -31520,7 +31520,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribIntegerType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -31528,7 +31528,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribDoubleType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -43249,7 +43249,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribIntegerType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -43257,7 +43257,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribDoubleType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -49742,7 +49742,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribIntegerType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
@@ -49750,7 +49750,7 @@
       <param name="vaobj" type="GLuint" flow="in" />
       <param name="attribindex" type="GLuint" flow="in" />
       <param name="size" type="GLint" flow="in" />
-      <param name="type" type="VertexAttribType" flow="in" />
+      <param name="type" type="VertexAttribDoubleType" flow="in" />
       <param name="relativeoffset" type="GLuint" flow="in" />
       <returns type="void" />
     </function>
