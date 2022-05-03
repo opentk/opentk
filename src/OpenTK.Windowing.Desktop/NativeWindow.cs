@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -37,7 +38,7 @@ namespace OpenTK.Windowing.Desktop
         private Vector2 _lastReportedMousePos;
 
         // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
-        private List<ExceptionDispatchInfo> _callbackExceptions = new List<ExceptionDispatchInfo>();
+        private static ConcurrentQueue<ExceptionDispatchInfo> _callbackExceptions = new ConcurrentQueue<ExceptionDispatchInfo>();
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -1138,7 +1139,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1150,7 +1151,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1167,7 +1168,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1179,7 +1180,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1191,7 +1192,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1203,7 +1204,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1215,7 +1216,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1238,7 +1239,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1255,7 +1256,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1274,7 +1275,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1293,7 +1294,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1324,7 +1325,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1336,7 +1337,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1355,7 +1356,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1383,7 +1384,7 @@ namespace OpenTK.Windowing.Desktop
             }
             catch (Exception e)
             {
-                _callbackExceptions.Add(ExceptionDispatchInfo.Capture(e));
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
@@ -1428,11 +1429,22 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Processes pending window events.
         /// </summary>
+        [Obsolete("This function wrongly implies that only events from this window are processed, while in fact events for all windows are processed. Use NativeWindow.ProcessWindowEvents() instead.")]
         public virtual void ProcessEvents()
         {
             ProcessInputEvents();
 
-            if (IsEventDriven)
+            ProcessWindowEvents(IsEventDriven);
+        }
+
+        /// <summary>
+        /// Processes pending window events, either by calling <see cref="GLFW.WaitEvents"/> or <see cref="GLFW.PollEvents"/> depending on if <paramref name="waitForEvents"/> is set to true or not.
+        /// </summary>
+        /// <remarks>This function should only be called from the main thread.</remarks>
+        /// <param name="waitForEvents">Whether to call <see cref="GLFW.WaitEvents()"/> or <see cref="GLFW.PollEvents()"/>.</param>
+        public static void ProcessWindowEvents(bool waitForEvents)
+        {
+            if (waitForEvents)
             {
                 GLFW.WaitEvents();
             }
@@ -1444,13 +1456,15 @@ namespace OpenTK.Windowing.Desktop
             RethrowCallbackExceptionsIfNeeded();
         }
 
-        private void RethrowCallbackExceptionsIfNeeded()
+        private static void RethrowCallbackExceptionsIfNeeded()
         {
             if (_callbackExceptions.Count == 1)
             {
-                ExceptionDispatchInfo exception = _callbackExceptions[0];
-                _callbackExceptions.Clear();
-                exception.Throw();
+                if (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo exception))
+                {
+                    _callbackExceptions.Clear();
+                    exception.Throw();
+                }
             }
             else if (_callbackExceptions.Count > 1)
             {
@@ -1458,7 +1472,10 @@ namespace OpenTK.Windowing.Desktop
                 Exception[] exceptions = new Exception[_callbackExceptions.Count];
                 for (int i = 0; i < _callbackExceptions.Count; i++)
                 {
-                    exceptions[i] = _callbackExceptions[i].SourceException;
+                    if (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo info))
+                    {
+                        exceptions[i] = info.SourceException;
+                    }
                 }
                 Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", exceptions);
                 _callbackExceptions.Clear();

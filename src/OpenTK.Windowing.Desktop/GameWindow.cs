@@ -229,7 +229,6 @@ namespace OpenTK.Windowing.Desktop
             _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
-                ProcessEvents();
                 DispatchUpdateFrame();
 
                 if (!IsMultiThreaded)
@@ -264,6 +263,11 @@ namespace OpenTK.Windowing.Desktop
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
+                // Update input state for next frame
+                ProcessInputEvents();
+                // Handle events for this frame
+                ProcessWindowEvents(IsEventDriven);
+
                 _watchUpdate.Restart();
                 UpdateTime = elapsed;
                 OnUpdateFrame(new FrameEventArgs(elapsed));
