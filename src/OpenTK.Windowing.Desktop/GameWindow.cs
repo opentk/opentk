@@ -241,7 +241,6 @@ namespace OpenTK.Windowing.Desktop
 
                 if (sleepTime > 0)
                 {
-                    Console.WriteLine(sleepTime * 1000);
                     Thread.Sleep((int)Math.Floor(sleepTime * 1000));
                 }
             }
