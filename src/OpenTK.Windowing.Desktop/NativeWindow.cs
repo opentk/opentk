@@ -1395,6 +1395,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Processes pending window events, either by calling <see cref="GLFW.WaitEvents"/> or <see cref="GLFW.PollEvents"/> depending on if <paramref name="waitForEvents"/> is set to true or not.
         /// </summary>
+        /// <remarks>This function should only be called from the main thread.</remarks>
         /// <param name="waitForEvents">Whether to call <see cref="GLFW.WaitEvents()"/> or <see cref="GLFW.PollEvents()"/>.</param>
         public static void ProcessWindowEvents(bool waitForEvents)
         {
