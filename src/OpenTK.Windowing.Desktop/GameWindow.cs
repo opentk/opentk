@@ -263,14 +263,14 @@ namespace OpenTK.Windowing.Desktop
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
+                // Update input state for next frame
+                ProcessInputEvents();
+                // Handle events for this frame
                 ProcessWindowEvents(IsEventDriven);
 
                 _watchUpdate.Restart();
                 UpdateTime = elapsed;
                 OnUpdateFrame(new FrameEventArgs(elapsed));
-
-                // Update input state for next frame
-                ProcessInputEvents();
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
