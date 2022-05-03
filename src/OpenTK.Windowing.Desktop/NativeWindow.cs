@@ -617,8 +617,52 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Gets or sets the cursor state of the windows cursor.
+        /// </summary>
+        public unsafe CursorState CursorState
+        {
+            get
+            {
+                CursorModeValue inputMode = GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor);
+                switch (inputMode)
+                {
+                    case CursorModeValue.CursorNormal:
+                        return CursorState.Normal;
+                    case CursorModeValue.CursorHidden:
+                        return CursorState.Hidden;
+                    case CursorModeValue.CursorDisabled:
+                        return CursorState.Grabbed;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            set
+            {
+                CursorModeValue inputMode;
+                switch (value)
+                {
+                    case CursorState.Normal:
+                        inputMode = CursorModeValue.CursorNormal;
+                        break;
+                    case CursorState.Hidden:
+                        inputMode = CursorModeValue.CursorHidden;
+                        break;
+                    case CursorState.Grabbed:
+                        inputMode = CursorModeValue.CursorDisabled;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                GLFW.SetInputMode(WindowPtr, CursorStateAttribute.Cursor, inputMode);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the mouse cursor is visible.
         /// </summary>
+        [Obsolete("Use CursorState insatead.")]
         public unsafe bool CursorVisible
         {
             get
@@ -638,6 +682,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value indicating whether the mouse cursor is confined inside the window size.
         /// </summary>
+        [Obsolete("Use CursorState instead.")]
         public unsafe bool CursorGrabbed
         {
             get => GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor) == CursorModeValue.CursorDisabled;
