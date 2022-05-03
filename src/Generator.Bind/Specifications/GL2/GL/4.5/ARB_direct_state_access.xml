@@ -221,7 +221,7 @@
       <param name="type"><type>VertexAttribType</type></param>
     </function>
     <function name="VertexArrayAttribIFormat">
-      <param name="type"><type>VertexAttribType</type></param>
+      <param name="type"><type>VertexAttribIntegerType</type></param>
     </function>
 
   </replace>
