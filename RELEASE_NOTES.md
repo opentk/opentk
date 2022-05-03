@@ -18,6 +18,22 @@
 
 * API: Added a proper "main thread" check for glfw. To turn this off, `GLFWProvider.CheckForMainThread` can be set to false. (@NogginBops)
 
+* API: Added all missing enums to `SizedInternalFormat`. (@NogginBops)
+
+* API: Added `TextureCubeMapArray` to `TextureTarget3d`. (@NogginBops)
+
+* API: Added `ParameterBuffer` to `BufferTarget`. (@NogginBops)
+
+* API: Added overloads to `MultiDrawElementsIndirectCount` that takes the proper `DrawElementsType` enum as an argument. (@NogginBops)
+
+* API: Added overloads to `VertexAttribIFormat` and `VertexAttribLFormat` that take `VertexAttribIntegerType` and `VertexAttributeDoubleType` respectively. (@BoyBaykiller)
+
+* API: Added bindings for `NV_mesh_shader`, `NV_shading_rate`, `NV_primitive_shading_rate`, `NV_representative_fragment_test` and `NV_scissor_exclusive` extensions. (@BoyBaykiller)
+
+* API: Enums should now be documented with their minimum version or extension requirements. These are not guaranteed to be 100% accurate but should mostly correct. (@NogginBops)
+
+* API: Added `RawMouseMotionAttribute` enum, to be able to control raw mouse motion from GLFW.
+
 * Fix issue where limiting framerate would cause issues with input functions like `JoystickState.WasButtonPressed` whould have an incorrect value (@NogginBops).
 
 * Updated GLFW to 3.3.7. This should fix an issue where UTF-16 code points where sent to OnTextInput causing it to crash. (@NogginBops, @g7ChoGXh)
