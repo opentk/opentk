@@ -5,9 +5,9 @@ using System.Text;
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
-    /// Cursor modes.
+    /// Cursor states.
     /// </summary>
-    public enum CursorMode
+    public enum CursorState
     {
         /// <summary>
         /// The cursor visible and cursor motion is not limited.

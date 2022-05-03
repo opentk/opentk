@@ -619,7 +619,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets the cursor state of the windows cursor.
         /// </summary>
-        public unsafe CursorMode CursorState
+        public unsafe CursorState CursorState
         {
             get
             {
@@ -627,11 +627,11 @@ namespace OpenTK.Windowing.Desktop
                 switch (inputMode)
                 {
                     case CursorModeValue.CursorNormal:
-                        return CursorMode.Normal;
+                        return CursorState.Normal;
                     case CursorModeValue.CursorHidden:
-                        return CursorMode.Hidden;
+                        return CursorState.Hidden;
                     case CursorModeValue.CursorDisabled:
-                        return CursorMode.Grabbed;
+                        return CursorState.Grabbed;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
@@ -642,13 +642,13 @@ namespace OpenTK.Windowing.Desktop
                 CursorModeValue inputMode;
                 switch (value)
                 {
-                    case CursorMode.Normal:
+                    case CursorState.Normal:
                         inputMode = CursorModeValue.CursorNormal;
                         break;
-                    case CursorMode.Hidden:
+                    case CursorState.Hidden:
                         inputMode = CursorModeValue.CursorHidden;
                         break;
-                    case CursorMode.Grabbed:
+                    case CursorState.Grabbed:
                         inputMode = CursorModeValue.CursorDisabled;
                         break;
                     default:
