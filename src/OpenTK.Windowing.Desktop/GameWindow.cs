@@ -229,11 +229,19 @@ namespace OpenTK.Windowing.Desktop
             _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
-                DispatchUpdateFrame();
+                double timeToNextUpdateFrame = DispatchUpdateFrame();
 
+                double sleepTime = timeToNextUpdateFrame;
                 if (!IsMultiThreaded)
                 {
-                    DispatchRenderFrame();
+                    double timeToNextRenderFrame = DispatchRenderFrame();
+
+                    sleepTime = Math.Min(sleepTime, timeToNextRenderFrame);
+                }
+
+                if (sleepTime > 0)
+                {
+                    Thread.Sleep((int)Math.Floor(sleepTime * 1000));
                 }
             }
 
@@ -254,7 +262,8 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private void DispatchUpdateFrame()
+        /// <returns>Time to next update frame.</returns>
+        private double DispatchUpdateFrame()
         {
             var isRunningSlowlyRetries = 4;
             var elapsed = _watchUpdate.Elapsed.TotalSeconds;
@@ -297,9 +306,12 @@ namespace OpenTK.Windowing.Desktop
 
                 elapsed = _watchUpdate.Elapsed.TotalSeconds;
             }
+
+            return UpdateFrequency == 0 ? 0 : updatePeriod - elapsed;
         }
 
-        private void DispatchRenderFrame()
+        /// <returns>Time to next render frame.</returns>
+        private double DispatchRenderFrame()
         {
             var elapsed = _watchRender.Elapsed.TotalSeconds;
             var renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
@@ -315,6 +327,8 @@ namespace OpenTK.Windowing.Desktop
                     GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                 }
             }
+
+            return RenderFrequency == 0 ? 0 : renderPeriod - elapsed;
         }
 
         /// <summary>
