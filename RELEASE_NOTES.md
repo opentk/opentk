@@ -1,3 +1,39 @@
+## 4.7.2
+
+* BREAKING: Fixed issue where the `QuaternionD(double, double, double)` ctor produced the wrong quaternion. It now produces the same quaternion as `Quaterion(float, float, float)`. (@NogginBops)
+
+* BREAKING: Fixed `QuaterionD.ToEulerAngles` to now produce the correct result. It now matches the result from `Quaterion.ToEulerAngles`. (@NogginBops)
+
+* API: Deprecated `NativeWindow.CursorVisible` and `NativeWindow.CursorGrabbed` in favor of a unified `NativeWindow.CursorState` that disallows invalid combinations. (@NogginBops)
+
+* API: Added `NativeWindowSettings.SrgbCapable` to be able to create a default framebuffer with sRGB capabilities. (@NogginBops)
+
+* API: Added glfw native access funtions added in glfw 3.1. (@NogginBops)
+
+* API: Added `MinimumSize` and `MaximumSize` properties to `NativeWindow` and `NativeWindowSettings`. (@toasty1307)
+
+* API: Added `NativeWindow.ProcessWindowEvents` static function for processing events manually. Prefer this function (with `NativeWindow.ProcessInputEvents`) in a multi-window setup. (@NogginBops)
+
+* API: Exposed `NativeWindow.ProcessInputEvents()` so multi-window setups can update input state of all windows before handling events (using `NativeWindow.ProcessWindowEvents`). (@NogginBops)
+
+* API: Added a proper "main thread" check for glfw. To turn this off, `GLFWProvider.CheckForMainThread` can be set to false. (@NogginBops)
+
+* Fix issue where limiting framerate would cause issues with input functions like `JoystickState.WasButtonPressed` whould have an incorrect value (@NogginBops).
+
+* Updated GLFW to 3.3.7. This should fix an issue where UTF-16 code points where sent to OnTextInput causing it to crash. (@NogginBops, @g7ChoGXh)
+
+* If the update loop gets too far behind it no longer tries to make up for lost time. This was typically caused by resizing the window, and or closing the lid of a laptop. (@daerogami)
+
+* OpenTK no longer put an upper limit on the `System.Runtime.CompilerServices.Unsafe` package. (@NogginBops)
+
+* Fixed so `NativeWindowSettings.DepthBits` and `NativeWindowSettings.StencilBits` actually affect the resulting backbuffer format. (@NogginBops)
+
+* Fixed an issue in `Box3i.Contains(Vector3i)` where one of the comparisons where wrong, causing incorrect results. (@BlakkM9)
+
+* Fixed an issue where `Vector3i.ComponentMin` returned one of the input arguments instead of the proper result. (@Oribow)
+
+* Fixed OpenAL `Buffer(int, BufferLoopPoint, ReadOnlySpan<int>)` overload to no longer crash. (@NogginBops)
+
 ## 4.7.1
 
 * BREAKING: Simplifications to the `Monitors` api, hopefully it's easier to work with now. Old functions are marked `[Obsolete]` with directions for equivalent operations with the new API. (@NogginBops)
