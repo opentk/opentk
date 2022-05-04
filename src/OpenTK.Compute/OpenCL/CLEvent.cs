@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLEvent : IEquatable<CLEvent>
 	{
 		public readonly IntPtr Handle;
+        public static CLEvent Zero { get { return new CLEvent(IntPtr.Zero); } }
 
-		public CLEvent(IntPtr handle)
+        public CLEvent(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,5 +38,5 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLEvent @event) => @event.Handle;
-	}
+    }
 }

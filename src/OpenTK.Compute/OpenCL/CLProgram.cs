@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLProgram : IEquatable<CLProgram>
 	{
 		public readonly IntPtr Handle;
+        public static CLProgram Zero { get { return new CLProgram(IntPtr.Zero); } }
 
-		public CLProgram(IntPtr handle)
+        public CLProgram(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,5 +38,5 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLProgram program) => program.Handle;
-	}
+    }
 }

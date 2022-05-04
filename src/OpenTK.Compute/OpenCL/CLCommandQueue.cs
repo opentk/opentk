@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLCommandQueue : IEquatable<CLCommandQueue>
 	{
 		public readonly IntPtr Handle;
+        public static CLCommandQueue Zero { get { return new CLCommandQueue(IntPtr.Zero); } }
 
-		public CLCommandQueue(IntPtr handle)
+        public CLCommandQueue(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,5 +38,5 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLCommandQueue queue) => queue.Handle;
-	}
+    }
 }

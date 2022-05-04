@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLKernel : IEquatable<CLKernel>
 	{
 		public readonly IntPtr Handle;
+        public static CLKernel Zero { get { return new CLKernel(IntPtr.Zero); } }
 
-		public CLKernel(IntPtr handle)
+        public CLKernel(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,5 +38,5 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLKernel kernel) => kernel.Handle;
-	}
+    }
 }

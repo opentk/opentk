@@ -5,8 +5,9 @@ namespace OpenTK.Compute.OpenCL
 	public readonly struct CLPipe : IEquatable<CLPipe>
 	{
 		public readonly IntPtr Handle;
+        public static CLPipe Zero { get { return new CLPipe(IntPtr.Zero); } }
 
-		public CLPipe(IntPtr handle)
+        public CLPipe(IntPtr handle)
 		{
 			Handle = handle;
 		}
@@ -37,5 +38,5 @@ namespace OpenTK.Compute.OpenCL
 		}
 
 		public static implicit operator IntPtr(CLPipe pipe) => pipe.Handle;
-	}
+    }
 }
