@@ -135,6 +135,34 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return _buttonsPrevious[index];
         }
 
+        /// <summary>
+        /// Gets a <see cref="bool"/> describing whether the specified button is down in the current frame but was up in the previous frame.
+        /// </summary>
+        /// <remarks>
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="index">The index of the button.</param>
+        /// <returns>True if the button is down in this frame, but not the last frame.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool IsButtonPressed(int index)
+        {
+            return IsButtonDown(index) && !WasButtonDown(index);
+        }
+
+        /// <summary>
+        /// Gets a <see cref="bool"/> describing whether the specified button is up in the current frame but was down in the previous frame.
+        /// </summary>
+        /// <remarks>
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="index">The index of the button.</param>
+        /// <returns>True if the button is up in this frame, but down the last frame.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool IsButtonReleased(int index)
+        {
+            return !IsButtonDown(index) && WasButtonDown(index);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetButtonDown(int index, bool value)
         {
