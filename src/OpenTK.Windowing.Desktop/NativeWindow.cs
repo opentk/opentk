@@ -1456,26 +1456,28 @@ namespace OpenTK.Windowing.Desktop
             RethrowCallbackExceptionsIfNeeded();
         }
 
+        private static List<ExceptionDispatchInfo> _rethrowExceptions = new List<ExceptionDispatchInfo>();
+
         private static void RethrowCallbackExceptionsIfNeeded()
         {
-            if (_callbackExceptions.Count == 1)
+            while (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo exception))
             {
-                if (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo exception))
-                {
-                    _callbackExceptions.Clear();
-                    exception.Throw();
-                }
+                _rethrowExceptions.Add(exception);
             }
-            else if (_callbackExceptions.Count > 1)
+
+            if (_rethrowExceptions.Count == 1)
+            {
+                ExceptionDispatchInfo exception = _rethrowExceptions[0];
+                _callbackExceptions.Clear();
+                exception.Throw();
+            }
+            else if (_rethrowExceptions.Count > 1)
             {
                 // FIXME: This doesn't seem to produce great exception messages... is there something we can do about this?
                 Exception[] exceptions = new Exception[_callbackExceptions.Count];
                 for (int i = 0; i < _callbackExceptions.Count; i++)
                 {
-                    if (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo info))
-                    {
-                        exceptions[i] = info.SourceException;
-                    }
+                    exceptions[i] = _rethrowExceptions[i].SourceException;
                 }
                 Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", exceptions);
                 _callbackExceptions.Clear();
