@@ -37,7 +37,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             Win32CursorHandle win32handle = handle.As<Win32CursorHandle>(this);
 
-            if (win32handle.IsShared)
+            if (win32handle.IsShared == false)
             {
                 bool success = Win32.DestroyCursor(win32handle.Cursor);
                 if (success == false)

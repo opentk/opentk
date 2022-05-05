@@ -810,6 +810,180 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         Wait = 32514,
     }
 
+    internal enum OCR
+    {
+        /// <summary>
+        /// Standard arrow and small hourglass
+        /// </summary>
+        AppStarting = 32650,
+
+        /// <summary>
+        /// Standard arrow
+        /// </summary>
+        Normal = 32512,
+
+        /// <summary>
+        /// Crosshair
+        /// </summary>
+        Cross = 32515,
+
+        /// <summary>
+        /// Hand
+        /// </summary>
+        Hand = 32649,
+
+        /// <summary>
+        /// Arrow and question mark
+        /// </summary>
+        Help = 32651,
+
+        /// <summary>
+        /// I-beam
+        /// </summary>
+        IBeam = 32513,
+
+        /// <summary>
+        /// Slashed circle
+        /// </summary>
+        No = 32648,
+
+        /// <summary>
+        /// Four-pointed arrow pointing north, south, east, and west
+        /// </summary>
+        SizeAll = 32646,
+
+        /// <summary>
+        /// Double-pointed arrow pointing northeast and southwest
+        /// </summary>
+        SizeNESW = 32643,
+
+        /// <summary>
+        /// Double-pointed arrow pointing north and south
+        /// </summary>
+        SizeNS = 32645,
+
+        /// <summary>
+        /// Double-pointed arrow pointing northwest and southeast
+        /// </summary>
+        SizeNWSE = 32642,
+
+        /// <summary>
+        /// Double-pointed arrow pointing west and east
+        /// </summary>
+        SizeWE = 32644,
+
+        /// <summary>
+        /// Vertical arrow
+        /// </summary>
+        Up = 32516,
+
+        /// <summary>
+        /// Hourglass
+        /// </summary>
+        Wait = 32514,
+    }
+
+    [Flags]
+    internal enum LR
+    {
+        /// <summary>
+        /// When the uType parameter specifies IMAGE_BITMAP,
+        /// causes the function to return a DIB section bitmap
+        /// rather than a compatible bitmap.
+        /// This flag is useful for loading a bitmap without
+        /// mapping it to the colors of the display device.
+        /// </summary>
+        CreatedIBSection = 0x00002000,
+
+        /// <summary>
+        /// The default flag; it does nothing. All it means is "not <see cref="LR.Monochrome"/>".
+        /// </summary>
+        DefaultColor = 0x00000000,
+
+        /// <summary>
+        /// Uses the width or height specified by the system
+        /// metric values for cursors or icons,
+        /// if the cxDesired or cyDesired values are set to zero.
+        /// If this flag is not specified and cxDesired and cyDesired
+        /// are set to zero,
+        /// the function uses the actual resource size.
+        /// If the resource contains multiple images,
+        /// the function uses the size of the first image.
+        /// </summary>
+        DefaultSize = 0x00000040,
+
+        /// <summary>
+        /// Loads the stand-alone image from the file specified
+        /// by lpszName (icon, cursor, or bitmap file).
+        /// </summary>
+        LoadFromFile = 0x00000010,
+
+        /// <summary>
+        /// Searches the color table for the image and replaces
+        /// the following shades of gray with the corresponding 3-D color.
+        /// <list type="3D colors">
+        /// <item>Dk Gray, RGB(128,128,128) with COLOR_3DSHADOW</item>
+        /// <item>Gray, RGB(192,192,192) with COLOR_3DFACE</item>
+        /// <item>Lt Gray, RGB(223,223,223) with COLOR_3DLIGHT</item>
+        /// </list>
+        /// Do not use this option if you are loading a bitmap
+        /// with a color depth greater than 8bpp.
+        /// </summary>
+        LoadMap3DColors = 0x00001000,
+
+        /// <summary>
+        /// Retrieves the color value of the first pixel in the image
+        /// and replaces the corresponding entry in the color table
+        /// with the default window color (COLOR_WINDOW).
+        /// All pixels in the image that use that entry become
+        /// the default window color.
+        /// This value applies only to images that have
+        /// corresponding color tables.
+        ///
+        /// Do not use this option if you are loading a bitmap
+        /// with a color depth greater than 8bpp.
+        ///
+        /// If fuLoad includes both the LR_LOADTRANSPARENT and
+        /// LR_LOADMAP3DCOLORS values, LR_LOADTRANSPARENT takes precedence.
+        /// However, the color table entry is replaced with COLOR_3DFACE
+        /// rather than COLOR_WINDOW.
+        /// </summary>
+        LoadTransparent = 0x00000020,
+
+        /// <summary>
+        /// Loads the image in black and white.
+        /// </summary>
+        Monochrome = 0x00000001,
+
+        /// <summary>
+        /// Shares the image handle if the image is loaded multiple times.
+        /// If <see cref="Shared"/> is not set, a second call to LoadImage
+        /// for the same resource will load the image again and
+        /// return a different handle.
+        ///
+        /// When you use this flag, the system will destroy the resource
+        /// when it is no longer needed.
+        ///
+        /// Do not use <see cref="Shared"/> for images that have
+        /// non-standard sizes, that may change after loading,'
+        /// or that are loaded from a file.
+        ///
+        /// When loading a system icon or cursor,
+        /// you must use <see cref="Shared"/> or the function
+        /// will fail to load the resource.
+        ///
+        /// This function finds the first image in the cache
+        /// with the requested resource name,
+        /// regardless of the size requested.
+        /// </summary>
+        Shared = 0x00008000,
+
+        /// <summary>
+        /// Uses true VGA colors.
+        /// </summary>
+        VGAColor = 0x00000080,
+    }
+
     [Flags]
     internal enum PM : uint
     {

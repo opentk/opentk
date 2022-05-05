@@ -301,6 +301,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, IDC lpCursorName);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /*HCURSOR*/ LoadImage(
+            IntPtr /*HINSTANCE*/ hInstance,
+            OCR name,
+            uint type,
+            int cx,
+            int cy,
+            LR fuLoad);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ SetCursor(IntPtr /*HCURSOR*/ hCursor);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
