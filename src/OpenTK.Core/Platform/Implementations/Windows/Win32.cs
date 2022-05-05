@@ -295,5 +295,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern bool SwapBuffers(IntPtr hDC);
+
+        // FIXME: Use LoadImage instead.
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, IDC lpCursorName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /*HCURSOR*/ SetCursor(IntPtr /*HCURSOR*/ hCursor);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool DestroyCursor(IntPtr /*HCURSOR*/ hCursor);
     }
 }

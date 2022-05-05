@@ -42,6 +42,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         }
     }
 
+    internal class Win32CursorHandle : CursorHandle
+    {
+        public IntPtr Cursor { get; set; }
+
+        public bool IsShared { get; set; }
+    }
+
     internal class Win32EventQueue : IEventQueue<WindowEventType, WindowEventArgs>
     {
         public event QueueEventHandler<WindowEventType, WindowEventArgs> EventRaised;

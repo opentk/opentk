@@ -14,6 +14,9 @@ public class Program
     static WindowHandle handle;
 
     static IMouseComponent mouseComp = new MouseComponent();
+    static ICursorComponent cursorComp = new CursorComponent();
+
+    static CursorHandle CursorHandle;
 
     public static void Main(string[] args)
     {
@@ -87,6 +90,9 @@ public class Program
 
         Win32BindingsContext w32bc = new Win32BindingsContext(glComp, context);
         GLLoader.LoadBindings(w32bc);
+
+        CursorHandle = cursorComp.Create();
+        cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
 
         Init();
 
@@ -240,6 +246,18 @@ void main()
         mouseComp.GetPosition(null, out int x, out int y);
         windowComp.ScreenToClient(handle, x, y, out int clientX, out int clientY);
         windowComp.SetTitle(handle, $"({clientX},{clientY})");
+
+        if (clientX > 100)
+        {
+            cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+            
+        }
+        else
+        {
+            cursorComp.Load(CursorHandle, SystemCursorType.Default);
+        }
+        mouseComp.SetCursor(null, CursorHandle);
+
 
         GL.BindVertexArray(vao);
         GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
