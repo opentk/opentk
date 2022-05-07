@@ -883,8 +883,26 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         Wait = 32514,
     }
 
+    internal enum ImageType : uint
+    {
+        /// <summary>
+        /// Loads a bitmap.
+        /// </summary>
+        Bitmap = 0,
+
+        /// <summary>
+        /// Loads a cursor.
+        /// </summary>
+        Cursor = 2,
+
+        /// <summary>
+        /// Loads an icon.
+        /// </summary>
+        Icon = 1,
+    }
+
     [Flags]
-    internal enum LR
+    internal enum LR : uint
     {
         /// <summary>
         /// When the uType parameter specifies IMAGE_BITMAP,

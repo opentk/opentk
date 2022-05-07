@@ -78,14 +78,5 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 throw new Win32Exception("SetCursorPos failed.");
             }
         }
-
-        /// <inheritdoc/>
-        public void SetCursor(MouseHandle handle, CursorHandle cursor)
-        {
-            // FIXME: Check mouse handle
-            Win32CursorHandle win32Cursor = cursor.As<Win32CursorHandle>(this);
-
-            IntPtr prevCursor = Win32.SetCursor(win32Cursor.Cursor);
-        }
     }
 }

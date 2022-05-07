@@ -11,6 +11,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
     {
         public IntPtr HWnd { get; private set; }
 
+        /// <summary> The current cursor for this window. </summary>
+        public IntPtr HCursor { get; set; }
+
         // FIXME: Is this a good place for this?
         public SimpleEventQueue<WindowEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<WindowEventType, WindowEventArgs>();
 
@@ -42,11 +45,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         }
     }
 
-    internal class Win32CursorHandle : CursorHandle
+    internal class HCursor : CursorHandle
     {
         public IntPtr Cursor { get; set; }
 
         public bool IsShared { get; set; }
+
+        public bool IsIcon { get; set; }
     }
 
     internal class Win32EventQueue : IEventQueue<WindowEventType, WindowEventArgs>

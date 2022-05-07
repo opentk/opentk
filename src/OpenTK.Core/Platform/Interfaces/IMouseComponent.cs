@@ -48,13 +48,5 @@ namespace OpenTK.Core.Platform
         /// <param name="x">X coordinate of the mouse in desktop space.</param>
         /// <param name="y">Y coordinate of the mouse in desktop space.</param>
         void SetPosition(MouseHandle handle, int x, int y);
-
-        /// <summary>
-        /// Set the mouse cursor.
-        /// </summary>
-        /// <param name="handle">Handle to a mouse or null for default.</param>
-        /// <param name="cursor">Mouse cursor handle.</param>
-        /// <exception cref="System.ArgumentNullException"><paramref name="cursor"/> is null.</exception>
-        void SetCursor(MouseHandle handle, CursorHandle cursor);
     }
 }

@@ -17,6 +17,7 @@ public class Program
     static ICursorComponent cursorComp = new CursorComponent();
 
     static CursorHandle CursorHandle;
+    static CursorHandle ImageCursorHandle;
 
     public static void Main(string[] args)
     {
@@ -92,7 +93,18 @@ public class Program
         GLLoader.LoadBindings(w32bc);
 
         CursorHandle = cursorComp.Create();
-        cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+        cursorComp.Load(CursorHandle, SystemCursorType.Default);
+        windowComp.SetCursor(handle, CursorHandle);
+
+        ImageCursorHandle = cursorComp.Create();
+        byte[] image = new byte[]
+        {
+            0, 0, 255,  0, 0, 255,  0, 0, 255,
+            255, 0, 0,  255, 0, 0,  255, 0, 0,
+            0, 255, 0,  0, 255, 0,  0, 255, 0,
+        };
+        cursorComp.Load(ImageCursorHandle, 3, 3, image);
+        windowComp.SetCursor(handle, ImageCursorHandle);
 
         Init();
 
@@ -100,6 +112,7 @@ public class Program
     }
 
     static bool enabled_sRGB = false;
+    static bool is_ibeam = false;
     private static void EventQueue_EventRaised(object sender, WindowEventType type, WindowEventArgs arguments)
     {
         if (enabled_sRGB == false)
@@ -114,6 +127,18 @@ public class Program
             GL.Disable(EnableCap.FramebufferSrgb);
             enabled_sRGB = false;
         }
+
+        if (is_ibeam)
+        {
+            cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+        }
+        else
+        {
+            cursorComp.Load(CursorHandle, SystemCursorType.Default);
+        }
+        windowComp.SetCursor(handle, CursorHandle);
+
+        is_ibeam = !is_ibeam;
     }
 
     static VertexArrayHandle vao;
@@ -246,18 +271,6 @@ void main()
         mouseComp.GetPosition(null, out int x, out int y);
         windowComp.ScreenToClient(handle, x, y, out int clientX, out int clientY);
         windowComp.SetTitle(handle, $"({clientX},{clientY})");
-
-        if (clientX > 100)
-        {
-            cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
-            
-        }
-        else
-        {
-            cursorComp.Load(CursorHandle, SystemCursorType.Default);
-        }
-        mouseComp.SetCursor(null, CursorHandle);
-
 
         GL.BindVertexArray(vao);
         GL.DrawArrays(PrimitiveType.Triangles, 0, 3);

@@ -6,6 +6,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform.Implementations.Windows
 {
     public class WindowComponent : IWindowComponent
@@ -97,7 +99,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         public bool CanGetDisplay => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public bool CanSetCursor => throw new NotImplementedException();
+        public bool CanSetCursor => true;
 
         /// <inheritdoc/>
         public IReadOnlyList<WindowEventType> SupportedEvents => throw new NotImplementedException();
@@ -169,19 +171,19 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
-                case WM.PAINT:
+                case WM.SETCURSOR:
                     {
-                        Win32.BeginPaint(hWnd, out Win32.PAINTSTRUCT lpPaint);
-
-                        int success = Win32.FillRect(lpPaint.hdc, lpPaint.rcPaint, new IntPtr(18));
-
-                        if (success == 0)
+                        int ht = ((int)lParam) & Win32.LoWordMask;
+                        if (ht == Win32.HTCLIENT)
                         {
-                            throw new Win32Exception("FillRect failed.");
+                            HWND h = HWndDict[hWnd];
+                            Win32.SetCursor(h.HCursor);
+                            return new IntPtr(1);
                         }
-
-                        Win32.EndPaint(hWnd, in lpPaint);
-                        return IntPtr.Zero;
+                        else
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                     }
                 case WM.CLOSE:
                     {
@@ -598,7 +600,14 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle cursor)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+            HCursor? hcursor = cursor?.As<HCursor>(this);
+
+            // A hCursor = null means a hidden cursor, as we want.
+            IntPtr hCursor = hcursor?.Cursor ?? IntPtr.Zero;
+
+            hwnd.HCursor = hCursor;
+            Win32.SetCursor(hCursor);
         }
 
         /// <inheritdoc/>

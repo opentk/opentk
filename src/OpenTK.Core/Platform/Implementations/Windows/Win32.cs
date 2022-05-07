@@ -11,7 +11,17 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 {
     internal static unsafe class Win32
     {
-        public const int CW_USEDEFAULT = -1;
+        internal const int LoWordMask = 0x00FF;
+        internal const int HiWordMask = 0xFF00;
+
+        // FIXME: Potentially change HTCLIENT into an enum later.
+
+        /// <summary>
+        /// In client area.
+        /// </summary>
+        internal const int HTCLIENT = 1;
+
+        internal const int CW_USEDEFAULT = -1;
 
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam);
@@ -275,7 +285,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         }
 
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern IntPtr GetDC(IntPtr hWnd);
+        internal static extern IntPtr GetDC(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern int ReleaseDC(IntPtr /* HWND */ hWnd, IntPtr /* HDC */ hDC);
 
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern int ChoosePixelFormat(
@@ -304,7 +317,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal static extern IntPtr /*HCURSOR*/ LoadImage(
             IntPtr /*HINSTANCE*/ hInstance,
             OCR name,
-            uint type,
+            ImageType type,
             int cx,
             int cy,
             LR fuLoad);
@@ -314,5 +327,39 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool DestroyCursor(IntPtr /*HCURSOR*/ hCursor);
+
+        internal struct ICONINFO
+        {
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fIcon;
+            public int xHotspot;
+            public int yHotspot;
+            public IntPtr /*HBITMAP*/ hbmMask;
+            public IntPtr /*HBITMAP*/ hbmColor;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HICON or HCURSOR */ CreateIconIndirect(in ICONINFO piconinfo);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDC */ CreateCompatibleDC(IntPtr /* HDC */ hdc);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern bool DeleteDC(IntPtr /* HDC */ hdc);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HBITMAP */ CreateCompatibleBitmap(IntPtr /* HDC */ hdc, int cx, int cy);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HGDIOBJ */ SelectObject(IntPtr /* HDC */ hdc, IntPtr /* HGDIOBJ */ h);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern int /* COLORREF */ GetPixel(IntPtr /* HDC */ hdc, int x, int y);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern int /* COLORREF */ SetPixel(IntPtr /* HDC */ hdc, int x, int y, int /* COLORREF */ color);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool /* COLORREF */ DestroyIcon(IntPtr /* HICON or HCURSOR */ hIcon);
     }
 }
