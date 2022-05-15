@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -354,12 +355,49 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal static extern IntPtr /* HGDIOBJ */ SelectObject(IntPtr /* HDC */ hdc, IntPtr /* HGDIOBJ */ h);
 
         [DllImport("gdi32.dll", SetLastError = true)]
-        internal static extern int /* COLORREF */ GetPixel(IntPtr /* HDC */ hdc, int x, int y);
+        internal static extern uint /* COLORREF */ GetPixel(IntPtr /* HDC */ hdc, int x, int y);
 
         [DllImport("gdi32.dll", SetLastError = true)]
-        internal static extern int /* COLORREF */ SetPixel(IntPtr /* HDC */ hdc, int x, int y, int /* COLORREF */ color);
+        internal static extern int /* COLORREF */ SetPixel(IntPtr /* HDC */ hdc, int x, int y, uint /* COLORREF */ color);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern int /* COLORREF */ SetPixelV(IntPtr /* HDC */ hdc, int x, int y, uint /* COLORREF */ color);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool /* COLORREF */ DestroyIcon(IntPtr /* HICON or HCURSOR */ hIcon);
+
+        internal struct BITMAP
+        {
+            public int bmType;
+            public int bmWidth;
+            public int bmHeight;
+            public int bmWidthBytes;
+            public ushort bmPlanes;
+            public ushort bmBitsPixel;
+            public IntPtr bmBits;
+        }
+
+        [DllImport("gdi32.dll", SetLastError = false)]
+        internal static extern int GetObject(IntPtr /* HANDLE */ h, int c, IntPtr /* BITMAP */ pv);
+
+        internal static int GetObject(IntPtr /* HANDLE */ h, int c, out BITMAP pv)
+        {
+            IntPtr rawptr = Marshal.AllocHGlobal(c + 4);
+            IntPtr aligned = new IntPtr(4 * (((long)rawptr + 3) / 4));
+
+            int res = GetObject(h, c, aligned);
+
+            pv = Marshal.PtrToStructure<BITMAP>(aligned);
+
+            Marshal.FreeHGlobal(rawptr);
+
+            return res;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetIconInfo(IntPtr /* HICON */ hIcon, [NotNullWhen(true)] out ICONINFO piconinfo);
+
+        [DllImport("gdi32.dll", SetLastError = false)]
+        internal static extern bool DeleteObject(IntPtr /* HGDIOBJ */ ho);
     }
 }

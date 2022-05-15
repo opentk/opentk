@@ -97,15 +97,25 @@ public class Program
         windowComp.SetCursor(handle, CursorHandle);
 
         ImageCursorHandle = cursorComp.Create();
-        byte[] image = new byte[]
+        byte[] image = new byte[16 * 16 * 3];
+        for (int ccx = 0; ccx < 16; ccx++)
         {
-            0, 0, 255,  0, 0, 255,  0, 0, 255,
-            255, 0, 0,  255, 0, 0,  255, 0, 0,
-            0, 255, 0,  0, 255, 0,  0, 255, 0,
-        };
-        cursorComp.Load(ImageCursorHandle, 3, 3, image);
+            for (int ccy = 0; ccy < 16; ccy++)
+            {
+                int index = (ccy * 16 + ccx) * 3;
+
+                image[index + 0] = (byte)(ccx * 16);
+                image[index + 1] = (byte)(ccy * 16);
+                image[index + 2] = (byte)(ccx * ccy);
+            }
+        }
+        cursorComp.Load(ImageCursorHandle, 16, 16, image);
         windowComp.SetCursor(handle, ImageCursorHandle);
 
+        {
+            cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);
+            Console.WriteLine($"Width: {curW}, Height: {curH}");
+        }
         Init();
 
         windowComp.Loop(handle, Render);
