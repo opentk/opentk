@@ -39,7 +39,7 @@ namespace OpenTK.Audio.OpenAL
     /// <summary>
     /// Defines OpenAL context errors.
     /// </summary>
-    public enum AlcError : int
+    public enum ALCError : int
     {
         /// <summary>There is no current error.</summary>
         NoError = 0,

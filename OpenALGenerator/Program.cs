@@ -236,6 +236,20 @@ namespace OpenALGenerator
         //unsafe delegate void GetSourcedv(int source, SourceLatencyVector2d param, double* values);
     }
 
+    class SOFT_HRTF
+    {
+        enum HRTFAttribute { }
+        enum HRTFString { }
+
+        struct ALDevice { }
+
+        [EntryPoint("alcGetStringiSOFT", "GetStringSOFT", false, GenerateArrayOverload = false)]
+        unsafe delegate char* GetStringSOFT(ALDevice device, HRTFString param, int index);
+
+        [EntryPoint("alcResetDeviceSOFT", "ResetDeviceSOFT", false, PrivateRefOverload = true)]
+        unsafe delegate bool ResetDeviceSOFT(ALDevice device, int* attrList);
+    }
+
     class Program
     {
         public struct Parameter
@@ -301,6 +315,8 @@ namespace OpenALGenerator
             { typeof(uint), "uint" },
             { typeof(long), "long" },
             { typeof(ulong), "ulong" },
+
+            { typeof(char), "char" },
         };
 
         static string GetTypeName(Type type, bool outParam)
@@ -492,7 +508,8 @@ namespace OpenALGenerator
             //Console.WriteLine();
 
             //Console.WriteLine(GenerateProcs(typeof(SOFT_source_latency)));
-            Console.WriteLine(GenerateProcs(typeof(SOFT_device_clock)));
+            //Console.WriteLine(GenerateProcs(typeof(SOFT_device_clock)));
+            Console.WriteLine(GenerateProcs(typeof(SOFT_HRTF)));
         }
     }
 }

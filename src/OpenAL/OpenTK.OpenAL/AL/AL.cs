@@ -63,8 +63,8 @@ namespace OpenTK.Audio.OpenAL
         public static extern string Get(ALGetString param);
 
         /// <summary>This function retrieves an OpenAL string property.</summary>
-        /// <param name="param">The human-readable errorstring to be returned.</param>
-        /// <returns>Returns a pointer to a null-terminated string.</returns>
+        /// <param name="param">The al error which human-readable string should be returned.</param>
+        /// <returns>The human-readable string for the al error.</returns>
         public static string GetErrorString(ALError param) => Get((ALGetString)param);
 
         /* no functions return more than 1 result ..
