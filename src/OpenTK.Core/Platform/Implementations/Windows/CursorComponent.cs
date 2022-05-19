@@ -27,7 +27,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public bool CanLoadSystemCursor => true;
 
-        public bool CanScaleCursor => throw new NotImplementedException();
+        public bool CanScaleCursor => false;
 
         public CursorHandle Create()
         {
@@ -86,17 +86,89 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public void GetHotspot(CursorHandle handle, out int x, out int y)
         {
-            throw new NotImplementedException();
+            HCursor hcursor = handle.As<HCursor>(this);
+
+            // See https://stackoverflow.com/a/13295280
+            if (Win32.GetIconInfo(hcursor.Cursor, out Win32.ICONINFO info))
+            {
+                x = info.xHotspot;
+                y = info.yHotspot;
+            }
+            else
+            {
+                throw new Win32Exception("GetIconInfo failed.");
+            }
         }
 
-        public void GetImage(CursorHandle handle, Span<byte> image)
+        public unsafe void GetImage(CursorHandle handle, Span<byte> image)
         {
+            HCursor hcursor = handle.As<HCursor>(this);
+
+            // FIXME: If this cursor is one of the standard cursors
+            // we want to call CopyIcon so that we can call GetIconInfo properly!
+
+            // See https://stackoverflow.com/a/13295280
+            if (Win32.GetIconInfo(hcursor.Cursor, out Win32.ICONINFO info))
+            {
+                bool bwCursor = info.hbmColor == IntPtr.Zero;
+
+                IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+                IntPtr compatibleDC = Win32.CreateCompatibleDC(hDC);
+
+                Win32.BITMAPINFO bmInfo = default;
+                bmInfo.bmiHeader.biSize = (uint)sizeof(Win32.BITMAPINFOHEADER);
+                int success = Win32.GetDIBits(hDC, info.hbmColor, 0, 0, null, ref bmInfo, DIB.RGBColors);
+                if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
+                {
+                    throw new Exception("GetDIBits failed.");
+                }
+
+                if (image.Length < bmInfo.bmiHeader.biSizeImage)
+                {
+                    throw new Exception("Image buffer not big enough!");
+                }
+
+                bmInfo.bmiHeader.biPlanes = 1;
+                bmInfo.bmiHeader.biCompression = BI.RGB;
+
+                fixed (byte* ptr = image)
+                {
+                    if (bmInfo.bmiHeader.biHeight >= 0)
+                    {
+                        success = Win32.GetDIBits(hDC, info.hbmColor, 0, (uint)bmInfo.bmiHeader.biHeight, (void*)ptr, ref bmInfo, DIB.RGBColors);
+                        if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
+                        {
+                            throw new Exception("GetDIBits failed.");
+                        }
+                    }
+                    else
+                    {
+                        // FIXME: Handle negative height!
+                        throw new NotImplementedException();
+                        //Win32.GetDIBits(hDC, info.hbmColor, 0, bmInfo.bmiHeader., (void*)ptr, ref bmInfo, DIB.RGBColors);
+                    }
+                }
+
+                Win32.ReleaseDC(IntPtr.Zero, hDC);
+
+                if (info.hbmColor != IntPtr.Zero)
+                    Win32.DeleteObject(info.hbmColor);
+                Win32.DeleteObject(info.hbmMask);
+            }
+            else
+            {
+                throw new Win32Exception("GetIconInfo failed.");
+            }
+
             throw new NotImplementedException();
         }
 
         public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
         {
-            throw new NotImplementedException();
+            HCursor hcursor = handle.As<HCursor>(this);
+
+            horizontal = 1;
+            vertical = 1;
         }
 
         public void Load(CursorHandle handle, SystemCursorType systemCursor)
@@ -229,9 +301,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             Win32.ICONINFO iconinfo = new Win32.ICONINFO()
             {
-                fIcon = false, // we are creating a cursor
-                xHotspot = 0,
-                yHotspot = 0,
+                fIcon = false, // We are creating a cursor
+                xHotspot = hcursor.HotSpotX,
+                yHotspot = hcursor.HotSpotY,
                 hbmMask = hAndMaskBitmap,
                 hbmColor = hXorMaskBitmap,
             };
@@ -259,6 +331,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public void SetHotspot(CursorHandle handle, int x, int y)
         {
+            HCursor hcursor = handle.As<HCursor>(this);
+
+            hcursor.HotSpotX = x;
+            hcursor.HotSpotY = y;
+
             throw new NotImplementedException();
         }
 

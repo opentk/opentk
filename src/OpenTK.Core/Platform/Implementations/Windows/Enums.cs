@@ -901,6 +901,71 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         Icon = 1,
     }
 
+    internal enum DIB
+    {
+        /// <summary>
+        /// The color table contains literal RGB values.
+        /// </summary>
+        RGBColors = 0x00,
+
+        /// <summary>
+        /// The color table consists of an array of 16-bit indexes
+        /// into the LogPalette object (section <see href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-emf/758f047d-765e-424c-9204-a833b7b4e527">2.2.17</see>) that is
+        /// currently defined in the <see href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-emf/6de331ec-81f6-4ab2-8982-673a232e0a5c#gt_32591a2b-a9d0-4ccf-a5b8-7177e1ea8d45">playback device context</see>.
+        /// </summary>
+        PALColors = 0x01,
+
+        /// <summary>
+        /// No color table exists.
+        /// The pixels in the DIB are indices into the current
+        /// logical palette in the playback device context.
+        /// </summary>
+        PALIndices = 0x02,
+    }
+
+    internal enum BI : uint
+    {
+        /// <summary>
+        /// An uncompressed format.
+        /// </summary>
+        RGB,
+
+        /// <summary>
+        /// A run-length encoded (RLE) format for bitmaps with 8 bpp.
+        /// The compression format is a 2-byte format consisting of
+        /// a count byte followed by a byte containing a color index.
+        /// For more information, see Bitmap Compression.
+        /// </summary>
+        RLE8,
+
+        /// <summary>
+        /// An RLE format for bitmaps with 4 bpp.
+        /// The compression format is a 2-byte format consisting of
+        /// a count byte followed by two word-length color indexes.
+        /// For more information, see Bitmap Compression.
+        /// </summary>
+        RLE4,
+
+        /// <summary>
+        /// Specifies that the bitmap is not compressed and that
+        /// the color table consists of three DWORD color masks
+        /// that specify the red, green, and blue components,
+        /// respectively, of each pixel.
+        /// This is valid when used with 16- and 32-bpp bitmaps.
+        /// </summary>
+        Bitfields,
+
+        /// <summary>
+        /// Indicates that the image is a JPEG image.
+        /// </summary>
+        JPEG,
+
+        /// <summary>
+        /// Indicates that the image is a PNG image.
+        /// </summary>
+        PNG,
+    }
+
     [Flags]
     internal enum LR : uint
     {

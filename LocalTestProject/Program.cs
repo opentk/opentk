@@ -96,6 +96,8 @@ public class Program
         cursorComp.Load(CursorHandle, SystemCursorType.Default);
         windowComp.SetCursor(handle, CursorHandle);
 
+        cursorComp.GetImage(CursorHandle, new byte[32 * 32 * 4]);
+
         ImageCursorHandle = cursorComp.Create();
         byte[] image = new byte[16 * 16 * 3];
         for (int ccx = 0; ccx < 16; ccx++)
@@ -111,6 +113,8 @@ public class Program
         }
         cursorComp.Load(ImageCursorHandle, 16, 16, image);
         windowComp.SetCursor(handle, ImageCursorHandle);
+
+        cursorComp.GetImage(ImageCursorHandle, new byte[32 * 32 * 4]);
 
         {
             cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);

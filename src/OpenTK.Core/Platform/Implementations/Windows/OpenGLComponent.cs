@@ -236,19 +236,17 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 attribs.Add((int)WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB);
                 attribs.Add(1);
 
-                // FIXME! Settings!
                 attribs.Add((int)WGLPixelFormatAttribute.RED_BITS_ARB);
-                attribs.Add(8);
+                attribs.Add(settings.RedBits);
 
                 attribs.Add((int)WGLPixelFormatAttribute.GREEN_BITS_ARB);
-                attribs.Add(8);
+                attribs.Add(settings.GreenBits);
 
                 attribs.Add((int)WGLPixelFormatAttribute.BLUE_BITS_ARB);
-                attribs.Add(8);
+                attribs.Add(settings.BlueBits);
 
-                // FIXME: Make settings available
                 attribs.Add((int)WGLPixelFormatAttribute.ALPHA_BITS_ARB);
-                attribs.Add(0);
+                attribs.Add(settings.AlphaBits);
 
                 if (settings.DoubleBuffer)
                 {
@@ -369,11 +367,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                 ContextValues choosenValues = default;
 
-                choosenValues.ColorBits =
-                        FindAttribute(WGLPixelFormatAttribute.RED_BITS_ARB) +
-                        FindAttribute(WGLPixelFormatAttribute.GREEN_BITS_ARB) +
-                        FindAttribute(WGLPixelFormatAttribute.BLUE_BITS_ARB) +
-                        FindAttribute(WGLPixelFormatAttribute.ALPHA_BITS_ARB);
+                choosenValues.RedBits = FindAttribute(WGLPixelFormatAttribute.RED_BITS_ARB);
+                choosenValues.GreenBits = FindAttribute(WGLPixelFormatAttribute.GREEN_BITS_ARB);
+                choosenValues.BlueBits = FindAttribute(WGLPixelFormatAttribute.BLUE_BITS_ARB);
+                choosenValues.AlphaBits = FindAttribute(WGLPixelFormatAttribute.ALPHA_BITS_ARB);
                 choosenValues.DepthBits = FindAttribute(WGLPixelFormatAttribute.DEPTH_BITS_ARB);
                 choosenValues.StencilBits = FindAttribute(WGLPixelFormatAttribute.STENCIL_BITS_ARB);
 
@@ -396,7 +393,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     nVersion = 1,
                     dwFlags = PFD.DRAW_TO_WINDOW | PFD.SUPPORT_OPENGL | PFD.DOUBLEBUFFER,
                     iPixelType = PFDType.TYPE_RGBA,
-                    cColorBits = (byte)choosenValues.ColorBits,
+                    cColorBits = (byte)(choosenValues.RedBits +
+                                        choosenValues.GreenBits +
+                                        choosenValues.BlueBits +
+                                        choosenValues.AlphaBits),
                     cRedBits = 0,
                     cRedShift = 0,
                     cGreenBits = 0,

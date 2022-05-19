@@ -49,6 +49,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
     {
         public IntPtr Cursor { get; set; }
 
+        public int HotSpotX { get; set; }
+
+        public int HotSpotY { get; set; }
+
         public bool IsShared { get; set; }
 
         public bool IsIcon { get; set; }

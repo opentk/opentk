@@ -24,6 +24,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         internal const int CW_USEDEFAULT = -1;
 
+        internal const int ERROR_INVALID_PARAMETER = 87;
+
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam);
 
@@ -394,10 +396,50 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             return res;
         }
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         internal static extern bool GetIconInfo(IntPtr /* HICON */ hIcon, [NotNullWhen(true)] out ICONINFO piconinfo);
 
         [DllImport("gdi32.dll", SetLastError = false)]
         internal static extern bool DeleteObject(IntPtr /* HGDIOBJ */ ho);
+
+        internal struct BITMAPINFOHEADER
+        {
+            public uint biSize;
+            public int biWidth;
+            public int biHeight;
+            public ushort biPlanes;
+            public ushort biBitCount;
+            public BI biCompression;
+            public uint biSizeImage;
+            public int biXPelsPerMeter;
+            public int biYPelsPerMeter;
+            public uint biClrUsed;
+            public uint biClrImportant;
+        }
+
+        internal struct RGBQUAD
+        {
+            public byte rgbBlue;
+            public byte rgbGreen;
+            public byte rgbRed;
+            public byte rgbReserved;
+        }
+
+        internal struct BITMAPINFO
+        {
+            public BITMAPINFOHEADER bmiHeader;
+            [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 1, ArraySubType = UnmanagedType.Struct)]
+            public RGBQUAD[] bmiColors;
+        }
+
+        [DllImport("gdi32.dll", SetLastError = false)]
+        internal static extern int GetDIBits(
+            IntPtr /* HDC */ hdc,
+            IntPtr /* HBITMAP */ hbm,
+            uint start,
+            uint cLines,
+            void* lpvBits,
+            ref BITMAPINFO lpbmi,
+            DIB usage);
     }
 }

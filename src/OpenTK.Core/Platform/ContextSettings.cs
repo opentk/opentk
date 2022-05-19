@@ -17,16 +17,25 @@ namespace OpenTK.Core.Platform
 
         public int Samples { get; set; }
 
-        // FIXME: Color depth bits??
+        public int RedBits { get; set; } = 8;
 
-        public ContextDepthBits DepthBits { get; set; }
+        public int GreenBits { get; set; } = 8;
 
-        public ContextStencilBits StencilBits { get; set; }
+        public int BlueBits { get; set; } = 8;
+
+        public int AlphaBits { get; set; } = 8;
+
+        public ContextDepthBits DepthBits { get; set; } = ContextDepthBits.Depth24;
+
+        public ContextStencilBits StencilBits { get; set; } = ContextStencilBits.Stencil8;
     }
 
     public struct ContextValues
     {
-        public int ColorBits;
+        public int RedBits;
+        public int GreenBits;
+        public int BlueBits;
+        public int AlphaBits;
         public int DepthBits;
         public int StencilBits;
         public bool DoubleBuffered;
@@ -37,12 +46,14 @@ namespace OpenTK.Core.Platform
 
     public enum ContextDepthBits
     {
+        None,
         Depth24,
         Depth32,
     }
 
     public enum ContextStencilBits
     {
+        None,
         Stencil1,
         Stencil8,
     }
