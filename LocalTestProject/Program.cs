@@ -96,7 +96,7 @@ public class Program
         cursorComp.Load(CursorHandle, SystemCursorType.Default);
         windowComp.SetCursor(handle, CursorHandle);
 
-        cursorComp.GetImage(CursorHandle, new byte[32 * 32 * 4]);
+        //cursorComp.GetImage(CursorHandle, new byte[32 * 32 * 4]);
 
         ImageCursorHandle = cursorComp.Create();
         byte[] image = new byte[16 * 16 * 3];
@@ -114,7 +114,9 @@ public class Program
         cursorComp.Load(ImageCursorHandle, 16, 16, image);
         windowComp.SetCursor(handle, ImageCursorHandle);
 
-        cursorComp.GetImage(ImageCursorHandle, new byte[32 * 32 * 4]);
+        windowComp.SetCursor(handle, CursorHandle);
+
+        //cursorComp.GetImage(ImageCursorHandle, new byte[32 * 32 * 4]);
 
         {
             cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);
@@ -144,11 +146,11 @@ public class Program
 
         if (is_ibeam)
         {
-            cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+            //cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
         }
         else
         {
-            cursorComp.Load(CursorHandle, SystemCursorType.Default);
+            //cursorComp.Load(CursorHandle, SystemCursorType.Default);
         }
         windowComp.SetCursor(handle, CursorHandle);
 
@@ -162,26 +164,54 @@ public class Program
     const string vertexShaderSource =
 @"#version 330 core
 layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aColor;
+layout (location = 1) in vec2 aUV;
+layout (location = 2) in vec3 aColor;
 
+out vec2 oUV;
 out vec3 oColor;
 
 void main()
 {
     gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);
+    oUV = aUV;
     oColor = aColor;
 }";
 
     const string fragmentShaderSource =
 @"#version 330 core
+in vec2 oUV;
 in vec3 oColor;
 
 out vec4 FragColor;
 
+uniform sampler2D tex;
+
 void main()
 {
-    FragColor = vec4(oColor, 1.0f);
+    FragColor = texture(tex, oUV);
 }";
+
+    public static TextureHandle GetCursorImage(CursorHandle handle)
+    {
+        cursorComp.GetSize(handle, out int width, out int height);
+        byte[] data = new byte[width * height * 4];
+        cursorComp.GetImage(handle, data);
+
+        TextureHandle tex = GL.GenTexture();
+
+        GL.ActiveTexture(TextureUnit.Texture0);
+        GL.BindTexture(TextureTarget.Texture2d, tex);
+
+        GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.Byte, data);
+
+        GL.GenerateMipmap(TextureTarget.Texture2d);
+
+        GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
+
+        return tex;
+    }
+
+    static TextureHandle cursor_tex;
 
     public static void Init()
     {
@@ -190,9 +220,13 @@ void main()
 
         float[] vertices = new float[]
         {
-            -0.5f, -0.5f, 0.0f,     1f, 0f, 0f,
-             0.5f, -0.5f, 0.0f,     0f, 1f, 0f,
-             0.0f,  0.5f, 0.0f,     0f, 0f, 1f,
+            -1f, -1f, 0f,     0f, 0f,     1f, 0f, 0f,
+             1f, -1f, 0f,     1f, 0f,     0f, 1f, 0f,
+             1f,  1f, 0f,     1f, 1f,     0f, 0f, 1f,
+
+             1f,  1f, 0f,     1f, 1f,     0f, 0f, 1f,
+            -1f,  1f, 0f,     0f, 1f,     0f, 1f, 0f,
+            -1f, -1f, 0f,     0f, 0f,     1f, 0f, 0f,
         };
 
         GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
@@ -202,11 +236,14 @@ void main()
 
         GL.BindVertexArray(vao);
 
-        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(float) * 6, 0);
+        GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(float) * 8, 0);
         GL.EnableVertexAttribArray(0);
 
-        GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, sizeof(float) * 6, sizeof(float) * 3);
+        GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, sizeof(float) * 8, sizeof(float) * 3);
         GL.EnableVertexAttribArray(1);
+
+        GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, sizeof(float) * 8, sizeof(float) * 5);
+        GL.EnableVertexAttribArray(2);
 
         CheckError("vao");
 
@@ -219,12 +256,33 @@ void main()
         GL.CompileShader(vert);
         GL.CompileShader(frag);
 
+        int success = 0;
+        GL.GetShaderi(vert, ShaderParameterName.CompileStatus, ref success);
+        if (success == 0)
+        {
+            GL.GetShaderInfoLog(vert, out string info);
+            Console.WriteLine(info);
+        }
+        GL.GetShaderi(frag, ShaderParameterName.CompileStatus, ref success);
+        if (success == 0)
+        {
+            GL.GetShaderInfoLog(frag, out string info);
+            Console.WriteLine(info);
+        }
+
         program = GL.CreateProgram();
 
         GL.AttachShader(program, vert);
         GL.AttachShader(program, frag);
 
         GL.LinkProgram(program);
+
+        GL.GetProgrami(program, ProgramPropertyARB.LinkStatus, ref success);
+        if (success == 0)
+        {
+            GL.GetProgramInfoLog(program, out string info);
+            Console.WriteLine(info);
+        }
 
         GL.DetachShader(program, vert);
         GL.DetachShader(program, frag);
@@ -235,6 +293,10 @@ void main()
         GL.UseProgram(program);
 
         CheckError("shader");
+
+        cursor_tex = GetCursorImage(CursorHandle);
+
+        CheckError("get cursor tex");
 
         /*
         int numExtensions = 0;
@@ -286,8 +348,11 @@ void main()
         windowComp.ScreenToClient(handle, x, y, out int clientX, out int clientY);
         windowComp.SetTitle(handle, $"({clientX},{clientY})");
 
+        GL.ActiveTexture(TextureUnit.Texture0);
+        GL.BindTexture(TextureTarget.Texture2d, cursor_tex);
+
         GL.BindVertexArray(vao);
-        GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
+        GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
         CheckError("draw");
 

@@ -53,7 +53,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public int HotSpotY { get; set; }
 
-        public bool IsShared { get; set; }
+        // Make all of the state variables into an enum?
+        public bool IsSystemCursor { get; set; }
+
+        public IDC SystemCursor { get; set; }
 
         public bool IsIcon { get; set; }
     }

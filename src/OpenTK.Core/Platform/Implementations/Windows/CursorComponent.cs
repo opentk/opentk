@@ -38,23 +38,20 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
-            if (hcursor.IsShared == false)
+            if (hcursor.IsSystemCursor)
             {
-                if (hcursor.IsIcon)
+                bool success = Win32.DestroyCursor(hcursor.Cursor);
+                if (success == false)
                 {
-                    bool success = Win32.DestroyIcon(hcursor.Cursor);
-                    if (success == false)
-                    {
-                        throw new Win32Exception("DestroyIcon failed.");
-                    }
+                    throw new Win32Exception("DestroyCursor failed.");
                 }
-                else
+            }
+            else if (hcursor.IsIcon)
+            {
+                bool success = Win32.DestroyIcon(hcursor.Cursor);
+                if (success == false)
                 {
-                    bool success = Win32.DestroyCursor(hcursor.Cursor);
-                    if (success == false)
-                    {
-                        throw new Win32Exception("DestroyCursor failed.");
-                    }
+                    throw new Win32Exception("DestroyIcon failed.");
                 }
             }
 
@@ -106,9 +103,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             // FIXME: If this cursor is one of the standard cursors
             // we want to call CopyIcon so that we can call GetIconInfo properly!
-
+            IntPtr cursor_copy = Win32.CopyIcon(hcursor.Cursor);
+            {
+                Win32.CURSORINFO cinfo = default;
+                cinfo.cbSize = (uint)sizeof(Win32.CURSORINFO);
+                if (Win32.GetCursorInfo(ref cinfo) == false)
+                    throw new Win32Exception("GetCursorInfo failed.");
+            }
             // See https://stackoverflow.com/a/13295280
-            if (Win32.GetIconInfo(hcursor.Cursor, out Win32.ICONINFO info))
+            if (Win32.GetIconInfo(cursor_copy, out Win32.ICONINFO info))
             {
                 bool bwCursor = info.hbmColor == IntPtr.Zero;
 
@@ -128,6 +131,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     throw new Exception("Image buffer not big enough!");
                 }
 
+                bmInfo.bmiHeader.biBitCount = 32;
                 bmInfo.bmiHeader.biPlanes = 1;
                 bmInfo.bmiHeader.biCompression = BI.RGB;
 
@@ -149,6 +153,12 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     }
                 }
 
+                for (int i = 0; i < image.Length; i += 4)
+                {
+                    //(image[i], image[i + 3]) = (image[i + 3], image[i]);
+                    //(image[i + 1], image[i + 2]) = (image[i + 2], image[i + 1]);
+                }
+
                 Win32.ReleaseDC(IntPtr.Zero, hDC);
 
                 if (info.hbmColor != IntPtr.Zero)
@@ -160,7 +170,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 throw new Win32Exception("GetIconInfo failed.");
             }
 
-            throw new NotImplementedException();
+            bool successBool = Win32.DestroyIcon(cursor_copy);
+            if (successBool == false)
+            {
+                throw new Win32Exception("DestroyIcon failed.");
+            }
+
+            //throw new NotImplementedException();
         }
 
         public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
@@ -182,50 +198,65 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 Destroy(handle);
             }
 
-            OCR cursor;
+            IDC cursor;
+            OCR ocr;
             switch (systemCursor)
             {
                 case SystemCursorType.Default:
-                    cursor = OCR.Normal;
+                    cursor = IDC.Arrow;
+                    ocr = OCR.Normal;
                     break;
                 case SystemCursorType.Loading:
-                    cursor = OCR.Wait;
+                    cursor = IDC.Wait;
+                    ocr = OCR.Wait;
                     break;
                 case SystemCursorType.Wait:
-                    cursor = OCR.Wait;
+                    cursor = IDC.Wait;
+                    ocr = OCR.Wait;
                     break;
                 case SystemCursorType.Cross:
-                    cursor = OCR.Cross;
+                    cursor = IDC.Cross;
+                    ocr = OCR.Cross;
                     break;
                 case SystemCursorType.Hand:
-                    cursor = OCR.Hand;
+                    cursor = IDC.Hand;
+                    ocr = OCR.Hand;
                     break;
                 case SystemCursorType.Help:
-                    cursor = OCR.Help;
+                    cursor = IDC.Help;
+                    ocr = OCR.Help;
                     break;
                 case SystemCursorType.TextBeam:
-                    cursor = OCR.IBeam;
+                    cursor = IDC.IBeam;
+                    ocr = OCR.IBeam;
                     break;
                 case SystemCursorType.Forbidden:
-                    cursor = OCR.No;
+                    cursor = IDC.No;
+                    ocr = OCR.No;
                     break;
                 case SystemCursorType.ArrowFourway:
-                    cursor = OCR.SizeAll;
+                    cursor = IDC.SizeAll;
+                    ocr = OCR.SizeAll;
                     break;
                 case SystemCursorType.ArrowNS:
-                    cursor = OCR.SizeNS;
+                    cursor = IDC.SizeNS;
+                    ocr = OCR.SizeNS;
                     break;
                 case SystemCursorType.ArrowEW:
-                    cursor = OCR.SizeWE;
+                    cursor = IDC.SizeWE;
+                    ocr = OCR.SizeWE;
                     break;
                 case SystemCursorType.ArrowNESW:
-                    cursor = OCR.SizeNESW;
+                    cursor = IDC.SizeNESW;
+                    ocr = OCR.SizeNESW;
                     break;
                 case SystemCursorType.ArrowNWSE:
-                    cursor = OCR.SizeNWSE;
+                    cursor = IDC.SizeNWSE;
+                    ocr = OCR.SizeNWSE;
                     break;
                 case SystemCursorType.ArrowUp:
-                    cursor = OCR.Up;
+                    cursor = IDC.UpArrow;
+                    ocr = OCR.Up;
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(systemCursor), (int)systemCursor, typeof(SystemCursorType));
@@ -233,8 +264,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             // FIXME: For now we are sending 0, 0 and DefaultSize for the size of the cursor.
             // We might want to handle this differently in the future.
-            hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, cursor, ImageType.Cursor, 0, 0, LR.DefaultSize | LR.Shared);
-            hcursor.IsShared = true;
+            //hcursor.Cursor = Win32.LoadCursor(IntPtr.Zero, cursor);
+            hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, ocr, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
+            hcursor.IsSystemCursor = true;
+            hcursor.SystemCursor = cursor;
             hcursor.IsIcon = false;
 
             if (hcursor.Cursor == IntPtr.Zero)
@@ -315,7 +348,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
 
             hcursor.Cursor = hcursorIcon;
-            hcursor.IsShared = false;
+            hcursor.IsSystemCursor = false;
             hcursor.IsIcon = true;
         }
 

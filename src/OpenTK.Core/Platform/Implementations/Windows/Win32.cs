@@ -291,6 +291,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal static extern IntPtr GetDC(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HDC */ GetWindowDC(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern int ReleaseDC(IntPtr /* HWND */ hWnd, IntPtr /* HDC */ hDC);
 
         [DllImport("gdi32.dll", SetLastError = true)]
@@ -441,5 +444,19 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             void* lpvBits,
             ref BITMAPINFO lpbmi,
             DIB usage);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HICON */ CopyIcon(IntPtr /* HICON */ hIcon);
+
+        internal struct CURSORINFO
+        {
+            public uint cbSize;
+            public uint flags;
+            public IntPtr /*HCURSOR*/ hCursor;
+            public POINT ptScreenPos;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetCursorInfo(ref CURSORINFO pci);
     }
 }
