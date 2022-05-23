@@ -40,24 +40,37 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
-            if (hcursor.IsSystemCursor)
+            switch (hcursor.Mode)
             {
-                bool success = Win32.DestroyCursor(hcursor.Cursor);
-                if (success == false)
-                {
-                    throw new Win32Exception("DestroyCursor failed.");
-                }
-            }
-            else if (hcursor.IsIcon)
-            {
-                bool success = Win32.DestroyIcon(hcursor.Cursor);
-                if (success == false)
-                {
-                    throw new Win32Exception("DestroyIcon failed.");
-                }
+                case HCursor.CursorMode.Uninitialized:
+                    // Do nothing.
+                    break;
+                case HCursor.CursorMode.SystemCursor:
+                    {
+                        // This is a shared cursor, so we shouldn't destroy it.
+                        break;
+                    }
+                case HCursor.CursorMode.Icon:
+                    {
+                        bool success = Win32.DestroyIcon(hcursor.Cursor);
+                        if (success == false)
+                        {
+                            throw new Win32Exception("DestroyIcon failed.");
+                        }
+
+                        // Delete the mask and color bitmaps.
+                        Win32.DeleteObject(hcursor.MaskBitmap);
+                        Win32.DeleteObject(hcursor.ColorBitmap);
+                        break;
+                    }
+                default:
+                    throw new InvalidOperationException($"Unknown cursor mode: {hcursor.Mode}.");
             }
 
             hcursor.Cursor = IntPtr.Zero;
+            hcursor.ColorBitmap = IntPtr.Zero;
+            hcursor.MaskBitmap = IntPtr.Zero;
+            hcursor.Mode = HCursor.CursorMode.Uninitialized;
         }
 
         public unsafe void GetSize(CursorHandle handle, out int width, out int height)
@@ -77,8 +90,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                     height = bmpInfo.bmHeight / (bwCursor ? 2 : 1);
                 }
 
-                if (info.hbmColor != IntPtr.Zero)
-                    Win32.DeleteObject(info.hbmColor);
+                Win32.DeleteObject(info.hbmColor);
                 Win32.DeleteObject(info.hbmMask);
             }
         }
@@ -92,6 +104,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             {
                 x = info.xHotspot;
                 y = info.yHotspot;
+
+                Win32.DeleteObject(info.hbmColor);
+                Win32.DeleteObject(info.hbmMask);
             }
             else
             {
@@ -238,64 +253,49 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 Destroy(handle);
             }
 
-            IDC cursor;
             OCR ocr;
             switch (systemCursor)
             {
                 case SystemCursorType.Default:
-                    cursor = IDC.Arrow;
                     ocr = OCR.Normal;
                     break;
                 case SystemCursorType.Loading:
-                    cursor = IDC.Wait;
                     ocr = OCR.Wait;
                     break;
                 case SystemCursorType.Wait:
-                    cursor = IDC.Wait;
                     ocr = OCR.Wait;
                     break;
                 case SystemCursorType.Cross:
-                    cursor = IDC.Cross;
                     ocr = OCR.Cross;
                     break;
                 case SystemCursorType.Hand:
-                    cursor = IDC.Hand;
                     ocr = OCR.Hand;
                     break;
                 case SystemCursorType.Help:
-                    cursor = IDC.Help;
                     ocr = OCR.Help;
                     break;
                 case SystemCursorType.TextBeam:
-                    cursor = IDC.IBeam;
                     ocr = OCR.IBeam;
                     break;
                 case SystemCursorType.Forbidden:
-                    cursor = IDC.No;
                     ocr = OCR.No;
                     break;
                 case SystemCursorType.ArrowFourway:
-                    cursor = IDC.SizeAll;
                     ocr = OCR.SizeAll;
                     break;
                 case SystemCursorType.ArrowNS:
-                    cursor = IDC.SizeNS;
                     ocr = OCR.SizeNS;
                     break;
                 case SystemCursorType.ArrowEW:
-                    cursor = IDC.SizeWE;
                     ocr = OCR.SizeWE;
                     break;
                 case SystemCursorType.ArrowNESW:
-                    cursor = IDC.SizeNESW;
                     ocr = OCR.SizeNESW;
                     break;
                 case SystemCursorType.ArrowNWSE:
-                    cursor = IDC.SizeNWSE;
                     ocr = OCR.SizeNWSE;
                     break;
                 case SystemCursorType.ArrowUp:
-                    cursor = IDC.UpArrow;
                     ocr = OCR.Up;
                     break;
                 default:
@@ -304,21 +304,23 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             // FIXME: For now we are sending 0, 0 and DefaultSize for the size of the cursor.
             // We might want to handle this differently in the future.
-            //hcursor.Cursor = Win32.LoadCursor(IntPtr.Zero, cursor);
             hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, ocr, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
-            hcursor.IsSystemCursor = true;
-            hcursor.SystemCursor = cursor;
-            hcursor.IsIcon = false;
+            hcursor.Mode = HCursor.CursorMode.SystemCursor;
 
             if (hcursor.Cursor == IntPtr.Zero)
             {
-                throw new Win32Exception($"Could not load cursor '{cursor}'");
+                throw new Win32Exception($"Could not load cursor '{ocr}'");
             }
         }
 
         public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);
+
+            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+
+            if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
 
             if (hcursor.Cursor != IntPtr.Zero)
             {
@@ -381,19 +383,21 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             Win32.ReleaseDC(IntPtr.Zero, hDC);
 
-            Win32.DeleteObject(colorBitmap);
-            Win32.DeleteObject(maskBitmap);
-
             hcursor.Cursor = hcursorIcon;
-            hcursor.IsSystemCursor = false;
-            hcursor.IsIcon = true;
+            hcursor.MaskBitmap = maskBitmap;
+            hcursor.ColorBitmap = colorBitmap;
+            hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
         public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
-            // FIXME: Check to see that the spans have the correct length.
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), $"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), $"Height cannot be negative. Value: {height}");
+
+            if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
+            if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
 
             if (hcursor.Cursor != IntPtr.Zero)
             {
@@ -468,8 +472,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
 
             hcursor.Cursor = hcursorIcon;
-            hcursor.IsSystemCursor = false;
-            hcursor.IsIcon = true;
+            hcursor.MaskBitmap = hAndMaskBitmap;
+            hcursor.ColorBitmap = hXorMaskBitmap;
+            hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
         public void Load(CursorHandle handle, string file)
@@ -486,12 +491,53 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
+            GetSize(handle, out int width, out int height);
+
+            if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), $"x cannot be negative. x = {x}");
+            if (y < 0) throw new ArgumentOutOfRangeException(nameof(y), $"y cannot be negative. y = {y}");
+            if (x >= width) throw new ArgumentOutOfRangeException(nameof(x), $"x cannot be larger than the cursor width. cursor width = {width}, x = {x}");
+            if (y >= height) throw new ArgumentOutOfRangeException(nameof(y), $"y cannot be larger than the cursor height. cursor height = {height}, y = {y}");
+
             hcursor.HotSpotX = x;
             hcursor.HotSpotY = y;
 
-            // FIXME: Change the hotspot of the cursor.
+            // Here we need to recreate the HCursor with the new hotspot.
 
-            throw new NotImplementedException();
+            switch (hcursor.Mode)
+            {
+                case HCursor.CursorMode.Uninitialized:
+                    // For an uninitialized cursor we just need to record the hotspot for later use.
+                    break;
+                case HCursor.CursorMode.SystemCursor:
+                    // Here we could get the bitmaps related to this system cursor using Win32.GetIconInfo
+                    // and convert this into a CursorMode.Icon cursor. That way we can set the hotspot to wherever.
+                    throw new NotSupportedException("Cannot change the hotspot of a system cursor.");
+                case HCursor.CursorMode.Icon:
+                    {
+                        // Here we delete the HCursor, and create a new one from the stored bitmaps.
+                        Win32.DestroyIcon(hcursor.Cursor);
+
+                        Win32.ICONINFO info = new Win32.ICONINFO()
+                        {
+                            fIcon = false,
+                            xHotspot = hcursor.HotSpotX,
+                            yHotspot = hcursor.HotSpotY,
+                            hbmMask = hcursor.MaskBitmap,
+                            hbmColor = hcursor.ColorBitmap,
+                        };
+
+                        IntPtr hcursorIcon = Win32.CreateIconIndirect(in info);
+                        if (hcursorIcon == IntPtr.Zero)
+                        {
+                            throw new Win32Exception("CreateIconIndirect() failed.");
+                        }
+
+                        hcursor.Cursor = hcursorIcon;
+                        break;
+                    }
+                default:
+                    throw new InvalidOperationException($"Unknown cursor mode: {hcursor.Mode}.");
+            }
         }
 
         public void SetScale(CursorHandle handle, float horizontal, float vertical)

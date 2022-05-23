@@ -105,9 +105,11 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a cursor object.</param>
         /// <param name="width">Width of the cursor image.</param>
         /// <param name="height">Height of the cursor image.</param>
-        /// <param name="color">Buffer containing color data.</param>
-        /// <param name="mask">Buffer containing mask data.</param>
-        void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> color, ReadOnlySpan<byte> mask);
+        /// <param name="colorData">Buffer containing color data.</param>
+        /// <param name="maskData">Buffer containing mask data.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
+        /// <exception cref="ArgumentException"><paramref name="colorData"/> or <paramref name="maskData"/> is smaller than specified dimensions.</exception>
+        void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData);
 
         /// <summary>
         /// Load a cursor from a file.

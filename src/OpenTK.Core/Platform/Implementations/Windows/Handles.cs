@@ -53,12 +53,18 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public int HotSpotY { get; set; }
 
-        // Make all of the state variables into an enum?
-        public bool IsSystemCursor { get; set; }
+        public CursorMode Mode { get; set; } = CursorMode.Uninitialized;
 
-        public IDC SystemCursor { get; set; }
+        public IntPtr ColorBitmap { get; set; }
 
-        public bool IsIcon { get; set; }
+        public IntPtr MaskBitmap { get; set; }
+
+        internal enum CursorMode
+        {
+            Uninitialized,
+            SystemCursor,
+            Icon,
+        }
     }
 
     internal class Win32EventQueue : IEventQueue<WindowEventType, WindowEventArgs>

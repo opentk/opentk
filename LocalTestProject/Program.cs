@@ -93,7 +93,8 @@ public class Program
         GLLoader.LoadBindings(w32bc);
 
         CursorHandle = cursorComp.Create();
-        cursorComp.Load(CursorHandle, SystemCursorType.Default);
+        cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+        cursorComp.GetSize(CursorHandle, out _, out _);
         windowComp.SetCursor(handle, CursorHandle);
 
         //cursorComp.GetImage(CursorHandle, new byte[32 * 32 * 4]);
@@ -117,7 +118,7 @@ public class Program
                 mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
             }
         }
-        cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
+        cursorComp.Load(ImageCursorHandle, 16, 16, image, mask.AsSpan().Slice(0, 10));
         windowComp.SetCursor(handle, ImageCursorHandle);
 
         //windowComp.SetCursor(handle, CursorHandle);
