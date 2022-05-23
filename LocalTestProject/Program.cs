@@ -16,6 +16,8 @@ public class Program
     static IMouseComponent mouseComp = new MouseComponent();
     static ICursorComponent cursorComp = new CursorComponent();
 
+    static IDisplayComponent dispComp = new DisplayComponent();
+
     static CursorHandle CursorHandle;
     static CursorHandle ImageCursorHandle;
     static CursorHandle FileCursorHandle;
@@ -25,6 +27,8 @@ public class Program
         windowComp = new WindowComponent();
 
         windowComp.Initialize(PalComponents.Window);
+
+        dispComp.Initialize(PalComponents.Display);
 
         handle = windowComp.Create();
 

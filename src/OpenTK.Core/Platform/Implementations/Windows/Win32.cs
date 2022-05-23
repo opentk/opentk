@@ -27,6 +27,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal const int ERROR_FILE_NOT_FOUND = 0x2;
         internal const int ERROR_INVALID_PARAMETER = 87;
 
+        internal const int CCHDEVICENAME = 32;
+        internal const int CCHFORMNAME = 32;
+
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam);
 
@@ -537,5 +540,115 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /* HCURSOR */ LoadCursorFromFile(string /* LPCSTR */ lpFileName);
+
+        [DllImport("user32", SetLastError = false)]
+        internal static extern int GetSystemMetrics(SystemMetric nIndex);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool EnumDisplayMonitors(IntPtr /* HDC */ hdc, in RECT /* LPRECT */ lprcClip, EnumMonitorsDelegate lpfnEnum, IntPtr dwData);
+
+        internal delegate bool EnumMonitorsDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static extern bool GetMonitorInfo(IntPtr /* HMONITOR */ hMonitor, ref MONITORINFO lpmi);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static extern bool GetMonitorInfo(IntPtr /* HMONITOR */ hMonitor, ref MONITORINFOEX lpmi);
+
+        internal struct MONITORINFO
+        {
+            public uint cbSize;
+            public RECT rcMonitor;
+            public RECT rcWork;
+            public uint dwFlags;
+        }
+
+        internal struct MONITORINFOEX
+        {
+            public uint cbSize;
+            public RECT rcMonitor;
+            public RECT rcWork;
+            public uint dwFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)]
+            public string szDevice;
+        }
+
+        internal static extern bool EnumDisplaySettingsA(string lpszDeviceName, uint iModeNum, out DEVMODE lpDevMode);
+
+        internal struct POINTL
+        {
+            public int X;
+            public int Y;
+        }
+
+        [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Ansi)]
+        internal struct DEVMODE
+        {
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)]
+            [FieldOffset(0)]
+            public string dmDeviceName;
+            [FieldOffset(32)]
+            public short dmSpecVersion;
+            [FieldOffset(34)]
+            public short dmDriverVersion;
+            [FieldOffset(36)]
+            public short dmSize;
+            [FieldOffset(38)]
+            public short dmDriverExtra;
+            [FieldOffset(40)]
+            public DM dmFields;
+
+            [FieldOffset(44)]
+            public short dmOrientation;
+            [FieldOffset(46)]
+            public short dmPaperSize;
+            [FieldOffset(48)]
+            public short dmPaperLength;
+            [FieldOffset(50)]
+            public short dmPaperWidth;
+            [FieldOffset(52)]
+            public short dmScale;
+            [FieldOffset(54)]
+            public short dmCopies;
+            [FieldOffset(56)]
+            public short dmDefaultSource;
+            [FieldOffset(58)]
+            public short dmPrintQuality;
+
+            [FieldOffset(44)]
+            public POINTL dmPosition;
+            [FieldOffset(52)]
+            public int dmDisplayOrientation;
+            [FieldOffset(56)]
+            public int dmDisplayFixedOutput;
+
+            [FieldOffset(60)]
+            public short dmColor; // See note below!
+            [FieldOffset(62)]
+            public short dmDuplex; // See note below!
+            [FieldOffset(64)]
+            public short dmYResolution;
+            [FieldOffset(66)]
+            public short dmTTOption;
+            [FieldOffset(68)]
+            public short dmCollate; // See note below!
+            [FieldOffset(70)]
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHFORMNAME)]
+            public string dmFormName;
+            [FieldOffset(102)]
+            public short dmLogPixels;
+            [FieldOffset(104)]
+            public int dmBitsPerPel;
+            [FieldOffset(108)]
+            public int dmPelsWidth;
+            [FieldOffset(112)]
+            public int dmPelsHeight;
+            [FieldOffset(116)]
+            public int dmDisplayFlags;
+            [FieldOffset(116)]
+            public int dmNup;
+            [FieldOffset(120)]
+            public int dmDisplayFrequency;
+        }
     }
 }
