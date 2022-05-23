@@ -177,7 +177,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         if (ht == Win32.HTCLIENT)
                         {
                             HWND h = HWndDict[hWnd];
-                            Win32.SetCursor(h.HCursor);
+                            // FIXME: Figure out what to do if h.HCursor is null
+                            Win32.SetCursor(h.HCursor?.Cursor ?? IntPtr.Zero);
                             return new IntPtr(1);
                         }
                         else
@@ -603,11 +604,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             HWND hwnd = handle.As<HWND>(this);
             HCursor? hcursor = cursor?.As<HCursor>(this);
 
-            // A hCursor = null means a hidden cursor, as we want.
-            IntPtr hCursor = hcursor?.Cursor ?? IntPtr.Zero;
+            hwnd.HCursor = hcursor;
 
-            hwnd.HCursor = hCursor;
-            Win32.SetCursor(hCursor);
+            // A hCursor = null means a hidden cursor, as we want.
+            Win32.SetCursor(hcursor?.Cursor ?? IntPtr.Zero);
         }
 
         /// <inheritdoc/>

@@ -23,7 +23,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
-        public bool CanLoadFromFile => throw new NotImplementedException();
+        public bool CanLoadFromFile => true;
 
         public bool CanLoadSystemCursor => true;
 
@@ -61,6 +61,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         // Delete the mask and color bitmaps.
                         Win32.DeleteObject(hcursor.MaskBitmap);
                         Win32.DeleteObject(hcursor.ColorBitmap);
+                        break;
+                    }
+                case HCursor.CursorMode.FileIcon:
+                    {
+                        // Cursors loaded with Win32.LoadCursorFromFile are shared so we should not delete them.
                         break;
                     }
                 default:
@@ -246,12 +251,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
-            if (hcursor.Cursor != IntPtr.Zero)
-            {
-                // FIXME: Figure out if we really need to destroy the cursor.
-                // FIXME: We want to call win32 DestroyCursor() if this is a non-shared cursor.
-                Destroy(handle);
-            }
+            // FIXME: Figure out if we should destroy the previous cursor like this.
+            Destroy(handle);
 
             OCR ocr;
             switch (systemCursor)
@@ -322,12 +323,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
 
-            if (hcursor.Cursor != IntPtr.Zero)
-            {
-                // FIXME: Figure out if we really need to destroy the cursor.
-                // FIXME: We want to call win32 DestroyCursor() if this is a non-shared cursor.
-                Destroy(handle);
-            }
+            // FIXME: Figure out if we should destroy the previous cursor like this.
+            Destroy(handle);
 
             // See https://web.archive.org/web/20080205042408/http://support.microsoft.com/kb/318876
             Win32.BITMAPV5HEADER header = default;
@@ -399,12 +396,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
             if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
 
-            if (hcursor.Cursor != IntPtr.Zero)
-            {
-                // FIXME: Figure out if we really need to destroy the cursor.
-                // FIXME: We want to call win32 DestroyCursor() if this is a non-shared cursor.
-                Destroy(handle);
-            }
+            // FIXME: Figure out if we should destroy the previous cursor like this.
+            Destroy(handle);
 
             // See https://www.codeguru.com/windows/creating-a-color-cursor-from-a-bitmap
             IntPtr hDC = Win32.GetDC(IntPtr.Zero);
@@ -479,7 +472,29 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public void Load(CursorHandle handle, string file)
         {
-            throw new NotImplementedException();
+            HCursor hcursor = handle.As<HCursor>(this);
+
+            // FIXME: Figure out if we should destroy the previous cursor like this.
+            Destroy(handle);
+
+            // FIXME: Is this a relative path or a absolute path?
+            IntPtr cursor = Win32.LoadCursorFromFile(file);
+            if (cursor == IntPtr.Zero)
+            {
+                // FIXME: Find out if we failed because of the wrong format!
+                Win32Exception ex = new Win32Exception("LoadCursorFromFile failed.");
+                if (ex.NativeErrorCode == Win32.ERROR_FILE_NOT_FOUND)
+                {
+                    throw new FileNotFoundException("Could not load file.", file);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+
+            hcursor.Cursor = cursor;
+            hcursor.Mode = HCursor.CursorMode.FileIcon;
         }
 
         public void Load(CursorHandle handle, Stream stream)
@@ -491,12 +506,17 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
-            GetSize(handle, out int width, out int height);
-
             if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), $"x cannot be negative. x = {x}");
             if (y < 0) throw new ArgumentOutOfRangeException(nameof(y), $"y cannot be negative. y = {y}");
-            if (x >= width) throw new ArgumentOutOfRangeException(nameof(x), $"x cannot be larger than the cursor width. cursor width = {width}, x = {x}");
-            if (y >= height) throw new ArgumentOutOfRangeException(nameof(y), $"y cannot be larger than the cursor height. cursor height = {height}, y = {y}");
+
+            // FIXME: This means that we need to check that the hotspot is specified correctly when we load in the cursor later.
+            if (hcursor.Mode != HCursor.CursorMode.Uninitialized)
+            {
+                GetSize(handle, out int width, out int height);
+
+                if (x >= width) throw new ArgumentOutOfRangeException(nameof(x), $"x cannot be larger than the cursor width. cursor width = {width}, x = {x}");
+                if (y >= height) throw new ArgumentOutOfRangeException(nameof(y), $"y cannot be larger than the cursor height. cursor height = {height}, y = {y}");
+            }
 
             hcursor.HotSpotX = x;
             hcursor.HotSpotY = y;
@@ -535,6 +555,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         hcursor.Cursor = hcursorIcon;
                         break;
                     }
+                case HCursor.CursorMode.FileIcon:
+                    // Should we get the cursor images and create a new CursorMode.Icon cursor from that here?
+                    // See CursorMode.SystemCursor case.
+                    throw new NotSupportedException("Cannot change the hotspot of a cursor loaded from a file.");
                 default:
                     throw new InvalidOperationException($"Unknown cursor mode: {hcursor.Mode}.");
             }

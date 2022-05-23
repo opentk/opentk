@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,6 +10,12 @@
   <ItemGroup>
     <ProjectReference Include="..\src\OpenTK.Core\OpenTK.Core.csproj" />
     <ProjectReference Include="..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Cute Light Green Normal Select.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

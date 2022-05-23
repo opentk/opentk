@@ -18,6 +18,7 @@ public class Program
 
     static CursorHandle CursorHandle;
     static CursorHandle ImageCursorHandle;
+    static CursorHandle FileCursorHandle;
 
     public static void Main(string[] args)
     {
@@ -97,8 +98,6 @@ public class Program
         cursorComp.GetSize(CursorHandle, out _, out _);
         windowComp.SetCursor(handle, CursorHandle);
 
-        //cursorComp.GetImage(CursorHandle, new byte[32 * 32 * 4]);
-
         ImageCursorHandle = cursorComp.Create();
         byte[] image = new byte[16 * 16 * 3];
         byte[] mask  = new byte[16 * 16 * 1];
@@ -118,12 +117,14 @@ public class Program
                 mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
             }
         }
-        cursorComp.Load(ImageCursorHandle, 16, 16, image, mask.AsSpan().Slice(0, 10));
+        cursorComp.SetHotspot(ImageCursorHandle, 8, 8);
+        cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
         windowComp.SetCursor(handle, ImageCursorHandle);
 
-        //windowComp.SetCursor(handle, CursorHandle);
-
-        //cursorComp.GetImage(ImageCursorHandle, new byte[32 * 32 * 4]);
+        FileCursorHandle = cursorComp.Create();
+        //cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");
+        cursorComp.Load(FileCursorHandle, "OpenTK.Core.xml");
+        windowComp.SetCursor(handle, FileCursorHandle);
 
         {
             cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);
@@ -159,9 +160,13 @@ public class Program
         {
             //cursorComp.Load(CursorHandle, SystemCursorType.Default);
         }
-        windowComp.SetCursor(handle, CursorHandle);
+        //windowComp.SetCursor(handle, CursorHandle);
 
         is_ibeam = !is_ibeam;
+
+        cursorComp.GetSize(ImageCursorHandle, out int width, out int height);
+        cursorComp.GetHotspot(ImageCursorHandle, out int x, out int y);
+        cursorComp.SetHotspot(ImageCursorHandle, (x + 1) % width, y);
     }
 
     static VertexArrayHandle vao;

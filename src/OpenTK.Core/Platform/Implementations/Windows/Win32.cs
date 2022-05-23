@@ -24,6 +24,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         internal const int CW_USEDEFAULT = -1;
 
+        internal const int ERROR_FILE_NOT_FOUND = 0x2;
         internal const int ERROR_INVALID_PARAMETER = 87;
 
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -533,5 +534,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             uint nPlanes,
             uint nBitCount,
             IntPtr lpBits);
+
+        [DllImport("user32", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HCURSOR */ LoadCursorFromFile(string /* LPCSTR */ lpFileName);
     }
 }

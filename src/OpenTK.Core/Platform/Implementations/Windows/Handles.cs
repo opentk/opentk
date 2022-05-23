@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform.Implementations.Windows
 {
 #pragma warning disable SA1649 // File name should match first type name
@@ -12,7 +14,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         public IntPtr HWnd { get; private set; }
 
         /// <summary> The current cursor for this window. </summary>
-        public IntPtr HCursor { get; set; }
+        //public IntPtr HCursor { get; set; }
+        public HCursor? HCursor { get; set; }
 
         // FIXME: Is this a good place for this?
         public SimpleEventQueue<WindowEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<WindowEventType, WindowEventArgs>();
@@ -64,6 +67,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             Uninitialized,
             SystemCursor,
             Icon,
+            FileIcon,
         }
     }
 
