@@ -24,6 +24,11 @@ namespace OpenTK.Core.Platform
         bool CanScaleCursor { get; }
 
         /// <summary>
+        /// True if the driver can create and display custom animated cursors.
+        /// </summary>
+        bool CanSupportAnimatedCursor { get; }
+
+        /// <summary>
         /// Create a cursor object.
         /// </summary>
         /// <returns>A cursor object.</returns>
@@ -93,6 +98,16 @@ namespace OpenTK.Core.Platform
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
         /// <exception cref="ArgumentException"><paramref name="image"/> is smaller than specified dimensions.</exception>
         void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image);
+
+        /// <summary>
+        /// Load a cursor image from memory.
+        /// </summary>
+        /// <param name="handle">Handle to a cursor object.</param>
+        /// <param name="width">Width of the cursor image.</param>
+        /// <param name="height">Height of the cursor image.</param>
+        /// <param name="color">Buffer containing color data.</param>
+        /// <param name="mask">Buffer containing mask data.</param>
+        void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> color, ReadOnlySpan<byte> mask);
 
         /// <summary>
         /// Load a cursor from a file.

@@ -428,11 +428,18 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             public byte rgbReserved;
         }
 
-        internal struct BITMAPINFO
+        /*internal struct BITMAPINFO
         {
             public BITMAPINFOHEADER bmiHeader;
             [MarshalAsAttribute(UnmanagedType.ByValArray, SizeConst = 1, ArraySubType = UnmanagedType.Struct)]
             public RGBQUAD[] bmiColors;
+        }*/
+
+        internal struct BITMAPINFO
+        {
+            public BITMAPINFOHEADER bmiHeader;
+            public RGBQUAD bmiColors;
+            public RGBQUAD bmiColors2;
         }
 
         [DllImport("gdi32.dll", SetLastError = false)]
@@ -458,5 +465,73 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool GetCursorInfo(ref CURSORINFO pci);
+
+        internal struct CIEXYZ
+        {
+            public uint /* FXPT2DOT30 */ ciexyzX;
+            public uint /* FXPT2DOT30 */ ciexyzY;
+            public uint /* FXPT2DOT30 */ ciexyzZ;
+        }
+
+        internal struct CIEXYZTRIPLE
+        {
+            public CIEXYZ ciexyzRed;
+            public CIEXYZ ciexyzGreen;
+            public CIEXYZ ciexyzBlue;
+        }
+
+        internal struct BITMAPV5HEADER
+        {
+            public uint bV5Size;
+            public int bV5Width;
+            public int bV5Height;
+            public ushort bV5Planes;
+            public ushort bV5BitCount;
+            public BI bV5Compression;
+            public uint bV5SizeImage;
+            public int bV5XPelsPerMeter;
+            public int bV5YPelsPerMeter;
+            public uint bV5ClrUsed;
+            public uint bV5ClrImportant;
+            public uint bV5RedMask;
+            public uint bV5GreenMask;
+            public uint bV5BlueMask;
+            public uint bV5AlphaMask;
+            public uint bV5CSType;
+            public CIEXYZTRIPLE bV5Endpoints;
+            public uint bV5GammaRed;
+            public uint bV5GammaGreen;
+            public uint bV5GammaBlue;
+            public uint bV5Intent;
+            public uint bV5ProfileData;
+            public uint bV5ProfileSize;
+            public uint bV5Reserved;
+        }
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HBITMAP */ CreateDIBSection(
+            IntPtr /* HDC */ hdc,
+            in BITMAPINFO pbmi,
+            DIB usage,
+            out IntPtr ppvBits,
+            IntPtr /* HANDLE */ hSection,
+            uint offset);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HBITMAP */ CreateDIBSection(
+            IntPtr /* HDC */ hdc,
+            in BITMAPV5HEADER pbmi,
+            DIB usage,
+            out IntPtr ppvBits,
+            IntPtr /* HANDLE */ hSection,
+            uint offset);
+
+        [DllImport("gdi32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HBITMAP */ CreateBitmap(
+            int nWidth,
+            int nHeight,
+            uint nPlanes,
+            uint nBitCount,
+            IntPtr lpBits);
     }
 }

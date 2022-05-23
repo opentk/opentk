@@ -100,6 +100,7 @@ public class Program
 
         ImageCursorHandle = cursorComp.Create();
         byte[] image = new byte[16 * 16 * 3];
+        byte[] mask  = new byte[16 * 16 * 1];
         for (int ccx = 0; ccx < 16; ccx++)
         {
             for (int ccy = 0; ccy < 16; ccy++)
@@ -107,14 +108,19 @@ public class Program
                 int index = (ccy * 16 + ccx) * 3;
 
                 image[index + 0] = (byte)(ccx * 16);
-                image[index + 1] = (byte)(ccy * 16);
-                image[index + 2] = (byte)(ccx * ccy);
+                image[index + 1] = (byte)(ccx * 16);
+                image[index + 2] = (byte)(ccx * 16);
+                //image[index + 1] = (byte)(ccy * 16);
+                //image[index + 2] = (byte)(ccx * ccy);
+                //image[index + 3] = (byte)(ccx * ccy);
+
+                mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
             }
         }
-        cursorComp.Load(ImageCursorHandle, 16, 16, image);
+        cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
         windowComp.SetCursor(handle, ImageCursorHandle);
 
-        windowComp.SetCursor(handle, CursorHandle);
+        //windowComp.SetCursor(handle, CursorHandle);
 
         //cursorComp.GetImage(ImageCursorHandle, new byte[32 * 32 * 4]);
 
@@ -202,9 +208,14 @@ void main()
         GL.ActiveTexture(TextureUnit.Texture0);
         GL.BindTexture(TextureTarget.Texture2d, tex);
 
-        GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.Byte, data);
+        GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
         GL.GenerateMipmap(TextureTarget.Texture2d);
+
+        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+
+        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
         GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
 
@@ -220,13 +231,13 @@ void main()
 
         float[] vertices = new float[]
         {
-            -1f, -1f, 0f,     0f, 0f,     1f, 0f, 0f,
-             1f, -1f, 0f,     1f, 0f,     0f, 1f, 0f,
-             1f,  1f, 0f,     1f, 1f,     0f, 0f, 1f,
+            -1f * 0.5f, -1f * 0.5f, 0f,     0f, 0f,     1f, 0f, 0f,
+             1f * 0.5f, -1f * 0.5f, 0f,     1f, 0f,     0f, 1f, 0f,
+             1f * 0.5f,  1f * 0.5f, 0f,     1f, 1f,     0f, 0f, 1f,
 
-             1f,  1f, 0f,     1f, 1f,     0f, 0f, 1f,
-            -1f,  1f, 0f,     0f, 1f,     0f, 1f, 0f,
-            -1f, -1f, 0f,     0f, 0f,     1f, 0f, 0f,
+             1f * 0.5f,  1f * 0.5f, 0f,     1f, 1f,     0f, 0f, 1f,
+            -1f * 0.5f,  1f * 0.5f, 0f,     0f, 1f,     0f, 1f, 0f,
+            -1f * 0.5f, -1f * 0.5f, 0f,     0f, 0f,     1f, 0f, 0f,
         };
 
         GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
@@ -294,7 +305,7 @@ void main()
 
         CheckError("shader");
 
-        cursor_tex = GetCursorImage(CursorHandle);
+        cursor_tex = GetCursorImage(ImageCursorHandle);
 
         CheckError("get cursor tex");
 
@@ -350,6 +361,9 @@ void main()
 
         GL.ActiveTexture(TextureUnit.Texture0);
         GL.BindTexture(TextureTarget.Texture2d, cursor_tex);
+
+        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+        GL.Enable(EnableCap.Blend);
 
         GL.BindVertexArray(vao);
         GL.DrawArrays(PrimitiveType.Triangles, 0, 6);

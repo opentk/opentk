@@ -29,6 +29,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public bool CanScaleCursor => false;
 
+        public bool CanSupportAnimatedCursor => throw new NotImplementedException();
+
         public CursorHandle Create()
         {
             return new HCursor();
@@ -110,59 +112,99 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 if (Win32.GetCursorInfo(ref cinfo) == false)
                     throw new Win32Exception("GetCursorInfo failed.");
             }
+
             // See https://stackoverflow.com/a/13295280
             if (Win32.GetIconInfo(cursor_copy, out Win32.ICONINFO info))
             {
-                bool bwCursor = info.hbmColor == IntPtr.Zero;
-
-                IntPtr hDC = Win32.GetDC(IntPtr.Zero);
-                IntPtr compatibleDC = Win32.CreateCompatibleDC(hDC);
-
-                Win32.BITMAPINFO bmInfo = default;
-                bmInfo.bmiHeader.biSize = (uint)sizeof(Win32.BITMAPINFOHEADER);
-                int success = Win32.GetDIBits(hDC, info.hbmColor, 0, 0, null, ref bmInfo, DIB.RGBColors);
-                if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
+                // Create a buffer for the mask.
+                static void GetImage(IntPtr hDC, IntPtr hbm, Span<byte> image)
                 {
-                    throw new Exception("GetDIBits failed.");
-                }
-
-                if (image.Length < bmInfo.bmiHeader.biSizeImage)
-                {
-                    throw new Exception("Image buffer not big enough!");
-                }
-
-                bmInfo.bmiHeader.biBitCount = 32;
-                bmInfo.bmiHeader.biPlanes = 1;
-                bmInfo.bmiHeader.biCompression = BI.RGB;
-
-                fixed (byte* ptr = image)
-                {
-                    if (bmInfo.bmiHeader.biHeight >= 0)
+                    Win32.BITMAPINFO bmInfo = default;
+                    bmInfo.bmiHeader.biSize = (uint)sizeof(Win32.BITMAPINFOHEADER);
+                    int success = Win32.GetDIBits(hDC, hbm, 0, 0, null, ref bmInfo, DIB.RGBColors);
+                    if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                     {
-                        success = Win32.GetDIBits(hDC, info.hbmColor, 0, (uint)bmInfo.bmiHeader.biHeight, (void*)ptr, ref bmInfo, DIB.RGBColors);
+                        throw new Exception("GetDIBits failed.");
+                    }
+
+                    if (image.Length < bmInfo.bmiHeader.biSizeImage)
+                    {
+                        throw new Exception("Image buffer not big enough!");
+                    }
+
+                    bmInfo.bmiHeader.biBitCount = 32;
+                    bmInfo.bmiHeader.biPlanes = 1;
+                    bmInfo.bmiHeader.biCompression = BI.RGB;
+
+                    fixed (byte* ptr = image)
+                    {
+                        success = Win32.GetDIBits(hDC, hbm, 0, (uint)bmInfo.bmiHeader.biHeight, (void*)ptr, ref bmInfo, DIB.RGBColors);
                         if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                         {
                             throw new Exception("GetDIBits failed.");
                         }
                     }
-                    else
+
+                    if (bmInfo.bmiHeader.biHeight < 0)
                     {
-                        // FIXME: Handle negative height!
-                        throw new NotImplementedException();
-                        //Win32.GetDIBits(hDC, info.hbmColor, 0, bmInfo.bmiHeader., (void*)ptr, ref bmInfo, DIB.RGBColors);
+                        // A negative height means we have a top-down bitmap.
+                        // For consistency we need to flip this image vertically.
+                        for (int y = 0; y < bmInfo.bmiHeader.biHeight / 2; y++)
+                        {
+                            for (int x = 0; x < bmInfo.bmiHeader.biWidth; x++)
+                            {
+                                int index = ((y * bmInfo.bmiHeader.biWidth) + x) * 4;
+                                int indexFlipped = (((bmInfo.bmiHeader.biHeight - y - 1) * bmInfo.bmiHeader.biWidth) + x) * 4;
+                                (image[index], image[indexFlipped]) = (image[indexFlipped], image[index]);
+                            }
+                        }
                     }
                 }
 
-                for (int i = 0; i < image.Length; i += 4)
+                IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+
+                if (info.hbmColor == IntPtr.Zero)
                 {
-                    //(image[i], image[i + 3]) = (image[i + 3], image[i]);
-                    //(image[i + 1], image[i + 2]) = (image[i + 2], image[i + 1]);
+                    // These is no color mask, so we need to read the mask
+                    GetImage(hDC, info.hbmMask, image);
+
+                    // Here we apply the mask over a white background
+                    // And at the same time generate an alpha mask.
+                    for (int i = 0; i < image.Length; i += 4)
+                    {
+                        // We also convert from Bgra to Rgba here.
+                        image[i + 0] = (byte)(0xFF ^ image[i + 2]);
+                        image[i + 1] = (byte)(0xFF ^ image[i + 1]);
+                        image[i + 2] = (byte)(0xFF ^ image[i + 0]);
+
+                        // If the resulting color pure white we set alpha to 0,
+                        // otherwise we set it to 255.
+                        if (image[i + 0] == 0xFF && image[i + 1] == 0xFF && image[i + 2] == 0xFF)
+                        {
+                            // The final color is pure white
+                            image[i + 3] = 0x00;
+                        }
+                        else
+                        {
+                            // The final color not pure white, so we set alpha.
+                            image[i + 3] = 0xFF;
+                        }
+                    }
+                }
+                else
+                {
+                    GetImage(hDC, info.hbmColor, image);
+
+                    // Convert from Bgra to Rgba.
+                    for (int i = 0; i < image.Length; i += 4)
+                    {
+                        (image[i + 0], image[i + 2]) = (image[i + 2], image[i + 0]);
+                    }
                 }
 
                 Win32.ReleaseDC(IntPtr.Zero, hDC);
 
-                if (info.hbmColor != IntPtr.Zero)
-                    Win32.DeleteObject(info.hbmColor);
+                Win32.DeleteObject(info.hbmColor);
                 Win32.DeleteObject(info.hbmMask);
             }
             else
@@ -175,8 +217,6 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             {
                 throw new Win32Exception("DestroyIcon failed.");
             }
-
-            //throw new NotImplementedException();
         }
 
         public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
@@ -193,7 +233,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (hcursor.Cursor != IntPtr.Zero)
             {
-                // FIXME: Figure if we really need to destroy the cursor.
+                // FIXME: Figure out if we really need to destroy the cursor.
                 // FIXME: We want to call win32 DestroyCursor() if this is a non-shared cursor.
                 Destroy(handle);
             }
@@ -276,12 +316,93 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
-        public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
+        public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
-            // See https://www.codeguru.com/windows/creating-a-color-cursor-from-a-bitmap/
+            if (hcursor.Cursor != IntPtr.Zero)
+            {
+                // FIXME: Figure out if we really need to destroy the cursor.
+                // FIXME: We want to call win32 DestroyCursor() if this is a non-shared cursor.
+                Destroy(handle);
+            }
 
+            // See https://web.archive.org/web/20080205042408/http://support.microsoft.com/kb/318876
+            Win32.BITMAPV5HEADER header = default;
+            header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
+            header.bV5Width = width;
+            header.bV5Height = height;
+            header.bV5Planes = 1;
+            header.bV5BitCount = 32;
+            header.bV5Compression = BI.Bitfields;
+            header.bV5RedMask = 0x00_FF_00_00;
+            header.bV5GreenMask = 0x00_00_FF_00;
+            header.bV5BlueMask = 0x00_00_00_FF;
+            header.bV5AlphaMask = 0xFF_00_00_00;
+            // FIXME: Determine color space!
+            // header.bV5CSType = LCS_sRGB?
+
+            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+
+            IntPtr colorBitmap = Win32.CreateDIBSection(hDC, in header, DIB.RGBColors, out IntPtr dataPtr, IntPtr.Zero, 0);
+            if (colorBitmap == IntPtr.Zero)
+            {
+                throw new Win32Exception("CreateDIBSection failed.");
+            }
+
+            Span<byte> data = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
+
+            // Copy over image data.
+            image.CopyTo(data);
+
+            // Create an empty mask.
+            IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);
+            // FIXME: The value if ERROR_INVALID_BITMAP is impossible to find.
+            // It's not defined in wingdi.h and nothing online mentions it.
+            if (maskBitmap == IntPtr.Zero /*|| maskBitmap == Win32.ERROR_INVALID_BITMAP*/)
+            {
+                throw new Win32Exception("CreateBitmap failed.");
+            }
+
+            Win32.ICONINFO iconinfo = new Win32.ICONINFO()
+            {
+                fIcon = false, // We are creating a cursor
+                xHotspot = hcursor.HotSpotX,
+                yHotspot = hcursor.HotSpotY,
+                hbmMask = maskBitmap,
+                hbmColor = colorBitmap,
+            };
+
+            IntPtr hcursorIcon = Win32.CreateIconIndirect(in iconinfo);
+            if (hcursorIcon == IntPtr.Zero)
+            {
+                throw new Win32Exception("CreateIconIndirect() failed.");
+            }
+
+            Win32.ReleaseDC(IntPtr.Zero, hDC);
+
+            Win32.DeleteObject(colorBitmap);
+            Win32.DeleteObject(maskBitmap);
+
+            hcursor.Cursor = hcursorIcon;
+            hcursor.IsSystemCursor = false;
+            hcursor.IsIcon = true;
+        }
+
+        public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
+        {
+            HCursor hcursor = handle.As<HCursor>(this);
+
+            // FIXME: Check to see that the spans have the correct length.
+
+            if (hcursor.Cursor != IntPtr.Zero)
+            {
+                // FIXME: Figure out if we really need to destroy the cursor.
+                // FIXME: We want to call win32 DestroyCursor() if this is a non-shared cursor.
+                Destroy(handle);
+            }
+
+            // See https://www.codeguru.com/windows/creating-a-color-cursor-from-a-bitmap
             IntPtr hDC = Win32.GetDC(IntPtr.Zero);
             IntPtr hAndMaskDC = Win32.CreateCompatibleDC(hDC);
             if (hAndMaskDC == IntPtr.Zero) throw new Win32Exception("AndMask CreateCompatibleDC() failed.");
@@ -302,18 +423,17 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             IntPtr hOldXorMaskBitmap = Win32.SelectObject(hXorMaskDC, hXorMaskBitmap);
             if (hOldXorMaskBitmap == IntPtr.Zero) throw new Win32Exception("XorMask SelectObject() failed.");
 
-            // FIXME: We want to consider transparency!
-            // And the possibility of a "Reverse screen" color
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
                     int index = (x + (y * width)) * 3;
 
-                    uint color = (uint)image[index + 0] << 0 | (uint)image[index + 1] << 8 | (uint)image[index + 2] << 16;
+                    uint mask = (uint)maskData[x + (y * width)] == 1 ? 0x00_FF_FF_FFu : 0x00_00_00_00u;
+                    uint color = (uint)colorData[index + 0] << 0 | (uint)colorData[index + 1] << 8 | (uint)colorData[index + 2] << 16;
 
                     int success;
-                    success = Win32.SetPixelV(hAndMaskDC, x, y, 0x00_00_00_00u);
+                    success = Win32.SetPixelV(hAndMaskDC, x, y, mask);
                     if (success == 0) throw new Win32Exception("AndMask SetPixel() failed.");
                     success = Win32.SetPixelV(hXorMaskDC, x, y, color);
                     if (success == 0) throw new Win32Exception("XorMask SetPixel() failed.");
@@ -369,12 +489,16 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             hcursor.HotSpotX = x;
             hcursor.HotSpotY = y;
 
+            // FIXME: Change the hotspot of the cursor.
+
             throw new NotImplementedException();
         }
 
         public void SetScale(CursorHandle handle, float horizontal, float vertical)
         {
-            throw new NotImplementedException();
+            HCursor hcursor = handle.As<HCursor>(this);
+
+            throw new NotSupportedException("Cannot scale cursor on windows.");
         }
     }
 }
