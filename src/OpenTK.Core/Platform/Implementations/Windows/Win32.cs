@@ -573,7 +573,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             public string szDevice;
         }
 
-        internal static extern bool EnumDisplaySettingsA(string lpszDeviceName, uint iModeNum, out DEVMODE lpDevMode);
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static extern bool EnumDisplaySettings(string lpszDeviceName, uint iModeNum, out DEVMODE lpDevMode);
 
         internal struct POINTL
         {
@@ -581,74 +582,39 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             public int Y;
         }
 
-        [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Ansi)]
         internal struct DEVMODE
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)]
-            [FieldOffset(0)]
             public string dmDeviceName;
-            [FieldOffset(32)]
-            public short dmSpecVersion;
-            [FieldOffset(34)]
-            public short dmDriverVersion;
-            [FieldOffset(36)]
-            public short dmSize;
-            [FieldOffset(38)]
-            public short dmDriverExtra;
-            [FieldOffset(40)]
-            public DM dmFields;
-
-            [FieldOffset(44)]
-            public short dmOrientation;
-            [FieldOffset(46)]
-            public short dmPaperSize;
-            [FieldOffset(48)]
-            public short dmPaperLength;
-            [FieldOffset(50)]
-            public short dmPaperWidth;
-            [FieldOffset(52)]
-            public short dmScale;
-            [FieldOffset(54)]
-            public short dmCopies;
-            [FieldOffset(56)]
-            public short dmDefaultSource;
-            [FieldOffset(58)]
-            public short dmPrintQuality;
-
-            [FieldOffset(44)]
+            public ushort dmSpecVersion;
+            public ushort dmDriverVersion;
+            public ushort dmSize;
+            public ushort dmDriverExtra;
+            public uint dmFields;
             public POINTL dmPosition;
-            [FieldOffset(52)]
-            public int dmDisplayOrientation;
-            [FieldOffset(56)]
-            public int dmDisplayFixedOutput;
-
-            [FieldOffset(60)]
-            public short dmColor; // See note below!
-            [FieldOffset(62)]
-            public short dmDuplex; // See note below!
-            [FieldOffset(64)]
+            public uint dmDisplayOrientation;
+            public uint dmDisplayFixedOutput;
+            public short dmColor;
+            public short dmDuplex;
             public short dmYResolution;
-            [FieldOffset(66)]
             public short dmTTOption;
-            [FieldOffset(68)]
-            public short dmCollate; // See note below!
-            [FieldOffset(70)]
+            public short dmCollate;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHFORMNAME)]
             public string dmFormName;
-            [FieldOffset(102)]
-            public short dmLogPixels;
-            [FieldOffset(104)]
-            public int dmBitsPerPel;
-            [FieldOffset(108)]
-            public int dmPelsWidth;
-            [FieldOffset(112)]
-            public int dmPelsHeight;
-            [FieldOffset(116)]
-            public int dmDisplayFlags;
-            [FieldOffset(116)]
-            public int dmNup;
-            [FieldOffset(120)]
-            public int dmDisplayFrequency;
+            public ushort dmLogPixels;
+            public uint dmBitsPerPel;
+            public uint dmPelsWidth;
+            public uint dmPelsHeight;
+            public uint dmDisplayFlags;
+            public uint dmDisplayFrequency;
+            public uint dmICMMethod;
+            public uint dmICMIntent;
+            public uint dmMediaType;
+            public uint dmDitherType;
+            public uint dmReserved1;
+            public uint dmReserved2;
+            public uint dmPanningWidth;
+            public uint dmPanningHeight;
         }
     }
 }

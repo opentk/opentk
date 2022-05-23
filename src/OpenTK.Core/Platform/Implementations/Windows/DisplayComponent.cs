@@ -39,6 +39,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             {
                 throw new Exception("EnumDisplayMonitors failed.");
             }
+
+            const uint ENUM_CURRENT_SETTINGS = unchecked((uint)-1);
+            Win32.EnumDisplaySettings(null, ENUM_CURRENT_SETTINGS, out var lpDevMode);
+
+            Console.WriteLine(lpDevMode.dmDeviceName);
         }
 
         public bool CanSetVideoMode => throw new NotImplementedException();

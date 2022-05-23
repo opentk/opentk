@@ -30,6 +30,8 @@ public class Program
 
         dispComp.Initialize(PalComponents.Display);
 
+        Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
+
         handle = windowComp.Create();
 
         windowComp.SetTitle(handle, "Cool test window");

@@ -1087,7 +1087,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         NOYIELD = 2,
     }
 
-    public enum SystemMetric : int
+    internal enum SystemMetric : int
     {
         /// <summary>
         /// The flags that specify how the system arranged minimized windows. For more information, see the Remarks section in this topic.
@@ -1624,6 +1624,99 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         /// The CYVIRTUALSCREEN metric is the height of the virtual screen.
         /// </summary>
         YVirtualScreen = 77,
+    }
+
+    internal enum DM
+    {
+        /// <summary> dmOrientation member is present </summary>
+        Orientation = 0x00000001,
+
+        /// <summary> dmPaperSize member is present </summary>
+        PaperSize = 0x00000002,
+
+        /// <summary> dmPaperength member is present </summary>
+        Paperength = 0x00000004,
+
+        /// <summary> dmPaperWidth member is present </summary>
+        PaperWidth = 0x00000008,
+
+        /// <summary> dmScale member is present </summary>
+        Scale = 0x00000010,
+
+        /// <summary> dmCopies member is present </summary>
+        Copies = 0x00000100,
+
+        /// <summary> dmDefaultSource member is present </summary>
+        DefaultSource = 0x00000200,
+
+        /// <summary> dmPrintQuality member is present </summary>
+        PrintQuality = 0x00000400,
+
+        /// <summary> dmPosition member is present </summary>
+        Position = 0x00000020,
+
+        /// <summary> dmDisplayOrientation member is present </summary>
+        DisplayOrientation = 0x00000080,
+
+        /// <summary> dmDisplayFixedOutput member is present </summary>
+        DisplayFixedOutput = 0x20000000,
+
+        /// <summary> dmColor member is present </summary>
+        Color = 0x00000800,
+
+        /// <summary> dmDuplex member is present </summary>
+        Duplex = 0x00001000,
+
+        /// <summary> dmYResolution member is present </summary>
+        YResolution = 0x00002000,
+
+        /// <summary> dmTTOption member is present </summary>
+        TTOption = 0x00004000,
+
+        /// <summary> dmCollate member is present </summary>
+        Collate = 0x00008000,
+
+        /// <summary> dmFormName member is present </summary>
+        FormName = 0x00010000,
+
+        /// <summary> dmogPixels member is present </summary>
+        ogPixels = 0x00020000,
+
+        /// <summary> dmBitsPerPel member is present </summary>
+        BitsPerPel = 0x00040000,
+
+        /// <summary> dmPelsWidth member is present </summary>
+        PelsWidth = 0x00080000,
+
+        /// <summary> dmPelsHeight member is present </summary>
+        PelsHeight = 0x00100000,
+
+        /// <summary> dmDisplayFlags member is present </summary>
+        DisplayFlags = 0x00200000,
+
+        /// <summary> dmNup member is present </summary>
+        Nup = 0x00000040,
+
+        /// <summary> dmDisplayFrequency member is present </summary>
+        DisplayFrequency = 0x00400000,
+
+        /// <summary> dmICMMethod member is present </summary>
+        ICMMethod = 0x00800000,
+
+        /// <summary> dmICMIntent member is present </summary>
+        ICMIntent = 0x01000000,
+
+        /// <summary> dmMediaType member is present </summary>
+        MediaType = 0x02000000,
+
+        /// <summary> dmDitherType member is present </summary>
+        DitherType = 0x04000000,
+
+        /// <summary> dmPanningWidth member is present </summary>
+        PanningWidth = 0x08000000,
+
+        /// <summary> dmPanningHeight member is present </summary>
+        PanningHeight = 0x10000000,
     }
 
     /// <summary>
