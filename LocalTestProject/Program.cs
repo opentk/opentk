@@ -122,8 +122,7 @@ public class Program
         windowComp.SetCursor(handle, ImageCursorHandle);
 
         FileCursorHandle = cursorComp.Create();
-        //cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");
-        cursorComp.Load(FileCursorHandle, "OpenTK.Core.xml");
+        cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");
         windowComp.SetCursor(handle, FileCursorHandle);
 
         {
