@@ -14,6 +14,120 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public PalComponents Provides => PalComponents.Display;
 
+        private List<HMonitor> _displays = new List<HMonitor>();
+
+        private IntPtr FindMonitorHandle(string adapterName)
+        {
+            IntPtr monitorHandle = default;
+
+            bool FindHandleCallback(IntPtr hMonitor, IntPtr hdcMonitor, ref Win32.RECT lprcMonitor, IntPtr dwData)
+            {
+                Win32.MONITORINFOEX info = default;
+                info.cbSize = (uint)Marshal.SizeOf<Win32.MONITORINFOEX>();
+                if (Win32.GetMonitorInfo(hMonitor, ref info))
+                {
+                    if (adapterName == info.szDevice)
+                    {
+                        monitorHandle = hMonitor;
+                    }
+                }
+
+                return true;
+            }
+
+            bool success = Win32.EnumDisplayMonitors(IntPtr.Zero, in Unsafe.NullRef<Win32.RECT>(), FindHandleCallback, IntPtr.Zero);
+            if (success == false)
+            {
+                throw new Exception("EnumDisplayMonitors failed.");
+            }
+
+            return monitorHandle;
+        }
+
+        internal void UpdateMonitors()
+        {
+            List<HMonitor> newDisplays = new List<HMonitor>();
+
+            const uint ENUM_CURRENT_SETTINGS = unchecked((uint)-1);
+
+            Win32.DISPLAY_DEVICE adapter = default;
+            adapter.cb = (uint)Marshal.SizeOf<Win32.DISPLAY_DEVICE>();
+            const int EDD_GET_DEVICE_INTERFACE_NAME = 0x00000001;
+            for (uint index = 0; Win32.EnumDisplayDevices(null, index, ref adapter, EDD_GET_DEVICE_INTERFACE_NAME); index++)
+            {
+                if (adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.Active) == false)
+                {
+                    continue;
+                }
+
+                // Console.WriteLine($"Adapter Name: {adapter.DeviceName}");
+                // Console.WriteLine($"Adapter String: {adapter.DeviceString}");
+                // Console.WriteLine($"Adapter State flags: {adapter.StateFlags}");
+
+                // Create/Update the cache of display settigns data
+                Win32.DEVMODE lpDevMode = default;
+                lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+                Win32.EnumDisplaySettings(adapter.DeviceName, 0, ref lpDevMode);
+
+                lpDevMode = default;
+                lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+                if (Win32.EnumDisplaySettings(adapter.DeviceName, ENUM_CURRENT_SETTINGS, ref lpDevMode))
+                {
+                    // Console.WriteLine("Current settings:");
+                    // Console.WriteLine($"  DeviceName: {lpDevMode.dmDeviceName}");
+                    // Console.WriteLine($"  Position: {lpDevMode.dmPosition}");
+                    // Console.WriteLine($"  BitsPerPel: {lpDevMode.dmBitsPerPel}");
+                    // Console.WriteLine($"  PelsWidth: {lpDevMode.dmPelsWidth}");
+                    // Console.WriteLine($"  PelsHeight: {lpDevMode.dmPelsHeight}");
+                    // Console.WriteLine($"  DisplayFrequency: {lpDevMode.dmDisplayFrequency}");
+                    // Console.WriteLine($"  DisplayFlags: {lpDevMode.dmDisplayFlags}");
+                    // Console.WriteLine("  " + lpDevMode.dmFields);
+                }
+
+                IntPtr hMonitor = FindMonitorHandle(adapter.DeviceName);
+
+                Win32.RECT workArea = default;
+
+                Win32.MONITORINFOEX monitorInfo = default;
+                monitorInfo.cbSize = (uint)Marshal.SizeOf<Win32.MONITORINFOEX>();
+                if (Win32.GetMonitorInfo(hMonitor, ref monitorInfo))
+                {
+                    workArea = monitorInfo.rcWork;
+                }
+
+                Win32.DISPLAY_DEVICE monitor = default;
+                monitor.cb = (uint)Marshal.SizeOf<Win32.DISPLAY_DEVICE>();
+
+                for (uint monitorIndex = 0; Win32.EnumDisplayDevices(adapter.DeviceName, monitorIndex, ref monitor, 0); monitorIndex++)
+                {
+                    // Console.WriteLine($"  Monitor: {monitor.DeviceName}");
+                    // Console.WriteLine($"  Monitor String: {monitor.DeviceString}");
+                    // Console.WriteLine($"  Monitor State Flags: {monitor.StateFlags}");
+
+                    HMonitor info = new HMonitor()
+                    {
+                        Monitor = hMonitor,
+                        Name = monitor.DeviceString,
+                        IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
+                        Position = lpDevMode.dmPosition,
+                        RefreshRate = (int)lpDevMode.dmDisplayFrequency,
+                        Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
+                        DpiX = -1,
+                        DpiY = -1,
+                        WorkArea = workArea,
+                    };
+
+                    newDisplays.Add(info);
+
+                    monitorIndex++;
+                }
+            }
+
+            // FIXME: Do a diff of the monitors and call relevant functions!!
+            _displays.Clear();
+            _displays.AddRange(newDisplays);
+        }
+
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Display)
@@ -21,34 +135,12 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                 throw new Exception("DisplayComponent can only initialize the Display component.");
             }
 
-            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
-
-            static bool Callback(IntPtr hMonitor, IntPtr hdcMonitor, ref Win32.RECT lprcMonitor, IntPtr dwData)
-            {
-                Win32.MONITORINFOEX info = default;
-                info.cbSize = (uint)Marshal.SizeOf<Win32.MONITORINFOEX>();
-                Win32.GetMonitorInfo(hMonitor, ref info);
-
-                Console.WriteLine("Device: " + info.szDevice);
-
-                return true;
-            }
-
-            bool success = Win32.EnumDisplayMonitors(IntPtr.Zero, in Unsafe.NullRef<Win32.RECT>(), Callback, IntPtr.Zero);
-            if (success == false)
-            {
-                throw new Exception("EnumDisplayMonitors failed.");
-            }
-
-            const uint ENUM_CURRENT_SETTINGS = unchecked((uint)-1);
-            Win32.EnumDisplaySettings(null, ENUM_CURRENT_SETTINGS, out var lpDevMode);
-
-            Console.WriteLine(lpDevMode.dmDeviceName);
+            UpdateMonitors();
         }
 
         public bool CanSetVideoMode => throw new NotImplementedException();
 
-        public bool CanGetVirtualPosition => throw new NotImplementedException();
+        public bool CanGetVirtualPosition => true;
 
         public bool CanGetDisplaySize => throw new NotImplementedException();
 
@@ -71,23 +163,43 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public DisplayHandle CreatePrimary()
         {
-            throw new NotImplementedException();
+            for (int i = 0; i < _displays.Count; i++)
+            {
+                if (_displays[i].IsPrimary)
+                {
+                    return _displays[i];
+                }
+            }
+
+            return null;
         }
 
         // FIXME: You probably also don't Destroy a monitor
         public void Destroy(DisplayHandle handle)
         {
-            throw new NotImplementedException();
+            // We basically don't need to do anything here.
+            // Just check that we got the right kind of handle back.
+            HMonitor hmonitor = handle.As<HMonitor>(this);
         }
 
         public string GetName(DisplayHandle handle)
         {
-            throw new NotImplementedException();
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.Name;
         }
 
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
         {
-            throw new NotImplementedException();
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            // FIXME: DPI
+            mode = new VideoMode(
+                hmonitor.Resolution.ResolutionX,
+                hmonitor.Resolution.ResolutionY,
+                hmonitor.RefreshRate,
+                1,
+                96);
         }
 
         public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
@@ -112,7 +224,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
         {
-            throw new NotImplementedException();
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            x = hmonitor.Position.X;
+            y = hmonitor.Position.Y;
         }
     }
 }

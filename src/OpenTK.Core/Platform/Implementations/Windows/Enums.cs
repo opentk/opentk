@@ -1626,7 +1626,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         YVirtualScreen = 77,
     }
 
-    internal enum DM
+    [Flags]
+    internal enum DM : uint
     {
         /// <summary> dmOrientation member is present </summary>
         Orientation = 0x00000001,
@@ -1717,6 +1718,85 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         /// <summary> dmPanningHeight member is present </summary>
         PanningHeight = 0x10000000,
+    }
+
+    internal enum DMDFO : uint
+    {
+        /// <summary>
+        /// The display's default setting.
+        /// </summary>
+        DMDFO_DEFAULT = 0,
+
+        /// <summary>
+        /// The low-resolution image is centered in the larger screen space.
+        /// </summary>
+        DMDFO_CENTER = 1,
+
+        /// <summary>
+        /// The low-resolution image is stretched to fill the larger screen space.
+        /// </summary>
+        DMDFO_STRETCH = 2,
+    }
+
+    [Flags]
+    internal enum DisplayDeviceStateFlags : uint
+    {
+        /// <summary>
+        /// <see cref="Active"/> specifies whether a monitor
+        /// is presented as being "on" by the respective GDI view.
+        ///
+        /// Windows Vista:
+        /// EnumDisplayDevices will only enumerate monitors that
+        /// can be presented as being "on."
+        /// </summary>
+        Active = 0x00000001,
+
+        /// <summary>
+        /// TODO: Find documentation.
+        /// </summary>
+        MultiDriver = 0x00000002,
+
+        /// <summary>
+        /// Represents a pseudo device used to mirror application
+        /// drawing for remoting or other purposes.
+        /// An invisible pseudo monitor is associated with this device.
+        /// For example, NetMeeting uses it.
+        /// Note that GetSystemMetrics (<see cref="SystemMetric.CMonitors"/>)
+        /// only accounts for visible display monitors.
+        /// </summary>
+        MirroringDriver = 0x00000008,
+
+        /// <summary>
+        /// The device has more display modes than its output devices support.
+        /// </summary>
+        ModesPruned = 0x08000000,
+
+        /// <summary>
+        /// The primary desktop is on the device.
+        /// For a system with a single display card, this is always set.
+        /// For a system with multiple display cards, only one device can have this set.
+        /// </summary>
+        PrimaryDevice = 0x00000004,
+
+        /// <summary>
+        /// The device is removable; it cannot be the primary display.
+        /// </summary>
+        Removable = 0x00000020,
+
+        /// <summary>
+        /// The device is VGA compatible.
+        /// </summary>
+        VGACompatible = 0x00000010,
+
+        /// <summary>
+        /// TODO: Find documentation.
+        /// </summary>
+        Remote = 0x04000000,
+
+        /// <summary>
+        /// TODO: Find documentation.
+        /// </summary>
+        Disconnect = 0x02000000,
     }
 
     /// <summary>

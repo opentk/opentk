@@ -71,6 +71,27 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         }
     }
 
+    internal class HMonitor : DisplayHandle
+    {
+        public IntPtr Monitor { get; set; }
+
+        public string Name { get; set; }
+
+        public bool IsPrimary { get; set; }
+
+        public Win32.POINTL Position { get; set; }
+
+        public DisplayResolution Resolution { get; set; }
+
+        public Win32.RECT WorkArea { get; set; }
+
+        public int RefreshRate { get; set; }
+
+        public int DpiX { get; set; }
+
+        public int DpiY { get; set; }
+    }
+
     internal class Win32EventQueue : IEventQueue<WindowEventType, WindowEventArgs>
     {
         public event QueueEventHandler<WindowEventType, WindowEventArgs> EventRaised;

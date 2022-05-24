@@ -30,6 +30,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal const int CCHDEVICENAME = 32;
         internal const int CCHFORMNAME = 32;
 
+        internal const int EDD_GET_DEVICE_INTERFACE_NAME = 0x00000001;
+
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam);
 
@@ -110,6 +112,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             {
                 this.X = x;
                 this.Y = y;
+            }
+
+            public override string ToString()
+            {
+                return $"({X}, {Y})";
             }
         }
 
@@ -550,10 +557,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         internal delegate bool EnumMonitorsDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        internal static extern bool GetMonitorInfo(IntPtr /* HMONITOR */ hMonitor, ref MONITORINFO lpmi);
+        internal static extern bool GetMonitorInfo(IntPtr /* HMONITOR */ hMonitor, [In, Out] ref MONITORINFO lpmi);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        internal static extern bool GetMonitorInfo(IntPtr /* HMONITOR */ hMonitor, ref MONITORINFOEX lpmi);
+        internal static extern bool GetMonitorInfo(IntPtr /* HMONITOR */ hMonitor, [In, Out] ref MONITORINFOEX lpmi);
 
         internal struct MONITORINFO
         {
@@ -563,6 +570,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             public uint dwFlags;
         }
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct MONITORINFOEX
         {
             public uint cbSize;
@@ -574,14 +582,20 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        internal static extern bool EnumDisplaySettings(string lpszDeviceName, uint iModeNum, out DEVMODE lpDevMode);
+        internal static extern bool EnumDisplaySettings(string lpszDeviceName, uint iModeNum, [In, Out] ref DEVMODE lpDevMode);
 
         internal struct POINTL
         {
             public int X;
             public int Y;
+
+            public override string ToString()
+            {
+                return $"({X}, {Y})";
+            }
         }
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct DEVMODE
         {
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)]
@@ -590,10 +604,10 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             public ushort dmDriverVersion;
             public ushort dmSize;
             public ushort dmDriverExtra;
-            public uint dmFields;
+            public DM dmFields;
             public POINTL dmPosition;
             public uint dmDisplayOrientation;
-            public uint dmDisplayFixedOutput;
+            public DMDFO dmDisplayFixedOutput;
             public short dmColor;
             public short dmDuplex;
             public short dmYResolution;
@@ -615,6 +629,24 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             public uint dmReserved2;
             public uint dmPanningWidth;
             public uint dmPanningHeight;
+        }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, [In, Out] ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        internal struct DISPLAY_DEVICE
+        {
+            public uint cb;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string DeviceName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceString;
+            public DisplayDeviceStateFlags StateFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceID;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
+            public string DeviceKey;
         }
     }
 }

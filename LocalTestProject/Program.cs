@@ -13,6 +13,8 @@ public class Program
     static WindowComponent windowComp;
     static WindowHandle handle;
 
+    static DisplayHandle PrimaryDisplayHandle;
+
     static IMouseComponent mouseComp = new MouseComponent();
     static ICursorComponent cursorComp = new CursorComponent();
 
@@ -29,6 +31,18 @@ public class Program
         windowComp.Initialize(PalComponents.Window);
 
         dispComp.Initialize(PalComponents.Display);
+
+        {
+            PrimaryDisplayHandle = dispComp.CreatePrimary();
+            string name = dispComp.GetName(PrimaryDisplayHandle);
+            dispComp.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
+            Console.WriteLine($"Primary monitor name: {name}");
+            Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
+            Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
+            Console.WriteLine($"  Scale: {videoMode.Scale}");
+            Console.WriteLine($"  Dpi: {videoMode.Dpi}");
+        }
+        
 
         Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
 

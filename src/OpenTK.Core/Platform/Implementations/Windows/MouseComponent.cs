@@ -56,7 +56,8 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         /// <inheritdoc/>
         public void GetPosition(MouseHandle handle, out int x, out int y)
         {
-            // FIXME: Check the mouse handle!
+            // FIXME: Check the handle!
+
             bool success = Win32.GetCursorPos(out Win32.POINT lpPoint);
             if (success == false)
             {
@@ -70,7 +71,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         /// <inheritdoc/>
         public void SetPosition(MouseHandle handle, int x, int y)
         {
-            // FIXME: Check the mouse handle!
+            // FIXME: Check the handle!
 
             bool success = Win32.SetCursorPos(x, y);
             if (success == false)
