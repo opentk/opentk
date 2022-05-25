@@ -2837,6 +2837,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -4620,6 +4624,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -8193,6 +8201,16 @@
       <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
+    </enum>
+    <enum name="SubgroupSupportedFeatures">
+      <token name="SUBGROUP_FEATURE_BASIC_BIT_KHR" value="0x00000001" />
+      <token name="SUBGROUP_FEATURE_VOTE_BIT_KHR" value="0x00000002" />
+      <token name="SUBGROUP_FEATURE_ARITHMETIC_BIT_KHR" value="0x00000004" />
+      <token name="SUBGROUP_FEATURE_BALLOT_BIT_KHR" value="0x00000008" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_BIT_KHR" value="0x00000010" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT_KHR" value="0x00000020" />
+      <token name="SUBGROUP_FEATURE_CLUSTERED_BIT_KHR" value="0x00000040" />
+      <token name="SUBGROUP_FEATURE_QUAD_BIT_KHR" value="0x00000080" />
     </enum>
     <enum name="VertexArrayPName">
       <token name="VERTEX_ATTRIB_ARRAY_ENABLED" value="0x8622" />
@@ -33358,6 +33376,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -33990,6 +34012,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -36236,6 +36262,16 @@
       <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
+    </enum>
+    <enum name="SubgroupSupportedFeatures">
+      <token name="SUBGROUP_FEATURE_BASIC_BIT_KHR" value="0x00000001" />
+      <token name="SUBGROUP_FEATURE_VOTE_BIT_KHR" value="0x00000002" />
+      <token name="SUBGROUP_FEATURE_ARITHMETIC_BIT_KHR" value="0x00000004" />
+      <token name="SUBGROUP_FEATURE_BALLOT_BIT_KHR" value="0x00000008" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_BIT_KHR" value="0x00000010" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT_KHR" value="0x00000020" />
+      <token name="SUBGROUP_FEATURE_CLUSTERED_BIT_KHR" value="0x00000040" />
+      <token name="SUBGROUP_FEATURE_QUAD_BIT_KHR" value="0x00000080" />
     </enum>
     <enum name="VertexArrayPName">
       <token name="VERTEX_ATTRIB_ARRAY_ENABLED" value="0x8622" />
@@ -50517,6 +50553,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -51330,6 +51370,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -53304,6 +53348,16 @@
       <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
+    </enum>
+    <enum name="SubgroupSupportedFeatures">
+      <token name="SUBGROUP_FEATURE_BASIC_BIT_KHR" value="0x00000001" />
+      <token name="SUBGROUP_FEATURE_VOTE_BIT_KHR" value="0x00000002" />
+      <token name="SUBGROUP_FEATURE_ARITHMETIC_BIT_KHR" value="0x00000004" />
+      <token name="SUBGROUP_FEATURE_BALLOT_BIT_KHR" value="0x00000008" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_BIT_KHR" value="0x00000010" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT_KHR" value="0x00000020" />
+      <token name="SUBGROUP_FEATURE_CLUSTERED_BIT_KHR" value="0x00000040" />
+      <token name="SUBGROUP_FEATURE_QUAD_BIT_KHR" value="0x00000080" />
     </enum>
     <enum name="VertexArrayPName">
       <token name="VERTEX_ATTRIB_ARRAY_ENABLED" value="0x8622" />
@@ -56845,6 +56899,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -58183,6 +58241,10 @@
       <token name="SHADING_RATE_IMAGE_PER_PRIMITIVE_NV" value="0x95B1" />
       <token name="SHADING_RATE_IMAGE_PALETTE_COUNT_NV" value="0x95B2" />
       <token name="REPRESENTATIVE_FRAGMENT_TEST_NV" value="0x937F" />
+      <token name="SUBGROUP_SIZE_KHR" value="0x9532" />
+      <token name="SUBGROUP_SUPPORTED_STAGES_KHR" value="0x9533" />
+      <token name="SUBGROUP_SUPPORTED_FEATURES_KHR" value="0x9534" />
+      <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
     </enum>
@@ -61086,6 +61148,16 @@
       <token name="TASK_SHADER_BIT_NV" value="0x00000080" />
       <token name="ALL_SHADER_BITS" value="0xFFFFFFFF" />
       <token name="ALL_SHADER_BITS_EXT" value="0xFFFFFFFF" />
+    </enum>
+    <enum name="SubgroupSupportedFeatures">
+      <token name="SUBGROUP_FEATURE_BASIC_BIT_KHR" value="0x00000001" />
+      <token name="SUBGROUP_FEATURE_VOTE_BIT_KHR" value="0x00000002" />
+      <token name="SUBGROUP_FEATURE_ARITHMETIC_BIT_KHR" value="0x00000004" />
+      <token name="SUBGROUP_FEATURE_BALLOT_BIT_KHR" value="0x00000008" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_BIT_KHR" value="0x00000010" />
+      <token name="SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT_KHR" value="0x00000020" />
+      <token name="SUBGROUP_FEATURE_CLUSTERED_BIT_KHR" value="0x00000040" />
+      <token name="SUBGROUP_FEATURE_QUAD_BIT_KHR" value="0x00000080" />
     </enum>
     <enum name="VertexArrayPName">
       <token name="VERTEX_ATTRIB_ARRAY_ENABLED" value="0x8622" />
