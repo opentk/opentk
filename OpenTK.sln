@@ -79,6 +79,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Graphics", "src\Open
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalTestProject", "LocalTestProject\LocalTestProject.csproj", "{1639B5D6-8111-41B0-AE52-D24EC5C42A91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "X11TestProject", "tests\X11TestProject\X11TestProject.csproj", "{4736086B-634E-459B-BCC4-88BCCDD4B218}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Platform.Native", "src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj", "{0EF16A44-F4CF-40F6-9AA4-296018E8D700}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -153,6 +157,14 @@ Global
 		{1639B5D6-8111-41B0-AE52-D24EC5C42A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1639B5D6-8111-41B0-AE52-D24EC5C42A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1639B5D6-8111-41B0-AE52-D24EC5C42A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4736086B-634E-459B-BCC4-88BCCDD4B218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4736086B-634E-459B-BCC4-88BCCDD4B218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4736086B-634E-459B-BCC4-88BCCDD4B218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4736086B-634E-459B-BCC4-88BCCDD4B218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EF16A44-F4CF-40F6-9AA4-296018E8D700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EF16A44-F4CF-40F6-9AA4-296018E8D700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EF16A44-F4CF-40F6-9AA4-296018E8D700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EF16A44-F4CF-40F6-9AA4-296018E8D700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -169,6 +181,7 @@ Global
 		{172C1E62-DA67-4203-BBCB-9DA4D9111EF0} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{A31363E2-783D-4F6A-B447-130E7A344442} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{1639B5D6-8111-41B0-AE52-D24EC5C42A91} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{4736086B-634E-459B-BCC4-88BCCDD4B218} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
