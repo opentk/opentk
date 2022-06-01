@@ -16,7 +16,7 @@ namespace X11TestProject
             IWindowComponent windowComponent = layer;
             XWindowHandle window = (XWindowHandle)layer.Create();
 
-            XSelectInput(layer.Display, window.Window, (1 << 15) | (1 << 2) | (1 << 0));
+            XSelectInput(layer.Display, window.Window, XEventMask.All);
 
             XGC gc = XCreateGC(layer.Display, window.Window, 0, IntPtr.Zero);
             XSetBackground(layer.Display, gc, XWhitePixel(layer.Display, XDefaultScreen(layer.Display)));
@@ -26,11 +26,13 @@ namespace X11TestProject
             XMapRaised(layer.Display, window.Window);
 
 
-            IntPtr arr = Marshal.AllocHGlobal(1024);
+            XEvent ea;
             for (;;)
             {
-                XNextEvent(layer.Display, arr);
+                XNextEvent(layer.Display, out ea);
                 XClearWindow(layer.Display, window.Window);
+
+                Console.WriteLine(ea.Type);
             }
 
             layer.Destroy(window);

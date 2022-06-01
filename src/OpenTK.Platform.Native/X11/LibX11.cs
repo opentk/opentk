@@ -49,7 +49,7 @@ namespace OpenTK.Platform.Native.X11
             ref XSetWindowAttributes attributes);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, long events);
+        public static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, XEventMask events);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XWindow XDefaultRootWindow(XDisplayPtr display);
@@ -91,6 +91,6 @@ namespace OpenTK.Platform.Native.X11
         public static extern int XCloseDisplay(XDisplayPtr display);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int XNextEvent(XDisplayPtr display, IntPtr @event);
+        public static extern int XNextEvent(XDisplayPtr display, out XEvent @event);
     }
 }
