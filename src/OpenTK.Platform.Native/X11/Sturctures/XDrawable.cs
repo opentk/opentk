@@ -10,5 +10,10 @@ namespace OpenTK.Platform.Native.X11
         {
             Id = id;
         }
+
+        public static implicit operator XDrawable(XWindow window)
+        {
+            return new XDrawable(window.Id);
+        }
     }
 }

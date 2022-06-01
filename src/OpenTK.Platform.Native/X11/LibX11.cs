@@ -9,10 +9,9 @@ namespace OpenTK.Platform.Native.X11
     public static class LibX11
     {
         private const string X11 = "X11";
-        public static readonly XDisplayPtr DefaultDisplay = XOpenDisplay(null);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string name);
+        public static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string? name);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XDefaultScreen(XDisplayPtr display);

@@ -3,7 +3,7 @@ using OpenTK.Core.Platform;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public partial class X11AbstractionLayer
+    public partial class X11AbstractionLayer : IOpenGLComponent
     {
         public bool CanShareContexts => false;
         public bool CanCreateFromWindow => true;
@@ -13,7 +13,7 @@ namespace OpenTK.Platform.Native.X11
             throw new PalNotImplementedException(this);
         }
 
-        public OpenGLContextHandle CreateFromWindow()
+        public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
@@ -38,17 +38,7 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        public string[] GetSupportedExtensions(OpenGLContextHandle handle)
-        {
-            throw new NotImplementedException();
-        }
-
         public OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsExtensionSupported(OpenGLContextHandle handle, string name)
         {
             throw new NotImplementedException();
         }

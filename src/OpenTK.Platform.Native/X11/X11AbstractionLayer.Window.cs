@@ -1,26 +1,70 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using OpenTK.Core.Platform;
+using OpenTK.Platform.Native.X11;
+using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
     public partial class X11AbstractionLayer : IWindowComponent
     {
-        public bool CanSetIcon { get; }
-        public bool CanGetDisplay { get; }
-        public bool CanSetCursor { get; }
+        private XDisplayPtr _display;
+
+        public bool CanSetIcon => false;
+        public bool CanGetDisplay => false;
+        public bool CanSetCursor => false;
         public IReadOnlyList<WindowEventType> SupportedEvents { get; }
         public IReadOnlyList<WindowStyle> SupportedStyles { get; }
         public IReadOnlyList<WindowMode> SupportedModes { get; }
 
+        public XDisplayPtr Display => _display;
+
+        public void InitializeWindow()
+        {
+            // Later on we can replace this with a hint.
+            string? displayName = null;
+            _display = XOpenDisplay(displayName);
+
+            if (_display.Value == IntPtr.Zero)
+            {
+                throw new PalException(
+                    this,
+                    (displayName is null) ? "Could not open default X display."
+                                          : $"Could not open X display {displayName}."
+                    );
+            }
+        }
+
         public WindowHandle Create()
         {
-            throw new NotImplementedException();
+            int screen = XDefaultScreen(_display);
+            ulong black = XBlackPixel(_display, screen);
+            ulong white = XWhitePixel(_display, screen);
+            XWindow window = XCreateSimpleWindow(
+                _display,
+                XDefaultRootWindow(_display),
+                0, 0, 800, 600,
+                0,
+                black);
+
+            XSetStandardProperties(
+                _display,
+                window,
+                "OpenTK Window [Native:X11]",
+                "ICO_OPENTK",
+                XPixMap.None,
+                IntPtr.Zero,
+                0,
+                ref Unsafe.NullRef<XSizeHints>());
+
+            return new XWindowHandle(_display, window);
         }
 
         public void Destroy(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            var xhandle = handle.As<XWindowHandle>(this);
+            XDestroyWindow(xhandle.Display, xhandle.Window);
         }
 
         public string GetTitle(WindowHandle handle)
