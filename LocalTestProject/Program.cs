@@ -20,6 +20,8 @@ public class Program
 
     static IDisplayComponent dispComp = new DisplayComponent();
 
+    static IKeyboardComponent keyboardComp = new KeyboardComponent();
+
     static CursorHandle CursorHandle;
     static CursorHandle ImageCursorHandle;
     static CursorHandle FileCursorHandle;
@@ -31,6 +33,8 @@ public class Program
         windowComp.Initialize(PalComponents.Window);
 
         dispComp.Initialize(PalComponents.Display);
+
+        keyboardComp.Initialize(PalComponents.KeyboardInput);
 
         {
             PrimaryDisplayHandle = dispComp.CreatePrimary();
@@ -156,8 +160,40 @@ public class Program
 
     static bool enabled_sRGB = false;
     static bool is_ibeam = false;
+
+    static Vector2i MousePos = (0, 0);
     private static void EventQueue_EventRaised(object sender, WindowEventType type, WindowEventArgs arguments)
     {
+        if (type == WindowEventType.MouseMove)
+        {
+            MouseMoveEventArgs mouseMoveArgs = (MouseMoveEventArgs)arguments;
+
+            Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
+
+            MousePos = (mouseMoveArgs.DeltaX, mouseMoveArgs.DeltaY);
+
+            return;
+        }
+        else if (type == WindowEventType.MouseDown)
+        {
+            MouseButtonDownEventArgs mouseButtonDownArgs = (MouseButtonDownEventArgs)arguments;
+
+            Console.WriteLine($"Pressed Mouse Button: {mouseButtonDownArgs.Button}");
+            
+            if (mouseButtonDownArgs.Button == MouseButton.Button1)
+            {
+                keyboardComp.BeginIme(handle);
+
+                keyboardComp.SetImeRectangle(handle, MousePos.X, MousePos.Y, 0, 0);
+
+                keyboardComp.EndIme(handle);
+            }
+
+            return;
+        }
+
+        return;
+
         if (enabled_sRGB == false)
         {
             Console.WriteLine("Enabled sRGB");

@@ -26,4 +26,27 @@ namespace OpenTK.Core.Platform
             Extended = extended;
         }
     }
+
+    public class MouseMoveEventArgs : WindowEventArgs
+    {
+        public int DeltaX { get; private set; }
+
+        public int DeltaY { get; private set; }
+
+        public MouseMoveEventArgs(int deltaX, int deltaY)
+        {
+            DeltaX = deltaX;
+            DeltaY = deltaY;
+        }
+    }
+
+    public class MouseButtonDownEventArgs : WindowEventArgs
+    {
+        public MouseButton Button { get; private set; }
+
+        public MouseButtonDownEventArgs(MouseButton button)
+        {
+            Button = button;
+        }
+    }
 }

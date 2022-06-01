@@ -187,6 +187,33 @@ namespace OpenTK.Platform.Native.Windows
                             return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                         }
                     }
+                case WM.MOUSEMOVE:
+                    {
+                        int x = Win32.GET_X_LPARAM(lParam);
+                        int y = Win32.GET_Y_LPARAM(lParam);
+
+                        HWND h = HWndDict[hWnd];
+                        h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseMoveEventArgs(x, y));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.LBUTTONDOWN:
+                case WM.MBUTTONDOWN:
+                case WM.RBUTTONDOWN:
+                    {
+                        MouseButton button = message switch
+                        {
+                            WM.LBUTTONDOWN => MouseButton.Button1,
+                            WM.RBUTTONDOWN => MouseButton.Button2,
+                            WM.MBUTTONDOWN => MouseButton.Button3,
+                            _ => throw new InvalidEnumArgumentException(nameof(uMsg), (int)uMsg, typeof(WM)),
+                        };
+
+                        HWND h = HWndDict[hWnd];
+                        h.EventQueue.Send(h, WindowEventType.MouseDown, new MouseButtonDownEventArgs(button));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 case WM.CLOSE:
                     {
                         // FIXME: HACK! This is not the greatest way to get the WindowComponent...

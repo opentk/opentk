@@ -159,7 +159,10 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: You probably shouldn't "create" a monitor handle.
         public DisplayHandle Create(int index)
         {
-            throw new NotImplementedException();
+            if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"Monitor index cannot be negative. {index}");
+            if (index >= _displays.Count) throw new ArgumentOutOfRangeException(nameof(index), $"Monitor index cannot be larger or equal to the number of displays. Index: {index}, Display count: {_displays.Count}");
+
+            return _displays[index];
         }
 
         public DisplayHandle CreatePrimary()
@@ -220,6 +223,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public void GetDisplaySize(DisplayHandle handle, out float width, out float height)
         {
+
+
             throw new NotImplementedException();
         }
 

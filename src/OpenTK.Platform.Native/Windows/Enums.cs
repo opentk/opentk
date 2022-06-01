@@ -300,6 +300,41 @@ namespace OpenTK.Platform.Native.Windows
         VerticalRedraw = 0x1
     }
 
+    internal enum CFS : uint
+    {
+        /// <summary>
+        /// Move the composition window to the default position.
+        /// The IME window can display the composition window
+        /// outside the client area, such as in a floating window.
+        /// </summary>
+        CFS_DEFAULT = 0,
+
+        /// <summary>
+        /// Display the upper left corner of the composition window
+        /// at exactly the position specified by ptCurrentPos.
+        /// The coordinates are relative to the upper left corner
+        /// of the window containing the composition window
+        /// and are not subject to adjustment by the IME.
+        /// </summary>
+        CFS_FORCE_POSITION = 32,
+
+        /// <summary>
+        /// Display the upper left corner of the composition window
+        /// at the position specified by ptCurrentPos.
+        /// The coordinates are relative to the upper left corner
+        /// of the window containing the composition window
+        /// and are subject to adjustment by the IME.
+        /// </summary>
+        CFS_POINT = 2,
+
+        /// <summary>
+        /// Display the composition window at the position specified by rcArea.
+        /// The coordinates are relative to the upper left
+        /// of the window containing the composition window.
+        /// </summary>
+        CFS_RECT = 1,
+    }
+
     internal enum ShowWindowCommands
     {
         /// <summary>

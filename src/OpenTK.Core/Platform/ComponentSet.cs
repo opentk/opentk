@@ -630,21 +630,21 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IKeyboardComponent.BeginIme()
+        void IKeyboardComponent.BeginIme(WindowHandle window)
         {
-            _keyboardComponent!.BeginIme();
+            _keyboardComponent!.BeginIme(window);
         }
 
         /// <inheritdoc/>
-        void IKeyboardComponent.SetImeRectangle(int x, int y, int width, int height)
+        void IKeyboardComponent.SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
         {
-            _keyboardComponent!.SetImeRectangle(x, y, width, height);
+            _keyboardComponent!.SetImeRectangle(window, x, y, width, height);
         }
 
         /// <inheritdoc/>
-        void IKeyboardComponent.EndIme()
+        void IKeyboardComponent.EndIme(WindowHandle window)
         {
-            _keyboardComponent!.EndIme();
+            _keyboardComponent!.EndIme(window);
         }
 
         /// <inheritdoc/>

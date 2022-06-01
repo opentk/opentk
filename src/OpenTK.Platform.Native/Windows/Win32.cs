@@ -12,8 +12,11 @@ namespace OpenTK.Platform.Native.Windows
 {
     internal static unsafe class Win32
     {
-        internal const int LoWordMask = 0x00FF;
-        internal const int HiWordMask = 0xFF00;
+        internal const int LoWordMask = 0x0000_FFFF;
+        internal const int HiWordMask = unchecked((int)0xFFFF_0000);
+
+        internal static int GET_X_LPARAM(IntPtr lParam) => ((short)lParam & LoWordMask);
+        internal static int GET_Y_LPARAM(IntPtr lParam) => (((int)lParam >> 16) & LoWordMask);
 
         // FIXME: Potentially change HTCLIENT into an enum later.
 
@@ -647,6 +650,22 @@ namespace OpenTK.Platform.Native.Windows
             public string DeviceID;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
             public string DeviceKey;
+        }
+
+        [DllImport("imm32.dll", SetLastError = false)]
+        internal static extern IntPtr /* HIMC */ ImmGetContext(IntPtr /* HWND */ hwnd);
+
+        [DllImport("imm32.dll", SetLastError = false)]
+        internal static extern bool ImmReleaseContext(IntPtr /* HWND */ hwnd, IntPtr /* HIMC */ himc);
+
+        [DllImport("imm32.dll", SetLastError = false)]
+        internal static extern bool ImmSetCompositionWindow(IntPtr /* HIMC */ hmic, in COMPOSITIONFORM lpCompForm);
+
+        internal struct COMPOSITIONFORM
+        {
+            public CFS dwStyle;
+            public POINT ptCurrentPos;
+            public RECT rcArea;
         }
     }
 }
