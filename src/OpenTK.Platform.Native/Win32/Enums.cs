@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
     // FIXME: Make enum names consistent between all enums.
 

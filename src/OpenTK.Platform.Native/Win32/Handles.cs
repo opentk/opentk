@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Core.Platform;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
 #pragma warning disable SA1649 // File name should match first type name
     internal class HWND : WindowHandle

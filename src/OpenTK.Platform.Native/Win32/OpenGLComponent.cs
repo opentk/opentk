@@ -1,11 +1,12 @@
-﻿using System;
+﻿using OpenTK.Core.Platform;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
     public class OpenGLComponent : IOpenGLComponent
     {

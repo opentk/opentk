@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
     internal static unsafe class Win32
     {

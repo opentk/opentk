@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Core.Platform;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
     public class WindowComponent : IWindowComponent
     {

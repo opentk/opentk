@@ -138,6 +138,9 @@ namespace OpenTK.Core.Platform
         bool ICursorComponent.CanScaleCursor => _cursorComponent!.CanScaleCursor;
 
         /// <inheritdoc/>
+        bool ICursorComponent.CanSupportAnimatedCursor => _cursorComponent!.CanSupportAnimatedCursor;
+
+        /// <inheritdoc/>
         bool IIconComponent.CanLoadFile => _iconComponent!.CanLoadFile;
 
         /// <inheritdoc/>
@@ -282,6 +285,18 @@ namespace OpenTK.Core.Platform
         void IWindowComponent.SetCursor(WindowHandle handle, CursorHandle cursor)
         {
             _windowComponent!.SetCursor(handle, cursor);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        {
+            _windowComponent!.ScreenToClient(handle, x, y, out clientX, out clientY);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        {
+            _windowComponent!.ClientToScreen(handle, clientX, clientY, out x, out y);
         }
 
         /// <inheritdoc/>
@@ -459,6 +474,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void ICursorComponent.Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
+        {
+            _cursorComponent!.Load(handle, width, height, colorData, maskData);
+        }
+
+        /// <inheritdoc/>
         void ICursorComponent.Load(CursorHandle handle, string file)
         {
             _cursorComponent!.Load(handle, file);
@@ -528,12 +549,6 @@ namespace OpenTK.Core.Platform
         void IMouseComponent.SetPosition(MouseHandle handle, int x, int y)
         {
             _mouseComponent!.SetPosition(handle, x, y);
-        }
-
-        /// <inheritdoc/>
-        void IMouseComponent.SetCursor(MouseHandle handle, CursorHandle cursor)
-        {
-            _mouseComponent!.SetCursor(handle, cursor);
         }
 
         /// <inheritdoc/>
@@ -639,7 +654,7 @@ namespace OpenTK.Core.Platform
         bool IOpenGLComponent.CanCreateFromWindow => _openGLComponent!.CanCreateFromWindow;
 
         /// <inheritdoc/>
-        bool IOpenGLComponent.CanCreateFromSurface => _openGLComponent.CanCreateFromSurface;
+        bool IOpenGLComponent.CanCreateFromSurface => _openGLComponent!.CanCreateFromSurface;
 
         /// <inheritdoc/>
         OpenGLContextHandle IOpenGLComponent.CreateFromSurface()
@@ -648,9 +663,9 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        OpenGLContextHandle IOpenGLComponent.CreateFromWindow(WindowHandle handle)
+        OpenGLContextHandle IOpenGLComponent.CreateFromWindow(WindowHandle handle, ContextSettings settings)
         {
-            return _openGLComponent!.CreateFromWindow(handle);
+            return _openGLComponent!.CreateFromWindow(handle, settings);
         }
 
         /// <inheritdoc/>

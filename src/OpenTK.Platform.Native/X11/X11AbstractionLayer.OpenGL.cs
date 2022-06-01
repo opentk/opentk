@@ -13,7 +13,7 @@ namespace OpenTK.Platform.Native.X11
             throw new PalNotImplementedException(this);
         }
 
-        public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
+        public OpenGLContextHandle CreateFromWindow(WindowHandle handle, ContextSettings settings)
         {
             throw new NotImplementedException();
         }

@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
 #pragma warning disable SA1516 // Elements should be separated by blank line
 #pragma warning disable SA1401 // Fields should be private

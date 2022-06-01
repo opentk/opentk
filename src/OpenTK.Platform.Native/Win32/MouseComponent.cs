@@ -1,11 +1,12 @@
-﻿using System;
+﻿using OpenTK.Core.Platform;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
     /// <inheritdoc/>
     public class MouseComponent : IMouseComponent

@@ -157,6 +157,17 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
+        public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
         {
             throw new NotImplementedException();

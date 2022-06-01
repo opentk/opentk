@@ -1,7 +1,7 @@
 ﻿
 
 using OpenTK.Core.Platform;
-using OpenTK.Core.Platform.Implementations.Windows;
+using OpenTK.Platform.Native.Windows;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
