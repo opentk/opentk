@@ -10,8 +10,8 @@ namespace OpenTK.Core.Platform
     {
         public object MissmatchedHandle { get; private set; }
 
-        public HandleMismatchException(IPalComponent component, object missmatchedHandle)
-            : base(component, $"Expected handle of type {typeof(T)} but got handle of type {missmatchedHandle}")
+        public HandleMismatchException(IPalComponent component, object mismatchedHandle)
+            : base(component, $"Expected handle of type {typeof(T)} but got handle of type {mismatchedHandle}")
         {
         }
     }
