@@ -61,7 +61,7 @@ namespace OpenTK.Core.Platform
         /// <param name="api">The OpenGL variant the hints are for.</param>
         public OpenGLGraphicsApiHints(GraphicsApi api = GraphicsApi.OpenGL)
         {
-            if (api != GraphicsApi.OpenGL || api != GraphicsApi.OpenGLES)
+            if (api != GraphicsApi.OpenGL && api != GraphicsApi.OpenGLES)
             {
                 throw new Exception($"Cannot create OpenGL hints for graphics API {api}.");
             }
