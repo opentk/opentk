@@ -55,6 +55,12 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool DoubleBuffer { get; set; } = true; // TODO: Is it really necessary?
 
+        public OpenGLProfile Profile { get; set; } = OpenGLProfile.None;
+
+        public bool ForwardCompatible { get; set; } = false;
+
+        public bool DebugFlag { get; set; } = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGraphicsApiHints"/> class.
         /// </summary>

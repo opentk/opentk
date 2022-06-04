@@ -8,11 +8,14 @@ namespace OpenTK.Platform.Native.X11
     {
         public XDisplayPtr Display { get; }
         public XWindow Window { get; }
+        public GLXFBConfig? FBConfig { get; }
 
-        public XWindowHandle(XDisplayPtr display, XWindow window)
+        public XWindowHandle(XDisplayPtr display, XWindow window, GraphicsApiHints hints, GLXFBConfig? fbConfig = null)
         {
             Display = display;
             Window = window;
+            GraphicsApiHints = hints;
+            FBConfig = fbConfig;
         }
     }
 }

@@ -92,5 +92,12 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XNextEvent(XDisplayPtr display, out XEvent @event);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XFree(IntPtr pointer);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XColorMap XCreateColormap(XDisplayPtr display, XWindow window, ref XVisual visual,
+            int alloc);
     }
 }
