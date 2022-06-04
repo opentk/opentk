@@ -61,7 +61,7 @@ namespace OpenTK.Platform.Native.X11
             [MarshalAs(UnmanagedType.LPStr)]string windowName,
             [MarshalAs(UnmanagedType.LPStr)]string iconName,
             XPixMap iconPixmap,
-            IntPtr argv,    // char**
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[]? argv,
             int argc,
             ref XSizeHints hints);
 

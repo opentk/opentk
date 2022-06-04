@@ -54,7 +54,7 @@ namespace OpenTK.Platform.Native.X11
                 "OpenTK Window [Native:X11]",
                 "ICO_OPENTK",
                 XPixMap.None,
-                IntPtr.Zero,
+                null,
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
 
