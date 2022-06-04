@@ -165,9 +165,9 @@ namespace OpenTK.Core.Platform
         IReadOnlyList<WindowMode> IWindowComponent.SupportedModes => _windowComponent!.SupportedModes;
 
         /// <inheritdoc/>
-        WindowHandle IWindowComponent.Create()
+        WindowHandle IWindowComponent.Create(GraphicsApiHints hints)
         {
-            return _windowComponent!.Create();
+            return _windowComponent!.Create(hints);
         }
 
         /// <inheritdoc/>

@@ -36,7 +36,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        public WindowHandle Create()
+        public WindowHandle Create(GraphicsApiHints hints)
         {
             int screen = XDefaultScreen(_display);
             ulong black = XBlackPixel(_display, screen);

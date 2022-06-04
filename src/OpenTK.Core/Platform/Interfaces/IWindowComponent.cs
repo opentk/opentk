@@ -41,8 +41,9 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Create a window object.
         /// </summary>
+        /// <param name="hints">Graphics API hints to be passed to the operating system.</param>
         /// <returns>Handle to the new window object.</returns>
-        WindowHandle Create();
+        WindowHandle Create(GraphicsApiHints hints = null);
 
         /// <summary>
         /// Destroy a window object.
