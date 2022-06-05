@@ -243,6 +243,30 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Inflates this Box2i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
+        /// </summary>
+        /// <param name="size">The size to inflate by.</param>
+        public void Inflate(Vector2i size)
+        {
+            size = Vector2i.ComponentMax(size, -HalfSize);
+            _min -= size;
+            _max += size;
+        }
+
+        /// <summary>
+        /// Inflates this Box2i by the given size in all directions. A negative size will shrink the box to a maximum of -HalfSize.
+        /// </summary>
+        /// <param name="size">The size to inflate by.</param>
+        /// <returns>The inflated box.</returns>
+        public Box2i Inflated(Vector2i size)
+        {
+            // create a local copy of this box
+            Box2i box = this;
+            box.Inflate(size);
+            return box;
+        }
+
+        /// <summary>
         /// Inflate this Box2i to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>

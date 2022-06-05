@@ -155,6 +155,16 @@ module Box2 =
             Assert.Equal(b, b1.Translated(v1))
             
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Inflate =
+        [<Property>]
+        let ``Box2.Inflate is equivalent to Box2.Inflated`` (b1 : Box2, v1 : Vector2) =
+            let mutable b = b1
+            
+            b.Inflate(v1)
+            
+            Assert.Equal(b, b1.Inflated(v1))
+
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Union =
         [<Property>]
         let ``After inflating a box the point should be either on the edge of the box or the box shouldn't change size`` (b1 : Box2, v1 : Vector2) =
@@ -174,7 +184,7 @@ module Box2 =
             Assert.True(b1.Unioned(b2).Contains(b2))
 
         [<Property>]
-        let ``Box2.Inflate(Vector2) is equivalent to Box2.Inflated(Vector2)`` (b1 : Box2, v1 : Vector2) =
+        let ``Box2.Union(Vector2) is equivalent to Box2.Unioned(Vector2)`` (b1 : Box2, v1 : Vector2) =
             let mutable b = b1
             
             b.Union(v1)
@@ -182,7 +192,7 @@ module Box2 =
             Assert.Equal(b, b1.Unioned(v1))
 
         [<Property>]
-        let ``Box2.Inflate(Box2) is equivalent to Box2.Inflated(Box2)`` (b1 : Box2, b2 : Box2) =
+        let ``Box2.Union(Box2) is equivalent to Box2.Unioned(Box2)`` (b1 : Box2, b2 : Box2) =
             let mutable b = b1
             
             b.Union(b2)
