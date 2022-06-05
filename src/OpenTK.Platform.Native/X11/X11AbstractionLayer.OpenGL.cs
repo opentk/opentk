@@ -51,16 +51,13 @@ namespace OpenTK.Platform.Native.X11
                     OpenGLProfile.Core => GLX_CONTEXT_CORE_PROFILE_BIT_ARB
                 });
             }
-            attribs.Add(0);
-
-            int[] attribsArray = attribs.ToArray();
 
             GLXContext context = s_glXCreateContextAttribARB(
                 window.Display,
                 window.FBConfig!.Value,
                 s_sharedContext?.Context ?? new GLXContext(IntPtr.Zero),
                 true,
-                ref attribsArray[0]);
+                ref CollectionsMarshal.AsSpan(attribs)[0]);
 
             return new XOpenGLContextHandle(window.Display, context, window.Window, s_sharedContext);
         }

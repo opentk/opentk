@@ -10,12 +10,20 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
 
-        public XWindowHandle(XDisplayPtr display, XWindow window, GraphicsApiHints hints, GLXFBConfig? fbConfig = null)
+        public XColorMap? ColorMap { get; }
+
+        public XWindowHandle(
+            XDisplayPtr display,
+            XWindow window,
+            GraphicsApiHints hints,
+            GLXFBConfig? fbConfig = null,
+            XColorMap? colorMap = null)
         {
             Display = display;
             Window = window;
             GraphicsApiHints = hints;
             FBConfig = fbConfig;
+            ColorMap = colorMap;
         }
     }
 }

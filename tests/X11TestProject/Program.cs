@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks.Dataflow;
 using OpenTK;
 using OpenTK.Core.Platform;
 using OpenTK.Graphics;
@@ -32,18 +34,28 @@ namespace X11TestProject
 
             GLLoader.LoadBindings(new TestBindingsContext(layer, context));
 
-            XEvent ea;
+            XEvent ea = new XEvent();
+            int frames = 0;
             for (;;)
             {
-                XNextEvent(layer.Display, out ea);
-                // XClearWindow(layer.Display, window.Window);
+                while (XEventsQueued(layer.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
+                {
+                    XNextEvent(layer.Display, out ea);
+                    Console.WriteLine(ea.Type);
+                }
 
+                layer.GetClientSize(window, out int width, out int height);
+
+                GL.Viewport(0, 0, width, height);
                 GL.ClearColor(1, 0, 1, 1);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
                 GLX.glXSwapBuffers(window.Display, window.Window);
 
-                Console.WriteLine(ea.Type);
+                layer.SetTitle(window, $"OpenTK Window [Native:X11] [frame={++frames}]");
+
+                layer.GetClientPosition(window, out int x, out int y);
+                Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
             }
 
             layer.Destroy(window);
@@ -62,7 +74,9 @@ namespace X11TestProject
 
             public IntPtr GetProcAddress(string procName)
             {
-                return (pal as IOpenGLComponent).GetProcedureAddress(context, procName);
+                IntPtr retval = (pal as IOpenGLComponent).GetProcedureAddress(context, procName);
+                Debug.WriteLine("GetProcAddr {0} = {1}", procName, retval);
+                return retval;
             }
         }
     }

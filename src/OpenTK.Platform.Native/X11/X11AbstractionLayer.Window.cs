@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Platform.Native.X11;
 using static OpenTK.Platform.Native.X11.GLX;
@@ -21,6 +22,8 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindow window;
             GLXFBConfig? chosenConfig = null;
+            XColorMap? map = null;
+
             if (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES)
             {
                 // Ignoring ES for now.
@@ -52,17 +55,16 @@ namespace OpenTK.Platform.Native.X11
                     XFree((IntPtr)configs);
                 }
 
-                XColorMap map;
                 XSetWindowAttributes windowAttributes = new XSetWindowAttributes();
                 unsafe
                 {
                     XVisualInfo* vi = glXGetVisualFromFBConfig(Display, chosenConfig.Value);
                     map = XCreateColormap(Display, XDefaultRootWindow(Display), ref *vi->VisualPtr, 0);
 
-                    windowAttributes.ColorMap = map;
+                    windowAttributes.ColorMap = map.Value;
                     windowAttributes.BackgroundPixmap = XPixMap.None;
                     windowAttributes.BorderPixel = 0;
-                    windowAttributes.EventMask = (long)XEventMask.StructureNotify;
+                    windowAttributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify;
 
                     window = XCreateWindow(
                         Display,
@@ -75,7 +77,7 @@ namespace OpenTK.Platform.Native.X11
                         vi->Depth,
                         1,
                         ref *vi->VisualPtr,
-                        ((1 << 3) | (1 << 13) | (1<<11)),
+                        XWindowAttributeValueMask.BackPixmap | XWindowAttributeValueMask.Colormap | XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                         ref windowAttributes);
 
                     XFree((IntPtr)vi);
@@ -103,23 +105,37 @@ namespace OpenTK.Platform.Native.X11
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
 
-            return new XWindowHandle(Display, window, hints, chosenConfig);
+            return new XWindowHandle(Display, window, hints, chosenConfig, map);
         }
 
         public void Destroy(WindowHandle handle)
         {
             var xhandle = handle.As<XWindowHandle>(this);
             XDestroyWindow(xhandle.Display, xhandle.Window);
+            if (xhandle.ColorMap.HasValue)
+            {
+                XFreeColormap(xhandle.Display, xhandle.ColorMap.Value);
+            }
         }
 
         public string GetTitle(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            string str = string.Empty;
+            unsafe
+            {
+                XFetchName(window.Display, window.Window, out byte* name);
+                str = Marshal.PtrToStringAnsi((IntPtr)name) ?? string.Empty;
+                XFree((IntPtr)name);
+            }
+
+            return str;
         }
 
         public void SetTitle(WindowHandle handle, string title)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            XStoreName(window.Display, window.Window, title);
         }
 
         public IconHandle GetIcon(WindowHandle handle)
@@ -154,7 +170,17 @@ namespace OpenTK.Platform.Native.X11
 
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
+            XTranslateCoordinates(
+                window.Display,
+                window.Window,
+                XDefaultRootWindow(window.Display),
+                attributes.X,
+                attributes.Y,
+                out x,
+                out y,
+                out _);
         }
 
         public void SetClientPosition(WindowHandle handle, int x, int y)
@@ -164,7 +190,10 @@ namespace OpenTK.Platform.Native.X11
 
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
+            width = attributes.Width;
+            height = attributes.Height;
         }
 
         public void SetClientSize(WindowHandle handle, int width, int height)
