@@ -157,26 +157,39 @@ module Box3 =
             Assert.Equal(b, b1.Translated(v1))
             
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
-    module Inflate =
+    module Union =
         [<Property>]
         let ``After inflating a box the point should be either on the edge of the box or the box shouldn't change size`` (b1 : Box3, v1 : Vector3) =
             let v2 = b1.Size
             
-            b1.Inflate(v1)
+            b1.Union(v1)
             
             Assert.True(b1.DistanceToNearestEdge(v1) = (float32)0 || v2 = b1.Size)
         
         [<Property>]
         let ``After inflating the point should be enclosed in the box`` (b1 : Box3, v1 : Vector3) =
-            Assert.True(b1.Inflated(v1).Contains(v1, true))
+            Assert.True(b1.Unioned(v1).Contains(v1, true))
+        
+        [<Property>]
+        let ``After inflating both boxes should be enclosed in the box`` (b1 : Box3, b2 : Box3) =
+            Assert.True(b1.Unioned(b2).Contains(b1))
+            Assert.True(b1.Unioned(b2).Contains(b2))
 
         [<Property>]
-        let ``Box3.Inflate is equivalent to Box3.Inflated`` (b1 : Box3, v1 : Vector3) =
+        let ``Box3.Union(Vector3) is equivalent to Box3.Unioned(Vector3)`` (b1 : Box3, v1 : Vector3) =
             let mutable b = b1
             
-            b.Inflate(v1)
+            b.Union(v1)
             
-            Assert.Equal(b, b1.Inflated(v1))
+            Assert.Equal(b, b1.Unioned(v1))
+
+        [<Property>]
+        let ``Box3.Union(Box3) is equivalent to Box3.Unioned(Box3)`` (b1 : Box3, b2 : Box3) =
+            let mutable b = b1
+            
+            b.Union(b2)
+            
+            Assert.Equal(b, b1.Unioned(b2))
         
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Center =
