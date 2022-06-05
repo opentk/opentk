@@ -233,10 +233,20 @@ namespace OpenTK.Mathematics
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
-        public void Inflate(Vector2 point)
+        public void Union(Vector2 point)
         {
             _min = Vector2.ComponentMin(_min, point);
             _max = Vector2.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Inflate this Box2 to encapsulate a given box.
+        /// </summary>
+        /// <param name="other">The box to query.</param>
+        public void Union(Box2 other)
+        {
+            _min = Vector2.ComponentMin(_min, other._min);
+            _max = Vector2.ComponentMax(_max, other._max);
         }
 
         /// <summary>
@@ -245,11 +255,25 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        public Box2 Inflated(Vector2 point)
+        public Box2 Unioned(Vector2 point)
         {
             // create a local copy of this box
             Box2 box = this;
-            box.Inflate(point);
+            box.Union(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Inflate this Box2 to encapsulate a given box.
+        /// </summary>
+        /// <param name="other">The box to query.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box2 Unioned(Box2 other)
+        {
+            // create a local copy of this box
+            Box2 box = this;
+            box.Union(other);
             return box;
         }
 

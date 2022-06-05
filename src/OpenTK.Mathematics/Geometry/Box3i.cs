@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
+using System.Drawing;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
@@ -231,10 +232,20 @@ namespace OpenTK.Mathematics
         /// Inflate this Box3i to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
-        public void Inflate(Vector3i point)
+        public void Union(Vector3i point)
         {
             _min = Vector3i.ComponentMin(_min, point);
             _max = Vector3i.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Inflate this Box3i to encapsulate a given Box.
+        /// </summary>
+        /// <param name="other">The box to include.</param>
+        public void Union(Box3i other)
+        {
+            _min = Vector3i.ComponentMin(_min, other._min);
+            _max = Vector3i.ComponentMax(_max, other._max);
         }
 
         /// <summary>
@@ -243,11 +254,25 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
-        public Box3i Inflated(Vector3i point)
+        public Box3i Unioned(Vector3i point)
         {
             // create a local copy of this box
             Box3i box = this;
-            box.Inflate(point);
+            box.Union(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Inflate this Box3i to encapsulate a given Box.
+        /// </summary>
+        /// <param name="other">The box to include.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box3i Unioned(Box3i other)
+        {
+            // create a local copy of this box
+            Box3i box = this;
+            box.Union(other);
             return box;
         }
 
