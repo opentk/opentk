@@ -1393,7 +1393,13 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual unsafe void Close()
         {
-            GLFW.SetWindowShouldClose(WindowPtr, true);
+            // We don't have to catch exceptions here as this code isn't called directly from unmanaged code
+            CancelEventArgs c = new CancelEventArgs();
+            OnClosing(c);
+            if (c.Cancel == false)
+            {
+                GLFW.SetWindowShouldClose(WindowPtr, true);
+            }
         }
 
         /// <summary>
