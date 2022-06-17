@@ -333,6 +333,18 @@ namespace Generator.Writing
         {
             foreach (var group in enumGroups)
             {
+                if (group.FunctionsUsingEnumGroup != null)
+                {
+                    if (group.FunctionsUsingEnumGroup.Count > 3)
+                    {
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{f.FunctionName}\" />"))}, ...</summary>");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{f.FunctionName}\" />"))}</summary>");
+                    }
+                }
+
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
                 writer.WriteLine($"public enum {group.Name} : uint");
                 using (writer.CsScope())
