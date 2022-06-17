@@ -719,7 +719,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        [CLSCompliant(false)]
         public static void Uniform2(int location, ref Vector2 vector)
         {
             GL.Uniform2(location, vector.X, vector.Y);
@@ -735,7 +734,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        [CLSCompliant(false)]
         public static void Uniform3(int location, ref Vector3 vector)
         {
             GL.Uniform3(location, vector.X, vector.Y, vector.Z);
@@ -751,7 +749,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        [CLSCompliant(false)]
         public static void Uniform4(int location, ref Vector4 vector)
         {
             GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
@@ -798,6 +795,96 @@ namespace OpenTK.Graphics.OpenGL
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
         public static void Uniform4(int location, Vector4 vector)
+        {
+            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the value of a <see cref="Vector2"/> uniform variable for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void Uniform2(int location, ref Vector2i vector)
+        {
+            GL.Uniform2(location, vector.X, vector.Y);
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the value of a <see cref="Vector3"/> uniform variable for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void Uniform3(int location, ref Vector3i vector)
+        {
+            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the value of a <see cref="Vector4"/> uniform variable for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void Uniform4(int location, ref Vector4i vector)
+        {
+            GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the value of a <see cref="Vector2"/> uniform variable for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void Uniform2(int location, Vector2i vector)
+        {
+            GL.Uniform2(location, vector.X, vector.Y);
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the value of a <see cref="Vector3"/> uniform variable for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void Uniform3(int location, Vector3i vector)
+        {
+            GL.Uniform3(location, vector.X, vector.Y, vector.Z);
+        }
+
+        /// <summary>
+        /// [requires: v2.0]
+        /// Specify the value of a <see cref="Vector4"/> uniform variable for the current program object.
+        /// </summary>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void Uniform4(int location, Vector4i vector)
         {
             GL.Uniform4(location, vector.X, vector.Y, vector.Z, vector.W);
         }
@@ -1261,7 +1348,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        [CLSCompliant(false)]
         public static void ProgramUniform2(int program, int location, ref Vector2 vector)
         {
             GL.ProgramUniform2(program, location, vector.X, vector.Y);
@@ -1280,7 +1366,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        [CLSCompliant(false)]
         public static void ProgramUniform3(int program, int location, ref Vector3 vector)
         {
             GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
@@ -1299,7 +1384,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="vector">
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
-        [CLSCompliant(false)]
         public static void ProgramUniform4(int program, int location, ref Vector4 vector)
         {
             GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
@@ -1355,6 +1439,114 @@ namespace OpenTK.Graphics.OpenGL
         /// Specifies the new vector to be used for the specified uniform variable.
         /// </param>
         public static void ProgramUniform4(int program, int location, Vector4 vector)
+        {
+            GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
+        }
+
+        /// <summary>
+        /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
+        /// Specify the value of a <see cref="Vector2"/> uniform variable for the specified program object.
+        /// </summary>
+        /// <param name="program">
+        /// Specifies the handle of the program containing the uniform variable to be modified.
+        /// </param>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void ProgramUniform2(int program, int location, ref Vector2i vector)
+        {
+            GL.ProgramUniform2(program, location, vector.X, vector.Y);
+        }
+
+        /// <summary>
+        /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
+        /// Specify the value of a <see cref="Vector3"/> uniform variable for the specified program object.
+        /// </summary>
+        /// <param name="program">
+        /// Specifies the handle of the program containing the uniform variable to be modified.
+        /// </param>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void ProgramUniform3(int program, int location, ref Vector3i vector)
+        {
+            GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
+        }
+
+        /// <summary>
+        /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
+        /// Specify the value of a <see cref="Vector4"/> uniform variable for the specified program object.
+        /// </summary>
+        /// <param name="program">
+        /// Specifies the handle of the program containing the uniform variable to be modified.
+        /// </param>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void ProgramUniform4(int program, int location, ref Vector4i vector)
+        {
+            GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
+        }
+
+        /// <summary>
+        /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
+        /// Specify the value of a <see cref="Vector2"/> uniform variable for the specified program object.
+        /// </summary>
+        /// <param name="program">
+        /// Specifies the handle of the program containing the uniform variable to be modified.
+        /// </param>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void ProgramUniform2(int program, int location, Vector2i vector)
+        {
+            GL.ProgramUniform2(program, location, vector.X, vector.Y);
+        }
+
+        /// <summary>
+        /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
+        /// Specify the value of a <see cref="Vector3"/> uniform variable for the specified program object.
+        /// </summary>
+        /// <param name="program">
+        /// Specifies the handle of the program containing the uniform variable to be modified.
+        /// </param>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void ProgramUniform3(int program, int location, Vector3i vector)
+        {
+            GL.ProgramUniform3(program, location, vector.X, vector.Y, vector.Z);
+        }
+
+        /// <summary>
+        /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
+        /// Specify the value of a <see cref="Vector4"/> uniform variable for the specified program object.
+        /// </summary>
+        /// <param name="program">
+        /// Specifies the handle of the program containing the uniform variable to be modified.
+        /// </param>
+        /// <param name="location">
+        /// Specifies the location of the uniform variable to be modified.
+        /// </param>
+        /// <param name="vector">
+        /// Specifies the new vector to be used for the specified uniform variable.
+        /// </param>
+        public static void ProgramUniform4(int program, int location, Vector4i vector)
         {
             GL.ProgramUniform4(program, location, vector.X, vector.Y, vector.Z, vector.W);
         }
@@ -2093,7 +2285,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x and y values to be used for the specified vertex attribute.
         /// </param>
-        [CLSCompliant(false)]
         public static void VertexAttrib2(Int32 index, ref Vector2 v)
         {
             GL.VertexAttrib2(index, v.X, v.Y);
@@ -2109,7 +2300,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y and z values to be used for the specified vertex attribute.
         /// </param>
-        [CLSCompliant(false)]
         public static void VertexAttrib3(Int32 index, ref Vector3 v)
         {
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
@@ -2125,7 +2315,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y, z and w values to be used for the specified vertex attribute.
         /// </param>
-        [CLSCompliant(false)]
         public static void VertexAttrib4(Int32 index, ref Vector4 v)
         {
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
@@ -2237,7 +2426,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x and y values to be used for the specified vertex attribute.
         /// </param>
-        [CLSCompliant(false)]
         public static void VertexAttrib2(Int32 index, ref Vector2d v)
         {
             GL.VertexAttrib2(index, v.X, v.Y);
@@ -2253,7 +2441,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y and z values to be used for the specified vertex attribute.
         /// </param>
-        [CLSCompliant(false)]
         public static void VertexAttrib3(Int32 index, ref Vector3d v)
         {
             GL.VertexAttrib3(index, v.X, v.Y, v.Z);
@@ -2269,7 +2456,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="v">
         /// Specifies the new x, y, z and w values to be used for the specified vertex attribute.
         /// </param>
-        [CLSCompliant(false)]
         public static void VertexAttrib4(Int32 index, ref Vector4d v)
         {
             GL.VertexAttrib4(index, v.X, v.Y, v.Z, v.W);
@@ -2378,7 +2564,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
-        [CLSCompliant(false)]
         public static void Rect(RectangleF rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
@@ -2391,7 +2576,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
-        [CLSCompliant(false)]
         public static void Rect(Rectangle rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
@@ -2404,7 +2588,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
-        [CLSCompliant(false)]
         public static void Rect(ref RectangleF rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
@@ -2417,7 +2600,6 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="rect">
         /// Specifies the vertices of the rectangle.
         /// </param>
-        [CLSCompliant(false)]
         public static void Rect(ref Rectangle rect)
         {
             GL.Rect(rect.Left, rect.Top, rect.Right, rect.Bottom);
