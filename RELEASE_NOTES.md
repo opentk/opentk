@@ -1,3 +1,19 @@
+## 4.7.3
+
+* API: Added overloads for `Vector2i`, `Vector3i`, and `Vector4i` to `GL.Uniform` and `GL.ProgramUniform` family of functions. (@NogginBops)
+
+* API: Added overloads for non-symmetric matrices to `GL.Uniform` family of functions to the `OpenTK.Graphics.OpenGL4` namespace. (@NogginBops)
+
+* API: Added `IsButtonPressed` and `IsButtonReleased` to `JoystickState`, to match `KeyboardState` and `MouseState`. (@g7ChoGXh)
+
+* API: Added `GL_KHR_shader_subgroup` to the bindings. (@BoyBaykiller)
+
+* FIX: Fixed race condition in `RethrowCallbackExceptionsIfNeeded` where some uncaught exceptions in callbacks could be lost. (@NogginBops, @seanofw)
+
+* FIX: Fixed issue where `NativeWindow.OnClosing` and `NativeWindow.Closing` wheren't called when calling `NativeWindow.Close()`. (@NogginBops)
+
+* FIX: Made `CL.EnqueueReadBuffer<T>()` use the correct `sizeof(T)` instead of `sizeof(float)`. This caused issues where the wrong number of bytes where sent, possibly leading to an access violation. (@NogginBops, @Ed-Silver)
+
 ## 4.7.2
 
 * BREAKING: Fixed issue where the `QuaternionD(double, double, double)` ctor produced the wrong quaternion. It now produces the same quaternion as `Quaterion(float, float, float)`. (@NogginBops)
