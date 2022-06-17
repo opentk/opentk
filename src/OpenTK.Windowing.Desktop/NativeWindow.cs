@@ -1456,29 +1456,34 @@ namespace OpenTK.Windowing.Desktop
             RethrowCallbackExceptionsIfNeeded();
         }
 
+        // This list must only ever be accessed from the main thread, inside RethrowCallbackExceptionsIfNeeded().
+        private static List<ExceptionDispatchInfo> _localThreadExceptions = new List<ExceptionDispatchInfo>();
+
         private static void RethrowCallbackExceptionsIfNeeded()
         {
-            if (_callbackExceptions.Count == 1)
+            // Pull a thread-local copy of the exceptions from the queue.  This is thread-safe,
+            // always collecting up the queue to a known specific instant in time.
+            while (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo exception))
             {
-                if (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo exception))
-                {
-                    _callbackExceptions.Clear();
-                    exception.Throw();
-                }
+                _localThreadExceptions.Add(exception);
             }
-            else if (_callbackExceptions.Count > 1)
+
+            if (_localThreadExceptions.Count == 1)
+            {
+                ExceptionDispatchInfo exception = _localThreadExceptions[0];
+                _localThreadExceptions.Clear();
+                exception.Throw();
+            }
+            else if (_localThreadExceptions.Count > 1)
             {
                 // FIXME: This doesn't seem to produce great exception messages... is there something we can do about this?
-                Exception[] exceptions = new Exception[_callbackExceptions.Count];
-                for (int i = 0; i < _callbackExceptions.Count; i++)
+                Exception[] exceptions = new Exception[_localThreadExceptions.Count];
+                for (int i = 0; i < _localThreadExceptions.Count; i++)
                 {
-                    if (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo info))
-                    {
-                        exceptions[i] = info.SourceException;
-                    }
+                    exceptions[i] = _localThreadExceptions[i].SourceException;
                 }
                 Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", exceptions);
-                _callbackExceptions.Clear();
+                _localThreadExceptions.Clear();
                 throw exception;
             }
         }
