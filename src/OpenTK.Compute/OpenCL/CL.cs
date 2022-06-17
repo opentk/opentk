@@ -1046,7 +1046,7 @@ public static extern IntPtr CreateImageWithProperties(CLContext context, IntPtr[
 			fixed (T* b = array)
 			{
 				CLResultCode resultCode = EnqueueReadBuffer(commandQueue, buffer, blockingRead, offset,
-					(UIntPtr)(array.Length * sizeof(float)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
+					(UIntPtr)(array.Length * sizeof(T)), (IntPtr)b, (uint)(eventWaitList?.Length ?? 0),
 					eventWaitList,
 					out eventHandle);
 				return resultCode;
