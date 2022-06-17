@@ -1,3 +1,7 @@
+## 4.7.4
+
+* FIX: Updated `OpenTK.redist.glfw` nuget reference to the latest version (`3.3.7.27`), the previous `3.3.7.25` had issues on linux.
+
 ## 4.7.3
 
 * API: Added overloads for `Vector2i`, `Vector3i`, and `Vector4i` to `GL.Uniform` and `GL.ProgramUniform` family of functions. (@NogginBops)
