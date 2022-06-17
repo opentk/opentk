@@ -2386,7 +2386,7 @@ namespace OpenTK.Graphics.OpenGLES3
         StencilBufferBit = 1024,
         ColorBufferBit = 16384,
     }
-    ///<summary>Used in <see cref="GL.Clear" />, <see cref="GL.BlitFramebuffer" />, <see cref="GL.BlitFramebufferANGLE" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.BlitFramebufferANGLE" />, <see cref="GL.BlitFramebufferNV" />, ...</summary>
     [Flags]
     public enum ClearBufferMask : uint
     {
@@ -2499,7 +2499,7 @@ namespace OpenTK.Graphics.OpenGLES3
         SubgroupFeatureQuadBitKhr = 128,
         SubgroupFeaturePartitionedBitNv = 256,
     }
-    ///<summary>Used in <see cref="GL.PathGlyphsNV" />, <see cref="GL.PathGlyphRangeNV" />, <see cref="GL.PathGlyphIndexRangeNV" />, ...</summary>
+    ///<summary>Used in <see cref="GL.PathGlyphIndexArrayNV" />, <see cref="GL.PathGlyphIndexRangeNV" />, <see cref="GL.PathGlyphRangeNV" />, ...</summary>
     [Flags]
     public enum PathFontStyle : uint
     {
@@ -2507,7 +2507,7 @@ namespace OpenTK.Graphics.OpenGLES3
         BoldBitNv = 1,
         ItalicBitNv = 2,
     }
-    ///<summary>Used in <see cref="GL.GetPathMetricsNV" />, <see cref="GL.GetPathMetricRangeNV" /></summary>
+    ///<summary>Used in <see cref="GL.GetPathMetricRangeNV" />, <see cref="GL.GetPathMetricsNV" /></summary>
     [Flags]
     public enum PathMetricMask : uint
     {
@@ -2541,7 +2541,7 @@ namespace OpenTK.Graphics.OpenGLES3
         PerfquerySingleContextIntel = 0,
         PerfqueryGlobalContextIntel = 1,
     }
-    ///<summary>Used in <see cref="GL.StartTilingQCOM" />, <see cref="GL.EndTilingQCOM" /></summary>
+    ///<summary>Used in <see cref="GL.EndTilingQCOM" />, <see cref="GL.StartTilingQCOM" /></summary>
     [Flags]
     public enum BufferBitQCOM : uint
     {
@@ -2634,7 +2634,7 @@ namespace OpenTK.Graphics.OpenGLES3
         ConicCurveToNv = 26,
         RelativeConicCurveToNv = 27,
     }
-    ///<summary>Used in <see cref="GL.ColorMask" />, <see cref="GL.DepthMask" />, <see cref="GL.GetBooleanv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.AcquireKeyedMutexWin32EXT" />, <see cref="GL.BindImageTexture" />, <see cref="GL.BufferPageCommitmentMemNV" />, ...</summary>
     public enum Boolean : uint
     {
         False = 0,
@@ -2691,7 +2691,7 @@ namespace OpenTK.Graphics.OpenGLES3
         IncrWrap = 34055,
         DecrWrap = 34056,
     }
-    ///<summary>Used in <see cref="GL.BlendFunc" />, <see cref="GL.BlendFuncSeparate" />, <see cref="GL.BlendFunci" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BlendFunc" />, <see cref="GL.BlendFunci" />, <see cref="GL.BlendFunciEXT" />, ...</summary>
     public enum BlendingFactor : uint
     {
         Zero = 0,
@@ -2710,7 +2710,7 @@ namespace OpenTK.Graphics.OpenGLES3
         ConstantAlpha = 32771,
         OneMinusConstantAlpha = 32772,
     }
-    ///<summary>Used in <see cref="GL.FenceSync" />, <see cref="GL.WaitSync" />, <see cref="GL.FenceSyncAPPLE" />, ...</summary>
+    ///<summary>Used in <see cref="GL.FenceSync" />, <see cref="GL.FenceSyncAPPLE" />, <see cref="GL.WaitSync" />, ...</summary>
     public enum SyncBehaviorFlags : uint
     {
         None = 0,
@@ -2852,7 +2852,7 @@ namespace OpenTK.Graphics.OpenGLES3
         None = 0,
         PathObjectBoundingBoxNv = 37002,
     }
-    ///<summary>Used in <see cref="GL.TransformPathNV" />, <see cref="GL.StencilFillPathInstancedNV" />, <see cref="GL.StencilStrokePathInstancedNV" />, ...</summary>
+    ///<summary>Used in <see cref="GL.CoverFillPathInstancedNV" />, <see cref="GL.CoverStrokePathInstancedNV" />, <see cref="GL.GetPathSpacingNV" />, ...</summary>
     public enum PathTransformType : uint
     {
         None = 0,
@@ -2865,7 +2865,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TransposeAffine2dNv = 37014,
         TransposeAffine3dNv = 37016,
     }
-    ///<summary>Used in <see cref="GL.DrawArrays" />, <see cref="GL.DrawElements" />, <see cref="GL.DrawRangeElements" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BeginTransformFeedback" />, <see cref="GL.DrawArrays" />, <see cref="GL.DrawArraysIndirect" />, ...</summary>
     public enum PrimitiveType : uint
     {
         Points = 0,
@@ -2896,7 +2896,7 @@ namespace OpenTK.Graphics.OpenGLES3
     {
         Replace = 7681,
     }
-    ///<summary>Used in <see cref="GL.StencilFunc" />, <see cref="GL.StencilFuncSeparate" />, <see cref="GL.PathStencilFuncNV" /></summary>
+    ///<summary>Used in <see cref="GL.PathStencilFuncNV" />, <see cref="GL.StencilFunc" />, <see cref="GL.StencilFuncSeparate" /></summary>
     public enum StencilFunction : uint
     {
         Never = 512,
@@ -2979,7 +2979,7 @@ namespace OpenTK.Graphics.OpenGLES3
         Cw = 2304,
         Ccw = 2305,
     }
-    ///<summary>Used in <see cref="GL.GetBooleanv" />, <see cref="GL.GetFloatv" />, <see cref="GL.GetIntegerv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.GetBooleanv" />, <see cref="GL.GetFloati_vNV" />, <see cref="GL.GetFloati_vOES" />, ...</summary>
     public enum GetPName : uint
     {
         BlendEquationRgb = 32777,
@@ -3203,7 +3203,7 @@ namespace OpenTK.Graphics.OpenGLES3
         MotionEstimationSearchBlockYQcom = 35985,
         ShadingRateQcom = 38564,
     }
-    ///<summary>Used in <see cref="GL.Disable" />, <see cref="GL.Enable" />, <see cref="GL.IsEnabled" />, ...</summary>
+    ///<summary>Used in <see cref="GL.Disable" />, <see cref="GL.Disablei" />, <see cref="GL.DisableiEXT" />, ...</summary>
     public enum EnableCap : uint
     {
         Texture2d = 3553,
@@ -3278,7 +3278,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureCubeMapArray = 36873,
         Texture2dMultisampleArray = 37122,
     }
-    ///<summary>Used in <see cref="GL.BindTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexSubImage2D" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BindTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexImage3D" />, ...</summary>
     public enum TextureTarget : uint
     {
         Texture2d = 3553,
@@ -3339,7 +3339,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureWrapROes = 32882,
         TextureFoveatedCutoffDensityQcom = 38560,
     }
-    ///<summary>Used in <see cref="GL.GetTexParameterfv" />, <see cref="GL.GetTexParameteriv" />, <see cref="GL.GetTexLevelParameteriv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.GetTexLevelParameterfv" />, <see cref="GL.GetTexLevelParameteriv" />, <see cref="GL.GetTexParameterfv" />, ...</summary>
     public enum GetTextureParameter : uint
     {
         TextureMagFilter = 10240,
@@ -3358,7 +3358,7 @@ namespace OpenTK.Graphics.OpenGLES3
         SurfaceCompressionExt = 38592,
         TextureBorderColorNv = 4100,
     }
-    ///<summary>Used in <see cref="GL.SamplerParameterf" />, <see cref="GL.SamplerParameterfv" />, <see cref="GL.GetSamplerParameterfv" /></summary>
+    ///<summary>Used in <see cref="GL.GetSamplerParameterfv" />, <see cref="GL.SamplerParameterf" />, <see cref="GL.SamplerParameterfv" /></summary>
     public enum SamplerParameterF : uint
     {
         TextureMinLod = 33082,
@@ -3366,7 +3366,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureBorderColor = 4100,
         TextureUnnormalizedCoordinatesArm = 36714,
     }
-    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
+    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageControlKHR" />, <see cref="GL.DebugMessageInsert" />, ...</summary>
     public enum DebugSeverity : uint
     {
         DontCare = 4352,
@@ -3382,7 +3382,7 @@ namespace OpenTK.Graphics.OpenGLES3
         Fastest = 4353,
         Nicest = 4354,
     }
-    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
+    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageControlKHR" />, <see cref="GL.DebugMessageInsert" />, ...</summary>
     public enum DebugSource : uint
     {
         DontCare = 4352,
@@ -3393,7 +3393,7 @@ namespace OpenTK.Graphics.OpenGLES3
         DebugSourceApplication = 33354,
         DebugSourceOther = 33355,
     }
-    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageInsert" />, <see cref="GL.GetDebugMessageLog" />, ...</summary>
+    ///<summary>Used in <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageControlKHR" />, <see cref="GL.DebugMessageInsert" />, ...</summary>
     public enum DebugType : uint
     {
         DontCare = 4352,
@@ -3407,7 +3407,7 @@ namespace OpenTK.Graphics.OpenGLES3
         DebugTypePushGroup = 33385,
         DebugTypePopGroup = 33386,
     }
-    ///<summary>Used in <see cref="GL.VertexAttribIPointer" />, <see cref="GL.VertexAttribIFormat" /></summary>
+    ///<summary>Used in <see cref="GL.VertexAttribIFormat" />, <see cref="GL.VertexAttribIPointer" /></summary>
     public enum VertexAttribIType : uint
     {
         Byte = 5120,
@@ -3465,7 +3465,7 @@ namespace OpenTK.Graphics.OpenGLES3
         Int = 5124,
         Float = 5126,
     }
-    ///<summary>Used in <see cref="GL.ReadPixels" />, <see cref="GL.TexImage2D" />, <see cref="GL.TexSubImage2D" />, ...</summary>
+    ///<summary>Used in <see cref="GL.ClearTexImageEXT" />, <see cref="GL.ClearTexSubImageEXT" />, <see cref="GL.ExtGetTexSubImageQCOM" />, ...</summary>
     public enum PixelType : uint
     {
         Byte = 5120,
@@ -3536,7 +3536,7 @@ namespace OpenTK.Graphics.OpenGLES3
         UnsignedShort = 5123,
         UnsignedInt = 5125,
     }
-    ///<summary>Used in <see cref="GL.DrawElements" />, <see cref="GL.DrawRangeElements" />, <see cref="GL.DrawElementsInstanced" />, ...</summary>
+    ///<summary>Used in <see cref="GL.DrawElements" />, <see cref="GL.DrawElementsBaseVertex" />, <see cref="GL.DrawElementsBaseVertexEXT" />, ...</summary>
     public enum DrawElementsType : uint
     {
         UnsignedByte = 5121,
@@ -3567,7 +3567,7 @@ namespace OpenTK.Graphics.OpenGLES3
         Int = 5124,
         Float = 5126,
     }
-    ///<summary>Used in <see cref="GL.ReadPixels" />, <see cref="GL.TexImage2D" />, <see cref="GL.TexSubImage2D" />, ...</summary>
+    ///<summary>Used in <see cref="GL.ClearTexImageEXT" />, <see cref="GL.ClearTexSubImageEXT" />, <see cref="GL.ExtGetTexSubImageQCOM" />, ...</summary>
     public enum PixelFormat : uint
     {
         UnsignedShort = 5123,
@@ -3830,7 +3830,7 @@ namespace OpenTK.Graphics.OpenGLES3
     {
         Invert = 5386,
     }
-    ///<summary>Used in <see cref="GL.StencilFillPathNV" />, <see cref="GL.StencilFillPathInstancedNV" /></summary>
+    ///<summary>Used in <see cref="GL.StencilFillPathInstancedNV" />, <see cref="GL.StencilFillPathNV" /></summary>
     public enum PathFillMode : uint
     {
         Invert = 5386,
@@ -3838,12 +3838,12 @@ namespace OpenTK.Graphics.OpenGLES3
         CountUpNv = 37000,
         CountDownNv = 37001,
     }
-    ///<summary>Used in <see cref="GL.MatrixFrustumEXT" />, <see cref="GL.MatrixLoadIdentityEXT" />, <see cref="GL.MatrixLoadTransposefEXT" />, ...</summary>
+    ///<summary>Used in <see cref="GL.MatrixFrustumEXT" />, <see cref="GL.MatrixLoaddEXT" />, <see cref="GL.MatrixLoadfEXT" />, ...</summary>
     public enum MatrixMode : uint
     {
         Texture = 5890,
     }
-    ///<summary>Used in <see cref="GL.ObjectLabel" />, <see cref="GL.GetObjectLabel" />, <see cref="GL.ObjectLabelKHR" /></summary>
+    ///<summary>Used in <see cref="GL.GetObjectLabel" />, <see cref="GL.ObjectLabel" />, <see cref="GL.ObjectLabelKHR" /></summary>
     public enum ObjectIdentifier : uint
     {
         Texture = 5890,
@@ -3858,7 +3858,7 @@ namespace OpenTK.Graphics.OpenGLES3
         ProgramPipeline = 33508,
         Sampler = 33510,
     }
-    ///<summary>Used in <see cref="GL.ClearBufferiv" />, <see cref="GL.ClearBufferuiv" />, <see cref="GL.ClearBufferfv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.ClearBufferfi" />, <see cref="GL.ClearBufferfv" />, <see cref="GL.ClearBufferiv" />, ...</summary>
     public enum Buffer : uint
     {
         Color = 6144,
@@ -3874,7 +3874,7 @@ namespace OpenTK.Graphics.OpenGLES3
         DepthExt = 6145,
         StencilExt = 6146,
     }
-    ///<summary>Used in <see cref="GL.InvalidateFramebuffer" />, <see cref="GL.InvalidateSubFramebuffer" />, <see cref="GL.DiscardFramebufferEXT" /></summary>
+    ///<summary>Used in <see cref="GL.DiscardFramebufferEXT" />, <see cref="GL.InvalidateFramebuffer" />, <see cref="GL.InvalidateSubFramebuffer" /></summary>
     public enum InvalidateFramebufferAttachment : uint
     {
         ColorAttachment0 = 36064,
@@ -3947,7 +3947,7 @@ namespace OpenTK.Graphics.OpenGLES3
         ColorAttachment14Nv = 36078,
         ColorAttachment15Nv = 36079,
     }
-    ///<summary>Used in <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexSubImage2D" />, <see cref="GL.CopyTexImage2D" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BindImageTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexImage3D" />, ...</summary>
     public enum InternalFormat : uint
     {
         DepthComponent = 6402,
@@ -4235,7 +4235,7 @@ namespace OpenTK.Graphics.OpenGLES3
         ClampToBorder = 33069,
         ClampToBorderNv = 33069,
     }
-    ///<summary>Used in <see cref="GL.SamplerParameteri" />, <see cref="GL.SamplerParameteriv" />, <see cref="GL.GetSamplerParameteriv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.GetSamplerParameterIiv" />, <see cref="GL.GetSamplerParameterIivEXT" />, <see cref="GL.GetSamplerParameterIivOES" />, ...</summary>
     public enum SamplerParameterI : uint
     {
         TextureMagFilter = 10240,
@@ -4247,7 +4247,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureCompareFunc = 34893,
         TextureUnnormalizedCoordinatesArm = 36714,
     }
-    ///<summary>Used in <see cref="GL.TexStorage2D" />, <see cref="GL.TexStorage3D" />, <see cref="GL.TexStorage2DMultisample" />, ...</summary>
+    ///<summary>Used in <see cref="GL.TexBuffer" />, <see cref="GL.TexBufferEXT" />, <see cref="GL.TexBufferOES" />, ...</summary>
     public enum SizedInternalFormat : uint
     {
         Rgba4 = 32854,
@@ -4458,7 +4458,7 @@ namespace OpenTK.Graphics.OpenGLES3
         CompressedSrgb8Alpha8Astc6x6x6Oes = 37865,
         StencilIndex8Oes = 36168,
     }
-    ///<summary>Used in <see cref="GL.BlendEquation" />, <see cref="GL.BlendEquationSeparate" />, <see cref="GL.BlendEquationi" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BlendEquation" />, <see cref="GL.BlendEquationEXT" />, <see cref="GL.BlendEquationi" />, ...</summary>
     public enum BlendEquationModeEXT : uint
     {
         FuncAdd = 32774,
@@ -4479,7 +4479,7 @@ namespace OpenTK.Graphics.OpenGLES3
         TextureCompressed = 34465,
         NumSurfaceCompressionFixedRatesExt = 36718,
     }
-    ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BufferData" />, <see cref="GL.BufferSubData" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BindBufferBase" />, <see cref="GL.BindBufferRange" />, ...</summary>
     public enum BufferTargetARB : uint
     {
         ArrayBuffer = 34962,
@@ -4534,7 +4534,7 @@ namespace OpenTK.Graphics.OpenGLES3
         FramebufferIncompleteMultisample = 36182,
         FramebufferIncompleteLayerTargets = 36264,
     }
-    ///<summary>Used in <see cref="GL.FramebufferRenderbuffer" />, <see cref="GL.FramebufferTexture2D" />, <see cref="GL.GetFramebufferAttachmentParameteriv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.FramebufferRenderbuffer" />, <see cref="GL.FramebufferTexture" />, <see cref="GL.FramebufferTexture2D" />, ...</summary>
     public enum FramebufferAttachment : uint
     {
         ColorAttachment0 = 36064,
@@ -4582,7 +4582,7 @@ namespace OpenTK.Graphics.OpenGLES3
         BufferMapLength = 37152,
         BufferMapOffset = 37153,
     }
-    ///<summary>Used in <see cref="GL.GetBufferParameteriv" />, <see cref="GL.GetBufferParameteri64v" /></summary>
+    ///<summary>Used in <see cref="GL.GetBufferParameteri64v" />, <see cref="GL.GetBufferParameteriv" /></summary>
     public enum BufferPNameARB : uint
     {
         BufferSize = 34660,
@@ -4659,13 +4659,13 @@ namespace OpenTK.Graphics.OpenGLES3
         VertexAttribArrayDivisor = 35070,
         VertexAttribRelativeOffset = 33493,
     }
-    ///<summary>Used in <see cref="GL.GetQueryObjectuiv" />, <see cref="GL.GetQueryObjectivEXT" />, <see cref="GL.GetQueryObjectuivEXT" />, ...</summary>
+    ///<summary>Used in <see cref="GL.GetQueryObjecti64vEXT" />, <see cref="GL.GetQueryObjectivEXT" />, <see cref="GL.GetQueryObjectui64vEXT" />, ...</summary>
     public enum QueryObjectParameterName : uint
     {
         QueryResult = 34918,
         QueryResultAvailable = 34919,
     }
-    ///<summary>Used in <see cref="GL.BeginQuery" />, <see cref="GL.EndQuery" />, <see cref="GL.GetQueryiv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BeginQuery" />, <see cref="GL.BeginQueryEXT" />, <see cref="GL.EndQuery" />, ...</summary>
     public enum QueryTarget : uint
     {
         TransformFeedbackPrimitivesWritten = 35976,
@@ -4758,7 +4758,7 @@ namespace OpenTK.Graphics.OpenGLES3
     {
         CurrentQuery = 34917,
     }
-    ///<summary>Used in <see cref="GL.CopyBufferSubData" />, <see cref="GL.CopyImageSubDataEXT" />, <see cref="GL.CopyBufferSubDataNV" />, ...</summary>
+    ///<summary>Used in <see cref="GL.CopyBufferSubData" />, <see cref="GL.CopyBufferSubDataNV" />, <see cref="GL.CopyImageSubDataEXT" />, ...</summary>
     public enum CopyBufferSubDataTarget : uint
     {
         ArrayBuffer = 34962,
@@ -4775,7 +4775,7 @@ namespace OpenTK.Graphics.OpenGLES3
         ShaderStorageBuffer = 37074,
         TextureBuffer = 35882,
     }
-    ///<summary>Used in <see cref="GL.BufferStorageEXT" />, <see cref="GL.BufferPageCommitmentMemNV" /></summary>
+    ///<summary>Used in <see cref="GL.BufferPageCommitmentMemNV" />, <see cref="GL.BufferStorageEXT" /></summary>
     public enum BufferStorageTarget : uint
     {
         ArrayBuffer = 34962,
@@ -4846,7 +4846,7 @@ namespace OpenTK.Graphics.OpenGLES3
         UniformSize = 35384,
         UniformNameLength = 35385,
     }
-    ///<summary>Used in <see cref="GL.CreateShader" />, <see cref="GL.GetShaderPrecisionFormat" />, <see cref="GL.CreateShaderProgramv" />, ...</summary>
+    ///<summary>Used in <see cref="GL.CreateShader" />, <see cref="GL.CreateShaderProgramEXT" />, <see cref="GL.CreateShaderProgramv" />, ...</summary>
     public enum ShaderType : uint
     {
         FragmentShader = 35632,
@@ -4892,7 +4892,7 @@ namespace OpenTK.Graphics.OpenGLES3
         InterleavedAttribs = 35980,
         SeparateAttribs = 35981,
     }
-    ///<summary>Used in <see cref="GL.GetProgramInterfaceiv" />, <see cref="GL.GetProgramResourceIndex" />, <see cref="GL.GetProgramResourceName" />, ...</summary>
+    ///<summary>Used in <see cref="GL.GetProgramInterfaceiv" />, <see cref="GL.GetProgramResourcefvNV" />, <see cref="GL.GetProgramResourceIndex" />, ...</summary>
     public enum ProgramInterface : uint
     {
         TransformFeedbackBuffer = 35982,
@@ -4910,7 +4910,7 @@ namespace OpenTK.Graphics.OpenGLES3
         ReadFramebuffer = 36008,
         DrawFramebuffer = 36009,
     }
-    ///<summary>Used in <see cref="GL.BindFramebuffer" />, <see cref="GL.CheckFramebufferStatus" />, <see cref="GL.FramebufferRenderbuffer" />, ...</summary>
+    ///<summary>Used in <see cref="GL.BindFramebuffer" />, <see cref="GL.CheckFramebufferStatus" />, <see cref="GL.DiscardFramebufferEXT" />, ...</summary>
     public enum FramebufferTarget : uint
     {
         Framebuffer = 36160,
@@ -5033,14 +5033,14 @@ namespace OpenTK.Graphics.OpenGLES3
         PathFormatSvgNv = 36976,
         PathFormatPsNv = 36977,
     }
-    ///<summary>Used in <see cref="GL.PathGlyphsNV" />, <see cref="GL.PathGlyphRangeNV" /></summary>
+    ///<summary>Used in <see cref="GL.PathGlyphRangeNV" />, <see cref="GL.PathGlyphsNV" /></summary>
     public enum PathFontTarget : uint
     {
         StandardFontNameNv = 36978,
         SystemFontNameNv = 36979,
         FileNameNv = 36980,
     }
-    ///<summary>Used in <see cref="GL.PathParameterivNV" />, <see cref="GL.PathParameteriNV" />, <see cref="GL.PathParameterfvNV" />, ...</summary>
+    ///<summary>Used in <see cref="GL.GetPathParameterfvNV" />, <see cref="GL.GetPathParameterivNV" />, <see cref="GL.PathParameterfNV" />, ...</summary>
     public enum PathParameter : uint
     {
         PathStrokeWidthNv = 36981,
@@ -5068,7 +5068,7 @@ namespace OpenTK.Graphics.OpenGLES3
         PathStrokeBoundingBoxNv = 37026,
         PathDashOffsetResetNv = 37044,
     }
-    ///<summary>Used in <see cref="GL.CoverFillPathNV" />, <see cref="GL.CoverStrokePathNV" />, <see cref="GL.CoverFillPathInstancedNV" />, ...</summary>
+    ///<summary>Used in <see cref="GL.CoverFillPathInstancedNV" />, <see cref="GL.CoverFillPathNV" />, <see cref="GL.CoverStrokePathInstancedNV" />, ...</summary>
     public enum PathCoverMode : uint
     {
         PathFillCoverModeNv = 36994,
@@ -5076,13 +5076,13 @@ namespace OpenTK.Graphics.OpenGLES3
         BoundingBoxNv = 37005,
         BoundingBoxOfBoundingBoxesNv = 37020,
     }
-    ///<summary>Used in <see cref="GL.PathGlyphsNV" />, <see cref="GL.StencilFillPathInstancedNV" />, <see cref="GL.StencilStrokePathInstancedNV" />, ...</summary>
+    ///<summary>Used in <see cref="GL.CoverFillPathInstancedNV" />, <see cref="GL.CoverStrokePathInstancedNV" />, <see cref="GL.GetPathMetricsNV" />, ...</summary>
     public enum PathElementType : uint
     {
         Utf8Nv = 37018,
         Utf16Nv = 37019,
     }
-    ///<summary>Used in <see cref="GL.PathGlyphsNV" />, <see cref="GL.PathGlyphRangeNV" /></summary>
+    ///<summary>Used in <see cref="GL.PathGlyphRangeNV" />, <see cref="GL.PathGlyphsNV" /></summary>
     public enum PathHandleMissingGlyphs : uint
     {
         SkipMissingGlyphNv = 37033,
@@ -5136,7 +5136,7 @@ namespace OpenTK.Graphics.OpenGLES3
         FramebufferDefaultFixedSampleLocations = 37652,
         FramebufferDefaultLayers = 37650,
     }
-    ///<summary>Used in <see cref="GL.WaitSemaphoreEXT" />, <see cref="GL.SignalSemaphoreEXT" /></summary>
+    ///<summary>Used in <see cref="GL.SignalSemaphoreEXT" />, <see cref="GL.WaitSemaphoreEXT" /></summary>
     public enum TextureLayout : uint
     {
         LayoutGeneralExt = 38285,
@@ -5149,7 +5149,7 @@ namespace OpenTK.Graphics.OpenGLES3
         LayoutDepthReadOnlyStencilAttachmentExt = 38192,
         LayoutDepthAttachmentStencilReadOnlyExt = 38193,
     }
-    ///<summary>Used in <see cref="GL.MemoryObjectParameterivEXT" />, <see cref="GL.GetMemoryObjectParameterivEXT" /></summary>
+    ///<summary>Used in <see cref="GL.GetMemoryObjectParameterivEXT" />, <see cref="GL.MemoryObjectParameterivEXT" /></summary>
     public enum MemoryObjectParameterName : uint
     {
         DedicatedMemoryObjectExt = 38273,
@@ -5167,7 +5167,7 @@ namespace OpenTK.Graphics.OpenGLES3
         HandleTypeD3d11ImageKmtExt = 38284,
         HandleTypeD3d12FenceExt = 38292,
     }
-    ///<summary>Used in <see cref="GL.SemaphoreParameterui64vEXT" />, <see cref="GL.GetSemaphoreParameterui64vEXT" />, <see cref="GL.SemaphoreParameterivNV" />, ...</summary>
+    ///<summary>Used in <see cref="GL.GetSemaphoreParameterivNV" />, <see cref="GL.GetSemaphoreParameterui64vEXT" />, <see cref="GL.SemaphoreParameterivNV" />, ...</summary>
     public enum SemaphoreParameterName : uint
     {
         D3d12FenceValueExt = 38293,

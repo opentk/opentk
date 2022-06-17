@@ -426,6 +426,9 @@ namespace Generator.Process
                     functionsUsingEnumGroup = null;
                 }
 
+                // If there is a list, sort it by name
+                if (functionsUsingEnumGroup != null) functionsUsingEnumGroup.Sort((f1, f2) => f1.FunctionName.CompareTo(f2.FunctionName));
+
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));
             }
 
