@@ -667,5 +667,8 @@ namespace OpenTK.Platform.Native.Windows
             public POINT ptCurrentPos;
             public RECT rcArea;
         }
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool GetKeyboardLayoutName([Out] StringBuilder pwszKLID);
     }
 }

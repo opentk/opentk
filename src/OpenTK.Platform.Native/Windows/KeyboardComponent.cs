@@ -23,11 +23,13 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool SupportsLayouts => throw new NotImplementedException();
 
-        public bool SupportsIme => throw new NotImplementedException();
+        public bool SupportsIme => true;
 
         public string GetActiveKeyboardLayout(WindowHandle handle = null)
         {
-            throw new NotImplementedException();
+            StringBuilder builder = new StringBuilder();
+            builder.EnsureCapacity(9); // FIXME: KL_NAMELENGTH 
+            Win32.GetKeyboardLayoutName(builder);
         }
 
         public string[] GetAvailableKeyboardLayouts()
@@ -53,6 +55,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hmic = Win32.ImmGetContext(hwnd.HWnd);
             if (hmic != IntPtr.Zero)
             {
+                // FIXME: Make the entire rect
                 Win32.COMPOSITIONFORM compForm = new Win32.COMPOSITIONFORM()
                 {
                     dwStyle = CFS.CFS_FORCE_POSITION,
