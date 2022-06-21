@@ -36,6 +36,10 @@ public class Program
 
         keyboardComp.Initialize(PalComponents.KeyboardInput);
 
+        Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout()}");
+
+        Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", keyboardComp.GetAvailableKeyboardLayouts())}");
+
         {
             PrimaryDisplayHandle = dispComp.CreatePrimary();
             string name = dispComp.GetName(PrimaryDisplayHandle);
@@ -46,7 +50,6 @@ public class Program
             Console.WriteLine($"  Scale: {videoMode.Scale}");
             Console.WriteLine($"  Dpi: {videoMode.Dpi}");
         }
-        
 
         Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
 

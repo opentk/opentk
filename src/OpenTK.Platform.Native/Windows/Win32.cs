@@ -35,6 +35,8 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int EDD_GET_DEVICE_INTERFACE_NAME = 0x00000001;
 
+        internal const int KL_NAMELENGTH = 9;
+
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam);
 
@@ -668,7 +670,57 @@ namespace OpenTK.Platform.Native.Windows
             public RECT rcArea;
         }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern IntPtr /* HKL */ GetKeyboardLayout(uint idThread);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern bool GetKeyboardLayoutName([Out] StringBuilder pwszKLID);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int /* LSTATUS */ RegOpenKeyEx(
+            IntPtr /* HKEY */ hKey,
+            string lpSubKey,
+            RegOption ulOptions,
+            AccessMask /* REGSAM */ samDesired,
+            out IntPtr /* PHKEY */ phkResult);
+
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static extern int /* LSTATUS */ RegGetValue(
+            IntPtr /* HKEY */ hkey,
+            string? lpSubKey,
+            string? lpValue,
+            RRF dwFlags,
+            out RegValueType pdwType,
+            byte* pvData,
+            ref uint pcbData);
+
+        internal static int /* LSTATUS */ RegGetValue(
+            IntPtr /* HKEY */ hkey,
+            string? lpSubKey,
+            string? lpValue,
+            RRF dwFlags,
+            out RegValueType pdwType,
+            Span<byte> pvData,
+            ref uint pcbData)
+        {
+            fixed (byte* data = &MemoryMarshal.GetReference(pvData))
+            {
+                return RegGetValue(hkey, lpSubKey, lpValue, dwFlags, out pdwType, data, ref pcbData);
+            }
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern int GetKeyboardLayoutList(int nBuff, IntPtr* lpList);
+
+        internal static int GetKeyboardLayoutList(int nBuff, Span<IntPtr> lpList)
+        {
+            fixed (IntPtr* list = &MemoryMarshal.GetReference(lpList))
+            {
+                return GetKeyboardLayoutList(nBuff, list);
+            }
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HKL */ ActivateKeyboardLayout(IntPtr /* HKL */ hkl, uint Flags);
     }
 }
