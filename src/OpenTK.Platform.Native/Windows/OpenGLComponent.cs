@@ -198,6 +198,19 @@ namespace OpenTK.Platform.Native.Windows
                 throw new PalException(this, $"Can't create an OpenGL context from a window that was not created with {nameof(OpenGLGraphicsApiHints)}.");
             }
 
+            HGLRC? hshareContext = null;
+            if (settings.SharedContext != null)
+            {
+                if (settings.SharedContext is HGLRC share)
+                {
+                    hshareContext = share;
+                }
+                else
+                {
+                    throw new PalException(this, "Can't create a shared context with a non-WGL (HGLRC) OpenGL context.");
+                }
+            }
+
             bool success;
 
             IntPtr hDC = Win32.GetDC(hwnd.HWnd);
@@ -510,16 +523,54 @@ namespace OpenTK.Platform.Native.Windows
             {
                 if (Wgl._CreateContextAttribsARB__fnptr != null)
                 {
-                    // FIXME: Shared context!
-                    int[] attribs = new int[]
-                    {
-                        (int)WGLContextAttribs.CONTEXT_MAJOR_VERSION_ARB, 3,
-                        (int)WGLContextAttribs.CONTEXT_MINOR_VERSION_ARB, 2,
-                        (int)WGLContextAttribs.CONTEXT_FLAGS_ARB, 0x00, // FIXME: context flags!!
-                        (int)WGLContextAttribs.CONTEXT_PROFILE_MASK_ARB, 0x01, // Core profile FIXME: Configurable!
-                    };
+                    const int WGL_CONTEXT_DEBUG_BIT_ARB = 0x0001;
+                    const int WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB = 0x0002;
 
-                    hGLRC = Wgl.CreateContextAttribsARB(hDC, IntPtr.Zero, attribs);
+                    const int WGL_CONTEXT_CORE_PROFILE_BIT_ARB = 0x1;
+                    const int WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB = 0x2;
+
+                    int flags = 0;
+                    if (settings.DebugFlag) flags |= WGL_CONTEXT_DEBUG_BIT_ARB;
+                    if (settings.ForwardCompatibleFlag) flags |= WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB;
+
+                    int profile = 0;
+                    switch (settings.Profile)
+                    {
+                        case OpenGLProfile.None:
+                            break;
+                        case OpenGLProfile.Core:
+                            profile = WGL_CONTEXT_CORE_PROFILE_BIT_ARB;
+                            break;
+                        case OpenGLProfile.Compatibility:
+                            profile = WGL_CONTEXT_CORE_PROFILE_BIT_ARB | WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    List<int> attribs = new List<int>();
+
+                    attribs.Add((int)WGLContextAttribs.CONTEXT_MAJOR_VERSION_ARB);
+                    attribs.Add(settings.Version.Major);
+
+                    attribs.Add((int)WGLContextAttribs.CONTEXT_MINOR_VERSION_ARB);
+                    attribs.Add(settings.Version.Minor);
+
+                    if (flags != 0)
+                    {
+                        attribs.Add((int)WGLContextAttribs.CONTEXT_FLAGS_ARB);
+                        attribs.Add(flags);
+                    }
+
+                    if (profile != 0)
+                    {
+                        attribs.Add((int)WGLContextAttribs.CONTEXT_PROFILE_MASK_ARB);
+                        attribs.Add(profile);
+                    }
+
+                    IntPtr hshare = hshareContext?.HGlrc ?? IntPtr.Zero;
+
+                    hGLRC = Wgl.CreateContextAttribsARB(hDC, hshare, CollectionsMarshal.AsSpan(attribs));
                     if (hGLRC == IntPtr.Zero)
                     {
                         throw new Win32Exception("wglCreateContextAttribsARB failed");
@@ -529,6 +580,8 @@ namespace OpenTK.Platform.Native.Windows
                 }
                 else
                 {
+                    // FIXME: We can't share contexts if this happens!
+
                     hGLRC = Wgl.CreateContext(hDC);
                     if (hGLRC == IntPtr.Zero)
                     {

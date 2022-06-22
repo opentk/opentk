@@ -40,6 +40,7 @@ public class Program
     public static void Main(string[] args)
     {
         windowComp.Initialize(PalComponents.Window);
+        glComp.Initialize(PalComponents.OpenGL);
 
         dispComp.Initialize(PalComponents.Display);
 
@@ -74,8 +75,15 @@ public class Program
             StencilBits = ContextStencilBits.Stencil8,
         };
 
-        WindowHandle = windowComp.Create(new OpenGLGraphicsApiHints());
-        WindowHandle2 = windowComp.Create(new OpenGLGraphicsApiHints());
+        WindowHandle = windowComp.Create(contextSettings);
+
+        WindowContext = glComp.CreateFromWindow(WindowHandle);
+
+        contextSettings.SharedContext = WindowContext;
+
+        WindowHandle2 = windowComp.Create(contextSettings);
+
+        Window2Context = glComp.CreateFromWindow(WindowHandle2);
 
         SetWindowSettings(WindowHandle, "Cool test window", 600, 400);
         SetWindowSettings(WindowHandle2, "Cool test window #2", 300, 300);
@@ -110,11 +118,6 @@ public class Program
         eventQueue.EventRaised += EventQueue_EventRaised;
         // FIXME!
         windowComp.GetEventQueue(WindowHandle2).EventRaised += EventQueue_EventRaised;
-
-        glComp.Initialize(PalComponents.OpenGL);
-
-        WindowContext = glComp.CreateFromWindow(WindowHandle);
-        Window2Context = glComp.CreateFromWindow(WindowHandle2);
 
         glComp.SetCurrentContext(WindowContext);
 
@@ -292,9 +295,13 @@ public class Program
         cursorComp.SetHotspot(ImageCursorHandle, (x + 1) % width, y);
     }
 
-    static VertexArrayHandle vao;
     static BufferHandle buffer;
+
+    static VertexArrayHandle vao;
+    static VertexArrayHandle vao2;
+
     static ProgramHandle program;
+    static ProgramHandle program2;
 
     const string vertexShaderSource =
 @"#version 330 core
@@ -333,6 +340,13 @@ void main()
         // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
         cursorComp.GetImage(handle, data);
 
+        for (int i = 0; i < width * height; i++)
+        {
+            int index = i * 4;
+
+            data[index + 3] = 255;
+        }
+
         TextureHandle tex = GL.GenTexture();
 
         GL.ActiveTexture(TextureUnit.Texture0);
@@ -356,9 +370,6 @@ void main()
 
     public static void Init()
     {
-        vao = GL.GenVertexArray();
-        buffer = GL.GenBuffer();
-
         float[] vertices = new float[]
         {
             -1f * 0.5f, -1f * 0.5f, 0f,     0f, 0f,     1f, 0f, 0f,
@@ -370,12 +381,66 @@ void main()
             -1f * 0.5f, -1f * 0.5f, 0f,     0f, 0f,     1f, 0f, 0f,
         };
 
+        glComp.SetCurrentContext(WindowContext);
+
+        buffer = CreateBuffer(vertices);
+        vao = CreateVAO(buffer);
+
+        CheckError("vao");
+
+        program = CreateShader("", vertexShaderSource, fragmentShaderSource);
+
+        GL.UseProgram(program);
+
+        CheckError("shader");
+
+        cursor_tex = GetCursorImage(ImageCursorHandle);
+
+        CheckError("get cursor tex");
+
+        glComp.SetCurrentContext(Window2Context);
+
+        vao2 = CreateVAO(buffer);
+        program2 = CreateShader("", vertexShaderSource, fragmentShaderSource);
+
+        glComp.SetCurrentContext(WindowContext);
+        
+        CheckError("getString");
+
+        int encoding = 0;
+        GL.GetFramebufferAttachmentParameteri(FramebufferTarget.DrawFramebuffer, (FramebufferAttachment)All.BackLeft, FramebufferAttachmentParameterName.FramebufferAttachmentColorEncoding, ref encoding);
+
+        if ((All)encoding == All.Linear)
+        {
+            Console.WriteLine("Linear default framebuffer!");
+        }
+        else if ((All)encoding == All.Srgb)
+        {
+            Console.WriteLine("sRGB default framebuffer!");
+        }
+        CheckError("getFramebuffer");
+
+        GL.Disable(EnableCap.FramebufferSrgb);
+    }
+
+    public static BufferHandle CreateBuffer(float[] vertices)
+    {
+        var buffer = GL.GenBuffer();
+
         GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
         GL.BufferData(BufferTargetARB.ArrayBuffer, vertices, BufferUsageARB.StaticDraw);
 
+        return buffer;
+    }
+
+    public static VertexArrayHandle CreateVAO(BufferHandle buffer)
+    {
+        var vao = GL.GenVertexArray();
+        
         CheckError("buffer");
 
         GL.BindVertexArray(vao);
+        GL.BindBuffer(BufferTargetARB.ArrayBuffer, buffer);
 
         GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, sizeof(float) * 8, 0);
         GL.EnableVertexAttribArray(0);
@@ -386,13 +451,16 @@ void main()
         GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, sizeof(float) * 8, sizeof(float) * 5);
         GL.EnableVertexAttribArray(2);
 
-        CheckError("vao");
+        return vao;
+    }
 
+    public static ProgramHandle CreateShader(string name, string vertexSource, string fragmentSource)
+    {
         var vert = GL.CreateShader(ShaderType.VertexShader);
         var frag = GL.CreateShader(ShaderType.FragmentShader);
 
-        GL.ShaderSource(vert, vertexShaderSource);
-        GL.ShaderSource(frag, fragmentShaderSource);
+        GL.ShaderSource(vert, vertexSource);
+        GL.ShaderSource(frag, fragmentSource);
 
         GL.CompileShader(vert);
         GL.CompileShader(frag);
@@ -411,7 +479,7 @@ void main()
             Console.WriteLine(info);
         }
 
-        program = GL.CreateProgram();
+        var program = GL.CreateProgram();
 
         GL.AttachShader(program, vert);
         GL.AttachShader(program, frag);
@@ -431,49 +499,7 @@ void main()
         GL.DeleteShader(vert);
         GL.DeleteShader(frag);
 
-        GL.UseProgram(program);
-
-        CheckError("shader");
-
-        cursor_tex = GetCursorImage(ImageCursorHandle);
-
-        CheckError("get cursor tex");
-
-        /*
-        int numExtensions = 0;
-        Console.WriteLine($"Extensions:");
-        GL.GetInteger(GetPName.NumExtensions, ref numExtensions);
-        for (int i = 0; i < numExtensions; i++)
-        {
-            string ext = GL.GetStringi(StringName.Extensions, (uint)i);
-            
-            if (ext.StartsWith("WGL"))
-            {
-                Console.WriteLine("  " + ext);
-            }
-            else
-            {
-                Console.WriteLine(ext);
-            }
-        }
-        */
-
-        CheckError("getString");
-
-        int encoding = 0;
-        GL.GetFramebufferAttachmentParameteri(FramebufferTarget.DrawFramebuffer, (FramebufferAttachment)All.BackLeft, FramebufferAttachmentParameterName.FramebufferAttachmentColorEncoding, ref encoding);
-
-        if ((All)encoding == All.Linear)
-        {
-            Console.WriteLine("Linear default framebuffer!");
-        }
-        else if ((All)encoding == All.Srgb)
-        {
-            Console.WriteLine("sRGB default framebuffer!");
-        }
-        CheckError("getFramebuffer");
-
-        GL.Disable(EnableCap.FramebufferSrgb);
+        return program;
     }
 
     public static bool Render()
@@ -481,6 +507,8 @@ void main()
         if (WindowHandle.UserData is not false)
         {
             glComp.SetCurrentContext(WindowContext);
+
+            GL.UseProgram(program);
 
             GL.ClearColor(new Color4<Rgba>(127 / 255f, 0, 64 / 255f, 255));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
@@ -511,9 +539,21 @@ void main()
         {
             glComp.SetCurrentContext(Window2Context);
 
+            GL.UseProgram(program2);
+
             GL.ClearColor(new Color4<Rgba>(64 / 255f, 0, 127 / 255f, 255));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+            windowComp.GetClientSize(WindowHandle2, out int width, out int height);
+            GL.Viewport(0, 0, width, height);
 
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2d, cursor_tex);
+
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Blend);
+
+            GL.BindVertexArray(vao2);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
             windowComp.SwapBuffers(WindowHandle2);
         }
 

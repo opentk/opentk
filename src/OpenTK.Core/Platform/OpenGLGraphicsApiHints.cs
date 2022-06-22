@@ -62,9 +62,11 @@ namespace OpenTK.Core.Platform
 
         public OpenGLProfile Profile { get; set; } = OpenGLProfile.None;
 
-        public bool ForwardCompatible { get; set; } = false;
+        public bool ForwardCompatibleFlag { get; set; } = false;
 
         public bool DebugFlag { get; set; } = false;
+
+        public OpenGLContextHandle? SharedContext { get; set; } = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGraphicsApiHints"/> class.
