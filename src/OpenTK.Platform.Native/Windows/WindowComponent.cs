@@ -153,11 +153,10 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        private static IntPtr Win32WindowProc(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam)
+        private static IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
-            WM message = (WM)uMsg;
             //Console.WriteLine("WinProc " + message + " " + hWnd);
-            switch (message)
+            switch (uMsg)
             {
                 case WM.KEYDOWN:
                     {
@@ -242,7 +241,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.MBUTTONDOWN:
                 case WM.RBUTTONDOWN:
                     {
-                        MouseButton button = message switch
+                        MouseButton button = uMsg switch
                         {
                             WM.LBUTTONDOWN => MouseButton.Button1,
                             WM.RBUTTONDOWN => MouseButton.Button2,
@@ -360,13 +359,34 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public IconHandle GetIcon(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+
+            // FIXME: If the user has changed the icon outside of our API this will not return the correct results
+            // We could make a custom response to WM.SETICON that only returns the icons set with our API.
+            // But ideally we would avoid this.
+            if (hwnd.HIcon != null)
+            {
+                return hwnd.HIcon;
+            }
+            else
+            {
+                // FIXME: Return a (new?) iconHandle for the window default icon.
+                throw new NotImplementedException();
+            }
         }
 
         /// <inheritdoc/>
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+            HIcon hicon = icon.As<HIcon>(this);
+
+            hwnd.HIcon = hicon;
+
+            // Send messages to set the icon.
+            // DefWinProc returns the last sent lParam so we don't need to handle WM.SETICON as it already does what we want.
+            Win32.SendMessage(hwnd.HWnd, WM.SETICON, new UIntPtr(Win32.ICON_SMALL), hicon.Icon);
+            Win32.SendMessage(hwnd.HWnd, WM.SETICON, new UIntPtr(Win32.ICON_BIG), hicon.Icon);
         }
 
         /// <inheritdoc/>

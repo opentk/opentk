@@ -24,6 +24,7 @@ public class Program
 
     static IMouseComponent mouseComp = new MouseComponent();
     static ICursorComponent cursorComp = new CursorComponent();
+    static IIconComponent iconComp = new IconComponent();
 
     static IDisplayComponent dispComp = new DisplayComponent();
 
@@ -33,6 +34,8 @@ public class Program
     static CursorHandle ImageCursorHandle;
     static CursorHandle FileCursorHandle;
 
+    static IconHandle IconHandle;
+
     public static void Main(string[] args)
     {
         windowComp.Initialize(PalComponents.Window);
@@ -40,6 +43,9 @@ public class Program
         dispComp.Initialize(PalComponents.Display);
 
         keyboardComp.Initialize(PalComponents.KeyboardInput);
+
+        iconComp.Initialize(PalComponents.WindowIcon);
+        cursorComp.Initialize(PalComponents.MouseCursor);
 
         Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout()}");
 
@@ -142,6 +148,29 @@ public class Program
         cursorComp.SetHotspot(ImageCursorHandle, 8, 8);
         cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
         windowComp.SetCursor(WindowHandle, ImageCursorHandle);
+
+        {
+            byte[] icon = new byte[16 * 16 * 4];
+            for (int ccx = 0; ccx < 16; ccx++)
+            {
+                for (int ccy = 0; ccy < 16; ccy++)
+                {
+                    int index = (ccy * 16 + ccx) * 4;
+
+                    icon[index + 0] = (byte)(ccx * 16);
+                    icon[index + 1] = (byte)(ccx * 16);
+                    icon[index + 2] = (byte)(ccx * 16);
+                    icon[index + 3] = 255;
+                }
+            }
+
+            IconHandle = iconComp.Create();
+            iconComp.Load(IconHandle, 16, 16, icon);
+
+            windowComp.SetIcon(WindowHandle, IconHandle);
+        }
+
+        
 
         FileCursorHandle = cursorComp.Create();
         cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");

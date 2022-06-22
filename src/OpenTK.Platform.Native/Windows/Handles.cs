@@ -15,8 +15,9 @@ namespace OpenTK.Platform.Native.Windows
         public IntPtr HWnd { get; private set; }
 
         /// <summary> The current cursor for this window. </summary>
-        //public IntPtr HCursor { get; set; }
         public HCursor? HCursor { get; set; }
+
+        public HIcon? HIcon { get; set; }
 
         // FIXME: Is this a good place for this?
         public SimpleEventQueue<WindowEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<WindowEventType, WindowEventArgs>();
@@ -76,6 +77,10 @@ namespace OpenTK.Platform.Native.Windows
     internal class HIcon : IconHandle
     {
         public IntPtr Icon { get; set; }
+
+        public IntPtr ColorBitmap { get; set; }
+
+        public IntPtr MaskBitmap { get; set; }
     }
 
     internal class HMonitor : DisplayHandle

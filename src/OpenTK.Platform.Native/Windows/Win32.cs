@@ -37,11 +37,14 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int KL_NAMELENGTH = 9;
 
+        internal const int ICON_SMALL = 0;
+        internal const int ICON_BIG = 1;
+
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-        internal delegate IntPtr WNDPROC(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam);
+        internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr DefWindowProc(IntPtr hWnd, uint Msg, UIntPtr wParam, IntPtr lParam);
+        internal static extern IntPtr DefWindowProc(IntPtr hWnd, WM Msg, UIntPtr wParam, IntPtr lParam);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct WNDCLASSEX
@@ -150,6 +153,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr DispatchMessage(in MSG lpMsg);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* LRESULT */ SendMessage(IntPtr /* HWND */ hWnd, WM Msg, UIntPtr /* WPARAM */ wParam, IntPtr /* LPARAM */ lParam);
 
         [DllImport("user32.dll")]
         internal static extern void PostQuitMessage(int nExitCode);
