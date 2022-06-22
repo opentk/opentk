@@ -170,7 +170,28 @@ public class Program
             windowComp.SetIcon(WindowHandle, IconHandle);
         }
 
-        
+        {
+            byte[] icon = new byte[16 * 16 * 4];
+            for (int ccx = 0; ccx < 16; ccx++)
+            {
+                for (int ccy = 0; ccy < 16; ccy++)
+                {
+                    int index = (ccy * 16 + ccx) * 4;
+
+                    icon[index + 0] = (byte)(ccx * 16);
+                    icon[index + 1] = (byte)(ccy * 16);
+                    icon[index + 2] = (byte)(ccx * ccy);
+                    icon[index + 3] = 255;
+                }
+            }
+
+            IconHandle = iconComp.Create();
+            iconComp.Load(IconHandle, 16, 16, icon);
+
+            windowComp.SetIcon(WindowHandle2, IconHandle);
+        }
+
+
 
         FileCursorHandle = cursorComp.Create();
         cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");
