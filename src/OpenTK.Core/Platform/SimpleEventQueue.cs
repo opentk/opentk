@@ -8,6 +8,7 @@ namespace OpenTK.Core.Platform
     /// </summary>
     /// <typeparam name="TType">Enumeration of event types.</typeparam>
     /// <typeparam name="TArguments">Event type parameter.</typeparam>
+    [Obsolete("Event Queue instances are no longer a part of the PAL API.")]
     public class SimpleEventQueue<TType, TArguments> : IEventQueue<TType, TArguments> where TType : Enum
     {
         private readonly Queue<Event> _events = new Queue<Event>();

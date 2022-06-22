@@ -4,11 +4,11 @@ using System.Diagnostics;
 namespace OpenTK.Platform.Native.X11
 {
     [DebuggerDisplay("{Value}")]
-    public struct XGC
+    public struct GLXFBConfig
     {
         public IntPtr Value { get; }
 
-        public XGC(IntPtr value)
+        public GLXFBConfig(IntPtr value)
         {
             Value = value;
         }

@@ -10,11 +10,13 @@ namespace OpenTK.Core.Platform
     /// <param name="sender">The object sending the event.</param>
     /// <param name="type">The type of event sent.</param>
     /// <param name="arguments">Arguments associated with event.</param>
+    [Obsolete("Event Queue instances are no longer a part of the PAL API.")]
     public delegate void QueueEventHandler<TType, TArguments>(object sender, TType type, TArguments arguments) where TType : Enum;
 
     /// <summary>
     /// An empty enum for use with <see cref="QueueEventHandler{TType,TArguments}"/> and <see cref="IEventQueue{Ttype,TArguments}"/>.
     /// </summary>
+    [Obsolete("Event Queue instances are no longer a part of the PAL API.")]
     public enum NullEnum
     {
     }
@@ -24,6 +26,7 @@ namespace OpenTK.Core.Platform
     /// </summary>
     /// <typeparam name="TType">Enumeration of possible event types.</typeparam>
     /// <typeparam name="TArguments">The event argument type, conventionally inherits <see cref="EventArgs"/>.</typeparam>
+    [Obsolete("Event Queue instances are no longer a part of the PAL API.")]
     public interface IEventQueue<TType, TArguments> where TType : Enum
     {
         /// <summary>

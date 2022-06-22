@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
@@ -6,6 +7,7 @@ namespace OpenTK.Platform.Native.X11
     // some more bytes in order to prevent potential segfaults down
     // the line. May be removed later.
     [StructLayout(LayoutKind.Explicit, Size = 256)]
+    [DebuggerDisplay("{Type} Display={Any.Display} Window={Any.Window}")]
     public struct XEvent
     {
         [FieldOffset(0)]

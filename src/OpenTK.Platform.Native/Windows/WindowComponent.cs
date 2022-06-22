@@ -234,8 +234,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        /// <inheritdoc/>
-        public WindowHandle Create()
+        public WindowHandle Create(GraphicsApiHints hints)
         {
             IntPtr hWnd = Win32.CreateWindowEx(
                 0,

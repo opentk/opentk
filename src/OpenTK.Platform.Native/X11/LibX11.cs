@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Native.X11
             int depth,
             uint @class,
             ref XVisual visual,
-            ulong valueMask,
+            XWindowAttributeValueMask valueMask,
             ref XSetWindowAttributes attributes);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -61,7 +61,7 @@ namespace OpenTK.Platform.Native.X11
             [MarshalAs(UnmanagedType.LPStr)]string windowName,
             [MarshalAs(UnmanagedType.LPStr)]string iconName,
             XPixMap iconPixmap,
-            IntPtr argv,    // char**
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[]? argv,
             int argc,
             ref XSizeHints hints);
 
@@ -92,5 +92,53 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XNextEvent(XDisplayPtr display, out XEvent @event);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XFree(IntPtr pointer);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XColorMap XCreateColormap(
+            XDisplayPtr display,
+            XWindow window,
+            ref XVisual visual,
+            int alloc);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XFreeColormap(XDisplayPtr display, XColorMap colormap);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XStoreName(XDisplayPtr display, XWindow window, [MarshalAs(UnmanagedType.LPStr)]string name);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XGetWindowAttributes(
+            XDisplayPtr display,
+            XWindow window,
+            out XWindowAttributes attributes);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XTranslateCoordinates(
+            XDisplayPtr display,
+            XWindow source,
+            XWindow destination,
+            int sourceX,
+            int sourceY,
+            out int destinationX,
+            out int destinationY,
+            out XWindow child);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XSendEvent(
+            XDisplayPtr display,
+            XWindow window,
+            int propagate,
+            XEventMask eventMask,
+            in XEvent ea);
+
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XEventsQueued(XDisplayPtr display, XEventsQueuedMode mode);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern unsafe int XFetchName(XDisplayPtr display, XWindow window, out byte* name);
     }
 }

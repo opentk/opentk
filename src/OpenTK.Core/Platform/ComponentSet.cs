@@ -28,10 +28,63 @@ namespace OpenTK.Core.Platform
         private ISurfaceComponent? _surfaceComponent;
         private IWindowComponent? _windowComponent;
 
+        /// <summary>
+        /// Indicated whether the component set has been initialized.
+        /// </summary>
+        /// <remarks>
+        /// An initialized component set cannot be modified.
+        /// </remarks>
         public bool Initialized { get; private set; } = false;
 
         /// <inheritdoc/>
-        public string Name { get; private set; } = "Component Set []";
+        public string Name
+        {
+            get
+            {
+                HashSet<string> names = new HashSet<string>();
+                if (_cursorComponent is not null)
+                {
+                    names.Add(_cursorComponent.Name);
+                }
+
+                if (_displayComponent is not null)
+                {
+                    names.Add(_displayComponent.Name);
+                }
+
+                if (_iconComponent is not null)
+                {
+                    names.Add(_iconComponent.Name);
+                }
+
+                if (_keyboardComponent is not null)
+                {
+                    names.Add(_keyboardComponent.Name);
+                }
+
+                if (_mouseComponent is not null)
+                {
+                    names.Add(_mouseComponent.Name);
+                }
+
+                if (_openGLComponent is not null)
+                {
+                    names.Add(_openGLComponent.Name);
+                }
+
+                if (_surfaceComponent is not null)
+                {
+                    names.Add(_surfaceComponent.Name);
+                }
+
+                if (_windowComponent is not null)
+                {
+                    names.Add(_windowComponent.Name);
+                }
+
+                return $"Component Set [{string.Join(", ", names)}]";
+            }
+        }
 
         /// <inheritdoc/>
         public PalComponents Provides => (_cursorComponent is not null ? PalComponents.MouseCursor : 0) |
@@ -43,6 +96,13 @@ namespace OpenTK.Core.Platform
                                          (_surfaceComponent is not null ? PalComponents.Surface : 0) |
                                          (_windowComponent is not null ? PalComponents.Window : 0);
 
+        /// <summary>
+        /// Get or set which components are in the set.
+        /// </summary>
+        /// <param name="which">The component group.</param>
+        /// <exception cref="NotImplementedException">Not implemented, yet.</exception>
+        /// <exception cref="ArgumentException">The given <paramref name="which"/> enum should only contain bit set for get.</exception>
+        /// <exception cref="PalException">Raised when the set is modified after initialization.</exception>
         public IPalComponent? this[PalComponents which]
         {
             get => which switch
@@ -168,9 +228,9 @@ namespace OpenTK.Core.Platform
         IReadOnlyList<WindowMode> IWindowComponent.SupportedModes => _windowComponent!.SupportedModes;
 
         /// <inheritdoc/>
-        WindowHandle IWindowComponent.Create()
+        WindowHandle IWindowComponent.Create(GraphicsApiHints hints)
         {
-            return _windowComponent!.Create();
+            return _windowComponent!.Create(hints);
         }
 
         /// <inheritdoc/>

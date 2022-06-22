@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Platform.Native.X11;
+using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
     public partial class X11AbstractionLayer : IWindowComponent
     {
-        private XDisplayPtr _display;
-
         public bool CanSetIcon => false;
         public bool CanGetDisplay => false;
         public bool CanSetCursor => false;
@@ -18,63 +18,124 @@ namespace OpenTK.Platform.Native.X11
         public IReadOnlyList<WindowStyle> SupportedStyles { get; }
         public IReadOnlyList<WindowMode> SupportedModes { get; }
 
-        public XDisplayPtr Display => _display;
-
-        public void InitializeWindow()
+        public WindowHandle Create(GraphicsApiHints hints)
         {
-            // Later on we can replace this with a hint.
-            string? displayName = null;
-            _display = XOpenDisplay(displayName);
+            XWindow window;
+            GLXFBConfig? chosenConfig = null;
+            XColorMap? map = null;
 
-            if (_display.Value == IntPtr.Zero)
+            if (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES)
             {
-                throw new PalException(
-                    this,
-                    (displayName is null) ? "Could not open default X display."
-                                          : $"Could not open X display {displayName}."
-                    );
-            }
-        }
+                // Ignoring ES for now.
+                OpenGLGraphicsApiHints glhints = hints as OpenGLGraphicsApiHints;
 
-        public WindowHandle Create()
-        {
-            int screen = XDefaultScreen(_display);
-            ulong black = XBlackPixel(_display, screen);
-            ulong white = XWhitePixel(_display, screen);
-            XWindow window = XCreateSimpleWindow(
-                _display,
-                XDefaultRootWindow(_display),
-                0, 0, 800, 600,
-                0,
-                black);
+                Span<int> visualAttribs = stackalloc int[]
+                {
+                    GLX_X_RENDERABLE, 1,
+                    GLX_DRAWABLE_TYPE, GLX_WINDOW_BIT,
+                    GLX_RENDER_TYPE, GLX_RGBA_BIT,
+                    GLX_X_VISUAL_TYPE, GLX_TRUE_COLOR,
+                    GLX_RED_SIZE, glhints.RedColorBits,
+                    GLX_GREEN_SIZE, glhints.GreenColorBits,
+                    GLX_BLUE_SIZE, glhints.BlueColorBits,
+                    GLX_ALPHA_SIZE, glhints.AlphaColorBits,
+                    GLX_DEPTH_SIZE, glhints.DepthBits,
+                    GLX_STENCIL_SIZE, glhints.StencilBits,
+                    GLX_DOUBLEBUFFER, glhints.DoubleBuffer ? 1 : 0,
+                    GLX_SAMPLE_BUFFERS, glhints.Multisamples == 0 ? 0 : 1,
+                    GLX_SAMPLES, glhints.Multisamples,
+                    /* fin */ 0
+                };
+
+                int items = visualAttribs.Length;
+                unsafe
+                {
+                    GLXFBConfig *configs = glXChooseFBConfig(Display, DefaultScreen, ref visualAttribs[0], ref items);
+                    chosenConfig = *configs;
+                    XFree((IntPtr)configs);
+                }
+
+                XSetWindowAttributes windowAttributes = new XSetWindowAttributes();
+                unsafe
+                {
+                    XVisualInfo* vi = glXGetVisualFromFBConfig(Display, chosenConfig.Value);
+                    map = XCreateColormap(Display, XDefaultRootWindow(Display), ref *vi->VisualPtr, 0);
+
+                    windowAttributes.ColorMap = map.Value;
+                    windowAttributes.BackgroundPixmap = XPixMap.None;
+                    windowAttributes.BorderPixel = 0;
+                    windowAttributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify;
+
+                    window = XCreateWindow(
+                        Display,
+                        XDefaultRootWindow(Display),
+                        0,
+                        0,
+                        800,
+                        600,
+                        0,
+                        vi->Depth,
+                        1,
+                        ref *vi->VisualPtr,
+                        XWindowAttributeValueMask.BackPixmap | XWindowAttributeValueMask.Colormap | XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
+                        ref windowAttributes);
+
+                    XFree((IntPtr)vi);
+                }
+            }
+            else
+            {
+                ulong black = XBlackPixel(Display, DefaultScreen);
+                ulong white = XWhitePixel(Display, DefaultScreen);
+                window = XCreateSimpleWindow(
+                    Display,
+                    XDefaultRootWindow(Display),
+                    0, 0, 800, 600,
+                    0,
+                    black);
+            }
 
             XSetStandardProperties(
-                _display,
+                Display,
                 window,
                 "OpenTK Window [Native:X11]",
                 "ICO_OPENTK",
                 XPixMap.None,
-                IntPtr.Zero,
+                null,
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
 
-            return new XWindowHandle(_display, window);
+            return new XWindowHandle(Display, window, hints, chosenConfig, map);
         }
 
         public void Destroy(WindowHandle handle)
         {
             var xhandle = handle.As<XWindowHandle>(this);
             XDestroyWindow(xhandle.Display, xhandle.Window);
+            if (xhandle.ColorMap.HasValue)
+            {
+                XFreeColormap(xhandle.Display, xhandle.ColorMap.Value);
+            }
         }
 
         public string GetTitle(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            string str = string.Empty;
+            unsafe
+            {
+                XFetchName(window.Display, window.Window, out byte* name);
+                str = Marshal.PtrToStringAnsi((IntPtr)name) ?? string.Empty;
+                XFree((IntPtr)name);
+            }
+
+            return str;
         }
 
         public void SetTitle(WindowHandle handle, string title)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            XStoreName(window.Display, window.Window, title);
         }
 
         public IconHandle GetIcon(WindowHandle handle)
@@ -109,7 +170,17 @@ namespace OpenTK.Platform.Native.X11
 
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
+            XTranslateCoordinates(
+                window.Display,
+                window.Window,
+                XDefaultRootWindow(window.Display),
+                attributes.X,
+                attributes.Y,
+                out x,
+                out y,
+                out _);
         }
 
         public void SetClientPosition(WindowHandle handle, int x, int y)
@@ -119,7 +190,10 @@ namespace OpenTK.Platform.Native.X11
 
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
-            throw new NotImplementedException();
+            var window = handle.As<XWindowHandle>(this);
+            XGetWindowAttributes(window.Display, window.Window, out XWindowAttributes attributes);
+            width = attributes.Width;
+            height = attributes.Height;
         }
 
         public void SetClientSize(WindowHandle handle, int width, int height)

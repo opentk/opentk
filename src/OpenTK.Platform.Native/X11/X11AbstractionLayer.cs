@@ -9,6 +9,10 @@ namespace OpenTK.Platform.Native.X11
         public string Name => "X11";
         public PalComponents Provides => PalComponents.OpenGL | PalComponents.Window;
 
+        public XDisplayPtr Display { get; private set; }
+
+        public int DefaultScreen { get; private set; }
+
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -16,9 +20,24 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
             }
 
-            if ((which & PalComponents.Window) != 0)
+            // Later on we can replace this with a hint.
+            string? displayName = null;
+            Display = LibX11.XOpenDisplay(displayName);
+
+            if (Display.Value == IntPtr.Zero)
             {
-                InitializeWindow();
+                throw new PalException(
+                    this,
+                    (displayName is null) ? "Could not open default X display."
+                        : $"Could not open X display {displayName}."
+                );
+            }
+
+            DefaultScreen = LibX11.XDefaultScreen(Display);
+
+            if (which.HasFlag(PalComponents.OpenGL))
+            {
+                InitializeGL();
             }
         }
     }

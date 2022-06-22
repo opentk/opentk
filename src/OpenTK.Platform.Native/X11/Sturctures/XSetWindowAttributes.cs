@@ -12,8 +12,8 @@ namespace OpenTK.Platform.Native.X11
         public ulong BackingPlanes;
         public ulong BackingPixel;
         public int SaveUnder;
-        public long EventMask;
-        public long DoNotPropagateMask;
+        public XEventMask EventMask;
+        public XEventMask DoNotPropagateMask;
         public int OverrideRedirect;
         public XColorMap ColorMap;
         public XCursor Cursor;

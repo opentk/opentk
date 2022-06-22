@@ -53,7 +53,7 @@ public class Program
 
         Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
 
-        handle = windowComp.Create();
+        handle = windowComp.Create(new OpenGLGraphicsApiHints());
 
         windowComp.SetTitle(handle, "Cool test window");
 
