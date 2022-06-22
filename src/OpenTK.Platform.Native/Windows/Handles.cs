@@ -76,11 +76,21 @@ namespace OpenTK.Platform.Native.Windows
 
     internal class HIcon : IconHandle
     {
+        public IconMode Mode { get; set; }
+
         public IntPtr Icon { get; set; }
 
         public IntPtr ColorBitmap { get; set; }
 
         public IntPtr MaskBitmap { get; set; }
+
+        internal enum IconMode
+        {
+            Uninitialized,
+            SystemIcon,
+            Icon,
+            FileIcon,
+        }
     }
 
     internal class HMonitor : DisplayHandle

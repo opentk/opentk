@@ -99,6 +99,10 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.DeleteObject(info.hbmColor);
                 Win32.DeleteObject(info.hbmMask);
             }
+            else
+            {
+                throw new Win32Exception();
+            }
         }
 
         public void GetHotspot(CursorHandle handle, out int x, out int y)

@@ -918,6 +918,20 @@ namespace OpenTK.Platform.Native.Windows
         Wait = 32514,
     }
 
+    internal enum OIC
+    {
+        Sample = 32512,
+        Hand = 32513,
+        Ques = 32514,
+        Bang = 32515,
+        Note = 32516,
+        WinLogo = 32517,
+        Warning = Bang,
+        Error = Hand,
+        Information = Note,
+        Shield = 32518,
+    }
+
     internal enum ImageType : uint
     {
         /// <summary>

@@ -38,22 +38,38 @@ namespace OpenTK.Platform.Native.Windows
         {
             HIcon hicon = handle.As<HIcon>(this);
 
-            if (hicon.Icon != IntPtr.Zero)
+            switch (hicon.Mode)
             {
-                bool success = Win32.DestroyIcon(hicon.Icon);
-                if (success == false)
-                {
-                    throw new Win32Exception("DestroyIcon failed.");
-                }
+                case HIcon.IconMode.Uninitialized:
+                    // Do nothing.
+                    break;
+                case HIcon.IconMode.SystemIcon:
+                    // This is a shared icon, so we shouldn't destroy it.
+                    break;
+                case HIcon.IconMode.Icon:
+                    {
+                        bool success = Win32.DestroyIcon(hicon.Icon);
+                        if (success == false)
+                        {
+                            throw new Win32Exception("DestroyIcon failed.");
+                        }
 
-                // Delete the mask and color bitmaps.
-                Win32.DeleteObject(hicon.MaskBitmap);
-                Win32.DeleteObject(hicon.ColorBitmap);
-
-                hicon.Icon = default;
-                hicon.MaskBitmap = default;
-                hicon.ColorBitmap = default;
+                        // Delete the mask and color bitmaps.
+                        Win32.DeleteObject(hicon.MaskBitmap);
+                        Win32.DeleteObject(hicon.ColorBitmap);
+                        break;
+                    }
+                case HIcon.IconMode.FileIcon:
+                    // FIXME
+                    break;
+                default:
+                    throw new InvalidOperationException($"Unknown cursor mode: {hicon.Mode}.");
             }
+
+            hicon.Mode = HIcon.IconMode.Uninitialized;
+            hicon.Icon = default;
+            hicon.MaskBitmap = default;
+            hicon.ColorBitmap = default;
         }
 
         public void GenerateMipmaps(IconHandle handle)
@@ -61,9 +77,29 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
-        public void GetDimensions(IconHandle handle, out int width, out int height)
+        public unsafe void GetDimensions(IconHandle handle, out int width, out int height)
         {
-            throw new NotImplementedException();
+            HIcon hicon = handle.As<HIcon>(this);
+
+            width = 0;
+            height = 0;
+
+            if (Win32.GetIconInfo(hicon.Icon, out Win32.ICONINFO info))
+            {
+                bool bwCursor = info.hbmColor == IntPtr.Zero;
+                if (Win32.GetObject(info.hbmMask, sizeof(Win32.BITMAP), out Win32.BITMAP bmpInfo) != 0)
+                {
+                    width = bmpInfo.bmWidth;
+                    height = bmpInfo.bmHeight / (bwCursor ? 2 : 1);
+                }
+
+                Win32.DeleteObject(info.hbmColor);
+                Win32.DeleteObject(info.hbmMask);
+            }
+            else
+            {
+                throw new Win32Exception();
+            }
         }
 
         public void GetDimensions(IconHandle handle, int level, out int width, out int height)
@@ -160,6 +196,7 @@ namespace OpenTK.Platform.Native.Windows
             hicon.Icon = hIcon;
             hicon.MaskBitmap = maskBitmap;
             hicon.ColorBitmap = colorBitmap;
+            hicon.Mode = HIcon.IconMode.Icon;
         }
 
         public void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data, int level)
@@ -177,9 +214,53 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
-        public void Load(IconHandle handle, SystemIconType name)
+        public void Load(IconHandle handle, SystemIconType systemIcon)
         {
-            throw new NotImplementedException();
+            HIcon hicon = handle.As<HIcon>(this);
+
+            Destroy(hicon);
+
+            OIC oic = default;
+            switch (systemIcon)
+            {
+                case SystemIconType.Default:
+                    oic = OIC.WinLogo;
+                    break;
+                case SystemIconType.Asterisk:
+                    // FIXME
+                    oic = OIC.Information;
+                    break;
+                case SystemIconType.Error:
+                    oic = OIC.Error;
+                    break;
+                case SystemIconType.Exclamation:
+                    oic = OIC.Bang;
+                    break;
+                case SystemIconType.Hand:
+                    oic = OIC.Hand;
+                    break;
+                case SystemIconType.Information:
+                    oic = OIC.Information;
+                    break;
+                case SystemIconType.Question:
+                    oic = OIC.Ques;
+                    break;
+                case SystemIconType.Shield:
+                    oic = OIC.Shield;
+                    break;
+                case SystemIconType.Warning:
+                    oic = OIC.Warning;
+                    break;
+                case SystemIconType.OperatingSystem:
+                    // FIXME how do we get this?
+                    oic = OIC.WinLogo;
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(systemIcon), (int)systemIcon, typeof(SystemIconType));
+            }
+
+            hicon.Icon = Win32.LoadImage(IntPtr.Zero, oic, ImageType.Icon, 0, 0, LR.Shared | LR.DefaultSize);
+            hicon.Mode = HIcon.IconMode.SystemIcon;
         }
     }
 }
