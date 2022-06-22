@@ -129,7 +129,7 @@ public class Program
 
         ImageCursorHandle = cursorComp.Create();
         byte[] image = new byte[16 * 16 * 3];
-        byte[] mask  = new byte[16 * 16 * 1];
+        byte[] mask = new byte[16 * 16 * 1];
         for (int ccx = 0; ccx < 16; ccx++)
         {
             for (int ccy = 0; ccy < 16; ccy++)
@@ -139,10 +139,7 @@ public class Program
                 image[index + 0] = (byte)(ccx * 16);
                 image[index + 1] = (byte)(ccx * 16);
                 image[index + 2] = (byte)(ccx * 16);
-                //image[index + 1] = (byte)(ccy * 16);
-                //image[index + 2] = (byte)(ccx * ccy);
-                //image[index + 3] = (byte)(ccx * ccy);
-
+                
                 mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
             }
         }
@@ -333,6 +330,7 @@ void main()
     {
         cursorComp.GetSize(handle, out int width, out int height);
         byte[] data = new byte[width * height * 4];
+        // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
         cursorComp.GetImage(handle, data);
 
         TextureHandle tex = GL.GenTexture();
@@ -508,7 +506,7 @@ void main()
 
             windowComp.SwapBuffers(WindowHandle);
         }
-
+        
         if (WindowHandle2.UserData is not false)
         {
             glComp.SetCurrentContext(Window2Context);
