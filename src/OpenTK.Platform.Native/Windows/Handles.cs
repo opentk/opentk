@@ -73,6 +73,11 @@ namespace OpenTK.Platform.Native.Windows
         }
     }
 
+    internal class HIcon : IconHandle
+    {
+        public IntPtr Icon { get; set; }
+    }
+
     internal class HMonitor : DisplayHandle
     {
         public IntPtr Monitor { get; set; }
