@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
@@ -29,6 +30,22 @@ namespace OpenTK.Platform.Native.X11
                 // Ignoring ES for now.
                 OpenGLGraphicsApiHints glhints = hints as OpenGLGraphicsApiHints;
 
+                byte depthBits;
+                switch (glhints.DepthBits)
+                {
+                    case ContextDepthBits.Depth24: depthBits = 24; break;
+                    case ContextDepthBits.Depth32: depthBits = 32; break;
+                    default: throw new InvalidEnumArgumentException(nameof(glhints.DepthBits), (int)glhints.DepthBits, glhints.DepthBits.GetType());
+                }
+
+                byte stencilBits;
+                switch (glhints.StencilBits)
+                {
+                    case ContextStencilBits.Stencil1: stencilBits = 1; break;
+                    case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                    default: throw new InvalidEnumArgumentException(nameof(glhints.StencilBits), (int)glhints.StencilBits, glhints.StencilBits.GetType());
+                }
+
                 Span<int> visualAttribs = stackalloc int[]
                 {
                     GLX_X_RENDERABLE, 1,
@@ -39,8 +56,8 @@ namespace OpenTK.Platform.Native.X11
                     GLX_GREEN_SIZE, glhints.GreenColorBits,
                     GLX_BLUE_SIZE, glhints.BlueColorBits,
                     GLX_ALPHA_SIZE, glhints.AlphaColorBits,
-                    GLX_DEPTH_SIZE, glhints.DepthBits,
-                    GLX_STENCIL_SIZE, glhints.StencilBits,
+                    GLX_DEPTH_SIZE, depthBits,
+                    GLX_STENCIL_SIZE, stencilBits,
                     GLX_DOUBLEBUFFER, glhints.DoubleBuffer ? 1 : 0,
                     GLX_SAMPLE_BUFFERS, glhints.Multisamples == 0 ? 0 : 1,
                     GLX_SAMPLES, glhints.Multisamples,

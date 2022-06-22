@@ -5,13 +5,20 @@ using OpenTK.Platform.Native.Windows;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using System.Text;
+using System.Diagnostics;
 
 namespace LocalTestProject;
 
 public class Program
 {
-    static WindowComponent windowComp;
-    static WindowHandle handle;
+    static WindowComponent windowComp = new WindowComponent();
+    static WindowHandle WindowHandle;
+    static WindowHandle WindowHandle2;
+
+    static OpenGLComponent glComp = new OpenGLComponent();
+    static OpenGLContextHandle WindowContext;
+    static OpenGLContextHandle Window2Context;
 
     static DisplayHandle PrimaryDisplayHandle;
 
@@ -28,8 +35,6 @@ public class Program
 
     public static void Main(string[] args)
     {
-        windowComp = new WindowComponent();
-
         windowComp.Initialize(PalComponents.Window);
 
         dispComp.Initialize(PalComponents.Display);
@@ -53,77 +58,67 @@ public class Program
 
         Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
 
-        handle = windowComp.Create(new OpenGLGraphicsApiHints());
-
-        windowComp.SetTitle(handle, "Cool test window");
-
-        windowComp.SetSize(handle, 600, 400);
-        windowComp.SetPosition(handle, 100, 100);
-
-        windowComp.SetBorderStyle(handle, WindowStyle.Borderless);
-        WindowStyle border = windowComp.GetBorderStyle(handle);
-        Console.WriteLine($"Border: {border}");
-
-        windowComp.SetBorderStyle(handle, WindowStyle.FixedBorder);
-        border = windowComp.GetBorderStyle(handle);
-        Console.WriteLine($"Border: {border}");
-
-        windowComp.SetBorderStyle(handle, WindowStyle.ResizableBorder);
-        border = windowComp.GetBorderStyle(handle);
-        Console.WriteLine($"Border: {border}");
-
-        windowComp.GetPosition(handle, out var x, out var y);
-        windowComp.GetSize(handle, out var width, out var height);
-        windowComp.GetClientPosition(handle, out var cx, out var cy);
-        windowComp.GetClientSize(handle, out var cwidth, out var cheight);
-        Console.WriteLine($"Window: X: {x}, Y: {y}, Width: {width}, Height: {height}");
-        Console.WriteLine($"Client: X: {cx}, Y {cy} Width: {cwidth}, Height: {cheight}");
-
-        windowComp.SetClientSize(handle, 600, 400);
-        windowComp.SetClientPosition(handle, 100, 100);
-
-        windowComp.GetPosition(handle, out x, out y);
-        windowComp.GetSize(handle, out width, out height);
-        windowComp.GetClientPosition(handle, out cx, out cy);
-        windowComp.GetClientSize(handle, out cwidth, out cheight);
-        Console.WriteLine($"Window: X: {x}, Y: {y}, Width: {width}, Height: {height}");
-        Console.WriteLine($"Client: X: {cx}, Y {cy} Width: {cwidth}, Height: {cheight}");
-
-        var mode = windowComp.GetMode(handle);
-        Console.WriteLine($"Mode: {mode}");
-
-        windowComp.SetMode(handle, WindowMode.Normal);
-
-        mode = windowComp.GetMode(handle);
-        Console.WriteLine($"Mode: {mode}");
-
-        var eventQueue = windowComp.GetEventQueue(handle);
-        eventQueue.EventRaised += EventQueue_EventRaised;
-
-        OpenGLComponent glComp = new OpenGLComponent();
-        glComp.Initialize(PalComponents.OpenGL);
-
-        ContextSettings contextSettings = new ContextSettings()
+        OpenGLGraphicsApiHints contextSettings = new OpenGLGraphicsApiHints()
         {
             DoubleBuffer = true,
             sRGBFramebuffer = false,
-            //Multisample = true,
-            //Samples = 8,
+            Multisamples = 0,
             DepthBits = ContextDepthBits.Depth24,
             StencilBits = ContextStencilBits.Stencil8,
         };
 
-        OpenGLContextHandle context = glComp.CreateFromWindow(handle, contextSettings);
+        WindowHandle = windowComp.Create(new OpenGLGraphicsApiHints());
+        WindowHandle2 = windowComp.Create(new OpenGLGraphicsApiHints());
 
-        glComp.SetCurrentContext(context);
+        SetWindowSettings(WindowHandle, "Cool test window", 600, 400);
+        SetWindowSettings(WindowHandle2, "Cool test window #2", 300, 300);
 
-        Win32BindingsContext w32bc = new Win32BindingsContext(glComp, context);
+        windowComp.GetPosition(WindowHandle, out var x, out var y);
+        windowComp.GetSize(WindowHandle, out var width, out var height);
+        windowComp.GetClientPosition(WindowHandle, out var cx, out var cy);
+        windowComp.GetClientSize(WindowHandle, out var cwidth, out var cheight);
+        Console.WriteLine($"Window: X: {x}, Y: {y}, Width: {width}, Height: {height}");
+        Console.WriteLine($"Client: X: {cx}, Y {cy} Width: {cwidth}, Height: {cheight}");
+
+        windowComp.SetClientSize(WindowHandle, 600, 400);
+        windowComp.SetClientPosition(WindowHandle, 100, 100);
+
+        windowComp.GetPosition(WindowHandle, out x, out y);
+        windowComp.GetSize(WindowHandle, out width, out height);
+        windowComp.GetClientPosition(WindowHandle, out cx, out cy);
+        windowComp.GetClientSize(WindowHandle, out cwidth, out cheight);
+        Console.WriteLine($"Window: X: {x}, Y: {y}, Width: {width}, Height: {height}");
+        Console.WriteLine($"Client: X: {cx}, Y {cy} Width: {cwidth}, Height: {cheight}");
+
+        var mode = windowComp.GetMode(WindowHandle);
+        Console.WriteLine($"Mode: {mode}");
+
+        windowComp.SetMode(WindowHandle, WindowMode.Normal);
+        windowComp.SetMode(WindowHandle2, WindowMode.Normal);
+
+        mode = windowComp.GetMode(WindowHandle);
+        Console.WriteLine($"Mode: {mode}");
+
+        var eventQueue = windowComp.GetEventQueue(WindowHandle);
+        eventQueue.EventRaised += EventQueue_EventRaised;
+        // FIXME!
+        windowComp.GetEventQueue(WindowHandle2).EventRaised += EventQueue_EventRaised;
+
+        glComp.Initialize(PalComponents.OpenGL);
+
+        WindowContext = glComp.CreateFromWindow(WindowHandle);
+        Window2Context = glComp.CreateFromWindow(WindowHandle2);
+
+        glComp.SetCurrentContext(WindowContext);
+
+        Win32BindingsContext w32bc = new Win32BindingsContext(glComp, WindowContext);
         GLLoader.LoadBindings(w32bc);
 
         CursorHandle = cursorComp.Create();
         cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
         cursorComp.GetSize(CursorHandle, out _, out _);
-        windowComp.SetCursor(handle, CursorHandle);
+        windowComp.SetCursor(WindowHandle, CursorHandle);
+        windowComp.SetCursor(WindowHandle2, CursorHandle);
 
         ImageCursorHandle = cursorComp.Create();
         byte[] image = new byte[16 * 16 * 3];
@@ -146,11 +141,11 @@ public class Program
         }
         cursorComp.SetHotspot(ImageCursorHandle, 8, 8);
         cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
-        windowComp.SetCursor(handle, ImageCursorHandle);
+        windowComp.SetCursor(WindowHandle, ImageCursorHandle);
 
         FileCursorHandle = cursorComp.Create();
         cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");
-        windowComp.SetCursor(handle, FileCursorHandle);
+        windowComp.SetCursor(WindowHandle, FileCursorHandle);
 
         {
             cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);
@@ -158,7 +153,27 @@ public class Program
         }
         Init();
 
-        windowComp.Loop(handle, Render);
+        windowComp.Loop(WindowHandle, Render);
+    }
+
+    public static void SetWindowSettings(WindowHandle handle, string title, int width, int height)
+    {
+        windowComp.SetTitle(handle, title);
+
+        windowComp.SetSize(handle, width, height);
+        //windowComp.SetPosition(handle, 100, 100);
+
+        windowComp.SetBorderStyle(handle, WindowStyle.Borderless);
+        WindowStyle border = windowComp.GetBorderStyle(handle);
+        Console.WriteLine($"Border: {border}");
+
+        windowComp.SetBorderStyle(handle, WindowStyle.FixedBorder);
+        border = windowComp.GetBorderStyle(handle);
+        Console.WriteLine($"Border: {border}");
+
+        windowComp.SetBorderStyle(handle, WindowStyle.ResizableBorder);
+        border = windowComp.GetBorderStyle(handle);
+        Console.WriteLine($"Border: {border}");
     }
 
     static bool enabled_sRGB = false;
@@ -171,7 +186,7 @@ public class Program
         {
             MouseMoveEventArgs mouseMoveArgs = (MouseMoveEventArgs)arguments;
 
-            Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
+            //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
             MousePos = (mouseMoveArgs.DeltaX, mouseMoveArgs.DeltaY);
 
@@ -185,12 +200,30 @@ public class Program
             
             if (mouseButtonDownArgs.Button == MouseButton.Button1)
             {
-                keyboardComp.BeginIme(handle);
+                keyboardComp.BeginIme(WindowHandle);
 
-                keyboardComp.SetImeRectangle(handle, MousePos.X, MousePos.Y, 0, 0);
+                keyboardComp.SetImeRectangle(WindowHandle, MousePos.X, MousePos.Y, 0, 0);
 
-                keyboardComp.EndIme(handle);
+                keyboardComp.EndIme(WindowHandle);
             }
+
+            return;
+        }
+        else if (type == WindowEventType.Close)
+        {
+            CloseEventArgs closeArgs = (CloseEventArgs)arguments;
+
+            (sender as WindowHandle).UserData = false;
+
+            //closeArgs.Window.UserData = false;
+
+            return;
+        }
+        else if (type == WindowEventType.TextInput)
+        {
+            TextInputEventArgs input = (TextInputEventArgs)arguments;
+
+            Console.WriteLine($"Input: {input.Text}");
 
             return;
         }
@@ -412,29 +445,45 @@ void main()
 
     public static bool Render()
     {
-        GL.ClearColor(new Color4<Rgba>(127/255f, 0, 64/255f, 255));
-        GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
-        windowComp.GetClientSize(handle, out int width, out int height);
-        GL.Viewport(0, 0, width, height);
+        if (WindowHandle.UserData is not false)
+        {
+            glComp.SetCurrentContext(WindowContext);
 
-        CheckError("clear");
+            GL.ClearColor(new Color4<Rgba>(127 / 255f, 0, 64 / 255f, 255));
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+            windowComp.GetClientSize(WindowHandle, out int width, out int height);
+            GL.Viewport(0, 0, width, height);
 
-        mouseComp.GetPosition(null, out int x, out int y);
-        windowComp.ScreenToClient(handle, x, y, out int clientX, out int clientY);
-        windowComp.SetTitle(handle, $"({clientX},{clientY})");
+            CheckError("clear");
 
-        GL.ActiveTexture(TextureUnit.Texture0);
-        GL.BindTexture(TextureTarget.Texture2d, cursor_tex);
+            mouseComp.GetPosition(null, out int x, out int y);
+            windowComp.ScreenToClient(WindowHandle, x, y, out int clientX, out int clientY);
+            windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
 
-        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-        GL.Enable(EnableCap.Blend);
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2d, cursor_tex);
 
-        GL.BindVertexArray(vao);
-        GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.Enable(EnableCap.Blend);
 
-        CheckError("draw");
+            GL.BindVertexArray(vao);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
-        windowComp.SwapBuffers(handle);
+            CheckError("draw");
+
+            windowComp.SwapBuffers(WindowHandle);
+        }
+
+        if (WindowHandle2.UserData is not false)
+        {
+            glComp.SetCurrentContext(Window2Context);
+
+            GL.ClearColor(new Color4<Rgba>(64 / 255f, 0, 127 / 255f, 255));
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
+
+            windowComp.SwapBuffers(WindowHandle2);
+        }
+
         return true;
     }
 

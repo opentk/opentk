@@ -28,7 +28,7 @@ namespace OpenTK.Platform.Native.X11
             throw new PalNotImplementedException(this);
         }
 
-        public OpenGLContextHandle CreateFromWindow(WindowHandle handle, ContextSettings settings)
+        public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             var window = handle.As<XWindowHandle>(this);
             OpenGLGraphicsApiHints hints = window.GraphicsApiHints as OpenGLGraphicsApiHints;

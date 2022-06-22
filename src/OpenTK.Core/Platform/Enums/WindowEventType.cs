@@ -10,10 +10,13 @@ namespace OpenTK.Core.Platform
         /// </summary>
         NoOperation = 0,
 
+        Close,
+
         MouseMove,
         MouseDown,
 
         KeyDown,
         KeyUp,
+        TextInput,
     }
 }

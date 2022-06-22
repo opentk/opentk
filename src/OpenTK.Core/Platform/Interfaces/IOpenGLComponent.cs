@@ -32,9 +32,8 @@ namespace OpenTK.Core.Platform
         /// Create an OpenGL context for a window.
         /// </summary>
         /// <param name="handle">The window for which the OpenGL context should be created.</param>
-        /// <param name="settings">The desired settings for the created context.</param>
         /// <returns>An OpenGL context handle.</returns>
-        OpenGLContextHandle CreateFromWindow(WindowHandle handle, ContextSettings settings);
+        OpenGLContextHandle CreateFromWindow(WindowHandle handle);
 
         /// <summary>
         /// Destroy an OpenGL context.

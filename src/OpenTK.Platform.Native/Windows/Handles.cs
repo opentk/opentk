@@ -24,10 +24,11 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: This is kind of a hack so that we can get access to the window component in the WndProc...
         public WindowComponent WindowComponent { get; private set; }
 
-        public HWND(IntPtr hWnd, WindowComponent windowComponent)
+        public HWND(IntPtr hWnd, WindowComponent windowComponent, GraphicsApiHints hints)
         {
             HWnd = hWnd;
             WindowComponent = windowComponent;
+            GraphicsApiHints = hints;
         }
     }
 

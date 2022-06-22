@@ -723,9 +723,9 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        OpenGLContextHandle IOpenGLComponent.CreateFromWindow(WindowHandle handle, ContextSettings settings)
+        OpenGLContextHandle IOpenGLComponent.CreateFromWindow(WindowHandle handle)
         {
-            return _openGLComponent!.CreateFromWindow(handle, settings);
+            return _openGLComponent!.CreateFromWindow(handle);
         }
 
         /// <inheritdoc/>

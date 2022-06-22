@@ -60,7 +60,7 @@ namespace OpenTK.Platform.Native.Windows
             wndClass.style = ClassStyles.OwnDC;
 
             short wndClassAtom = Win32.RegisterClassEx(in wndClass);
-
+            
             if (wndClassAtom == 0)
             {
                 throw new Win32Exception("RegisterClassEx failed!");
@@ -148,6 +148,7 @@ namespace OpenTK.Platform.Native.Windows
 
             if (success == false)
             {
+                throw new Win32Exception();
                 throw new Win32Exception("SwapBuffers failed");
             }
         }
@@ -169,6 +170,46 @@ namespace OpenTK.Platform.Native.Windows
                         bool extended = (l & (1 << 24)) != 0;
 
                         h.EventQueue.Send(h, WindowEventType.KeyDown, new KeyDownEventArgs(vk, wasDown, extended));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.CHAR:
+                    {
+                        HWND h = HWndDict[hWnd];
+                        if (Win32.IsWindowUnicode(hWnd))
+                        {
+                            // UTF-16
+                            string str;
+
+                            ulong chars = wParam.ToUInt64();
+                            char hi = (char)(chars >> 16);
+                            char lo = (char)(chars & 0xFFFF);
+                            if (char.IsSurrogatePair(hi, lo))
+                            {
+                                Span<char> text = stackalloc char[2];
+                                text[0] = hi;
+                                text[1] = lo;
+                                str = new string(text);
+                            }
+                            else
+                            {
+                                str = new string(lo, 1);
+                            }
+
+                            Console.WriteLine($"wParam: 0x{wParam.ToUInt64():X16}, lo: {(ushort)lo:X4}, hi: 0x{(ushort)hi:X4}");
+
+                            if (char.IsSurrogate(lo))
+                            {
+                                ;
+                            }
+
+                            h.EventQueue.Send(h, WindowEventType.TextInput, new TextInputEventArgs(str));
+                        }
+                        else
+                        {
+                            // ANSI
+                            h.EventQueue.Send(h, WindowEventType.TextInput, new TextInputEventArgs(new string((char)(wParam.ToUInt64()), 1)));
+                        }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -216,15 +257,20 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.CLOSE:
                     {
-                        // FIXME: HACK! This is not the greatest way to get the WindowComponent...
                         HWND h = HWndDict[hWnd];
+                        h.EventQueue.Send(h, WindowEventType.Close, new CloseEventArgs(h));
+
+                        // FIXME: HACK! This is not the greatest way to get the WindowComponent...
                         h.WindowComponent.Destroy(h);
                         return IntPtr.Zero;
                     }
                 case WM.DESTROY:
                     {
-                        Win32.PostQuitMessage(0);
-                        quit = true;
+                        if (HWndDict.Count == 0)
+                        {
+                            Win32.PostQuitMessage(0);
+                            quit = true;
+                        }
                         return IntPtr.Zero;
                     }
                 default:
@@ -255,7 +301,7 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception("CreateWindowEx failed!");
             }
 
-            HWND hwnd = new HWND(hWnd, this);
+            HWND hwnd = new HWND(hWnd, this, hints);
 
             HWndDict.Add(hwnd.HWnd, hwnd);
 

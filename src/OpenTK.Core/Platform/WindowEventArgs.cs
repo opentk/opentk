@@ -27,6 +27,16 @@ namespace OpenTK.Core.Platform
         }
     }
 
+    public class TextInputEventArgs : WindowEventArgs
+    {
+        public string Text { get; private set; }
+
+        public TextInputEventArgs(string text)
+        {
+            Text = text;
+        }
+    }
+
     public class MouseMoveEventArgs : WindowEventArgs
     {
         public int DeltaX { get; private set; }
@@ -47,6 +57,16 @@ namespace OpenTK.Core.Platform
         public MouseButtonDownEventArgs(MouseButton button)
         {
             Button = button;
+        }
+    }
+
+    public class CloseEventArgs : WindowEventArgs
+    {
+        public WindowHandle Window { get; private set; }
+
+        public CloseEventArgs(WindowHandle window)
+        {
+            Window = window;
         }
     }
 }

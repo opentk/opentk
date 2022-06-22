@@ -104,8 +104,10 @@ namespace OpenTK.Platform.Native.Windows
             );
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DestroyWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool IsWindowUnicode(IntPtr /* HWND */ hWnd);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct POINT
@@ -159,7 +161,6 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetWindowText(IntPtr hWnd, string? lpString);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]

@@ -190,9 +190,14 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
-        public OpenGLContextHandle CreateFromWindow(WindowHandle handle, ContextSettings settings)
+        public OpenGLContextHandle CreateFromWindow(WindowHandle handle/*, ContextSettings settings*/)
         {
             HWND hwnd = handle.As<HWND>(this);
+            if (hwnd.GraphicsApiHints is not OpenGLGraphicsApiHints settings)
+            {
+                throw new PalException(this, $"Can't create an OpenGL context from a window that was not created with {nameof(OpenGLGraphicsApiHints)}.");
+            }
+
             bool success;
 
             IntPtr hDC = Win32.GetDC(hwnd.HWnd);
@@ -238,16 +243,16 @@ namespace OpenTK.Platform.Native.Windows
                 attribs.Add(1);
 
                 attribs.Add((int)WGLPixelFormatAttribute.RED_BITS_ARB);
-                attribs.Add(settings.RedBits);
+                attribs.Add(settings.RedColorBits);
 
                 attribs.Add((int)WGLPixelFormatAttribute.GREEN_BITS_ARB);
-                attribs.Add(settings.GreenBits);
+                attribs.Add(settings.GreenColorBits);
 
                 attribs.Add((int)WGLPixelFormatAttribute.BLUE_BITS_ARB);
-                attribs.Add(settings.BlueBits);
+                attribs.Add(settings.BlueColorBits);
 
                 attribs.Add((int)WGLPixelFormatAttribute.ALPHA_BITS_ARB);
-                attribs.Add(settings.AlphaBits);
+                attribs.Add(settings.AlphaColorBits);
 
                 if (settings.DoubleBuffer)
                 {
@@ -267,10 +272,11 @@ namespace OpenTK.Platform.Native.Windows
                     attribs.Add(stencilBits);
                 }
 
-                if (settings.Multisample && ARB_multisample)
+                // FIXME: Figure out if 0 or 1 means no MSAA
+                if (settings.Multisamples > 0 && ARB_multisample)
                 {
                     attribs.Add((int)WGLPixelFormatAttribute.SAMPLES_ARB);
-                    attribs.Add(settings.Samples);
+                    attribs.Add(settings.Multisamples);
                 }
 
                 if (ARB_framebuffer_sRGB)
