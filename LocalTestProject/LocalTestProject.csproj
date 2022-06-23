@@ -17,6 +17,9 @@
     <None Update="Cute Light Green Normal Select.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Wikipedia-Flags-UN-United-Nations-Flag.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

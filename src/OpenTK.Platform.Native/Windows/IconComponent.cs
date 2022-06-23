@@ -60,8 +60,11 @@ namespace OpenTK.Platform.Native.Windows
                         break;
                     }
                 case HIcon.IconMode.FileIcon:
-                    // FIXME
-                    break;
+                    {
+                        // Documentation for LoadImage says we should release the icon like this.
+                        Win32.DestroyIcon(hicon.Icon);
+                        break;
+                    }
                 default:
                     throw new InvalidOperationException($"Unknown cursor mode: {hicon.Mode}.");
             }
@@ -206,7 +209,18 @@ namespace OpenTK.Platform.Native.Windows
 
         public void Load(IconHandle handle, string file)
         {
-            throw new NotImplementedException();
+            HIcon hicon = handle.As<HIcon>(this);
+
+            Destroy(hicon);
+
+            IntPtr icon = Win32.LoadImage(IntPtr.Zero, file, ImageType.Icon, 0, 0, LR.LoadFromFile | LR.DefaultSize);
+            if (icon == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            hicon.Icon = icon;
+            hicon.Mode = HIcon.IconMode.FileIcon;
         }
 
         public void Load(IconHandle handle, Stream stream)

@@ -361,6 +361,15 @@ namespace OpenTK.Platform.Native.Windows
             LR fuLoad);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /*HCURSOR*/ LoadImage(
+            IntPtr /*HINSTANCE*/ hInstance,
+            string name,
+            ImageType type,
+            int cx,
+            int cy,
+            LR fuLoad);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ SetCursor(IntPtr /*HCURSOR*/ hCursor);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]

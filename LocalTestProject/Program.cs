@@ -173,7 +173,7 @@ public class Program
 
         {
             IconHandle2 = iconComp.Create();
-            iconComp.Load(IconHandle2, SystemIconType.Information);
+            iconComp.Load(IconHandle2, "Wikipedia-Flags-UN-United-Nations-Flag.ico");
 
             windowComp.SetIcon(WindowHandle2, IconHandle2);
         }
