@@ -339,7 +339,7 @@ void main()
         byte[] data = new byte[width * height * 4];
         // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
         cursorComp.GetImage(handle, data);
-
+        
         for (int i = 0; i < width * height; i++)
         {
             int index = i * 4;
@@ -366,7 +366,34 @@ void main()
         return tex;
     }
 
+    public static TextureHandle GetIconImage(IconHandle handle)
+    {
+        iconComp.GetDimensions(handle, out int width, out int height);
+        byte[] data = new byte[width * height * 4];
+        // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
+        iconComp.GetBitmap(handle, data);
+
+        TextureHandle tex = GL.GenTexture();
+
+        GL.ActiveTexture(TextureUnit.Texture0);
+        GL.BindTexture(TextureTarget.Texture2d, tex);
+
+        GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+
+        GL.GenerateMipmap(TextureTarget.Texture2d);
+
+        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+
+        GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+
+        GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
+
+        return tex;
+    }
+
     static TextureHandle cursor_tex;
+    static TextureHandle icon_tex;
 
     public static void Init()
     {
@@ -395,6 +422,7 @@ void main()
         CheckError("shader");
 
         cursor_tex = GetCursorImage(ImageCursorHandle);
+        icon_tex = GetIconImage(IconHandle2);
 
         CheckError("get cursor tex");
 
@@ -547,7 +575,7 @@ void main()
             GL.Viewport(0, 0, width, height);
 
             GL.ActiveTexture(TextureUnit.Texture0);
-            GL.BindTexture(TextureTarget.Texture2d, cursor_tex);
+            GL.BindTexture(TextureTarget.Texture2d, icon_tex);
 
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             GL.Enable(EnableCap.Blend);
