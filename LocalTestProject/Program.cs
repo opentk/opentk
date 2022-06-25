@@ -57,11 +57,14 @@ public class Program
             PrimaryDisplayHandle = dispComp.CreatePrimary();
             string name = dispComp.GetName(PrimaryDisplayHandle);
             dispComp.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
+            dispComp.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
             Console.WriteLine($"Primary monitor name: {name}");
             Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
             Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
             Console.WriteLine($"  Scale: {videoMode.Scale}");
             Console.WriteLine($"  Dpi: {videoMode.Dpi}");
+            Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+
         }
 
         Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
@@ -224,6 +227,12 @@ public class Program
             //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
             MousePos = (mouseMoveArgs.DeltaX, mouseMoveArgs.DeltaY);
+
+            if (WindowHandle.UserData is not false)
+            {
+                windowComp.ScreenToClient(WindowHandle, MousePos.X, MousePos.Y, out int clientX, out int clientY);
+                windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
+            }
 
             return;
         }
@@ -545,9 +554,9 @@ void main()
 
             CheckError("clear");
 
-            mouseComp.GetPosition(null, out int x, out int y);
-            windowComp.ScreenToClient(WindowHandle, x, y, out int clientX, out int clientY);
-            windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
+            //mouseComp.GetPosition(null, out int x, out int y);
+            //windowComp.ScreenToClient(WindowHandle, x, y, out int clientX, out int clientY);
+            //windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2d, cursor_tex);

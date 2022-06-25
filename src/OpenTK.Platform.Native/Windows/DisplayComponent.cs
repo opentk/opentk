@@ -1,6 +1,7 @@
 ﻿using OpenTK.Core.Platform;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -136,6 +137,42 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Exception("DisplayComponent can only initialize the Display component.");
             }
 
+            if (OperatingSystem.IsWindowsVersionAtLeast(10, 0))
+            {
+                bool success = Win32.SetProcessDpiAwarenessContext(new IntPtr((int)DpiAwarenessContext.SystemAware));
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+            }
+            else if (OperatingSystem.IsWindowsVersionAtLeast(6, 3)) // Windows 8.1
+            {
+                // FIXME: Figure out what kind of awareness
+                int result = Win32.SetProcessDpiAwareness(ProcessDPIAwareness.SystemDpiAware);
+                if (result == Win32.E_INVALIDARG)
+                {
+                    throw new Exception("SetProcessDpiAwareness failed with E_INVALIDARG");
+                }
+                else if (result == Win32.E_ACCESSDENIED)
+                {
+                    throw new Exception("SetProcessDpiAwareness failed with E_ACCESSDENIED");
+                }
+                else if (result != Win32.S_OK)
+                {
+                    throw new Exception($"SetProcessDpiAwareness failed with unknown error {result}");
+                }
+            }
+            else
+            {
+                // Windows vista function for setting the process as DPI aware
+                // Equivalent to `SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_SYSTEM_AWARE)`
+                bool success = Win32.SetProcessDPIAware();
+                if (success == false)
+                {
+                    throw new Exception("SetProcessDPIAware failed.");
+                }
+            }
+
             UpdateMonitors();
         }
 
@@ -197,12 +234,14 @@ namespace OpenTK.Platform.Native.Windows
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
+            GetDisplayScale(handle, out float scaleX, out float scaleY);
+
             // FIXME: DPI
             mode = new VideoMode(
                 hmonitor.Resolution.ResolutionX,
                 hmonitor.Resolution.ResolutionY,
                 hmonitor.RefreshRate,
-                1,
+                scaleX,
                 96);
         }
 
@@ -234,6 +273,23 @@ namespace OpenTK.Platform.Native.Windows
 
             x = hmonitor.Position.X;
             y = hmonitor.Position.Y;
+        }
+
+        public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            int success = Win32.GetDpiForMonitor(hmonitor.Monitor, MonitorDpiType.EffectiveDpi, out uint dpiX, out uint dpiY);
+            if (success != Win32.S_OK)
+            {
+                throw new Exception("GetDpiForMonitor failed.");
+            }
+
+            // This is the platform default DPI for windows.
+            const float DefaultDPI = 96;
+
+            scaleX = dpiX / DefaultDPI;
+            scaleY = dpiY / DefaultDPI;
         }
     }
 }

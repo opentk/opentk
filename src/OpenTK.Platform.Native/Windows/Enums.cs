@@ -1675,6 +1675,30 @@ namespace OpenTK.Platform.Native.Windows
         YVirtualScreen = 77,
     }
 
+    internal enum MonitorDpiType : int
+    {
+        EffectiveDpi = 0,
+        AngularDpi = 1,
+        RawDpi = 2,
+        Default = EffectiveDpi,
+    }
+
+    internal enum ProcessDPIAwareness : int
+    {
+        DpiUnaware = 0,
+        SystemDpiAware = 1,
+        PerMonitorDpiAware = 2,
+    }
+
+    internal enum DpiAwarenessContext : int
+    {
+        Unaware = -1,
+        SystemAware = -2,
+        PerMonitorAware = -3,
+        PerMonitorAwareV2 = -4,
+        UnawareGDIScaled = -5,
+    }
+
     [Flags]
     internal enum DM : uint
     {

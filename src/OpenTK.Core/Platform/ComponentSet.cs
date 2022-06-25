@@ -671,6 +671,11 @@ namespace OpenTK.Core.Platform
             _displayComponent!.GetVirtualPosition(handle, out x, out y);
         }
 
+        void IDisplayComponent.GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
+        {
+            _displayComponent!.GetDisplayScale(handle, out scaleX, out scaleY);
+        }
+
         /// <inheritdoc/>
         bool IKeyboardComponent.SupportsLayouts => _keyboardComponent!.SupportsLayouts;
 

@@ -274,6 +274,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 default:
                     {
+                        Console.WriteLine(uMsg);
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
             }

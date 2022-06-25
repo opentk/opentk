@@ -40,6 +40,10 @@ namespace OpenTK.Platform.Native.Windows
         internal const int ICON_SMALL = 0;
         internal const int ICON_BIG = 1;
 
+        internal const int S_OK = 0x0;
+        internal const int E_INVALIDARG = unchecked((int)0x80070057);
+        internal const int E_ACCESSDENIED = unchecked((int)0x80070005);
+        
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
@@ -678,6 +682,25 @@ namespace OpenTK.Platform.Native.Windows
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
             public string DeviceKey;
         }
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern uint GetDpiForWindow(IntPtr /* HWND */ hwnd);
+
+        [DllImport("shcore.dll", SetLastError = false)]
+        internal static extern int /* HRESULT */ GetDpiForMonitor(
+            IntPtr /* HMONITOR */ hmonitor,
+            MonitorDpiType dpiType,
+            out uint dpiX,
+            out uint dpiY);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern bool SetProcessDPIAware();
+
+        [DllImport("shcore.dll", SetLastError = false)]
+        internal static extern int /* HRESULT */ SetProcessDpiAwareness(ProcessDPIAwareness value);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool SetProcessDpiAwarenessContext(IntPtr /* DpiAwarenessContext */ value);
 
         [DllImport("imm32.dll", SetLastError = false)]
         internal static extern IntPtr /* HIMC */ ImmGetContext(IntPtr /* HWND */ hwnd);
