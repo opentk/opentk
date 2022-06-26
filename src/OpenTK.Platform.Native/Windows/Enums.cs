@@ -1699,6 +1699,69 @@ namespace OpenTK.Platform.Native.Windows
         UnawareGDIScaled = -5,
     }
 
+    internal enum DBT : int
+    {
+        /// <summary>
+        /// A device has been added to or removed from the system.
+        /// </summary>
+        DevNodesChanged = 0x0007,
+
+        /// <summary>
+        /// Permission is requested to change the current configuration (dock or undock).
+        /// </summary>
+        QueryChangeConfig = 0x0017,
+
+        /// <summary>
+        /// The current configuration has changed, due to a dock or undock.
+        /// </summary>
+        ConfigChanged = 0x0018,
+
+        /// <summary>
+        /// A request to change the current configuration (dock or undock) has been canceled.
+        /// </summary>
+        ConfigChangedCanceled = 0x0019,
+
+        /// <summary>
+        /// A device or piece of media has been inserted and is now available.
+        /// </summary>
+        DeviceArrival = 0x8000,
+
+        /// <summary>
+        /// Permission is requested to remove a device or piece of media. Any application can deny this request and cancel the removal.
+        /// </summary>
+        DeviceQueryRemove = 0x8001,
+
+        /// <summary>
+        /// A request to remove a device or piece of media has been canceled.
+        /// </summary>
+        DeviceQueryMoveFailed = 0x8002,
+
+        /// <summary>
+        /// A request to remove a device or piece of media has been canceled.
+        /// </summary>
+        DeviceRemovePending = 0x8003,
+
+        /// <summary>
+        /// A device or piece of media has been removed.
+        /// </summary>
+        DeviceRemoveComplete = 0x8004,
+
+        /// <summary>
+        /// A device-specific event has occurred.
+        /// </summary>
+        DeviceTypeSpecific = 0x8005,
+
+        /// <summary>
+        /// A custom event has occurred.
+        /// </summary>
+        CustomEvent = 0x8006,
+
+        /// <summary>
+        /// The meaning of this message is user-defined.
+        /// </summary>
+        UserDefined = 0xFFFF,
+    }
+
     [Flags]
     internal enum DM : uint
     {

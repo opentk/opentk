@@ -272,6 +272,12 @@ namespace OpenTK.Platform.Native.Windows
                         }
                         return IntPtr.Zero;
                     }
+                case WM.DEVICECHANGE:
+                    {
+
+                        Console.WriteLine($"{uMsg} {(DBT)wParam}");
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 default:
                     {
                         Console.WriteLine(uMsg);
