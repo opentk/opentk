@@ -10,5 +10,10 @@
             ResolutionX = resolutionX;
             ResolutionY = resolutionY;
         }
+
+        public override string ToString()
+        {
+            return $"{ResolutionX}x{ResolutionY}";
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
-    public class WindowComponent : IWindowComponent
+    public partial class WindowComponent : IWindowComponent
     {
         /// <summary>
         /// Class name used to create windows.
@@ -274,13 +274,26 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DEVICECHANGE:
                     {
-
                         Console.WriteLine($"{uMsg} {(DBT)wParam}");
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.DISPLAYCHANGE:
+                    {
+                        Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
+
+                        // FIXME: Some other way of notifying the DisplayComponent that things have changed.
+                        DisplayComponent.UpdateMonitors();
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.DPICHANGED:
+                    {
+                        Console.WriteLine($"DPI Changed! dpiY: {(wParam.ToUInt32() & Win32.HiWordMask) >> 16}, dpiX: {wParam.ToUInt32() & Win32.LoWordMask}");
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 default:
                     {
-                        Console.WriteLine(uMsg);
+                        //Console.WriteLine(uMsg);
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
             }

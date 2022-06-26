@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -16,9 +17,9 @@ namespace OpenTK.Platform.Native.Windows
 
         public PalComponents Provides => PalComponents.Display;
 
-        private List<HMonitor> _displays = new List<HMonitor>();
+        private static List<HMonitor> _displays = new List<HMonitor>();
 
-        private IntPtr FindMonitorHandle(string adapterName)
+        private static IntPtr FindMonitorHandle(string adapterName)
         {
             IntPtr monitorHandle = default;
 
@@ -46,9 +47,15 @@ namespace OpenTK.Platform.Native.Windows
             return monitorHandle;
         }
 
-        internal void UpdateMonitors()
+        internal static void UpdateMonitors()
         {
             List<HMonitor> newDisplays = new List<HMonitor>();
+
+            // Create a list with all current displays,
+            // we will remove from this list as we enumerate displays.
+            List<HMonitor> removedDisplays = new List<HMonitor>(_displays);
+
+            HMonitor? oldPrimary = _displays.Find(h => h.IsPrimary);
 
             const uint ENUM_CURRENT_SETTINGS = unchecked((uint)-1);
 
@@ -106,28 +113,103 @@ namespace OpenTK.Platform.Native.Windows
                     // Console.WriteLine($"  Monitor String: {monitor.DeviceString}");
                     // Console.WriteLine($"  Monitor State Flags: {monitor.StateFlags}");
 
-                    HMonitor info = new HMonitor()
+                    HMonitor? info = null;
+                    foreach (var display in _displays)
                     {
-                        Monitor = hMonitor,
-                        Name = monitor.DeviceString,
-                        IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
-                        Position = lpDevMode.dmPosition,
-                        RefreshRate = (int)lpDevMode.dmDisplayFrequency,
-                        Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
-                        DpiX = -1,
-                        DpiY = -1,
-                        WorkArea = workArea,
-                    };
+                        if (monitor.DeviceName == display.Name)
+                        {
+                            // This monitor already exists.
+                            removedDisplays.Remove(display);
+                            info = display;
+                            break;
+                        }
+                    }
 
-                    newDisplays.Add(info);
+                    if (info == null)
+                    {
+                        // This display didn't exist before, which means it's now conncted.
+                        info = new HMonitor()
+                        {
+                            Monitor = hMonitor,
+                            Name = monitor.DeviceName,
+                            PublicName = monitor.DeviceString,
+                            IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
+                            Position = lpDevMode.dmPosition,
+                            RefreshRate = (int)lpDevMode.dmDisplayFrequency,
+                            Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
+                            DpiX = -1,
+                            DpiY = -1,
+                            WorkArea = workArea,
+                        };
+
+                        newDisplays.Add(info);
+                    }
+                    else
+                    {
+                        info.Monitor = hMonitor;
+
+                        Debug.Assert(info.Name == monitor.DeviceName);
+                        Debug.Assert(info.PublicName == monitor.DeviceString);
+
+                        info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
+
+                        info.Position = lpDevMode.dmPosition;
+                        info.RefreshRate = (int)lpDevMode.dmDisplayFrequency;
+                        info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
+                        info.WorkArea = workArea;
+                    }
 
                     monitorIndex++;
                 }
             }
 
-            // FIXME: Do a diff of the monitors and call relevant functions!!
-            _displays.Clear();
+            // Console.WriteLine();
+            // Console.WriteLine();
+
+            foreach (var connected in newDisplays)
+            {
+                // FIXME: Add event!
+                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+            }
+
+            foreach (var removed in removedDisplays)
+            {
+                // FIXME: Add event!
+                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
+            }
+
+            foreach (var removed in removedDisplays)
+            {
+                _displays.Remove(removed);
+            }
             _displays.AddRange(newDisplays);
+
+            HMonitor? primary = null;
+            foreach (var display in _displays)
+            {
+                if (display.IsPrimary)
+                {
+                    primary = display;
+                    break;
+                }
+            }
+
+            // Place the primary monitor at the beginning of the list.
+            if (primary != null)
+            {
+                int index = _displays.IndexOf(primary);
+                _displays.RemoveAt(index);
+                _displays.Insert(0, primary);
+
+                if (primary != oldPrimary)
+                {
+                    Console.WriteLine("New primary monitor!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Could not find primary monitor!");
+            }
         }
 
         public void Initialize(PalComponents which)
@@ -137,9 +219,11 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Exception("DisplayComponent can only initialize the Display component.");
             }
 
+            // FIXME: Make the DPI awareness a user-set property!
+
             if (OperatingSystem.IsWindowsVersionAtLeast(10, 0))
             {
-                bool success = Win32.SetProcessDpiAwarenessContext(new IntPtr((int)DpiAwarenessContext.SystemAware));
+                bool success = Win32.SetProcessDpiAwarenessContext(new IntPtr((int)DpiAwarenessContext.PerMonitorAwareV2));
                 if (success == false)
                 {
                     throw new Win32Exception();
@@ -148,7 +232,7 @@ namespace OpenTK.Platform.Native.Windows
             else if (OperatingSystem.IsWindowsVersionAtLeast(6, 3)) // Windows 8.1
             {
                 // FIXME: Figure out what kind of awareness
-                int result = Win32.SetProcessDpiAwareness(ProcessDPIAwareness.SystemDpiAware);
+                int result = Win32.SetProcessDpiAwareness(ProcessDPIAwareness.PerMonitorDpiAware);
                 if (result == Win32.E_INVALIDARG)
                 {
                     throw new Exception("SetProcessDpiAwareness failed with E_INVALIDARG");

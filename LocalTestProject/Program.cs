@@ -68,6 +68,23 @@ public class Program
         }
 
         Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
+        for (int i = 0; i < dispComp.GetDisplayCount(); i++)
+        {
+            DisplayHandle disp = dispComp.Create(i);
+
+            string name = dispComp.GetName(disp);
+            dispComp.GetVideoMode(disp, out VideoMode videoMode);
+            dispComp.GetDisplayScale(disp, out float scaleX, out float scaleY);
+            Console.WriteLine($"Primary monitor name: {name}");
+            Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
+            Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
+            Console.WriteLine($"  Scale: {videoMode.Scale}");
+            Console.WriteLine($"  Dpi: {videoMode.Dpi}");
+            Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+        Console.WriteLine();
 
         OpenGLGraphicsApiHints contextSettings = new OpenGLGraphicsApiHints()
         {
