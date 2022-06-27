@@ -605,10 +605,10 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="DeleteBuffers"/>
-        public static unsafe void DeleteBuffer(in BufferHandle buffers)
+        public static unsafe void DeleteBuffer(in BufferHandle buffer)
         {
             int n = 1;
-            fixed(BufferHandle* buffers_handle = &buffers)
+            fixed(BufferHandle* buffers_handle = &buffer)
             {
                 DeleteBuffers(n, buffers_handle);
             }
@@ -640,10 +640,10 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="DeleteTextures"/>
-        public static unsafe void DeleteTexture(in TextureHandle textures)
+        public static unsafe void DeleteTexture(in TextureHandle texture)
         {
             int n = 1;
-            fixed(TextureHandle* textures_handle = &textures)
+            fixed(TextureHandle* textures_handle = &texture)
             {
                 DeleteTextures(n, textures_handle);
             }
@@ -785,9 +785,9 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <inheritdoc cref="GenBuffers"/>
         public static unsafe BufferHandle GenBuffer()
         {
-            BufferHandle buffers;
+            BufferHandle buffer;
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -796,15 +796,15 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
-            return buffers;
+            return buffer;
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe void GenBuffer(out BufferHandle buffers)
+        public static unsafe void GenBuffer(out BufferHandle buffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -813,7 +813,7 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="GenBuffers"/>
@@ -845,9 +845,9 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <inheritdoc cref="GenTextures"/>
         public static unsafe TextureHandle GenTexture()
         {
-            TextureHandle textures;
+            TextureHandle texture;
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -856,15 +856,15 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
-            return textures;
+            return texture;
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe void GenTexture(out TextureHandle textures)
+        public static unsafe void GenTexture(out TextureHandle texture)
         {
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -873,7 +873,7 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
         }
         /// <inheritdoc cref="GenTextures"/>

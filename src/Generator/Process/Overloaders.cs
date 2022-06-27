@@ -672,6 +672,15 @@ namespace Generator.Process
 
     public class GenCreateAndDeleteOverloader : IOverloader
     {
+        // Atm only Queries/Query needs this renaming
+        // - 2022-06-27
+        public static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
+        {
+            { "CreateQueries", "CreateQuery" },
+            { "DeleteQueries", "DeleteQuery" },
+            { "GenQueries", "GenQuery" },
+        };
+
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             var nativeName = overload.NativeFunction.FunctionName;
@@ -697,7 +706,12 @@ namespace Generator.Process
                 return false;
             }
 
-            var newName = nativeName[..^1];
+            string? newName;
+            if (pluralNameToSingularName.TryGetValue(nativeName, out newName) == false)
+            {
+                // If the name didn't have a custom singular name, we just remove the trailing 's'
+                newName = NameMangler.RemoveEnd(nativeName, "s");
+            }
 
             int lengthParameterIndex = -1;
             Parameter[] parameters = new Parameter[overload.InputParameters.Length - 1];
@@ -723,6 +737,10 @@ namespace Generator.Process
             CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
             {
+                // Remove ending 's' in parameter name.
+                // This works for Queries/Query because the parameter names in these functions is "ids
+                // - 2022-06-27
+                Name = NameMangler.RemoveEnd(pointerParameter.Name, "s"),
                 Type = new CSRef(refType, pointerParameterType.BaseType),
                 Length = null
             };
