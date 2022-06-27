@@ -17,6 +17,7 @@ namespace Generator.Writing
         private const string GraphicsNamespace = BaseNamespace + ".Graphics";
         private const string LoaderClass = "GLLoader";
         private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
+        private const string FunctionPointerArrayName = "EntryPoints";
 
         public static void Write(OutputData data)
         {
@@ -78,11 +79,59 @@ namespace Generator.Writing
                             scope = writer.CsScope();
                         }
 
+                        int slot = 0;
+                        writer.WriteLine($"private static IntPtr[] {FunctionPointerArrayName};");
+                        writer.WriteLine();
+
                         foreach (var function in group.NativeFunctions)
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
                             documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
-                            WriteNativeMethod(writer, function, postfixName, functionDocumentation);
+                            WriteNativeMethod(writer, slot, function, postfixName, functionDocumentation);
+                            slot++;
+                        }
+
+                        writer.WriteLine($"static {(string.IsNullOrEmpty(vendor) ? "GL" : vendor)}()");
+                        using (writer.CsScope())
+                        {
+                            writer.WriteLine($"{FunctionPointerArrayName} = new IntPtr[{group.NativeFunctions.Count}];");
+
+                            slot = 0;
+                            foreach (var function in group.NativeFunctions)
+                            {
+                                bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
+
+                                string name = function.FunctionName;
+                                if (postfixName) name += "_";
+
+                                string returnType;
+                                if (function.ReturnType is CSStruct returnStruct)
+                                {
+                                    if (returnStruct.UnderlyingType == null) throw new Exception("A function returned a struct, but didn't have an underlying representation.");
+                                    returnType = returnStruct.UnderlyingType.ToCSString();
+                                }
+                                else
+                                {
+                                    returnType = function.ReturnType.ToCSString();
+                                }
+
+                                string types = string.Join(", ", function.Parameters.Select(p => p.Type.ToCSString()).Append(returnType));
+
+                                writer.WriteLine($"{FunctionPointerArrayName}[{slot}] = (IntPtr)(delegate* unmanaged<{types}>)&{name}_Lazy;");
+
+                                slot++;
+                            }
+                        }
+
+                        writer.WriteLine($"public static void LoadAllFunctions(IBindingsContext context)");
+                        using (writer.CsScope())
+                        {
+                            slot = 0;
+                            foreach (var function in group.NativeFunctions)
+                            {
+                                writer.WriteLine($"{FunctionPointerArrayName}[{slot}] = context.GetProcAddress(\"{function.EntryPoint}\");");
+                                slot++;
+                            }
                         }
 
                         scope?.Dispose();
@@ -93,7 +142,7 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
+        private static void WriteNativeMethod(IndentedTextWriter writer, int slot, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
@@ -146,7 +195,7 @@ namespace Generator.Writing
 
             delegateTypes.Append(returnType);
 
-            writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
+            //writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
 
             if (documentation != null)
             {
@@ -159,28 +208,38 @@ namespace Generator.Writing
                 // This works because all of the structs that get here should have a defined cast from the primitive type to the struct type.
                 // These casts need to be added manually for this to work correctly.
                 // - 2021-06-22
-                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) _{name}_fnptr({paramNames});");
+                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) ((delegate* unmanaged<{delegateTypes}>){FunctionPointerArrayName}[{slot}])({paramNames});");
             }
             else
             {
-                writer.WriteLine($"public static {returnType} {name}({signature}) => _{name}_fnptr({paramNames});");
+                writer.WriteLine($"public static {returnType} {name}({signature}) => ((delegate* unmanaged<{delegateTypes}>){FunctionPointerArrayName}[{slot}])({paramNames});");
             }
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
             writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
             using (writer.CsScope())
             {
-                // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
-
+                writer.WriteLine($"{FunctionPointerArrayName}[{slot}] = {LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
                 if (function.ReturnType is not CSVoid)
+                {
+                    writer.WriteLine($"return ((delegate* unmanaged<{delegateTypes}>){FunctionPointerArrayName}[{slot}])({paramNames});");
+                }
+                else
+                {
+                    writer.WriteLine($"((delegate* unmanaged<{delegateTypes}>){FunctionPointerArrayName}[{slot}])({paramNames});");
+                }
+
+                // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
+                //writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+
+                /*if (function.ReturnType is not CSVoid)
                 {
                     writer.WriteLine($"return _{name}_fnptr({paramNames});");
                 }
                 else
                 {
                     writer.WriteLine($"_{name}_fnptr({paramNames});");
-                }
+                }*/
             }
 
             writer.WriteLine();
