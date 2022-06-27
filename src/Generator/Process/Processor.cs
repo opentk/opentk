@@ -374,13 +374,35 @@ namespace Generator.Process
                 }
             }
 
+            // Go through all functions and build up a Dictionary from enum groups to functions using them
+            Dictionary<string, List<NativeFunction>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<NativeFunction>>();
+            foreach (var (_, functions) in functionsByVendor)
+            {
+                foreach (var function in functions)
+                {
+                    foreach (var group in function.NativeFunction.ReferencedEnumGroups)
+                    {
+                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var listOfFunctions) == false)
+                        {
+                            listOfFunctions = new List<NativeFunction>();
+                            enumGroupToNativeFunctionsUsingThatEnumGroup.Add(group, listOfFunctions);
+                        }
+
+                        if (listOfFunctions.Contains(function.NativeFunction) == false)
+                        {
+                            listOfFunctions.Add(function.NativeFunction);
+                        }
+                    }
+                }
+            }
+
             // Go through all of the enums and put them into their groups
 
             // Add keys + lists for all enum names
             List<EnumGroup> finalGroups = new List<EnumGroup>();
 
             // Add the All enum group
-            finalGroups.Add(new EnumGroup("All", false, theAllEnumGroup.ToList()));
+            finalGroups.Add(new EnumGroup("All", false, theAllEnumGroup.ToList(), null));
 
             foreach ((string groupName, bool isFlags) in allEnumGroups)
             {
@@ -399,7 +421,15 @@ namespace Generator.Process
                 if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
                     continue;
 
-                finalGroups.Add(new EnumGroup(groupName, isFlags, members));
+                if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(groupName, out var functionsUsingEnumGroup) == false)
+                {
+                    functionsUsingEnumGroup = null;
+                }
+
+                // If there is a list, sort it by name
+                if (functionsUsingEnumGroup != null) functionsUsingEnumGroup.Sort((f1, f2) => f1.FunctionName.CompareTo(f2.FunctionName));
+
+                finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));
             }
 
             Dictionary<string, GLVendorFunctions> vendors = new Dictionary<string, GLVendorFunctions>();

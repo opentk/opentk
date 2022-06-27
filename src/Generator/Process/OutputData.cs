@@ -63,7 +63,8 @@ namespace Generator.Writing
     public record EnumGroup(
         string Name,
         bool IsFlags,
-        List<EnumGroupMember> Members);
+        List<EnumGroupMember> Members,
+        List<NativeFunction>? FunctionsUsingEnumGroup);
 
 
     public interface IOverloadLayer
