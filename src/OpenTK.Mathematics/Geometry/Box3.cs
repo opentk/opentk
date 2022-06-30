@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -18,6 +19,7 @@ namespace OpenTK.Mathematics
     /// Defines an axis-aligned 3d box (rectangular prism).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
     public struct Box3 : IEquatable<Box3>
     {
         private Vector3 _min;
@@ -102,6 +104,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the size of the Box3 structure.
         /// </summary>
+        [XmlIgnore]
         public Vector3 Size
         {
             get => Max - Min;
@@ -116,6 +119,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector3 HalfSize
         {
             get => Size / 2;
@@ -125,6 +129,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector3 Center
         {
             get => HalfSize + _min;

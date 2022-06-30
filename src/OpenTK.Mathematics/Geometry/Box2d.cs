@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -18,6 +19,7 @@ namespace OpenTK.Mathematics
     /// Defines an axis-aligned 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
     public struct Box2d : IEquatable<Box2d>
     {
         private Vector2d _min;
@@ -92,6 +94,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the size of the Box2d structure.
         /// </summary>
+        [XmlIgnore]
         public Vector2d Size
         {
             get => Max - Min;
@@ -106,6 +109,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector2d HalfSize
         {
             get => Size / 2;
@@ -115,6 +119,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector2d Center
         {
             get => HalfSize + _min;

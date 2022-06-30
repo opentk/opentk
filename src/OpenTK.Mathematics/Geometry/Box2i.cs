@@ -18,6 +18,7 @@ namespace OpenTK.Mathematics
     /// Defines an axis-aligned 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
     public struct Box2i : IEquatable<Box2i>
     {
         /// <summary>
@@ -81,6 +82,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets a vector describing the size of the Box2i structure.
         /// </summary>
+        [XmlIgnore]
         public Vector2i Size
         {
             get => Max - Min;
@@ -89,6 +91,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector2i HalfSize
         {
             get => Size / 2;
@@ -104,6 +107,7 @@ namespace OpenTK.Mathematics
         /// Gets a vector describing the center of the box.
         /// </summary>
         /// to avoid annoying off-by-one errors in box placement, no setter is provided for this property
+        [XmlIgnore]
         public Vector2 Center
         {
             get => _min + ((_max - _min).ToVector2() * 0.5f);
