@@ -233,7 +233,6 @@ namespace OpenTK.Platform.Native.Windows
                         int y = Win32.GET_Y_LPARAM(lParam);
 
                         HWND h = HWndDict[hWnd];
-                        h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseMoveEventArgs(x, y));
 
                         if (h.TrackingMouse == false)
                         {
@@ -244,13 +243,21 @@ namespace OpenTK.Platform.Native.Windows
                             Win32.TrackMouseEvent(ref tme);
 
                             h.TrackingMouse = true;
+
+                            h.EventQueue.Send(h, WindowEventType.MouseEnter, new MouseEnterEventArgs(true));
+                            Console.WriteLine("Tracking!");
                         }
+
+                        h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseMoveEventArgs(x, y));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.MOUSELEAVE:
                     {
+                        HWND h = HWndDict[hWnd];
+                        h.TrackingMouse = false;
 
+                        h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseEnterEventArgs(false));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }

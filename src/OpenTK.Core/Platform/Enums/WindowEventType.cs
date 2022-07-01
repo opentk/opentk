@@ -12,6 +12,7 @@ namespace OpenTK.Core.Platform
 
         Close,
 
+        MouseEnter,
         MouseMove,
         MouseDown,
 

@@ -37,6 +37,16 @@ namespace OpenTK.Core.Platform
         }
     }
 
+    public class MouseEnterEventArgs : WindowEventArgs
+    {
+        public bool Entered { get; set; }
+
+        public MouseEnter(bool entered)
+        {
+            Entered = entered;
+        }
+    }
+
     public class MouseMoveEventArgs : WindowEventArgs
     {
         public int DeltaX { get; private set; }
