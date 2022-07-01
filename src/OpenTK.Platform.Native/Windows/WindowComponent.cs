@@ -235,6 +235,23 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
                         h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseMoveEventArgs(x, y));
 
+                        if (h.TrackingMouse == false)
+                        {
+                            Win32.TRACKMOUSEEVENT tme = default;
+                            tme.cbSize = (uint)Marshal.SizeOf<Win32.TRACKMOUSEEVENT>();
+                            tme.dwFlags = TME.Leave;
+                            tme.hwndTrack = hWnd;
+                            Win32.TrackMouseEvent(ref tme);
+
+                            h.TrackingMouse = true;
+                        }
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.MOUSELEAVE:
+                    {
+
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.LBUTTONDOWN:

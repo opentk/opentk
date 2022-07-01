@@ -770,5 +770,16 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HKL */ ActivateKeyboardLayout(IntPtr /* HKL */ hkl, uint Flags);
+
+        internal struct TRACKMOUSEEVENT
+        {
+            public uint cbSize;
+            public TME dwFlags;
+            public IntPtr /* HWND */ hwndTrack;
+            public uint dwHoverTime;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
     }
 }

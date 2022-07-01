@@ -19,6 +19,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public HIcon? HIcon { get; set; }
 
+        public bool TrackingMouse { get; set; }
+
         // FIXME: Is this a good place for this?
         public SimpleEventQueue<WindowEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<WindowEventType, WindowEventArgs>();
 
