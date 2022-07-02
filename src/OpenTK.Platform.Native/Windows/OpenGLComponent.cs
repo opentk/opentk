@@ -119,7 +119,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (Wgl._GetExtensionsStringARB__fnptr != null)
                 {
-                    string[] wglExts = Wgl.GetExtensionsStringARB(hDC).Split(" ");
+                    string[] wglExts = Wgl.GetExtensionsStringARB(hDC)?.Split(" ") ?? Array.Empty<string>();
 
                     ARB_multisample = wglExts.Contains("WGL_ARB_multisample");
                     ARB_framebuffer_sRGB = wglExts.Contains("WGL_ARB_framebuffer_sRGB");
@@ -179,7 +179,7 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static bool ARB_context_flush_control { get; set; }
 
-        public bool CanShareContexts => throw new NotImplementedException();
+        public bool CanShareContexts => true;
 
         public bool CanCreateFromWindow => true;
 
@@ -190,7 +190,7 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
-        public OpenGLContextHandle CreateFromWindow(WindowHandle handle/*, ContextSettings settings*/)
+        public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
             if (hwnd.GraphicsApiHints is not OpenGLGraphicsApiHints settings)
@@ -599,7 +599,7 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception("wglMakeCurrent failed to make helper context current");
             }
 
-            HGLRC hglrc = new HGLRC(hGLRC, hDC, this);
+            HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext, this);
             HGLRCDict.Add(hGLRC, hglrc);
 
             return hglrc;
@@ -670,9 +670,10 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
-        public OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle)
+        public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
-            throw new NotImplementedException();
+            HGLRC hglrc = handle.As<HGLRC>(this);
+            return hglrc.SharedContext;
         }
 
         public void SetSharedContext(OpenGLContextHandle handle)

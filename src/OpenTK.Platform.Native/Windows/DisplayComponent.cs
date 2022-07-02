@@ -166,23 +166,25 @@ namespace OpenTK.Platform.Native.Windows
             // Console.WriteLine();
             // Console.WriteLine();
 
-            foreach (var connected in newDisplays)
-            {
-                // FIXME: Add event!
-                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
-            }
-
-            foreach (var removed in removedDisplays)
-            {
-                // FIXME: Add event!
-                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
-            }
+            // FIXME: Maybe we should just send all of the data at once to the user.
 
             foreach (var removed in removedDisplays)
             {
                 _displays.Remove(removed);
+
+                // FIXME: Add event!
+                // EventQueue.Raise(removed, PlatformEventType.MonitorRemoved, null);
+                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
-            _displays.AddRange(newDisplays);
+
+            foreach (var connected in newDisplays)
+            {
+                _displays.Add(connected);
+
+                // FIXME: Add event!
+                // EventQueue.Raise(connected, PlatformEventType.MonitorConnected, null)
+                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+            }
 
             HMonitor? primary = null;
             foreach (var display in _displays)

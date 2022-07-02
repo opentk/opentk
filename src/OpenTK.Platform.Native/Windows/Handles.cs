@@ -31,9 +31,6 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Initialize this property properly!
         public WindowState WindowState { get; set; }
 
-        // FIXME: Is this a good place for this?
-        public SimpleEventQueue<PlatformEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<PlatformEventType, WindowEventArgs>();
-
         // FIXME: This is kind of a hack so that we can get access to the window component in the WndProc...
         public WindowComponent WindowComponent { get; private set; }
 
@@ -52,13 +49,16 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: How do we want to handle this??
         public IntPtr HDC { get; private set; }
 
+        public HGLRC? SharedContext { get; private set; }
+
         // FIXME: Is this needed?
         public OpenGLComponent OpenGLComponent { get; private set; }
 
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, OpenGLComponent openglComponent)
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext, OpenGLComponent openglComponent)
         {
             HGlrc = hGlrc;
             HDC = hdc;
+            SharedContext = sharedContext;
             OpenGLComponent = openglComponent;
         }
     }

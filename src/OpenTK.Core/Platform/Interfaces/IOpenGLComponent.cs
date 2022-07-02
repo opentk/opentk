@@ -76,7 +76,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to the OpenGL context.</param>
         /// <returns>Handle to the OpenGL context the given context shares display lists with.</returns>
-        OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle);
+        OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle);
 
         /// <summary>
         /// Set a context to share display lists with newly created OpenGL contexts.

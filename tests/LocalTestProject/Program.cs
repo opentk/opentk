@@ -134,10 +134,8 @@ namespace LocalTestProject
             mode = windowComp.GetMode(WindowHandle);
             Console.WriteLine($"Mode: {mode}");
 
-            var eventQueue = windowComp.GetEventQueue(WindowHandle);
-            eventQueue.EventRaised += EventQueue_EventRaised;
-            // FIXME!
-            windowComp.GetEventQueue(WindowHandle2).EventRaised += EventQueue_EventRaised;
+            // Subscribe to all events
+            EventQueue.EventRaised += EventQueue_EventRaised;
 
             glComp.SetCurrentContext(WindowContext);
 
@@ -235,11 +233,11 @@ namespace LocalTestProject
         static bool is_ibeam = false;
 
         static Vector2i MousePos = (0, 0);
-        private static void EventQueue_EventRaised(object sender, PlatformEventType type, WindowEventArgs arguments)
+        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             if (type == PlatformEventType.MouseMove)
             {
-                MouseMoveEventArgs mouseMoveArgs = (MouseMoveEventArgs)arguments;
+                MouseMoveEventArgs mouseMoveArgs = (MouseMoveEventArgs)args;
 
                 //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
@@ -255,7 +253,7 @@ namespace LocalTestProject
             }
             else if (type == PlatformEventType.MouseDown)
             {
-                MouseButtonDownEventArgs mouseButtonDownArgs = (MouseButtonDownEventArgs)arguments;
+                MouseButtonDownEventArgs mouseButtonDownArgs = (MouseButtonDownEventArgs)args;
 
                 Console.WriteLine($"Pressed Mouse Button: {mouseButtonDownArgs.Button}");
 
@@ -272,7 +270,7 @@ namespace LocalTestProject
             }
             else if (type == PlatformEventType.MouseUp)
             {
-                MouseButtonUpEventArgs mouseButtonUpArgs = (MouseButtonUpEventArgs)arguments;
+                MouseButtonUpEventArgs mouseButtonUpArgs = (MouseButtonUpEventArgs)args;
 
                 Console.WriteLine($"Released Mouse Button: {mouseButtonUpArgs.Button}");
 
@@ -280,9 +278,9 @@ namespace LocalTestProject
             }
             else if (type == PlatformEventType.Close)
             {
-                CloseEventArgs closeArgs = (CloseEventArgs)arguments;
-
-                (sender as WindowHandle).UserData = false;
+                CloseEventArgs closeArgs = (CloseEventArgs)args;
+                
+                handle!.UserData = false;
 
                 //closeArgs.Window.UserData = false;
 
@@ -290,7 +288,7 @@ namespace LocalTestProject
             }
             else if (type == PlatformEventType.TextInput)
             {
-                TextInputEventArgs input = (TextInputEventArgs)arguments;
+                TextInputEventArgs input = (TextInputEventArgs)args;
 
                 Console.WriteLine($"Input: {input.Text}");
 
