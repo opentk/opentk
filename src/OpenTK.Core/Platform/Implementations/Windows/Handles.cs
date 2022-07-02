@@ -12,7 +12,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         public IntPtr HWnd { get; private set; }
 
         // FIXME: Is this a good place for this?
-        public SimpleEventQueue<WindowEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<WindowEventType, WindowEventArgs>();
+        public SimpleEventQueue<PlatformEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<PlatformEventType, WindowEventArgs>();
 
         // FIXME: This is kind of a hack so that we can get access to the window component in the WndProc...
         public WindowComponent WindowComponent { get; private set; }
@@ -42,9 +42,9 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         }
     }
 
-    internal class Win32EventQueue : IEventQueue<WindowEventType, WindowEventArgs>
+    internal class Win32EventQueue : IEventQueue<PlatformEventType, WindowEventArgs>
     {
-        public event QueueEventHandler<WindowEventType, WindowEventArgs> EventRaised;
+        public event QueueEventHandler<PlatformEventType, WindowEventArgs> EventRaised;
 
         public void ProcessEvents()
         {
@@ -56,7 +56,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             throw new NotImplementedException();
         }
 
-        public void DefaultEventHandler(object sender, WindowEventType type, WindowEventArgs arguments)
+        public void DefaultEventHandler(object sender, PlatformEventType type, WindowEventArgs arguments)
         {
             throw new NotImplementedException();
         }

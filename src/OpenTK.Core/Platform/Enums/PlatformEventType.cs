@@ -3,7 +3,7 @@ namespace OpenTK.Core.Platform
     /// <summary>
     /// Enumeration of all OpenTK window events.
     /// </summary>
-    public enum WindowEventType
+    public enum PlatformEventType
     {
         /// <summary>
         /// A no operation event, for testing purposes.

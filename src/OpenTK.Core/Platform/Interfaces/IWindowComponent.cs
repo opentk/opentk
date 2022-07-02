@@ -26,7 +26,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Read-only list of event types the driver supports.
         /// </summary>
-        IReadOnlyList<WindowEventType> SupportedEvents { get; }
+        IReadOnlyList<PlatformEventType> SupportedEvents { get; }
 
         /// <summary>
         /// Read-only list of window styles the driver supports.
@@ -234,6 +234,6 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a window.</param>
         /// <returns>Event queue for the window.</returns>
         [Obsolete("Event Queue instances are no longer a part of the PAL API.")]
-        IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle);
+        IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle);
     }
 }

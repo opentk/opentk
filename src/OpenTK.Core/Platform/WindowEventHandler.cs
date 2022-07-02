@@ -26,5 +26,5 @@ namespace OpenTK.Core.Platform
     /// OpenTK.Core.Platform.Window.ProcessEvents(handle, MyWindowEventHandler);
     /// </code>
     /// </example>
-    public delegate void WindowEventHandler(WindowHandle handle, WindowEventType type, WindowEventArgs args);
+    public delegate void WindowEventHandler(WindowHandle handle, PlatformEventType type, WindowEventArgs args);
 }

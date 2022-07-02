@@ -14,7 +14,7 @@ namespace X11TestProject
 {
     public class Program
     {
-        public static void Main()
+        public static void SingleWindowMain()
         {
             X11AbstractionLayer layer = new X11AbstractionLayer();
             layer.Initialize(PalComponents.Window | PalComponents.OpenGL);

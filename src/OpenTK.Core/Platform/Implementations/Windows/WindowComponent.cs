@@ -82,7 +82,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
         public bool CanSetCursor => throw new NotImplementedException();
 
-        public IReadOnlyList<WindowEventType> SupportedEvents => throw new NotImplementedException();
+        public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         public IReadOnlyList<WindowStyle> SupportedStyles => _SupportedStyles;
 
@@ -145,7 +145,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
                         bool wasDown = (l & (1 << 30)) != 0;
                         bool extended = (l & (1 << 24)) != 0;
 
-                        h.EventQueue.Send(h, WindowEventType.KeyDown, new KeyDownEventArgs(vk, wasDown, extended));
+                        h.EventQueue.Send(h, PlatformEventType.KeyDown, new KeyDownEventArgs(vk, wasDown, extended));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -561,7 +561,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             throw new NotImplementedException();
         }
 
-        public IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
+        public IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
             return hwnd.EventQueue;
