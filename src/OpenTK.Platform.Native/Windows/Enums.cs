@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
     // FIXME: Make enum names consistent between all enums.
 
@@ -300,6 +300,41 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         VerticalRedraw = 0x1
     }
 
+    internal enum CFS : uint
+    {
+        /// <summary>
+        /// Move the composition window to the default position.
+        /// The IME window can display the composition window
+        /// outside the client area, such as in a floating window.
+        /// </summary>
+        CFS_DEFAULT = 0,
+
+        /// <summary>
+        /// Display the upper left corner of the composition window
+        /// at exactly the position specified by ptCurrentPos.
+        /// The coordinates are relative to the upper left corner
+        /// of the window containing the composition window
+        /// and are not subject to adjustment by the IME.
+        /// </summary>
+        CFS_FORCE_POSITION = 32,
+
+        /// <summary>
+        /// Display the upper left corner of the composition window
+        /// at the position specified by ptCurrentPos.
+        /// The coordinates are relative to the upper left corner
+        /// of the window containing the composition window
+        /// and are subject to adjustment by the IME.
+        /// </summary>
+        CFS_POINT = 2,
+
+        /// <summary>
+        /// Display the composition window at the position specified by rcArea.
+        /// The coordinates are relative to the upper left
+        /// of the window containing the composition window.
+        /// </summary>
+        CFS_RECT = 1,
+    }
+
     internal enum ShowWindowCommands
     {
         /// <summary>
@@ -570,6 +605,78 @@ namespace OpenTK.Core.Platform.Implementations.Windows
     }
 
     [Flags]
+    internal enum TME : uint
+    {
+        /// <summary>
+        /// The caller wants to cancel a prior tracking request.
+        /// The caller should also specify the type of tracking that it wants to cancel.
+        /// For example, to cancel hover tracking,
+        /// the caller must pass the <see cref="Cancel"/> and <see cref="Hover"/> flags.
+        /// </summary>
+        Cancel = 0x80000000,
+
+        /// <summary>
+        /// The caller wants hover notification.
+        /// Notification is delivered as a <see cref="WM.MOUSEHOVER"/> message.
+        /// If the caller requests hover tracking while hover tracking is already active,
+        /// the hover timer will be reset.
+        /// This flag is ignored if the mouse pointer is not over the specified window or area.
+        /// </summary>
+        Hover = 0x00000001,
+
+        /// <summary>
+        /// The caller wants leave notification.
+        /// Notification is delivered as a <see cref="WM.MOUSELEAVE"/> message.
+        /// If the mouse is not over the specified window or area,
+        /// a leave notification is generated immediately and no further tracking is performed.
+        /// </summary>
+        Leave = 0x00000002,
+
+        /// <summary>
+        /// The caller wants hover and leave notification for the nonclient areas.
+        /// Notification is delivered as <see cref="WM.NCMOUSEHOVER"/> and <see cref="WM.NCMOUSELEAVE"/> messages.
+        /// </summary>
+        NonClient = 0x00000010,
+
+        /// <summary>
+        /// The function fills in the structure instead of treating it as a tracking request.
+        /// The structure is filled such that had that structure been passed to TrackMouseEvent,
+        /// it would generate the current tracking.
+        /// The only anomaly is that the hover time-out returned is always the actual time-out and not HOVER_DEFAULT,
+        /// if HOVER_DEFAULT was specified during the original TrackMouseEvent request.
+        /// </summary>
+        Query = 0x40000000,
+    }
+
+    internal enum SIZE
+    {
+        /// <summary>
+        /// Message is sent to all pop-up windows when some other window is maximized.
+        /// </summary>
+        MaxHide = 4,
+
+        /// <summary>
+        /// The window has been maximized.
+        /// </summary>
+        Maximized = 2,
+
+        /// <summary>
+        /// Message is sent to all pop-up windows when some other window has been restored to its former size.
+        /// </summary>
+        MaxShow = 3,
+
+        /// <summary>
+        /// The window has been minimized.
+        /// </summary>
+        Minimized = 1,
+
+        /// <summary>
+        /// The window has been resized, but neither the SIZE_MINIMIZED nor SIZE_MAXIMIZED value applies.
+        /// </summary>
+        Restored = 0,
+    }
+
+    [Flags]
     internal enum PFD : uint
     {
         /// <summary>
@@ -727,6 +834,360 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         UNDERLAY = 0xFF, // -1
     }
 
+    internal enum IDC : int
+    {
+        /// <summary>
+        /// Standard arrow and small hourglass
+        /// </summary>
+        AppStarting = 32650,
+
+        /// <summary>
+        /// Standard arrow
+        /// </summary>
+        Arrow = 32512,
+
+        /// <summary>
+        /// Crosshair
+        /// </summary>
+        Cross = 32515,
+
+        /// <summary>
+        /// Hand
+        /// </summary>
+        Hand = 32649,
+
+        /// <summary>
+        /// Arrow and question mark
+        /// </summary>
+        Help = 32651,
+
+        /// <summary>
+        /// I-beam
+        /// </summary>
+        IBeam = 32513,
+
+        /// <summary>
+        /// Obsolete for applications marked version 4.0 or later.
+        /// </summary>
+        Icon = 32641,
+
+        /// <summary>
+        /// Slashed circle
+        /// </summary>
+        No = 32648,
+
+        /// <summary>
+        /// Obsolete for applications marked version 4.0 or later. Use SIZEALL.
+        /// </summary>
+        Size = 32640,
+
+        /// <summary>
+        /// Four-pointed arrow pointing north, south, east, and west
+        /// </summary>
+        SizeAll = 32646,
+
+        /// <summary>
+        /// Double-pointed arrow pointing northeast and southwest
+        /// </summary>
+        SizeNESW = 32643,
+
+        /// <summary>
+        /// Double-pointed arrow pointing north and south
+        /// </summary>
+        SizeNS = 32645,
+
+        /// <summary>
+        /// Double-pointed arrow pointing northwest and southeast
+        /// </summary>
+        SizeNWSE = 32642,
+
+        /// <summary>
+        /// Double-pointed arrow pointing west and east
+        /// </summary>
+        SizeWE = 32644,
+
+        /// <summary>
+        /// Vertical arrow
+        /// </summary>
+        UpArrow = 32516,
+
+        /// <summary>
+        /// Hour
+        /// </summary>
+        Wait = 32514,
+    }
+
+    internal enum OCR
+    {
+        /// <summary>
+        /// Standard arrow and small hourglass
+        /// </summary>
+        AppStarting = 32650,
+
+        /// <summary>
+        /// Standard arrow
+        /// </summary>
+        Normal = 32512,
+
+        /// <summary>
+        /// Crosshair
+        /// </summary>
+        Cross = 32515,
+
+        /// <summary>
+        /// Hand
+        /// </summary>
+        Hand = 32649,
+
+        /// <summary>
+        /// Arrow and question mark
+        /// </summary>
+        Help = 32651,
+
+        /// <summary>
+        /// I-beam
+        /// </summary>
+        IBeam = 32513,
+
+        /// <summary>
+        /// Slashed circle
+        /// </summary>
+        No = 32648,
+
+        /// <summary>
+        /// Four-pointed arrow pointing north, south, east, and west
+        /// </summary>
+        SizeAll = 32646,
+
+        /// <summary>
+        /// Double-pointed arrow pointing northeast and southwest
+        /// </summary>
+        SizeNESW = 32643,
+
+        /// <summary>
+        /// Double-pointed arrow pointing north and south
+        /// </summary>
+        SizeNS = 32645,
+
+        /// <summary>
+        /// Double-pointed arrow pointing northwest and southeast
+        /// </summary>
+        SizeNWSE = 32642,
+
+        /// <summary>
+        /// Double-pointed arrow pointing west and east
+        /// </summary>
+        SizeWE = 32644,
+
+        /// <summary>
+        /// Vertical arrow
+        /// </summary>
+        Up = 32516,
+
+        /// <summary>
+        /// Hourglass
+        /// </summary>
+        Wait = 32514,
+    }
+
+    internal enum OIC
+    {
+        Sample = 32512,
+        Hand = 32513,
+        Ques = 32514,
+        Bang = 32515,
+        Note = 32516,
+        WinLogo = 32517,
+        Warning = Bang,
+        Error = Hand,
+        Information = Note,
+        Shield = 32518,
+    }
+
+    internal enum ImageType : uint
+    {
+        /// <summary>
+        /// Loads a bitmap.
+        /// </summary>
+        Bitmap = 0,
+
+        /// <summary>
+        /// Loads a cursor.
+        /// </summary>
+        Cursor = 2,
+
+        /// <summary>
+        /// Loads an icon.
+        /// </summary>
+        Icon = 1,
+    }
+
+    internal enum DIB
+    {
+        /// <summary>
+        /// The color table contains literal RGB values.
+        /// </summary>
+        RGBColors = 0x00,
+
+        /// <summary>
+        /// The color table consists of an array of 16-bit indexes
+        /// into the LogPalette object (section <see href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-emf/758f047d-765e-424c-9204-a833b7b4e527">2.2.17</see>) that is
+        /// currently defined in the <see href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-emf/6de331ec-81f6-4ab2-8982-673a232e0a5c#gt_32591a2b-a9d0-4ccf-a5b8-7177e1ea8d45">playback device context</see>.
+        /// </summary>
+        PALColors = 0x01,
+
+        /// <summary>
+        /// No color table exists.
+        /// The pixels in the DIB are indices into the current
+        /// logical palette in the playback device context.
+        /// </summary>
+        PALIndices = 0x02,
+    }
+
+    internal enum BI : uint
+    {
+        /// <summary>
+        /// An uncompressed format.
+        /// </summary>
+        RGB,
+
+        /// <summary>
+        /// A run-length encoded (RLE) format for bitmaps with 8 bpp.
+        /// The compression format is a 2-byte format consisting of
+        /// a count byte followed by a byte containing a color index.
+        /// For more information, see Bitmap Compression.
+        /// </summary>
+        RLE8,
+
+        /// <summary>
+        /// An RLE format for bitmaps with 4 bpp.
+        /// The compression format is a 2-byte format consisting of
+        /// a count byte followed by two word-length color indexes.
+        /// For more information, see Bitmap Compression.
+        /// </summary>
+        RLE4,
+
+        /// <summary>
+        /// Specifies that the bitmap is not compressed and that
+        /// the color table consists of three DWORD color masks
+        /// that specify the red, green, and blue components,
+        /// respectively, of each pixel.
+        /// This is valid when used with 16- and 32-bpp bitmaps.
+        /// </summary>
+        Bitfields,
+
+        /// <summary>
+        /// Indicates that the image is a JPEG image.
+        /// </summary>
+        JPEG,
+
+        /// <summary>
+        /// Indicates that the image is a PNG image.
+        /// </summary>
+        PNG,
+    }
+
+    [Flags]
+    internal enum LR : uint
+    {
+        /// <summary>
+        /// When the uType parameter specifies IMAGE_BITMAP,
+        /// causes the function to return a DIB section bitmap
+        /// rather than a compatible bitmap.
+        /// This flag is useful for loading a bitmap without
+        /// mapping it to the colors of the display device.
+        /// </summary>
+        CreatedIBSection = 0x00002000,
+
+        /// <summary>
+        /// The default flag; it does nothing. All it means is "not <see cref="LR.Monochrome"/>".
+        /// </summary>
+        DefaultColor = 0x00000000,
+
+        /// <summary>
+        /// Uses the width or height specified by the system
+        /// metric values for cursors or icons,
+        /// if the cxDesired or cyDesired values are set to zero.
+        /// If this flag is not specified and cxDesired and cyDesired
+        /// are set to zero,
+        /// the function uses the actual resource size.
+        /// If the resource contains multiple images,
+        /// the function uses the size of the first image.
+        /// </summary>
+        DefaultSize = 0x00000040,
+
+        /// <summary>
+        /// Loads the stand-alone image from the file specified
+        /// by lpszName (icon, cursor, or bitmap file).
+        /// </summary>
+        LoadFromFile = 0x00000010,
+
+        /// <summary>
+        /// Searches the color table for the image and replaces
+        /// the following shades of gray with the corresponding 3-D color.
+        /// <list type="3D colors">
+        /// <item>Dk Gray, RGB(128,128,128) with COLOR_3DSHADOW</item>
+        /// <item>Gray, RGB(192,192,192) with COLOR_3DFACE</item>
+        /// <item>Lt Gray, RGB(223,223,223) with COLOR_3DLIGHT</item>
+        /// </list>
+        /// Do not use this option if you are loading a bitmap
+        /// with a color depth greater than 8bpp.
+        /// </summary>
+        LoadMap3DColors = 0x00001000,
+
+        /// <summary>
+        /// Retrieves the color value of the first pixel in the image
+        /// and replaces the corresponding entry in the color table
+        /// with the default window color (COLOR_WINDOW).
+        /// All pixels in the image that use that entry become
+        /// the default window color.
+        /// This value applies only to images that have
+        /// corresponding color tables.
+        ///
+        /// Do not use this option if you are loading a bitmap
+        /// with a color depth greater than 8bpp.
+        ///
+        /// If fuLoad includes both the LR_LOADTRANSPARENT and
+        /// LR_LOADMAP3DCOLORS values, LR_LOADTRANSPARENT takes precedence.
+        /// However, the color table entry is replaced with COLOR_3DFACE
+        /// rather than COLOR_WINDOW.
+        /// </summary>
+        LoadTransparent = 0x00000020,
+
+        /// <summary>
+        /// Loads the image in black and white.
+        /// </summary>
+        Monochrome = 0x00000001,
+
+        /// <summary>
+        /// Shares the image handle if the image is loaded multiple times.
+        /// If <see cref="Shared"/> is not set, a second call to LoadImage
+        /// for the same resource will load the image again and
+        /// return a different handle.
+        ///
+        /// When you use this flag, the system will destroy the resource
+        /// when it is no longer needed.
+        ///
+        /// Do not use <see cref="Shared"/> for images that have
+        /// non-standard sizes, that may change after loading,'
+        /// or that are loaded from a file.
+        ///
+        /// When loading a system icon or cursor,
+        /// you must use <see cref="Shared"/> or the function
+        /// will fail to load the resource.
+        ///
+        /// This function finds the first image in the cache
+        /// with the requested resource name,
+        /// regardless of the size requested.
+        /// </summary>
+        Shared = 0x00008000,
+
+        /// <summary>
+        /// Uses true VGA colors.
+        /// </summary>
+        VGAColor = 0x00000080,
+    }
+
     [Flags]
     internal enum PM : uint
     {
@@ -745,6 +1206,1210 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         /// Combine this value with either PM_NOREMOVE or PM_REMOVE.
         /// </summary>
         NOYIELD = 2,
+    }
+
+    internal enum SystemMetric : int
+    {
+        /// <summary>
+        /// The flags that specify how the system arranged minimized windows. For more information, see the Remarks section in this topic.
+        /// </summary>
+        Arrange = 56,
+
+        /// <summary>
+        /// The value that specifies how the system is started:
+        /// 0 Normal boot
+        /// 1 Fail-safe boot
+        /// 2 Fail-safe with network boot
+        /// A fail-safe boot (also called SafeBoot, Safe Mode, or Clean Boot) bypasses the user startup files.
+        /// </summary>
+        CleanBoot = 67,
+
+        /// <summary>
+        /// The number of display monitors on a desktop. For more information, see the Remarks section in this topic.
+        /// </summary>
+        CMonitors = 80,
+
+        /// <summary>
+        /// The number of buttons on a mouse, or zero if no mouse is installed.
+        /// </summary>
+        CMouseButtons = 43,
+
+        /// <summary>
+        /// The width of a window border, in pixels. This is equivalent to the CXEDGE value for windows with the 3-D look.
+        /// </summary>
+        CXBorder = 5,
+
+        /// <summary>
+        /// The width of a cursor, in pixels. The system cannot create cursors of other sizes.
+        /// </summary>
+        CXCursor = 13,
+
+        /// <summary>
+        /// This value is the same as <see cref="CXFIXEDFRAME"/>.
+        /// </summary>
+        CXDLGFrame = 7,
+
+        /// <summary>
+        /// The width of the rectangle around the location of a first click in a double-click sequence, in pixels. ,
+        /// The second click must occur within the rectangle that is defined by CXDOUBLECLK and CYDOUBLECLK for the system
+        /// to consider the two clicks a double-click. The two clicks must also occur within a specified time.
+        /// To set the width of the double-click rectangle, call SystemParametersInfo with SPI_SETDOUBLECLKWIDTH.
+        /// </summary>
+        CXDoubleClk = 36,
+
+        /// <summary>
+        /// The number of pixels on either side of a mouse-down point that the mouse pointer can move before a drag operation begins.
+        /// This allows the user to click and release the mouse button easily without unintentionally starting a drag operation.
+        /// If this value is negative, it is subtracted from the left of the mouse-down point and added to the right of it.
+        /// </summary>
+        CXDrag = 68,
+
+        /// <summary>
+        /// The width of a 3-D border, in pixels. This metric is the 3-D counterpart of CXBORDER.
+        /// </summary>
+        CXEdge = 45,
+
+        /// <summary>
+        /// The thickness of the frame around the perimeter of a window that has a caption but is not sizable, in pixels.
+        /// CXFIXEDFRAME is the height of the horizontal border, and CYFIXEDFRAME is the width of the vertical border.
+        /// This value is the same as CXDLGFRAME.
+        /// </summary>
+        CXFixedFrame = 7,
+
+        /// <summary>
+        /// The width of the left and right edges of the focus rectangle that the DrawFocusRectdraws.
+        /// This value is in pixels.
+        /// Windows 2000:  This value is not supported.
+        /// </summary>
+        CXFocusBorder = 83,
+
+        /// <summary>
+        /// This value is the same as CXSIZEFRAME.
+        /// </summary>
+        CXFrame = 32,
+
+        /// <summary>
+        /// The width of the client area for a full-screen window on the primary display monitor, in pixels.
+        /// To get the coordinates of the portion of the screen that is not obscured by the system taskbar or by application desktop toolbars,
+        /// call the SystemParametersInfofunction with the SPI_GETWORKAREA value.
+        /// </summary>
+        CXFullscreen = 16,
+
+        /// <summary>
+        /// The width of the arrow bitmap on a horizontal scroll bar, in pixels.
+        /// </summary>
+        CXHScroll = 21,
+
+        /// <summary>
+        /// The width of the thumb box in a horizontal scroll bar, in pixels.
+        /// </summary>
+        CXHThumb = 10,
+
+        /// <summary>
+        /// The default width of an icon, in pixels. The LoadIcon function can load only icons with the dimensions
+        /// that CXICON and CYICON specifies.
+        /// </summary>
+        CXIcon = 11,
+
+        /// <summary>
+        /// The width of a grid cell for items in large icon view, in pixels. Each item fits into a rectangle of size
+        /// CXICONSPACING by CYICONSPACING when arranged. This value is always greater than or equal to CXICON.
+        /// </summary>
+        CXIconSpacing = 38,
+
+        /// <summary>
+        /// The default width, in pixels, of a maximized top-level window on the primary display monitor.
+        /// </summary>
+        CXMaximized = 61,
+
+        /// <summary>
+        /// The default maximum width of a window that has a caption and sizing borders, in pixels.
+        /// This metric refers to the entire desktop. The user cannot drag the window frame to a size larger than these dimensions.
+        /// A window can override this value by processing the WM_GETMINMAXINFO message.
+        /// </summary>
+        CXMaxTrack = 59,
+
+        /// <summary>
+        /// The width of the default menu check-mark bitmap, in pixels.
+        /// </summary>
+        CXMenuCheck = 71,
+
+        /// <summary>
+        /// The width of menu bar buttons, such as the child window close button that is used in the multiple document interface, in pixels.
+        /// </summary>
+        CXMenuSize = 54,
+
+        /// <summary>
+        /// The minimum width of a window, in pixels.
+        /// </summary>
+        CXMin = 28,
+
+        /// <summary>
+        /// The width of a minimized window, in pixels.
+        /// </summary>
+        CXMinimized = 57,
+
+        /// <summary>
+        /// The width of a grid cell for a minimized window, in pixels. Each minimized window fits into a rectangle this size when arranged.
+        /// This value is always greater than or equal to CXMINIMIZED.
+        /// </summary>
+        CXMinSpacing = 47,
+
+        /// <summary>
+        /// The minimum tracking width of a window, in pixels. The user cannot drag the window frame to a size smaller than these dimensions.
+        /// A window can override this value by processing the WM_GETMINMAXINFO message.
+        /// </summary>
+        CXMinTrack = 34,
+
+        /// <summary>
+        /// The amount of border padding for captioned windows, in pixels. Windows XP/2000:  This value is not supported.
+        /// </summary>
+        CXPaddedBorder = 92,
+
+        /// <summary>
+        /// The width of the screen of the primary display monitor, in pixels. This is the same value obtained by calling
+        /// GetDeviceCaps as follows: GetDeviceCaps( hdcPrimaryMonitor, HORZRES).
+        /// </summary>
+        CXScreen = 0,
+
+        /// <summary>
+        /// The width of a button in a window caption or title bar, in pixels.
+        /// </summary>
+        CXSize = 30,
+
+        /// <summary>
+        /// The thickness of the sizing border around the perimeter of a window that can be resized, in pixels.
+        /// CXSIZEFRAME is the width of the horizontal border, and CYSIZEFRAME is the height of the vertical border.
+        /// This value is the same as CXFRAME.
+        /// </summary>
+        CXSizeFrame = 32,
+
+        /// <summary>
+        /// The recommended width of a small icon, in pixels. Small icons typically appear in window captions and in small icon view.
+        /// </summary>
+        CXSMIcon = 49,
+
+        /// <summary>
+        /// The width of small caption buttons, in pixels.
+        /// </summary>
+        CXSMSize = 52,
+
+        /// <summary>
+        /// The width of the virtual screen, in pixels. The virtual screen is the bounding rectangle of all display monitors.
+        /// The XVIRTUALSCREEN metric is the coordinates for the left side of the virtual screen.
+        /// </summary>
+        CXVirtualScreen = 78,
+
+        /// <summary>
+        /// The width of a vertical scroll bar, in pixels.
+        /// </summary>
+        CXVScroll = 2,
+
+        /// <summary>
+        /// The height of a window border, in pixels. This is equivalent to the CYEDGE value for windows with the 3-D look.
+        /// </summary>
+        CYBorder = 6,
+
+        /// <summary>
+        /// The height of a caption area, in pixels.
+        /// </summary>
+        CYCaption = 4,
+
+        /// <summary>
+        /// The height of a cursor, in pixels. The system cannot create cursors of other sizes.
+        /// </summary>
+        CYCursor = 14,
+
+        /// <summary>
+        /// This value is the same as CYFIXEDFRAME.
+        /// </summary>
+        CYDLGFrame = 8,
+
+        /// <summary>
+        /// The height of the rectangle around the location of a first click in a double-click sequence, in pixels.
+        /// The second click must occur within the rectangle defined by CXDOUBLECLK and CYDOUBLECLK for the system to consider
+        /// the two clicks a double-click. The two clicks must also occur within a specified time. To set the height of the double-click
+        /// rectangle, call SystemParametersInfo with SPI_SETDOUBLECLKHEIGHT.
+        /// </summary>
+        CYDoubleClick = 37,
+
+        /// <summary>
+        /// The number of pixels above and below a mouse-down point that the mouse pointer can move before a drag operation begins.
+        /// This allows the user to click and release the mouse button easily without unintentionally starting a drag operation.
+        /// If this value is negative, it is subtracted from above the mouse-down point and added below it.
+        /// </summary>
+        CYDrag = 69,
+
+        /// <summary>
+        /// The height of a 3-D border, in pixels. This is the 3-D counterpart of CYBORDER.
+        /// </summary>
+        CYEdge = 46,
+
+        /// <summary>
+        /// The thickness of the frame around the perimeter of a window that has a caption but is not sizable, in pixels.
+        /// CXFIXEDFRAME is the height of the horizontal border, and CYFIXEDFRAME is the width of the vertical border.
+        /// This value is the same as CYDLGFRAME.
+        /// </summary>
+        CYFixedFrame = 8,
+
+        /// <summary>
+        /// The height of the top and bottom edges of the focus rectangle drawn byDrawFocusRect.
+        /// This value is in pixels.
+        /// Windows 2000:  This value is not supported.
+        /// </summary>
+        CYFocusBorder = 84,
+
+        /// <summary>
+        /// This value is the same as CYSIZEFRAME.
+        /// </summary>
+        CYFrame = 33,
+
+        /// <summary>
+        /// The height of the client area for a full-screen window on the primary display monitor, in pixels.
+        /// To get the coordinates of the portion of the screen not obscured by the system taskbar or by application desktop toolbars,
+        /// call the SystemParametersInfo function with the SPI_GETWORKAREA value.
+        /// </summary>
+        CYFullscreen = 17,
+
+        /// <summary>
+        /// The height of a horizontal scroll bar, in pixels.
+        /// </summary>
+        CYHScroll = 3,
+
+        /// <summary>
+        /// The default height of an icon, in pixels. The LoadIcon function can load only icons with the dimensions CXICON and CYICON.
+        /// </summary>
+        CYIcon = 12,
+
+        /// <summary>
+        /// The height of a grid cell for items in large icon view, in pixels. Each item fits into a rectangle of size
+        /// CXICONSPACING by CYICONSPACING when arranged. This value is always greater than or equal to CYICON.
+        /// </summary>
+        CYIconSpacing = 39,
+
+        /// <summary>
+        /// For double byte character set versions of the system, this is the height of the Kanji window at the bottom of the screen, in pixels.
+        /// </summary>
+        CYKanjiWindow = 18,
+
+        /// <summary>
+        /// The default height, in pixels, of a maximized top-level window on the primary display monitor.
+        /// </summary>
+        CYMaximized = 62,
+
+        /// <summary>
+        /// The default maximum height of a window that has a caption and sizing borders, in pixels. This metric refers to the entire desktop.
+        /// The user cannot drag the window frame to a size larger than these dimensions. A window can override this value by processing
+        /// the WM_GETMINMAXINFO message.
+        /// </summary>
+        CYMaxTrack = 60,
+
+        /// <summary>
+        /// The height of a single-line menu bar, in pixels.
+        /// </summary>
+        CYMenu = 15,
+
+        /// <summary>
+        /// The height of the default menu check-mark bitmap, in pixels.
+        /// </summary>
+        CYMenuCheck = 72,
+
+        /// <summary>
+        /// The height of menu bar buttons, such as the child window close button that is used in the multiple document interface, in pixels.
+        /// </summary>
+        CYMenuSize = 55,
+
+        /// <summary>
+        /// The minimum height of a window, in pixels.
+        /// </summary>
+        CYMin = 29,
+
+        /// <summary>
+        /// The height of a minimized window, in pixels.
+        /// </summary>
+        CYMinimized = 58,
+
+        /// <summary>
+        /// The height of a grid cell for a minimized window, in pixels. Each minimized window fits into a rectangle this size when arranged.
+        /// This value is always greater than or equal to CYMINIMIZED.
+        /// </summary>
+        CYMinSpacing = 48,
+
+        /// <summary>
+        /// The minimum tracking height of a window, in pixels. The user cannot drag the window frame to a size smaller than these dimensions.
+        /// A window can override this value by processing the WM_GETMINMAXINFO message.
+        /// </summary>
+        CYMinTrack = 35,
+
+        /// <summary>
+        /// The height of the screen of the primary display monitor, in pixels. This is the same value obtained by calling
+        /// GetDeviceCaps as follows: GetDeviceCaps( hdcPrimaryMonitor, VERTRES).
+        /// </summary>
+        CYScreen = 1,
+
+        /// <summary>
+        /// The height of a button in a window caption or title bar, in pixels.
+        /// </summary>
+        CYSize = 31,
+
+        /// <summary>
+        /// The thickness of the sizing border around the perimeter of a window that can be resized, in pixels.
+        /// CXSIZEFRAME is the width of the horizontal border, and CYSIZEFRAME is the height of the vertical border.
+        /// This value is the same as CYFRAME.
+        /// </summary>
+        CYSizeFrame = 33,
+
+        /// <summary>
+        /// The height of a small caption, in pixels.
+        /// </summary>
+        CYSMCaption = 51,
+
+        /// <summary>
+        /// The recommended height of a small icon, in pixels. Small icons typically appear in window captions and in small icon view.
+        /// </summary>
+        CYSMIcon = 50,
+
+        /// <summary>
+        /// The height of small caption buttons, in pixels.
+        /// </summary>
+        CYSMSize = 53,
+
+        /// <summary>
+        /// The height of the virtual screen, in pixels. The virtual screen is the bounding rectangle of all display monitors.
+        /// The YVIRTUALSCREEN metric is the coordinates for the top of the virtual screen.
+        /// </summary>
+        CYVirtualScreen = 79,
+
+        /// <summary>
+        /// The height of the arrow bitmap on a vertical scroll bar, in pixels.
+        /// </summary>
+        CYVScroll = 20,
+
+        /// <summary>
+        /// The height of the thumb box in a vertical scroll bar, in pixels.
+        /// </summary>
+        CYVThumb = 9,
+
+        /// <summary>
+        /// Nonzero if User32.dll supports DBCS; otherwise, 0.
+        /// </summary>
+        DBCSEnabled = 42,
+
+        /// <summary>
+        /// Nonzero if the debug version of User.exe is installed; otherwise, 0.
+        /// </summary>
+        Debug = 22,
+
+        /// <summary>
+        /// Nonzero if the current operating system is Windows 7 or Windows Server 2008 R2 and the Tablet PC Input
+        /// service is started; otherwise, 0. The return value is a bitmask that specifies the type of digitizer input supported by the device.
+        /// For more information, see Remarks.
+        /// Windows Server 2008, Windows Vista, and Windows XP/2000:  This value is not supported.
+        /// </summary>
+        Digitizer = 94,
+
+        /// <summary>
+        /// Nonzero if Input Method Manager/Input Method Editor features are enabled; otherwise, 0.
+        /// IMMENABLED indicates whether the system is ready to use a Unicode-based IME on a Unicode application.
+        /// To ensure that a language-dependent IME works, check DBCSENABLED and the system ANSI code page.
+        /// Otherwise the ANSI-to-Unicode conversion may not be performed correctly, or some components like fonts
+        /// or registry settings may not be present.
+        /// </summary>
+        IMMEnabled = 82,
+
+        /// <summary>
+        /// Nonzero if there are digitizers in the system; otherwise, 0. MAXIMUMTOUCHES returns the aggregate maximum of the
+        /// maximum number of contacts supported by every digitizer in the system. If the system has only single-touch digitizers,
+        /// the return value is 1. If the system has multi-touch digitizers, the return value is the number of simultaneous contacts
+        /// the hardware can provide. Windows Server 2008, Windows Vista, and Windows XP/2000:  This value is not supported.
+        /// </summary>
+        MaximumTouches = 95,
+
+        /// <summary>
+        /// Nonzero if the current operating system is the Windows XP, Media Center Edition, 0 if not.
+        /// </summary>
+        MediaCenter = 87,
+
+        /// <summary>
+        /// Nonzero if drop-down menus are right-aligned with the corresponding menu-bar item; 0 if the menus are left-aligned.
+        /// </summary>
+        MenuDropAlignment = 40,
+
+        /// <summary>
+        /// Nonzero if the system is enabled for Hebrew and Arabic languages, 0 if not.
+        /// </summary>
+        MidEastEnabled = 74,
+
+        /// <summary>
+        /// Nonzero if a mouse is installed; otherwise, 0. This value is rarely zero, because of support for virtual mice and because
+        /// some systems detect the presence of the port instead of the presence of a mouse.
+        /// </summary>
+        MousePresent = 19,
+
+        /// <summary>
+        /// Nonzero if a mouse with a horizontal scroll wheel is installed; otherwise 0.
+        /// </summary>
+        MouseHorizontalWheelPresent = 91,
+
+        /// <summary>
+        /// Nonzero if a mouse with a vertical scroll wheel is installed; otherwise 0.
+        /// </summary>
+        MouseWheelPresent = 75,
+
+        /// <summary>
+        /// The least significant bit is set if a network is present; otherwise, it is cleared. The other bits are reserved for future use.
+        /// </summary>
+        Network = 63,
+
+        /// <summary>
+        /// Nonzero if the Microsoft Windows for Pen computing extensions are installed; zero otherwise.
+        /// </summary>
+        PenWindows = 41,
+
+        /// <summary>
+        /// This system metric is used in a Terminal Services environment to determine if the current Terminal Server session is
+        /// being remotely controlled. Its value is nonzero if the current session is remotely controlled; otherwise, 0.
+        /// You can use terminal services management tools such as Terminal Services Manager (tsadmin.msc) and shadow.exe to
+        /// control a remote session. When a session is being remotely controlled, another user can view the contents of that session
+        /// and potentially interact with it.
+        /// </summary>
+        RemoteControl = 0x2001,
+
+        /// <summary>
+        /// This system metric is used in a Terminal Services environment. If the calling process is associated with a Terminal Services
+        /// client session, the return value is nonzero. If the calling process is associated with the Terminal Services console session,
+        /// the return value is 0.
+        /// Windows Server 2003 and Windows XP:  The console session is not necessarily the physical console.
+        /// For more information, seeWTSGetActiveConsoleSessionId.
+        /// </summary>
+        RemoteSession = 0x1000,
+
+        /// <summary>
+        /// Nonzero if all the display monitors have the same color format, otherwise, 0. Two displays can have the same bit depth,
+        /// but different color formats. For example, the red, green, and blue pixels can be encoded with different numbers of bits,
+        /// or those bits can be located in different places in a pixel color value.
+        /// </summary>
+        SameDisplayFormat = 81,
+
+        /// <summary>
+        /// This system metric should be ignored; it always returns 0.
+        /// </summary>
+        Secure = 44,
+
+        /// <summary>
+        /// The build number if the system is Windows Server 2003 R2; otherwise, 0.
+        /// </summary>
+        ServerR2 = 89,
+
+        /// <summary>
+        /// Nonzero if the user requires an application to present information visually in situations where it would otherwise present
+        /// the information only in audible form; otherwise, 0.
+        /// </summary>
+        ShowSounds = 70,
+
+        /// <summary>
+        /// Nonzero if the current session is shutting down; otherwise, 0. Windows 2000:  This value is not supported.
+        /// </summary>
+        ShuttingDown = 0x2000,
+
+        /// <summary>
+        /// Nonzero if the computer has a low-end (slow) processor; otherwise, 0.
+        /// </summary>
+        SlowMachine = 73,
+
+        /// <summary>
+        /// Nonzero if the current operating system is Windows 7 Starter Edition, Windows Vista Starter, or Windows XP Starter Edition; otherwise, 0.
+        /// </summary>
+        Starter = 88,
+
+        /// <summary>
+        /// Nonzero if the meanings of the left and right mouse buttons are swapped; otherwise, 0.
+        /// </summary>
+        SwapButton = 23,
+
+        /// <summary>
+        /// Nonzero if the current operating system is the Windows XP Tablet PC edition or if the current operating system is Windows Vista
+        /// or Windows 7 and the Tablet PC Input service is started; otherwise, 0. The DIGITIZER setting indicates the type of digitizer
+        /// input supported by a device running Windows 7 or Windows Server 2008 R2. For more information, see Remarks.
+        /// </summary>
+        TabletPC = 86,
+
+        /// <summary>
+        /// The coordinates for the left side of the virtual screen. The virtual screen is the bounding rectangle of all display monitors.
+        /// The CXVIRTUALSCREEN metric is the width of the virtual screen.
+        /// </summary>
+        XVirtualScreen = 76,
+
+        /// <summary>
+        /// The coordinates for the top of the virtual screen. The virtual screen is the bounding rectangle of all display monitors.
+        /// The CYVIRTUALSCREEN metric is the height of the virtual screen.
+        /// </summary>
+        YVirtualScreen = 77,
+    }
+
+    internal enum MonitorDpiType : int
+    {
+        EffectiveDpi = 0,
+        AngularDpi = 1,
+        RawDpi = 2,
+        Default = EffectiveDpi,
+    }
+
+    internal enum ProcessDPIAwareness : int
+    {
+        DpiUnaware = 0,
+        SystemDpiAware = 1,
+        PerMonitorDpiAware = 2,
+    }
+
+    internal enum DpiAwarenessContext : int
+    {
+        Unaware = -1,
+        SystemAware = -2,
+        PerMonitorAware = -3,
+        PerMonitorAwareV2 = -4,
+        UnawareGDIScaled = -5,
+    }
+
+    internal enum DBT : int
+    {
+        /// <summary>
+        /// A device has been added to or removed from the system.
+        /// </summary>
+        DevNodesChanged = 0x0007,
+
+        /// <summary>
+        /// Permission is requested to change the current configuration (dock or undock).
+        /// </summary>
+        QueryChangeConfig = 0x0017,
+
+        /// <summary>
+        /// The current configuration has changed, due to a dock or undock.
+        /// </summary>
+        ConfigChanged = 0x0018,
+
+        /// <summary>
+        /// A request to change the current configuration (dock or undock) has been canceled.
+        /// </summary>
+        ConfigChangedCanceled = 0x0019,
+
+        /// <summary>
+        /// A device or piece of media has been inserted and is now available.
+        /// </summary>
+        DeviceArrival = 0x8000,
+
+        /// <summary>
+        /// Permission is requested to remove a device or piece of media. Any application can deny this request and cancel the removal.
+        /// </summary>
+        DeviceQueryRemove = 0x8001,
+
+        /// <summary>
+        /// A request to remove a device or piece of media has been canceled.
+        /// </summary>
+        DeviceQueryMoveFailed = 0x8002,
+
+        /// <summary>
+        /// A request to remove a device or piece of media has been canceled.
+        /// </summary>
+        DeviceRemovePending = 0x8003,
+
+        /// <summary>
+        /// A device or piece of media has been removed.
+        /// </summary>
+        DeviceRemoveComplete = 0x8004,
+
+        /// <summary>
+        /// A device-specific event has occurred.
+        /// </summary>
+        DeviceTypeSpecific = 0x8005,
+
+        /// <summary>
+        /// A custom event has occurred.
+        /// </summary>
+        CustomEvent = 0x8006,
+
+        /// <summary>
+        /// The meaning of this message is user-defined.
+        /// </summary>
+        UserDefined = 0xFFFF,
+    }
+
+    [Flags]
+    internal enum DM : uint
+    {
+        /// <summary> dmOrientation member is present </summary>
+        Orientation = 0x00000001,
+
+        /// <summary> dmPaperSize member is present </summary>
+        PaperSize = 0x00000002,
+
+        /// <summary> dmPaperength member is present </summary>
+        Paperength = 0x00000004,
+
+        /// <summary> dmPaperWidth member is present </summary>
+        PaperWidth = 0x00000008,
+
+        /// <summary> dmScale member is present </summary>
+        Scale = 0x00000010,
+
+        /// <summary> dmCopies member is present </summary>
+        Copies = 0x00000100,
+
+        /// <summary> dmDefaultSource member is present </summary>
+        DefaultSource = 0x00000200,
+
+        /// <summary> dmPrintQuality member is present </summary>
+        PrintQuality = 0x00000400,
+
+        /// <summary> dmPosition member is present </summary>
+        Position = 0x00000020,
+
+        /// <summary> dmDisplayOrientation member is present </summary>
+        DisplayOrientation = 0x00000080,
+
+        /// <summary> dmDisplayFixedOutput member is present </summary>
+        DisplayFixedOutput = 0x20000000,
+
+        /// <summary> dmColor member is present </summary>
+        Color = 0x00000800,
+
+        /// <summary> dmDuplex member is present </summary>
+        Duplex = 0x00001000,
+
+        /// <summary> dmYResolution member is present </summary>
+        YResolution = 0x00002000,
+
+        /// <summary> dmTTOption member is present </summary>
+        TTOption = 0x00004000,
+
+        /// <summary> dmCollate member is present </summary>
+        Collate = 0x00008000,
+
+        /// <summary> dmFormName member is present </summary>
+        FormName = 0x00010000,
+
+        /// <summary> dmogPixels member is present </summary>
+        ogPixels = 0x00020000,
+
+        /// <summary> dmBitsPerPel member is present </summary>
+        BitsPerPel = 0x00040000,
+
+        /// <summary> dmPelsWidth member is present </summary>
+        PelsWidth = 0x00080000,
+
+        /// <summary> dmPelsHeight member is present </summary>
+        PelsHeight = 0x00100000,
+
+        /// <summary> dmDisplayFlags member is present </summary>
+        DisplayFlags = 0x00200000,
+
+        /// <summary> dmNup member is present </summary>
+        Nup = 0x00000040,
+
+        /// <summary> dmDisplayFrequency member is present </summary>
+        DisplayFrequency = 0x00400000,
+
+        /// <summary> dmICMMethod member is present </summary>
+        ICMMethod = 0x00800000,
+
+        /// <summary> dmICMIntent member is present </summary>
+        ICMIntent = 0x01000000,
+
+        /// <summary> dmMediaType member is present </summary>
+        MediaType = 0x02000000,
+
+        /// <summary> dmDitherType member is present </summary>
+        DitherType = 0x04000000,
+
+        /// <summary> dmPanningWidth member is present </summary>
+        PanningWidth = 0x08000000,
+
+        /// <summary> dmPanningHeight member is present </summary>
+        PanningHeight = 0x10000000,
+    }
+
+    internal enum DMDFO : uint
+    {
+        /// <summary>
+        /// The display's default setting.
+        /// </summary>
+        DMDFO_DEFAULT = 0,
+
+        /// <summary>
+        /// The low-resolution image is centered in the larger screen space.
+        /// </summary>
+        DMDFO_CENTER = 1,
+
+        /// <summary>
+        /// The low-resolution image is stretched to fill the larger screen space.
+        /// </summary>
+        DMDFO_STRETCH = 2,
+    }
+
+    [Flags]
+    internal enum DisplayDeviceStateFlags : uint
+    {
+        /// <summary>
+        /// <see cref="Active"/> specifies whether a monitor
+        /// is presented as being "on" by the respective GDI view.
+        ///
+        /// Windows Vista:
+        /// EnumDisplayDevices will only enumerate monitors that
+        /// can be presented as being "on."
+        /// </summary>
+        Active = 0x00000001,
+
+        /// <summary>
+        /// TODO: Find documentation.
+        /// </summary>
+        MultiDriver = 0x00000002,
+
+        /// <summary>
+        /// Represents a pseudo device used to mirror application
+        /// drawing for remoting or other purposes.
+        /// An invisible pseudo monitor is associated with this device.
+        /// For example, NetMeeting uses it.
+        /// Note that GetSystemMetrics (<see cref="SystemMetric.CMonitors"/>)
+        /// only accounts for visible display monitors.
+        /// </summary>
+        MirroringDriver = 0x00000008,
+
+        /// <summary>
+        /// The device has more display modes than its output devices support.
+        /// </summary>
+        ModesPruned = 0x08000000,
+
+        /// <summary>
+        /// The primary desktop is on the device.
+        /// For a system with a single display card, this is always set.
+        /// For a system with multiple display cards, only one device can have this set.
+        /// </summary>
+        PrimaryDevice = 0x00000004,
+
+        /// <summary>
+        /// The device is removable; it cannot be the primary display.
+        /// </summary>
+        Removable = 0x00000020,
+
+        /// <summary>
+        /// The device is VGA compatible.
+        /// </summary>
+        VGACompatible = 0x00000010,
+
+        /// <summary>
+        /// TODO: Find documentation.
+        /// </summary>
+        Remote = 0x04000000,
+
+        /// <summary>
+        /// TODO: Find documentation.
+        /// </summary>
+        Disconnect = 0x02000000,
+    }
+
+    internal enum RegOption : uint
+    {
+        /// <summary>
+        /// The key is a symbolic link.
+        /// Registry symbolic links should only be used when absolutely necessary.
+        /// </summary>
+        OpenLink = 0x00000008
+    }
+
+    /// <remarks>Sometimes called REGSAM.</remarks>
+    [Flags]
+    internal enum AccessMask : uint
+    {
+        // --- Standard access rights ---
+
+        /// <summary>
+        /// The right to delete the object.
+        /// </summary>
+        Delete = 0x00010000,
+
+        /// <summary>
+        /// The right to read the information in the object's security descriptor,
+        /// not including the information in the system access control list (SACL).
+        /// </summary>
+        ReadControl = 0x00020000,
+
+        /// <summary>
+        /// The right to modify the discretionary access control list (DACL)
+        /// in the object's security descriptor.
+        /// </summary>
+        WriteDAC = 0x00040000,
+
+        /// <summary>
+        /// The right to change the owner in the object's security descriptor.
+        /// </summary>
+        WriteOwner = 0x00080000,
+
+        /// <summary>
+        /// The right to use the object for synchronization.
+        /// This enables a thread to wait until the object is in the signaled state.
+        /// Some object types do not support this access right.
+        /// </summary>
+        Synchronize = 0x00100000,
+
+        // --- Registry access rights ---
+
+        /// <summary>
+        /// Combines the STANDARD_RIGHTS_REQUIRED, KEY_QUERY_VALUE,
+        /// KEY_SET_VALUE, KEY_CREATE_SUB_KEY, KEY_ENUMERATE_SUB_KEYS,
+        /// KEY_NOTIFY, and KEY_CREATE_LINK access rights.
+        /// </summary>
+        KeyAllAccess = 0xF003F,
+
+        /// <summary>
+        /// Reserved for system use.
+        /// </summary>
+        KeyCreateLink = 0x0020,
+
+        /// <summary>
+        /// Required to create a subkey of a registry key.
+        /// </summary>
+        KeyCreateSubKey = 0x0004,
+
+        /// <summary>
+        /// Required to enumerate the subkeys of a registry key.
+        /// </summary>
+        KeyEnumerateSubKeys = 0x0008,
+
+        /// <summary>
+        /// Equivalent to KEY_READ.
+        /// </summary>
+        KeyExecute = 0x20019,
+
+        /// <summary>
+        /// Required to request change notifications for a
+        /// registry key or for subkeys of a registry key.
+        /// </summary>
+        KeyNotify = 0x0010,
+
+        /// <summary>
+        /// Required to query the values of a registry key.
+        /// </summary>
+        KeyQueryValue = 0x0001,
+
+        /// <summary>
+        /// Combines the STANDARD_RIGHTS_READ, KEY_QUERY_VALUE,
+        /// KEY_ENUMERATE_SUB_KEYS, and KEY_NOTIFY values.
+        /// </summary>
+        KeyRead = 0x20019,
+
+        /// <summary>
+        /// Required to create, delete, or set a registry value.
+        /// </summary>
+        KeySetValue = 0x0002,
+
+        /// <summary>
+        /// Indicates that an application on 64-bit Windows should
+        /// operate on the 32-bit registry view.
+        /// This flag is ignored by 32-bit Windows.
+        /// For more information, see Accessing an Alternate Registry View.
+        /// This flag must be combined using the OR operator with the
+        /// other flags in this table that either query or access registry values.
+        /// Windows 2000: This flag is not supported.
+        /// </summary>
+        KeyWOW64_32Key = 0x0200,
+
+        /// <summary>
+        /// Indicates that an application on 64-bit Windows should
+        /// operate on the 64-bit registry view.
+        /// This flag is ignored by 32-bit Windows.
+        /// For more information, see Accessing an Alternate Registry View.
+        /// This flag must be combined using the OR operator with the
+        /// other flags in this table that either query or access registry values.
+        /// Windows 2000: This flag is not supported.
+        /// </summary>
+        KeyWOW64_64Key = 0x0100,
+
+        /// <summary>
+        /// Combines the STANDARD_RIGHTS_WRITE, KEY_SET_VALUE,
+        /// and KEY_CREATE_SUB_KEY access rights.
+        /// </summary>
+        KeyWrite = 0x20006,
+    }
+
+    internal enum PredefinedKeys : uint {
+        /// <summary>
+        /// Registry entries subordinate to this key define types (or classes)
+        /// of documents and the properties associated with those types.
+        /// Shell and COM applications use the information stored under this key.
+        /// This key also provides backward compatibility with the Windows 3.1 registration
+        /// database by storing information for DDE and OLE support.
+        /// File viewers and user interface extensions store their OLE class identifiers
+        /// in HKEY_CLASSES_ROOT, and in-process servers are registered in this key.
+        /// This handle should not be used in a service or an application that
+        /// impersonates different users.
+        /// For more information, see HKEY_CLASSES_ROOT.
+        /// </summary>
+        HKEY_CLASSES_ROOT = 0x80000000,
+
+        /// <summary>
+        /// Registry entries subordinate to this key define the preferences of the current user.
+        /// These preferences include the settings of environment variables,
+        /// data about program groups, colors, printers, network connections,
+        /// and application preferences.
+        /// This key makes it easier to establish the current user's settings;
+        /// the key maps to the current user's branch in HKEY_USERS.
+        /// In HKEY_CURRENT_USER, software vendors store the current user-specific preferences
+        /// to be used within their applications.
+        /// Microsoft, for example, creates the HKEY_CURRENT_USER\Software\Microsoft key
+        /// for its applications to use,
+        /// with each application creating its own subkey under the Microsoft key.
+        /// 
+        /// The mapping between HKEY_CURRENT_USER and HKEY_USERS is per process and
+        /// is established the first time the process references HKEY_CURRENT_USER.
+        /// The mapping is based on the security context of the first thread to
+        /// reference HKEY_CURRENT_USER.
+        /// If this security context does not have a registry hive loaded in HKEY_USERS,
+        /// the mapping is established with HKEY_USERS\.Default.
+        /// After this mapping is established it persists,
+        /// even if the security context of the thread changes.
+        /// 
+        /// All registry entries in HKEY_CURRENT_USER except those under
+        /// HKEY_CURRENT_USER\Software\Classes are included in the per-user registry
+        /// portion of a roaming user profile.
+        /// To exclude other entries from a roaming user profile,
+        /// store them in HKEY_CURRENT_USER_LOCAL_SETTINGS.
+        /// This handle should not be used in a service or an application
+        /// that impersonates different users.
+        /// Instead, call the RegOpenCurrentUser function.
+        /// For more information, see HKEY_CURRENT_USER.
+        /// </summary>
+        HKEY_CURRENT_USER = 0x80000001,
+
+        /// <summary>
+        /// Registry entries subordinate to this key define the physical state of the computer,
+        /// including data about the bus type, system memory, and installed hardware and software.
+        /// It contains subkeys that hold current configuration data,
+        /// including Plug and Play information
+        /// (the Enum branch, which includes a complete list of all hardware that
+        /// has ever been on the system), network logon preferences,
+        /// network security information, software-related information
+        /// (such as server names and the location of the server),
+        /// and other system information.
+        /// For more information, see HKEY_LOCAL_MACHINE.
+        /// </summary>
+        HKEY_LOCAL_MACHINE = 0x80000002,
+
+        /// <summary>
+        /// Registry entries subordinate to this key define the default user configuration
+        /// for new users on the local computer and the user configuration for the current user.
+        /// </summary>
+        HKEY_USERS = 0x80000003,
+
+        /// <summary>
+        /// Registry entries subordinate to this key allow you to access performance data.
+        /// The data is not actually stored in the registry;
+        /// the registry functions cause the system to collect the data from its source.
+        /// </summary>
+        HKEY_PERFORMANCE_DATA = 0x80000004,
+
+        /// <summary>
+        /// Contains information about the current hardware profile of the local computer system.
+        /// The information under HKEY_CURRENT_CONFIG describes only the differences
+        /// between the current hardware configuration and the standard configuration.
+        /// Information about the standard hardware configuration is stored under the
+        /// Software and System keys of HKEY_LOCAL_MACHINE.
+        /// HKEY_CURRENT_CONFIG is an alias for
+        /// HKEY_LOCAL_MACHINE\System\CurrentControlSet\Hardware Profiles\Current.
+        /// For more information, see HKEY_CURRENT_CONFIG.
+        /// </summary>
+        HKEY_CURRENT_CONFIG = 0x80000005,
+
+        HKEY_DYN_DATA = 0x80000006,
+
+        /// <summary>
+        /// Registry entries subordinate to this key reference the text strings
+        /// that describe counters in US English.
+        /// These entries are not available to Regedit.exe and Regedt32.exe.
+        /// Windows 2000: This key is not supported.
+        /// </summary>
+        HKEY_PERFORMANCE_TEXT = 0x80000050,
+
+        /// <summary>
+        /// Registry entries subordinate to this key reference the text strings
+        /// that describe counters in the local language of the area in which the
+        /// computer system is running.
+        /// These entries are not available to Regedit.exe and Regedt32.exe.
+        /// Windows 2000: This key is not supported.
+        /// </summary>
+        HKEY_PERFORMANCE_NLSTEXT = 0x80000060,
+    }
+
+    [Flags]
+    internal enum RRF : uint
+    {
+        /// <summary>
+        /// No type restriction.
+        /// </summary>
+        TypeAny = 0x0000ffff,
+
+        /// <summary>
+        /// Restrict type to 32-bit TypeRegBinary | TypeRegDword.
+        /// </summary>
+        TypeDword = 0x00000018,
+
+        /// <summary>
+        /// Restrict type to 64-bit TypeRegBinary | TypeRegQword.
+        /// </summary>
+        TypeQword = 0x00000048,
+
+        /// <summary>
+        /// A 32-bit number in little-endian format.
+        /// Windows is designed to run on little-endian computer architectures.
+        /// Therefore, this value is defined as REG_DWORD in the Windows header files.
+        /// </summary>
+        REG_DWORD_LITTLE_ENDIAN,
+
+        /// <summary>
+        /// A 32-bit number in big-endian format. Some UNIX systems support big-endian architectures.
+        /// </summary>
+        REG_DWORD_BIG_ENDIAN,
+
+        /// <summary>
+        /// Restrict type to REG_BINARY.
+        /// </summary>
+        TypeRegBinary = 0x00000008,
+
+        /// <summary>
+        /// Restrict type to REG_DWORD.
+        /// </summary>
+        TypeRegDword = 0x00000010,
+
+        /// <summary>
+        /// Restrict type to REG_EXPAND_SZ.
+        /// </summary>
+        TypeRegExpandSZ = 0x00000004,
+
+        /// <summary>
+        /// Restrict type to REG_MULTI_SZ.
+        /// </summary>
+        TypeRegMultiSZ = 0x00000020,
+
+        /// <summary>
+        /// Restrict type to REG_NONE.
+        /// </summary>
+        TypeRegNone = 0x00000001,
+
+        /// <summary>
+        /// Restrict type to REG_QWORD.
+        /// </summary>
+        TypeRegQword = 0x00000040,
+
+        /// <summary>
+        /// Restrict type to REG_SZ.
+        /// </summary>
+        TypeRegSZ = 0x00000002,
+
+        // This parameter can also include one or more of the following values.
+
+        /// <summary>
+        /// Do not automatically expand environment strings if the value is of type REG_EXPAND_SZ.
+        /// </summary>
+        NoExpand = 0x10000000,
+
+        /// <summary>
+        /// If pvData is not NULL, set the contents of the buffer to zeroes on failure.
+        /// </summary>
+        ZeroOnFailure = 0x20000000,
+
+        /// <summary>
+        /// If lpSubKey is not NULL, open the subkey that lpSubKey specifies with the KEY_WOW64_64KEY access rights.
+        /// For information about these access rights, see Registry Key Security and Access Rights.
+        /// You cannot specify SubKeyWOW6464Key in combination with SubKeyWOW6432Key.
+        /// </summary>
+        SubKeyWOW6464Key = 0x00010000,
+
+        /// <summary>
+        /// If lpSubKey is not NULL, open the subkey that lpSubKey specifies with the KEY_WOW64_32KEY access rights.
+        /// For information about these access rights, see Registry Key Security and Access Rights.
+        /// You cannot specify SubKeyWOW6432Key in combination with SubKeyWOW6464Key.
+        /// </summary>
+        SubKeyWOW6432Key = 0x00020000,
+
+    }
+
+    internal enum RegValueType : uint
+    {
+        /* Maybe we want to include these?
+            #define REG_RESOURCE_LIST           ( 8 )   // Resource list in the resource map
+            #define REG_FULL_RESOURCE_DESCRIPTOR ( 9 )  // Resource list in the hardware description
+            #define REG_RESOURCE_REQUIREMENTS_LIST ( 10 )
+        */
+
+        /// <summary>
+        /// Binary data in any form.
+        /// </summary>
+        Binary = 3,
+
+        /// <summary>
+        /// A 32-bit number.
+        /// </summary>
+        Dword = 4,
+
+        /// <summary>
+        /// A 32-bit number in little-endian format.
+        /// Windows is designed to run on little-endian computer architectures.
+        /// Therefore, this value is defined as REG_DWORD in the Windows header files.
+        /// </summary>
+        DwordLittleEndian = 4,
+
+        /// <summary>
+        /// A 32-bit number in big-endian format. Some UNIX systems support big-endian architectures.
+        /// </summary>
+        DwordBigEndian = 5,
+
+        /// <summary>
+        /// A null-terminated string that contains unexpanded references to
+        /// environment variables (for example, "%PATH%").
+        /// It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions.
+        /// To expand the environment variable references, use the ExpandEnvironmentStrings function.
+        /// </summary>
+        ExpandSZ = 2,
+
+        /// <summary>
+        /// A null-terminated Unicode string that contains the target path of a symbolic
+        /// link that was created by calling the RegCreateKeyEx function with REG_OPTION_CREATE_LINK.
+        /// </summary>
+        Link = 6,
+
+        /// <summary>
+        /// A sequence of null-terminated strings, terminated by an empty string (\0).
+        /// The following is an example:
+        /// String1\0String2\0String3\0LastString\0\0
+        /// The first \0 terminates the first string,
+        /// the second to the last \0 terminates the last string,
+        /// and the final \0 terminates the sequence.
+        /// Note that the final terminator must be factored into the length of the string.
+        /// </summary>
+        MultiSZ = 7,
+
+        /// <summary>
+        /// No defined value type.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// A 64-bit number.
+        /// </summary>
+        Qword = 11,
+
+        /// <summary>
+        /// A 64-bit number in little-endian format.
+        /// Windows is designed to run on little-endian computer architectures.
+        /// Therefore, this value is defined as REG_QWORD in the Windows header files.
+        /// </summary>
+        QwordLittleEndian = 11,
+
+        /// <summary>
+        /// A null-terminated string.
+        /// This will be either a Unicode or an ANSI string,
+        /// depending on whether you use the Unicode or ANSI functions.
+        /// </summary>
+        SZ = 1,
     }
 
     /// <summary>
@@ -1712,6 +3377,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         TABLET_LAST = 0x02df,
 
         /// <summary>
+        /// Sent when the effective dots per inch (dpi) for a window has changed. The DPI is the scale factor for a window.
+        /// </summary>
+        DPICHANGED = 0x02E0,
+
+        /// <summary>
         /// An application sends a WM_CUT message to an edit control or combo box to delete (cut) the current selection, if any, in the edit control and copy the deleted text to the clipboard in CF_TEXT format.
         /// </summary>
         CUT = 0x0300,
@@ -1951,7 +3621,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
         HSHELL_WINDOWREPLACED = 13
     }
 
-    public enum WGLPixelFormat : int
+    public enum WGLPixelFormatAttribute : int
     {
         /// <summary>
         /// The number of pixel formats for the device context. The
@@ -2260,5 +3930,14 @@ namespace OpenTK.Core.Platform.Implementations.Windows
     {
         TYPE_RGBA_ARB = 0x202B,
         TYPE_COLORINDEX_ARB = 0x202C,
+    }
+
+    public enum WGLContextAttribs : int
+    {
+        CONTEXT_MAJOR_VERSION_ARB = 0x2091,
+        CONTEXT_MINOR_VERSION_ARB = 0x2092,
+        CONTEXT_LAYER_PLANE_ARB = 0x2093,
+        CONTEXT_FLAGS_ARB = 0x2094,
+        CONTEXT_PROFILE_MASK_ARB = 0x9126,
     }
 }

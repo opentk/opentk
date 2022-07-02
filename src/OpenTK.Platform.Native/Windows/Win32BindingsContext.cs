@@ -1,10 +1,11 @@
-﻿using System;
+﻿using OpenTK.Core.Platform;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
     public class Win32BindingsContext : IBindingsContext
     {

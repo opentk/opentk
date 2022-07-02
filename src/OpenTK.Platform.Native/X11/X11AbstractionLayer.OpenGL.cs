@@ -39,7 +39,7 @@ namespace OpenTK.Platform.Native.X11
                 GLX_CONTEXT_MINOR_VERSION_ARB, hints.Version.Minor,
 
                 GLX_CONTEXT_FLAGS_ARB, (hints.DebugFlag ? GLX_CONTEXT_DEBUG_BIT_ARB : 0) |
-                                       (hints.ForwardCompatible ? GLX_CONTEXT_FORWARD_COMPATIBLE_BIT : 0)
+                                       (hints.ForwardCompatibleFlag ? GLX_CONTEXT_FORWARD_COMPATIBLE_BIT : 0)
             };
 
             if (hints.Profile != OpenGLProfile.None)

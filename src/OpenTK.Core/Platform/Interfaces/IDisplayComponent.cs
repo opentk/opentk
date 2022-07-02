@@ -110,5 +110,13 @@ namespace OpenTK.Core.Platform
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="PalNotImplementedException">Driver cannot get display virtual position. See <see cref="CanGetVirtualPosition"/>.</exception>
         void GetVirtualPosition(DisplayHandle handle, out int x, out int y);
+
+        /// <summary>
+        /// Get the scale of the display.
+        /// </summary>
+        /// <param name="handle">Handle to a display.</param>
+        /// <param name="scaleX">The X-axis scale of the monitor.</param>
+        /// <param name="scaleY">The Y-axis scale of the monitor.</param>
+        void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK.Core.Platform;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -6,15 +7,28 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+#nullable enable
+
+namespace OpenTK.Platform.Native.Windows
 {
-    public class WindowComponent : IWindowComponent
+    public partial class WindowComponent : IWindowComponent
     {
+        /// <summary>
+        /// Class name used to create windows.
+        /// </summary>
         public const string CLASS_NAME = "OpenTK Window";
 
+        /// <summary>
+        /// The applications HInstance.
+        /// </summary>
         public static readonly IntPtr HInstance;
 
+        /// <summary>
+        /// The helper window used to load wgl extensions.
+        /// </summary>
         public static IntPtr HelperHWnd { get; private set; }
+
+        private static Win32.WNDPROC WindowProc = Win32WindowProc;
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
@@ -24,10 +38,13 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             HInstance = Win32.GetModuleHandle(null);
         }
 
+        /// <inheritdoc/>
         public string Name => "Win32Window";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Window;
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Window)
@@ -37,16 +54,16 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             // Here we register the window class that we will use for all created windows.
             Win32.WNDCLASSEX wndClass = Win32.WNDCLASSEX.Create();
-            wndClass.lpfnWndProc = Win32WindowProc;
+            wndClass.lpfnWndProc = WindowProc;
             wndClass.hInstance = HInstance;
             wndClass.lpszClassName = CLASS_NAME;
             wndClass.style = ClassStyles.OwnDC;
 
             short wndClassAtom = Win32.RegisterClassEx(in wndClass);
-
+            
             if (wndClassAtom == 0)
             {
-                throw new Win32Exception("RegisterClassEx failed!", Marshal.GetLastWin32Error());
+                throw new Win32Exception("RegisterClassEx failed!");
             }
 
             HelperHWnd = Win32.CreateWindowEx(
@@ -65,7 +82,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (HelperHWnd == IntPtr.Zero)
             {
-                throw new Win32Exception("Failed to create helper window", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Failed to create helper window");
             }
 
             // Eat all messages so that the WM_CREATE messages get processed etc.
@@ -76,16 +93,22 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool CanSetIcon => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanGetDisplay => throw new NotImplementedException();
 
-        public bool CanSetCursor => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanSetCursor => true;
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowEventType> SupportedEvents => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowStyle> SupportedStyles => _SupportedStyles;
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => _SupportedModes;
 
         // FIXME: HACK!!!!!!
@@ -125,15 +148,15 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("SwapBuffers failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception();
+                throw new Win32Exception("SwapBuffers failed");
             }
         }
 
-        private static IntPtr Win32WindowProc(IntPtr hWnd, uint uMsg, UIntPtr wParam, IntPtr lParam)
+        private static IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
-            WM message = (WM)uMsg;
-            Console.WriteLine("WinProc " + message + " " + hWnd);
-            switch (message)
+            //Console.WriteLine("WinProc " + message + " " + hWnd);
+            switch (uMsg)
             {
                 case WM.KEYDOWN:
                     {
@@ -149,35 +172,293 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
-                case WM.PAINT:
+                case WM.CHAR:
                     {
-                        Win32.BeginPaint(hWnd, out Win32.PAINTSTRUCT lpPaint);
-
-                        int success = Win32.FillRect(lpPaint.hdc, lpPaint.rcPaint, new IntPtr(18));
-
-                        if (success == 0)
+                        HWND h = HWndDict[hWnd];
+                        if (Win32.IsWindowUnicode(hWnd))
                         {
-                            throw new Win32Exception("FillRect failed.", Marshal.GetLastWin32Error());
+                            // UTF-16
+                            string str;
+
+                            ulong chars = wParam.ToUInt64();
+                            char hi = (char)(chars >> 16);
+                            char lo = (char)(chars & 0xFFFF);
+                            if (char.IsSurrogatePair(hi, lo))
+                            {
+                                Span<char> text = stackalloc char[2];
+                                text[0] = hi;
+                                text[1] = lo;
+                                str = new string(text);
+                            }
+                            else
+                            {
+                                str = new string(lo, 1);
+                            }
+
+                            Console.WriteLine($"wParam: 0x{wParam.ToUInt64():X16}, lo: {(ushort)lo:X4}, hi: 0x{(ushort)hi:X4}");
+
+                            if (char.IsSurrogate(lo))
+                            {
+                                ;
+                            }
+
+                            h.EventQueue.Send(h, WindowEventType.TextInput, new TextInputEventArgs(str));
+                        }
+                        else
+                        {
+                            // ANSI
+                            h.EventQueue.Send(h, WindowEventType.TextInput, new TextInputEventArgs(new string((char)(wParam.ToUInt64()), 1)));
                         }
 
-                        Win32.EndPaint(hWnd, in lpPaint);
-                        return IntPtr.Zero;
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.SETFOCUS:
+                    {
+                        HWND h = HWndDict[hWnd];
+                        //h.EventQueue.Send(h, WindowEventType.GotFocus, null);
+                        Console.WriteLine("Got focus");
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.KILLFOCUS:
+                    {
+                        // This message can be sent after WM_CLOSE which means that the specificed window might not exist any more.
+                        if (HWndDict.TryGetValue(hWnd, out HWND? h))
+                        {
+                            //h.EventQueue.Send(h, WindowEventType.LostFocus, null);
+                            Console.WriteLine("Lost focus");
+                        }
+                        
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.SETCURSOR:
+                    {
+                        int ht = ((int)lParam) & Win32.LoWordMask;
+                        if (ht == Win32.HTCLIENT)
+                        {
+                            HWND h = HWndDict[hWnd];
+                            // FIXME: Figure out what to do if h.HCursor is null
+                            Win32.SetCursor(h.HCursor?.Cursor ?? IntPtr.Zero);
+                            return new IntPtr(1);
+                        }
+                        else
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
+                    }
+                case WM.MOUSEMOVE:
+                    {
+                        int x = Win32.GET_X_LPARAM(lParam);
+                        int y = Win32.GET_Y_LPARAM(lParam);
+
+                        HWND h = HWndDict[hWnd];
+
+                        if (h.TrackingMouse == false)
+                        {
+                            Win32.TRACKMOUSEEVENT tme = default;
+                            tme.cbSize = (uint)Marshal.SizeOf<Win32.TRACKMOUSEEVENT>();
+                            tme.dwFlags = TME.Leave;
+                            tme.hwndTrack = hWnd;
+                            Win32.TrackMouseEvent(ref tme);
+
+                            h.TrackingMouse = true;
+
+                            h.EventQueue.Send(h, WindowEventType.MouseEnter, new MouseEnterEventArgs(true));
+                        }
+
+                        h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseMoveEventArgs(x, y));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.MOUSELEAVE:
+                    {
+                        HWND h = HWndDict[hWnd];
+                        h.TrackingMouse = false;
+
+                        h.EventQueue.Send(h, WindowEventType.MouseEnter, new MouseEnterEventArgs(false));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.LBUTTONDOWN:
+                case WM.MBUTTONDOWN:
+                case WM.RBUTTONDOWN:
+                case WM.XBUTTONDOWN:
+                    {
+                        MouseButton? button;
+                        switch (uMsg)
+                        {
+                            case WM.LBUTTONDOWN:
+                                button = MouseButton.Button1;
+                                break;
+                            case WM.MBUTTONDOWN:
+                                button = MouseButton.Button3;
+                                break;
+                            case WM.RBUTTONDOWN:
+                                button = MouseButton.Button2;
+                                break;
+                            case WM.XBUTTONDOWN:
+                                {
+                                    const int XBUTTON1 = 0x0001;
+                                    const int XBUTTON2 = 0x0002;
+                                    int hiWord = ((int)wParam.ToUInt32() & Win32.HiWordMask) >> 16;
+
+                                    if (hiWord == XBUTTON1)
+                                    {
+                                        button = MouseButton.Button4;
+                                    }
+                                    else if (hiWord == XBUTTON2)
+                                    {
+                                        button = MouseButton.Button5;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        button = null;
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new InvalidEnumArgumentException(nameof(uMsg), (int)uMsg, typeof(WM));
+                        }
+
+                        if (button != null)
+                        {
+                            HWND h = HWndDict[hWnd];
+                            h.EventQueue.Send(h, WindowEventType.MouseDown, new MouseButtonDownEventArgs(button.Value));
+                        }
+                        
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.LBUTTONUP:
+                case WM.MBUTTONUP:
+                case WM.RBUTTONUP:
+                case WM.XBUTTONUP:
+                    {
+                        MouseButton? button;
+                        switch (uMsg)
+                        {
+                            case WM.LBUTTONUP:
+                                button = MouseButton.Button1;
+                                break;
+                            case WM.MBUTTONUP:
+                                button = MouseButton.Button3;
+                                break;
+                            case WM.RBUTTONUP:
+                                button = MouseButton.Button2;
+                                break;
+                            case WM.XBUTTONUP:
+                                {
+                                    const int XBUTTON1 = 0x0001;
+                                    const int XBUTTON2 = 0x0002;
+                                    int hiWord = ((int)wParam.ToUInt32() & Win32.HiWordMask) >> 16;
+
+                                    if (hiWord == XBUTTON1)
+                                    {
+                                        button = MouseButton.Button4;
+                                    }
+                                    else if (hiWord == XBUTTON2)
+                                    {
+                                        button = MouseButton.Button5;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        button = null;
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new InvalidEnumArgumentException(nameof(uMsg), (int)uMsg, typeof(WM));
+                        }
+
+                        if (button != null)
+                        {
+                            HWND h = HWndDict[hWnd];
+                            h.EventQueue.Send(h, WindowEventType.MouseUp, new MouseButtonUpEventArgs(button.Value));
+                        }
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.SIZE:
+                    {
+                        SIZE size = (SIZE)wParam.ToUInt32();
+
+                        HWND h = HWndDict[hWnd];
+
+                        switch (size)
+                        {
+                            case SIZE.Maximized:
+                                h.WindowState = WindowState.Maximized;
+                                Console.WriteLine($"Move: {size}");
+                                //h.EventQueue.Send(h, WindowEventType.Maximized, null);
+                                break;
+                            case SIZE.Minimized:
+                                h.WindowState = WindowState.Minimized;
+                                Console.WriteLine($"Move: {size}");
+                                //h.EventQueue.Send(h, WindowEventType.Minimized, null);
+                                break;
+                            case SIZE.Restored:
+                                if (h.WindowState != WindowState.Restored)
+                                {
+                                    h.WindowState = WindowState.Restored;
+                                    Console.WriteLine($"Move: {size}");
+                                    //h.EventQueue.Send(h, WindowEventType.Restored, null);
+                                }
+                                break;
+                            case SIZE.MaxShow:
+                            case SIZE.MaxHide:
+                            default:
+                                // Igonre these for now!
+                                break;
+                        }
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.CLOSE:
                     {
-                        // FIXME: HACK! This is not the greatest way to get the WindowComponent...
+                        // FIXME: Get the result back from the user here!
+                        // Or delay the closing of the window until the user has handled the message.
+                        // This could hang the window if the user code is stuck.
                         HWND h = HWndDict[hWnd];
+                        h.EventQueue.Send(h, WindowEventType.Close, new CloseEventArgs(h));
+
+                        // FIXME: HACK! This is not the greatest way to get the WindowComponent...
                         h.WindowComponent.Destroy(h);
+
                         return IntPtr.Zero;
                     }
                 case WM.DESTROY:
                     {
-                        Win32.PostQuitMessage(0);
-                        quit = true;
+                        if (HWndDict.Count == 0)
+                        {
+                            Win32.PostQuitMessage(0);
+                            quit = true;
+                        }
                         return IntPtr.Zero;
+                    }
+                case WM.DEVICECHANGE:
+                    {
+                        Console.WriteLine($"{uMsg} {(DBT)wParam}");
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.DISPLAYCHANGE:
+                    {
+                        Console.WriteLine($"{uMsg} Bit depth: {wParam.ToUInt64()}, ResX: {(lParam.ToInt64() & Win32.HiWordMask) >> 16}, ResY: {lParam.ToInt64() & Win32.LoWordMask}");
+
+                        // FIXME: Some other way of notifying the DisplayComponent that things have changed.
+                        DisplayComponent.UpdateMonitors();
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.DPICHANGED:
+                    {
+                        Console.WriteLine($"DPI Changed! dpiY: {(wParam.ToUInt32() & Win32.HiWordMask) >> 16}, dpiX: {wParam.ToUInt32() & Win32.LoWordMask}");
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 default:
                     {
+                        //Console.WriteLine(uMsg);
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
             }
@@ -201,16 +482,17 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (hWnd == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateWindowEx failed!", Marshal.GetLastWin32Error());
+                throw new Win32Exception("CreateWindowEx failed!");
             }
 
-            HWND hwnd = new HWND(hWnd, this);
+            HWND hwnd = new HWND(hWnd, this, hints);
 
             HWndDict.Add(hwnd.HWnd, hwnd);
 
             return hwnd;
         }
 
+        /// <inheritdoc/>
         public void Destroy(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -222,10 +504,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             // FIXME: Do we add back the hglrc to HGLRCDict?
             if (success == false)
             {
-                throw new Win32Exception("DestroyWindow failed!", Marshal.GetLastWin32Error());
+                throw new Win32Exception("DestroyWindow failed!");
             }
         }
 
+        /// <inheritdoc/>
         public string GetTitle(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -235,7 +518,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             int error = Marshal.GetLastWin32Error();
             if (textLength == 0 && error != 0)
             {
-                throw new Win32Exception("GetWindowTextLength: Could not get length of window text", error);
+                throw new Win32Exception(error, "GetWindowTextLength: Could not get length of window text");
             }
 
             StringBuilder title = new StringBuilder(textLength + 1);
@@ -245,6 +528,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             return title.ToString();
         }
 
+        /// <inheritdoc/>
         public void SetTitle(WindowHandle handle, string title)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -253,20 +537,44 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window title", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window title");
             }
         }
 
+        /// <inheritdoc/>
         public IconHandle GetIcon(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+
+            // FIXME: If the user has changed the icon outside of our API this will not return the correct results
+            // We could make a custom response to WM.SETICON that only returns the icons set with our API.
+            // But ideally we would avoid this.
+            if (hwnd.HIcon != null)
+            {
+                return hwnd.HIcon;
+            }
+            else
+            {
+                // FIXME: Return a (new?) iconHandle for the window default icon.
+                throw new NotImplementedException();
+            }
         }
 
+        /// <inheritdoc/>
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+            HIcon hicon = icon.As<HIcon>(this);
+
+            hwnd.HIcon = hicon;
+
+            // Send messages to set the icon.
+            // DefWinProc returns the last sent lParam so we don't need to handle WM.SETICON as it already does what we want.
+            Win32.SendMessage(hwnd.HWnd, WM.SETICON, new UIntPtr(Win32.ICON_SMALL), hicon.Icon);
+            Win32.SendMessage(hwnd.HWnd, WM.SETICON, new UIntPtr(Win32.ICON_BIG), hicon.Icon);
         }
 
+        /// <inheritdoc/>
         public void GetPosition(WindowHandle handle, out int x, out int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -275,13 +583,14 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("GetWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("GetWindowRect failed");
             }
 
             x = lpRect.left;
             y = lpRect.top;
         }
 
+        /// <inheritdoc/>
         public void SetPosition(WindowHandle handle, int x, int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -292,10 +601,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window position");
             }
         }
 
+        /// <inheritdoc/>
         public void GetSize(WindowHandle handle, out int width, out int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -304,13 +614,14 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("GetWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("GetWindowRect failed");
             }
 
             width = lpRect.right - lpRect.left;
             height = lpRect.bottom - lpRect.top;
         }
 
+        /// <inheritdoc/>
         public void SetSize(WindowHandle handle, int width, int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -321,10 +632,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window size", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window size");
             }
         }
 
+        /// <inheritdoc/>
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -335,13 +647,14 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("ClientToScreen failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("ClientToScreen failed");
             }
 
             x = point.X;
             y = point.Y;
         }
 
+        /// <inheritdoc/>
         public void SetClientPosition(WindowHandle handle, int x, int y)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -354,7 +667,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("AdjustWindowRect failed");
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
@@ -363,10 +676,11 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("Could not set window position", Marshal.GetLastWin32Error());
+                throw new Win32Exception("Could not set window position");
             }
         }
 
+        /// <inheritdoc/>
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -375,13 +689,14 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("GetClientRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("GetClientRect failed");
             }
 
             width = lpRect.right;
             height = lpRect.bottom;
         }
 
+        /// <inheritdoc/>
         public void SetClientSize(WindowHandle handle, int width, int height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -395,7 +710,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("AdjustWindowRect failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("AdjustWindowRect failed");
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
@@ -404,15 +719,17 @@ namespace OpenTK.Core.Platform.Implementations.Windows
 
             if (success == false)
             {
-                throw new Win32Exception("SetWindowPos failed", Marshal.GetLastWin32Error());
+                throw new Win32Exception("SetWindowPos failed");
             }
         }
 
+        /// <inheritdoc/>
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public WindowMode GetMode(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -451,6 +768,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             WindowMode.Maximized
         };
 
+        /// <inheritdoc/>
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -480,6 +798,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             }
         }
 
+        /// <inheritdoc/>
         public WindowStyle GetBorderStyle(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -518,6 +837,7 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             WindowStyle.ResizableBorder,
         };
 
+        /// <inheritdoc/>
         public unsafe void SetBorderStyle(WindowHandle handle, WindowStyle style)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -556,11 +876,55 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
         }
 
+        /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle cursor)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+            HCursor? hcursor = cursor?.As<HCursor>(this);
+
+            hwnd.HCursor = hcursor;
+
+            // A hCursor = null means a hidden cursor, as we want.
+            Win32.SetCursor(hcursor?.Cursor ?? IntPtr.Zero);
         }
 
+        /// <inheritdoc/>
+        public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            Win32.POINT point;
+            point.X = x;
+            point.Y = y;
+            bool success = Win32.ScreenToClient(hwnd.HWnd, ref point);
+            if (success == false)
+            {
+                throw new Win32Exception("ScreenToClient failed.");
+            }
+
+            clientX = point.X;
+            clientY = point.Y;
+        }
+
+        /// <inheritdoc/>
+        public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            Win32.POINT point;
+            point.X = clientX;
+            point.Y = clientY;
+            bool success = Win32.ClientToScreen(hwnd.HWnd, ref point);
+            if (success == false)
+            {
+                throw new Win32Exception("ClientToScreen failed.");
+            }
+
+            x = point.X;
+            y = point.Y;
+        }
+
+        /// <inheritdoc/>
         public IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
