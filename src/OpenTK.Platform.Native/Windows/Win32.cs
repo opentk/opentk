@@ -666,7 +666,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        internal static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, [In, Out] ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
+        internal static extern bool EnumDisplayDevices(string? lpDevice, uint iDevNum, [In, Out] ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct DISPLAY_DEVICE
