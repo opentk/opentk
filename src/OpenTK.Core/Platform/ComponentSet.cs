@@ -219,7 +219,7 @@ namespace OpenTK.Core.Platform
         bool IWindowComponent.CanSetCursor => _windowComponent!.CanSetCursor;
 
         /// <inheritdoc/>
-        IReadOnlyList<WindowEventType> IWindowComponent.SupportedEvents => _windowComponent!.SupportedEvents;
+        IReadOnlyList<PlatformEventType> IWindowComponent.SupportedEvents => _windowComponent!.SupportedEvents;
 
         /// <inheritdoc/>
         IReadOnlyList<WindowStyle> IWindowComponent.SupportedStyles => _windowComponent!.SupportedStyles;
@@ -360,7 +360,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        IEventQueue<WindowEventType, WindowEventArgs> IWindowComponent.GetEventQueue(WindowHandle handle)
+        IEventQueue<PlatformEventType, WindowEventArgs> IWindowComponent.GetEventQueue(WindowHandle handle)
         {
             return _windowComponent!.GetEventQueue(handle);
         }
@@ -402,7 +402,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        IEventQueue<WindowEventType, WindowEventArgs> ISurfaceComponent.GetEventQueue(SurfaceHandle handle)
+        IEventQueue<PlatformEventType, WindowEventArgs> ISurfaceComponent.GetEventQueue(SurfaceHandle handle)
         {
             return _surfaceComponent!.GetEventQueue(handle);
         }

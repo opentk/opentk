@@ -1,0 +1,1268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glPushAttrib">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glPushAttrib</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPushAttrib</refname>
+        <refpurpose>push and pop the server attribute stack</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPushAttrib</function></funcdef>
+                <paramdef>GLbitfield <parameter>mask</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>mask</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a mask that indicates which attributes to save. Values for
+                    <parameter>mask</parameter> are listed below.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPopAttrib</function></funcdef>
+                <paramdef> <parameter>void</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glPushAttrib</function> takes one argument,
+            a mask that indicates which groups of state variables
+            to save on the attribute stack.
+            Symbolic constants are used to set bits in the mask.
+            <parameter>mask</parameter>
+            is typically constructed by specifying the bitwise-or of several 
+            of these constants together.
+            The special mask
+            <constant>GL_ALL_ATTRIB_BITS</constant>
+            can be used to save all stackable states.
+        </para>
+        <para>
+            The symbolic mask constants and their associated GL state are as follows
+            (the second column lists which attributes are saved):
+        </para>
+        <para>
+        </para>
+        <informaltable frame="topbot">
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <tbody>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ACCUM_BUFFER_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        Accumulation buffer clear value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_COLOR_BUFFER_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ALPHA_TEST</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Alpha test function and reference value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_BLEND</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Blending source and destination functions
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Constant blend color
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Blending equation
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_DITHER</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_DRAW_BUFFER</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_COLOR_LOGIC_OP</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_INDEX_LOGIC_OP</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Logic op function
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Color mode and index mode clear values
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Color mode and index mode writemasks
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_CURRENT_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        Current RGBA color
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Current color index
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Current normal vector
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Current texture coordinates
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Current raster position
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_CURRENT_RASTER_POSITION_VALID</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        RGBA color associated with current raster position
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Color index associated with current raster position
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Texture coordinates associated with current raster position
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_EDGE_FLAG</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_DEPTH_BUFFER_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_DEPTH_TEST</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Depth buffer test function
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Depth buffer clear value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_DEPTH_WRITEMASK</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_ENABLE_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ALPHA_TEST</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_AUTO_NORMAL</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_BLEND</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Enable bits for the user-definable clipping planes
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_COLOR_MATERIAL</constant>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_CULL_FACE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_DEPTH_TEST</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_DITHER</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_FOG</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LIGHT</constant><emphasis>i</emphasis>
+			where
+				    <constant>0</constant> &lt;&#61; 		  				    <emphasis>i</emphasis> &lt;     				    <constant>GL_MAX_LIGHTS</constant>
+   
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LIGHTING</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LINE_SMOOTH</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LINE_STIPPLE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_COLOR_LOGIC_OP</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_INDEX_LOGIC_OP</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MAP1_</constant><emphasis>x</emphasis> where <emphasis>x</emphasis> is a map type
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MAP2_</constant><emphasis>x</emphasis> where <emphasis>x</emphasis> is a map type
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MULTISAMPLE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_NORMALIZE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POINT_SMOOTH</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_LINE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_FILL</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_POINT</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_SMOOTH</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_STIPPLE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_ALPHA_TO_ONE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_COVERAGE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SCISSOR_TEST</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_STENCIL_TEST</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_TEXTURE_1D</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_TEXTURE_2D</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_TEXTURE_3D</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Flags <constant>GL_TEXTURE_GEN_</constant><emphasis>x</emphasis> where <emphasis>x</emphasis> is S, T, R, or Q
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_EVAL_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MAP1_</constant><emphasis>x</emphasis> enable bits, where <emphasis>x</emphasis> is a map type
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MAP2_</constant><emphasis>x</emphasis> enable bits, where <emphasis>x</emphasis> is a map type
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        1D grid endpoints and divisions
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        2D grid endpoints and divisions
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_AUTO_NORMAL</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_FOG_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_FOG</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Fog color
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Fog density
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Linear fog start
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Linear fog end
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Fog index
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_FOG_MODE</constant> value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_HINT_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_PERSPECTIVE_CORRECTION_HINT</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POINT_SMOOTH_HINT</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LINE_SMOOTH_HINT</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_SMOOTH_HINT</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_FOG_HINT</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_GENERATE_MIPMAP_HINT</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_TEXTURE_COMPRESSION_HINT</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LIGHTING_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_COLOR_MATERIAL</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_COLOR_MATERIAL_FACE</constant> value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Color material parameters that are tracking the current color
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Ambient scene color
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LIGHT_MODEL_LOCAL_VIEWER</constant> value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LIGHT_MODEL_TWO_SIDE</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LIGHTING</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Enable bit for each light
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Ambient, diffuse, and specular intensity for each light
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Direction, position, exponent, and cutoff angle for each light
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Constant, linear, and quadratic attenuation factors for each light
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Ambient, diffuse, specular, and emissive color for each material
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Ambient, diffuse, and specular color indices for each material
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Specular exponent for each material
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SHADE_MODEL</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LINE_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LINE_SMOOTH</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LINE_STIPPLE</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Line stipple pattern and repeat counter
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Line width
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_LIST_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_LIST_BASE</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_MULTISAMPLE_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MULTISAMPLE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_ALPHA_TO_ONE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_COVERAGE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_COVERAGE_VALUE</constant> value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SAMPLE_COVERAGE_INVERT</constant> value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_PIXEL_MODE_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_RED_BIAS</constant> and <constant>GL_RED_SCALE</constant> settings
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_GREEN_BIAS</constant> and <constant>GL_GREEN_SCALE</constant> values
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_BLUE_BIAS</constant> and <constant>GL_BLUE_SCALE</constant>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ALPHA_BIAS</constant> and <constant>GL_ALPHA_SCALE</constant>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_DEPTH_BIAS</constant> and <constant>GL_DEPTH_SCALE</constant>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_INDEX_OFFSET</constant> and <constant>GL_INDEX_SHIFT</constant> values
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MAP_COLOR</constant> and <constant>GL_MAP_STENCIL</constant> flags
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_ZOOM_X</constant> and <constant>GL_ZOOM_Y</constant> factors
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_READ_BUFFER</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_POINT_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POINT_SMOOTH</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Point size
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_POLYGON_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_CULL_FACE</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_CULL_FACE_MODE</constant> value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_FRONT_FACE</constant> indicator
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_MODE</constant> setting
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_SMOOTH</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_STIPPLE</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_FILL</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_LINE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_POINT</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_FACTOR</constant>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_POLYGON_OFFSET_UNITS</constant>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_POLYGON_STIPPLE_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        Polygon stipple image
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_SCISSOR_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_SCISSOR_TEST</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Scissor box
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_STENCIL_BUFFER_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_STENCIL_TEST</constant> enable bit
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Stencil function and reference value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Stencil value mask
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Stencil fail, pass, and depth buffer pass actions
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Stencil buffer clear value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Stencil buffer writemask
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_TEXTURE_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        Enable bits for the four texture coordinates
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Border color for each texture image
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Minification function for each texture image
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Magnification function for each texture image
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Texture coordinates and wrap mode for each texture image
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Color and mode for each texture environment
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Enable bits <constant>GL_TEXTURE_GEN_</constant><emphasis>x</emphasis>, <emphasis>x</emphasis> is S, T, R, and Q
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_TEXTURE_GEN_MODE</constant> setting for S, T, R, and Q
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <citerefentry><refentrytitle>glTexGen</refentrytitle></citerefentry> plane equations for S, T, R, and Q
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Current texture bindings (for example, <constant>GL_TEXTURE_BINDING_2D</constant>)
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_TRANSFORM_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        Coefficients of the six clipping planes
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Enable bits for the user-definable clipping planes
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_MATRIX_MODE</constant> value
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_NORMALIZE</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        <constant>GL_RESCALE_NORMAL</constant> flag
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        <constant>GL_VIEWPORT_BIT</constant>
+                        </entry>
+                        <entry align="left">
+                        Depth range (near and far)
+                        </entry>
+                    </row>
+                    <row>
+                        <entry align="left">
+                        </entry>
+                        <entry align="left">
+                        Viewport origin and extent
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+            <citerefentry><refentrytitle>glPopAttrib</refentrytitle></citerefentry> restores the values of the state variables saved with the last
+            <function>glPushAttrib</function> command.
+            Those not saved are left unchanged.
+        </para>
+        <para>
+            It is an error to push attributes onto a full stack
+            or to pop attributes off an empty stack.
+            In either case, the error flag is set
+            and no other change is made to GL state.
+        </para>
+        <para>
+            Initially, the attribute stack is empty.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            Not all values for GL state can be saved on the attribute stack.
+            For example,
+            render mode state,
+            and select and feedback state cannot be saved.
+            Client state must be saved with
+            <citerefentry><refentrytitle>glPushClientAttrib</refentrytitle></citerefentry>.
+        </para>
+        <para>
+            The depth of the attribute stack depends on the implementation,
+            but it must be at least 16.
+        </para>
+        <para>
+            For OpenGL versions 1.3 and greater, or when the <code>ARB_multitexture</code> extension is supported, pushing and
+            popping texture state applies to all supported texture units.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_STACK_OVERFLOW</constant> is generated if <function>glPushAttrib</function> is called while
+            the attribute stack is full.
+        </para>
+        <para>
+            <constant>GL_STACK_UNDERFLOW</constant> is generated if <citerefentry><refentrytitle>glPopAttrib</refentrytitle></citerefentry> is called while
+            the attribute stack is empty.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glPushAttrib</function> or <citerefentry><refentrytitle>glPopAttrib</refentrytitle></citerefentry>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ATTRIB_STACK_DEPTH</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_MAX_ATTRIB_STACK_DEPTH</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetClipPlane</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetError</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetLight</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetMap</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetMaterial</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetPixelMap</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetPolygonStipple</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetString</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexEnv</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexGen</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexImage</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexLevelParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glGetTexParameter</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushClientAttrib</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

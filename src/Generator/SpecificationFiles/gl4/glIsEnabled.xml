@@ -1,0 +1,360 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glIsEnabled">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glIsEnabled</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glIsEnabled, glIsEnabledi</refname>
+        <refpurpose>test whether a capability is enabled</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLboolean <function>glIsEnabled</function></funcdef>
+                <paramdef>GLenum <parameter>cap</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>GLboolean <function>glIsEnabledi</function></funcdef>
+                <paramdef>GLenum <parameter>cap</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>cap</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant indicating a GL capability.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the index of the capability.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glIsEnabled</function> returns <constant>GL_TRUE</constant> if <parameter>cap</parameter> is an enabled capability
+            and returns <constant>GL_FALSE</constant> otherwise. Boolean states that are indexed may be tested with <function>glIsEnabledi</function>.
+            For <function>glIsEnabledi</function>, <parameter>index</parameter> specifies the index of the capability to test. <parameter>index</parameter>
+            must be between zero and the count of indexed capabilities for <parameter>cap</parameter>.
+            Initially all capabilities except <constant>GL_DITHER</constant> are disabled;
+            <constant>GL_DITHER</constant> is initially enabled.
+        </para>
+        <para>
+            The following capabilities are accepted for <parameter>cap</parameter>:
+        </para>
+        <para>
+        </para>
+        <informaltable>
+            <tgroup cols="2" align="left">
+                <colspec/>
+                <colspec/>
+                <thead>
+                    <row>
+                        <entry>
+                            <emphasis role="bold"> Constant </emphasis>
+                        </entry>
+                        <entry>
+                            <emphasis role="bold"> See </emphasis>
+                        </entry>
+                    </row>
+                </thead>
+                <tbody>
+                    <row>
+                        <entry>
+                            <constant>GL_BLEND</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glBlendFunc</refentrytitle></citerefentry>,
+                            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_CLIP_DISTANCE</constant><emphasis>i</emphasis>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_COLOR_LOGIC_OP</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glLogicOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_CULL_FACE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glCullFace</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_DEPTH_CLAMP</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_DEBUG_OUTPUT</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_DEBUG_OUTPUT_SYNCHRONOUS</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_DEPTH_TEST</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+                            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_DITHER</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_FRAMEBUFFER_SRGB</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_LINE_SMOOTH</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glLineWidth</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_MULTISAMPLE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_POLYGON_SMOOTH</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonMode</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_POLYGON_OFFSET_FILL</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_POLYGON_OFFSET_LINE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_POLYGON_OFFSET_POINT</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_PROGRAM_POINT_SIZE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_PRIMITIVE_RESTART</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+                            <citerefentry><refentrytitle>glPrimitiveRestartIndex</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_PRIMITIVE_RESTART_FIXED_INDEX</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_ALPHA_TO_COVERAGE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_ALPHA_TO_ONE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_COVERAGE</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glSampleCoverage</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SAMPLE_MASK</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_SCISSOR_TEST</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glScissor</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_STENCIL_TEST</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glStencilFunc</refentrytitle></citerefentry>,
+                            <citerefentry><refentrytitle>glStencilOp</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                    <row>
+                        <entry>
+                            <constant>GL_TEXTURE_CUBE_MAP_SEAMLESS</constant>
+                        </entry>
+                        <entry>
+                            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>
+                        </entry>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+        <para>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            <function>glIsEnabled</function> and <function>glIsEnabledi</function> return <constant>GL_FALSE</constant>.
+        </para>
+        <para>
+            <constant>GL_PRIMITIVE_RESTART_FIXED_INDEX</constant> are available only if the GL version is 4.3 or greater.
+        </para>
+        <para>
+            <constant>GL_DEBUG_OUTPUT</constant> and <constant>GL_DEBUG_OUTPUT_SYNCHRONOUS</constant> are available only if the GL version is 4.3 or greater.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>cap</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated by <function>glIsEnabledi</function> if <parameter>index</parameter> is outside the
+            valid range for the indexed state <parameter>cap</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glIsEnabled</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glIsEnabledi</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <!-- FIX: link to glEnable --> <function>glDisable</function>,
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

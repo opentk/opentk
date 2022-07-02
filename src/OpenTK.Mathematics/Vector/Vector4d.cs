@@ -134,53 +134,28 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2d to copy components from.</param>
-        public Vector4d(Vector2d v)
+        /// <param name="xy">The x and y components of the Vector4d.</param>
+        /// <param name="z">The z component of the Vector4d.</param>
+        /// <param name="w">The w component of the Vector4d.</param>
+        public Vector4d(Vector2d xy, double z = default, double w = default)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = 0.0f;
-            W = 0.0f;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector3d to copy components from.</param>
-        /// <remarks>
-        /// <seealso cref="Vector4d(Vector3d, double)"/>.
-        /// </remarks>
-        public Vector4d(Vector3d v)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-            W = 0.0f;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4d"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector3d to copy components from.</param>
-        /// <param name="w">The w component of the new Vector4.</param>
-        public Vector4d(Vector3d v, double w)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
             W = w;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4d"/> struct.
         /// </summary>
-        /// <param name="v">The Vector4d to copy components from.</param>
-        public Vector4d(Vector4d v)
+        /// <param name="xyz">The x, y and z components of the Vector4d.</param>
+        /// <param name="w">The w component of the Vector4d.</param>
+        public Vector4d(Vector3d xyz, double w = default)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-            W = v.W;
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
+            W = w;
         }
 
         /// <summary>
@@ -1983,31 +1958,6 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Vector4d left, Vector4d right)
         {
             return !(left == right);
-        }
-
-        /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static unsafe explicit operator double*(Vector4d v)
-        {
-            return &v.X;
-        }
-
-        /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static explicit operator IntPtr(Vector4d v)
-        {
-            unsafe
-            {
-                return (IntPtr)(&v.X);
-            }
         }
 
         /// <summary>

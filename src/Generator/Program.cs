@@ -12,27 +12,26 @@ namespace Generator
     {
         static void Main(string[] args)
         {
-            var st = new Stopwatch();
+            Stopwatch st = new Stopwatch();
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
-                // Reading the gl.xml file.
-                using var stream = Reader.ReadSpecFromGithub();
+                // Reading the gl.xml file and parsing it into data structures.
+                using FileStream specificationStream = Reader.ReadSpecFromGithub();
+                Specification specification = SpecificationParser.Parse(specificationStream);
 
-                // TODO: Documentation.
-
-                // Parsing into data structures.
-                var specification = Parser.Parse(stream);
+                // Read the documentation folders and parse it into data structures.
+                using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
+                Documentation documentation = DocumentationParser.Parse(documentationSource);
 
                 // Processer/overloading
-                var outputSpec = Processor.ProcessSpec(specification);
+                OutputData outputSpec = Processor.ProcessSpec(specification, documentation);
 
                 // Writing cs files.
                 Writer.Write(outputSpec);
 
                 st.Stop();
-
-                Logger.Info($"Generated bidnigns in {st.ElapsedMilliseconds}ms");
+                Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");
             }
         }
     }

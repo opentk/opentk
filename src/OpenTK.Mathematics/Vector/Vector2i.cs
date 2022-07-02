@@ -49,8 +49,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2i"/> struct.
         /// </summary>
-        /// <param name="x">The X component of the Vector2i.</param>
-        /// <param name="y">The Y component of the Vector2i.</param>
+        /// <param name="x">The x component of the Vector2i.</param>
+        /// <param name="y">The y component of the Vector2i.</param>
         public Vector2i(int x, int y)
         {
             X = x;

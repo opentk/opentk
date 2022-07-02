@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glIndex">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glIndex</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glIndex</refname>
+        <refpurpose>set the current color index</refpurpose>
+    </refnamediv>
+    <para>
+    </para>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexs</function></funcdef>
+                <paramdef>GLshort <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexi</function></funcdef>
+                <paramdef>GLint <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexf</function></funcdef>
+                <paramdef>GLfloat <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexd</function></funcdef>
+                <paramdef>GLdouble <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexub</function></funcdef>
+                <paramdef>GLubyte <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>c</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the new value for the current color index.
+                </para>
+                <para>
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexsv</function></funcdef>
+                <paramdef>const GLshort * <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexiv</function></funcdef>
+                <paramdef>const GLint * <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexfv</function></funcdef>
+                <paramdef>const GLfloat * <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexdv</function></funcdef>
+                <paramdef>const GLdouble * <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glIndexubv</function></funcdef>
+                <paramdef>const GLubyte * <parameter>c</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters2"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>c</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to a one-element array that contains
+                    the new value for the current color index.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glIndex</function> updates the current (single-valued) color index.
+            It takes one argument, the new value for the current color index.
+        </para>
+        <para>
+            The current index is stored as a floating-point value.
+            Integer values are converted directly to floating-point values,
+            with no special mapping.
+            The initial value is 1.
+        </para>
+        <para>
+            Index values outside the representable range of the color index buffer
+            are not clamped.
+            However,
+            before an index is dithered (if enabled) and written to the frame buffer,
+            it is converted to fixed-point format.
+            Any bits in the integer portion of the resulting fixed-point value
+            that do not correspond to bits in the frame buffer are masked out.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glIndexub</function> and <function>glIndexubv</function> are available only if the GL version is
+            1.1 or greater.
+        </para>
+        <para>
+            The current index can be updated at any time.
+            In particular,
+            <function>glIndex</function> can be called between a call to <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding
+            call to <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_INDEX</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIndexPointer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

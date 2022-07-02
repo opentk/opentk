@@ -13,9 +13,17 @@ namespace Generator.Writing
     public record GLOutputApi(
         OutputApi Api,
         Dictionary<string, GLVendorFunctions> Vendors,
-        List<EnumGroupMember> TheAllEnumGroup,
-        List<EnumGroup> EnumGroups);
+        List<EnumGroup> EnumGroups,
+        Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
+    public record FunctionDocumentation(
+        string Name,
+        string Purpose,
+        ParameterDocumentation[] Parameters,
+        string RefPagesLink,
+        List<string> AddedIn,
+        List<string>? RemovedIn
+        );
 
     public record GLVendorFunctions(
         List<NativeFunction> NativeFunctions,
@@ -55,7 +63,8 @@ namespace Generator.Writing
     public record EnumGroup(
         string Name,
         bool IsFlags,
-        List<EnumGroupMember> Members);
+        List<EnumGroupMember> Members,
+        List<NativeFunction>? FunctionsUsingEnumGroup);
 
 
     public interface IOverloadLayer

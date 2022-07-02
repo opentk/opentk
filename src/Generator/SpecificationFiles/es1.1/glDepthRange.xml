@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glDepthRange">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glDepthRange</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glDepthRange</refdescriptor>
+        <refname>glDepthRangef</refname>
+        <refname>glDepthRangex</refname>
+        <refpurpose>specify mapping of depth values from normalized
+        device coordinates to window coordinates</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDepthRangef</function></funcdef>
+                <paramdef>GLclampf <parameter>near</parameter></paramdef>
+                <paramdef>GLclampf <parameter>far</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glDepthRangex</function></funcdef>
+                <paramdef>GLclampx <parameter>near</parameter></paramdef>
+                <paramdef>GLclampx <parameter>far</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>near</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the mapping of the near clipping plane to
+                    window coordinates. The initial value is 0.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>far</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the mapping of the far clipping plane to
+                    window coordinates. The initial value is 1.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>After clipping and division by <parameter>w</parameter>,
+        depth coordinates range from -1 to 1, corresponding to the
+        near and far clipping planes. <function>glDepthRange</function>
+        specifies a linear mapping of the normalized depth coordinates
+        in this range to window depth coordinates. Regardless of the
+        actual depth buffer implementation, window coordinate depth
+        values are treated as though they range from 0 through 1 (like
+        color components). Thus, the values accepted by
+        <function>glDepthRange</function>
+        are both clamped to this range before they are accepted.</para>
+
+        <para>The setting of (0, 1) maps the near plane to 0 and the far
+        plane to 1. With this mapping, the depth buffer range is fully
+        utilized.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>It is not necessary that <parameter>near</parameter>
+        be less than <parameter>far</parameter>.
+        Reverse mappings such as
+        <inlineequation><mml:math>
+            <mml:mi>near</mml:mi>
+            <mml:mo>=</mml:mo>
+            <mml:mn>1</mml:mn>
+        </mml:math></inlineequation>,
+        and
+        <inlineequation><mml:math>
+            <mml:mi>far</mml:mi>
+            <mml:mo>=</mml:mo>
+            <mml:mn>0</mml:mn>
+        </mml:math></inlineequation>
+        are acceptable.</para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glDepthFunc</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glViewport</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

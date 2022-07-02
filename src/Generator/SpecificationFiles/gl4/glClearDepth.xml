@@ -1,0 +1,111 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glClearDepth">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glClearDepth</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glClearDepth</refname>
+        <refpurpose>specify the clear value for the depth buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glClearDepth</function></funcdef>
+                <paramdef>GLdouble <parameter>depth</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glClearDepthf</function></funcdef>
+                <paramdef>GLfloat <parameter>depth</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>depth</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the depth value used when the depth buffer is cleared. The
+                    initial value is 1.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glClearDepth</function> specifies the depth value used by <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry> to clear the depth buffer.
+            Values specified by <function>glClearDepth</function> are clamped to the range
+            <inlineequation><mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" overflow="scroll">
+                <!-- eqn: [0,1]: -->
+                <mml:mfenced open="[" close="]">
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>1</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            The type of the <parameter>depth</parameter> parameter was
+            changed from GLclampf to GLfloat for
+            <function>glClearDepthf</function> and from GLclampd to
+            GLdouble for <function>glClearDepth</function>. This change
+            is transparent to user code and is described in detail on
+            the
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+            page.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_CLEAR_VALUE</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glClearDepth</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glClearDepthf</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='41']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glClear</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>removedTypes</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

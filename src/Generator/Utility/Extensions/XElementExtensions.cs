@@ -1,7 +1,8 @@
 using System;
 using System.Text;
+using System.Linq;
 using System.Xml.Linq;
-
+using System.Collections.Generic;
 
 namespace Generator.Utility.Extensions
 {
@@ -29,6 +30,26 @@ namespace Generator.Utility.Extensions
                 }
             }
             return sb.ToString();
+        }
+
+        public static IEnumerable<XElement> ElementsIgnoreNamespace(this XElement element, string name)
+        {
+            return element.Descendants().Where(e => e.Name.LocalName == name);
+        }
+        
+        public static XElement ElementIgnoreNamespace(this XElement element, string name)
+        {
+            return element.Descendants().Where(e => e.Name.LocalName == name).First();
+        }
+
+        public static XElement? ElementIgnoreNamespace(this XElement element, Predicate<XElement> pred)
+        {
+            return element.Descendants().Where(e => pred(e)).FirstOrDefault();
+        }
+
+        public static XAttribute? AttributeIgnoreNamespace(this XElement element, string name)
+        {
+            return element.Attributes().Where(a => a.Name.LocalName == "id").FirstOrDefault();
         }
     }
 }

@@ -62,8 +62,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2"/> struct.
         /// </summary>
-        /// <param name="x">The x coordinate of the net Vector2.</param>
-        /// <param name="y">The y coordinate of the net Vector2.</param>
+        /// <param name="x">The x component of the Vector2.</param>
+        /// <param name="y">The y component of the Vector2.</param>
         public Vector2(float x, float y)
         {
             X = x;

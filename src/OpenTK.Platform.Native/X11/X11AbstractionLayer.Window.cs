@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Native.X11
         public bool CanSetIcon => false;
         public bool CanGetDisplay => false;
         public bool CanSetCursor => false;
-        public IReadOnlyList<WindowEventType> SupportedEvents { get; }
+        public IReadOnlyList<PlatformEventType> SupportedEvents { get; }
         public IReadOnlyList<WindowStyle> SupportedStyles { get; }
         public IReadOnlyList<WindowMode> SupportedModes { get; }
 
@@ -259,7 +259,7 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        public IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
+        public IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
         {
             throw new NotImplementedException();
         }

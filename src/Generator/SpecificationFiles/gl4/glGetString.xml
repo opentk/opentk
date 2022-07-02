@@ -1,0 +1,194 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glGetString">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glGetString</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetString</refname>
+        <refpurpose>return a string describing the current GL connection</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>const GLubyte *<function>glGetString</function></funcdef>
+                <paramdef>GLenum <parameter>name</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>const GLubyte *<function>glGetStringi</function></funcdef>
+                <paramdef>GLenum <parameter>name</parameter></paramdef>
+                <paramdef>GLuint <parameter>index</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>name</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a symbolic constant, one of
+                    <constant>GL_VENDOR</constant>, <constant>GL_RENDERER</constant>,
+                    <constant>GL_VERSION</constant>, or <constant>GL_SHADING_LANGUAGE_VERSION</constant>.
+                    Additionally, <function>glGetStringi</function> accepts the <constant>GL_EXTENSIONS</constant> token.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>index</parameter></term>
+            <listitem>
+                <para>
+                    For <function>glGetStringi</function>, specifies the index of the string to return.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glGetString</function> returns a pointer to a static string
+            describing some aspect of the current GL connection.
+            <parameter>name</parameter> can be one of the following:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_VENDOR</constant></term>
+                <listitem>
+                    <para>
+                        Returns the company responsible for this GL implementation.
+                        This name does not change from release to release.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_RENDERER</constant></term>
+                <listitem>
+                    <para>
+                        Returns the name of the renderer.
+                        This name is typically specific to a particular configuration of a hardware
+                        platform.
+                        It does not change from release to release.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_VERSION</constant></term>
+                <listitem>
+                    <para>
+                        Returns a version or release number.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_SHADING_LANGUAGE_VERSION</constant></term>
+                <listitem>
+                    <para>
+                        Returns a version or release number for the shading language.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            <function>glGetStringi</function> returns a pointer to a static string
+            indexed by <parameter>index</parameter>.
+            <parameter>name</parameter> can be one of the following:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_EXTENSIONS</constant></term>
+                <listitem>
+                    <para>
+                        For <function>glGetStringi</function> only, returns the extension string
+                        supported by the implementation at <parameter>index</parameter>.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            Strings <constant>GL_VENDOR</constant> and <constant>GL_RENDERER</constant> together uniquely specify
+            a platform. They do not change from release to release and should be used
+            by platform-recognition algorithms.
+        </para>
+        <para>
+            The <constant>GL_VERSION</constant> and <constant>GL_SHADING_LANGUAGE_VERSION</constant> strings begin with a version number.
+            The version number uses one
+            of these forms:
+        </para>
+        <para>
+            <emphasis>major_number.minor_number</emphasis>
+            <emphasis>major_number.minor_number.release_number</emphasis>
+        </para>
+        <para>
+            Vendor-specific information may follow the version
+            number. Its format depends on the implementation, but
+            a space always separates the version number and
+            the vendor-specific information.
+        </para>
+        <para>
+            All strings are null-terminated.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            If an error is generated, <function>glGetString</function> returns 0.
+        </para>
+        <para>
+            The client and server may support different versions.
+            <function>glGetString</function> always returns a compatible version number.
+            The release number always describes the server.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>name</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated by <function>glGetStringi</function> if
+            <parameter>index</parameter> is outside the valid range for indexed state <parameter>name</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glGetString</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                    <row>
+                        <entry><function>glGetStringi</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='30']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <!-- TBD -->
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI
+            Free Software B License. For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

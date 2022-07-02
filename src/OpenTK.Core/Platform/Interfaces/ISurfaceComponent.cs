@@ -51,6 +51,6 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to a surface.</param>
         /// <returns>The surface event queue.</returns>
-        IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(SurfaceHandle handle);
+        IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(SurfaceHandle handle);
     }
 }

@@ -60,7 +60,7 @@ namespace OpenTK.Platform.Native.Windows
             wndClass.style = ClassStyles.OwnDC;
 
             short wndClassAtom = Win32.RegisterClassEx(in wndClass);
-            
+
             if (wndClassAtom == 0)
             {
                 throw new Win32Exception("RegisterClassEx failed!");
@@ -102,8 +102,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public bool CanSetCursor => true;
 
-        /// <inheritdoc/>
-        public IReadOnlyList<WindowEventType> SupportedEvents => throw new NotImplementedException();
+        public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public IReadOnlyList<WindowStyle> SupportedStyles => _SupportedStyles;
@@ -168,7 +167,7 @@ namespace OpenTK.Platform.Native.Windows
                         bool wasDown = (l & (1 << 30)) != 0;
                         bool extended = (l & (1 << 24)) != 0;
 
-                        h.EventQueue.Send(h, WindowEventType.KeyDown, new KeyDownEventArgs(vk, wasDown, extended));
+                        h.EventQueue.Send(h, PlatformEventType.KeyDown, new KeyDownEventArgs(vk, wasDown, extended));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -202,12 +201,12 @@ namespace OpenTK.Platform.Native.Windows
                                 ;
                             }
 
-                            h.EventQueue.Send(h, WindowEventType.TextInput, new TextInputEventArgs(str));
+                            h.EventQueue.Send(h, PlatformEventType.TextInput, new TextInputEventArgs(str));
                         }
                         else
                         {
                             // ANSI
-                            h.EventQueue.Send(h, WindowEventType.TextInput, new TextInputEventArgs(new string((char)(wParam.ToUInt64()), 1)));
+                            h.EventQueue.Send(h, PlatformEventType.TextInput, new TextInputEventArgs(new string((char)(wParam.ToUInt64()), 1)));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -227,7 +226,7 @@ namespace OpenTK.Platform.Native.Windows
                             //h.EventQueue.Send(h, WindowEventType.LostFocus, null);
                             Console.WriteLine("Lost focus");
                         }
-                        
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.SETCURSOR:
@@ -262,10 +261,10 @@ namespace OpenTK.Platform.Native.Windows
 
                             h.TrackingMouse = true;
 
-                            h.EventQueue.Send(h, WindowEventType.MouseEnter, new MouseEnterEventArgs(true));
+                            h.EventQueue.Send(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
                         }
 
-                        h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseMoveEventArgs(x, y));
+                        h.EventQueue.Send(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(x, y));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -274,7 +273,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
                         h.TrackingMouse = false;
 
-                        h.EventQueue.Send(h, WindowEventType.MouseEnter, new MouseEnterEventArgs(false));
+                        h.EventQueue.Send(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(false));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -324,9 +323,9 @@ namespace OpenTK.Platform.Native.Windows
                         if (button != null)
                         {
                             HWND h = HWndDict[hWnd];
-                            h.EventQueue.Send(h, WindowEventType.MouseDown, new MouseButtonDownEventArgs(button.Value));
+                            h.EventQueue.Send(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(button.Value));
                         }
-                        
+
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.LBUTTONUP:
@@ -375,7 +374,7 @@ namespace OpenTK.Platform.Native.Windows
                         if (button != null)
                         {
                             HWND h = HWndDict[hWnd];
-                            h.EventQueue.Send(h, WindowEventType.MouseUp, new MouseButtonUpEventArgs(button.Value));
+                            h.EventQueue.Send(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(button.Value));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -421,7 +420,7 @@ namespace OpenTK.Platform.Native.Windows
                         // Or delay the closing of the window until the user has handled the message.
                         // This could hang the window if the user code is stuck.
                         HWND h = HWndDict[hWnd];
-                        h.EventQueue.Send(h, WindowEventType.Close, new CloseEventArgs(h));
+                        h.EventQueue.Send(h, PlatformEventType.Close, new CloseEventArgs(h));
 
                         // FIXME: HACK! This is not the greatest way to get the WindowComponent...
                         h.WindowComponent.Destroy(h);
@@ -925,7 +924,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public IEventQueue<WindowEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
+        public IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
             return hwnd.EventQueue;

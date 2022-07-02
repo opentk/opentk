@@ -81,34 +81,13 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2 to copy components from.</param>
-        public Vector3(Vector2 v)
+        /// <param name="xy">The x and y components of the Vector3.</param>
+        /// <param name="z">The z component of the Vector3.</param>
+        public Vector3(Vector2 xy, float z = default)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = 0.0f;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
-        public Vector3(Vector3 v)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector4 to copy components from.</param>
-        public Vector3(Vector4 v)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
         }
 
         /// <summary>

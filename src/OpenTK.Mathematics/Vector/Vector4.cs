@@ -134,53 +134,28 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector2 to copy components from.</param>
-        public Vector4(Vector2 v)
+        /// <param name="xy">The x and y components of the Vector4.</param>
+        /// <param name="z">The z component of the Vector4.</param>
+        /// <param name="w">The w component of the Vector4.</param>
+        public Vector4(Vector2 xy, float z = default, float w = default)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = 0.0f;
-            W = 0.0f;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
-        /// <remarks>
-        ///  .<seealso cref="Vector4(Vector3, float)"/>
-        /// </remarks>
-        public Vector4(Vector3 v)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-            W = 0.0f;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4"/> struct.
-        /// </summary>
-        /// <param name="v">The Vector3 to copy components from.</param>
-        /// <param name="w">The w component of the new Vector4.</param>
-        public Vector4(Vector3 v, float w)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
             W = w;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4"/> struct.
         /// </summary>
-        /// <param name="v">The Vector4 to copy components from.</param>
-        public Vector4(Vector4 v)
+        /// <param name="xyz">The x, y and z components of the Vector4.</param>
+        /// <param name="w">The w component of the Vector4.</param>
+        public Vector4(Vector3 xyz, float w = default)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-            W = v.W;
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
+            W = w;
         }
 
         /// <summary>
@@ -1988,31 +1963,6 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Vector4 left, Vector4 right)
         {
             return !(left == right);
-        }
-
-        /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static unsafe explicit operator float*(Vector4 v)
-        {
-            return &v.X;
-        }
-
-        /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static explicit operator IntPtr(Vector4 v)
-        {
-            unsafe
-            {
-                return (IntPtr)(&v.X);
-            }
         }
 
         /// <summary>

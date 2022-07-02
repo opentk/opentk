@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glPixelZoom">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glPixelZoom</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPixelZoom</refname>
+        <refpurpose>specify the pixel zoom factors</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPixelZoom</function></funcdef>
+                <paramdef>GLfloat <parameter>xfactor</parameter></paramdef>
+                <paramdef>GLfloat <parameter>yfactor</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>xfactor</parameter></term>
+            <term><parameter>yfactor</parameter></term>
+            <listitem>
+                <para>
+                    Specify the 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+                    and 
+                    <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+                    zoom factors for pixel write operations.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glPixelZoom</function> specifies values for the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">x</mml:mi></mml:math></inlineequation>
+            and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">y</mml:mi></mml:math></inlineequation>
+            zoom factors.
+            During the execution of <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry> or <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            if 
+            (<inlineequation><mml:math>
+                <!-- eqn: xr:-->
+                <mml:mi mathvariant="italic">xr</mml:mi>
+            </mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: yr:-->
+                <mml:mi mathvariant="italic">yr</mml:mi>
+            </mml:math></inlineequation>)
+            is the current raster position,
+            and a given element is in the 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">m</mml:mi></mml:math></inlineequation>th
+            row and 
+            <inlineequation><mml:math><mml:mi mathvariant="italic">n</mml:mi></mml:math></inlineequation>th
+            column of the pixel rectangle,
+            then pixels whose centers are in the rectangle with corners at
+        </para>
+        <para>
+            (<inlineequation><mml:math>
+                <!-- eqn: xr  +  n cdot xfactor:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">xr</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">n</mml:mi>
+                        <mml:mo>&CenterDot;</mml:mo>
+                        <mml:mi mathvariant="italic">xfactor</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: yr  +  m cdot yfactor:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">yr</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mrow>
+                        <mml:mi mathvariant="italic">m</mml:mi>
+                        <mml:mo>&CenterDot;</mml:mo>
+                        <mml:mi mathvariant="italic">yfactor</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>)
+        </para>
+        <para>
+            (<inlineequation><mml:math>
+                <!-- eqn: xr  +  (n+1) cdot xfactor:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">xr</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mrow>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">n</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mo>&CenterDot;</mml:mo>
+                        <mml:mi mathvariant="italic">xfactor</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>, 
+            <inlineequation><mml:math>
+                <!-- eqn: yr  +  (m+1) cdot yfactor:-->
+                <mml:mrow>
+                    <mml:mi mathvariant="italic">yr</mml:mi>
+                    <mml:mo>+</mml:mo>
+                    <mml:mrow>
+                        <mml:mfenced open="(" close=")">
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">m</mml:mi>
+                                <mml:mo>+</mml:mo>
+                                <mml:mn>1</mml:mn>
+                            </mml:mrow>
+                        </mml:mfenced>
+                        <mml:mo>&CenterDot;</mml:mo>
+                        <mml:mi mathvariant="italic">yfactor</mml:mi>
+                    </mml:mrow>
+                </mml:mrow>
+            </mml:math></inlineequation>)
+        </para>
+        <para>
+            are candidates for replacement.
+            Any pixel whose center lies on the bottom or left edge of this rectangular
+            region is also modified.
+        </para>
+        <para>
+            Pixel zoom factors are not limited to positive values.
+            Negative zoom factors reflect the resulting image about the current
+            raster position.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glPixelZoom</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ZOOM_X</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ZOOM_Y</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glCopyPixels</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawPixels</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

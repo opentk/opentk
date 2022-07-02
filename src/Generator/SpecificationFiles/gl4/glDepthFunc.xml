@@ -1,0 +1,189 @@
+<!DOCTYPE refentry [ <!ENTITY % mathent SYSTEM "math.ent"> %mathent; ]>
+
+<!-- Converted by db4-upgrade version 1.1 -->
+
+<refentry xmlns="http://docbook.org/ns/docbook" version="5.0" xml:id="glDepthFunc">
+    <info>
+        <copyright>
+            <year>1991-2006</year>
+            <holder>Silicon Graphics, Inc.</holder>
+        </copyright>
+        <copyright>
+            <year>2010-2014</year>
+            <holder>Khronos Group</holder>
+        </copyright>
+    </info>
+    <refmeta>
+        <refentrytitle>glDepthFunc</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glDepthFunc</refname>
+        <refpurpose>specify the value used for depth buffer comparisons</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glDepthFunc</function></funcdef>
+                <paramdef>GLenum <parameter>func</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 xml:id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>func</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the depth comparison function.
+                    Symbolic constants
+                    <constant>GL_NEVER</constant>,
+                    <constant>GL_LESS</constant>,
+                    <constant>GL_EQUAL</constant>,
+                    <constant>GL_LEQUAL</constant>,
+                    <constant>GL_GREATER</constant>,
+                    <constant>GL_NOTEQUAL</constant>,
+                    <constant>GL_GEQUAL</constant>, and
+                    <constant>GL_ALWAYS</constant> are accepted.
+                    The initial value is <constant>GL_LESS</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 xml:id="description"><title>Description</title>
+        <para>
+            <function>glDepthFunc</function> specifies the function used to compare each incoming pixel depth value
+            with the depth value present in the depth buffer.
+            The comparison is performed only if depth testing is enabled.
+            (See <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and <!-- FIX: link to glEnable --> <function>glDisable</function> of <constant>GL_DEPTH_TEST</constant>.)
+        </para>
+        <para>
+            <parameter>func</parameter> specifies the conditions under which the pixel will be drawn.
+            The comparison functions are as follows:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_NEVER</constant></term>
+                <listitem>
+                    <para>
+                        Never passes.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LESS</constant></term>
+                <listitem>
+                    <para>
+                        Passes if the incoming depth value is less than the stored depth value.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_EQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if the incoming depth value is equal to the stored depth value.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_LEQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if the incoming depth value is less than or equal to
+                        the stored depth value.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_GREATER</constant></term>
+                <listitem>
+                    <para>
+                        Passes if the incoming depth value is greater than the stored depth value.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_NOTEQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if the incoming depth value is not equal to the stored depth value.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_GEQUAL</constant></term>
+                <listitem>
+                    <para>
+                        Passes if the incoming depth value is greater than or equal to
+                        the stored depth value.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_ALWAYS</constant></term>
+                <listitem>
+                    <para>
+                        Always passes.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+        <para>
+            The initial value of <parameter>func</parameter> is <constant>GL_LESS</constant>.
+            Initially, depth testing is disabled.  If depth testing is disabled or if no
+            depth buffer exists, it is as if the depth test always passes.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="notes"><title>Notes</title>
+        <para>
+            Even if the depth buffer exists and the depth mask is non-zero, the
+            depth buffer is not updated if the depth test is disabled. In order to
+            unconditionally write to the depth buffer, the depth test should be enabled
+            and set to <constant>GL_ALWAYS</constant>.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>func</parameter> is not an accepted value.
+        </para>
+    </refsect1>
+    <refsect1 xml:id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_FUNC</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_DEPTH_TEST</constant>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="versions"><title>Version Support</title>
+        <informaltable>
+            <tgroup cols="13" align="left">
+                <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apifunchead.xml" xpointer="xpointer(/*/*)"/>
+                <tbody>
+                    <row>
+                        <entry><function>glDepthFunc</function></entry>
+                        <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="apiversion.xml" xpointer="xpointer(/*/*[@role='20']/*)"/>
+                    </row>
+                </tbody>
+            </tgroup>
+        </informaltable>
+    </refsect1>
+    <refsect1 xml:id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glDepthRange</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPolygonOffset</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 xml:id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"/> 1991-2006 Silicon Graphics, Inc.
+            Copyright <trademark class="copyright"/> 2010-2014 Khronos Group.
+            This document is licensed under the SGI Free Software B License.
+            For details, see
+            <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</link>.
+        </para>
+    </refsect1>
+</refentry>

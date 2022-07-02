@@ -1,3 +1,9 @@
+## 5.0-pre.7
+
+* Add documentation to all native and overloaded functions (and links to their refpage) (@frederikja163, @NogginBops)
+* Fixed math overloads for float functions (e.g. `GL.UniformMatrix4f`) (@NogginBops)
+* Make all vector constructors follow a similar pattern (@Cyphall)
+
 ## 5.0-pre.6
 * New manual overload for ClearColor
 * New manual overload for GetProgramInfoLog

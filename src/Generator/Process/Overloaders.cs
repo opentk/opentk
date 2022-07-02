@@ -912,8 +912,40 @@ namespace Generator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine(
-                    $"var {nameTable[PointerParameter]} = (byte*)Marshal.AllocCoTaskMem({nameTable[StringLengthParameter]});");
+                if (StringLengthParameter.Type is CSPrimitive primitive)
+                {
+                    // If the parameter is unsigned we need to cast it for AllocCoTaskMem
+                    if (primitive.TypeName == "int")
+                    {
+                        writer.WriteLine($"var {nameTable[PointerParameter]} = (byte*)Marshal.AllocCoTaskMem({nameTable[StringLengthParameter]});");
+                    }
+                    else if (primitive.TypeName == "uint")
+                    {
+                        
+                        writer.WriteLine($"var {nameTable[PointerParameter]} = (byte*)Marshal.AllocCoTaskMem((int){nameTable[StringLengthParameter]});");
+                    }
+                    else
+                    {
+                        throw new Exception($"Unsupported primitive type for length parameter ({primitive.ToCSString()})!");
+                    }
+                }
+                else if (StringLengthParameter.Type is CSPointer pointer && pointer.BaseType is CSPrimitive basePrimitive)
+                {
+                    if (basePrimitive.TypeName == "int")
+                    {
+                        // This case is needed for ExtGetProgramBinarySourceQCOM and ExtGetProgramBinarySourceQCOM
+                        // - 2022-03-22
+                        writer.WriteLine($"var {nameTable[PointerParameter]} = (byte*)Marshal.AllocCoTaskMem(*{nameTable[StringLengthParameter]});");
+                    }
+                    else
+                    {
+                        throw new Exception($"Unsupported pointer type for length parameter ({pointer.ToCSString()})!");
+                    }
+                }
+                else
+                {
+                    throw new Exception($"Unsupported type for length parameter ({StringLengthParameter.Type.ToCSString()})");
+                }
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
