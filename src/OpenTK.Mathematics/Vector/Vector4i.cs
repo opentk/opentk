@@ -76,50 +76,27 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4i"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector2i"/> to copy components from.</param>
-        public Vector4i(Vector2i v)
+        /// <param name="xy">The x and y components of the Vector4i.</param>
+        /// <param name="z">The z component of the Vector4i.</param>
+        /// <param name="w">The w component of the Vector4i.</param>
+        public Vector4i(Vector2i xy, int z = default, int w = default)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = 0;
-            W = 0;
+            X = xy.X;
+            Y = xy.Y;
+            Z = z;
+            W = w;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector4i"/> struct.
         /// </summary>
-        /// <param name="v1">The <see cref="Vector2i"/> to get the X and Y components for the Vector4.</param>
-        /// <param name="v2">The <see cref="Vector2i"/> to get the Z and W components for the Vector4.</param>
-        public Vector4i(Vector2i v1, Vector2i v2)
+        /// <param name="xyz">The x, y and z components of the Vector4i.</param>
+        /// <param name="w">The w component of the Vector4i.</param>
+        public Vector4i(Vector3i xyz, int w = default)
         {
-            X = v1.X;
-            Y = v1.Y;
-            Z = v2.X;
-            W = v2.Y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector3i"/> to copy components from.</param>
-        public Vector4i(Vector3i v)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
-            W = 0;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector4i"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector3i"/> to copy components from.</param>
-        /// <param name="w">The w component of the new Vector4.</param>
-        public Vector4i(Vector3i v, int w)
-        {
-            X = v.X;
-            Y = v.Y;
-            Z = v.Z;
+            X = xyz.X;
+            Y = xyz.Y;
+            Z = xyz.Z;
             W = w;
         }
 
@@ -1592,31 +1569,6 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Vector4i left, Vector4i right)
         {
             return !(left == right);
-        }
-
-        /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static unsafe explicit operator int*(Vector4i v)
-        {
-            return &v.X;
-        }
-
-        /// <summary>
-        /// Returns a pointer to the first element of the specified instance.
-        /// </summary>
-        /// <param name="v">The instance.</param>
-        /// <returns>A pointer to the first element of v.</returns>
-        [Pure]
-        public static explicit operator IntPtr(Vector4i v)
-        {
-            unsafe
-            {
-                return (IntPtr)(&v.X);
-            }
         }
 
         /// <summary>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glColorPointer">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glColorPointer</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glColorPointer</refname>
+        <refpurpose>define an array of colors</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glColorPointer</function></funcdef>
+                <paramdef>GLint <parameter>size</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>GLsizei <parameter>stride</parameter></paramdef>
+                <paramdef>const void * <parameter>pointer</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>size</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the number of components per color. Must be 3 or 4.
+                    The initial value is 4.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>type</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the data type of each color component in the array.
+                    Symbolic constants
+                    <constant>GL_BYTE</constant>,
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_SHORT</constant>,
+                    <constant>GL_UNSIGNED_SHORT</constant>,
+                    <constant>GL_INT</constant>,
+                    <constant>GL_UNSIGNED_INT</constant>,
+                    <constant>GL_FLOAT</constant>,
+                    and
+                    <constant>GL_DOUBLE</constant>
+                    are accepted.
+                    The initial value is <constant>GL_FLOAT</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>stride</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the byte offset between consecutive colors.
+                    If <parameter>stride</parameter> is 0, the colors are understood to be
+                    tightly packed in the array. The initial value is 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>pointer</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a pointer to the first component of the first color element
+                    in the array. The initial value is 0.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <function>glColorPointer</function> specifies the location and data format of an array of color components
+            to use when rendering.
+            <parameter>size</parameter> specifies the number of components per color, and must be 3 or 4.
+            <parameter>type</parameter> specifies the data type of each color component, and <parameter>stride</parameter>
+            specifies the byte stride from one color to the next, allowing vertices and
+            attributes to be packed into a single array or stored in separate arrays.
+            (Single-array storage may be more efficient on some implementations;
+            see <citerefentry><refentrytitle>glInterleavedArrays</refentrytitle></citerefentry>.)
+        </para>
+        <para>
+            If a non-zero named buffer object is bound to the <constant>GL_ARRAY_BUFFER</constant> target 
+            (see <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>) while a color array is
+            specified, <parameter>pointer</parameter> is treated as a byte offset into the buffer object's data store.
+            Also, the buffer object binding (<constant>GL_ARRAY_BUFFER_BINDING</constant>) is saved as color vertex array
+            client-side state (<constant>GL_COLOR_ARRAY_BUFFER_BINDING</constant>).
+        </para>
+        <para>
+            When a color array is specified,
+            <parameter>size</parameter>, <parameter>type</parameter>, <parameter>stride</parameter>, and <parameter>pointer</parameter> are saved as client-side
+            state, in addition to the current vertex array buffer object binding.
+        </para>
+        <para>
+            To enable and disable the color array, call
+            <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glDisableClientState</refentrytitle></citerefentry> with the argument
+            <constant>GL_COLOR_ARRAY</constant>. If
+            enabled, the color array is used
+            when <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glMultiDrawArrays</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>, or
+            <citerefentry><refentrytitle>glArrayElement</refentrytitle></citerefentry> is called.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glColorPointer</function> is available only if the GL version is 1.1 or greater.
+        </para>
+        <para>
+            The color array is initially disabled and isn't accessed when
+            <citerefentry><refentrytitle>glArrayElement</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>, <citerefentry><refentrytitle>glMultiDrawArrays</refentrytitle></citerefentry>, or <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>
+            is called.
+        </para>
+        <para>
+            Execution of <function>glColorPointer</function> is not allowed between the execution of
+            <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>,
+            but an error may or may not be generated. If no error is generated,
+            the operation is undefined.
+        </para>
+        <para>
+            <function>glColorPointer</function> is typically implemented on the client side.
+        </para>
+        <para>
+            Color array parameters are client-side state and are therefore not saved
+            or restored by <citerefentry><refentrytitle>glPushAttrib</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glPopAttrib</refentrytitle></citerefentry>.
+            Use <citerefentry><refentrytitle>glPushClientAttrib</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glPopClientAttrib</refentrytitle></citerefentry> instead.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>size</parameter> is not 3 or 4.
+        </para>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if <parameter>type</parameter> is not an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_VALUE</constant> is generated if <parameter>stride</parameter> is negative.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glIsEnabled</refentrytitle></citerefentry> with argument <constant>GL_COLOR_ARRAY</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_ARRAY_SIZE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_ARRAY_TYPE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_ARRAY_STRIDE</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_COLOR_ARRAY_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_ARRAY_BUFFER_BINDING</constant>
+        </para>
+        <para>
+            <citerefentry><refentrytitle>glGetPointerv</refentrytitle></citerefentry> with argument <constant>GL_COLOR_ARRAY_POINTER</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glArrayElement</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glBindBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDisableClientState</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glDrawRangeElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEdgeFlagPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glEnableClientState</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glFogCoordPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glIndexPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glInterleavedArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawArrays</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMultiDrawElements</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glNormalPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPopClientAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glPushClientAttrib</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glSecondaryColorPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexAttribPointer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glVertexPointer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

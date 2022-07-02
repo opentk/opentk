@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.CodeDom.Compiler;
+using Generator.Parsing;
+using Generator.Utility;
 
 namespace Generator.Writing
 {
@@ -41,17 +43,18 @@ namespace Generator.Writing
                     File.Delete(file);
                 }
 
-                WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors);
+                WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors, api.Documentation);
                 WriteOverloads(directoryPath, apiNamespace, api.Vendors);
 
-                WriteEnums(directoryPath, apiNamespace, api.TheAllEnumGroup, api.EnumGroups);
+                WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
             }
         }
 
         private static void WriteNativeFunctions(
             string directoryPath,
             string glNamespace,
-            Dictionary<string, GLVendorFunctions> groups)
+            Dictionary<string, GLVendorFunctions> groups,
+            Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -78,7 +81,8 @@ namespace Generator.Writing
                         foreach (var function in group.NativeFunctions)
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
-                            WriteNativeMethod(function, postfixName, writer);
+                            documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
+                            WriteNativeMethod(writer, function, postfixName, functionDocumentation);
                         }
 
                         scope?.Dispose();
@@ -89,7 +93,7 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeMethod(NativeFunction function, bool postfixName, IndentedTextWriter writer)
+        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
@@ -143,6 +147,11 @@ namespace Generator.Writing
             delegateTypes.Append(returnType);
 
             writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
+
+            if (documentation != null)
+            {
+                WriteDocumentation(writer, documentation);
+            }
 
             if (handleAbiDifferenceForTypesafeHandles)
             {
@@ -223,6 +232,8 @@ namespace Generator.Writing
 
         private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
         {
+            writer.WriteLine($"/// <inheritdoc cref=\"{overload.NativeFunction.FunctionName}\"/>");
+
             string parameterString =
                 string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
@@ -290,7 +301,19 @@ namespace Generator.Writing
             return overload.MarshalLayerToNested?.WriteEpilogue(writer, nameTable, returnName) ?? returnName;
         }
 
-        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroupMember> allEnums, List<EnumGroup> enumGroups)
+
+        private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation)
+        {
+            writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> {documentation.Purpose} </summary>");
+
+            foreach (ParameterDocumentation parameter in documentation.Parameters)
+            {
+                writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameter.Description}</param>");
+            }
+            writer.WriteLine($"/// <remarks><see href=\"{documentation.RefPagesLink}\" /></remarks>");
+        }
+
+        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -301,21 +324,8 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CA1069 // Enums values should not be duplicated");
-                WriteAllEnum(writer, allEnums);
                 WriteEnumGroups(writer, enumGroups);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
-            }
-        }
-
-        private static void WriteAllEnum(IndentedTextWriter writer, List<EnumGroupMember> allEnums)
-        {
-            writer.WriteLine($"public enum All : uint");
-            using (writer.CsScope())
-            {
-                foreach (var member in allEnums)
-                {
-                    writer.WriteLine($"{member.Name} = {member.Value},");
-                }
             }
         }
 
@@ -323,6 +333,18 @@ namespace Generator.Writing
         {
             foreach (var group in enumGroups)
             {
+                if (group.FunctionsUsingEnumGroup != null)
+                {
+                    if (group.FunctionsUsingEnumGroup.Count > 3)
+                    {
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{f.FunctionName}\" />"))}, ...</summary>");
+                    }
+                    else
+                    {
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{f.FunctionName}\" />"))}</summary>");
+                    }
+                }
+
                 if (group.IsFlags) writer.WriteLine($"[Flags]");
                 writer.WriteLine($"public enum {group.Name} : uint");
                 using (writer.CsScope())

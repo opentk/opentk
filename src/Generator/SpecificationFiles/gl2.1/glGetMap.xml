@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glGetMap">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glGetMap</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glGetMap</refname>
+        <refpurpose>return evaluator parameters</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetMapdv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>query</parameter></paramdef>
+                <paramdef>GLdouble * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetMapfv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>query</parameter></paramdef>
+                <paramdef>GLfloat * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glGetMapiv</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLenum <parameter>query</parameter></paramdef>
+                <paramdef>GLint * <parameter>v</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <!-- eqn: ignoring delim $$ -->
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>target</parameter></term>
+            <listitem>
+                <para>
+                    Specifies the symbolic name of a map.
+                    Accepted values are
+                    <constant>GL_MAP1_COLOR_4</constant>,
+                    <constant>GL_MAP1_INDEX</constant>,
+                    <constant>GL_MAP1_NORMAL</constant>,
+                    <constant>GL_MAP1_TEXTURE_COORD_1</constant>,
+                    <constant>GL_MAP1_TEXTURE_COORD_2</constant>,
+                    <constant>GL_MAP1_TEXTURE_COORD_3</constant>,
+                    <constant>GL_MAP1_TEXTURE_COORD_4</constant>,
+                    <constant>GL_MAP1_VERTEX_3</constant>,
+                    <constant>GL_MAP1_VERTEX_4</constant>,
+                    <constant>GL_MAP2_COLOR_4</constant>,
+                    <constant>GL_MAP2_INDEX</constant>,
+                    <constant>GL_MAP2_NORMAL</constant>,
+                    <constant>GL_MAP2_TEXTURE_COORD_1</constant>,
+                    <constant>GL_MAP2_TEXTURE_COORD_2</constant>,
+                    <constant>GL_MAP2_TEXTURE_COORD_3</constant>,
+                    <constant>GL_MAP2_TEXTURE_COORD_4</constant>,
+                    <constant>GL_MAP2_VERTEX_3</constant>, and
+                    <constant>GL_MAP2_VERTEX_4</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>query</parameter></term>
+            <listitem>
+                <para>
+                    Specifies which parameter to return.
+                    Symbolic names
+                    <constant>GL_COEFF</constant>,
+                    <constant>GL_ORDER</constant>, and
+                    <constant>GL_DOMAIN</constant> are accepted.
+                </para>
+            </listitem>
+        </varlistentry>
+        <varlistentry>
+            <term><parameter>v</parameter></term>
+            <listitem>
+                <para>
+                    Returns the requested data.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+            <citerefentry><refentrytitle>glMap1</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glMap2</refentrytitle></citerefentry> define evaluators.
+            <function>glGetMap</function> returns evaluator parameters.
+            <parameter>target</parameter> chooses a map,
+            <parameter>query</parameter> selects a specific parameter,
+            and <parameter>v</parameter> points to storage where the values will be returned.
+        </para>
+        <para>
+            The acceptable values for the <parameter>target</parameter> parameter are described
+            in the <citerefentry><refentrytitle>glMap1</refentrytitle></citerefentry> and <citerefentry><refentrytitle>glMap2</refentrytitle></citerefentry> reference pages.
+        </para>
+        <para>
+            <parameter>query</parameter> can assume the following values:
+        </para>
+        <variablelist>
+            <varlistentry>
+                <term><constant>GL_COEFF</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>v</parameter> returns the control points for the evaluator function.
+                        One-dimensional evaluators return 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">order</mml:mi></mml:math></inlineequation>
+                        control points,
+                        and two-dimensional evaluators return 
+                        <inlineequation><mml:math>
+                            <!-- eqn: uorder  times  vorder:-->
+                            <mml:mrow>
+                                <mml:mi mathvariant="italic">uorder</mml:mi>
+                                <mml:mo>&times;</mml:mo>
+                                <mml:mi mathvariant="italic">vorder</mml:mi>
+                            </mml:mrow>
+                        </mml:math></inlineequation>
+                        control points.
+                        Each control point consists of one, two, three, or four integer,
+                        single-precision floating-point,
+                        or double-precision floating-point values,
+                        depending on the type of the evaluator.
+                        The GL returns two-dimensional control points in row-major order,
+                        incrementing the 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">uorder</mml:mi></mml:math></inlineequation>
+                        index quickly
+                        and the 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">vorder</mml:mi></mml:math></inlineequation>
+                        index after each row.
+                        Integer values,
+                        when requested,
+                        are computed by rounding the internal floating-point values to the
+                        nearest integer values.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_ORDER</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>v</parameter> returns the order of the evaluator function.
+                        One-dimensional evaluators return a single value,
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">order</mml:mi></mml:math></inlineequation>.
+                        The initial value is 1.
+                        Two-dimensional evaluators return two values,
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">uorder</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">vorder</mml:mi></mml:math></inlineequation>.
+                        The initial value is 1,1.
+                    </para>
+                </listitem>
+            </varlistentry>
+            <varlistentry>
+                <term><constant>GL_DOMAIN</constant></term>
+                <listitem>
+                    <para>
+                        <parameter>v</parameter> returns the linear 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">u</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">v</mml:mi></mml:math></inlineequation>
+                        mapping parameters.
+                        One-dimensional evaluators return two values,
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">u1</mml:mi></mml:math></inlineequation>
+                        and 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">u2</mml:mi></mml:math></inlineequation>,
+                        as specified by <citerefentry><refentrytitle>glMap1</refentrytitle></citerefentry>.
+                        Two-dimensional evaluators return four values
+                        (<inlineequation><mml:math><mml:mi mathvariant="italic">u1</mml:mi></mml:math></inlineequation>, 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">u2</mml:mi></mml:math></inlineequation>, 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">v1</mml:mi></mml:math></inlineequation>,
+                        and 
+                        <inlineequation><mml:math><mml:mi mathvariant="italic">v2</mml:mi></mml:math></inlineequation>)
+                        as specified by <citerefentry><refentrytitle>glMap2</refentrytitle></citerefentry>.
+                        Integer values,
+                        when requested,
+                        are computed by rounding the internal floating-point values to the
+                        nearest integer values.
+                    </para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            If an error is generated,
+            no change is made to the contents of <parameter>v</parameter>.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_ENUM</constant> is generated if either <parameter>target</parameter> or <parameter>query</parameter> is not
+            an accepted value.
+        </para>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glGetMap</function>
+            is executed between the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry>
+            and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glEvalCoord</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMap1</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glMap2</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

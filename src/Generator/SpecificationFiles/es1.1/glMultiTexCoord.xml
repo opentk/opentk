@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glMultiTexCoord">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glMultiTexCoord</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refdescriptor>glMultiTexCoord</refdescriptor>
+        <refname>glMultiTexCoord4f</refname>
+        <refname>glMultiTexCoord4x</refname>
+        <refpurpose>set the current texture coordinates</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glMultiTexCoord4f</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLfloat <parameter>s</parameter></paramdef>
+                <paramdef>GLfloat <parameter>t</parameter></paramdef>
+                <paramdef>GLfloat <parameter>r</parameter></paramdef>
+                <paramdef>GLfloat <parameter>q</parameter></paramdef>
+            </funcprototype>
+            <funcprototype>
+                <funcdef>void <function>glMultiTexCoord4x</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLfixed <parameter>s</parameter></paramdef>
+                <paramdef>GLfixed <parameter>t</parameter></paramdef>
+                <paramdef>GLfixed <parameter>r</parameter></paramdef>
+                <paramdef>GLfixed <parameter>q</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>target</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the texture unit whose coordinates should be
+                    modified. The number of texture units is implementation
+                    dependent, but must be at least 
+                    <phrase revision="es1.1">two</phrase><phrase revision="not-es1.1">one</phrase>. 
+                    Symbolic constant must be one of
+                    <constant>GL_TEXTURE</constant><inlineequation><mml:math><mml:mi mathvariant="italic">i</mml:mi></mml:math></inlineequation>,
+                    where i ranges from 0 to <constant>GL_MAX_TEXTURE_UNITS</constant> - 1,
+                    which is an implementation-dependent value.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                <parameter>s</parameter>,
+                <parameter>t</parameter>,
+                <parameter>r</parameter>,
+                <parameter>q</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specify
+                    <parameter>s</parameter>,
+                    <parameter>t</parameter>,
+                    <parameter>r</parameter>, and
+                    <parameter>q</parameter> texture coordinates for
+                    <parameter>target</parameter> texture unit.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glMultiTexCoord</function>
+        specifies the four texture coordinates as
+        (<parameter>s</parameter>,
+        <parameter>t</parameter>,
+        <parameter>r</parameter>,
+        <parameter>q</parameter>).</para>
+
+        <para>The current texture coordinates are part of the data that
+        is associated with each vertex.
+            Initially, the values for
+            <inlineequation><mml:math>
+                <!-- eqn: (s, t, r, q):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:mi mathvariant="italic">s</mml:mi>
+                    <mml:mi mathvariant="italic">t</mml:mi>
+                    <mml:mi mathvariant="italic">r</mml:mi>
+                    <mml:mi mathvariant="italic">q</mml:mi>
+                </mml:mfenced>
+            </mml:math></inlineequation>
+            are 
+            <inlineequation><mml:math>
+                <!-- eqn: (0, 0, 0, 1):-->
+                <mml:mfenced open="(" close=")">
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>0</mml:mn>
+                    <mml:mn>1</mml:mn>
+                </mml:mfenced>
+            </mml:math></inlineequation>.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+        <para>It is always the case that
+        <inlineequation><mml:math>
+            <mml:mi>GL_TEXTURE</mml:mi><mml:mi>i</mml:mi> <mml:mo>=</mml:mo>
+            <mml:mi>GL_TEXTURE0</mml:mi><mml:mo>+</mml:mo><mml:mi>i</mml:mi>
+        </mml:math></inlineequation>.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_TEXTURE_COORDS</constant> with appropriate
+            texture unit selected.
+        </para>
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_MAX_TEXTURE_UNITS</constant>
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glClientActiveTexture</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glColor</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexCoordPointer</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

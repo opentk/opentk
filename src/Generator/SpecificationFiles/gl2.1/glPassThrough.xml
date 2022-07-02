@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+              "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry id="glPassThrough">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>1991-2006</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glPassThrough</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+    <refnamediv>
+        <refname>glPassThrough</refname>
+        <refpurpose>place a marker in the feedback buffer</refpurpose>
+    </refnamediv>
+    <refsynopsisdiv><title>C Specification</title>
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glPassThrough</function></funcdef>
+                <paramdef>GLfloat <parameter>token</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+    <refsect1 id="parameters"><title>Parameters</title>
+        <variablelist>
+        <varlistentry>
+            <term><parameter>token</parameter></term>
+            <listitem>
+                <para>
+                    Specifies a marker value to be placed in the feedback buffer
+                    following a <constant>GL_PASS_THROUGH_TOKEN</constant>.
+                </para>
+            </listitem>
+        </varlistentry>
+        </variablelist>
+    </refsect1>
+    <refsect1 id="description"><title>Description</title>
+        <para>
+        </para>
+        <para>
+            Feedback is a GL render mode.
+            The mode is selected by calling
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry> with <constant>GL_FEEDBACK</constant>.
+            When the GL is in feedback mode,
+            no pixels are produced by rasterization.
+            Instead,
+            information about primitives that would have been rasterized
+            is fed back to the application using the GL.
+            See the <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry> reference page for a description of the
+            feedback buffer and the values in it.
+        </para>
+        <para>
+            <function>glPassThrough</function> inserts a user-defined marker in the feedback buffer
+            when it is executed in feedback mode.
+            <parameter>token</parameter> is returned as if it were a primitive;
+            it is indicated with its own unique identifying value:
+            <constant>GL_PASS_THROUGH_TOKEN</constant>.
+            The order of <function>glPassThrough</function> commands with respect to the specification
+            of graphics primitives is maintained.
+        </para>
+    </refsect1>
+    <refsect1 id="notes"><title>Notes</title>
+        <para>
+            <function>glPassThrough</function> is ignored if the GL is not in feedback mode.
+        </para>
+    </refsect1>
+    <refsect1 id="errors"><title>Errors</title>
+        <para>
+            <constant>GL_INVALID_OPERATION</constant> is generated if <function>glPassThrough</function> is executed between
+            the execution of <citerefentry><refentrytitle>glBegin</refentrytitle></citerefentry> and the corresponding execution of <citerefentry><refentrytitle>glEnd</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_RENDER_MODE</constant>
+        </para>
+    </refsect1>
+    <refsect1 id="seealso"><title>See Also</title>
+        <para>
+            <citerefentry><refentrytitle>glFeedbackBuffer</refentrytitle></citerefentry>,
+            <citerefentry><refentrytitle>glRenderMode</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="Copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 1991-2006
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

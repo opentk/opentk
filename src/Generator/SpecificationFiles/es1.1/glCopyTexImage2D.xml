@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glCopyTexImage2D">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glCopyTexImage2D</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glCopyTexImage2D</refname>
+        <refpurpose>specify a two-dimensional texture image with pixels from the color buffer</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glCopyTexImage2D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLenum <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLint <parameter>x</parameter></paramdef>
+                <paramdef>GLint <parameter>y</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLint <parameter>border</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>target</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the target texture. Must be
+                    <constant>GL_TEXTURE_2D</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>level</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the level-of-detail number. Level 0 is
+                    the base image level. Level <parameter>n</parameter>
+                    is the <parameter>n</parameter>th mipmap reduction image.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>internalformat</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the color components of the texture. Must be one
+                    of the following symbolic constants:
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_LUMINANCE</constant>,
+                    <constant>GL_LUMINANCE_ALPHA</constant>,
+                    <constant>GL_RGB</constant>, or
+                    <constant>GL_RGBA</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                <parameter>x</parameter>, <parameter>y</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specify the window coordinates of the lower left
+                    corner of the rectangular region of pixels to be
+                    copied.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>width</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the width of the texture image. Must be 0 or
+                    <inlineequation><mml:math>
+                        <mml:msup><mml:mn>2</mml:mn><mml:mi>n</mml:mi></mml:msup>
+                    </mml:math></inlineequation>
+                    for some integer <replaceable>n</replaceable>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>height</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the height of the texture image. Must be 0 or
+                    <inlineequation><mml:math>
+                        <mml:msup><mml:mn>2</mml:mn><mml:mi>m</mml:mi></mml:msup>
+                    </mml:math></inlineequation>
+                    for some integer <replaceable>m</replaceable>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>border</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the width of the border. Must be 0.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>
+        <function>glCopyTexImage2D</function>
+        defines a two-dimensional texture image with pixels from the
+        color buffer.</para>
+
+        <para>The screen-aligned pixel rectangle with lower left corner
+        at (<parameter>x</parameter>, <parameter>y</parameter>)
+        and with a width of
+        <inlineequation><mml:math>
+            <mml:mi>width</mml:mi>
+        </mml:math></inlineequation>
+        and a height of
+        <inlineequation><mml:math>
+            <mml:mi>height</mml:mi>
+        </mml:math></inlineequation>
+        defines the texture array at the mipmap level specified by
+        <parameter>level</parameter>. <parameter>internalformat</parameter>
+        specifies the color components of the texture.</para>
+
+        <para>
+        The red, green, blue, and alpha
+        components of each pixel that is read are converted to an
+        internal fixed-point or floating-point format with unspecified precision.
+        The conversion maps the largest representable component
+        value to 1.0, and component value 0 to 0.0.
+        The values are then converted to the texture's internal format for
+        storage in the texel array.</para>
+
+        <para><parameter>internalformat</parameter> must be chosen such that
+        color buffer components can be dropped during conversion to the
+        internal format, but new components cannot be added. For example,
+        an <constant>GL_RGB</constant> color buffer can be used to create
+        <constant>GL_LUMINANCE</constant> or <constant>GL_RGB</constant>
+        textures, but not <constant>GL_ALPHA</constant>,
+        <constant>GL_LUMINANCE_ALPHA</constant> or <constant>GL_RGBA</constant>
+        textures.</para>
+
+        <para>Pixel ordering is such that lower <parameter>x</parameter>
+        and <parameter>y</parameter> screen coordinates correspond to lower
+        <parameter>s</parameter> and <parameter>t</parameter> texture
+        coordinates.</para>
+
+        <para>If any of the pixels within the specified rectangle of
+        the color buffer are outside the window associated with the
+        current rendering context, then the values obtained for those
+        pixels are undefined.</para>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para>An image with height or width of 0 indicates a
+        null-texture.</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para><constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>target</parameter> is not
+        <constant>GL_TEXTURE_2D</constant>.</para>
+
+        <para><constant>GL_INVALID_OPERATION</constant> is generated if
+        <parameter>internalformat</parameter> is not compatible
+        with the color buffer format.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>level</parameter> is less than 0.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> may be generated if
+        <parameter>level</parameter> is greater than
+        <inlineequation><mml:math>
+            <mml:msub><mml:mo>log</mml:mo><mml:mn>2</mml:mn></mml:msub><mml:mi>max</mml:mi>
+        </mml:math></inlineequation>, where
+        <replaceable>max</replaceable> is the returned value of
+        <constant>GL_MAX_TEXTURE_SIZE</constant>.</para>
+
+        <para>
+        <constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>width</parameter> or
+        <parameter>height</parameter>
+        is less than 0, greater than
+        <constant>GL_MAX_TEXTURE_SIZE</constant>, or if
+        <parameter>width</parameter> or <parameter>height</parameter>
+        cannot be represented as
+        <inlineequation><mml:math>
+            <mml:msup><mml:mn>2</mml:mn><mml:mi>k</mml:mi></mml:msup>
+        </mml:math></inlineequation>
+        for some integer <replaceable>k</replaceable>.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>border</parameter> is not 0.</para>
+
+        <para>
+        <constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>internalformat</parameter>
+        is not an accepted constant.
+        </para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_MAX_TEXTURE_SIZE</constant></para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glCompressedTexImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

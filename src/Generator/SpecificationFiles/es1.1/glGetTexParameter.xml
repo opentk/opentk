@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+			    "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glGetTexParameter">
+    <refmeta>
+	<refmetainfo>
+	    <copyright>
+		<year>2003-2004</year>
+		<holder>Silicon Graphics, Inc.</holder>
+	    </copyright>
+	</refmetainfo>
+	<refentrytitle>glGetTexParameter</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+	<refdescriptor>glGetTexParameter</refdescriptor>
+	<refname>glGetTexParameterfv</refname>
+	<refname>glGetTexParameteriv</refname>
+	<refname>glGetTexParameterxv</refname>
+	<refpurpose>return texture parameter values</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+	<title>C Specification</title>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glGetTexParameterfv</function></funcdef>
+		<paramdef>GLenum <parameter>target</parameter></paramdef>
+		<paramdef>GLenum <parameter>pname</parameter></paramdef>
+		<paramdef>GLfloat * <parameter>params</parameter></paramdef>
+	    </funcprototype>
+	    <funcprototype>
+		<funcdef>void <function>glGetTexParameteriv</function></funcdef>
+		<paramdef>GLenum <parameter>target</parameter></paramdef>
+		<paramdef>GLenum <parameter>pname</parameter></paramdef>
+		<paramdef>GLint * <parameter>params</parameter></paramdef>
+	    </funcprototype>
+	    <funcprototype>
+		<funcdef>void <function>glGetTexParameterxv</function></funcdef>
+		<paramdef>GLenum <parameter>target</parameter></paramdef>
+		<paramdef>GLenum <parameter>pname</parameter></paramdef>
+		<paramdef>GLfixed * <parameter>params</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+	<variablelist>
+	    <varlistentry>
+		<term>
+		    <parameter>target</parameter>
+		</term>
+		<listitem>
+		    <para>Specifies the target texture, which must be
+		    <constant>GL_TEXTURE_2D</constant>.</para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <parameter>pname</parameter>
+		</term>
+		<listitem>
+		    <para>
+		    Specifies the symbolic name of a texture parameter.
+		    Which can be one of the following:
+		    <constant>GL_TEXTURE_MIN_FILTER</constant>,
+		    <constant>GL_TEXTURE_MAG_FILTER</constant>,
+		    <constant>GL_TEXTURE_WRAP_S</constant>,
+		    <constant>GL_TEXTURE_WRAP_T</constant>, or
+		    <constant>GL_GENERATE_MIPMAP</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <parameter>params</parameter>
+		</term>
+		<listitem>
+		    <para>Returns texture parameters.</para>
+		</listitem>
+	    </varlistentry>
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+	<para>
+	<function>glGetTexParameter</function>
+	returns in <parameter>param</parameter> the value of
+	the texture parameter specified as <parameter>pname</parameter>.
+	<parameter>target</parameter> defines the target texture,
+	which must be <constant>GL_TEXTURE_2D</constant>
+	which specifies two-dimensional texturing.
+	<parameter>pname</parameter> accepts the same symbols as
+	<citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>,
+	with the same interpretations:
+	</para>
+
+	<variablelist>
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_MIN_FILTER</constant>
+		</term>
+		<listitem>
+		    <para>
+			Returns the single-valued texture minifying function, a symbolic
+			constant, which can be one of the following:
+		    <constant>GL_NEAREST</constant>,
+		    <constant>GL_LINEAR</constant>,
+		    <constant>GL_NEAREST_MIPMAP_NEAREST</constant>,
+		    <constant>GL_LINEAR_MIPMAP_NEAREST</constant>,
+		    <constant>GL_NEAREST_MIPMAP_LINEAR</constant>, or
+		    <constant>GL_LINEAR_MIPMAP_LINEAR</constant>.
+		    The initial value is
+		    <constant>GL_NEAREST_MIPMAP_LINEAR</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_MAG_FILTER</constant>
+		</term>
+		<listitem>
+		    <para>
+			Returns the single-valued texture magnification function,
+			a symbolic constant, which can be either
+		    <constant>GL_NEAREST</constant> or
+		    <constant>GL_LINEAR</constant>.
+		    The initial value is
+		    <constant>GL_LINEAR</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_WRAP_S</constant>
+		</term>
+		<listitem>
+		    <para>
+		    Returns the single-valued wrapping function for texture coordinate
+			<replaceable>s</replaceable>, a symbolic constant, which can be
+		   	either:
+		    <constant>GL_CLAMP_TO_EDGE</constant>, or
+		    <constant>GL_REPEAT</constant>.
+		    The initial value is
+		    <constant>GL_REPEAT</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_TEXTURE_WRAP_T</constant>
+		</term>
+		<listitem>
+		    <para>
+		    Returns the single-valued wrapping function for texture coordinate
+			<replaceable>t</replaceable>, a symbolic constant, which can be
+		   	either:
+		    <constant>GL_CLAMP_TO_EDGE</constant>, or
+		    <constant>GL_REPEAT</constant>.
+		    The initial value is
+		    <constant>GL_REPEAT</constant>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	    <varlistentry>
+		<term>
+		    <constant>GL_GENERATE_MIPMAP</constant>
+		</term>
+		<listitem>
+		    <para>
+			Returns a single boolean value indicating if automatic mipmap level
+			updates are enabled.  The initial value is
+			<constant>GL_FALSE</constant>.
+			See <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>.
+		    </para>
+		</listitem>
+	    </varlistentry>
+
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+	<para>
+	If an error is generated, no change is made to the contents of
+	<parameter>param</parameter>.
+	</para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+	<para><constant>GL_INVALID_ENUM</constant> is generated if
+	<parameter>target</parameter> or
+	<parameter>pname</parameter>
+	is not one of the accepted defined values.</para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+	<para>
+	<citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+	</para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+	<para>
+	    Copyright <trademark class="copyright"></trademark> 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+	</para>
+    </refsect1>
+</refentry>

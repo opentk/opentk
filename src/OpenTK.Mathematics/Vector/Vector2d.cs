@@ -94,8 +94,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector2d"/> struct.
         /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
+        /// <param name="x">The x component of the Vector2d.</param>
+        /// <param name="y">The y component of the Vector2d.</param>
         public Vector2d(double x, double y)
         {
             X = x;

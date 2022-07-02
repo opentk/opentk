@@ -55,9 +55,9 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3i"/> struct.
         /// </summary>
-        /// <param name="x">The x component of the Vector3.</param>
-        /// <param name="y">The y component of the Vector3.</param>
-        /// <param name="z">The z component of the Vector3.</param>
+        /// <param name="x">The x component of the Vector3i.</param>
+        /// <param name="y">The y component of the Vector3i.</param>
+        /// <param name="z">The z component of the Vector3i.</param>
         public Vector3i(int x, int y, int z)
         {
             X = x;
@@ -68,23 +68,12 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Vector3i"/> struct.
         /// </summary>
-        /// <param name="v">The <see cref="Vector2i"/> to copy components from.</param>
-        public Vector3i(Vector2i v)
+        /// <param name="xy">The x and y components of the Vector3i.</param>
+        /// <param name="z">The z component of the Vector3i.</param>
+        public Vector3i(Vector2i xy, int z = default)
         {
-            X = v.X;
-            Y = v.Y;
-            Z = 0;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Vector3i"/> struct.
-        /// </summary>
-        /// <param name="v">The <see cref="Vector2i"/> to copy components from.</param>
-        /// <param name="z">The z component of the new Vector3.</param>
-        public Vector3i(Vector2i v, int z)
-        {
-            X = v.X;
-            Y = v.Y;
+            X = xy.X;
+            Y = xy.Y;
             Z = z;
         }
 

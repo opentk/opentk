@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+                            "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glTexImage2D">
+    <refmeta>
+        <refmetainfo>
+            <copyright>
+                <year>2003-2004</year>
+                <holder>Silicon Graphics, Inc.</holder>
+            </copyright>
+        </refmetainfo>
+        <refentrytitle>glTexImage2D</refentrytitle>
+        <manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+        <refname>glTexImage2D</refname>
+        <refpurpose>specify a two-dimensional texture image</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+        <title>C Specification</title>
+
+        <funcsynopsis>
+            <funcprototype>
+                <funcdef>void <function>glTexImage2D</function></funcdef>
+                <paramdef>GLenum <parameter>target</parameter></paramdef>
+                <paramdef>GLint <parameter>level</parameter></paramdef>
+                <paramdef>GLint <parameter>internalformat</parameter></paramdef>
+                <paramdef>GLsizei <parameter>width</parameter></paramdef>
+                <paramdef>GLsizei <parameter>height</parameter></paramdef>
+                <paramdef>GLint <parameter>border</parameter></paramdef>
+                <paramdef>GLenum <parameter>format</parameter></paramdef>
+                <paramdef>GLenum <parameter>type</parameter></paramdef>
+                <paramdef>const void * <parameter>pixels</parameter></paramdef>
+            </funcprototype>
+        </funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <parameter>target</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the target texture. Must be
+                    <constant>GL_TEXTURE_2D</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>level</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the level-of-detail number. Level 0 is
+                    the base image level. Level <parameter>n</parameter> is the
+                    <parameter>n</parameter>th mipmap reduction image.
+                    Must be greater or equal 0.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>internalformat</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the color components in the
+                    texture. Must be same as <parameter>format</parameter>.
+                    The following symbolic values are accepted:
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_LUMINANCE</constant>, or
+                    <constant>GL_LUMINANCE_ALPHA</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>width</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the width of the texture image. Must be
+                    <inlineequation><mml:math>
+                        <mml:msup><mml:mn>2</mml:mn><mml:mi>n</mml:mi></mml:msup>
+                    </mml:math></inlineequation>
+                    for some integer <replaceable>n</replaceable>.
+                    All implementations support texture images that are at
+                    least 64 texels wide.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>height</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the height of the texture image. Must be
+                    <inlineequation><mml:math>
+                        <mml:msup><mml:mn>2</mml:mn><mml:mi>m</mml:mi></mml:msup>
+                    </mml:math></inlineequation>
+                    for some integer <replaceable>m</replaceable>.
+                    All implementations support texture images that are at
+                    least 64 texels high.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>border</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the width of the border. Must be 0.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>format</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the format of the pixel data. Must be same
+                    as <parameter>internalformat</parameter>. The following
+                    symbolic values are accepted:
+                    <constant>GL_ALPHA</constant>,
+                    <constant>GL_RGB</constant>,
+                    <constant>GL_RGBA</constant>,
+                    <constant>GL_LUMINANCE</constant>, and
+                    <constant>GL_LUMINANCE_ALPHA</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>type</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies the data type of the pixel data. The
+                    following symbolic values are accepted:
+                    <constant>GL_UNSIGNED_BYTE</constant>,
+                    <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+                    <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>, and
+                    <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <parameter>pixels</parameter>
+                </term>
+
+                <listitem>
+                    <para>Specifies a pointer to the image data in memory.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+        <para>Texturing maps a portion of a specified texture image
+        onto each graphical primitive for which texturing is enabled.
+        To enable and disable two-dimensional texturing, call
+        <citerefentry><refentrytitle>glEnable</refentrytitle></citerefentry> and
+        <citerefentry><refentrytitle>glDisable</refentrytitle></citerefentry>
+        with argument <constant>GL_TEXTURE_2D</constant>.
+        Two-dimensional texturing is initially disabled.
+        </para>
+
+        <para>To define texture images, call
+        <function>glTexImage2D</function>.
+        The arguments describe the parameters of the texture image,
+        such as height, width, width of the border, level-of-detail
+        number (see
+        <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>),
+        and number of color components provided. The last three
+        arguments describe how the image is represented in memory.</para>
+
+        <para>Data is read from <parameter>pixels</parameter>
+        as a sequence of unsigned bytes or shorts, depending on
+        <parameter>type</parameter>.
+        These values are grouped into sets of one, two, three, or
+        four values, depending on <parameter>format</parameter>,
+        to form elements.</para>
+
+        <para>When <parameter>type</parameter> is
+        <constant>GL_UNSIGNED_BYTE</constant>, each of these bytes is
+        interpreted as one color component, depending on
+        <parameter>format</parameter>.
+        When <parameter>type</parameter> is one of
+        <constant>GL_UNSIGNED_SHORT_5_6_5</constant>,
+        <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,
+        <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant>,
+        each unsigned value is interpreted as containing all the components
+        for a single pixel, with the color components arranged according to
+        format.</para>
+
+        <para>The first element corresponds to the lower left corner of
+        the texture image. Subsequent elements progress left-to-right
+        through the remaining texels in the lowest row of the texture
+        image, and then in successively higher rows of the texture
+        image. The final element corresponds to the upper right corner
+        of the texture image.</para>
+
+        <para>By default, adjacent pixels are taken from adjacent memory
+        locations, except that after all <parameter>width</parameter> pixels are
+        read, the read pointer is advanced to the next four-byte boundary.
+        The four-byte row alignment is specified by
+        <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>
+        with argument <constant>GL_UNPACK_ALIGNMENT</constant>, and it can be set
+        to one, two, four, or eight bytes.</para>
+
+        <para><parameter>format</parameter>
+        determines the composition of each element in
+        <parameter>pixels</parameter>.
+        It can assume one of the following symbolic values:</para>
+
+        <variablelist>
+            <varlistentry>
+                <term>
+                    <constant>GL_ALPHA</constant>
+                </term>
+
+                <listitem>
+                    <para>Each element is a single alpha component. The GL
+                    converts it to floating point and assembles it into an
+                    RGBA element by attaching 0 for red, green, and blue.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_RGB</constant>
+                </term>
+
+                <listitem>
+                    <para>Each element is an RGB triple. The GL converts it
+                    to fixed-point or floating-point and assembles it into an
+                    RGBA element by attaching 1 for alpha.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_RGBA</constant>
+                </term>
+
+                <listitem>
+                    <para>Each element contains all four components. The GL
+                    converts it to fixed-point or floating-point.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_LUMINANCE</constant>
+                </term>
+
+                <listitem>
+                    <para>Each element is a single luminance value. The GL
+                    converts it to fixed-point or floating-point, then
+                    assembles it into an RGBA element by replicating the
+                    luminance value three times for red, green, and blue and
+                    attaching 1 for alpha.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term>
+                    <constant>GL_LUMINANCE_ALPHA</constant>
+                </term>
+
+                <listitem>
+                    <para>Each element is a luminance/alpha pair. The GL
+                    converts it to fixed-point or floating point, then
+                    assembles it into an RGBA element by replicating the
+                    luminance value three times for red, green, and blue.</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+<!--
+        <para>If an application wants to store the texture at a certain
+        resolution or in a certain format, it can request the resolution and
+        with <parameter>internalformat</parameter>.
+        The GL will choose an internal representation that closely
+        approximates that requested by
+        <parameter>internalformat</parameter>,
+        but it may not match exactly. (The representations specified by
+        <constant>GL_LUMINANCE</constant>,
+        <constant>GL_LUMINANCE_ALPHA</constant>,
+        <constant>GL_RGB</constant>, and
+        <constant>GL_RGBA</constant> must match exactly.)</para>
+-->
+
+<!--
+        <para>A one-component texture image uses only the red component
+        of the RGBA color extracted from <parameter>pixels</parameter>.
+        A two-component image uses the R and A values. A
+        three-component image uses the R, G, and B values. A
+        four-component image uses all of the RGBA components.</para>
+-->
+    </refsect1>
+
+    <refsect1 id="notes"><title>Notes</title>
+
+        <para><parameter>pixels</parameter>
+        may be <constant>NULL</constant>. In this case texture memory is allocated
+        to accommodate a texture of width <parameter>width</parameter> and height
+        <parameter>height</parameter>.
+        You can then download subtextures to initialize this texture
+        memory. The image is undefined if the user tries to apply an
+        uninitialized portion of the texture image to a primitive.</para>
+
+        <para><function>glTexImage2D</function>
+        specifies the two-dimensional texture for the currently bound texture
+        specified with
+        <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+        and the current texture
+        unit, specified with
+        <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>.
+        </para>
+    </refsect1>
+
+    <refsect1 id="errors"><title>Errors</title>
+
+        <para><constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>target</parameter> is not
+        <constant>GL_TEXTURE_2D</constant>.</para>
+
+        <para><constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>format</parameter> is not an accepted constant.</para>
+
+        <para><constant>GL_INVALID_ENUM</constant> is generated if
+        <parameter>type</parameter> is not an accepted constant.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>level</parameter> is less than 0.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> may be generated if
+        <parameter>level</parameter> is greater than
+        <inlineequation><mml:math>
+            <mml:msub><mml:mo>log</mml:mo><mml:mn>2</mml:mn></mml:msub><mml:mi>max</mml:mi>
+        </mml:math></inlineequation>, where
+        <replaceable>max</replaceable> is the returned value of
+        <constant>GL_MAX_TEXTURE_SIZE</constant>.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>internalformat</parameter>
+        is not an accepted constant.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>width</parameter> or <parameter>height</parameter>
+        is less than 0 or greater than <constant>GL_MAX_TEXTURE_SIZE</constant>,
+        or if either cannot be represented as
+        <inlineequation><mml:math>
+            <mml:msup><mml:mn>2</mml:mn><mml:mi>k</mml:mi></mml:msup>
+        </mml:math></inlineequation>
+        for some integer <replaceable>k</replaceable>.</para>
+
+        <para><constant>GL_INVALID_VALUE</constant> is generated if
+        <parameter>border</parameter> is not 0.</para>
+
+        <para><constant>GL_INVALID_OPERATION</constant> is generated if
+        <parameter>internalformat</parameter> and
+        <parameter>format</parameter> are not the same.</para>
+
+        <para><constant>GL_INVALID_OPERATION</constant> is generated if
+        <parameter>type</parameter> is
+        <constant>GL_UNSIGNED_SHORT_5_6_5</constant> and
+        <parameter>format</parameter> is not
+        <constant>GL_RGB</constant>.</para>
+
+        <para><constant>GL_INVALID_OPERATION</constant> is generated if
+        <parameter>type</parameter> is one of
+        <constant>GL_UNSIGNED_SHORT_4_4_4_4</constant>,  or
+        <constant>GL_UNSIGNED_SHORT_5_5_5_1</constant> and
+        <parameter>format</parameter> is not
+        <constant>GL_RGBA</constant>.</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+
+        <para>
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>
+        with argument <constant>GL_MAX_TEXTURE_SIZE</constant></para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+        <para>
+        <citerefentry><refentrytitle>glActiveTexture</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glBindTexture</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCopyTexImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glCopyTexSubImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glMatrixMode</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glPixelStorei</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexEnv</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexSubImage2D</refentrytitle></citerefentry>,
+        <citerefentry><refentrytitle>glTexParameter</refentrytitle></citerefentry>
+        </para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+        <para>
+            Copyright <trademark class="copyright"></trademark> 2003-2004
+            Silicon Graphics, Inc. This document is licensed under the SGI
+            Free Software B License. For details, see
+            <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+        </para>
+    </refsect1>
+</refentry>

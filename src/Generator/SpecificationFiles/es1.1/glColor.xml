@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook MathML Module V1.1b1//EN"
+			    "http://www.oasis-open.org/docbook/xml/mathml/1.1CR1/dbmathml.dtd">
+<refentry xml:base="" id="glColor">
+    <refmeta>
+	<refmetainfo>
+	    <copyright>
+		<year>2003-2004</year>
+		<holder>Silicon Graphics, Inc.</holder>
+	    </copyright>
+	</refmetainfo>
+	<refentrytitle>glColor</refentrytitle>
+	<manvolnum>3G</manvolnum>
+    </refmeta>
+
+    <refnamediv>
+	<refdescriptor>glColor</refdescriptor>
+	<refname>glColor4f</refname>
+	<refname>glColor4x</refname>
+	<refpurpose>set the current color</refpurpose>
+    </refnamediv>
+
+    <refsynopsisdiv>
+	<title>C Specification</title>
+
+	<funcsynopsis>
+	    <funcprototype>
+		<funcdef>void <function>glColor4f</function></funcdef>
+		<paramdef>GLfloat <parameter>red</parameter></paramdef>
+		<paramdef>GLfloat <parameter>green</parameter></paramdef>
+		<paramdef>GLfloat <parameter>blue</parameter></paramdef>
+		<paramdef>GLfloat <parameter>alpha</parameter></paramdef>
+	    </funcprototype>
+	    <funcprototype>
+		<funcdef>void <function>glColor4x</function></funcdef>
+		<paramdef>GLfixed <parameter>red</parameter></paramdef>
+		<paramdef>GLfixed <parameter>green</parameter></paramdef>
+		<paramdef>GLfixed <parameter>blue</parameter></paramdef>
+		<paramdef>GLfixed <parameter>alpha</parameter></paramdef>
+	    </funcprototype>
+	    <funcprototype revision="es1.1">
+		  <funcdef>void <function>glColor4ub</function></funcdef>
+		<paramdef>GLubyte <parameter>red</parameter></paramdef>
+		<paramdef>GLubyte <parameter>green</parameter></paramdef>
+		<paramdef>GLubyte <parameter>blue</parameter></paramdef>
+		<paramdef>GLubyte <parameter>alpha</parameter></paramdef>
+	    </funcprototype>
+	</funcsynopsis>
+    </refsynopsisdiv>
+
+    <refsect1 id="parameters"><title>Parameters</title>
+
+	<variablelist>
+	    <varlistentry>
+		<term>
+		<parameter>red</parameter>,
+		<parameter>green</parameter>,
+		<parameter>blue</parameter>,
+		<parameter>alpha</parameter>
+		</term>
+		<listitem>
+		    <para>Specify new red, green, blue, and alpha values for
+		    the current color.</para>
+		</listitem>
+	    </varlistentry>
+	</variablelist>
+    </refsect1>
+
+    <refsect1 id="description"><title>Description</title>
+
+	<para><function>glColor</function> sets a new four-valued current RGBA color.</para>
+
+	<para>Current color values are stored in fixed-point or
+	floating-point. In case the values are stored in
+	floating-point, the mantissa and exponent sizes are
+	unspecified.</para>
+
+	<para>Neither fixed-point nor floating-point values are clamped
+	to the range [0, 1] before the current color is updated.
+	However, color components are clamped to this range before they
+	are interpolated or written into the color buffer.</para>
+
+	<para revision="es1.1">Unsigned byte color components specified
+	with <function>glColor4ub</function> are linearly mapped to
+	floating-point values such that 255 maps to 1.0 (full
+	intensity), and 0 maps to 0.0 (zero intensity).</para>
+
+    </refsect1>
+
+    <refsect1 id="notes" revision="es1.1">
+	<title>Notes</title>
+
+	<para> The initial value for the current color is (1, 1, 1, 1).</para>
+    </refsect1>
+
+    <refsect1 id="associatedgets"><title>Associated Gets</title>
+        <para>
+            <citerefentry><refentrytitle>glGet</refentrytitle></citerefentry> with argument <constant>GL_CURRENT_COLOR</constant>
+        </para>
+    </refsect1>
+
+    <refsect1 id="seealso"><title>See Also</title>
+
+	<para>
+	<citerefentry><refentrytitle>glColorPointer</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glNormal</refentrytitle></citerefentry>,
+	<citerefentry><refentrytitle>glMultiTexCoord</refentrytitle></citerefentry>
+	</para>
+    </refsect1>
+    <refsect1 id="copyright"><title>Copyright</title>
+	<para>
+	    Copyright <trademark class="copyright"></trademark> 2003-2004
+	    Silicon Graphics, Inc. This document is licensed under the SGI
+	    Free Software B License. For details, see
+	    <ulink url="https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt">https://khronos.org/registry/OpenGL-Refpages/LICENSES/LicenseRef-FreeB.txt</ulink>.
+	</para>
+    </refsect1>
+</refentry>
