@@ -212,6 +212,24 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.SETFOCUS:
+                    {
+                        HWND h = HWndDict[hWnd];
+                        //h.EventQueue.Send(h, WindowEventType.GotFocus, null);
+                        Console.WriteLine("Got focus");
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.KILLFOCUS:
+                    {
+                        // This message can be sent after WM_CLOSE which means that the specificed window might not exist any more.
+                        if (HWndDict.TryGetValue(hWnd, out HWND? h))
+                        {
+                            //h.EventQueue.Send(h, WindowEventType.LostFocus, null);
+                            Console.WriteLine("Lost focus");
+                        }
+                        
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 case WM.SETCURSOR:
                     {
                         int ht = ((int)lParam) & Win32.LoWordMask;
@@ -399,11 +417,15 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.CLOSE:
                     {
+                        // FIXME: Get the result back from the user here!
+                        // Or delay the closing of the window until the user has handled the message.
+                        // This could hang the window if the user code is stuck.
                         HWND h = HWndDict[hWnd];
                         h.EventQueue.Send(h, WindowEventType.Close, new CloseEventArgs(h));
 
                         // FIXME: HACK! This is not the greatest way to get the WindowComponent...
                         h.WindowComponent.Destroy(h);
+
                         return IntPtr.Zero;
                     }
                 case WM.DESTROY:
