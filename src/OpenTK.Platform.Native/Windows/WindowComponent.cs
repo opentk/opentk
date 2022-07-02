@@ -245,7 +245,6 @@ namespace OpenTK.Platform.Native.Windows
                             h.TrackingMouse = true;
 
                             h.EventQueue.Send(h, WindowEventType.MouseEnter, new MouseEnterEventArgs(true));
-                            Console.WriteLine("Tracking!");
                         }
 
                         h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseMoveEventArgs(x, y));
@@ -257,24 +256,144 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
                         h.TrackingMouse = false;
 
-                        h.EventQueue.Send(h, WindowEventType.MouseMove, new MouseEnterEventArgs(false));
+                        h.EventQueue.Send(h, WindowEventType.MouseEnter, new MouseEnterEventArgs(false));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.LBUTTONDOWN:
                 case WM.MBUTTONDOWN:
                 case WM.RBUTTONDOWN:
+                case WM.XBUTTONDOWN:
                     {
-                        MouseButton button = uMsg switch
+                        MouseButton? button;
+                        switch (uMsg)
                         {
-                            WM.LBUTTONDOWN => MouseButton.Button1,
-                            WM.RBUTTONDOWN => MouseButton.Button2,
-                            WM.MBUTTONDOWN => MouseButton.Button3,
-                            _ => throw new InvalidEnumArgumentException(nameof(uMsg), (int)uMsg, typeof(WM)),
-                        };
+                            case WM.LBUTTONDOWN:
+                                button = MouseButton.Button1;
+                                break;
+                            case WM.MBUTTONDOWN:
+                                button = MouseButton.Button3;
+                                break;
+                            case WM.RBUTTONDOWN:
+                                button = MouseButton.Button2;
+                                break;
+                            case WM.XBUTTONDOWN:
+                                {
+                                    const int XBUTTON1 = 0x0001;
+                                    const int XBUTTON2 = 0x0002;
+                                    int hiWord = ((int)wParam.ToUInt32() & Win32.HiWordMask) >> 16;
+
+                                    if (hiWord == XBUTTON1)
+                                    {
+                                        button = MouseButton.Button4;
+                                    }
+                                    else if (hiWord == XBUTTON2)
+                                    {
+                                        button = MouseButton.Button5;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        button = null;
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new InvalidEnumArgumentException(nameof(uMsg), (int)uMsg, typeof(WM));
+                        }
+
+                        if (button != null)
+                        {
+                            HWND h = HWndDict[hWnd];
+                            h.EventQueue.Send(h, WindowEventType.MouseDown, new MouseButtonDownEventArgs(button.Value));
+                        }
+                        
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.LBUTTONUP:
+                case WM.MBUTTONUP:
+                case WM.RBUTTONUP:
+                case WM.XBUTTONUP:
+                    {
+                        MouseButton? button;
+                        switch (uMsg)
+                        {
+                            case WM.LBUTTONUP:
+                                button = MouseButton.Button1;
+                                break;
+                            case WM.MBUTTONUP:
+                                button = MouseButton.Button3;
+                                break;
+                            case WM.RBUTTONUP:
+                                button = MouseButton.Button2;
+                                break;
+                            case WM.XBUTTONUP:
+                                {
+                                    const int XBUTTON1 = 0x0001;
+                                    const int XBUTTON2 = 0x0002;
+                                    int hiWord = ((int)wParam.ToUInt32() & Win32.HiWordMask) >> 16;
+
+                                    if (hiWord == XBUTTON1)
+                                    {
+                                        button = MouseButton.Button4;
+                                    }
+                                    else if (hiWord == XBUTTON2)
+                                    {
+                                        button = MouseButton.Button5;
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        button = null;
+                                    }
+
+                                    break;
+                                }
+                            default:
+                                throw new InvalidEnumArgumentException(nameof(uMsg), (int)uMsg, typeof(WM));
+                        }
+
+                        if (button != null)
+                        {
+                            HWND h = HWndDict[hWnd];
+                            h.EventQueue.Send(h, WindowEventType.MouseUp, new MouseButtonUpEventArgs(button.Value));
+                        }
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.SIZE:
+                    {
+                        SIZE size = (SIZE)wParam.ToUInt32();
 
                         HWND h = HWndDict[hWnd];
-                        h.EventQueue.Send(h, WindowEventType.MouseDown, new MouseButtonDownEventArgs(button));
+
+                        switch (size)
+                        {
+                            case SIZE.Maximized:
+                                h.WindowState = WindowState.Maximized;
+                                Console.WriteLine($"Move: {size}");
+                                //h.EventQueue.Send(h, WindowEventType.Maximized, null);
+                                break;
+                            case SIZE.Minimized:
+                                h.WindowState = WindowState.Minimized;
+                                Console.WriteLine($"Move: {size}");
+                                //h.EventQueue.Send(h, WindowEventType.Minimized, null);
+                                break;
+                            case SIZE.Restored:
+                                if (h.WindowState != WindowState.Restored)
+                                {
+                                    h.WindowState = WindowState.Restored;
+                                    Console.WriteLine($"Move: {size}");
+                                    //h.EventQueue.Send(h, WindowEventType.Restored, null);
+                                }
+                                break;
+                            case SIZE.MaxShow:
+                            case SIZE.MaxHide:
+                            default:
+                                // Igonre these for now!
+                                break;
+                        }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }

@@ -41,7 +41,7 @@ namespace OpenTK.Core.Platform
     {
         public bool Entered { get; set; }
 
-        public MouseEnter(bool entered)
+        public MouseEnterEventArgs(bool entered)
         {
             Entered = entered;
         }
@@ -65,6 +65,16 @@ namespace OpenTK.Core.Platform
         public MouseButton Button { get; private set; }
 
         public MouseButtonDownEventArgs(MouseButton button)
+        {
+            Button = button;
+        }
+    }
+
+    public class MouseButtonUpEventArgs : WindowEventArgs
+    {
+        public MouseButton Button { get; private set; }
+
+        public MouseButtonUpEventArgs(MouseButton button)
         {
             Button = button;
         }

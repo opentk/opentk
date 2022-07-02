@@ -270,6 +270,14 @@ public class Program
 
             return;
         }
+        else if (type == WindowEventType.MouseUp)
+        {
+            MouseButtonUpEventArgs mouseButtonUpArgs = (MouseButtonUpEventArgs)arguments;
+
+            Console.WriteLine($"Released Mouse Button: {mouseButtonUpArgs.Button}");
+
+            return;
+        }
         else if (type == WindowEventType.Close)
         {
             CloseEventArgs closeArgs = (CloseEventArgs)arguments;

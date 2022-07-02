@@ -15,6 +15,7 @@ namespace OpenTK.Core.Platform
         MouseEnter,
         MouseMove,
         MouseDown,
+        MouseUp,
 
         KeyDown,
         KeyUp,

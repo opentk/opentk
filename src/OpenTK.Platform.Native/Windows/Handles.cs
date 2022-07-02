@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    internal enum WindowState
+    {
+        Restored,
+        Maximized,
+        Minimized,
+    }
+
 #pragma warning disable SA1649 // File name should match first type name
     internal class HWND : WindowHandle
     {
@@ -21,12 +28,15 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool TrackingMouse { get; set; }
 
+        // FIXME: Initialize this property properly!
+        public WindowState WindowState { get; set; }
+
         // FIXME: Is this a good place for this?
         public SimpleEventQueue<WindowEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<WindowEventType, WindowEventArgs>();
 
         // FIXME: This is kind of a hack so that we can get access to the window component in the WndProc...
         public WindowComponent WindowComponent { get; private set; }
-
+        
         public HWND(IntPtr hWnd, WindowComponent windowComponent, GraphicsApiHints hints)
         {
             HWnd = hWnd;

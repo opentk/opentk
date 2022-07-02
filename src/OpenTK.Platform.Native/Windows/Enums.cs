@@ -648,6 +648,34 @@ namespace OpenTK.Platform.Native.Windows
         Query = 0x40000000,
     }
 
+    internal enum SIZE
+    {
+        /// <summary>
+        /// Message is sent to all pop-up windows when some other window is maximized.
+        /// </summary>
+        MaxHide = 4,
+
+        /// <summary>
+        /// The window has been maximized.
+        /// </summary>
+        Maximized = 2,
+
+        /// <summary>
+        /// Message is sent to all pop-up windows when some other window has been restored to its former size.
+        /// </summary>
+        MaxShow = 3,
+
+        /// <summary>
+        /// The window has been minimized.
+        /// </summary>
+        Minimized = 1,
+
+        /// <summary>
+        /// The window has been resized, but neither the SIZE_MINIMIZED nor SIZE_MAXIMIZED value applies.
+        /// </summary>
+        Restored = 0,
+    }
+
     [Flags]
     internal enum PFD : uint
     {
