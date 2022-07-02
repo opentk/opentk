@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Implementations.Windows
+namespace OpenTK.Platform.Native.Windows
 {
 #pragma warning disable SA1516 // Elements should be separated by blank line
 #pragma warning disable SA1401 // Fields should be private
@@ -68,12 +68,61 @@ namespace OpenTK.Core.Platform.Implementations.Windows
             _GetPixelFormatAttribivARB__fnptr = (delegate* unmanaged<IntPtr, int, int, uint, int*, int*, int>)GetProcAddress("wglGetPixelFormatAttribivARB");
             return _GetPixelFormatAttribivARB__fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
-        public static unsafe bool GetPixelFormatAttribivARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, uint nAttributes, int[] attributes, int[] values)
+        public static unsafe bool GetPixelFormatAttribivARB(IntPtr hdc, int iPixelFormat, int iLayerPlane, int nAttributes, ReadOnlySpan<WGLPixelFormatAttribute> attributes, Span<int> values)
         {
-            fixed (int* piAttributes = attributes)
+            fixed (WGLPixelFormatAttribute* piAttributes = attributes)
             fixed (int* piValues = values)
             {
-                return GetPixelFormatAttribivARB_(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues) != 0;
+                unchecked
+                {
+                    return GetPixelFormatAttribivARB_(hdc, iPixelFormat, iLayerPlane, (uint)nAttributes, (int*)piAttributes, piValues) != 0;
+                }
+            }
+        }
+
+        /*    BOOL wglChoosePixelFormatARB(HDC hdc,
+                                 const int *piAttribIList,
+                                 const FLOAT *pfAttribFList,
+                                 UINT nMaxFormats,
+                                 int *piFormats,
+                                 UINT *nNumFormats);
+        */
+
+        internal static unsafe delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int> _ChoosePixelFormatARB__fnptr = &ChoosePixelFormatARB__Lazy;
+        public static unsafe int ChoosePixelFormatARB_(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats) => _ChoosePixelFormatARB__fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
+        [UnmanagedCallersOnly]
+        private static unsafe int ChoosePixelFormatARB__Lazy(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats)
+        {
+            _ChoosePixelFormatARB__fnptr = (delegate* unmanaged<IntPtr, int*, float*, uint, int*, uint*, int>)GetProcAddress("wglChoosePixelFormatARB");
+            return _ChoosePixelFormatARB__fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
+        }
+        public static unsafe bool ChoosePixelFormatARB(IntPtr hdc, Span<int> attribIList, Span<float> attribFList, int nMaxFormats, Span<int> formats, out int numFormats)
+        {
+            fixed (int* piAttribIList = attribIList)
+            fixed (float* pfAttribFList = attribFList)
+            fixed (int* piFormats = formats)
+            fixed (int* nNumFormats = &numFormats)
+            {
+                unchecked
+                {
+                    return ChoosePixelFormatARB_(hdc, piAttribIList, pfAttribFList, (uint)nMaxFormats, piFormats, (uint*)nNumFormats) != 0;
+                }
+            }
+        }
+
+        internal static unsafe delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr> _CreateContextAttribsARB__fnptr = &CreateContextAttribsARB__Lazy;
+        public static unsafe IntPtr CreateContextAttribsARB_(IntPtr hdc, IntPtr hglrc, int* attribList) => _CreateContextAttribsARB__fnptr(hdc, hglrc, attribList);
+        [UnmanagedCallersOnly]
+        private static unsafe IntPtr CreateContextAttribsARB__Lazy(IntPtr hdc, IntPtr hglrc, int* attribList)
+        {
+            _CreateContextAttribsARB__fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)GetProcAddress("wglCreateContextAttribsARB");
+            return _CreateContextAttribsARB__fnptr(hdc, hglrc, attribList);
+        }
+        public static unsafe IntPtr CreateContextAttribsARB(IntPtr hdc, IntPtr hglrc, Span<int> attribList)
+        {
+            fixed (int* attribPtr = attribList)
+            {
+                return CreateContextAttribsARB_(hdc, hglrc, attribPtr);
             }
         }
     }

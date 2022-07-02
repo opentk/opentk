@@ -1,3 +1,5 @@
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>
@@ -5,6 +7,6 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public abstract class WindowHandle : PalHandle
     {
-        public GraphicsApiHints GraphicsApiHints { get; protected set; }
+        public GraphicsApiHints? GraphicsApiHints { get; protected set; }
     }
 }

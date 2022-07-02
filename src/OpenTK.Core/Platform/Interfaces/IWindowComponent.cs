@@ -229,6 +229,28 @@ namespace OpenTK.Core.Platform
         void SetCursor(WindowHandle handle, CursorHandle cursor);
 
         /// <summary>
+        /// Converts screen coordinates to window relative coordinates.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="x">The screen x coordinate.</param>
+        /// <param name="y">The screen y coordinate.</param>
+        /// <param name="clientX">The client x coordinate.</param>
+        /// <param name="clientY">The client y coordinate.</param>
+        /// FIXME: Change to use Vector2i instead of x and y variables.
+        void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY);
+
+        /// <summary>
+        /// Converts window relative coordinates to screen coordinates.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="clientX">The client x coordinate.</param>
+        /// <param name="clientY">The client y coordinate.</param>
+        /// <param name="x">The screen x coordinate.</param>
+        /// <param name="y">The screen y coordinate.</param>
+        /// FIXME: Change to use Vector2i instead of x and y variables.
+        void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
+
+        /// <summary>
         /// Get the event queue object for a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>

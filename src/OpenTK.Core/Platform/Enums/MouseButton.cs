@@ -5,6 +5,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public enum MouseButton
     {
+        // FIXME: Better names!
+
         /// <summary>
         /// The primary mouse button (usually the left one).
         /// </summary>

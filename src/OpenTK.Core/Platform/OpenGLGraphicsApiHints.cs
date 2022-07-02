@@ -38,28 +38,35 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Number of bits for stencil buffer.
         /// </summary>
-        public int StencilBits { get; set; } = 0;
+        public ContextStencilBits StencilBits { get; set; } = ContextStencilBits.Stencil8;
 
         /// <summary>
         /// Number of bits for depth buffer.
         /// </summary>
-        public int DepthBits { get; set; } = 24;
+        public ContextDepthBits DepthBits { get; set; } = ContextDepthBits.Depth24;
 
         /// <summary>
         /// Number of MSAA samples.
         /// </summary>
-        public int Multisamples { get; set; } = 4;
+        public int Multisamples { get; set; } = 0;
 
         /// <summary>
         /// Enable double buffering.
         /// </summary>
         public bool DoubleBuffer { get; set; } = true; // TODO: Is it really necessary?
 
+        /// <summary>
+        /// Makes the backbuffer support sRGB.
+        /// </summary>
+        public bool sRGBFramebuffer { get; set; } = false;
+
         public OpenGLProfile Profile { get; set; } = OpenGLProfile.None;
 
-        public bool ForwardCompatible { get; set; } = false;
+        public bool ForwardCompatibleFlag { get; set; } = false;
 
         public bool DebugFlag { get; set; } = false;
+
+        public OpenGLContextHandle? SharedContext { get; set; } = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OpenGLGraphicsApiHints"/> class.
