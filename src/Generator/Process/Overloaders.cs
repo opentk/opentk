@@ -676,9 +676,19 @@ namespace Generator.Process
         // - 2022-06-27
         public static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
         {
-            { "CreateQueries", "CreateQuery" },
-            { "DeleteQueries", "DeleteQuery" },
-            { "GenQueries", "GenQuery" },
+            { "Queries", "Query" },
+        };
+
+        public static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
+        {
+            { "ids", "id" },
+            { "arrays", "array" },
+            { "textures", "texture" },
+            { "samplers", "sampler" },
+            { "renderbuffers", "renderbuffer" },
+            { "pipelines", "pipeline" },
+            { "framebuffers", "framebuffer" },
+            { "buffers", "buffer" },
         };
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
@@ -706,8 +716,28 @@ namespace Generator.Process
                 return false;
             }
 
-            string? newName;
-            if (pluralNameToSingularName.TryGetValue(nativeName, out newName) == false)
+            string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
+
+            string? namePrefix = null;
+            string? nameWithoutPrefix = null;
+            foreach (var prefix in Prefixes)
+            {
+                if (nativeName.StartsWith(prefix))
+                {
+                    namePrefix = prefix;
+                    nameWithoutPrefix = nativeName[prefix.Length..];
+                }
+            }
+
+            if (nameWithoutPrefix == null || namePrefix == null)
+                throw new Exception($"Function name '{nativeName}' doesn't start with Gen/Create/Delete and cannot be overloaded by this overloader.");
+
+            string newName;
+            if (pluralNameToSingularName.TryGetValue(nameWithoutPrefix, out string? newPostfix))
+            {
+                newName = $"{namePrefix}{newPostfix}";
+            }
+            else
             {
                 // If the name didn't have a custom singular name, we just remove the trailing 's'
                 newName = NameMangler.RemoveEnd(nativeName, "s");
@@ -727,9 +757,16 @@ namespace Generator.Process
                     parameters[lengthParameterIndex != -1 ? i + 1 : i] = parameter;
                 }
             }
-
+            
             if (lengthParameterIndex == -1)
                 throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
+
+            string? newPointerParameterName;
+            if (parameterNamesToChange.TryGetValue(pointerParameter.Name, out newPointerParameterName) == false)
+            {
+                newPointerParameterName = pointerParameter.Name;
+                Logger.Warning($"Parameter '{pointerParameter.Name}' needs a depluralized name!");
+            }
 
             var nameTable = overload.NameTable.New();
             nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
@@ -740,7 +777,7 @@ namespace Generator.Process
                 // Remove ending 's' in parameter name.
                 // This works for Queries/Query because the parameter names in these functions is "ids
                 // - 2022-06-27
-                Name = NameMangler.RemoveEnd(pointerParameter.Name, "s"),
+                Name = newPointerParameterName,
                 Type = new CSRef(refType, pointerParameterType.BaseType),
                 Length = null
             };
