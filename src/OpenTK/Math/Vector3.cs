@@ -979,10 +979,10 @@ namespace OpenTK
         /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
+        [Obsolete("This function erroneously does a vector * matrix multiplication instead of the intended matrix * vector multiplication. Use TransformColumn() if proper right-handed multiplication is wanted, or TransformRow() for the existing behavior.")]
         public static Vector3 Transform(Matrix3 mat, Vector3 vec)
         {
-            Vector3 result;
-            Transform(ref vec, ref mat, out result);
+            Transform(ref vec, ref mat, out Vector3 result);
             return result;
         }
 
@@ -990,11 +990,56 @@ namespace OpenTK
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
         /// <param name="result">The transformed vector</param>
+        [Obsolete("Use TransformColumn() instead.")]
         public static void Transform(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
+        {
+            TransformColumn(ref mat, ref vec, out result);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="mat">The desired transformation.</param>
+        /// <param name="vec">The vector to transform.</param>
+        /// <returns>The transformed vector.</returns>
+        public static Vector3 TransformColumn(Matrix3 mat, Vector3 vec)
+        {
+            TransformColumn(ref mat, ref vec, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="result">The transformed vector</param>
+        public static void TransformColumn(ref Matrix3 mat, ref Vector3 vec, out Vector3 result)
         {
             result.X = mat.Row0.X * vec.X + mat.Row0.Y * vec.Y + mat.Row0.Z * vec.Z;
             result.Y = mat.Row1.X * vec.X + mat.Row1.Y * vec.Y + mat.Row1.Z * vec.Z;
             result.Z = mat.Row2.X * vec.X + mat.Row2.Y * vec.Y + mat.Row2.Z * vec.Z;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The desired transformation.</param>
+        /// <returns>The transformed vector.</returns>
+        public static Vector3 TransformRow(Vector3 vec, Matrix3 mat)
+        {
+            TransformColumn(ref mat, ref vec, out Vector3 result);
+            return result;
+        }
+
+        /// <summary>Transform a Vector by the given Matrix using right-handed notation</summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void TransformRow(ref Vector3 vec, ref Matrix3 mat, out Vector3 result)
+        {
+            result.X = vec.X * mat.Row0.X + vec.Y * mat.Row1.X + vec.Z * mat.Row2.X;
+            result.Y = vec.X * mat.Row0.Y + vec.Y * mat.Row1.Y + vec.Z * mat.Row2.Y;
+            result.Z = vec.X * mat.Row0.Z + vec.Y * mat.Row1.Z + vec.Z * mat.Row2.Z;
         }
 
         /// <summary>Transform a Vector3 by the given Matrix, and project the resulting Vector4 back to a Vector3</summary>
@@ -1311,7 +1356,7 @@ namespace OpenTK
         public static Vector3 operator *(Vector3 vec, Matrix3 mat)
         {
             Vector3 result;
-            Vector3.Transform(ref vec, ref mat, out result);
+            Vector3.TransformRow(ref vec, ref mat, out result);
             return result;
         }
 
@@ -1324,7 +1369,7 @@ namespace OpenTK
         public static Vector3 operator *(Matrix3 mat, Vector3 vec)
         {
             Vector3 result;
-            Vector3.Transform(ref mat, ref vec, out result);
+            Vector3.TransformColumn(ref mat, ref vec, out result);
             return result;
         }
 
