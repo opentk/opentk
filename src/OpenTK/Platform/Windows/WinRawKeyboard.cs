@@ -42,6 +42,8 @@ namespace OpenTK.Platform.Windows
         private readonly Dictionary<ContextHandle, int> rawids = new Dictionary<ContextHandle, int>();
         private readonly IntPtr window;
         private readonly object UpdateLock = new object();
+        
+        public bool UseVirtualKeys { private get; set; }
 
         public WinRawKeyboard(IntPtr windowHandle)
         {
@@ -187,7 +189,9 @@ namespace OpenTK.Platform.Windows
                 int keyboard_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
                 keyboard = keyboards[keyboard_handle];
 
-                Key key = WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
+                Key key = UseVirtualKeys ?
+                    WinKeyMap.TranslateVKey(scancode, vkey, extended0, out is_valid) :
+                    WinKeyMap.TranslateKey(scancode, vkey, extended0, extended1, out is_valid);
 
                 if (is_valid)
                 {

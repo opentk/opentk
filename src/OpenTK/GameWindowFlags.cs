@@ -28,7 +28,7 @@ using System;
 namespace OpenTK
 {
     /// <summary>
-    /// Defines bitwise combianations of GameWindow construction options.
+    /// Defines bitwise combinations of GameWindow construction options.
     /// </summary>
     [Flags]
     public enum GameWindowFlags
@@ -47,5 +47,10 @@ namespace OpenTK
         /// Indicates that the GameWindow should be a fixed window.
         /// </summary>
         FixedWindow = 2,
+        
+        /// <summary>
+        /// Use virtual key mappings instead (Windows only)
+        /// </summary>
+        UseVirtualKeys = 4,
     }
 }
