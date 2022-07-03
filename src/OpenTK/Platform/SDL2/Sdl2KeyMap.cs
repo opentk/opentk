@@ -268,7 +268,7 @@ namespace OpenTK.Platform.SDL2
                     return Key.Keypad8;
                 case Code.KP_9:
                     return Key.Keypad9;
-
+                case Code.KP_PERIOD:
                 case Code.KP_DECIMAL:
                     return Key.KeypadDecimal;
                 case Code.KP_PLUS:

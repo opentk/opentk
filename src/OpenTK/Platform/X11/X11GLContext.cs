@@ -385,15 +385,14 @@ namespace OpenTK.Platform.X11
                         Glx.QueryDrawable(Display, currentWindow.Handle, GLXAttribute.SWAP_INTERVAL_EXT, out value);
                         return value;
                     }
-                    else if (vsync_mesa_supported)
+                    if (vsync_mesa_supported)
                     {
                         return Glx.Mesa.GetSwapInterval();
                     }
-                    else if (vsync_sgi_supported)
+                    if (vsync_sgi_supported)
                     {
                         return sgi_swap_interval;
                     }
-
                     return 0;
                 }
             }

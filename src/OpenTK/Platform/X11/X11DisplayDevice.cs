@@ -45,8 +45,6 @@ namespace OpenTK.Platform.X11
         private readonly Dictionary<DisplayDevice, int> deviceToDefaultResolution = new Dictionary<DisplayDevice, int>();
         // Store a mapping between DisplayDevices and X11 screens.
         private readonly Dictionary<DisplayDevice, int> deviceToScreen = new Dictionary<DisplayDevice, int>();
-        // Keep the time when the config of each screen was last updated.
-        private readonly List<IntPtr> lastConfigUpdate = new List<IntPtr>();
 
         private bool xinerama_supported, xrandr_supported, xf86_supported;
 
@@ -77,7 +75,7 @@ namespace OpenTK.Platform.X11
                     // Note: this won't work correctly in the case of distinct X servers.
                     for (int i = 0; i < API.ScreenCount; i++)
                     {
-                        DisplayDevice dev = new DisplayDevice();
+                        DisplayDevice dev = new DisplayDevice(i);
                         dev.IsPrimary = i == Functions.XDefaultScreen(API.DefaultDisplay);
                         devices.Add(dev);
                         deviceToScreen.Add(dev, i);
@@ -121,7 +119,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-            throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
+                throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
         }
 
         private bool QueryXinerama(List<DisplayDevice> devices)
@@ -133,9 +131,10 @@ namespace OpenTK.Platform.X11
             {
                 IList<XineramaScreenInfo> screens = NativeMethods.XineramaQueryScreens(API.DefaultDisplay);
                 bool first = true;
+                int screenCount = 0;
                 foreach (XineramaScreenInfo screen in screens)
                 {
-                    DisplayDevice dev = new DisplayDevice();
+                    DisplayDevice dev = new DisplayDevice(screenCount);
                     dev.Bounds = new Rectangle(screen.X, screen.Y, screen.Width, screen.Height);
                     if (first)
                     {
@@ -143,6 +142,7 @@ namespace OpenTK.Platform.X11
                         // Makes sense conceptually, but is there a way to verify this?
                         dev.IsPrimary = true;
                         first = false;
+                        screenCount++;
                     }
                     devices.Add(dev);
                     // It seems that all X screens are equal to 0 is Xinerama is enabled, at least on Nvidia (verify?)
@@ -159,9 +159,8 @@ namespace OpenTK.Platform.X11
             {
                 int screen = deviceToScreen[dev];
 
-                IntPtr timestamp_of_last_update;
+                IntPtr timestamp_of_last_update; //TODO: Unused, may possibly be removable
                 Functions.XRRTimes(API.DefaultDisplay, screen, out timestamp_of_last_update);
-                lastConfigUpdate.Add(timestamp_of_last_update);
 
                 List<DisplayResolution> available_res = new List<DisplayResolution>();
 
@@ -174,13 +173,24 @@ namespace OpenTK.Platform.X11
                 XRRScreenSize[] sizes = FindAvailableResolutions(screen);
                 foreach (XRRScreenSize size in sizes)
                 {
+                    // Calculate the scaling factor for this resolution
+                    // Use a default 1,1 in case the reported physical size is zero / undefined
+                    Vector2 scaleFactor = new Vector2(1, 1);
+                    if (size.MWidth != 0 && size.MHeight != 0)
+                    {
+                        // DPI may be calculated by multiplying the screen width / height in pixels by 1 inch (25.4mm)
+                        // and then dividing it by the physical size in millimeters.
+                        // We then divide this by the default 96dpi to give the current scale factor as a size / resolution independant Vector2
+
+                        scaleFactor = new Vector2(((size.Width * 25.4f) / size.MWidth) / 96.0f, ((size.Height * 25.4f) / size.MHeight) / 96.0f);
+                    }
+
                     if (size.Width == 0 || size.Height == 0)
                     {
                         Debug.Print("[Warning] XRandR returned an invalid resolution ({0}) for display device {1}", size, screen);
                         continue;
                     }
-                    short[] rates = null;
-                    rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
+                    short[] rates = Functions.XRRRates(API.DefaultDisplay, screen, resolution_count);
 
                     // It seems that XRRRates returns 0 for modes that are larger than the screen
                     // can support, as well as for all supported modes. On Ubuntu 7.10 the tool
@@ -193,7 +203,8 @@ namespace OpenTK.Platform.X11
                         {
                             foreach (int depth in depths)
                             {
-                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, (float)rate));
+                                
+                                available_res.Add(new DisplayResolution(0, 0, size.Width, size.Height, depth, rate, scaleFactor));
                             }
                         }
                     }
@@ -204,7 +215,7 @@ namespace OpenTK.Platform.X11
                         // not distinguish between the two as far as resolutions are supported (since XRandR
                         // operates on X screens, not display devices) - we need to be careful not to add the
                         // same resolution twice!
-                        DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0);
+                        DisplayResolution res = new DisplayResolution(0, 0, size.Width, size.Height, depth, 0, scaleFactor);
                         if (!screenResolutionToIndex[screen].ContainsKey(res))
                         {
                             screenResolutionToIndex[screen].Add(res, resolution_count);
@@ -256,7 +267,7 @@ namespace OpenTK.Platform.X11
             }
 
             int currentScreen = 0;
-            Debug.Print("Using XF86 v" + major.ToString() + "." + minor.ToString());
+            Debug.Print("Using XF86 v" + major + "." + minor);
 
             foreach (DisplayDevice dev in devices)
             {
@@ -264,7 +275,7 @@ namespace OpenTK.Platform.X11
 
                 IntPtr srcArray;
                 API.XF86VidModeGetAllModeLines(API.DefaultDisplay, currentScreen, out count, out srcArray);
-                Debug.Print(count.ToString() + " modes detected on screen " + currentScreen.ToString());
+                Debug.Print(count + " modes detected on screen " + currentScreen);
                 IntPtr[] array = new IntPtr[count];
                 Marshal.Copy(srcArray, array, 0, count);
                 API.XF86VidModeModeInfo Mode = new API.XF86VidModeModeInfo();
@@ -298,8 +309,7 @@ namespace OpenTK.Platform.X11
 
         private static XRRScreenSize[] FindAvailableResolutions(int screen)
         {
-            XRRScreenSize[] resolutions = null;
-            resolutions = Functions.XRRSizes(API.DefaultDisplay, screen);
+            XRRScreenSize[] resolutions = Functions.XRRSizes(API.DefaultDisplay, screen);
             if (resolutions == null)
             {
                 throw new NotSupportedException("XRandR extensions not available.");
@@ -309,11 +319,10 @@ namespace OpenTK.Platform.X11
 
         private static float FindCurrentRefreshRate(int screen)
         {
-            short rate = 0;
             IntPtr screen_config = Functions.XRRGetScreenInfo(API.DefaultDisplay, Functions.XRootWindow(API.DefaultDisplay, screen));
-            rate = Functions.XRRConfigCurrentRate(screen_config);
+            short rate = Functions.XRRConfigCurrentRate(screen_config);
             Functions.XRRFreeScreenConfigInfo(screen_config);
-            return (float)rate;
+            return rate;
         }
 
         private static int FindCurrentDepth(int screen)
@@ -345,7 +354,7 @@ namespace OpenTK.Platform.X11
                 Debug.Print("Changing size of screen {0} from {1} to {2}",
                     screen, current_resolution_index, new_resolution_index);
 
-                int ret = 0;
+                int ret;
                 short refresh_rate = (short)(resolution != null ? resolution.RefreshRate : 0);
                 if (refresh_rate > 0)
                 {
@@ -383,19 +392,24 @@ namespace OpenTK.Platform.X11
             {
                 return ChangeResolutionXRandR(device, resolution);
             }
-            else if (xf86_supported)
+
+            if (xf86_supported)
             {
                 return ChangeResolutionXF86(device, resolution);
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public sealed override bool TryRestoreResolution(DisplayDevice device)
         {
             return TryChangeResolution(device, null);
+        }
+
+        public override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
+        {
+            DisplayDevice dev = DisplayDevice.GetDisplay(displayIndex);
+            return dev.current_resolution.ScaleFactor;
         }
 
         private static class NativeMethods

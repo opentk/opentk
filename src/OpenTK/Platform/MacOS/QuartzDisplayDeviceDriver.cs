@@ -35,7 +35,7 @@ namespace OpenTK.Platform.MacOS
 {
     internal sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
     {
-        private static object display_lock = new object();
+        private static readonly object display_lock = new object();
 
         public QuartzDisplayDeviceDriver()
         {
@@ -107,12 +107,7 @@ namespace OpenTK.Platform.MacOS
 
                             CV.DisplayLinkRelease(displayLink);
                         }
-
-                        //if (current) Debug.Write("  * ");
-                        //else Debug.Write("    ");
-
-                        //Debug.Print("Mode {0} is {1}x{2}x{3} @ {4}.", j, width, height, bpp, freq);
-
+                        
                         DisplayResolution thisRes = new DisplayResolution(0, 0, width, height, bpp, (float)freq);
                         opentk_dev_available_res.Add(thisRes);
 
@@ -121,6 +116,19 @@ namespace OpenTK.Platform.MacOS
                             opentk_dev_current_res = thisRes;
                         }
                     }
+                    //Copy the current display mode and take a pointer to it
+                    IntPtr displayMode = CG.CopyDisplayMode(currentDisplay);
+                    //Pull out the scaled width and height
+                    int scaledWidth = (int)CG.GetModeWidth(displayMode);
+                    int scaledHeight = (int)CG.GetModeHeight(displayMode);
+                    //Pull out the raw width and height
+                    int rawWidth = (int)CG.GetModePixelWidth(displayMode);
+                    int rawHeight = (int)CG.GetModePixelHeight(displayMode);
+                    //Remember to release the display mode
+                    CG.ReleaseDisplayMode(displayMode);
+
+                    float pixelScaleW = (float)rawWidth / scaledWidth;
+                    float pixelScaleH = (float)rawHeight / scaledHeight;
 
                     NSRect bounds = CG.DisplayBounds(currentDisplay);
                     Rectangle newRect = new Rectangle((int)bounds.Location.X, (int)bounds.Location.Y, (int)bounds.Size.Width, (int)bounds.Size.Height);
@@ -128,7 +136,7 @@ namespace OpenTK.Platform.MacOS
                     Debug.Print("Display {0} bounds: {1}", i, newRect);
 
                     DisplayDevice opentk_dev = new DisplayDevice(opentk_dev_current_res,
-                        primary, opentk_dev_available_res, newRect, currentDisplay);
+                        primary, opentk_dev_available_res, newRect, i, currentDisplay);
 
                     AvailableDevices.Add(opentk_dev);
 
@@ -142,13 +150,12 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        static internal IntPtr HandleTo(DisplayDevice displayDevice)
+        internal static IntPtr HandleTo(DisplayDevice displayDevice)
         {
             return (IntPtr)displayDevice.Id;
         }
 
-        private Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
-        private List<IntPtr> displaysCaptured = new List<IntPtr>();
+        private readonly Dictionary<IntPtr, IntPtr> storedModes = new Dictionary<IntPtr, IntPtr>();
 
         public sealed override bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
         {
@@ -174,11 +181,6 @@ namespace OpenTK.Platform.MacOS
 
                 if (width == resolution.Width && height == resolution.Height && bpp == resolution.BitsPerPixel && System.Math.Abs(freq - resolution.RefreshRate) < 1e-6)
                 {
-//                    if (displaysCaptured.Contains(display) == false)
-//                    {
-//                        CG.DisplayCapture(display);
-//                    }
-
                     Debug.Print("Changing resolution to {0}x{1}x{2}@{3}.", width, height, bpp, freq);
 
                     CG.DisplaySwitchToMode(display, displayModes[j]);
@@ -197,15 +199,30 @@ namespace OpenTK.Platform.MacOS
             if (storedModes.ContainsKey(display))
             {
                 Debug.Print("Restoring resolution.");
-
                 CG.DisplaySwitchToMode(display, storedModes[display]);
-                //CG.DisplayRelease(display);
-                displaysCaptured.Remove(display);
-
                 return true;
             }
 
             return false;
+        }
+
+        public sealed override Vector2 GetDisplayScaling (DisplayIndex displayIndex)
+        {
+            DisplayDevice device = GetDisplay (displayIndex);
+            IntPtr currentDisplay = HandleTo (device);
+
+            //Copy the current display mode and take a pointer to it
+            IntPtr displayMode = CG.CopyDisplayMode (currentDisplay);
+            //Pull out the scaled width and height
+            int scaledWidth = (int)CG.GetModeWidth (displayMode);
+            int scaledHeight = (int)CG.GetModeHeight (displayMode);
+            //Pull out the raw width and height
+            int rawWidth = (int)CG.GetModePixelWidth (displayMode);
+            int rawHeight = (int)CG.GetModePixelHeight (displayMode);
+            //Remember to release the display mode
+            CG.ReleaseDisplayMode (displayMode);
+
+            return new Vector2 (rawHeight / scaledHeight, rawWidth / scaledWidth);
         }
     }
 }
