@@ -672,11 +672,21 @@ namespace Generator.Process
 
     public class GenCreateAndDeleteOverloader : IOverloader
     {
+        public static readonly string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
+
         // Atm only Queries/Query needs this renaming
         // - 2022-06-27
         public static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
         {
             { "Queries", "Query" },
+            { "TransformFeedbacks", "TransformFeedback" },
+            { "VertexArrays", "VertexArray" },
+            { "Textures", "Texture" },
+            { "Samplers", "Sampler" },
+            { "Renderbuffers", "Renderbuffer" },
+            { "ProgramPipelines", "ProgramPipeline" },
+            { "Framebuffers", "Framebuffer" },
+            { "Buffers", "Buffer" },
         };
 
         public static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
@@ -716,8 +726,6 @@ namespace Generator.Process
                 return false;
             }
 
-            string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
-
             string? namePrefix = null;
             string? nameWithoutPrefix = null;
             foreach (var prefix in Prefixes)
@@ -740,7 +748,8 @@ namespace Generator.Process
             else
             {
                 // If the name didn't have a custom singular name, we just remove the trailing 's'
-                newName = NameMangler.RemoveEnd(nativeName, "s");
+                newName = nativeName;
+                Logger.Warning($"Function '{nativeName}' ({nameWithoutPrefix}) {nameWithoutPrefix[..^1]} needs a depluralized name.");
             }
 
             int lengthParameterIndex = -1;
