@@ -3578,10 +3578,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteTextures"/>
-        public static unsafe void DeleteTexture(in TextureHandle textures)
+        public static unsafe void DeleteTexture(in TextureHandle texture)
         {
             int n = 1;
-            fixed(TextureHandle* textures_handle = &textures)
+            fixed(TextureHandle* textures_handle = &texture)
             {
                 DeleteTextures(n, textures_handle);
             }
@@ -3615,9 +3615,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenTextures"/>
         public static unsafe TextureHandle GenTexture()
         {
-            TextureHandle textures;
+            TextureHandle texture;
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -3626,15 +3626,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
-            return textures;
+            return texture;
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe void GenTexture(out TextureHandle textures)
+        public static unsafe void GenTexture(out TextureHandle texture)
         {
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -3643,7 +3643,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
         }
         /// <inheritdoc cref="GenTextures"/>
@@ -5453,11 +5453,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="GenQueries"/>
-        public static unsafe QueryHandle GenQuerie()
+        public static unsafe QueryHandle GenQuery()
         {
-            QueryHandle ids;
+            QueryHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -5466,15 +5466,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             GenQueries(n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="GenQueries"/>
-        public static unsafe void GenQuerie(out QueryHandle ids)
+        public static unsafe void GenQuery(out QueryHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -5483,7 +5483,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             GenQueries(n, ids_handle);
         }
         /// <inheritdoc cref="GenQueries"/>
@@ -5513,10 +5513,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteQueries"/>
-        public static unsafe void DeleteQuerie(in QueryHandle ids)
+        public static unsafe void DeleteQuery(in QueryHandle id)
         {
             int n = 1;
-            fixed(QueryHandle* ids_handle = &ids)
+            fixed(QueryHandle* ids_handle = &id)
             {
                 DeleteQueries(n, ids_handle);
             }
@@ -5620,10 +5620,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteBuffers"/>
-        public static unsafe void DeleteBuffer(in BufferHandle buffers)
+        public static unsafe void DeleteBuffer(in BufferHandle buffer)
         {
             int n = 1;
-            fixed(BufferHandle* buffers_handle = &buffers)
+            fixed(BufferHandle* buffers_handle = &buffer)
             {
                 DeleteBuffers(n, buffers_handle);
             }
@@ -5657,9 +5657,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenBuffers"/>
         public static unsafe BufferHandle GenBuffer()
         {
-            BufferHandle buffers;
+            BufferHandle buffer;
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -5668,15 +5668,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
-            return buffers;
+            return buffer;
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe void GenBuffer(out BufferHandle buffers)
+        public static unsafe void GenBuffer(out BufferHandle buffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -5685,7 +5685,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="GenBuffers"/>
@@ -8458,10 +8458,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             return returnValue_str;
         }
         /// <inheritdoc cref="DeleteRenderbuffers"/>
-        public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffers)
+        public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffer)
         {
             int n = 1;
-            fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffers)
+            fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffer)
             {
                 DeleteRenderbuffers(n, renderbuffers_handle);
             }
@@ -8495,9 +8495,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenRenderbuffers"/>
         public static unsafe RenderbufferHandle GenRenderbuffer()
         {
-            RenderbufferHandle renderbuffers;
+            RenderbufferHandle renderbuffer;
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8506,15 +8506,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             GenRenderbuffers(n, renderbuffers_handle);
-            return renderbuffers;
+            return renderbuffer;
         }
         /// <inheritdoc cref="GenRenderbuffers"/>
-        public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffers)
+        public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8523,7 +8523,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             GenRenderbuffers(n, renderbuffers_handle);
         }
         /// <inheritdoc cref="GenRenderbuffers"/>
@@ -8577,10 +8577,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteFramebuffers"/>
-        public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffers)
+        public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffer)
         {
             int n = 1;
-            fixed(FramebufferHandle* framebuffers_handle = &framebuffers)
+            fixed(FramebufferHandle* framebuffers_handle = &framebuffer)
             {
                 DeleteFramebuffers(n, framebuffers_handle);
             }
@@ -8614,9 +8614,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenFramebuffers"/>
         public static unsafe FramebufferHandle GenFramebuffer()
         {
-            FramebufferHandle framebuffers;
+            FramebufferHandle framebuffer;
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8625,15 +8625,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             GenFramebuffers(n, framebuffers_handle);
-            return framebuffers;
+            return framebuffer;
         }
         /// <inheritdoc cref="GenFramebuffers"/>
-        public static unsafe void GenFramebuffer(out FramebufferHandle framebuffers)
+        public static unsafe void GenFramebuffer(out FramebufferHandle framebuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8642,7 +8642,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             GenFramebuffers(n, framebuffers_handle);
         }
         /// <inheritdoc cref="GenFramebuffers"/>
@@ -8696,10 +8696,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteVertexArrays"/>
-        public static unsafe void DeleteVertexArray(in VertexArrayHandle arrays)
+        public static unsafe void DeleteVertexArray(in VertexArrayHandle array)
         {
             int n = 1;
-            fixed(VertexArrayHandle* arrays_handle = &arrays)
+            fixed(VertexArrayHandle* arrays_handle = &array)
             {
                 DeleteVertexArrays(n, arrays_handle);
             }
@@ -8733,9 +8733,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenVertexArrays"/>
         public static unsafe VertexArrayHandle GenVertexArray()
         {
-            VertexArrayHandle arrays;
+            VertexArrayHandle array;
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8744,15 +8744,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             GenVertexArrays(n, arrays_handle);
-            return arrays;
+            return array;
         }
         /// <inheritdoc cref="GenVertexArrays"/>
-        public static unsafe void GenVertexArray(out VertexArrayHandle arrays)
+        public static unsafe void GenVertexArray(out VertexArrayHandle array)
         {
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8761,7 +8761,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             GenVertexArrays(n, arrays_handle);
         }
         /// <inheritdoc cref="GenVertexArrays"/>
@@ -9239,9 +9239,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenSamplers"/>
         public static unsafe SamplerHandle GenSampler()
         {
-            SamplerHandle samplers;
+            SamplerHandle sampler;
             int count = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9250,15 +9250,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             GenSamplers(count, samplers_handle);
-            return samplers;
+            return sampler;
         }
         /// <inheritdoc cref="GenSamplers"/>
-        public static unsafe void GenSampler(out SamplerHandle samplers)
+        public static unsafe void GenSampler(out SamplerHandle sampler)
         {
             int count = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9267,7 +9267,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             GenSamplers(count, samplers_handle);
         }
         /// <inheritdoc cref="GenSamplers"/>
@@ -9297,10 +9297,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteSamplers"/>
-        public static unsafe void DeleteSampler(in SamplerHandle samplers)
+        public static unsafe void DeleteSampler(in SamplerHandle sampler)
         {
             int count = 1;
-            fixed(SamplerHandle* samplers_handle = &samplers)
+            fixed(SamplerHandle* samplers_handle = &sampler)
             {
                 DeleteSamplers(count, samplers_handle);
             }
@@ -10793,10 +10793,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="DeleteTransformFeedbacks"/>
-        public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle ids)
+        public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle id)
         {
             int n = 1;
-            fixed(TransformFeedbackHandle* ids_handle = &ids)
+            fixed(TransformFeedbackHandle* ids_handle = &id)
             {
                 DeleteTransformFeedbacks(n, ids_handle);
             }
@@ -10830,9 +10830,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenTransformFeedbacks"/>
         public static unsafe TransformFeedbackHandle GenTransformFeedback()
         {
-            TransformFeedbackHandle ids;
+            TransformFeedbackHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -10841,15 +10841,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             GenTransformFeedbacks(n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="GenTransformFeedbacks"/>
-        public static unsafe void GenTransformFeedback(out TransformFeedbackHandle ids)
+        public static unsafe void GenTransformFeedback(out TransformFeedbackHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -10858,7 +10858,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             GenTransformFeedbacks(n, ids_handle);
         }
         /// <inheritdoc cref="GenTransformFeedbacks"/>
@@ -11129,10 +11129,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             return returnValue;
         }
         /// <inheritdoc cref="DeleteProgramPipelines"/>
-        public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipelines)
+        public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipeline)
         {
             int n = 1;
-            fixed(ProgramPipelineHandle* pipelines_handle = &pipelines)
+            fixed(ProgramPipelineHandle* pipelines_handle = &pipeline)
             {
                 DeleteProgramPipelines(n, pipelines_handle);
             }
@@ -11166,9 +11166,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="GenProgramPipelines"/>
         public static unsafe ProgramPipelineHandle GenProgramPipeline()
         {
-            ProgramPipelineHandle pipelines;
+            ProgramPipelineHandle pipeline;
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -11177,15 +11177,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             GenProgramPipelines(n, pipelines_handle);
-            return pipelines;
+            return pipeline;
         }
         /// <inheritdoc cref="GenProgramPipelines"/>
-        public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipelines)
+        public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipeline)
         {
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -11194,7 +11194,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             GenProgramPipelines(n, pipelines_handle);
         }
         /// <inheritdoc cref="GenProgramPipelines"/>
@@ -13769,9 +13769,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateTransformFeedbacks"/>
         public static unsafe TransformFeedbackHandle CreateTransformFeedback()
         {
-            TransformFeedbackHandle ids;
+            TransformFeedbackHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -13780,15 +13780,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             CreateTransformFeedbacks(n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="CreateTransformFeedbacks"/>
-        public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle ids)
+        public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -13797,7 +13797,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             CreateTransformFeedbacks(n, ids_handle);
         }
         /// <inheritdoc cref="CreateTransformFeedbacks"/>
@@ -13853,9 +13853,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateBuffers"/>
         public static unsafe BufferHandle CreateBuffer()
         {
-            BufferHandle buffers;
+            BufferHandle buffer;
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -13864,15 +13864,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             CreateBuffers(n, buffers_handle);
-            return buffers;
+            return buffer;
         }
         /// <inheritdoc cref="CreateBuffers"/>
-        public static unsafe void CreateBuffer(out BufferHandle buffers)
+        public static unsafe void CreateBuffer(out BufferHandle buffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -13881,7 +13881,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             CreateBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="CreateBuffers"/>
@@ -14062,9 +14062,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateFramebuffers"/>
         public static unsafe FramebufferHandle CreateFramebuffer()
         {
-            FramebufferHandle framebuffers;
+            FramebufferHandle framebuffer;
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14073,15 +14073,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             CreateFramebuffers(n, framebuffers_handle);
-            return framebuffers;
+            return framebuffer;
         }
         /// <inheritdoc cref="CreateFramebuffers"/>
-        public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffers)
+        public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14090,7 +14090,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             CreateFramebuffers(n, framebuffers_handle);
         }
         /// <inheritdoc cref="CreateFramebuffers"/>
@@ -14191,9 +14191,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateRenderbuffers"/>
         public static unsafe RenderbufferHandle CreateRenderbuffer()
         {
-            RenderbufferHandle renderbuffers;
+            RenderbufferHandle renderbuffer;
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14202,15 +14202,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             CreateRenderbuffers(n, renderbuffers_handle);
-            return renderbuffers;
+            return renderbuffer;
         }
         /// <inheritdoc cref="CreateRenderbuffers"/>
-        public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffers)
+        public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14219,7 +14219,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             CreateRenderbuffers(n, renderbuffers_handle);
         }
         /// <inheritdoc cref="CreateRenderbuffers"/>
@@ -14259,9 +14259,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateTextures"/>
         public static unsafe TextureHandle CreateTexture(TextureTarget target)
         {
-            TextureHandle textures;
+            TextureHandle texture;
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14270,15 +14270,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             CreateTextures(target, n, textures_handle);
-            return textures;
+            return texture;
         }
         /// <inheritdoc cref="CreateTextures"/>
-        public static unsafe void CreateTexture(TextureTarget target, out TextureHandle textures)
+        public static unsafe void CreateTexture(TextureTarget target, out TextureHandle texture)
         {
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14287,7 +14287,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             CreateTextures(target, n, textures_handle);
         }
         /// <inheritdoc cref="CreateTextures"/>
@@ -14531,9 +14531,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateVertexArrays"/>
         public static unsafe VertexArrayHandle CreateVertexArray()
         {
-            VertexArrayHandle arrays;
+            VertexArrayHandle array;
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14542,15 +14542,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             CreateVertexArrays(n, arrays_handle);
-            return arrays;
+            return array;
         }
         /// <inheritdoc cref="CreateVertexArrays"/>
-        public static unsafe void CreateVertexArray(out VertexArrayHandle arrays)
+        public static unsafe void CreateVertexArray(out VertexArrayHandle array)
         {
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14559,7 +14559,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             CreateVertexArrays(n, arrays_handle);
         }
         /// <inheritdoc cref="CreateVertexArrays"/>
@@ -14631,9 +14631,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateSamplers"/>
         public static unsafe SamplerHandle CreateSampler()
         {
-            SamplerHandle samplers;
+            SamplerHandle sampler;
             int n = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14642,15 +14642,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             CreateSamplers(n, samplers_handle);
-            return samplers;
+            return sampler;
         }
         /// <inheritdoc cref="CreateSamplers"/>
-        public static unsafe void CreateSampler(out SamplerHandle samplers)
+        public static unsafe void CreateSampler(out SamplerHandle sampler)
         {
             int n = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14659,7 +14659,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             CreateSamplers(n, samplers_handle);
         }
         /// <inheritdoc cref="CreateSamplers"/>
@@ -14691,9 +14691,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <inheritdoc cref="CreateProgramPipelines"/>
         public static unsafe ProgramPipelineHandle CreateProgramPipeline()
         {
-            ProgramPipelineHandle pipelines;
+            ProgramPipelineHandle pipeline;
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14702,15 +14702,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             CreateProgramPipelines(n, pipelines_handle);
-            return pipelines;
+            return pipeline;
         }
         /// <inheritdoc cref="CreateProgramPipelines"/>
-        public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipelines)
+        public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipeline)
         {
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14719,7 +14719,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             CreateProgramPipelines(n, pipelines_handle);
         }
         /// <inheritdoc cref="CreateProgramPipelines"/>
@@ -14749,11 +14749,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="CreateQueries"/>
-        public static unsafe QueryHandle CreateQuerie(QueryTarget target)
+        public static unsafe QueryHandle CreateQuery(QueryTarget target)
         {
-            QueryHandle ids;
+            QueryHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14762,15 +14762,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             CreateQueries(target, n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="CreateQueries"/>
-        public static unsafe void CreateQuerie(QueryTarget target, out QueryHandle ids)
+        public static unsafe void CreateQuery(QueryTarget target, out QueryHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -14779,7 +14779,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             CreateQueries(target, n, ids_handle);
         }
         /// <inheritdoc cref="CreateQueries"/>
@@ -17494,9 +17494,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateTransformFeedbacks"/>
             public static unsafe TransformFeedbackHandle CreateTransformFeedback()
             {
-                TransformFeedbackHandle ids;
+                TransformFeedbackHandle id;
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17505,15 +17505,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 CreateTransformFeedbacks(n, ids_handle);
-                return ids;
+                return id;
             }
             /// <inheritdoc cref="CreateTransformFeedbacks"/>
-            public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle ids)
+            public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle id)
             {
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17522,7 +17522,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 CreateTransformFeedbacks(n, ids_handle);
             }
             /// <inheritdoc cref="CreateTransformFeedbacks"/>
@@ -17578,9 +17578,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateBuffers"/>
             public static unsafe BufferHandle CreateBuffer()
             {
-                BufferHandle buffers;
+                BufferHandle buffer;
                 int n = 1;
-                Unsafe.SkipInit(out buffers);
+                Unsafe.SkipInit(out buffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17589,15 +17589,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
                 CreateBuffers(n, buffers_handle);
-                return buffers;
+                return buffer;
             }
             /// <inheritdoc cref="CreateBuffers"/>
-            public static unsafe void CreateBuffer(out BufferHandle buffers)
+            public static unsafe void CreateBuffer(out BufferHandle buffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out buffers);
+                Unsafe.SkipInit(out buffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17606,7 +17606,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
                 CreateBuffers(n, buffers_handle);
             }
             /// <inheritdoc cref="CreateBuffers"/>
@@ -17787,9 +17787,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateFramebuffers"/>
             public static unsafe FramebufferHandle CreateFramebuffer()
             {
-                FramebufferHandle framebuffers;
+                FramebufferHandle framebuffer;
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17798,15 +17798,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 CreateFramebuffers(n, framebuffers_handle);
-                return framebuffers;
+                return framebuffer;
             }
             /// <inheritdoc cref="CreateFramebuffers"/>
-            public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffers)
+            public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17815,7 +17815,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 CreateFramebuffers(n, framebuffers_handle);
             }
             /// <inheritdoc cref="CreateFramebuffers"/>
@@ -17916,9 +17916,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateRenderbuffers"/>
             public static unsafe RenderbufferHandle CreateRenderbuffer()
             {
-                RenderbufferHandle renderbuffers;
+                RenderbufferHandle renderbuffer;
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17927,15 +17927,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 CreateRenderbuffers(n, renderbuffers_handle);
-                return renderbuffers;
+                return renderbuffer;
             }
             /// <inheritdoc cref="CreateRenderbuffers"/>
-            public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffers)
+            public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17944,7 +17944,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 CreateRenderbuffers(n, renderbuffers_handle);
             }
             /// <inheritdoc cref="CreateRenderbuffers"/>
@@ -17984,9 +17984,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateTextures"/>
             public static unsafe TextureHandle CreateTexture(TextureTarget target)
             {
-                TextureHandle textures;
+                TextureHandle texture;
                 int n = 1;
-                Unsafe.SkipInit(out textures);
+                Unsafe.SkipInit(out texture);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -17995,15 +17995,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
                 CreateTextures(target, n, textures_handle);
-                return textures;
+                return texture;
             }
             /// <inheritdoc cref="CreateTextures"/>
-            public static unsafe void CreateTexture(TextureTarget target, out TextureHandle textures)
+            public static unsafe void CreateTexture(TextureTarget target, out TextureHandle texture)
             {
                 int n = 1;
-                Unsafe.SkipInit(out textures);
+                Unsafe.SkipInit(out texture);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18012,7 +18012,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
                 CreateTextures(target, n, textures_handle);
             }
             /// <inheritdoc cref="CreateTextures"/>
@@ -18256,9 +18256,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateVertexArrays"/>
             public static unsafe VertexArrayHandle CreateVertexArray()
             {
-                VertexArrayHandle arrays;
+                VertexArrayHandle array;
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18267,15 +18267,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 CreateVertexArrays(n, arrays_handle);
-                return arrays;
+                return array;
             }
             /// <inheritdoc cref="CreateVertexArrays"/>
-            public static unsafe void CreateVertexArray(out VertexArrayHandle arrays)
+            public static unsafe void CreateVertexArray(out VertexArrayHandle array)
             {
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18284,7 +18284,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 CreateVertexArrays(n, arrays_handle);
             }
             /// <inheritdoc cref="CreateVertexArrays"/>
@@ -18356,9 +18356,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateSamplers"/>
             public static unsafe SamplerHandle CreateSampler()
             {
-                SamplerHandle samplers;
+                SamplerHandle sampler;
                 int n = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18367,15 +18367,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 CreateSamplers(n, samplers_handle);
-                return samplers;
+                return sampler;
             }
             /// <inheritdoc cref="CreateSamplers"/>
-            public static unsafe void CreateSampler(out SamplerHandle samplers)
+            public static unsafe void CreateSampler(out SamplerHandle sampler)
             {
                 int n = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18384,7 +18384,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 CreateSamplers(n, samplers_handle);
             }
             /// <inheritdoc cref="CreateSamplers"/>
@@ -18416,9 +18416,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="CreateProgramPipelines"/>
             public static unsafe ProgramPipelineHandle CreateProgramPipeline()
             {
-                ProgramPipelineHandle pipelines;
+                ProgramPipelineHandle pipeline;
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18427,15 +18427,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 CreateProgramPipelines(n, pipelines_handle);
-                return pipelines;
+                return pipeline;
             }
             /// <inheritdoc cref="CreateProgramPipelines"/>
-            public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipelines)
+            public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipeline)
             {
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18444,7 +18444,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 CreateProgramPipelines(n, pipelines_handle);
             }
             /// <inheritdoc cref="CreateProgramPipelines"/>
@@ -18474,11 +18474,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="CreateQueries"/>
-            public static unsafe QueryHandle CreateQuerie(QueryTarget target)
+            public static unsafe QueryHandle CreateQuery(QueryTarget target)
             {
-                QueryHandle ids;
+                QueryHandle id;
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18487,15 +18487,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
                 CreateQueries(target, n, ids_handle);
-                return ids;
+                return id;
             }
             /// <inheritdoc cref="CreateQueries"/>
-            public static unsafe void CreateQuerie(QueryTarget target, out QueryHandle ids)
+            public static unsafe void CreateQuery(QueryTarget target, out QueryHandle id)
             {
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -18504,7 +18504,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
                 CreateQueries(target, n, ids_handle);
             }
             /// <inheritdoc cref="CreateQueries"/>
@@ -19025,10 +19025,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffers"/>
-            public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffers)
+            public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffer)
             {
                 int n = 1;
-                fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffers)
+                fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffer)
                 {
                     DeleteRenderbuffers(n, renderbuffers_handle);
                 }
@@ -19062,9 +19062,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="GenRenderbuffers"/>
             public static unsafe RenderbufferHandle GenRenderbuffer()
             {
-                RenderbufferHandle renderbuffers;
+                RenderbufferHandle renderbuffer;
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -19073,15 +19073,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 GenRenderbuffers(n, renderbuffers_handle);
-                return renderbuffers;
+                return renderbuffer;
             }
             /// <inheritdoc cref="GenRenderbuffers"/>
-            public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffers)
+            public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -19090,7 +19090,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 GenRenderbuffers(n, renderbuffers_handle);
             }
             /// <inheritdoc cref="GenRenderbuffers"/>
@@ -19144,10 +19144,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffers"/>
-            public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffers)
+            public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffer)
             {
                 int n = 1;
-                fixed(FramebufferHandle* framebuffers_handle = &framebuffers)
+                fixed(FramebufferHandle* framebuffers_handle = &framebuffer)
                 {
                     DeleteFramebuffers(n, framebuffers_handle);
                 }
@@ -19181,9 +19181,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="GenFramebuffers"/>
             public static unsafe FramebufferHandle GenFramebuffer()
             {
-                FramebufferHandle framebuffers;
+                FramebufferHandle framebuffer;
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -19192,15 +19192,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 GenFramebuffers(n, framebuffers_handle);
-                return framebuffers;
+                return framebuffer;
             }
             /// <inheritdoc cref="GenFramebuffers"/>
-            public static unsafe void GenFramebuffer(out FramebufferHandle framebuffers)
+            public static unsafe void GenFramebuffer(out FramebufferHandle framebuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -19209,7 +19209,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 GenFramebuffers(n, framebuffers_handle);
             }
             /// <inheritdoc cref="GenFramebuffers"/>
@@ -22828,9 +22828,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="GenSamplers"/>
             public static unsafe SamplerHandle GenSampler()
             {
-                SamplerHandle samplers;
+                SamplerHandle sampler;
                 int count = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -22839,15 +22839,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 GenSamplers(count, samplers_handle);
-                return samplers;
+                return sampler;
             }
             /// <inheritdoc cref="GenSamplers"/>
-            public static unsafe void GenSampler(out SamplerHandle samplers)
+            public static unsafe void GenSampler(out SamplerHandle sampler)
             {
                 int count = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -22856,7 +22856,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 GenSamplers(count, samplers_handle);
             }
             /// <inheritdoc cref="GenSamplers"/>
@@ -22886,10 +22886,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteSamplers"/>
-            public static unsafe void DeleteSampler(in SamplerHandle samplers)
+            public static unsafe void DeleteSampler(in SamplerHandle sampler)
             {
                 int count = 1;
-                fixed(SamplerHandle* samplers_handle = &samplers)
+                fixed(SamplerHandle* samplers_handle = &sampler)
                 {
                     DeleteSamplers(count, samplers_handle);
                 }
@@ -23120,10 +23120,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="DeleteProgramPipelines"/>
-            public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipelines)
+            public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipeline)
             {
                 int n = 1;
-                fixed(ProgramPipelineHandle* pipelines_handle = &pipelines)
+                fixed(ProgramPipelineHandle* pipelines_handle = &pipeline)
                 {
                     DeleteProgramPipelines(n, pipelines_handle);
                 }
@@ -23157,9 +23157,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="GenProgramPipelines"/>
             public static unsafe ProgramPipelineHandle GenProgramPipeline()
             {
-                ProgramPipelineHandle pipelines;
+                ProgramPipelineHandle pipeline;
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -23168,15 +23168,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 GenProgramPipelines(n, pipelines_handle);
-                return pipelines;
+                return pipeline;
             }
             /// <inheritdoc cref="GenProgramPipelines"/>
-            public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipelines)
+            public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipeline)
             {
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -23185,7 +23185,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 GenProgramPipelines(n, pipelines_handle);
             }
             /// <inheritdoc cref="GenProgramPipelines"/>
@@ -25901,10 +25901,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteTransformFeedbacks"/>
-            public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle ids)
+            public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle id)
             {
                 int n = 1;
-                fixed(TransformFeedbackHandle* ids_handle = &ids)
+                fixed(TransformFeedbackHandle* ids_handle = &id)
                 {
                     DeleteTransformFeedbacks(n, ids_handle);
                 }
@@ -25938,9 +25938,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="GenTransformFeedbacks"/>
             public static unsafe TransformFeedbackHandle GenTransformFeedback()
             {
-                TransformFeedbackHandle ids;
+                TransformFeedbackHandle id;
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -25949,15 +25949,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 GenTransformFeedbacks(n, ids_handle);
-                return ids;
+                return id;
             }
             /// <inheritdoc cref="GenTransformFeedbacks"/>
-            public static unsafe void GenTransformFeedback(out TransformFeedbackHandle ids)
+            public static unsafe void GenTransformFeedback(out TransformFeedbackHandle id)
             {
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -25966,7 +25966,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 GenTransformFeedbacks(n, ids_handle);
             }
             /// <inheritdoc cref="GenTransformFeedbacks"/>
@@ -26374,10 +26374,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="DeleteVertexArrays"/>
-            public static unsafe void DeleteVertexArray(in VertexArrayHandle arrays)
+            public static unsafe void DeleteVertexArray(in VertexArrayHandle array)
             {
                 int n = 1;
-                fixed(VertexArrayHandle* arrays_handle = &arrays)
+                fixed(VertexArrayHandle* arrays_handle = &array)
                 {
                     DeleteVertexArrays(n, arrays_handle);
                 }
@@ -26411,9 +26411,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <inheritdoc cref="GenVertexArrays"/>
             public static unsafe VertexArrayHandle GenVertexArray()
             {
-                VertexArrayHandle arrays;
+                VertexArrayHandle array;
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -26422,15 +26422,15 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 GenVertexArrays(n, arrays_handle);
-                return arrays;
+                return array;
             }
             /// <inheritdoc cref="GenVertexArrays"/>
-            public static unsafe void GenVertexArray(out VertexArrayHandle arrays)
+            public static unsafe void GenVertexArray(out VertexArrayHandle array)
             {
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -26439,7 +26439,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 GenVertexArrays(n, arrays_handle);
             }
             /// <inheritdoc cref="GenVertexArrays"/>

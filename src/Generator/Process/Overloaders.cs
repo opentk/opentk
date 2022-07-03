@@ -672,6 +672,35 @@ namespace Generator.Process
 
     public class GenCreateAndDeleteOverloader : IOverloader
     {
+        public static readonly string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
+
+        // Atm only Queries/Query needs this renaming
+        // - 2022-06-27
+        public static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
+        {
+            { "Queries", "Query" },
+            { "TransformFeedbacks", "TransformFeedback" },
+            { "VertexArrays", "VertexArray" },
+            { "Textures", "Texture" },
+            { "Samplers", "Sampler" },
+            { "Renderbuffers", "Renderbuffer" },
+            { "ProgramPipelines", "ProgramPipeline" },
+            { "Framebuffers", "Framebuffer" },
+            { "Buffers", "Buffer" },
+        };
+
+        public static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
+        {
+            { "ids", "id" },
+            { "arrays", "array" },
+            { "textures", "texture" },
+            { "samplers", "sampler" },
+            { "renderbuffers", "renderbuffer" },
+            { "pipelines", "pipeline" },
+            { "framebuffers", "framebuffer" },
+            { "buffers", "buffer" },
+        };
+
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             var nativeName = overload.NativeFunction.FunctionName;
@@ -697,7 +726,31 @@ namespace Generator.Process
                 return false;
             }
 
-            var newName = nativeName[..^1];
+            string? namePrefix = null;
+            string? nameWithoutPrefix = null;
+            foreach (var prefix in Prefixes)
+            {
+                if (nativeName.StartsWith(prefix))
+                {
+                    namePrefix = prefix;
+                    nameWithoutPrefix = nativeName[prefix.Length..];
+                }
+            }
+
+            if (nameWithoutPrefix == null || namePrefix == null)
+                throw new Exception($"Function name '{nativeName}' doesn't start with Gen/Create/Delete and cannot be overloaded by this overloader.");
+
+            string newName;
+            if (pluralNameToSingularName.TryGetValue(nameWithoutPrefix, out string? newPostfix))
+            {
+                newName = $"{namePrefix}{newPostfix}";
+            }
+            else
+            {
+                // If the name didn't have a custom singular name, we just remove the trailing 's'
+                newName = nativeName;
+                Logger.Warning($"Function '{nativeName}' ({nameWithoutPrefix}) {nameWithoutPrefix[..^1]} needs a depluralized name.");
+            }
 
             int lengthParameterIndex = -1;
             Parameter[] parameters = new Parameter[overload.InputParameters.Length - 1];
@@ -713,9 +766,16 @@ namespace Generator.Process
                     parameters[lengthParameterIndex != -1 ? i + 1 : i] = parameter;
                 }
             }
-
+            
             if (lengthParameterIndex == -1)
                 throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
+
+            string? newPointerParameterName;
+            if (parameterNamesToChange.TryGetValue(pointerParameter.Name, out newPointerParameterName) == false)
+            {
+                newPointerParameterName = pointerParameter.Name;
+                Logger.Warning($"Parameter '{pointerParameter.Name}' needs a depluralized name!");
+            }
 
             var nameTable = overload.NameTable.New();
             nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
@@ -723,6 +783,10 @@ namespace Generator.Process
             CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
             {
+                // Remove ending 's' in parameter name.
+                // This works for Queries/Query because the parameter names in these functions is "ids
+                // - 2022-06-27
+                Name = newPointerParameterName,
                 Type = new CSRef(refType, pointerParameterType.BaseType),
                 Length = null
             };
