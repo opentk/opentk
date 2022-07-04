@@ -24,6 +24,7 @@ namespace Generator.Writing
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
+            WriteFunctionPointers(outputProjectPath, data.AllNativeFunctions);
             // This should create folders to put the versions in
             foreach (var api in data.Apis)
             {
@@ -48,6 +49,132 @@ namespace Generator.Writing
 
                 WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
             }
+        }
+
+        private static void WriteFunctionPointers(string directoryPath, List<NativeFunction> nativeFunctions)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Pointers.cs"));
+            using IndentedTextWriter writer = new IndentedTextWriter(stream);
+
+            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine("using System;");
+            writer.WriteLine("using System.Runtime.InteropServices;");
+            writer.WriteLine("using OpenTK.Graphics;");
+            writer.WriteLine();
+            writer.WriteLine($"namespace {GraphicsNamespace}");
+            using (writer.CsScope())
+            {
+                writer.WriteLine($"public static unsafe partial class GLNative");
+                using (writer.CsScope())
+                {
+                    foreach (NativeFunction function in nativeFunctions)
+                    {
+                        WriteNativeMethod(writer, function, false, null);
+                    }
+                }
+            }
+        }
+
+        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
+        {
+            // Write delegate field initialized to the lazy loader.
+            // Write public function definition that calls delegate.
+            // Write lazy loader function.
+            string name, returnType;
+            StringBuilder paramNames, delegateTypes, signature;
+            GetNativeFunctionSignature(function, postfixName, SwapUnderlyingTypeForPrimitive, out name, out paramNames, out delegateTypes, out signature, out bool _, out returnType);
+
+            writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
+
+            writer.WriteLine($"[UnmanagedCallersOnly]");
+            writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
+            using (writer.CsScope())
+            {
+                // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
+                writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+
+                if (function.ReturnType is not CSVoid)
+                {
+                    writer.WriteLine($"return _{name}_fnptr({paramNames});");
+                }
+                else
+                {
+                    writer.WriteLine($"_{name}_fnptr({paramNames});");
+                }
+            }
+
+            writer.WriteLine();
+        }
+
+        private static string SwapUnderlyingTypeForPrimitive(BaseCSType type)
+        {
+            if (type is CSStruct csstruct)
+            {
+                return csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type.");
+            }
+            else if (type is CSEnum csenum)
+            {
+                return "uint";
+            }
+            else if (type is CSPointer cspointer)
+            {
+                return SwapUnderlyingTypeForPrimitive(cspointer.BaseType) + "*";
+            }
+            else
+            {
+                return type.ToCSString();
+            }
+        }
+
+        private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, Func<BaseCSType, string> typeToString,
+            out string name, out StringBuilder paramNames, out StringBuilder delegateTypes, out StringBuilder signature, out bool castReturnType, out string returnType)
+        {
+            // Write delegate field initialized to the lazy loader.
+            // Write public function definition that calls delegate.
+            // Write lazy loader function.
+            name = function.FunctionName;
+            if (postfixName) name += "_";
+
+            paramNames = new StringBuilder();
+            delegateTypes = new StringBuilder();
+            signature = new StringBuilder();
+            for (int i = 0; i < function.Parameters.Count; i++)
+            {
+                var param = function.Parameters[i];
+                string type = typeToString(param.Type);
+
+                string primitiveType = SwapUnderlyingTypeForPrimitive(param.Type);
+                if (type != primitiveType)
+                {
+                    paramNames.Append($"({primitiveType})");
+                }
+                paramNames.Append(param.Name);
+                delegateTypes.Append(type);
+                signature.Append($"{type} {param.Name}");
+
+                // If we are adding more types, append a ", "
+                if (i + 1 < function.Parameters.Count)
+                {
+                    paramNames.Append(", ");
+                    signature.Append(", ");
+                }
+
+                delegateTypes.Append(", ");
+            }
+
+            returnType = typeToString(function.ReturnType);
+            string primitiveReturnType = SwapUnderlyingTypeForPrimitive(function.ReturnType);
+            if (returnType != primitiveReturnType)
+            {
+                castReturnType = true;
+            }
+            else
+            {
+
+                castReturnType = false;
+            }
+
+            delegateTypes.Append(returnType);
         }
 
         private static void WriteNativeFunctions(
@@ -82,7 +209,7 @@ namespace Generator.Writing
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
                             documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
-                            WriteNativeMethod(writer, function, postfixName, functionDocumentation);
+                            WriteNativeFunction(writer, function, postfixName, functionDocumentation);
                         }
 
                         scope?.Dispose();
@@ -92,61 +219,12 @@ namespace Generator.Writing
 
             writer.Flush();
         }
-
-        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
+        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
         {
-            // Write delegate field initialized to the lazy loader.
-            // Write public function definition that calls delegate.
-            // Write lazy loader function.
-            string name = function.FunctionName;
-            if (postfixName) name += "_";
-
-            StringBuilder paramNames = new StringBuilder();
-            StringBuilder delegateTypes = new StringBuilder();
-            StringBuilder signature = new StringBuilder();
-
-            for (int i = 0; i < function.Parameters.Count; i++)
-            {
-                var param = function.Parameters[i];
-
-                paramNames.Append(param.Name);
-                string type = param.Type.ToCSString();
-                delegateTypes.Append(type);
-                signature.Append($"{type} {param.Name}");
-
-                // If we are adding more types, append a ", "
-                if (i + 1 < function.Parameters.Count)
-                {
-                    paramNames.Append(", ");
-                    signature.Append(", ");
-                }
-
-                delegateTypes.Append(", ");
-            }
-
-            // Because there might be ABI differences between returning a struct and a primitive type we can't assume the GL function is gonna return a struct,
-            // so we need to match the native function signature excactly, to avoid a mismatch in the ABI.
-            // - 2021-06-22
+            string name, returnType;
+            StringBuilder paramNames, delegateTypes, signature;
             bool handleAbiDifferenceForTypesafeHandles;
-
-            string returnType;
-            if (function.ReturnType is CSStruct returnStruct)
-            {
-                if (returnStruct.UnderlyingType == null) throw new Exception("A function returned a struct, but didn't have an underlying representation.");
-                returnType = returnStruct.UnderlyingType.ToCSString();
-
-                handleAbiDifferenceForTypesafeHandles = true;
-            }
-            else
-            {
-                returnType = function.ReturnType.ToCSString();
-
-                handleAbiDifferenceForTypesafeHandles = false;
-            }
-
-            delegateTypes.Append(returnType);
-
-            writer.WriteLine($"private static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
+            GetNativeFunctionSignature(function, postfixName, type => type.ToCSString(), out name, out paramNames, out delegateTypes, out signature, out handleAbiDifferenceForTypesafeHandles, out returnType);
 
             if (documentation != null)
             {
@@ -159,28 +237,11 @@ namespace Generator.Writing
                 // This works because all of the structs that get here should have a defined cast from the primitive type to the struct type.
                 // These casts need to be added manually for this to work correctly.
                 // - 2021-06-22
-                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) _{name}_fnptr({paramNames});");
+                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLNative._{name}_fnptr({paramNames});");
             }
             else
             {
-                writer.WriteLine($"public static {returnType} {name}({signature}) => _{name}_fnptr({paramNames});");
-            }
-
-            writer.WriteLine($"[UnmanagedCallersOnly]");
-            writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
-            using (writer.CsScope())
-            {
-                // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
-
-                if (function.ReturnType is not CSVoid)
-                {
-                    writer.WriteLine($"return _{name}_fnptr({paramNames});");
-                }
-                else
-                {
-                    writer.WriteLine($"_{name}_fnptr({paramNames});");
-                }
+                writer.WriteLine($"public static {returnType} {name}({signature}) => GLNative._{function.FunctionName}_fnptr({paramNames});");
             }
 
             writer.WriteLine();

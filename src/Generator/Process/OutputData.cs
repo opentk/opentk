@@ -7,7 +7,7 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    public record OutputData(List<GLOutputApi> Apis);
+    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
 
 
     public record GLOutputApi(
@@ -92,6 +92,14 @@ namespace Generator.Writing
     }
 
     public record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return TypeName;
+        }
+    }
+
+    public record CSEnum(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
