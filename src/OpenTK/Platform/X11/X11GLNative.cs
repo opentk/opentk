@@ -1170,7 +1170,7 @@ namespace OpenTK.Platform.X11
                         }
                         break;
 
-                   case XEventName.PropertyNotify:
+                    case XEventName.PropertyNotify:
                         if (e.PropertyEvent.atom == _atom_net_wm_state)
                         {
                             OnWindowStateChanged(EventArgs.Empty);

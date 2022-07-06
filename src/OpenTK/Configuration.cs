@@ -179,7 +179,7 @@ namespace OpenTK
             try
             {
                 version = Platform.SDL2.SDL.Version;
-                    if (version.Number >= 2000)
+                if (version.Number >= 2000)
                 {
                     if (Platform.SDL2.SDL.WasInit(0))
                     {
