@@ -72,7 +72,7 @@ namespace OpenTK.Input
         /// <param name="button">The button to query.</param>
         public ButtonState GetButton(int button)
         {
-            return (buttons & ((long)1 << button)) != 0 ? ButtonState.Pressed : ButtonState.Released;
+            return (buttons & (1L << button)) != 0 ? ButtonState.Pressed : ButtonState.Released;
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace OpenTK.Input
         /// <param name="button">The button to query.</param>
         public bool IsButtonDown(int button)
         {
-            return (buttons & ((long)1 << button)) != 0;
+            return (buttons & (1L << button)) != 0;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace OpenTK.Input
         /// <param name="button">The button to query.</param>
         public bool IsButtonUp(int button)
         {
-            return (buttons & ((long)1 << button)) == 0;
+            return (buttons & (1L << button)) == 0;
         }
 
         /// <summary>
@@ -231,11 +231,11 @@ namespace OpenTK.Input
 
             if (value)
             {
-                buttons |= (long)1 << button;
+                buttons |= 1L << button;
             }
             else
             {
-                buttons &= ~((long)1 << button);
+                buttons &= ~(1L << button);
             }
         }
 

@@ -1228,8 +1228,8 @@ XF86VidModeGetGammaRampSize(
         XF86Bluetooth = 0x1008ff94,
         XF86WLAN = 0x1008ff95,
 
-         SunProps = 0x1005ff70,
-         SunOpen = 0x1005ff73,
+        SunProps = 0x1005ff70,
+        SunOpen = 0x1005ff73,
     }
 
     public enum XVisualClass : int
