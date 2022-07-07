@@ -800,25 +800,25 @@ namespace OpenTK.Graphics.OpenGLES3
             return returnValue;
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, Span<byte> data)
+        public static unsafe void GetBoolean(GetPName pname, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, byte[] data)
+        public static unsafe void GetBoolean(GetPName pname, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, ref byte data)
+        public static unsafe void GetBoolean(GetPName pname, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleanv(pname, data_ptr);
             }
@@ -4882,25 +4882,25 @@ namespace OpenTK.Graphics.OpenGLES3
             BindImageTexture(unit, texture, level, layered_byte, layer, access, format);
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<byte> data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, byte[] data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref byte data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
@@ -10284,9 +10284,9 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -10303,9 +10303,9 @@ namespace OpenTK.Graphics.OpenGLES3
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -10322,9 +10322,9 @@ namespace OpenTK.Graphics.OpenGLES3
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = &x)
                 fixed (float* y_ptr = &y)
                 fixed (float* tangentX_ptr = &tangentX)

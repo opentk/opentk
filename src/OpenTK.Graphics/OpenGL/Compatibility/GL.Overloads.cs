@@ -172,25 +172,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, Span<byte> data)
+        public static unsafe void GetBoolean(GetPName pname, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, byte[] data)
+        public static unsafe void GetBoolean(GetPName pname, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, ref byte data)
+        public static unsafe void GetBoolean(GetPName pname, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleanv(pname, data_ptr);
             }
@@ -893,25 +893,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             EdgeFlag(flag_byte);
         }
         /// <inheritdoc cref="EdgeFlagv"/>
-        public static unsafe void EdgeFlag(ReadOnlySpan<byte> flag)
+        public static unsafe void EdgeFlag(ReadOnlySpan<bool> flag)
         {
-            fixed (byte* flag_ptr = flag)
+            fixed (bool* flag_ptr = flag)
             {
                 EdgeFlagv(flag_ptr);
             }
         }
         /// <inheritdoc cref="EdgeFlagv"/>
-        public static unsafe void EdgeFlag(byte[] flag)
+        public static unsafe void EdgeFlag(bool[] flag)
         {
-            fixed (byte* flag_ptr = flag)
+            fixed (bool* flag_ptr = flag)
             {
                 EdgeFlagv(flag_ptr);
             }
         }
         /// <inheritdoc cref="EdgeFlagv"/>
-        public static unsafe void EdgeFlag(in byte flag)
+        public static unsafe void EdgeFlag(in bool flag)
         {
-            fixed (byte* flag_ptr = &flag)
+            fixed (bool* flag_ptr = &flag)
             {
                 EdgeFlagv(flag_ptr);
             }
@@ -3904,12 +3904,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="AreTexturesResident"/>
-        public static unsafe byte AreTexturesResident(int n, ReadOnlySpan<TextureHandle> textures, Span<byte> residences)
+        public static unsafe bool AreTexturesResident(int n, ReadOnlySpan<TextureHandle> textures, Span<bool> residences)
         {
-            byte returnValue;
+            bool returnValue;
             fixed (TextureHandle* textures_ptr = textures)
             {
-                fixed (byte* residences_ptr = residences)
+                fixed (bool* residences_ptr = residences)
                 {
                     returnValue = AreTexturesResident(n, textures_ptr, residences_ptr);
                 }
@@ -3917,12 +3917,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             return returnValue;
         }
         /// <inheritdoc cref="AreTexturesResident"/>
-        public static unsafe byte AreTexturesResident(int n, TextureHandle[] textures, byte[] residences)
+        public static unsafe bool AreTexturesResident(int n, TextureHandle[] textures, bool[] residences)
         {
-            byte returnValue;
+            bool returnValue;
             fixed (TextureHandle* textures_ptr = textures)
             {
-                fixed (byte* residences_ptr = residences)
+                fixed (bool* residences_ptr = residences)
                 {
                     returnValue = AreTexturesResident(n, textures_ptr, residences_ptr);
                 }
@@ -3930,11 +3930,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             return returnValue;
         }
         /// <inheritdoc cref="AreTexturesResident"/>
-        public static unsafe byte AreTexturesResident(int n, in TextureHandle textures, ref byte residences)
+        public static unsafe bool AreTexturesResident(int n, in TextureHandle textures, ref bool residences)
         {
-            byte returnValue;
+            bool returnValue;
             fixed (TextureHandle* textures_ptr = &textures)
-            fixed (byte* residences_ptr = &residences)
+            fixed (bool* residences_ptr = &residences)
             {
                 returnValue = AreTexturesResident(n, textures_ptr, residences_ptr);
             }
@@ -7642,25 +7642,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             ColorMaski(index, r_byte, g_byte, b_byte, a_byte);
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<byte> data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, byte[] data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref byte data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
@@ -25334,9 +25334,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="IsNamedStringARB"/>
-            public static unsafe byte IsNamedStringARB(int namelen, string name)
+            public static unsafe bool IsNamedStringARB(int namelen, string name)
             {
-                byte returnValue;
+                bool returnValue;
                 byte* name_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(name);
                 returnValue = IsNamedStringARB(namelen, name_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)name_ptr);
@@ -31628,25 +31628,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
-            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, Span<byte> data)
+            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
-            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, byte[] data)
+            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
-            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, ref byte data)
+            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
@@ -36424,12 +36424,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="AreTexturesResidentEXT"/>
-            public static unsafe byte AreTexturesResidentEXT(int n, ReadOnlySpan<TextureHandle> textures, Span<byte> residences)
+            public static unsafe bool AreTexturesResidentEXT(int n, ReadOnlySpan<TextureHandle> textures, Span<bool> residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (TextureHandle* textures_ptr = textures)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreTexturesResidentEXT(n, textures_ptr, residences_ptr);
                     }
@@ -36437,12 +36437,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AreTexturesResidentEXT"/>
-            public static unsafe byte AreTexturesResidentEXT(int n, TextureHandle[] textures, byte[] residences)
+            public static unsafe bool AreTexturesResidentEXT(int n, TextureHandle[] textures, bool[] residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (TextureHandle* textures_ptr = textures)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreTexturesResidentEXT(n, textures_ptr, residences_ptr);
                     }
@@ -36450,11 +36450,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AreTexturesResidentEXT"/>
-            public static unsafe byte AreTexturesResidentEXT(int n, in TextureHandle textures, ref byte residences)
+            public static unsafe bool AreTexturesResidentEXT(int n, in TextureHandle textures, ref bool residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (TextureHandle* textures_ptr = &textures)
-                fixed (byte* residences_ptr = &residences)
+                fixed (bool* residences_ptr = &residences)
                 {
                     returnValue = AreTexturesResidentEXT(n, textures_ptr, residences_ptr);
                 }
@@ -36725,25 +36725,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="EdgeFlagPointerEXT"/>
-            public static unsafe void EdgeFlagPointerEXT(int stride, int count, ReadOnlySpan<byte> pointer)
+            public static unsafe void EdgeFlagPointerEXT(int stride, int count, ReadOnlySpan<bool> pointer)
             {
-                fixed (byte* pointer_ptr = pointer)
+                fixed (bool* pointer_ptr = pointer)
                 {
                     EdgeFlagPointerEXT(stride, count, pointer_ptr);
                 }
             }
             /// <inheritdoc cref="EdgeFlagPointerEXT"/>
-            public static unsafe void EdgeFlagPointerEXT(int stride, int count, byte[] pointer)
+            public static unsafe void EdgeFlagPointerEXT(int stride, int count, bool[] pointer)
             {
-                fixed (byte* pointer_ptr = pointer)
+                fixed (bool* pointer_ptr = pointer)
                 {
                     EdgeFlagPointerEXT(stride, count, pointer_ptr);
                 }
             }
             /// <inheritdoc cref="EdgeFlagPointerEXT"/>
-            public static unsafe void EdgeFlagPointerEXT(int stride, int count, in byte pointer)
+            public static unsafe void EdgeFlagPointerEXT(int stride, int count, in bool pointer)
             {
-                fixed (byte* pointer_ptr = &pointer)
+                fixed (bool* pointer_ptr = &pointer)
                 {
                     EdgeFlagPointerEXT(stride, count, pointer_ptr);
                 }
@@ -37327,25 +37327,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT"/>
-            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<byte> data)
+            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetVariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT"/>
-            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, byte[] data)
+            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetVariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT"/>
-            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, ref byte data)
+            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetVariantBooleanvEXT(id, value, data_ptr);
                 }
@@ -37399,25 +37399,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT"/>
-            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<byte> data)
+            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetInvariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT"/>
-            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, byte[] data)
+            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetInvariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT"/>
-            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, ref byte data)
+            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetInvariantBooleanvEXT(id, value, data_ptr);
                 }
@@ -37471,25 +37471,25 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT"/>
-            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, Span<byte> data)
+            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetLocalConstantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT"/>
-            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, byte[] data)
+            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetLocalConstantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT"/>
-            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, ref byte data)
+            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetLocalConstantBooleanvEXT(id, value, data_ptr);
                 }
@@ -41142,9 +41142,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -41161,9 +41161,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -41180,9 +41180,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = &x)
                 fixed (float* y_ptr = &y)
                 fixed (float* tangentX_ptr = &tangentX)
@@ -43516,12 +43516,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="AreProgramsResidentNV"/>
-            public static unsafe byte AreProgramsResidentNV(int n, ReadOnlySpan<ProgramHandle> programs, Span<byte> residences)
+            public static unsafe bool AreProgramsResidentNV(int n, ReadOnlySpan<ProgramHandle> programs, Span<bool> residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (ProgramHandle* programs_ptr = programs)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreProgramsResidentNV(n, programs_ptr, residences_ptr);
                     }
@@ -43529,12 +43529,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AreProgramsResidentNV"/>
-            public static unsafe byte AreProgramsResidentNV(int n, ProgramHandle[] programs, byte[] residences)
+            public static unsafe bool AreProgramsResidentNV(int n, ProgramHandle[] programs, bool[] residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (ProgramHandle* programs_ptr = programs)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreProgramsResidentNV(n, programs_ptr, residences_ptr);
                     }
@@ -43542,11 +43542,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 return returnValue;
             }
             /// <inheritdoc cref="AreProgramsResidentNV"/>
-            public static unsafe byte AreProgramsResidentNV(int n, in ProgramHandle programs, ref byte residences)
+            public static unsafe bool AreProgramsResidentNV(int n, in ProgramHandle programs, ref bool residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (ProgramHandle* programs_ptr = &programs)
-                fixed (byte* residences_ptr = &residences)
+                fixed (bool* residences_ptr = &residences)
                 {
                     returnValue = AreProgramsResidentNV(n, programs_ptr, residences_ptr);
                 }
