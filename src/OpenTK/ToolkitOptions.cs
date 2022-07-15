@@ -82,6 +82,27 @@ namespace OpenTK
         public bool EnableHighResolution { get; set; }
 
         /// <summary>
+        /// <para>
+        /// Gets or sets a value indicating wether OpenTK should set the search path for x86 and x64 specific dll folders.
+        /// This is useful when running using the AnyCPU configuration that needs to load 32-bit or 64-bit dlls depending on architecture.
+        /// </para>
+        /// <para>
+        /// Turning this feature switch on will cause OpenTK to call <c>SetDllDirectory</c> with the following code:
+        /// <code>
+        /// string assemblyLocation = entryAssembly.Location;
+        /// string path = Path.GetDirectoryName(assemblyLocation);
+        /// path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
+        /// bool ok = SetDllDirectory(path);
+        /// </code>
+        /// </para>
+        /// <para>
+        /// For non-windows platforms this should be handled using OpenTK.dll.config or similar mechanism.
+        /// </para>
+        /// </summary>
+        /// 
+        public bool SetWindowsDLLPathAnyCPU { get; set; } = false;
+
+        /// <summary>
         /// Gets a <c>ToolkitOptions</c> instance with
         /// default values.
         /// </summary>

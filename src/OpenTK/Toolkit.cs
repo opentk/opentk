@@ -134,51 +134,54 @@ namespace OpenTK
                     Options = options;
                     if (Environment.OSVersion.Platform == PlatformID.Win32S || Environment.OSVersion.Platform == PlatformID.Win32Windows || Environment.OSVersion.Platform == PlatformID.Win32NT)
                     {
-                        /*
-                         * https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order
-                         *
-                         * If shipping an AnyCPU build and C++ DLLImports such as OpenALSoft / SDL
-                         * we need to use architecture specific P/Invokes.
-                         * Windows will attempt to locate an appropriate file using the search order listed
-                         * in the document above. However, we want to avoid putting 'our' copy of these files
-                         * into the system cache.
-                         *
-                         * Thus, a common convention is to use an x86 / x64 subfolder to store the architecture
-                         * specific DLLImports. (Architecture independant files can be stored in the same
-                         * folder as the main DLL)
-                         *
-                         * For this to work, we need to add the appropriate search path to SetDLLDirectory
-                         *
-                         * NOTE:
-                         * Non-Windows platforms should be handled via the OpenTK.dll.config file as appropriate
-                         */
-                        Assembly entryAssembly = Assembly.GetEntryAssembly();
-                        if (entryAssembly != null)
+                        if (options.SetWindowsDLLPathAnyCPU)
                         {
-                            try
+                            /*
+                        * https://docs.microsoft.com/en-us/windows/win32/dlls/dynamic-link-library-search-order
+                        *
+                        * If shipping an AnyCPU build and C++ DLLImports such as OpenALSoft / SDL
+                        * we need to use architecture specific P/Invokes.
+                        * Windows will attempt to locate an appropriate file using the search order listed
+                        * in the document above. However, we want to avoid putting 'our' copy of these files
+                        * into the system cache.
+                        *
+                        * Thus, a common convention is to use an x86 / x64 subfolder to store the architecture
+                        * specific DLLImports. (Architecture independant files can be stored in the same
+                        * folder as the main DLL)
+                        *
+                        * For this to work, we need to add the appropriate search path to SetDLLDirectory
+                        *
+                        * NOTE:
+                        * Non-Windows platforms should be handled via the OpenTK.dll.config file as appropriate
+                        */
+                            Assembly entryAssembly = Assembly.GetEntryAssembly();
+                            if (entryAssembly != null)
                             {
-                                string assemblyLocation = entryAssembly.Location;
-                                string path = Path.GetDirectoryName(assemblyLocation);
-                                path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
-                                bool ok = SetDllDirectory(path);
-                                if (!ok)
+                                try
                                 {
-                                    // A fairly fundamental Win32 syscall failed. Developer probably wants to know about this, but not necessarily users
-                                    throw new System.ComponentModel.Win32Exception("Setting x86/x64 specific dll import directory failed.");
+                                    string assemblyLocation = entryAssembly.Location;
+                                    string path = Path.GetDirectoryName(assemblyLocation);
+                                    path = Path.Combine(path, IntPtr.Size == 4 ? "x86" : "x64");
+                                    bool ok = SetDllDirectory(path);
+                                    if (!ok)
+                                    {
+                                        // A fairly fundamental Win32 syscall failed. Developer probably wants to know about this, but not necessarily users
+                                        throw new System.ComponentModel.Win32Exception("Setting x86/x64 specific dll import directory failed.");
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+#if DEBUG
+                                    throw;
+#else
+                                    Trace.TraceWarning($"Exception when trying to set x86/x64 dll directory. {e}");
+#endif
                                 }
                             }
-                            catch (Exception e)
+                            else
                             {
-#if DEBUG
-                                throw;
-#else
-                                Trace.TraceWarning($"Exception when trying to set x86/x64 dll directory. {e}");
-#endif
+                                Trace.TraceWarning("Could not get assembly location, we will not set separate x86 and x64 dll import folders. This means you won't get architecture specific dll imports.");
                             }
-                        }
-                        else
-                        {
-                            Trace.TraceWarning("Could not get assembly location, we will not set separate x86 and x64 dll import folders. This means you won't get architecture specific dll imports.");
                         }
                     }
 
