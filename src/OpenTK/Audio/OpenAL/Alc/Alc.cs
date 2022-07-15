@@ -111,7 +111,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function makes a specified context the current context.</summary>
         /// <param name="context">A pointer to the new context.</param>
         /// <returns>Returns True on success, or False on failure.</returns>
-         public static bool MakeContextCurrent(ContextHandle context)
+        public static bool MakeContextCurrent(ContextHandle context)
         {
             return MakeContextCurrent(context.Handle);
         }

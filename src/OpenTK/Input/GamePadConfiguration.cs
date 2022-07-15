@@ -190,7 +190,7 @@ namespace OpenTK.Input
         /// </summary>
         /// <param name="item">The string to parse</param>
         /// <returns>The index of the axis or button</returns>
-       private static int ParseIndex(string item)
+        private static int ParseIndex(string item)
         {
             // item is in the format "a#" where # a zero-based integer number
             return Int32.Parse(item.Substring(1)); ;

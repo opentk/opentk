@@ -45,6 +45,8 @@ module GameWindow =
     module Constructors =
         [<Fact>]
         let ``Width and Height can be set via constructor`` () =
+            // FIXME: DPI scaling will mess with the width and height values and will break this test.
+            ToolkitOptions.Default.EnableHighResolution <- false
             use gw = new OpenTK.GameWindow(200, 100)
             Assert.Equal(200, gw.Width)
             Assert.Equal(100, gw.Height)
