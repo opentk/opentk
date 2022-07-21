@@ -259,18 +259,18 @@ namespace OpenTK.Graphics.OpenGLES3
             _ClearStencil_fnptr(s);
         }
         
-        private static delegate* unmanaged<byte, byte, byte, byte, void> _ColorMask_fnptr = &ColorMask_Lazy;
+        private static delegate* unmanaged<bool, bool, bool, bool, void> _ColorMask_fnptr = &ColorMask_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Enable and disable writing of frame buffer color components. </summary>
         /// <param name="red"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="green"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglColorMask.xhtml" /></remarks>
-        public static void ColorMask(byte red, byte green, byte blue, byte alpha) => _ColorMask_fnptr(red, green, blue, alpha);
+        public static void ColorMask(bool red, bool green, bool blue, bool alpha) => _ColorMask_fnptr(red, green, blue, alpha);
         [UnmanagedCallersOnly]
-        private static void ColorMask_Lazy(byte red, byte green, byte blue, byte alpha)
+        private static void ColorMask_Lazy(bool red, bool green, bool blue, bool alpha)
         {
-            _ColorMask_fnptr = (delegate* unmanaged<byte, byte, byte, byte, void>)GLLoader.BindingsContext.GetProcAddress("glColorMask");
+            _ColorMask_fnptr = (delegate* unmanaged<bool, bool, bool, bool, void>)GLLoader.BindingsContext.GetProcAddress("glColorMask");
             _ColorMask_fnptr(red, green, blue, alpha);
         }
         
@@ -486,15 +486,15 @@ namespace OpenTK.Graphics.OpenGLES3
             _DepthFunc_fnptr(func);
         }
         
-        private static delegate* unmanaged<byte, void> _DepthMask_fnptr = &DepthMask_Lazy;
+        private static delegate* unmanaged<bool, void> _DepthMask_fnptr = &DepthMask_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Enable or disable writing into the depth buffer. </summary>
         /// <param name="flag"> Specifies whether the depth buffer is enabled for writing. If flag is GL_FALSE, depth buffer writing is disabled. Otherwise, it is enabled. Initially, depth buffer writing is enabled. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDepthMask.xhtml" /></remarks>
-        public static void DepthMask(byte flag) => _DepthMask_fnptr(flag);
+        public static void DepthMask(bool flag) => _DepthMask_fnptr(flag);
         [UnmanagedCallersOnly]
-        private static void DepthMask_Lazy(byte flag)
+        private static void DepthMask_Lazy(bool flag)
         {
-            _DepthMask_fnptr = (delegate* unmanaged<byte, void>)GLLoader.BindingsContext.GetProcAddress("glDepthMask");
+            _DepthMask_fnptr = (delegate* unmanaged<bool, void>)GLLoader.BindingsContext.GetProcAddress("glDepthMask");
             _DepthMask_fnptr(flag);
         }
         
@@ -794,16 +794,16 @@ namespace OpenTK.Graphics.OpenGLES3
             return _GetAttribLocation_fnptr(program, name);
         }
         
-        private static delegate* unmanaged<GetPName, byte*, void> _GetBooleanv_fnptr = &GetBooleanv_Lazy;
+        private static delegate* unmanaged<GetPName, bool*, void> _GetBooleanv_fnptr = &GetBooleanv_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Return the value or values of a selected parameter. </summary>
         /// <param name="pname"> Specifies the parameter value to be returned. The symbolic constants in the list below are accepted. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
-        public static void GetBooleanv(GetPName pname, byte* data) => _GetBooleanv_fnptr(pname, data);
+        public static void GetBooleanv(GetPName pname, bool* data) => _GetBooleanv_fnptr(pname, data);
         [UnmanagedCallersOnly]
-        private static void GetBooleanv_Lazy(GetPName pname, byte* data)
+        private static void GetBooleanv_Lazy(GetPName pname, bool* data)
         {
-            _GetBooleanv_fnptr = (delegate* unmanaged<GetPName, byte*, void>)GLLoader.BindingsContext.GetProcAddress("glGetBooleanv");
+            _GetBooleanv_fnptr = (delegate* unmanaged<GetPName, bool*, void>)GLLoader.BindingsContext.GetProcAddress("glGetBooleanv");
             _GetBooleanv_fnptr(pname, data);
         }
         
@@ -1111,87 +1111,87 @@ namespace OpenTK.Graphics.OpenGLES3
             _Hint_fnptr(target, mode);
         }
         
-        private static delegate* unmanaged<BufferHandle, byte> _IsBuffer_fnptr = &IsBuffer_Lazy;
+        private static delegate* unmanaged<BufferHandle, bool> _IsBuffer_fnptr = &IsBuffer_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a buffer object. </summary>
         /// <param name="buffer"> Specifies a value that may be the name of a buffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsBuffer.xhtml" /></remarks>
-        public static byte IsBuffer(BufferHandle buffer) => _IsBuffer_fnptr(buffer);
+        public static bool IsBuffer(BufferHandle buffer) => _IsBuffer_fnptr(buffer);
         [UnmanagedCallersOnly]
-        private static byte IsBuffer_Lazy(BufferHandle buffer)
+        private static bool IsBuffer_Lazy(BufferHandle buffer)
         {
-            _IsBuffer_fnptr = (delegate* unmanaged<BufferHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsBuffer");
+            _IsBuffer_fnptr = (delegate* unmanaged<BufferHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsBuffer");
             return _IsBuffer_fnptr(buffer);
         }
         
-        private static delegate* unmanaged<EnableCap, byte> _IsEnabled_fnptr = &IsEnabled_Lazy;
+        private static delegate* unmanaged<EnableCap, bool> _IsEnabled_fnptr = &IsEnabled_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsEnabled.xhtml" /></remarks>
-        public static byte IsEnabled(EnableCap cap) => _IsEnabled_fnptr(cap);
+        public static bool IsEnabled(EnableCap cap) => _IsEnabled_fnptr(cap);
         [UnmanagedCallersOnly]
-        private static byte IsEnabled_Lazy(EnableCap cap)
+        private static bool IsEnabled_Lazy(EnableCap cap)
         {
-            _IsEnabled_fnptr = (delegate* unmanaged<EnableCap, byte>)GLLoader.BindingsContext.GetProcAddress("glIsEnabled");
+            _IsEnabled_fnptr = (delegate* unmanaged<EnableCap, bool>)GLLoader.BindingsContext.GetProcAddress("glIsEnabled");
             return _IsEnabled_fnptr(cap);
         }
         
-        private static delegate* unmanaged<FramebufferHandle, byte> _IsFramebuffer_fnptr = &IsFramebuffer_Lazy;
+        private static delegate* unmanaged<FramebufferHandle, bool> _IsFramebuffer_fnptr = &IsFramebuffer_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a framebuffer object. </summary>
         /// <param name="framebuffer"> Specifies a value that may be the name of a framebuffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsFramebuffer.xhtml" /></remarks>
-        public static byte IsFramebuffer(FramebufferHandle framebuffer) => _IsFramebuffer_fnptr(framebuffer);
+        public static bool IsFramebuffer(FramebufferHandle framebuffer) => _IsFramebuffer_fnptr(framebuffer);
         [UnmanagedCallersOnly]
-        private static byte IsFramebuffer_Lazy(FramebufferHandle framebuffer)
+        private static bool IsFramebuffer_Lazy(FramebufferHandle framebuffer)
         {
-            _IsFramebuffer_fnptr = (delegate* unmanaged<FramebufferHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsFramebuffer");
+            _IsFramebuffer_fnptr = (delegate* unmanaged<FramebufferHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsFramebuffer");
             return _IsFramebuffer_fnptr(framebuffer);
         }
         
-        private static delegate* unmanaged<ProgramHandle, byte> _IsProgram_fnptr = &IsProgram_Lazy;
+        private static delegate* unmanaged<ProgramHandle, bool> _IsProgram_fnptr = &IsProgram_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Determines if a name corresponds to a program object. </summary>
         /// <param name="program">Specifies a potential program object.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsProgram.xhtml" /></remarks>
-        public static byte IsProgram(ProgramHandle program) => _IsProgram_fnptr(program);
+        public static bool IsProgram(ProgramHandle program) => _IsProgram_fnptr(program);
         [UnmanagedCallersOnly]
-        private static byte IsProgram_Lazy(ProgramHandle program)
+        private static bool IsProgram_Lazy(ProgramHandle program)
         {
-            _IsProgram_fnptr = (delegate* unmanaged<ProgramHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsProgram");
+            _IsProgram_fnptr = (delegate* unmanaged<ProgramHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsProgram");
             return _IsProgram_fnptr(program);
         }
         
-        private static delegate* unmanaged<RenderbufferHandle, byte> _IsRenderbuffer_fnptr = &IsRenderbuffer_Lazy;
+        private static delegate* unmanaged<RenderbufferHandle, bool> _IsRenderbuffer_fnptr = &IsRenderbuffer_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a renderbuffer object. </summary>
         /// <param name="renderbuffer"> Specifies a value that may be the name of a renderbuffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsRenderbuffer.xhtml" /></remarks>
-        public static byte IsRenderbuffer(RenderbufferHandle renderbuffer) => _IsRenderbuffer_fnptr(renderbuffer);
+        public static bool IsRenderbuffer(RenderbufferHandle renderbuffer) => _IsRenderbuffer_fnptr(renderbuffer);
         [UnmanagedCallersOnly]
-        private static byte IsRenderbuffer_Lazy(RenderbufferHandle renderbuffer)
+        private static bool IsRenderbuffer_Lazy(RenderbufferHandle renderbuffer)
         {
-            _IsRenderbuffer_fnptr = (delegate* unmanaged<RenderbufferHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsRenderbuffer");
+            _IsRenderbuffer_fnptr = (delegate* unmanaged<RenderbufferHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsRenderbuffer");
             return _IsRenderbuffer_fnptr(renderbuffer);
         }
         
-        private static delegate* unmanaged<ShaderHandle, byte> _IsShader_fnptr = &IsShader_Lazy;
+        private static delegate* unmanaged<ShaderHandle, bool> _IsShader_fnptr = &IsShader_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Determines if a name corresponds to a shader object. </summary>
         /// <param name="shader">Specifies a potential shader object.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsShader.xhtml" /></remarks>
-        public static byte IsShader(ShaderHandle shader) => _IsShader_fnptr(shader);
+        public static bool IsShader(ShaderHandle shader) => _IsShader_fnptr(shader);
         [UnmanagedCallersOnly]
-        private static byte IsShader_Lazy(ShaderHandle shader)
+        private static bool IsShader_Lazy(ShaderHandle shader)
         {
-            _IsShader_fnptr = (delegate* unmanaged<ShaderHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsShader");
+            _IsShader_fnptr = (delegate* unmanaged<ShaderHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsShader");
             return _IsShader_fnptr(shader);
         }
         
-        private static delegate* unmanaged<TextureHandle, byte> _IsTexture_fnptr = &IsTexture_Lazy;
+        private static delegate* unmanaged<TextureHandle, bool> _IsTexture_fnptr = &IsTexture_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a texture. </summary>
         /// <param name="texture"> Specifies a value that may be the name of a texture. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsTexture.xhtml" /></remarks>
-        public static byte IsTexture(TextureHandle texture) => _IsTexture_fnptr(texture);
+        public static bool IsTexture(TextureHandle texture) => _IsTexture_fnptr(texture);
         [UnmanagedCallersOnly]
-        private static byte IsTexture_Lazy(TextureHandle texture)
+        private static bool IsTexture_Lazy(TextureHandle texture)
         {
-            _IsTexture_fnptr = (delegate* unmanaged<TextureHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsTexture");
+            _IsTexture_fnptr = (delegate* unmanaged<TextureHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsTexture");
             return _IsTexture_fnptr(texture);
         }
         
@@ -1289,16 +1289,16 @@ namespace OpenTK.Graphics.OpenGLES3
             _RenderbufferStorage_fnptr(target, internalformat, width, height);
         }
         
-        private static delegate* unmanaged<float, byte, void> _SampleCoverage_fnptr = &SampleCoverage_Lazy;
+        private static delegate* unmanaged<float, bool, void> _SampleCoverage_fnptr = &SampleCoverage_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Specify multisample coverage parameters. </summary>
         /// <param name="value"> Specify a single floating-point sample coverage value. The value is clamped to the range 0 1 . The initial value is 1.0. </param>
         /// <param name="invert"> Specify a single boolean value representing if the coverage masks should be inverted. GL_TRUE and GL_FALSE are accepted. The initial value is GL_FALSE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSampleCoverage.xhtml" /></remarks>
-        public static void SampleCoverage(float value, byte invert) => _SampleCoverage_fnptr(value, invert);
+        public static void SampleCoverage(float value, bool invert) => _SampleCoverage_fnptr(value, invert);
         [UnmanagedCallersOnly]
-        private static void SampleCoverage_Lazy(float value, byte invert)
+        private static void SampleCoverage_Lazy(float value, bool invert)
         {
-            _SampleCoverage_fnptr = (delegate* unmanaged<float, byte, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoverage");
+            _SampleCoverage_fnptr = (delegate* unmanaged<float, bool, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoverage");
             _SampleCoverage_fnptr(value, invert);
         }
         
@@ -1755,48 +1755,48 @@ namespace OpenTK.Graphics.OpenGLES3
             _Uniform4iv_fnptr(location, count, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2fv_fnptr = &UniformMatrix2fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix2fv_fnptr = &UniformMatrix2fv_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix2fv(int location, int count, byte transpose, float* value) => _UniformMatrix2fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix2fv(int location, int count, bool transpose, float* value) => _UniformMatrix2fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix2fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix2fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix2fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2fv");
+            _UniformMatrix2fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2fv");
             _UniformMatrix2fv_fnptr(location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3fv_fnptr = &UniformMatrix3fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix3fv_fnptr = &UniformMatrix3fv_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix3fv(int location, int count, byte transpose, float* value) => _UniformMatrix3fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix3fv(int location, int count, bool transpose, float* value) => _UniformMatrix3fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix3fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix3fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix3fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3fv");
+            _UniformMatrix3fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3fv");
             _UniformMatrix3fv_fnptr(location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4fv_fnptr = &UniformMatrix4fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix4fv_fnptr = &UniformMatrix4fv_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix4fv(int location, int count, byte transpose, float* value) => _UniformMatrix4fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix4fv(int location, int count, bool transpose, float* value) => _UniformMatrix4fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix4fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix4fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix4fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4fv");
+            _UniformMatrix4fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4fv");
             _UniformMatrix4fv_fnptr(location, count, transpose, value);
         }
         
@@ -1934,7 +1934,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _VertexAttrib4fv_fnptr(index, v);
         }
         
-        private static delegate* unmanaged<uint, int, VertexAttribPointerType, byte, int, void*, void> _VertexAttribPointer_fnptr = &VertexAttribPointer_Lazy;
+        private static delegate* unmanaged<uint, int, VertexAttribPointerType, bool, int, void*, void> _VertexAttribPointer_fnptr = &VertexAttribPointer_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Define an array of generic vertex attribute data. </summary>
         /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
         /// <param name="size">Specifies the number of components per generic vertex attribute. Must be 1, 2, 3, 4. The initial value is 4.</param>
@@ -1943,11 +1943,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="stride"> Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0. </param>
         /// <param name="pointer"> Specifies a pointer to the first generic vertex attribute in the array. If a non-zero buffer is currently bound to the GL_ARRAY_BUFFER target, pointer specifies an offset of into the array in the data store of that buffer. The initial value is 0. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribPointer.xhtml" /></remarks>
-        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, byte normalized, int stride, void* pointer) => _VertexAttribPointer_fnptr(index, size, type, normalized, stride, pointer);
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, void* pointer) => _VertexAttribPointer_fnptr(index, size, type, normalized, stride, pointer);
         [UnmanagedCallersOnly]
-        private static void VertexAttribPointer_Lazy(uint index, int size, VertexAttribPointerType type, byte normalized, int stride, void* pointer)
+        private static void VertexAttribPointer_Lazy(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, void* pointer)
         {
-            _VertexAttribPointer_fnptr = (delegate* unmanaged<uint, int, VertexAttribPointerType, byte, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribPointer");
+            _VertexAttribPointer_fnptr = (delegate* unmanaged<uint, int, VertexAttribPointerType, bool, int, void*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribPointer");
             _VertexAttribPointer_fnptr(index, size, type, normalized, stride, pointer);
         }
         
@@ -2126,15 +2126,15 @@ namespace OpenTK.Graphics.OpenGLES3
             _DeleteQueries_fnptr(n, ids);
         }
         
-        private static delegate* unmanaged<QueryHandle, byte> _IsQuery_fnptr = &IsQuery_Lazy;
+        private static delegate* unmanaged<QueryHandle, bool> _IsQuery_fnptr = &IsQuery_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a query object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a query object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsQuery.xhtml" /></remarks>
-        public static byte IsQuery(QueryHandle id) => _IsQuery_fnptr(id);
+        public static bool IsQuery(QueryHandle id) => _IsQuery_fnptr(id);
         [UnmanagedCallersOnly]
-        private static byte IsQuery_Lazy(QueryHandle id)
+        private static bool IsQuery_Lazy(QueryHandle id)
         {
-            _IsQuery_fnptr = (delegate* unmanaged<QueryHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsQuery");
+            _IsQuery_fnptr = (delegate* unmanaged<QueryHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsQuery");
             return _IsQuery_fnptr(id);
         }
         
@@ -2191,15 +2191,15 @@ namespace OpenTK.Graphics.OpenGLES3
             _GetQueryObjectuiv_fnptr(id, pname, parameters);
         }
         
-        private static delegate* unmanaged<BufferTargetARB, byte> _UnmapBuffer_fnptr = &UnmapBuffer_Lazy;
+        private static delegate* unmanaged<BufferTargetARB, bool> _UnmapBuffer_fnptr = &UnmapBuffer_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Map a section of a buffer object's data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglMapBufferRange.xhtml" /></remarks>
-        public static byte UnmapBuffer(BufferTargetARB target) => _UnmapBuffer_fnptr(target);
+        public static bool UnmapBuffer(BufferTargetARB target) => _UnmapBuffer_fnptr(target);
         [UnmanagedCallersOnly]
-        private static byte UnmapBuffer_Lazy(BufferTargetARB target)
+        private static bool UnmapBuffer_Lazy(BufferTargetARB target)
         {
-            _UnmapBuffer_fnptr = (delegate* unmanaged<BufferTargetARB, byte>)GLLoader.BindingsContext.GetProcAddress("glUnmapBuffer");
+            _UnmapBuffer_fnptr = (delegate* unmanaged<BufferTargetARB, bool>)GLLoader.BindingsContext.GetProcAddress("glUnmapBuffer");
             return _UnmapBuffer_fnptr(target);
         }
         
@@ -2230,93 +2230,93 @@ namespace OpenTK.Graphics.OpenGLES3
             _DrawBuffers_fnptr(n, bufs);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2x3fv_fnptr = &UniformMatrix2x3fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix2x3fv_fnptr = &UniformMatrix2x3fv_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix2x3fv(int location, int count, byte transpose, float* value) => _UniformMatrix2x3fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix2x3fv(int location, int count, bool transpose, float* value) => _UniformMatrix2x3fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix2x3fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix2x3fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix2x3fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x3fv");
+            _UniformMatrix2x3fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x3fv");
             _UniformMatrix2x3fv_fnptr(location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3x2fv_fnptr = &UniformMatrix3x2fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix3x2fv_fnptr = &UniformMatrix3x2fv_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix3x2fv(int location, int count, byte transpose, float* value) => _UniformMatrix3x2fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix3x2fv(int location, int count, bool transpose, float* value) => _UniformMatrix3x2fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix3x2fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix3x2fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix3x2fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x2fv");
+            _UniformMatrix3x2fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x2fv");
             _UniformMatrix3x2fv_fnptr(location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2x4fv_fnptr = &UniformMatrix2x4fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix2x4fv_fnptr = &UniformMatrix2x4fv_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix2x4fv(int location, int count, byte transpose, float* value) => _UniformMatrix2x4fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix2x4fv(int location, int count, bool transpose, float* value) => _UniformMatrix2x4fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix2x4fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix2x4fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix2x4fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x4fv");
+            _UniformMatrix2x4fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x4fv");
             _UniformMatrix2x4fv_fnptr(location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4x2fv_fnptr = &UniformMatrix4x2fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix4x2fv_fnptr = &UniformMatrix4x2fv_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix4x2fv(int location, int count, byte transpose, float* value) => _UniformMatrix4x2fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix4x2fv(int location, int count, bool transpose, float* value) => _UniformMatrix4x2fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix4x2fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix4x2fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix4x2fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x2fv");
+            _UniformMatrix4x2fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x2fv");
             _UniformMatrix4x2fv_fnptr(location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3x4fv_fnptr = &UniformMatrix3x4fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix3x4fv_fnptr = &UniformMatrix3x4fv_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix3x4fv(int location, int count, byte transpose, float* value) => _UniformMatrix3x4fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix3x4fv(int location, int count, bool transpose, float* value) => _UniformMatrix3x4fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix3x4fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix3x4fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix3x4fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x4fv");
+            _UniformMatrix3x4fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x4fv");
             _UniformMatrix3x4fv_fnptr(location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4x3fv_fnptr = &UniformMatrix4x3fv_Lazy;
+        private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix4x3fv_fnptr = &UniformMatrix4x3fv_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
         /// <param name="count"> For the vector (glUniform*v) commands, specifies the number of elements that are to be modified. This should be 1 if the targeted uniform variable is not an array, and 1 or more if it is an array. </param>
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix4x3fv(int location, int count, byte transpose, float* value) => _UniformMatrix4x3fv_fnptr(location, count, transpose, value);
+        public static void UniformMatrix4x3fv(int location, int count, bool transpose, float* value) => _UniformMatrix4x3fv_fnptr(location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void UniformMatrix4x3fv_Lazy(int location, int count, byte transpose, float* value)
+        private static void UniformMatrix4x3fv_Lazy(int location, int count, bool transpose, float* value)
         {
-            _UniformMatrix4x3fv_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x3fv");
+            _UniformMatrix4x3fv_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x3fv");
             _UniformMatrix4x3fv_fnptr(location, count, transpose, value);
         }
         
@@ -2440,15 +2440,15 @@ namespace OpenTK.Graphics.OpenGLES3
             _GenVertexArrays_fnptr(n, arrays);
         }
         
-        private static delegate* unmanaged<VertexArrayHandle, byte> _IsVertexArray_fnptr = &IsVertexArray_Lazy;
+        private static delegate* unmanaged<VertexArrayHandle, bool> _IsVertexArray_fnptr = &IsVertexArray_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a vertex array object. </summary>
         /// <param name="array"> Specifies a value that may be the name of a vertex array object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsVertexArray.xhtml" /></remarks>
-        public static byte IsVertexArray(VertexArrayHandle array) => _IsVertexArray_fnptr(array);
+        public static bool IsVertexArray(VertexArrayHandle array) => _IsVertexArray_fnptr(array);
         [UnmanagedCallersOnly]
-        private static byte IsVertexArray_Lazy(VertexArrayHandle array)
+        private static bool IsVertexArray_Lazy(VertexArrayHandle array)
         {
-            _IsVertexArray_fnptr = (delegate* unmanaged<VertexArrayHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsVertexArray");
+            _IsVertexArray_fnptr = (delegate* unmanaged<VertexArrayHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsVertexArray");
             return _IsVertexArray_fnptr(array);
         }
         
@@ -3014,15 +3014,15 @@ namespace OpenTK.Graphics.OpenGLES3
             return _FenceSync_fnptr(condition, flags);
         }
         
-        private static delegate* unmanaged<GLSync, byte> _IsSync_fnptr = &IsSync_Lazy;
+        private static delegate* unmanaged<GLSync, bool> _IsSync_fnptr = &IsSync_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a sync object. </summary>
         /// <param name="sync"> Specifies a value that may be the name of a sync object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsSync.xhtml" /></remarks>
-        public static byte IsSync(GLSync sync) => _IsSync_fnptr(sync);
+        public static bool IsSync(GLSync sync) => _IsSync_fnptr(sync);
         [UnmanagedCallersOnly]
-        private static byte IsSync_Lazy(GLSync sync)
+        private static bool IsSync_Lazy(GLSync sync)
         {
-            _IsSync_fnptr = (delegate* unmanaged<GLSync, byte>)GLLoader.BindingsContext.GetProcAddress("glIsSync");
+            _IsSync_fnptr = (delegate* unmanaged<GLSync, bool>)GLLoader.BindingsContext.GetProcAddress("glIsSync");
             return _IsSync_fnptr(sync);
         }
         
@@ -3149,15 +3149,15 @@ namespace OpenTK.Graphics.OpenGLES3
             _DeleteSamplers_fnptr(count, samplers);
         }
         
-        private static delegate* unmanaged<SamplerHandle, byte> _IsSampler_fnptr = &IsSampler_Lazy;
+        private static delegate* unmanaged<SamplerHandle, bool> _IsSampler_fnptr = &IsSampler_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a sampler object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsSampler.xhtml" /></remarks>
-        public static byte IsSampler(SamplerHandle sampler) => _IsSampler_fnptr(sampler);
+        public static bool IsSampler(SamplerHandle sampler) => _IsSampler_fnptr(sampler);
         [UnmanagedCallersOnly]
-        private static byte IsSampler_Lazy(SamplerHandle sampler)
+        private static bool IsSampler_Lazy(SamplerHandle sampler)
         {
-            _IsSampler_fnptr = (delegate* unmanaged<SamplerHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsSampler");
+            _IsSampler_fnptr = (delegate* unmanaged<SamplerHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsSampler");
             return _IsSampler_fnptr(sampler);
         }
         
@@ -3310,15 +3310,15 @@ namespace OpenTK.Graphics.OpenGLES3
             _GenTransformFeedbacks_fnptr(n, ids);
         }
         
-        private static delegate* unmanaged<TransformFeedbackHandle, byte> _IsTransformFeedback_fnptr = &IsTransformFeedback_Lazy;
+        private static delegate* unmanaged<TransformFeedbackHandle, bool> _IsTransformFeedback_fnptr = &IsTransformFeedback_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a transform feedback object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a transform feedback object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsTransformFeedback.xhtml" /></remarks>
-        public static byte IsTransformFeedback(TransformFeedbackHandle id) => _IsTransformFeedback_fnptr(id);
+        public static bool IsTransformFeedback(TransformFeedbackHandle id) => _IsTransformFeedback_fnptr(id);
         [UnmanagedCallersOnly]
-        private static byte IsTransformFeedback_Lazy(TransformFeedbackHandle id)
+        private static bool IsTransformFeedback_Lazy(TransformFeedbackHandle id)
         {
-            _IsTransformFeedback_fnptr = (delegate* unmanaged<TransformFeedbackHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsTransformFeedback");
+            _IsTransformFeedback_fnptr = (delegate* unmanaged<TransformFeedbackHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsTransformFeedback");
             return _IsTransformFeedback_fnptr(id);
         }
         
@@ -3709,15 +3709,15 @@ namespace OpenTK.Graphics.OpenGLES3
             _GenProgramPipelines_fnptr(n, pipelines);
         }
         
-        private static delegate* unmanaged<ProgramPipelineHandle, byte> _IsProgramPipeline_fnptr = &IsProgramPipeline_Lazy;
+        private static delegate* unmanaged<ProgramPipelineHandle, bool> _IsProgramPipeline_fnptr = &IsProgramPipeline_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Determine if a name corresponds to a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies a value that may be the name of a program pipeline object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsProgramPipeline.xhtml" /></remarks>
-        public static byte IsProgramPipeline(ProgramPipelineHandle pipeline) => _IsProgramPipeline_fnptr(pipeline);
+        public static bool IsProgramPipeline(ProgramPipelineHandle pipeline) => _IsProgramPipeline_fnptr(pipeline);
         [UnmanagedCallersOnly]
-        private static byte IsProgramPipeline_Lazy(ProgramPipelineHandle pipeline)
+        private static bool IsProgramPipeline_Lazy(ProgramPipelineHandle pipeline)
         {
-            _IsProgramPipeline_fnptr = (delegate* unmanaged<ProgramPipelineHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsProgramPipeline");
+            _IsProgramPipeline_fnptr = (delegate* unmanaged<ProgramPipelineHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsProgramPipeline");
             return _IsProgramPipeline_fnptr(pipeline);
         }
         
@@ -4101,7 +4101,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _ProgramUniform4fv_fnptr(program, location, count, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2fv_fnptr = &ProgramUniformMatrix2fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix2fv_fnptr = &ProgramUniformMatrix2fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4109,15 +4109,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix2fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix2fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix2fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix2fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix2fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2fv");
+            _ProgramUniformMatrix2fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2fv");
             _ProgramUniformMatrix2fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3fv_fnptr = &ProgramUniformMatrix3fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix3fv_fnptr = &ProgramUniformMatrix3fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4125,15 +4125,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix3fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix3fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix3fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix3fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix3fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3fv");
+            _ProgramUniformMatrix3fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3fv");
             _ProgramUniformMatrix3fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4fv_fnptr = &ProgramUniformMatrix4fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix4fv_fnptr = &ProgramUniformMatrix4fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4141,15 +4141,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix4fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix4fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix4fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix4fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix4fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4fv");
+            _ProgramUniformMatrix4fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4fv");
             _ProgramUniformMatrix4fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2x3fv_fnptr = &ProgramUniformMatrix2x3fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix2x3fv_fnptr = &ProgramUniformMatrix2x3fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4157,15 +4157,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix2x3fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2x3fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix2x3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix2x3fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix2x3fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix2x3fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix2x3fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x3fv");
+            _ProgramUniformMatrix2x3fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x3fv");
             _ProgramUniformMatrix2x3fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3x2fv_fnptr = &ProgramUniformMatrix3x2fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix3x2fv_fnptr = &ProgramUniformMatrix3x2fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4173,15 +4173,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix3x2fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3x2fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix3x2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix3x2fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix3x2fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix3x2fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix3x2fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x2fv");
+            _ProgramUniformMatrix3x2fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x2fv");
             _ProgramUniformMatrix3x2fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2x4fv_fnptr = &ProgramUniformMatrix2x4fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix2x4fv_fnptr = &ProgramUniformMatrix2x4fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4189,15 +4189,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix2x4fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2x4fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix2x4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix2x4fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix2x4fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix2x4fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix2x4fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x4fv");
+            _ProgramUniformMatrix2x4fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x4fv");
             _ProgramUniformMatrix2x4fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4x2fv_fnptr = &ProgramUniformMatrix4x2fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix4x2fv_fnptr = &ProgramUniformMatrix4x2fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4205,15 +4205,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix4x2fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4x2fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix4x2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix4x2fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix4x2fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix4x2fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix4x2fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x2fv");
+            _ProgramUniformMatrix4x2fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x2fv");
             _ProgramUniformMatrix4x2fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3x4fv_fnptr = &ProgramUniformMatrix3x4fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix3x4fv_fnptr = &ProgramUniformMatrix3x4fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4221,15 +4221,15 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix3x4fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3x4fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix3x4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix3x4fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix3x4fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix3x4fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix3x4fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x4fv");
+            _ProgramUniformMatrix3x4fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x4fv");
             _ProgramUniformMatrix3x4fv_fnptr(program, location, count, transpose, value);
         }
         
-        private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4x3fv_fnptr = &ProgramUniformMatrix4x3fv_Lazy;
+        private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix4x3fv_fnptr = &ProgramUniformMatrix4x3fv_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -4237,11 +4237,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix4x3fv(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4x3fv_fnptr(program, location, count, transpose, value);
+        public static void ProgramUniformMatrix4x3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix4x3fv_fnptr(program, location, count, transpose, value);
         [UnmanagedCallersOnly]
-        private static void ProgramUniformMatrix4x3fv_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+        private static void ProgramUniformMatrix4x3fv_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
         {
-            _ProgramUniformMatrix4x3fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x3fv");
+            _ProgramUniformMatrix4x3fv_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x3fv");
             _ProgramUniformMatrix4x3fv_fnptr(program, location, count, transpose, value);
         }
         
@@ -4272,7 +4272,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _GetProgramPipelineInfoLog_fnptr(pipeline, bufSize, length, infoLog);
         }
         
-        private static delegate* unmanaged<uint, TextureHandle, int, byte, int, BufferAccessARB, InternalFormat, void> _BindImageTexture_fnptr = &BindImageTexture_Lazy;
+        private static delegate* unmanaged<uint, TextureHandle, int, bool, int, BufferAccessARB, InternalFormat, void> _BindImageTexture_fnptr = &BindImageTexture_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Bind a level of a texture to an image unit. </summary>
         /// <param name="unit"> Specifies the index of the image unit to which to bind the texture </param>
         /// <param name="texture"> Specifies the name of the texture to bind to the image unit. </param>
@@ -4282,25 +4282,25 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="access"> Specifies a token indicating the type of access that will be performed on the image. </param>
         /// <param name="format"> Specifies the format that the elements of the image will be treated as for the purposes of formatted loads and stores. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindImageTexture.xhtml" /></remarks>
-        public static void BindImageTexture(uint unit, TextureHandle texture, int level, byte layered, int layer, BufferAccessARB access, InternalFormat format) => _BindImageTexture_fnptr(unit, texture, level, layered, layer, access, format);
+        public static void BindImageTexture(uint unit, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format) => _BindImageTexture_fnptr(unit, texture, level, layered, layer, access, format);
         [UnmanagedCallersOnly]
-        private static void BindImageTexture_Lazy(uint unit, TextureHandle texture, int level, byte layered, int layer, BufferAccessARB access, InternalFormat format)
+        private static void BindImageTexture_Lazy(uint unit, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format)
         {
-            _BindImageTexture_fnptr = (delegate* unmanaged<uint, TextureHandle, int, byte, int, BufferAccessARB, InternalFormat, void>)GLLoader.BindingsContext.GetProcAddress("glBindImageTexture");
+            _BindImageTexture_fnptr = (delegate* unmanaged<uint, TextureHandle, int, bool, int, BufferAccessARB, InternalFormat, void>)GLLoader.BindingsContext.GetProcAddress("glBindImageTexture");
             _BindImageTexture_fnptr(unit, texture, level, layered, layer, access, format);
         }
         
-        private static delegate* unmanaged<BufferTargetARB, uint, byte*, void> _GetBooleani_v_fnptr = &GetBooleani_v_Lazy;
+        private static delegate* unmanaged<BufferTargetARB, uint, bool*, void> _GetBooleani_v_fnptr = &GetBooleani_v_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Return the value or values of a selected parameter. </summary>
         /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
         /// <param name="index"> Specifies the index of the particular element being queried. </param>
         /// <param name="data"> Returns the value or values of the specified parameter. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglGet.xhtml" /></remarks>
-        public static void GetBooleani_v(BufferTargetARB target, uint index, byte* data) => _GetBooleani_v_fnptr(target, index, data);
+        public static void GetBooleani_v(BufferTargetARB target, uint index, bool* data) => _GetBooleani_v_fnptr(target, index, data);
         [UnmanagedCallersOnly]
-        private static void GetBooleani_v_Lazy(BufferTargetARB target, uint index, byte* data)
+        private static void GetBooleani_v_Lazy(BufferTargetARB target, uint index, bool* data)
         {
-            _GetBooleani_v_fnptr = (delegate* unmanaged<BufferTargetARB, uint, byte*, void>)GLLoader.BindingsContext.GetProcAddress("glGetBooleani_v");
+            _GetBooleani_v_fnptr = (delegate* unmanaged<BufferTargetARB, uint, bool*, void>)GLLoader.BindingsContext.GetProcAddress("glGetBooleani_v");
             _GetBooleani_v_fnptr(target, index, data);
         }
         
@@ -4328,7 +4328,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _MemoryBarrierByRegion_fnptr(barriers);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, byte, void> _TexStorage2DMultisample_fnptr = &TexStorage2DMultisample_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, bool, void> _TexStorage2DMultisample_fnptr = &TexStorage2DMultisample_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify storage for a two-dimensional multisample texture. </summary>
         /// <param name="target"> Specify the target of the operation. target must be GL_TEXTURE_2D_MULTISAMPLE. </param>
         /// <param name="samples"> Specify the number of samples in the texture. </param>
@@ -4337,11 +4337,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="height"> Specifies the height of the texture, in texels. </param>
         /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage2DMultisample.xhtml" /></remarks>
-        public static void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, byte fixedsamplelocations) => _TexStorage2DMultisample_fnptr(target, samples, internalformat, width, height, fixedsamplelocations);
+        public static void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations) => _TexStorage2DMultisample_fnptr(target, samples, internalformat, width, height, fixedsamplelocations);
         [UnmanagedCallersOnly]
-        private static void TexStorage2DMultisample_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, byte fixedsamplelocations)
+        private static void TexStorage2DMultisample_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations)
         {
-            _TexStorage2DMultisample_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage2DMultisample");
+            _TexStorage2DMultisample_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, bool, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage2DMultisample");
             _TexStorage2DMultisample_fnptr(target, samples, internalformat, width, height, fixedsamplelocations);
         }
         
@@ -4417,7 +4417,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _BindVertexBuffer_fnptr(bindingindex, buffer, offset, stride);
         }
         
-        private static delegate* unmanaged<uint, int, VertexAttribType, byte, uint, void> _VertexAttribFormat_fnptr = &VertexAttribFormat_Lazy;
+        private static delegate* unmanaged<uint, int, VertexAttribType, bool, uint, void> _VertexAttribFormat_fnptr = &VertexAttribFormat_Lazy;
         /// <summary> <b>[requires: v3.1]</b> Specify the organization of vertex arrays. </summary>
         /// <param name="attribindex"> The generic vertex attribute array being described. </param>
         /// <param name="size"> The number of values per vertex that are stored in the array. </param>
@@ -4425,11 +4425,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="normalized"> Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed. This parameter is ignored if type is GL_FIXED. </param>
         /// <param name="relativeoffset"> An offset to the first element relative to the start of the vertex buffer binding. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribFormat.xhtml" /></remarks>
-        public static void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, byte normalized, uint relativeoffset) => _VertexAttribFormat_fnptr(attribindex, size, type, normalized, relativeoffset);
+        public static void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset) => _VertexAttribFormat_fnptr(attribindex, size, type, normalized, relativeoffset);
         [UnmanagedCallersOnly]
-        private static void VertexAttribFormat_Lazy(uint attribindex, int size, VertexAttribType type, byte normalized, uint relativeoffset)
+        private static void VertexAttribFormat_Lazy(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset)
         {
-            _VertexAttribFormat_fnptr = (delegate* unmanaged<uint, int, VertexAttribType, byte, uint, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribFormat");
+            _VertexAttribFormat_fnptr = (delegate* unmanaged<uint, int, VertexAttribType, bool, uint, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribFormat");
             _VertexAttribFormat_fnptr(attribindex, size, type, normalized, relativeoffset);
         }
         
@@ -4511,7 +4511,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _CopyImageSubData_fnptr(srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
         }
         
-        private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
+        private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> Control the reporting of debug messages in a debug context. </summary>
         /// <param name="source"> The source of debug messages to enable or disable. </param>
         /// <param name="type"> The type of debug messages to enable or disable. </param>
@@ -4520,11 +4520,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
         /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageControl.xhtml" /></remarks>
-        public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
+        public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
         [UnmanagedCallersOnly]
-        private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled)
+        private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled)
         {
-            _DebugMessageControl_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControl");
+            _DebugMessageControl_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControl");
             _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
         }
         
@@ -4759,7 +4759,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _BlendFuncSeparatei_fnptr(buf, srcRGB, dstRGB, srcAlpha, dstAlpha);
         }
         
-        private static delegate* unmanaged<uint, byte, byte, byte, byte, void> _ColorMaski_fnptr = &ColorMaski_Lazy;
+        private static delegate* unmanaged<uint, bool, bool, bool, bool, void> _ColorMaski_fnptr = &ColorMaski_Lazy;
         /// <summary> <b>[requires: v3.2]</b> Enable and disable writing of frame buffer color components. </summary>
         /// <param name="buf"> For glColorMaski, specifies the index of the draw buffer whose color mask to set. </param>
         /// <param name="red"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
@@ -4767,24 +4767,24 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglColorMask.xhtml" /></remarks>
-        public static void ColorMaski(uint index, byte r, byte g, byte b, byte a) => _ColorMaski_fnptr(index, r, g, b, a);
+        public static void ColorMaski(uint index, bool r, bool g, bool b, bool a) => _ColorMaski_fnptr(index, r, g, b, a);
         [UnmanagedCallersOnly]
-        private static void ColorMaski_Lazy(uint index, byte r, byte g, byte b, byte a)
+        private static void ColorMaski_Lazy(uint index, bool r, bool g, bool b, bool a)
         {
-            _ColorMaski_fnptr = (delegate* unmanaged<uint, byte, byte, byte, byte, void>)GLLoader.BindingsContext.GetProcAddress("glColorMaski");
+            _ColorMaski_fnptr = (delegate* unmanaged<uint, bool, bool, bool, bool, void>)GLLoader.BindingsContext.GetProcAddress("glColorMaski");
             _ColorMaski_fnptr(index, r, g, b, a);
         }
         
-        private static delegate* unmanaged<EnableCap, uint, byte> _IsEnabledi_fnptr = &IsEnabledi_Lazy;
+        private static delegate* unmanaged<EnableCap, uint, bool> _IsEnabledi_fnptr = &IsEnabledi_Lazy;
         /// <summary> <b>[requires: v3.2]</b> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the capability. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsEnabled.xhtml" /></remarks>
-        public static byte IsEnabledi(EnableCap target, uint index) => _IsEnabledi_fnptr(target, index);
+        public static bool IsEnabledi(EnableCap target, uint index) => _IsEnabledi_fnptr(target, index);
         [UnmanagedCallersOnly]
-        private static byte IsEnabledi_Lazy(EnableCap target, uint index)
+        private static bool IsEnabledi_Lazy(EnableCap target, uint index)
         {
-            _IsEnabledi_fnptr = (delegate* unmanaged<EnableCap, uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsEnabledi");
+            _IsEnabledi_fnptr = (delegate* unmanaged<EnableCap, uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsEnabledi");
             return _IsEnabledi_fnptr(target, index);
         }
         
@@ -5115,7 +5115,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _TexBufferRange_fnptr(target, internalformat, buffer, offset, size);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, byte, void> _TexStorage3DMultisample_fnptr = &TexStorage3DMultisample_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, bool, void> _TexStorage3DMultisample_fnptr = &TexStorage3DMultisample_Lazy;
         /// <summary> <b>[requires: v3.2]</b> Specify storage for a two-dimensional multisample array texture. </summary>
         /// <param name="target"> Specifies the target to which the texture object is bound for glTexStorage3DMultisample. Must be GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
         /// <param name="samples"> Specify the number of samples in the texture. </param>
@@ -5125,11 +5125,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="depth"> Specifies the depth of the texture, in layers. </param>
         /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage3DMultisample.xhtml" /></remarks>
-        public static void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, byte fixedsamplelocations) => _TexStorage3DMultisample_fnptr(target, samples, internalformat, width, height, depth, fixedsamplelocations);
+        public static void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => _TexStorage3DMultisample_fnptr(target, samples, internalformat, width, height, depth, fixedsamplelocations);
         [UnmanagedCallersOnly]
-        private static void TexStorage3DMultisample_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, byte fixedsamplelocations)
+        private static void TexStorage3DMultisample_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
         {
-            _TexStorage3DMultisample_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage3DMultisample");
+            _TexStorage3DMultisample_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, bool, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage3DMultisample");
             _TexStorage3DMultisample_fnptr(target, samples, internalformat, width, height, depth, fixedsamplelocations);
         }
         
@@ -5234,14 +5234,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _DeletePerfMonitorsAMD_fnptr(n, monitors);
             }
             
-            private static delegate* unmanaged<uint, byte, uint, int, uint*, void> _SelectPerfMonitorCountersAMD_fnptr = &SelectPerfMonitorCountersAMD_Lazy;
+            private static delegate* unmanaged<uint, bool, uint, int, uint*, void> _SelectPerfMonitorCountersAMD_fnptr = &SelectPerfMonitorCountersAMD_Lazy;
             /// <summary> <b>[requires: GL_AMD_performance_monitor]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void SelectPerfMonitorCountersAMD(uint monitor, byte enable, uint group, int numCounters, uint* counterList) => _SelectPerfMonitorCountersAMD_fnptr(monitor, enable, group, numCounters, counterList);
+            public static void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, uint* counterList) => _SelectPerfMonitorCountersAMD_fnptr(monitor, enable, group, numCounters, counterList);
             [UnmanagedCallersOnly]
-            private static void SelectPerfMonitorCountersAMD_Lazy(uint monitor, byte enable, uint group, int numCounters, uint* counterList)
+            private static void SelectPerfMonitorCountersAMD_Lazy(uint monitor, bool enable, uint group, int numCounters, uint* counterList)
             {
-                _SelectPerfMonitorCountersAMD_fnptr = (delegate* unmanaged<uint, byte, uint, int, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glSelectPerfMonitorCountersAMD");
+                _SelectPerfMonitorCountersAMD_fnptr = (delegate* unmanaged<uint, bool, uint, int, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glSelectPerfMonitorCountersAMD");
                 _SelectPerfMonitorCountersAMD_fnptr(monitor, enable, group, numCounters, counterList);
             }
             
@@ -5394,14 +5394,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 return _FenceSyncAPPLE_fnptr(condition, flags);
             }
             
-            private static delegate* unmanaged<GLSync, byte> _IsSyncAPPLE_fnptr = &IsSyncAPPLE_Lazy;
+            private static delegate* unmanaged<GLSync, bool> _IsSyncAPPLE_fnptr = &IsSyncAPPLE_Lazy;
             /// <summary> <b>[requires: GL_APPLE_sync]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsSyncAPPLE(GLSync sync) => _IsSyncAPPLE_fnptr(sync);
+            public static bool IsSyncAPPLE(GLSync sync) => _IsSyncAPPLE_fnptr(sync);
             [UnmanagedCallersOnly]
-            private static byte IsSyncAPPLE_Lazy(GLSync sync)
+            private static bool IsSyncAPPLE_Lazy(GLSync sync)
             {
-                _IsSyncAPPLE_fnptr = (delegate* unmanaged<GLSync, byte>)GLLoader.BindingsContext.GetProcAddress("glIsSyncAPPLE");
+                _IsSyncAPPLE_fnptr = (delegate* unmanaged<GLSync, bool>)GLLoader.BindingsContext.GetProcAddress("glIsSyncAPPLE");
                 return _IsSyncAPPLE_fnptr(sync);
             }
             
@@ -5716,14 +5716,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _DeleteQueriesEXT_fnptr(n, ids);
             }
             
-            private static delegate* unmanaged<QueryHandle, byte> _IsQueryEXT_fnptr = &IsQueryEXT_Lazy;
+            private static delegate* unmanaged<QueryHandle, bool> _IsQueryEXT_fnptr = &IsQueryEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_disjoint_timer_query | GL_EXT_occlusion_query_boolean]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsQueryEXT(QueryHandle id) => _IsQueryEXT_fnptr(id);
+            public static bool IsQueryEXT(QueryHandle id) => _IsQueryEXT_fnptr(id);
             [UnmanagedCallersOnly]
-            private static byte IsQueryEXT_Lazy(QueryHandle id)
+            private static bool IsQueryEXT_Lazy(QueryHandle id)
             {
-                _IsQueryEXT_fnptr = (delegate* unmanaged<QueryHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsQueryEXT");
+                _IsQueryEXT_fnptr = (delegate* unmanaged<QueryHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsQueryEXT");
                 return _IsQueryEXT_fnptr(id);
             }
             
@@ -5903,25 +5903,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 _BlendFuncSeparateiEXT_fnptr(buf, srcRGB, dstRGB, srcAlpha, dstAlpha);
             }
             
-            private static delegate* unmanaged<uint, byte, byte, byte, byte, void> _ColorMaskiEXT_fnptr = &ColorMaskiEXT_Lazy;
+            private static delegate* unmanaged<uint, bool, bool, bool, bool, void> _ColorMaskiEXT_fnptr = &ColorMaskiEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_draw_buffers_indexed]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorMaskiEXT(uint index, byte r, byte g, byte b, byte a) => _ColorMaskiEXT_fnptr(index, r, g, b, a);
+            public static void ColorMaskiEXT(uint index, bool r, bool g, bool b, bool a) => _ColorMaskiEXT_fnptr(index, r, g, b, a);
             [UnmanagedCallersOnly]
-            private static void ColorMaskiEXT_Lazy(uint index, byte r, byte g, byte b, byte a)
+            private static void ColorMaskiEXT_Lazy(uint index, bool r, bool g, bool b, bool a)
             {
-                _ColorMaskiEXT_fnptr = (delegate* unmanaged<uint, byte, byte, byte, byte, void>)GLLoader.BindingsContext.GetProcAddress("glColorMaskiEXT");
+                _ColorMaskiEXT_fnptr = (delegate* unmanaged<uint, bool, bool, bool, bool, void>)GLLoader.BindingsContext.GetProcAddress("glColorMaskiEXT");
                 _ColorMaskiEXT_fnptr(index, r, g, b, a);
             }
             
-            private static delegate* unmanaged<EnableCap, uint, byte> _IsEnablediEXT_fnptr = &IsEnablediEXT_Lazy;
+            private static delegate* unmanaged<EnableCap, uint, bool> _IsEnablediEXT_fnptr = &IsEnablediEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_draw_buffers_indexed]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsEnablediEXT(EnableCap target, uint index) => _IsEnablediEXT_fnptr(target, index);
+            public static bool IsEnablediEXT(EnableCap target, uint index) => _IsEnablediEXT_fnptr(target, index);
             [UnmanagedCallersOnly]
-            private static byte IsEnablediEXT_Lazy(EnableCap target, uint index)
+            private static bool IsEnablediEXT_Lazy(EnableCap target, uint index)
             {
-                _IsEnablediEXT_fnptr = (delegate* unmanaged<EnableCap, uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsEnablediEXT");
+                _IsEnablediEXT_fnptr = (delegate* unmanaged<EnableCap, uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsEnablediEXT");
                 return _IsEnablediEXT_fnptr(target, index);
             }
             
@@ -6112,14 +6112,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _DeleteMemoryObjectsEXT_fnptr(n, memoryObjects);
             }
             
-            private static delegate* unmanaged<uint, byte> _IsMemoryObjectEXT_fnptr = &IsMemoryObjectEXT_Lazy;
+            private static delegate* unmanaged<uint, bool> _IsMemoryObjectEXT_fnptr = &IsMemoryObjectEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsMemoryObjectEXT(uint memoryObject) => _IsMemoryObjectEXT_fnptr(memoryObject);
+            public static bool IsMemoryObjectEXT(uint memoryObject) => _IsMemoryObjectEXT_fnptr(memoryObject);
             [UnmanagedCallersOnly]
-            private static byte IsMemoryObjectEXT_Lazy(uint memoryObject)
+            private static bool IsMemoryObjectEXT_Lazy(uint memoryObject)
             {
-                _IsMemoryObjectEXT_fnptr = (delegate* unmanaged<uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsMemoryObjectEXT");
+                _IsMemoryObjectEXT_fnptr = (delegate* unmanaged<uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsMemoryObjectEXT");
                 return _IsMemoryObjectEXT_fnptr(memoryObject);
             }
             
@@ -6167,14 +6167,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _TexStorageMem2DEXT_fnptr(target, levels, internalFormat, width, height, memory, offset);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, byte, uint, ulong, void> _TexStorageMem2DMultisampleEXT_fnptr = &TexStorageMem2DMultisampleEXT_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, bool, uint, ulong, void> _TexStorageMem2DMultisampleEXT_fnptr = &TexStorageMem2DMultisampleEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageMem2DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, byte fixedSampleLocations, uint memory, ulong offset) => _TexStorageMem2DMultisampleEXT_fnptr(target, samples, internalFormat, width, height, fixedSampleLocations, memory, offset);
+            public static void TexStorageMem2DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => _TexStorageMem2DMultisampleEXT_fnptr(target, samples, internalFormat, width, height, fixedSampleLocations, memory, offset);
             [UnmanagedCallersOnly]
-            private static void TexStorageMem2DMultisampleEXT_Lazy(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, byte fixedSampleLocations, uint memory, ulong offset)
+            private static void TexStorageMem2DMultisampleEXT_Lazy(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset)
             {
-                _TexStorageMem2DMultisampleEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, byte, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageMem2DMultisampleEXT");
+                _TexStorageMem2DMultisampleEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, bool, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageMem2DMultisampleEXT");
                 _TexStorageMem2DMultisampleEXT_fnptr(target, samples, internalFormat, width, height, fixedSampleLocations, memory, offset);
             }
             
@@ -6189,14 +6189,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _TexStorageMem3DEXT_fnptr(target, levels, internalFormat, width, height, depth, memory, offset);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, byte, uint, ulong, void> _TexStorageMem3DMultisampleEXT_fnptr = &TexStorageMem3DMultisampleEXT_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, bool, uint, ulong, void> _TexStorageMem3DMultisampleEXT_fnptr = &TexStorageMem3DMultisampleEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations, uint memory, ulong offset) => _TexStorageMem3DMultisampleEXT_fnptr(target, samples, internalFormat, width, height, depth, fixedSampleLocations, memory, offset);
+            public static void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => _TexStorageMem3DMultisampleEXT_fnptr(target, samples, internalFormat, width, height, depth, fixedSampleLocations, memory, offset);
             [UnmanagedCallersOnly]
-            private static void TexStorageMem3DMultisampleEXT_Lazy(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations, uint memory, ulong offset)
+            private static void TexStorageMem3DMultisampleEXT_Lazy(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset)
             {
-                _TexStorageMem3DMultisampleEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, byte, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageMem3DMultisampleEXT");
+                _TexStorageMem3DMultisampleEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, bool, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageMem3DMultisampleEXT");
                 _TexStorageMem3DMultisampleEXT_fnptr(target, samples, internalFormat, width, height, depth, fixedSampleLocations, memory, offset);
             }
             
@@ -6222,14 +6222,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _TextureStorageMem2DEXT_fnptr(texture, levels, internalFormat, width, height, memory, offset);
             }
             
-            private static delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, byte, uint, ulong, void> _TextureStorageMem2DMultisampleEXT_fnptr = &TextureStorageMem2DMultisampleEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, bool, uint, ulong, void> _TextureStorageMem2DMultisampleEXT_fnptr = &TextureStorageMem2DMultisampleEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureStorageMem2DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, byte fixedSampleLocations, uint memory, ulong offset) => _TextureStorageMem2DMultisampleEXT_fnptr(texture, samples, internalFormat, width, height, fixedSampleLocations, memory, offset);
+            public static void TextureStorageMem2DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => _TextureStorageMem2DMultisampleEXT_fnptr(texture, samples, internalFormat, width, height, fixedSampleLocations, memory, offset);
             [UnmanagedCallersOnly]
-            private static void TextureStorageMem2DMultisampleEXT_Lazy(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, byte fixedSampleLocations, uint memory, ulong offset)
+            private static void TextureStorageMem2DMultisampleEXT_Lazy(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset)
             {
-                _TextureStorageMem2DMultisampleEXT_fnptr = (delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, byte, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTextureStorageMem2DMultisampleEXT");
+                _TextureStorageMem2DMultisampleEXT_fnptr = (delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, bool, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTextureStorageMem2DMultisampleEXT");
                 _TextureStorageMem2DMultisampleEXT_fnptr(texture, samples, internalFormat, width, height, fixedSampleLocations, memory, offset);
             }
             
@@ -6244,14 +6244,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _TextureStorageMem3DEXT_fnptr(texture, levels, internalFormat, width, height, depth, memory, offset);
             }
             
-            private static delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, int, byte, uint, ulong, void> _TextureStorageMem3DMultisampleEXT_fnptr = &TextureStorageMem3DMultisampleEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, int, bool, uint, ulong, void> _TextureStorageMem3DMultisampleEXT_fnptr = &TextureStorageMem3DMultisampleEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureStorageMem3DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations, uint memory, ulong offset) => _TextureStorageMem3DMultisampleEXT_fnptr(texture, samples, internalFormat, width, height, depth, fixedSampleLocations, memory, offset);
+            public static void TextureStorageMem3DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => _TextureStorageMem3DMultisampleEXT_fnptr(texture, samples, internalFormat, width, height, depth, fixedSampleLocations, memory, offset);
             [UnmanagedCallersOnly]
-            private static void TextureStorageMem3DMultisampleEXT_Lazy(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations, uint memory, ulong offset)
+            private static void TextureStorageMem3DMultisampleEXT_Lazy(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset)
             {
-                _TextureStorageMem3DMultisampleEXT_fnptr = (delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, int, byte, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTextureStorageMem3DMultisampleEXT");
+                _TextureStorageMem3DMultisampleEXT_fnptr = (delegate* unmanaged<TextureHandle, int, SizedInternalFormat, int, int, int, bool, uint, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glTextureStorageMem3DMultisampleEXT");
                 _TextureStorageMem3DMultisampleEXT_fnptr(texture, samples, internalFormat, width, height, depth, fixedSampleLocations, memory, offset);
             }
             
@@ -6442,14 +6442,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _PrimitiveBoundingBoxEXT_fnptr(minX, minY, minZ, minW, maxX, maxY, maxZ, maxW);
             }
             
-            private static delegate* unmanaged<uint, byte, void> _RasterSamplesEXT_fnptr = &RasterSamplesEXT_Lazy;
+            private static delegate* unmanaged<uint, bool, void> _RasterSamplesEXT_fnptr = &RasterSamplesEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_raster_multisample | GL_NV_framebuffer_mixed_samples]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void RasterSamplesEXT(uint samples, byte fixedsamplelocations) => _RasterSamplesEXT_fnptr(samples, fixedsamplelocations);
+            public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => _RasterSamplesEXT_fnptr(samples, fixedsamplelocations);
             [UnmanagedCallersOnly]
-            private static void RasterSamplesEXT_Lazy(uint samples, byte fixedsamplelocations)
+            private static void RasterSamplesEXT_Lazy(uint samples, bool fixedsamplelocations)
             {
-                _RasterSamplesEXT_fnptr = (delegate* unmanaged<uint, byte, void>)GLLoader.BindingsContext.GetProcAddress("glRasterSamplesEXT");
+                _RasterSamplesEXT_fnptr = (delegate* unmanaged<uint, bool, void>)GLLoader.BindingsContext.GetProcAddress("glRasterSamplesEXT");
                 _RasterSamplesEXT_fnptr(samples, fixedsamplelocations);
             }
             
@@ -6519,14 +6519,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _DeleteSemaphoresEXT_fnptr(n, semaphores);
             }
             
-            private static delegate* unmanaged<uint, byte> _IsSemaphoreEXT_fnptr = &IsSemaphoreEXT_Lazy;
+            private static delegate* unmanaged<uint, bool> _IsSemaphoreEXT_fnptr = &IsSemaphoreEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_semaphore]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsSemaphoreEXT(uint semaphore) => _IsSemaphoreEXT_fnptr(semaphore);
+            public static bool IsSemaphoreEXT(uint semaphore) => _IsSemaphoreEXT_fnptr(semaphore);
             [UnmanagedCallersOnly]
-            private static byte IsSemaphoreEXT_Lazy(uint semaphore)
+            private static bool IsSemaphoreEXT_Lazy(uint semaphore)
             {
-                _IsSemaphoreEXT_fnptr = (delegate* unmanaged<uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsSemaphoreEXT");
+                _IsSemaphoreEXT_fnptr = (delegate* unmanaged<uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsSemaphoreEXT");
                 return _IsSemaphoreEXT_fnptr(semaphore);
             }
             
@@ -6717,14 +6717,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _GetProgramPipelineivEXT_fnptr(pipeline, pname, parameters);
             }
             
-            private static delegate* unmanaged<ProgramPipelineHandle, byte> _IsProgramPipelineEXT_fnptr = &IsProgramPipelineEXT_Lazy;
+            private static delegate* unmanaged<ProgramPipelineHandle, bool> _IsProgramPipelineEXT_fnptr = &IsProgramPipelineEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsProgramPipelineEXT(ProgramPipelineHandle pipeline) => _IsProgramPipelineEXT_fnptr(pipeline);
+            public static bool IsProgramPipelineEXT(ProgramPipelineHandle pipeline) => _IsProgramPipelineEXT_fnptr(pipeline);
             [UnmanagedCallersOnly]
-            private static byte IsProgramPipelineEXT_Lazy(ProgramPipelineHandle pipeline)
+            private static bool IsProgramPipelineEXT_Lazy(ProgramPipelineHandle pipeline)
             {
-                _IsProgramPipelineEXT_fnptr = (delegate* unmanaged<ProgramPipelineHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsProgramPipelineEXT");
+                _IsProgramPipelineEXT_fnptr = (delegate* unmanaged<ProgramPipelineHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsProgramPipelineEXT");
                 return _IsProgramPipelineEXT_fnptr(pipeline);
             }
             
@@ -6915,36 +6915,36 @@ namespace OpenTK.Graphics.OpenGLES3
                 _ProgramUniform4ivEXT_fnptr(program, location, count, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2fvEXT_fnptr = &ProgramUniformMatrix2fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix2fvEXT_fnptr = &ProgramUniformMatrix2fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix2fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix2fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix2fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix2fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix2fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2fvEXT");
+                _ProgramUniformMatrix2fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2fvEXT");
                 _ProgramUniformMatrix2fvEXT_fnptr(program, location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3fvEXT_fnptr = &ProgramUniformMatrix3fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix3fvEXT_fnptr = &ProgramUniformMatrix3fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix3fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix3fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix3fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix3fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix3fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3fvEXT");
+                _ProgramUniformMatrix3fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3fvEXT");
                 _ProgramUniformMatrix3fvEXT_fnptr(program, location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4fvEXT_fnptr = &ProgramUniformMatrix4fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix4fvEXT_fnptr = &ProgramUniformMatrix4fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix4fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix4fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix4fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix4fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix4fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4fvEXT");
+                _ProgramUniformMatrix4fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4fvEXT");
                 _ProgramUniformMatrix4fvEXT_fnptr(program, location, count, transpose, value);
             }
             
@@ -7058,69 +7058,69 @@ namespace OpenTK.Graphics.OpenGLES3
                 _ProgramUniform4uivEXT_fnptr(program, location, count, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2x3fvEXT_fnptr = &ProgramUniformMatrix2x3fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix2x3fvEXT_fnptr = &ProgramUniformMatrix2x3fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix2x3fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2x3fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix2x3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix2x3fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix2x3fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix2x3fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix2x3fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x3fvEXT");
+                _ProgramUniformMatrix2x3fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x3fvEXT");
                 _ProgramUniformMatrix2x3fvEXT_fnptr(program, location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3x2fvEXT_fnptr = &ProgramUniformMatrix3x2fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix3x2fvEXT_fnptr = &ProgramUniformMatrix3x2fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix3x2fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3x2fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix3x2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix3x2fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix3x2fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix3x2fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix3x2fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x2fvEXT");
+                _ProgramUniformMatrix3x2fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x2fvEXT");
                 _ProgramUniformMatrix3x2fvEXT_fnptr(program, location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix2x4fvEXT_fnptr = &ProgramUniformMatrix2x4fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix2x4fvEXT_fnptr = &ProgramUniformMatrix2x4fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix2x4fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix2x4fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix2x4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix2x4fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix2x4fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix2x4fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix2x4fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x4fvEXT");
+                _ProgramUniformMatrix2x4fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix2x4fvEXT");
                 _ProgramUniformMatrix2x4fvEXT_fnptr(program, location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4x2fvEXT_fnptr = &ProgramUniformMatrix4x2fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix4x2fvEXT_fnptr = &ProgramUniformMatrix4x2fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix4x2fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4x2fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix4x2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix4x2fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix4x2fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix4x2fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix4x2fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x2fvEXT");
+                _ProgramUniformMatrix4x2fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x2fvEXT");
                 _ProgramUniformMatrix4x2fvEXT_fnptr(program, location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix3x4fvEXT_fnptr = &ProgramUniformMatrix3x4fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix3x4fvEXT_fnptr = &ProgramUniformMatrix3x4fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix3x4fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix3x4fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix3x4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix3x4fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix3x4fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix3x4fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix3x4fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x4fvEXT");
+                _ProgramUniformMatrix3x4fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix3x4fvEXT");
                 _ProgramUniformMatrix3x4fvEXT_fnptr(program, location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<ProgramHandle, int, int, byte, float*, void> _ProgramUniformMatrix4x3fvEXT_fnptr = &ProgramUniformMatrix4x3fvEXT_Lazy;
+            private static delegate* unmanaged<ProgramHandle, int, int, bool, float*, void> _ProgramUniformMatrix4x3fvEXT_fnptr = &ProgramUniformMatrix4x3fvEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix4x3fvEXT(ProgramHandle program, int location, int count, byte transpose, float* value) => _ProgramUniformMatrix4x3fvEXT_fnptr(program, location, count, transpose, value);
+            public static void ProgramUniformMatrix4x3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => _ProgramUniformMatrix4x3fvEXT_fnptr(program, location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void ProgramUniformMatrix4x3fvEXT_Lazy(ProgramHandle program, int location, int count, byte transpose, float* value)
+            private static void ProgramUniformMatrix4x3fvEXT_Lazy(ProgramHandle program, int location, int count, bool transpose, float* value)
             {
-                _ProgramUniformMatrix4x3fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x3fvEXT");
+                _ProgramUniformMatrix4x3fvEXT_fnptr = (delegate* unmanaged<ProgramHandle, int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glProgramUniformMatrix4x3fvEXT");
                 _ProgramUniformMatrix4x3fvEXT_fnptr(program, location, count, transpose, value);
             }
             
@@ -7168,14 +7168,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _ClearPixelLocalStorageuiEXT_fnptr(offset, n, values);
             }
             
-            private static delegate* unmanaged<All, int, int, int, int, int, int, int, byte, void> _TexPageCommitmentEXT_fnptr = &TexPageCommitmentEXT_Lazy;
+            private static delegate* unmanaged<All, int, int, int, int, int, int, int, bool, void> _TexPageCommitmentEXT_fnptr = &TexPageCommitmentEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_sparse_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexPageCommitmentEXT(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, byte commit) => _TexPageCommitmentEXT_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, commit);
+            public static void TexPageCommitmentEXT(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => _TexPageCommitmentEXT_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, commit);
             [UnmanagedCallersOnly]
-            private static void TexPageCommitmentEXT_Lazy(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, byte commit)
+            private static void TexPageCommitmentEXT_Lazy(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit)
             {
-                _TexPageCommitmentEXT_fnptr = (delegate* unmanaged<All, int, int, int, int, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexPageCommitmentEXT");
+                _TexPageCommitmentEXT_fnptr = (delegate* unmanaged<All, int, int, int, int, int, int, int, bool, void>)GLLoader.BindingsContext.GetProcAddress("glTexPageCommitmentEXT");
                 _TexPageCommitmentEXT_fnptr(target, level, xoffset, yoffset, zoffset, width, height, depth, commit);
             }
             
@@ -7399,25 +7399,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 _TextureViewEXT_fnptr(texture, target, origtexture, internalformat, minlevel, numlevels, minlayer, numlayers);
             }
             
-            private static delegate* unmanaged<uint, ulong, uint, byte> _AcquireKeyedMutexWin32EXT_fnptr = &AcquireKeyedMutexWin32EXT_Lazy;
+            private static delegate* unmanaged<uint, ulong, uint, bool> _AcquireKeyedMutexWin32EXT_fnptr = &AcquireKeyedMutexWin32EXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_win32_keyed_mutex]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte AcquireKeyedMutexWin32EXT(uint memory, ulong key, uint timeout) => _AcquireKeyedMutexWin32EXT_fnptr(memory, key, timeout);
+            public static bool AcquireKeyedMutexWin32EXT(uint memory, ulong key, uint timeout) => _AcquireKeyedMutexWin32EXT_fnptr(memory, key, timeout);
             [UnmanagedCallersOnly]
-            private static byte AcquireKeyedMutexWin32EXT_Lazy(uint memory, ulong key, uint timeout)
+            private static bool AcquireKeyedMutexWin32EXT_Lazy(uint memory, ulong key, uint timeout)
             {
-                _AcquireKeyedMutexWin32EXT_fnptr = (delegate* unmanaged<uint, ulong, uint, byte>)GLLoader.BindingsContext.GetProcAddress("glAcquireKeyedMutexWin32EXT");
+                _AcquireKeyedMutexWin32EXT_fnptr = (delegate* unmanaged<uint, ulong, uint, bool>)GLLoader.BindingsContext.GetProcAddress("glAcquireKeyedMutexWin32EXT");
                 return _AcquireKeyedMutexWin32EXT_fnptr(memory, key, timeout);
             }
             
-            private static delegate* unmanaged<uint, ulong, byte> _ReleaseKeyedMutexWin32EXT_fnptr = &ReleaseKeyedMutexWin32EXT_Lazy;
+            private static delegate* unmanaged<uint, ulong, bool> _ReleaseKeyedMutexWin32EXT_fnptr = &ReleaseKeyedMutexWin32EXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_win32_keyed_mutex]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte ReleaseKeyedMutexWin32EXT(uint memory, ulong key) => _ReleaseKeyedMutexWin32EXT_fnptr(memory, key);
+            public static bool ReleaseKeyedMutexWin32EXT(uint memory, ulong key) => _ReleaseKeyedMutexWin32EXT_fnptr(memory, key);
             [UnmanagedCallersOnly]
-            private static byte ReleaseKeyedMutexWin32EXT_Lazy(uint memory, ulong key)
+            private static bool ReleaseKeyedMutexWin32EXT_Lazy(uint memory, ulong key)
             {
-                _ReleaseKeyedMutexWin32EXT_fnptr = (delegate* unmanaged<uint, ulong, byte>)GLLoader.BindingsContext.GetProcAddress("glReleaseKeyedMutexWin32EXT");
+                _ReleaseKeyedMutexWin32EXT_fnptr = (delegate* unmanaged<uint, ulong, bool>)GLLoader.BindingsContext.GetProcAddress("glReleaseKeyedMutexWin32EXT");
                 return _ReleaseKeyedMutexWin32EXT_fnptr(memory, key);
             }
             
@@ -7512,14 +7512,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _MakeTextureHandleNonResidentNV_fnptr(handle);
             }
             
-            private static delegate* unmanaged<TextureHandle, int, byte, int, PixelFormat, ulong> _GetImageHandleNV_fnptr = &GetImageHandleNV_Lazy;
+            private static delegate* unmanaged<TextureHandle, int, bool, int, PixelFormat, ulong> _GetImageHandleNV_fnptr = &GetImageHandleNV_Lazy;
             /// <summary> <b>[requires: GL_NV_bindless_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static ulong GetImageHandleNV(TextureHandle texture, int level, byte layered, int layer, PixelFormat format) => _GetImageHandleNV_fnptr(texture, level, layered, layer, format);
+            public static ulong GetImageHandleNV(TextureHandle texture, int level, bool layered, int layer, PixelFormat format) => _GetImageHandleNV_fnptr(texture, level, layered, layer, format);
             [UnmanagedCallersOnly]
-            private static ulong GetImageHandleNV_Lazy(TextureHandle texture, int level, byte layered, int layer, PixelFormat format)
+            private static ulong GetImageHandleNV_Lazy(TextureHandle texture, int level, bool layered, int layer, PixelFormat format)
             {
-                _GetImageHandleNV_fnptr = (delegate* unmanaged<TextureHandle, int, byte, int, PixelFormat, ulong>)GLLoader.BindingsContext.GetProcAddress("glGetImageHandleNV");
+                _GetImageHandleNV_fnptr = (delegate* unmanaged<TextureHandle, int, bool, int, PixelFormat, ulong>)GLLoader.BindingsContext.GetProcAddress("glGetImageHandleNV");
                 return _GetImageHandleNV_fnptr(texture, level, layered, layer, format);
             }
             
@@ -7589,25 +7589,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 _ProgramUniformHandleui64vNV_fnptr(program, location, count, values);
             }
             
-            private static delegate* unmanaged<ulong, byte> _IsTextureHandleResidentNV_fnptr = &IsTextureHandleResidentNV_Lazy;
+            private static delegate* unmanaged<ulong, bool> _IsTextureHandleResidentNV_fnptr = &IsTextureHandleResidentNV_Lazy;
             /// <summary> <b>[requires: GL_NV_bindless_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsTextureHandleResidentNV(ulong handle) => _IsTextureHandleResidentNV_fnptr(handle);
+            public static bool IsTextureHandleResidentNV(ulong handle) => _IsTextureHandleResidentNV_fnptr(handle);
             [UnmanagedCallersOnly]
-            private static byte IsTextureHandleResidentNV_Lazy(ulong handle)
+            private static bool IsTextureHandleResidentNV_Lazy(ulong handle)
             {
-                _IsTextureHandleResidentNV_fnptr = (delegate* unmanaged<ulong, byte>)GLLoader.BindingsContext.GetProcAddress("glIsTextureHandleResidentNV");
+                _IsTextureHandleResidentNV_fnptr = (delegate* unmanaged<ulong, bool>)GLLoader.BindingsContext.GetProcAddress("glIsTextureHandleResidentNV");
                 return _IsTextureHandleResidentNV_fnptr(handle);
             }
             
-            private static delegate* unmanaged<ulong, byte> _IsImageHandleResidentNV_fnptr = &IsImageHandleResidentNV_Lazy;
+            private static delegate* unmanaged<ulong, bool> _IsImageHandleResidentNV_fnptr = &IsImageHandleResidentNV_Lazy;
             /// <summary> <b>[requires: GL_NV_bindless_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsImageHandleResidentNV(ulong handle) => _IsImageHandleResidentNV_fnptr(handle);
+            public static bool IsImageHandleResidentNV(ulong handle) => _IsImageHandleResidentNV_fnptr(handle);
             [UnmanagedCallersOnly]
-            private static byte IsImageHandleResidentNV_Lazy(ulong handle)
+            private static bool IsImageHandleResidentNV_Lazy(ulong handle)
             {
-                _IsImageHandleResidentNV_fnptr = (delegate* unmanaged<ulong, byte>)GLLoader.BindingsContext.GetProcAddress("glIsImageHandleResidentNV");
+                _IsImageHandleResidentNV_fnptr = (delegate* unmanaged<ulong, bool>)GLLoader.BindingsContext.GetProcAddress("glIsImageHandleResidentNV");
                 return _IsImageHandleResidentNV_fnptr(handle);
             }
             
@@ -7699,14 +7699,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _CopyBufferSubDataNV_fnptr(readTarget, writeTarget, readOffset, writeOffset, size);
             }
             
-            private static delegate* unmanaged<byte, void> _CoverageMaskNV_fnptr = &CoverageMaskNV_Lazy;
+            private static delegate* unmanaged<bool, void> _CoverageMaskNV_fnptr = &CoverageMaskNV_Lazy;
             /// <summary> <b>[requires: GL_NV_coverage_sample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void CoverageMaskNV(byte mask) => _CoverageMaskNV_fnptr(mask);
+            public static void CoverageMaskNV(bool mask) => _CoverageMaskNV_fnptr(mask);
             [UnmanagedCallersOnly]
-            private static void CoverageMaskNV_Lazy(byte mask)
+            private static void CoverageMaskNV_Lazy(bool mask)
             {
-                _CoverageMaskNV_fnptr = (delegate* unmanaged<byte, void>)GLLoader.BindingsContext.GetProcAddress("glCoverageMaskNV");
+                _CoverageMaskNV_fnptr = (delegate* unmanaged<bool, void>)GLLoader.BindingsContext.GetProcAddress("glCoverageMaskNV");
                 _CoverageMaskNV_fnptr(mask);
             }
             
@@ -7831,25 +7831,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 _GenFencesNV_fnptr(n, fences);
             }
             
-            private static delegate* unmanaged<uint, byte> _IsFenceNV_fnptr = &IsFenceNV_Lazy;
+            private static delegate* unmanaged<uint, bool> _IsFenceNV_fnptr = &IsFenceNV_Lazy;
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsFenceNV(uint fence) => _IsFenceNV_fnptr(fence);
+            public static bool IsFenceNV(uint fence) => _IsFenceNV_fnptr(fence);
             [UnmanagedCallersOnly]
-            private static byte IsFenceNV_Lazy(uint fence)
+            private static bool IsFenceNV_Lazy(uint fence)
             {
-                _IsFenceNV_fnptr = (delegate* unmanaged<uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsFenceNV");
+                _IsFenceNV_fnptr = (delegate* unmanaged<uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsFenceNV");
                 return _IsFenceNV_fnptr(fence);
             }
             
-            private static delegate* unmanaged<uint, byte> _TestFenceNV_fnptr = &TestFenceNV_Lazy;
+            private static delegate* unmanaged<uint, bool> _TestFenceNV_fnptr = &TestFenceNV_Lazy;
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte TestFenceNV(uint fence) => _TestFenceNV_fnptr(fence);
+            public static bool TestFenceNV(uint fence) => _TestFenceNV_fnptr(fence);
             [UnmanagedCallersOnly]
-            private static byte TestFenceNV_Lazy(uint fence)
+            private static bool TestFenceNV_Lazy(uint fence)
             {
-                _TestFenceNV_fnptr = (delegate* unmanaged<uint, byte>)GLLoader.BindingsContext.GetProcAddress("glTestFenceNV");
+                _TestFenceNV_fnptr = (delegate* unmanaged<uint, bool>)GLLoader.BindingsContext.GetProcAddress("glTestFenceNV");
                 return _TestFenceNV_fnptr(fence);
             }
             
@@ -7908,14 +7908,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _BlitFramebufferNV_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
             }
             
-            private static delegate* unmanaged<uint, byte, void> _RasterSamplesEXT_fnptr = &RasterSamplesEXT_Lazy;
+            private static delegate* unmanaged<uint, bool, void> _RasterSamplesEXT_fnptr = &RasterSamplesEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_raster_multisample | GL_NV_framebuffer_mixed_samples]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void RasterSamplesEXT(uint samples, byte fixedsamplelocations) => _RasterSamplesEXT_fnptr(samples, fixedsamplelocations);
+            public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => _RasterSamplesEXT_fnptr(samples, fixedsamplelocations);
             [UnmanagedCallersOnly]
-            private static void RasterSamplesEXT_Lazy(uint samples, byte fixedsamplelocations)
+            private static void RasterSamplesEXT_Lazy(uint samples, bool fixedsamplelocations)
             {
-                _RasterSamplesEXT_fnptr = (delegate* unmanaged<uint, byte, void>)GLLoader.BindingsContext.GetProcAddress("glRasterSamplesEXT");
+                _RasterSamplesEXT_fnptr = (delegate* unmanaged<uint, bool, void>)GLLoader.BindingsContext.GetProcAddress("glRasterSamplesEXT");
                 _RasterSamplesEXT_fnptr(samples, fixedsamplelocations);
             }
             
@@ -8414,47 +8414,47 @@ namespace OpenTK.Graphics.OpenGLES3
                 _NamedBufferAttachMemoryNV_fnptr(buffer, memory, offset);
             }
             
-            private static delegate* unmanaged<BufferStorageTarget, IntPtr, nint, uint, ulong, byte, void> _BufferPageCommitmentMemNV_fnptr = &BufferPageCommitmentMemNV_Lazy;
+            private static delegate* unmanaged<BufferStorageTarget, IntPtr, nint, uint, ulong, bool, void> _BufferPageCommitmentMemNV_fnptr = &BufferPageCommitmentMemNV_Lazy;
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, byte commit) => _BufferPageCommitmentMemNV_fnptr(target, offset, size, memory, memOffset, commit);
+            public static void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => _BufferPageCommitmentMemNV_fnptr(target, offset, size, memory, memOffset, commit);
             [UnmanagedCallersOnly]
-            private static void BufferPageCommitmentMemNV_Lazy(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, byte commit)
+            private static void BufferPageCommitmentMemNV_Lazy(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit)
             {
-                _BufferPageCommitmentMemNV_fnptr = (delegate* unmanaged<BufferStorageTarget, IntPtr, nint, uint, ulong, byte, void>)GLLoader.BindingsContext.GetProcAddress("glBufferPageCommitmentMemNV");
+                _BufferPageCommitmentMemNV_fnptr = (delegate* unmanaged<BufferStorageTarget, IntPtr, nint, uint, ulong, bool, void>)GLLoader.BindingsContext.GetProcAddress("glBufferPageCommitmentMemNV");
                 _BufferPageCommitmentMemNV_fnptr(target, offset, size, memory, memOffset, commit);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, int, uint, ulong, byte, void> _TexPageCommitmentMemNV_fnptr = &TexPageCommitmentMemNV_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, int, uint, ulong, bool, void> _TexPageCommitmentMemNV_fnptr = &TexPageCommitmentMemNV_Lazy;
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, byte commit) => _TexPageCommitmentMemNV_fnptr(target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit);
+            public static void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => _TexPageCommitmentMemNV_fnptr(target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit);
             [UnmanagedCallersOnly]
-            private static void TexPageCommitmentMemNV_Lazy(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, byte commit)
+            private static void TexPageCommitmentMemNV_Lazy(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit)
             {
-                _TexPageCommitmentMemNV_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, int, uint, ulong, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexPageCommitmentMemNV");
+                _TexPageCommitmentMemNV_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, int, int, uint, ulong, bool, void>)GLLoader.BindingsContext.GetProcAddress("glTexPageCommitmentMemNV");
                 _TexPageCommitmentMemNV_fnptr(target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit);
             }
             
-            private static delegate* unmanaged<BufferHandle, IntPtr, nint, uint, ulong, byte, void> _NamedBufferPageCommitmentMemNV_fnptr = &NamedBufferPageCommitmentMemNV_Lazy;
+            private static delegate* unmanaged<BufferHandle, IntPtr, nint, uint, ulong, bool, void> _NamedBufferPageCommitmentMemNV_fnptr = &NamedBufferPageCommitmentMemNV_Lazy;
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void NamedBufferPageCommitmentMemNV(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, byte commit) => _NamedBufferPageCommitmentMemNV_fnptr(buffer, offset, size, memory, memOffset, commit);
+            public static void NamedBufferPageCommitmentMemNV(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => _NamedBufferPageCommitmentMemNV_fnptr(buffer, offset, size, memory, memOffset, commit);
             [UnmanagedCallersOnly]
-            private static void NamedBufferPageCommitmentMemNV_Lazy(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, byte commit)
+            private static void NamedBufferPageCommitmentMemNV_Lazy(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit)
             {
-                _NamedBufferPageCommitmentMemNV_fnptr = (delegate* unmanaged<BufferHandle, IntPtr, nint, uint, ulong, byte, void>)GLLoader.BindingsContext.GetProcAddress("glNamedBufferPageCommitmentMemNV");
+                _NamedBufferPageCommitmentMemNV_fnptr = (delegate* unmanaged<BufferHandle, IntPtr, nint, uint, ulong, bool, void>)GLLoader.BindingsContext.GetProcAddress("glNamedBufferPageCommitmentMemNV");
                 _NamedBufferPageCommitmentMemNV_fnptr(buffer, offset, size, memory, memOffset, commit);
             }
             
-            private static delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, int, uint, ulong, byte, void> _TexturePageCommitmentMemNV_fnptr = &TexturePageCommitmentMemNV_Lazy;
+            private static delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, int, uint, ulong, bool, void> _TexturePageCommitmentMemNV_fnptr = &TexturePageCommitmentMemNV_Lazy;
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexturePageCommitmentMemNV(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, byte commit) => _TexturePageCommitmentMemNV_fnptr(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit);
+            public static void TexturePageCommitmentMemNV(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => _TexturePageCommitmentMemNV_fnptr(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit);
             [UnmanagedCallersOnly]
-            private static void TexturePageCommitmentMemNV_Lazy(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, byte commit)
+            private static void TexturePageCommitmentMemNV_Lazy(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit)
             {
-                _TexturePageCommitmentMemNV_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, int, uint, ulong, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexturePageCommitmentMemNV");
+                _TexturePageCommitmentMemNV_fnptr = (delegate* unmanaged<TextureHandle, int, int, int, int, int, int, int, int, uint, ulong, bool, void>)GLLoader.BindingsContext.GetProcAddress("glTexturePageCommitmentMemNV");
                 _TexturePageCommitmentMemNV_fnptr(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit);
             }
             
@@ -8502,69 +8502,69 @@ namespace OpenTK.Graphics.OpenGLES3
                 _MultiDrawMeshTasksIndirectCountNV_fnptr(indirect, drawcount, maxdrawcount, stride);
             }
             
-            private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2x3fvNV_fnptr = &UniformMatrix2x3fvNV_Lazy;
+            private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix2x3fvNV_fnptr = &UniformMatrix2x3fvNV_Lazy;
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix2x3fvNV(int location, int count, byte transpose, float* value) => _UniformMatrix2x3fvNV_fnptr(location, count, transpose, value);
+            public static void UniformMatrix2x3fvNV(int location, int count, bool transpose, float* value) => _UniformMatrix2x3fvNV_fnptr(location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void UniformMatrix2x3fvNV_Lazy(int location, int count, byte transpose, float* value)
+            private static void UniformMatrix2x3fvNV_Lazy(int location, int count, bool transpose, float* value)
             {
-                _UniformMatrix2x3fvNV_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x3fvNV");
+                _UniformMatrix2x3fvNV_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x3fvNV");
                 _UniformMatrix2x3fvNV_fnptr(location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3x2fvNV_fnptr = &UniformMatrix3x2fvNV_Lazy;
+            private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix3x2fvNV_fnptr = &UniformMatrix3x2fvNV_Lazy;
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix3x2fvNV(int location, int count, byte transpose, float* value) => _UniformMatrix3x2fvNV_fnptr(location, count, transpose, value);
+            public static void UniformMatrix3x2fvNV(int location, int count, bool transpose, float* value) => _UniformMatrix3x2fvNV_fnptr(location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void UniformMatrix3x2fvNV_Lazy(int location, int count, byte transpose, float* value)
+            private static void UniformMatrix3x2fvNV_Lazy(int location, int count, bool transpose, float* value)
             {
-                _UniformMatrix3x2fvNV_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x2fvNV");
+                _UniformMatrix3x2fvNV_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x2fvNV");
                 _UniformMatrix3x2fvNV_fnptr(location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix2x4fvNV_fnptr = &UniformMatrix2x4fvNV_Lazy;
+            private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix2x4fvNV_fnptr = &UniformMatrix2x4fvNV_Lazy;
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix2x4fvNV(int location, int count, byte transpose, float* value) => _UniformMatrix2x4fvNV_fnptr(location, count, transpose, value);
+            public static void UniformMatrix2x4fvNV(int location, int count, bool transpose, float* value) => _UniformMatrix2x4fvNV_fnptr(location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void UniformMatrix2x4fvNV_Lazy(int location, int count, byte transpose, float* value)
+            private static void UniformMatrix2x4fvNV_Lazy(int location, int count, bool transpose, float* value)
             {
-                _UniformMatrix2x4fvNV_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x4fvNV");
+                _UniformMatrix2x4fvNV_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix2x4fvNV");
                 _UniformMatrix2x4fvNV_fnptr(location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4x2fvNV_fnptr = &UniformMatrix4x2fvNV_Lazy;
+            private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix4x2fvNV_fnptr = &UniformMatrix4x2fvNV_Lazy;
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix4x2fvNV(int location, int count, byte transpose, float* value) => _UniformMatrix4x2fvNV_fnptr(location, count, transpose, value);
+            public static void UniformMatrix4x2fvNV(int location, int count, bool transpose, float* value) => _UniformMatrix4x2fvNV_fnptr(location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void UniformMatrix4x2fvNV_Lazy(int location, int count, byte transpose, float* value)
+            private static void UniformMatrix4x2fvNV_Lazy(int location, int count, bool transpose, float* value)
             {
-                _UniformMatrix4x2fvNV_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x2fvNV");
+                _UniformMatrix4x2fvNV_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x2fvNV");
                 _UniformMatrix4x2fvNV_fnptr(location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix3x4fvNV_fnptr = &UniformMatrix3x4fvNV_Lazy;
+            private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix3x4fvNV_fnptr = &UniformMatrix3x4fvNV_Lazy;
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix3x4fvNV(int location, int count, byte transpose, float* value) => _UniformMatrix3x4fvNV_fnptr(location, count, transpose, value);
+            public static void UniformMatrix3x4fvNV(int location, int count, bool transpose, float* value) => _UniformMatrix3x4fvNV_fnptr(location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void UniformMatrix3x4fvNV_Lazy(int location, int count, byte transpose, float* value)
+            private static void UniformMatrix3x4fvNV_Lazy(int location, int count, bool transpose, float* value)
             {
-                _UniformMatrix3x4fvNV_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x4fvNV");
+                _UniformMatrix3x4fvNV_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix3x4fvNV");
                 _UniformMatrix3x4fvNV_fnptr(location, count, transpose, value);
             }
             
-            private static delegate* unmanaged<int, int, byte, float*, void> _UniformMatrix4x3fvNV_fnptr = &UniformMatrix4x3fvNV_Lazy;
+            private static delegate* unmanaged<int, int, bool, float*, void> _UniformMatrix4x3fvNV_fnptr = &UniformMatrix4x3fvNV_Lazy;
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix4x3fvNV(int location, int count, byte transpose, float* value) => _UniformMatrix4x3fvNV_fnptr(location, count, transpose, value);
+            public static void UniformMatrix4x3fvNV(int location, int count, bool transpose, float* value) => _UniformMatrix4x3fvNV_fnptr(location, count, transpose, value);
             [UnmanagedCallersOnly]
-            private static void UniformMatrix4x3fvNV_Lazy(int location, int count, byte transpose, float* value)
+            private static void UniformMatrix4x3fvNV_Lazy(int location, int count, bool transpose, float* value)
             {
-                _UniformMatrix4x3fvNV_fnptr = (delegate* unmanaged<int, int, byte, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x3fvNV");
+                _UniformMatrix4x3fvNV_fnptr = (delegate* unmanaged<int, int, bool, float*, void>)GLLoader.BindingsContext.GetProcAddress("glUniformMatrix4x3fvNV");
                 _UniformMatrix4x3fvNV_fnptr(location, count, transpose, value);
             }
             
@@ -8590,14 +8590,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _DeletePathsNV_fnptr(path, range);
             }
             
-            private static delegate* unmanaged<uint, byte> _IsPathNV_fnptr = &IsPathNV_Lazy;
+            private static delegate* unmanaged<uint, bool> _IsPathNV_fnptr = &IsPathNV_Lazy;
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsPathNV(uint path) => _IsPathNV_fnptr(path);
+            public static bool IsPathNV(uint path) => _IsPathNV_fnptr(path);
             [UnmanagedCallersOnly]
-            private static byte IsPathNV_Lazy(uint path)
+            private static bool IsPathNV_Lazy(uint path)
             {
-                _IsPathNV_fnptr = (delegate* unmanaged<uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsPathNV");
+                _IsPathNV_fnptr = (delegate* unmanaged<uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsPathNV");
                 return _IsPathNV_fnptr(path);
             }
             
@@ -8986,25 +8986,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 _GetPathSpacingNV_fnptr(pathListMode, numPaths, pathNameType, paths, pathBase, advanceScale, kerningScale, transformType, returnedSpacing);
             }
             
-            private static delegate* unmanaged<uint, uint, float, float, byte> _IsPointInFillPathNV_fnptr = &IsPointInFillPathNV_Lazy;
+            private static delegate* unmanaged<uint, uint, float, float, bool> _IsPointInFillPathNV_fnptr = &IsPointInFillPathNV_Lazy;
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsPointInFillPathNV(uint path, uint mask, float x, float y) => _IsPointInFillPathNV_fnptr(path, mask, x, y);
+            public static bool IsPointInFillPathNV(uint path, uint mask, float x, float y) => _IsPointInFillPathNV_fnptr(path, mask, x, y);
             [UnmanagedCallersOnly]
-            private static byte IsPointInFillPathNV_Lazy(uint path, uint mask, float x, float y)
+            private static bool IsPointInFillPathNV_Lazy(uint path, uint mask, float x, float y)
             {
-                _IsPointInFillPathNV_fnptr = (delegate* unmanaged<uint, uint, float, float, byte>)GLLoader.BindingsContext.GetProcAddress("glIsPointInFillPathNV");
+                _IsPointInFillPathNV_fnptr = (delegate* unmanaged<uint, uint, float, float, bool>)GLLoader.BindingsContext.GetProcAddress("glIsPointInFillPathNV");
                 return _IsPointInFillPathNV_fnptr(path, mask, x, y);
             }
             
-            private static delegate* unmanaged<uint, float, float, byte> _IsPointInStrokePathNV_fnptr = &IsPointInStrokePathNV_Lazy;
+            private static delegate* unmanaged<uint, float, float, bool> _IsPointInStrokePathNV_fnptr = &IsPointInStrokePathNV_Lazy;
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsPointInStrokePathNV(uint path, float x, float y) => _IsPointInStrokePathNV_fnptr(path, x, y);
+            public static bool IsPointInStrokePathNV(uint path, float x, float y) => _IsPointInStrokePathNV_fnptr(path, x, y);
             [UnmanagedCallersOnly]
-            private static byte IsPointInStrokePathNV_Lazy(uint path, float x, float y)
+            private static bool IsPointInStrokePathNV_Lazy(uint path, float x, float y)
             {
-                _IsPointInStrokePathNV_fnptr = (delegate* unmanaged<uint, float, float, byte>)GLLoader.BindingsContext.GetProcAddress("glIsPointInStrokePathNV");
+                _IsPointInStrokePathNV_fnptr = (delegate* unmanaged<uint, float, float, bool>)GLLoader.BindingsContext.GetProcAddress("glIsPointInStrokePathNV");
                 return _IsPointInStrokePathNV_fnptr(path, x, y);
             }
             
@@ -9019,14 +9019,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 return _GetPathLengthNV_fnptr(path, startSegment, numSegments);
             }
             
-            private static delegate* unmanaged<uint, int, int, float, float*, float*, float*, float*, byte> _PointAlongPathNV_fnptr = &PointAlongPathNV_Lazy;
+            private static delegate* unmanaged<uint, int, int, float, float*, float*, float*, float*, bool> _PointAlongPathNV_fnptr = &PointAlongPathNV_Lazy;
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY) => _PointAlongPathNV_fnptr(path, startSegment, numSegments, distance, x, y, tangentX, tangentY);
+            public static bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY) => _PointAlongPathNV_fnptr(path, startSegment, numSegments, distance, x, y, tangentX, tangentY);
             [UnmanagedCallersOnly]
-            private static byte PointAlongPathNV_Lazy(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY)
+            private static bool PointAlongPathNV_Lazy(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY)
             {
-                _PointAlongPathNV_fnptr = (delegate* unmanaged<uint, int, int, float, float*, float*, float*, float*, byte>)GLLoader.BindingsContext.GetProcAddress("glPointAlongPathNV");
+                _PointAlongPathNV_fnptr = (delegate* unmanaged<uint, int, int, float, float*, float*, float*, float*, bool>)GLLoader.BindingsContext.GetProcAddress("glPointAlongPathNV");
                 return _PointAlongPathNV_fnptr(path, startSegment, numSegments, distance, x, y, tangentX, tangentY);
             }
             
@@ -9514,14 +9514,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _GetShadingRateSampleLocationivNV_fnptr(rate, samples, index, location);
             }
             
-            private static delegate* unmanaged<byte, void> _ShadingRateImageBarrierNV_fnptr = &ShadingRateImageBarrierNV_Lazy;
+            private static delegate* unmanaged<bool, void> _ShadingRateImageBarrierNV_fnptr = &ShadingRateImageBarrierNV_Lazy;
             /// <summary> <b>[requires: GL_NV_shading_rate_image]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ShadingRateImageBarrierNV(byte synchronize) => _ShadingRateImageBarrierNV_fnptr(synchronize);
+            public static void ShadingRateImageBarrierNV(bool synchronize) => _ShadingRateImageBarrierNV_fnptr(synchronize);
             [UnmanagedCallersOnly]
-            private static void ShadingRateImageBarrierNV_Lazy(byte synchronize)
+            private static void ShadingRateImageBarrierNV_Lazy(bool synchronize)
             {
-                _ShadingRateImageBarrierNV_fnptr = (delegate* unmanaged<byte, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateImageBarrierNV");
+                _ShadingRateImageBarrierNV_fnptr = (delegate* unmanaged<bool, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateImageBarrierNV");
                 _ShadingRateImageBarrierNV_fnptr(synchronize);
             }
             
@@ -9679,14 +9679,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _DisableiNV_fnptr(target, index);
             }
             
-            private static delegate* unmanaged<EnableCap, uint, byte> _IsEnablediNV_fnptr = &IsEnablediNV_Lazy;
+            private static delegate* unmanaged<EnableCap, uint, bool> _IsEnablediNV_fnptr = &IsEnablediNV_Lazy;
             /// <summary> <b>[requires: GL_NV_viewport_array]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsEnablediNV(EnableCap target, uint index) => _IsEnablediNV_fnptr(target, index);
+            public static bool IsEnablediNV(EnableCap target, uint index) => _IsEnablediNV_fnptr(target, index);
             [UnmanagedCallersOnly]
-            private static byte IsEnablediNV_Lazy(EnableCap target, uint index)
+            private static bool IsEnablediNV_Lazy(EnableCap target, uint index)
             {
-                _IsEnablediNV_fnptr = (delegate* unmanaged<EnableCap, uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsEnablediNV");
+                _IsEnablediNV_fnptr = (delegate* unmanaged<EnableCap, uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsEnablediNV");
                 return _IsEnablediNV_fnptr(target, index);
             }
             
@@ -9952,7 +9952,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 _BlendBarrierKHR_fnptr();
             }
             
-            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
+            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
             /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> Control the reporting of debug messages in a debug context. </summary>
             /// <param name="source"> The source of debug messages to enable or disable. </param>
             /// <param name="type"> The type of debug messages to enable or disable. </param>
@@ -9961,11 +9961,11 @@ namespace OpenTK.Graphics.OpenGLES3
             /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
             /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageControl.xhtml" /></remarks>
-            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
+            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
             [UnmanagedCallersOnly]
-            private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled)
+            private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled)
             {
-                _DebugMessageControl_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControl");
+                _DebugMessageControl_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControl");
                 _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
             }
             
@@ -10117,14 +10117,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _GetPointerv_fnptr(pname, parameters);
             }
             
-            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void> _DebugMessageControlKHR_fnptr = &DebugMessageControlKHR_Lazy;
+            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void> _DebugMessageControlKHR_fnptr = &DebugMessageControlKHR_Lazy;
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled) => _DebugMessageControlKHR_fnptr(source, type, severity, count, ids, enabled);
+            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => _DebugMessageControlKHR_fnptr(source, type, severity, count, ids, enabled);
             [UnmanagedCallersOnly]
-            private static void DebugMessageControlKHR_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled)
+            private static void DebugMessageControlKHR_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled)
             {
-                _DebugMessageControlKHR_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControlKHR");
+                _DebugMessageControlKHR_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControlKHR");
                 _DebugMessageControlKHR_fnptr(source, type, severity, count, ids, enabled);
             }
             
@@ -10506,25 +10506,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 _BlendFuncSeparateiOES_fnptr(buf, srcRGB, dstRGB, srcAlpha, dstAlpha);
             }
             
-            private static delegate* unmanaged<uint, byte, byte, byte, byte, void> _ColorMaskiOES_fnptr = &ColorMaskiOES_Lazy;
+            private static delegate* unmanaged<uint, bool, bool, bool, bool, void> _ColorMaskiOES_fnptr = &ColorMaskiOES_Lazy;
             /// <summary> <b>[requires: GL_OES_draw_buffers_indexed]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorMaskiOES(uint index, byte r, byte g, byte b, byte a) => _ColorMaskiOES_fnptr(index, r, g, b, a);
+            public static void ColorMaskiOES(uint index, bool r, bool g, bool b, bool a) => _ColorMaskiOES_fnptr(index, r, g, b, a);
             [UnmanagedCallersOnly]
-            private static void ColorMaskiOES_Lazy(uint index, byte r, byte g, byte b, byte a)
+            private static void ColorMaskiOES_Lazy(uint index, bool r, bool g, bool b, bool a)
             {
-                _ColorMaskiOES_fnptr = (delegate* unmanaged<uint, byte, byte, byte, byte, void>)GLLoader.BindingsContext.GetProcAddress("glColorMaskiOES");
+                _ColorMaskiOES_fnptr = (delegate* unmanaged<uint, bool, bool, bool, bool, void>)GLLoader.BindingsContext.GetProcAddress("glColorMaskiOES");
                 _ColorMaskiOES_fnptr(index, r, g, b, a);
             }
             
-            private static delegate* unmanaged<EnableCap, uint, byte> _IsEnablediOES_fnptr = &IsEnablediOES_Lazy;
+            private static delegate* unmanaged<EnableCap, uint, bool> _IsEnablediOES_fnptr = &IsEnablediOES_Lazy;
             /// <summary> <b>[requires: GL_OES_draw_buffers_indexed | GL_OES_viewport_array]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsEnablediOES(EnableCap target, uint index) => _IsEnablediOES_fnptr(target, index);
+            public static bool IsEnablediOES(EnableCap target, uint index) => _IsEnablediOES_fnptr(target, index);
             [UnmanagedCallersOnly]
-            private static byte IsEnablediOES_Lazy(EnableCap target, uint index)
+            private static bool IsEnablediOES_Lazy(EnableCap target, uint index)
             {
-                _IsEnablediOES_fnptr = (delegate* unmanaged<EnableCap, uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsEnablediOES");
+                _IsEnablediOES_fnptr = (delegate* unmanaged<EnableCap, uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsEnablediOES");
                 return _IsEnablediOES_fnptr(target, index);
             }
             
@@ -10616,14 +10616,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 return _MapBufferOES_fnptr(target, access);
             }
             
-            private static delegate* unmanaged<All, byte> _UnmapBufferOES_fnptr = &UnmapBufferOES_Lazy;
+            private static delegate* unmanaged<All, bool> _UnmapBufferOES_fnptr = &UnmapBufferOES_Lazy;
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte UnmapBufferOES(All target) => _UnmapBufferOES_fnptr(target);
+            public static bool UnmapBufferOES(All target) => _UnmapBufferOES_fnptr(target);
             [UnmanagedCallersOnly]
-            private static byte UnmapBufferOES_Lazy(All target)
+            private static bool UnmapBufferOES_Lazy(All target)
             {
-                _UnmapBufferOES_fnptr = (delegate* unmanaged<All, byte>)GLLoader.BindingsContext.GetProcAddress("glUnmapBufferOES");
+                _UnmapBufferOES_fnptr = (delegate* unmanaged<All, bool>)GLLoader.BindingsContext.GetProcAddress("glUnmapBufferOES");
                 return _UnmapBufferOES_fnptr(target);
             }
             
@@ -10847,14 +10847,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _TexBufferRangeOES_fnptr(target, internalformat, buffer, offset, size);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, byte, void> _TexStorage3DMultisampleOES_fnptr = &TexStorage3DMultisampleOES_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, bool, void> _TexStorage3DMultisampleOES_fnptr = &TexStorage3DMultisampleOES_Lazy;
             /// <summary> <b>[requires: GL_OES_texture_storage_multisample_2d_array]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorage3DMultisampleOES(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, byte fixedsamplelocations) => _TexStorage3DMultisampleOES_fnptr(target, samples, internalformat, width, height, depth, fixedsamplelocations);
+            public static void TexStorage3DMultisampleOES(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => _TexStorage3DMultisampleOES_fnptr(target, samples, internalformat, width, height, depth, fixedsamplelocations);
             [UnmanagedCallersOnly]
-            private static void TexStorage3DMultisampleOES_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, byte fixedsamplelocations)
+            private static void TexStorage3DMultisampleOES_Lazy(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
             {
-                _TexStorage3DMultisampleOES_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage3DMultisampleOES");
+                _TexStorage3DMultisampleOES_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, bool, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorage3DMultisampleOES");
                 _TexStorage3DMultisampleOES_fnptr(target, samples, internalformat, width, height, depth, fixedsamplelocations);
             }
             
@@ -10902,14 +10902,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _GenVertexArraysOES_fnptr(n, arrays);
             }
             
-            private static delegate* unmanaged<VertexArrayHandle, byte> _IsVertexArrayOES_fnptr = &IsVertexArrayOES_Lazy;
+            private static delegate* unmanaged<VertexArrayHandle, bool> _IsVertexArrayOES_fnptr = &IsVertexArrayOES_Lazy;
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsVertexArrayOES(VertexArrayHandle array) => _IsVertexArrayOES_fnptr(array);
+            public static bool IsVertexArrayOES(VertexArrayHandle array) => _IsVertexArrayOES_fnptr(array);
             [UnmanagedCallersOnly]
-            private static byte IsVertexArrayOES_Lazy(VertexArrayHandle array)
+            private static bool IsVertexArrayOES_Lazy(VertexArrayHandle array)
             {
-                _IsVertexArrayOES_fnptr = (delegate* unmanaged<VertexArrayHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsVertexArrayOES");
+                _IsVertexArrayOES_fnptr = (delegate* unmanaged<VertexArrayHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsVertexArrayOES");
                 return _IsVertexArrayOES_fnptr(array);
             }
             
@@ -11205,14 +11205,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _ExtGetProgramsQCOM_fnptr(programs, maxPrograms, numPrograms);
             }
             
-            private static delegate* unmanaged<ProgramHandle, byte> _ExtIsProgramBinaryQCOM_fnptr = &ExtIsProgramBinaryQCOM_Lazy;
+            private static delegate* unmanaged<ProgramHandle, bool> _ExtIsProgramBinaryQCOM_fnptr = &ExtIsProgramBinaryQCOM_Lazy;
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte ExtIsProgramBinaryQCOM(ProgramHandle program) => _ExtIsProgramBinaryQCOM_fnptr(program);
+            public static bool ExtIsProgramBinaryQCOM(ProgramHandle program) => _ExtIsProgramBinaryQCOM_fnptr(program);
             [UnmanagedCallersOnly]
-            private static byte ExtIsProgramBinaryQCOM_Lazy(ProgramHandle program)
+            private static bool ExtIsProgramBinaryQCOM_Lazy(ProgramHandle program)
             {
-                _ExtIsProgramBinaryQCOM_fnptr = (delegate* unmanaged<ProgramHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glExtIsProgramBinaryQCOM");
+                _ExtIsProgramBinaryQCOM_fnptr = (delegate* unmanaged<ProgramHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glExtIsProgramBinaryQCOM");
                 return _ExtIsProgramBinaryQCOM_fnptr(program);
             }
             

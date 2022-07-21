@@ -492,15 +492,6 @@ namespace OpenTK.Graphics.OpenGLES1
         {
             Color4ub(red, green, blue, alpha);
         }
-        /// <inheritdoc cref="ColorMask"/>
-        public static unsafe void ColorMask(bool red, bool green, bool blue, bool alpha)
-        {
-            byte red_byte = (byte)(red ? 1 : 0);
-            byte green_byte = (byte)(green ? 1 : 0);
-            byte blue_byte = (byte)(blue ? 1 : 0);
-            byte alpha_byte = (byte)(alpha ? 1 : 0);
-            ColorMask(red_byte, green_byte, blue_byte, alpha_byte);
-        }
         /// <inheritdoc cref="ColorPointer"/>
         public static unsafe void ColorPointer(int size, ColorPointerType type, int stride, IntPtr pointer)
         {
@@ -674,12 +665,6 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_ptr);
             }
         }
-        /// <inheritdoc cref="DepthMask"/>
-        public static unsafe void DepthMask(bool flag)
-        {
-            byte flag_byte = (byte)(flag ? 1 : 0);
-            DepthMask(flag_byte);
-        }
         /// <inheritdoc cref="DrawElements"/>
         public static unsafe void DrawElements(PrimitiveType mode, int count, DrawElementsType type, nint offset)
         {
@@ -711,25 +696,25 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, Span<byte> data)
+        public static unsafe void GetBoolean(GetPName pname, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, byte[] data)
+        public static unsafe void GetBoolean(GetPName pname, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, ref byte data)
+        public static unsafe void GetBoolean(GetPName pname, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleanv(pname, data_ptr);
             }
@@ -1302,18 +1287,6 @@ namespace OpenTK.Graphics.OpenGLES1
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="SampleCoverage"/>
-        public static unsafe void SampleCoverage(float value, bool invert)
-        {
-            byte invert_byte = (byte)(invert ? 1 : 0);
-            SampleCoverage(value, invert_byte);
-        }
-        /// <inheritdoc cref="SampleCoveragex"/>
-        public static unsafe void SampleCoveragex(int value, bool invert)
-        {
-            byte invert_byte = (byte)(invert ? 1 : 0);
-            SampleCoveragex(value, invert_byte);
-        }
         /// <inheritdoc cref="TexCoordPointer"/>
         public static unsafe void TexCoordPointer(int size, TexCoordPointerType type, int stride, IntPtr pointer)
         {
@@ -1830,8 +1803,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControl"/>
@@ -1840,8 +1812,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControl"/>
@@ -1849,8 +1820,7 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsert"/>
@@ -2229,8 +2199,7 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsertKHR"/>
@@ -3406,12 +3375,6 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetMaterialxvOES(face, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="SampleCoveragexOES"/>
-            public static unsafe void SampleCoveragexOES(int value, bool invert)
-            {
-                byte invert_byte = (byte)(invert ? 1 : 0);
-                SampleCoveragexOES(value, invert_byte);
             }
             /// <inheritdoc cref="BitmapxOES"/>
             public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, ReadOnlySpan<byte> bitmap)
