@@ -25,7 +25,6 @@ namespace Generator.Process
 
             new StringReturnOverloader(),
 
-            new BoolOverloader(),
             new MathTypeOverloader(),
             new FunctionPtrToDelegateOverloader(),
             new PointerToOffsetOverloader(),
@@ -146,60 +145,6 @@ namespace Generator.Process
             {
                 writer.WriteLine($"{NewReturnName} = Marshal.PtrToStringAnsi((IntPtr){returnName});");
                 return NewReturnName;
-            }
-        }
-    }
-
-    public class BoolOverloader : IOverloader
-    {
-        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
-        {
-            Parameter[] parameters = overload.InputParameters.ToArray();
-            NameTable nameTable = overload.NameTable;
-            List<(Parameter byteParam, Parameter boolParam)> overloadedParameters = new List<(Parameter, Parameter)>();
-            for (int i = 0; i < parameters.Length; i++)
-            {
-                Parameter parameter = parameters[i];
-                if (parameter.Type is not CSBool8 bool8)
-                {
-                    continue;
-                }
-
-                nameTable.Rename(parameter, parameter.Name + "_byte");
-                parameters[i] = parameter with { Type = new CSPrimitive("bool", bool8.Constant) };
-                overloadedParameters.Add((parameter, parameters[i]));
-            }
-
-            if (overloadedParameters.Count == 0)
-            {
-                newOverloads = null;
-                return false;
-            }
-
-            newOverloads = new List<Overload>()
-            {
-                overload with {
-                    NestedOverload = overload,
-                    MarshalLayerToNested = new BoolLayer(overloadedParameters),
-                    InputParameters = parameters,
-                    NameTable = nameTable }
-            };
-            return true;
-        }
-
-        private record BoolLayer(List<(Parameter byteParam, Parameter boolParam)> OverloadedParameters) : IOverloadLayer
-        {
-            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
-            {
-                foreach (var (byteParam, boolParam) in OverloadedParameters)
-                {
-                    writer.WriteLine($"byte {nameTable[byteParam]} = (byte)({nameTable[boolParam]} ? 1 : 0);");
-                }
-            }
-
-            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
-            {
-                return returnName;
             }
         }
     }
