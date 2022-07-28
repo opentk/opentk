@@ -68,9 +68,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL", "src\OpenAL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions", "src\OpenAL\OpenTK.OpenAL.Extensions\OpenTK.OpenAL.Extensions.csproj", "{CB4028A7-A449-4452-9FC5-78CDB545FEB9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALGenerator", "OpenALGenerator\OpenALGenerator.csproj", "{17FB3437-BD1A-423B-B333-B2D7F775BC79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALGenerator", "src\OpenAL\OpenALGenerator\OpenALGenerator.csproj", "{17FB3437-BD1A-423B-B333-B2D7F775BC79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "tests\OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Common", "src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj", "{9A0D02D2-0834-42F8-9610-8221CF803708}"
 EndProject
@@ -82,12 +82,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Compute", "src\OpenT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenCL.Tests", "tests\OpenToolkit.OpenCL.Tests\OpenToolkit.OpenCL.Tests.csproj", "{51A92F39-3444-4E07-9C4F-99C2D8F11879}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "tests\OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
 	ProjectSection(ProjectDependencies) = postProject
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336} = {517AC4BF-6AF5-415D-B11C-FC6FE6710336}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalTest", "LocalTest\LocalTest.csproj", "{B2A8C618-E2D7-45BD-B751-37CD7EA315B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalTest", "tests\LocalTest\LocalTest.csproj", "{B2A8C618-E2D7-45BD-B751-37CD7EA315B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
