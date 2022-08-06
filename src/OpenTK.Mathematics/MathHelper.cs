@@ -1255,10 +1255,8 @@ namespace OpenTK.Mathematics
             // mod angle so it's in the range (-360, 360)
             angle %= 360f;
 
-            // abs angle so it's in the range [0, 360)
-            angle = Abs(angle);
-
-            return angle;
+            // return angle in the range [0, 360)
+            return angle >= 0.0f ? angle : angle + 360f;
         }
 
         /// <summary>
@@ -1269,12 +1267,10 @@ namespace OpenTK.Mathematics
         public static double ClampAngle(double angle)
         {
             // mod angle so it's in the range (-360, 360)
-            angle %= 360f;
+            angle %= 360d;
 
-            // abs angle so it's in the range [0, 360)
-            angle = Abs(angle);
-
-            return angle;
+            // return angle in the range [0, 360)
+            return angle >= 0.0d ? angle : angle + 360d;
         }
 
         /// <summary>
@@ -1285,12 +1281,10 @@ namespace OpenTK.Mathematics
         public static float ClampRadians(float angle)
         {
             // mod angle so it's in the range (-2π,2π)
-            angle %= 2 * Pi;
+            angle %= TwoPi;
 
-            // abs angle so it's in the range [0,2π)
-            angle = Abs(angle);
-
-            return angle;
+            // return angle in the range [0,2π)
+            return angle >= 0.0f ? angle : angle + TwoPi;
         }
 
         /// <summary>
@@ -1301,12 +1295,10 @@ namespace OpenTK.Mathematics
         public static double ClampRadians(double angle)
         {
             // mod angle so it's in the range (-2π,2π)
-            angle %= 2 * Pi;
+            angle %= 2d * Math.PI;
 
-            // abs angle so it's in the range [0,2π)
-            angle = Abs(angle);
-
-            return angle;
+            // return angle in the range [0,2π)
+            return angle >= 0.0d ? angle : angle + (2d * Math.PI);
         }
 
         internal static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
