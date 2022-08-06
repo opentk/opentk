@@ -1255,8 +1255,13 @@ namespace OpenTK.Mathematics
             // mod angle so it's in the range (-360, 360)
             angle %= 360f;
 
-            // return angle in the range [0, 360)
-            return angle >= 0.0f ? angle : angle + 360f;
+            if (angle < 0.0f)
+            {
+                // shift angle to the range [0, 360)
+                angle += 360f;
+            }
+
+            return angle;
         }
 
         /// <summary>
@@ -1269,8 +1274,13 @@ namespace OpenTK.Mathematics
             // mod angle so it's in the range (-360, 360)
             angle %= 360d;
 
-            // return angle in the range [0, 360)
-            return angle >= 0.0d ? angle : angle + 360d;
+            if (angle < 0.0d)
+            {
+                // shift angle to the range [0, 360)
+                angle += 360d;
+            }
+
+            return angle;
         }
 
         /// <summary>
@@ -1283,8 +1293,13 @@ namespace OpenTK.Mathematics
             // mod angle so it's in the range (-2π,2π)
             angle %= TwoPi;
 
-            // return angle in the range [0,2π)
-            return angle >= 0.0f ? angle : angle + TwoPi;
+            if (angle < 0.0f)
+            {
+                // shift angle to the range [0,2π)
+                angle += TwoPi;
+            }
+
+            return angle;
         }
 
         /// <summary>
@@ -1297,8 +1312,13 @@ namespace OpenTK.Mathematics
             // mod angle so it's in the range (-2π,2π)
             angle %= 2d * Math.PI;
 
-            // return angle in the range [0,2π)
-            return angle >= 0.0d ? angle : angle + (2d * Math.PI);
+            if (angle < 0.0d)
+            {
+                // shift angle to the range [0,2π)
+                angle += 2d * Math.PI;
+            }
+
+            return angle;
         }
 
         internal static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
