@@ -1255,8 +1255,11 @@ namespace OpenTK.Mathematics
             // mod angle so it's in the range (-360, 360)
             angle %= 360f;
 
-            // abs angle so it's in the range [0, 360)
-            angle = Abs(angle);
+            if (angle < 0.0f)
+            {
+                // shift angle to the range [0, 360)
+                angle += 360f;
+            }
 
             return angle;
         }
@@ -1269,10 +1272,13 @@ namespace OpenTK.Mathematics
         public static double ClampAngle(double angle)
         {
             // mod angle so it's in the range (-360, 360)
-            angle %= 360f;
+            angle %= 360d;
 
-            // abs angle so it's in the range [0, 360)
-            angle = Abs(angle);
+            if (angle < 0.0d)
+            {
+                // shift angle to the range [0, 360)
+                angle += 360d;
+            }
 
             return angle;
         }
@@ -1285,10 +1291,13 @@ namespace OpenTK.Mathematics
         public static float ClampRadians(float angle)
         {
             // mod angle so it's in the range (-2π,2π)
-            angle %= 2 * Pi;
+            angle %= TwoPi;
 
-            // abs angle so it's in the range [0,2π)
-            angle = Abs(angle);
+            if (angle < 0.0f)
+            {
+                // shift angle to the range [0,2π)
+                angle += TwoPi;
+            }
 
             return angle;
         }
@@ -1301,10 +1310,13 @@ namespace OpenTK.Mathematics
         public static double ClampRadians(double angle)
         {
             // mod angle so it's in the range (-2π,2π)
-            angle %= 2 * Pi;
+            angle %= 2d * Math.PI;
 
-            // abs angle so it's in the range [0,2π)
-            angle = Abs(angle);
+            if (angle < 0.0d)
+            {
+                // shift angle to the range [0,2π)
+                angle += 2d * Math.PI;
+            }
 
             return angle;
         }
