@@ -1217,7 +1217,7 @@ namespace OpenTK.Mathematics
             // returns angle in the range [0, 2π).
             angle = ClampRadians(angle);
 
-            if (angle > PiOver2)
+            if (angle > Pi)
             {
                 // shift angle to range (-π, π]
                 angle -= 2 * Pi;
@@ -1236,7 +1236,7 @@ namespace OpenTK.Mathematics
             // returns angle in the range [0, 2π).
             angle = ClampRadians(angle);
 
-            if (angle > PiOver2)
+            if (angle > Pi)
             {
                 // shift angle to range (-π, π]
                 angle -= 2 * Pi;
