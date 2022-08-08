@@ -1396,13 +1396,13 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        public static unsafe void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -1411,7 +1411,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -1420,7 +1420,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)

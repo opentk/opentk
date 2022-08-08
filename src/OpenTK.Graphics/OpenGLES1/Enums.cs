@@ -784,7 +784,6 @@ namespace OpenTK.Graphics.OpenGLES1
         MultisampleBufferBit6Qcom = 1073741824,
         MultisampleBufferBit7Qcom = 2147483648,
     }
-    ///<summary>Used in <see cref="GL.ColorMask" />, <see cref="GL.DebugMessageControl" />, <see cref="GL.DebugMessageControlKHR" />, ...</summary>
     public enum Boolean : uint
     {
         False = 0,
@@ -849,6 +848,16 @@ namespace OpenTK.Graphics.OpenGLES1
         SrcAlphaSaturate = 776,
         Src1Alpha = 34185,
     }
+    public enum FragmentShaderGenericSourceATI : uint
+    {
+        Zero = 0,
+        One = 1,
+        PrimaryColor = 34167,
+    }
+    public enum FragmentShaderValueRepATI : uint
+    {
+        Alpha = 6406,
+    }
     ///<summary>Used in <see cref="GL.FenceSyncAPPLE" />, <see cref="GL.WaitSyncAPPLE" /></summary>
     public enum SyncBehaviorFlags : uint
     {
@@ -867,13 +876,6 @@ namespace OpenTK.Graphics.OpenGLES1
         Back = 1029,
         FrontAndBack = 1032,
         NoneOes = 0,
-    }
-    public enum PixelTexGenMode : uint
-    {
-        Rgb = 6407,
-        Rgba = 6408,
-        Luminance = 6409,
-        LuminanceAlpha = 6410,
     }
     public enum ReadBufferMode : uint
     {
@@ -1432,6 +1434,10 @@ namespace OpenTK.Graphics.OpenGLES1
         Float = 5126,
         UnsignedShort4444 = 32819,
         UnsignedShort5551 = 32820,
+        UnsignedShort565 = 33635,
+        UnsignedShort4444RevExt = 33637,
+        UnsignedShort1555RevExt = 33638,
+        UnsignedShort4444RevImg = 33637,
         UnsignedInt = 5125,
     }
     public enum VertexAttribType : uint
@@ -1517,6 +1523,8 @@ namespace OpenTK.Graphics.OpenGLES1
         Rgba = 6408,
         Luminance = 6409,
         LuminanceAlpha = 6410,
+        BgraExt = 32993,
+        BgraImg = 32993,
         UnsignedInt = 5125,
     }
     public enum AttributeType : uint
@@ -1663,6 +1671,13 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         Alpha = 6406,
         Rgb = 6407,
+    }
+    public enum PixelTexGenMode : uint
+    {
+        Rgb = 6407,
+        Rgba = 6408,
+        Luminance = 6409,
+        LuminanceAlpha = 6410,
     }
     ///<summary>Used in <see cref="GL.ShadeModel" /></summary>
     public enum ShadingModel : uint
@@ -1867,6 +1882,41 @@ namespace OpenTK.Graphics.OpenGLES1
     }
     ///<summary>Used in <see cref="GL.ActiveTexture" />, <see cref="GL.ClientActiveTexture" />, <see cref="GL.MultiTexCoord1bOES" />, ...</summary>
     public enum TextureUnit : uint
+    {
+        Texture0 = 33984,
+        Texture1 = 33985,
+        Texture2 = 33986,
+        Texture3 = 33987,
+        Texture4 = 33988,
+        Texture5 = 33989,
+        Texture6 = 33990,
+        Texture7 = 33991,
+        Texture8 = 33992,
+        Texture9 = 33993,
+        Texture10 = 33994,
+        Texture11 = 33995,
+        Texture12 = 33996,
+        Texture13 = 33997,
+        Texture14 = 33998,
+        Texture15 = 33999,
+        Texture16 = 34000,
+        Texture17 = 34001,
+        Texture18 = 34002,
+        Texture19 = 34003,
+        Texture20 = 34004,
+        Texture21 = 34005,
+        Texture22 = 34006,
+        Texture23 = 34007,
+        Texture24 = 34008,
+        Texture25 = 34009,
+        Texture26 = 34010,
+        Texture27 = 34011,
+        Texture28 = 34012,
+        Texture29 = 34013,
+        Texture30 = 34014,
+        Texture31 = 34015,
+    }
+    public enum FragmentShaderTextureSourceATI : uint
     {
         Texture0 = 33984,
         Texture1 = 33985,

@@ -1431,7 +1431,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _StencilOpSeparate_fnptr(face, sfail, dpfail, dppass);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage2D_fnptr = &TexImage2D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void> _TexImage2D_fnptr = &TexImage2D_Lazy;
         /// <summary> <b>[requires: v2.0]</b> Specify a two-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
         /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
@@ -1443,11 +1443,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage2D.xhtml" /></remarks>
-        public static void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage2D_fnptr(target, level, internalformat, width, height, border, format, type, pixels);
+        public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage2D_fnptr(target, level, internalformat, width, height, border, format, type, pixels);
         [UnmanagedCallersOnly]
-        private static void TexImage2D_Lazy(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
+        private static void TexImage2D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
         {
-            _TexImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage2D");
+            _TexImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage2D");
             _TexImage2D_fnptr(target, level, internalformat, width, height, border, format, type, pixels);
         }
         
@@ -1995,7 +1995,7 @@ namespace OpenTK.Graphics.OpenGLES3
             _DrawRangeElements_fnptr(mode, start, end, count, type, indices);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage3D_fnptr = &TexImage3D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage3D_fnptr = &TexImage3D_Lazy;
         /// <summary> <b>[requires: v3.0]</b> Specify a three-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be one of GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
         /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n th mipmap reduction image. </param>
@@ -2008,11 +2008,11 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage3D.xhtml" /></remarks>
-        public static void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage3D_fnptr(target, level, internalformat, width, height, depth, border, format, type, pixels);
+        public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage3D_fnptr(target, level, internalformat, width, height, depth, border, format, type, pixels);
         [UnmanagedCallersOnly]
-        private static void TexImage3D_Lazy(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
+        private static void TexImage3D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
         {
-            _TexImage3D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage3D");
+            _TexImage3D_fnptr = (delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage3D");
             _TexImage3D_fnptr(target, level, internalformat, width, height, depth, border, format, type, pixels);
         }
         
@@ -6035,6 +6035,50 @@ namespace OpenTK.Graphics.OpenGLES3
                 _NamedBufferStorageExternalEXT_fnptr(buffer, offset, size, clientBuffer, flags);
             }
             
+            private static delegate* unmanaged<int, int, int*, ShadingRate*, void> _GetFragmentShadingRatesEXT_fnptr = &GetFragmentShadingRatesEXT_Lazy;
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void GetFragmentShadingRatesEXT(int samples, int maxCount, int* count, ShadingRate* shadingRates) => _GetFragmentShadingRatesEXT_fnptr(samples, maxCount, count, shadingRates);
+            [UnmanagedCallersOnly]
+            private static void GetFragmentShadingRatesEXT_Lazy(int samples, int maxCount, int* count, ShadingRate* shadingRates)
+            {
+                _GetFragmentShadingRatesEXT_fnptr = (delegate* unmanaged<int, int, int*, ShadingRate*, void>)GLLoader.BindingsContext.GetProcAddress("glGetFragmentShadingRatesEXT");
+                _GetFragmentShadingRatesEXT_fnptr(samples, maxCount, count, shadingRates);
+            }
+            
+            private static delegate* unmanaged<ShadingRate, void> _ShadingRateEXT_fnptr = &ShadingRateEXT_Lazy;
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void ShadingRateEXT(ShadingRate rate) => _ShadingRateEXT_fnptr(rate);
+            [UnmanagedCallersOnly]
+            private static void ShadingRateEXT_Lazy(ShadingRate rate)
+            {
+                _ShadingRateEXT_fnptr = (delegate* unmanaged<ShadingRate, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateEXT");
+                _ShadingRateEXT_fnptr(rate);
+            }
+            
+            private static delegate* unmanaged<ShadingRateCombinerOp, ShadingRateCombinerOp, void> _ShadingRateCombinerOpsEXT_fnptr = &ShadingRateCombinerOpsEXT_Lazy;
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void ShadingRateCombinerOpsEXT(ShadingRateCombinerOp combinerOp0, ShadingRateCombinerOp combinerOp1) => _ShadingRateCombinerOpsEXT_fnptr(combinerOp0, combinerOp1);
+            [UnmanagedCallersOnly]
+            private static void ShadingRateCombinerOpsEXT_Lazy(ShadingRateCombinerOp combinerOp0, ShadingRateCombinerOp combinerOp1)
+            {
+                _ShadingRateCombinerOpsEXT_fnptr = (delegate* unmanaged<ShadingRateCombinerOp, ShadingRateCombinerOp, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateCombinerOpsEXT");
+                _ShadingRateCombinerOpsEXT_fnptr(combinerOp0, combinerOp1);
+            }
+            
+            private static delegate* unmanaged<FramebufferTarget, FramebufferAttachment, TextureHandle, int, int, int, int, void> _FramebufferShadingRateEXT_fnptr = &FramebufferShadingRateEXT_Lazy;
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void FramebufferShadingRateEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int baseLayer, int numLayers, int texelWidth, int texelHeight) => _FramebufferShadingRateEXT_fnptr(target, attachment, texture, baseLayer, numLayers, texelWidth, texelHeight);
+            [UnmanagedCallersOnly]
+            private static void FramebufferShadingRateEXT_Lazy(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int baseLayer, int numLayers, int texelWidth, int texelHeight)
+            {
+                _FramebufferShadingRateEXT_fnptr = (delegate* unmanaged<FramebufferTarget, FramebufferAttachment, TextureHandle, int, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glFramebufferShadingRateEXT");
+                _FramebufferShadingRateEXT_fnptr(target, attachment, texture, baseLayer, numLayers, texelWidth, texelHeight);
+            }
+            
             private static delegate* unmanaged<FramebufferTarget, FramebufferAttachment, TextureHandle, int, void> _FramebufferTextureEXT_fnptr = &FramebufferTextureEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_geometry_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -7146,14 +7190,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 _FramebufferPixelLocalStorageSizeEXT_fnptr(target, size);
             }
             
-            private static delegate* unmanaged<uint, int> _GetFramebufferPixelLocalStorageSizeEXT_fnptr = &GetFramebufferPixelLocalStorageSizeEXT_Lazy;
+            private static delegate* unmanaged<FramebufferTarget, int> _GetFramebufferPixelLocalStorageSizeEXT_fnptr = &GetFramebufferPixelLocalStorageSizeEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_shader_pixel_local_storage2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static int GetFramebufferPixelLocalStorageSizeEXT(uint target) => _GetFramebufferPixelLocalStorageSizeEXT_fnptr(target);
+            public static int GetFramebufferPixelLocalStorageSizeEXT(FramebufferTarget target) => _GetFramebufferPixelLocalStorageSizeEXT_fnptr(target);
             [UnmanagedCallersOnly]
-            private static int GetFramebufferPixelLocalStorageSizeEXT_Lazy(uint target)
+            private static int GetFramebufferPixelLocalStorageSizeEXT_Lazy(FramebufferTarget target)
             {
-                _GetFramebufferPixelLocalStorageSizeEXT_fnptr = (delegate* unmanaged<uint, int>)GLLoader.BindingsContext.GetProcAddress("glGetFramebufferPixelLocalStorageSizeEXT");
+                _GetFramebufferPixelLocalStorageSizeEXT_fnptr = (delegate* unmanaged<FramebufferTarget, int>)GLLoader.BindingsContext.GetProcAddress("glGetFramebufferPixelLocalStorageSizeEXT");
                 return _GetFramebufferPixelLocalStorageSizeEXT_fnptr(target);
             }
             
@@ -7366,25 +7410,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 _TextureStorage3DEXT_fnptr(texture, target, levels, internalformat, width, height, depth);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int*, void> _TexStorageAttribs2DEXT_fnptr = &TexStorageAttribs2DEXT_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, TexStorageAttribs*, void> _TexStorageAttribs2DEXT_fnptr = &TexStorageAttribs2DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_texture_storage_compression]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int* attrib_list) => _TexStorageAttribs2DEXT_fnptr(target, levels, internalformat, width, height, attrib_list);
+            public static void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, TexStorageAttribs* attrib_list) => _TexStorageAttribs2DEXT_fnptr(target, levels, internalformat, width, height, attrib_list);
             [UnmanagedCallersOnly]
-            private static void TexStorageAttribs2DEXT_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int* attrib_list)
+            private static void TexStorageAttribs2DEXT_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, TexStorageAttribs* attrib_list)
             {
-                _TexStorageAttribs2DEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int*, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageAttribs2DEXT");
+                _TexStorageAttribs2DEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, TexStorageAttribs*, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageAttribs2DEXT");
                 _TexStorageAttribs2DEXT_fnptr(target, levels, internalformat, width, height, attrib_list);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, int*, void> _TexStorageAttribs3DEXT_fnptr = &TexStorageAttribs3DEXT_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, TexStorageAttribs*, void> _TexStorageAttribs3DEXT_fnptr = &TexStorageAttribs3DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_texture_storage_compression]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, int* attrib_list) => _TexStorageAttribs3DEXT_fnptr(target, levels, internalformat, width, height, depth, attrib_list);
+            public static void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, TexStorageAttribs* attrib_list) => _TexStorageAttribs3DEXT_fnptr(target, levels, internalformat, width, height, depth, attrib_list);
             [UnmanagedCallersOnly]
-            private static void TexStorageAttribs3DEXT_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, int* attrib_list)
+            private static void TexStorageAttribs3DEXT_Lazy(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, TexStorageAttribs* attrib_list)
             {
-                _TexStorageAttribs3DEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, int*, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageAttribs3DEXT");
+                _TexStorageAttribs3DEXT_fnptr = (delegate* unmanaged<TextureTarget, int, SizedInternalFormat, int, int, int, TexStorageAttribs*, void>)GLLoader.BindingsContext.GetProcAddress("glTexStorageAttribs3DEXT");
                 _TexStorageAttribs3DEXT_fnptr(target, levels, internalformat, width, height, depth, attrib_list);
             }
             

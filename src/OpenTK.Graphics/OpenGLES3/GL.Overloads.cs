@@ -1536,13 +1536,13 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        public static unsafe void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -1551,7 +1551,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -1560,7 +1560,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -2076,13 +2076,13 @@ namespace OpenTK.Graphics.OpenGLES3
             DrawRangeElements(mode, start, end, count, type, indices);
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        public static unsafe void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -2091,7 +2091,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -2100,7 +2100,7 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -6839,6 +6839,39 @@ namespace OpenTK.Graphics.OpenGLES3
                     NamedBufferStorageExternalEXT(buffer, offset, size, clientBuffer_ptr, flags);
                 }
             }
+            /// <inheritdoc cref="GetFragmentShadingRatesEXT"/>
+            public static unsafe void GetFragmentShadingRatesEXT(int samples, Span<int> count, Span<ShadingRate> shadingRates)
+            {
+                fixed (int* count_ptr = count)
+                {
+                    int maxCount = (int)(shadingRates.Length);
+                    fixed (ShadingRate* shadingRates_ptr = shadingRates)
+                    {
+                        GetFragmentShadingRatesEXT(samples, maxCount, count_ptr, shadingRates_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="GetFragmentShadingRatesEXT"/>
+            public static unsafe void GetFragmentShadingRatesEXT(int samples, int[] count, ShadingRate[] shadingRates)
+            {
+                fixed (int* count_ptr = count)
+                {
+                    int maxCount = (int)(shadingRates.Length);
+                    fixed (ShadingRate* shadingRates_ptr = shadingRates)
+                    {
+                        GetFragmentShadingRatesEXT(samples, maxCount, count_ptr, shadingRates_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="GetFragmentShadingRatesEXT"/>
+            public static unsafe void GetFragmentShadingRatesEXT(int samples, int maxCount, ref int count, ref ShadingRate shadingRates)
+            {
+                fixed (int* count_ptr = &count)
+                fixed (ShadingRate* shadingRates_ptr = &shadingRates)
+                {
+                    GetFragmentShadingRatesEXT(samples, maxCount, count_ptr, shadingRates_ptr);
+                }
+            }
             /// <inheritdoc cref="GetUnsignedBytevEXT"/>
             public static unsafe void GetUnsignedBytevEXT(GetPName pname, Span<byte> data)
             {
@@ -8357,17 +8390,17 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="TexStorageAttribs2DEXT"/>
-            public static unsafe void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, in int attrib_list)
+            public static unsafe void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, in TexStorageAttribs attrib_list)
             {
-                fixed (int* attrib_list_ptr = &attrib_list)
+                fixed (TexStorageAttribs* attrib_list_ptr = &attrib_list)
                 {
                     TexStorageAttribs2DEXT(target, levels, internalformat, width, height, attrib_list_ptr);
                 }
             }
             /// <inheritdoc cref="TexStorageAttribs3DEXT"/>
-            public static unsafe void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, in int attrib_list)
+            public static unsafe void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, in TexStorageAttribs attrib_list)
             {
-                fixed (int* attrib_list_ptr = &attrib_list)
+                fixed (TexStorageAttribs* attrib_list_ptr = &attrib_list)
                 {
                     TexStorageAttribs3DEXT(target, levels, internalformat, width, height, depth, attrib_list_ptr);
                 }

@@ -152,7 +152,7 @@ namespace OpenTK.Graphics.OpenGL
             _TexParameteriv_fnptr(target, pname, parameters);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage1D_fnptr = &TexImage1D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*, void> _TexImage1D_fnptr = &TexImage1D_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Specify a one-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_1D or GL_PROXY_TEXTURE_1D. </param>
         /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. </param>
@@ -163,15 +163,15 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage1D.xhtml" /></remarks>
-        public static void TexImage1D(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage1D_fnptr(target, level, internalformat, width, border, format, type, pixels);
+        public static void TexImage1D(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage1D_fnptr(target, level, internalformat, width, border, format, type, pixels);
         [UnmanagedCallersOnly]
-        private static void TexImage1D_Lazy(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels)
+        private static void TexImage1D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels)
         {
-            _TexImage1D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage1D");
+            _TexImage1D_fnptr = (delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage1D");
             _TexImage1D_fnptr(target, level, internalformat, width, border, format, type, pixels);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage2D_fnptr = &TexImage2D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void> _TexImage2D_fnptr = &TexImage2D_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Specify a two-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_PROXY_TEXTURE_2D, GL_TEXTURE_1D_ARRAY, GL_PROXY_TEXTURE_1D_ARRAY, GL_TEXTURE_RECTANGLE, GL_PROXY_TEXTURE_RECTANGLE, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, or GL_PROXY_TEXTURE_CUBE_MAP. </param>
         /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the nth mipmap reduction image. If target is GL_TEXTURE_RECTANGLE or GL_PROXY_TEXTURE_RECTANGLE, level must be 0. </param>
@@ -183,11 +183,11 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml" /></remarks>
-        public static void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage2D_fnptr(target, level, internalformat, width, height, border, format, type, pixels);
+        public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage2D_fnptr(target, level, internalformat, width, height, border, format, type, pixels);
         [UnmanagedCallersOnly]
-        private static void TexImage2D_Lazy(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
+        private static void TexImage2D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
         {
-            _TexImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage2D");
+            _TexImage2D_fnptr = (delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage2D");
             _TexImage2D_fnptr(target, level, internalformat, width, height, border, format, type, pixels);
         }
         
@@ -870,7 +870,7 @@ namespace OpenTK.Graphics.OpenGL
             _DrawRangeElements_fnptr(mode, start, end, count, type, indices);
         }
         
-        private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage3D_fnptr = &TexImage3D_Lazy;
+        private static delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void> _TexImage3D_fnptr = &TexImage3D_Lazy;
         /// <summary> <b>[requires: v1.2]</b> Specify a three-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be one of GL_TEXTURE_3D, GL_PROXY_TEXTURE_3D, GL_TEXTURE_2D_ARRAY or GL_PROXY_TEXTURE_2D_ARRAY. </param>
         /// <param name="level"> Specifies the level-of-detail number. Level 0 is the base image level. Level n is the n th mipmap reduction image. </param>
@@ -883,11 +883,11 @@ namespace OpenTK.Graphics.OpenGL
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage3D.xhtml" /></remarks>
-        public static void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage3D_fnptr(target, level, internalformat, width, height, depth, border, format, type, pixels);
+        public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _TexImage3D_fnptr(target, level, internalformat, width, height, depth, border, format, type, pixels);
         [UnmanagedCallersOnly]
-        private static void TexImage3D_Lazy(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
+        private static void TexImage3D_Lazy(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
         {
-            _TexImage3D_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage3D");
+            _TexImage3D_fnptr = (delegate* unmanaged<TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage3D");
             _TexImage3D_fnptr(target, level, internalformat, width, height, depth, border, format, type, pixels);
         }
         
@@ -9409,14 +9409,14 @@ namespace OpenTK.Graphics.OpenGL
                 _DebugMessageCallbackAMD_fnptr(callback, userParam);
             }
             
-            private static delegate* unmanaged<uint, int, All*, uint*, uint*, int*, byte*, uint> _GetDebugMessageLogAMD_fnptr = &GetDebugMessageLogAMD_Lazy;
+            private static delegate* unmanaged<uint, int, All*, DebugSeverity*, uint*, int*, byte*, uint> _GetDebugMessageLogAMD_fnptr = &GetDebugMessageLogAMD_Lazy;
             /// <summary> <b>[requires: GL_AMD_debug_output]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static uint GetDebugMessageLogAMD(uint count, int bufSize, All* categories, uint* severities, uint* ids, int* lengths, byte* message) => _GetDebugMessageLogAMD_fnptr(count, bufSize, categories, severities, ids, lengths, message);
+            public static uint GetDebugMessageLogAMD(uint count, int bufSize, All* categories, DebugSeverity* severities, uint* ids, int* lengths, byte* message) => _GetDebugMessageLogAMD_fnptr(count, bufSize, categories, severities, ids, lengths, message);
             [UnmanagedCallersOnly]
-            private static uint GetDebugMessageLogAMD_Lazy(uint count, int bufSize, All* categories, uint* severities, uint* ids, int* lengths, byte* message)
+            private static uint GetDebugMessageLogAMD_Lazy(uint count, int bufSize, All* categories, DebugSeverity* severities, uint* ids, int* lengths, byte* message)
             {
-                _GetDebugMessageLogAMD_fnptr = (delegate* unmanaged<uint, int, All*, uint*, uint*, int*, byte*, uint>)GLLoader.BindingsContext.GetProcAddress("glGetDebugMessageLogAMD");
+                _GetDebugMessageLogAMD_fnptr = (delegate* unmanaged<uint, int, All*, DebugSeverity*, uint*, int*, byte*, uint>)GLLoader.BindingsContext.GetProcAddress("glGetDebugMessageLogAMD");
                 return _GetDebugMessageLogAMD_fnptr(count, bufSize, categories, severities, ids, lengths, message);
             }
             
@@ -9970,14 +9970,14 @@ namespace OpenTK.Graphics.OpenGL
                 return _IsNameAMD_fnptr(identifier, name);
             }
             
-            private static delegate* unmanaged<QueryTarget, QueryHandle, All, uint, void> _QueryObjectParameteruiAMD_fnptr = &QueryObjectParameteruiAMD_Lazy;
+            private static delegate* unmanaged<QueryTarget, QueryHandle, All, OcclusionQueryEventMaskAMD, void> _QueryObjectParameteruiAMD_fnptr = &QueryObjectParameteruiAMD_Lazy;
             /// <summary> <b>[requires: GL_AMD_occlusion_query_event]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void QueryObjectParameteruiAMD(QueryTarget target, QueryHandle id, All pname, uint param) => _QueryObjectParameteruiAMD_fnptr(target, id, pname, param);
+            public static void QueryObjectParameteruiAMD(QueryTarget target, QueryHandle id, All pname, OcclusionQueryEventMaskAMD param) => _QueryObjectParameteruiAMD_fnptr(target, id, pname, param);
             [UnmanagedCallersOnly]
-            private static void QueryObjectParameteruiAMD_Lazy(QueryTarget target, QueryHandle id, All pname, uint param)
+            private static void QueryObjectParameteruiAMD_Lazy(QueryTarget target, QueryHandle id, All pname, OcclusionQueryEventMaskAMD param)
             {
-                _QueryObjectParameteruiAMD_fnptr = (delegate* unmanaged<QueryTarget, QueryHandle, All, uint, void>)GLLoader.BindingsContext.GetProcAddress("glQueryObjectParameteruiAMD");
+                _QueryObjectParameteruiAMD_fnptr = (delegate* unmanaged<QueryTarget, QueryHandle, All, OcclusionQueryEventMaskAMD, void>)GLLoader.BindingsContext.GetProcAddress("glQueryObjectParameteruiAMD");
                 _QueryObjectParameteruiAMD_fnptr(target, id, pname, param);
             }
             
@@ -19334,102 +19334,102 @@ namespace OpenTK.Graphics.OpenGL
                 _EndFragmentShaderATI_fnptr();
             }
             
-            private static delegate* unmanaged<uint, uint, SwizzleOpATI, void> _PassTexCoordATI_fnptr = &PassTexCoordATI_Lazy;
+            private static delegate* unmanaged<FragmentShaderRegATI, FragmentShaderTextureSourceATI, SwizzleOpATI, void> _PassTexCoordATI_fnptr = &PassTexCoordATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void PassTexCoordATI(uint dst, uint coord, SwizzleOpATI swizzle) => _PassTexCoordATI_fnptr(dst, coord, swizzle);
+            public static void PassTexCoordATI(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI coord, SwizzleOpATI swizzle) => _PassTexCoordATI_fnptr(dst, coord, swizzle);
             [UnmanagedCallersOnly]
-            private static void PassTexCoordATI_Lazy(uint dst, uint coord, SwizzleOpATI swizzle)
+            private static void PassTexCoordATI_Lazy(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI coord, SwizzleOpATI swizzle)
             {
-                _PassTexCoordATI_fnptr = (delegate* unmanaged<uint, uint, SwizzleOpATI, void>)GLLoader.BindingsContext.GetProcAddress("glPassTexCoordATI");
+                _PassTexCoordATI_fnptr = (delegate* unmanaged<FragmentShaderRegATI, FragmentShaderTextureSourceATI, SwizzleOpATI, void>)GLLoader.BindingsContext.GetProcAddress("glPassTexCoordATI");
                 _PassTexCoordATI_fnptr(dst, coord, swizzle);
             }
             
-            private static delegate* unmanaged<uint, uint, SwizzleOpATI, void> _SampleMapATI_fnptr = &SampleMapATI_Lazy;
+            private static delegate* unmanaged<FragmentShaderRegATI, FragmentShaderTextureSourceATI, SwizzleOpATI, void> _SampleMapATI_fnptr = &SampleMapATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void SampleMapATI(uint dst, uint interp, SwizzleOpATI swizzle) => _SampleMapATI_fnptr(dst, interp, swizzle);
+            public static void SampleMapATI(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI interp, SwizzleOpATI swizzle) => _SampleMapATI_fnptr(dst, interp, swizzle);
             [UnmanagedCallersOnly]
-            private static void SampleMapATI_Lazy(uint dst, uint interp, SwizzleOpATI swizzle)
+            private static void SampleMapATI_Lazy(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI interp, SwizzleOpATI swizzle)
             {
-                _SampleMapATI_fnptr = (delegate* unmanaged<uint, uint, SwizzleOpATI, void>)GLLoader.BindingsContext.GetProcAddress("glSampleMapATI");
+                _SampleMapATI_fnptr = (delegate* unmanaged<FragmentShaderRegATI, FragmentShaderTextureSourceATI, SwizzleOpATI, void>)GLLoader.BindingsContext.GetProcAddress("glSampleMapATI");
                 _SampleMapATI_fnptr(dst, interp, swizzle);
             }
             
-            private static delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, void> _ColorFragmentOp1ATI_fnptr = &ColorFragmentOp1ATI_Lazy;
+            private static delegate* unmanaged<FragmentOp1ATI, FragmentShaderRegATI, FragmentShaderDestMaskATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void> _ColorFragmentOp1ATI_fnptr = &ColorFragmentOp1ATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorFragmentOp1ATI(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => _ColorFragmentOp1ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod);
+            public static void ColorFragmentOp1ATI(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => _ColorFragmentOp1ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod);
             [UnmanagedCallersOnly]
-            private static void ColorFragmentOp1ATI_Lazy(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod)
+            private static void ColorFragmentOp1ATI_Lazy(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod)
             {
-                _ColorFragmentOp1ATI_fnptr = (delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glColorFragmentOp1ATI");
+                _ColorFragmentOp1ATI_fnptr = (delegate* unmanaged<FragmentOp1ATI, FragmentShaderRegATI, FragmentShaderDestMaskATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void>)GLLoader.BindingsContext.GetProcAddress("glColorFragmentOp1ATI");
                 _ColorFragmentOp1ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod);
             }
             
-            private static delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, uint, void> _ColorFragmentOp2ATI_fnptr = &ColorFragmentOp2ATI_Lazy;
+            private static delegate* unmanaged<FragmentOp2ATI, FragmentShaderRegATI, FragmentShaderDestMaskATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void> _ColorFragmentOp2ATI_fnptr = &ColorFragmentOp2ATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorFragmentOp2ATI(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => _ColorFragmentOp2ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
+            public static void ColorFragmentOp2ATI(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => _ColorFragmentOp2ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
             [UnmanagedCallersOnly]
-            private static void ColorFragmentOp2ATI_Lazy(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod)
+            private static void ColorFragmentOp2ATI_Lazy(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod)
             {
-                _ColorFragmentOp2ATI_fnptr = (delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glColorFragmentOp2ATI");
+                _ColorFragmentOp2ATI_fnptr = (delegate* unmanaged<FragmentOp2ATI, FragmentShaderRegATI, FragmentShaderDestMaskATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void>)GLLoader.BindingsContext.GetProcAddress("glColorFragmentOp2ATI");
                 _ColorFragmentOp2ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
             }
             
-            private static delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, void> _ColorFragmentOp3ATI_fnptr = &ColorFragmentOp3ATI_Lazy;
+            private static delegate* unmanaged<FragmentOp3ATI, FragmentShaderRegATI, FragmentShaderDestMaskATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void> _ColorFragmentOp3ATI_fnptr = &ColorFragmentOp3ATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorFragmentOp3ATI(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => _ColorFragmentOp3ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
+            public static void ColorFragmentOp3ATI(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => _ColorFragmentOp3ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
             [UnmanagedCallersOnly]
-            private static void ColorFragmentOp3ATI_Lazy(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod)
+            private static void ColorFragmentOp3ATI_Lazy(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod)
             {
-                _ColorFragmentOp3ATI_fnptr = (delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glColorFragmentOp3ATI");
+                _ColorFragmentOp3ATI_fnptr = (delegate* unmanaged<FragmentOp3ATI, FragmentShaderRegATI, FragmentShaderDestMaskATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void>)GLLoader.BindingsContext.GetProcAddress("glColorFragmentOp3ATI");
                 _ColorFragmentOp3ATI_fnptr(op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
             }
             
-            private static delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, void> _AlphaFragmentOp1ATI_fnptr = &AlphaFragmentOp1ATI_Lazy;
+            private static delegate* unmanaged<FragmentOp1ATI, FragmentShaderRegATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void> _AlphaFragmentOp1ATI_fnptr = &AlphaFragmentOp1ATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void AlphaFragmentOp1ATI(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => _AlphaFragmentOp1ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod);
+            public static void AlphaFragmentOp1ATI(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => _AlphaFragmentOp1ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod);
             [UnmanagedCallersOnly]
-            private static void AlphaFragmentOp1ATI_Lazy(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod)
+            private static void AlphaFragmentOp1ATI_Lazy(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod)
             {
-                _AlphaFragmentOp1ATI_fnptr = (delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glAlphaFragmentOp1ATI");
+                _AlphaFragmentOp1ATI_fnptr = (delegate* unmanaged<FragmentOp1ATI, FragmentShaderRegATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void>)GLLoader.BindingsContext.GetProcAddress("glAlphaFragmentOp1ATI");
                 _AlphaFragmentOp1ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod);
             }
             
-            private static delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, void> _AlphaFragmentOp2ATI_fnptr = &AlphaFragmentOp2ATI_Lazy;
+            private static delegate* unmanaged<FragmentOp2ATI, FragmentShaderRegATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void> _AlphaFragmentOp2ATI_fnptr = &AlphaFragmentOp2ATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void AlphaFragmentOp2ATI(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => _AlphaFragmentOp2ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
+            public static void AlphaFragmentOp2ATI(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => _AlphaFragmentOp2ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
             [UnmanagedCallersOnly]
-            private static void AlphaFragmentOp2ATI_Lazy(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod)
+            private static void AlphaFragmentOp2ATI_Lazy(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod)
             {
-                _AlphaFragmentOp2ATI_fnptr = (delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glAlphaFragmentOp2ATI");
+                _AlphaFragmentOp2ATI_fnptr = (delegate* unmanaged<FragmentOp2ATI, FragmentShaderRegATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void>)GLLoader.BindingsContext.GetProcAddress("glAlphaFragmentOp2ATI");
                 _AlphaFragmentOp2ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
             }
             
-            private static delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, void> _AlphaFragmentOp3ATI_fnptr = &AlphaFragmentOp3ATI_Lazy;
+            private static delegate* unmanaged<FragmentOp3ATI, FragmentShaderRegATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void> _AlphaFragmentOp3ATI_fnptr = &AlphaFragmentOp3ATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void AlphaFragmentOp3ATI(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => _AlphaFragmentOp3ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
+            public static void AlphaFragmentOp3ATI(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => _AlphaFragmentOp3ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
             [UnmanagedCallersOnly]
-            private static void AlphaFragmentOp3ATI_Lazy(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod)
+            private static void AlphaFragmentOp3ATI_Lazy(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod)
             {
-                _AlphaFragmentOp3ATI_fnptr = (delegate* unmanaged<FragmentOpATI, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glAlphaFragmentOp3ATI");
+                _AlphaFragmentOp3ATI_fnptr = (delegate* unmanaged<FragmentOp3ATI, FragmentShaderRegATI, FragmentShaderDestModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, FragmentShaderGenericSourceATI, FragmentShaderValueRepATI, FragmentShaderColorModMaskATI, void>)GLLoader.BindingsContext.GetProcAddress("glAlphaFragmentOp3ATI");
                 _AlphaFragmentOp3ATI_fnptr(op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
             }
             
-            private static delegate* unmanaged<uint, float*, void> _SetFragmentShaderConstantATI_fnptr = &SetFragmentShaderConstantATI_Lazy;
+            private static delegate* unmanaged<FragmentShaderConATI, float*, void> _SetFragmentShaderConstantATI_fnptr = &SetFragmentShaderConstantATI_Lazy;
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void SetFragmentShaderConstantATI(uint dst, float* value) => _SetFragmentShaderConstantATI_fnptr(dst, value);
+            public static void SetFragmentShaderConstantATI(FragmentShaderConATI dst, float* value) => _SetFragmentShaderConstantATI_fnptr(dst, value);
             [UnmanagedCallersOnly]
-            private static void SetFragmentShaderConstantATI_Lazy(uint dst, float* value)
+            private static void SetFragmentShaderConstantATI_Lazy(FragmentShaderConATI dst, float* value)
             {
-                _SetFragmentShaderConstantATI_fnptr = (delegate* unmanaged<uint, float*, void>)GLLoader.BindingsContext.GetProcAddress("glSetFragmentShaderConstantATI");
+                _SetFragmentShaderConstantATI_fnptr = (delegate* unmanaged<FragmentShaderConATI, float*, void>)GLLoader.BindingsContext.GetProcAddress("glSetFragmentShaderConstantATI");
                 _SetFragmentShaderConstantATI_fnptr(dst, value);
             }
             
@@ -21064,25 +21064,25 @@ namespace OpenTK.Graphics.OpenGL
                 _TextureParameterivEXT_fnptr(texture, target, pname, parameters);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*, void> _TextureImage1DEXT_fnptr = &TextureImage1DEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*, void> _TextureImage1DEXT_fnptr = &TextureImage1DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureImage1DEXT(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => _TextureImage1DEXT_fnptr(texture, target, level, internalformat, width, border, format, type, pixels);
+            public static void TextureImage1DEXT(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => _TextureImage1DEXT_fnptr(texture, target, level, internalformat, width, border, format, type, pixels);
             [UnmanagedCallersOnly]
-            private static void TextureImage1DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels)
+            private static void TextureImage1DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels)
             {
-                _TextureImage1DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage1DEXT");
+                _TextureImage1DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage1DEXT");
                 _TextureImage1DEXT_fnptr(texture, target, level, internalformat, width, border, format, type, pixels);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TextureImage2DEXT_fnptr = &TextureImage2DEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void> _TextureImage2DEXT_fnptr = &TextureImage2DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureImage2DEXT(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _TextureImage2DEXT_fnptr(texture, target, level, internalformat, width, height, border, format, type, pixels);
+            public static void TextureImage2DEXT(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _TextureImage2DEXT_fnptr(texture, target, level, internalformat, width, height, border, format, type, pixels);
             [UnmanagedCallersOnly]
-            private static void TextureImage2DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
+            private static void TextureImage2DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
             {
-                _TextureImage2DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage2DEXT");
+                _TextureImage2DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage2DEXT");
                 _TextureImage2DEXT_fnptr(texture, target, level, internalformat, width, height, border, format, type, pixels);
             }
             
@@ -21207,14 +21207,14 @@ namespace OpenTK.Graphics.OpenGL
                 _GetTextureLevelParameterivEXT_fnptr(texture, target, level, pname, parameters);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void> _TextureImage3DEXT_fnptr = &TextureImage3DEXT_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void> _TextureImage3DEXT_fnptr = &TextureImage3DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureImage3DEXT(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _TextureImage3DEXT_fnptr(texture, target, level, internalformat, width, height, depth, border, format, type, pixels);
+            public static void TextureImage3DEXT(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _TextureImage3DEXT_fnptr(texture, target, level, internalformat, width, height, depth, border, format, type, pixels);
             [UnmanagedCallersOnly]
-            private static void TextureImage3DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
+            private static void TextureImage3DEXT_Lazy(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
             {
-                _TextureImage3DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage3DEXT");
+                _TextureImage3DEXT_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage3DEXT");
                 _TextureImage3DEXT_fnptr(texture, target, level, internalformat, width, height, depth, border, format, type, pixels);
             }
             
@@ -21471,25 +21471,25 @@ namespace OpenTK.Graphics.OpenGL
                 _MultiTexParameterfvEXT_fnptr(texunit, target, pname, parameters);
             }
             
-            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*, void> _MultiTexImage1DEXT_fnptr = &MultiTexImage1DEXT_Lazy;
+            private static delegate* unmanaged<TextureUnit, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*, void> _MultiTexImage1DEXT_fnptr = &MultiTexImage1DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => _MultiTexImage1DEXT_fnptr(texunit, target, level, internalformat, width, border, format, type, pixels);
+            public static void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => _MultiTexImage1DEXT_fnptr(texunit, target, level, internalformat, width, border, format, type, pixels);
             [UnmanagedCallersOnly]
-            private static void MultiTexImage1DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels)
+            private static void MultiTexImage1DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels)
             {
-                _MultiTexImage1DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexImage1DEXT");
+                _MultiTexImage1DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexImage1DEXT");
                 _MultiTexImage1DEXT_fnptr(texunit, target, level, internalformat, width, border, format, type, pixels);
             }
             
-            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void> _MultiTexImage2DEXT_fnptr = &MultiTexImage2DEXT_Lazy;
+            private static delegate* unmanaged<TextureUnit, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void> _MultiTexImage2DEXT_fnptr = &MultiTexImage2DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _MultiTexImage2DEXT_fnptr(texunit, target, level, internalformat, width, height, border, format, type, pixels);
+            public static void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => _MultiTexImage2DEXT_fnptr(texunit, target, level, internalformat, width, height, border, format, type, pixels);
             [UnmanagedCallersOnly]
-            private static void MultiTexImage2DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
+            private static void MultiTexImage2DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels)
             {
-                _MultiTexImage2DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexImage2DEXT");
+                _MultiTexImage2DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexImage2DEXT");
                 _MultiTexImage2DEXT_fnptr(texunit, target, level, internalformat, width, height, border, format, type, pixels);
             }
             
@@ -21614,14 +21614,14 @@ namespace OpenTK.Graphics.OpenGL
                 _GetMultiTexLevelParameterivEXT_fnptr(texunit, target, level, pname, parameters);
             }
             
-            private static delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void> _MultiTexImage3DEXT_fnptr = &MultiTexImage3DEXT_Lazy;
+            private static delegate* unmanaged<TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void> _MultiTexImage3DEXT_fnptr = &MultiTexImage3DEXT_Lazy;
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _MultiTexImage3DEXT_fnptr(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels);
+            public static void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => _MultiTexImage3DEXT_fnptr(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels);
             [UnmanagedCallersOnly]
-            private static void MultiTexImage3DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
+            private static void MultiTexImage3DEXT_Lazy(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels)
             {
-                _MultiTexImage3DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexImage3DEXT");
+                _MultiTexImage3DEXT_fnptr = (delegate* unmanaged<TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexImage3DEXT");
                 _MultiTexImage3DEXT_fnptr(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels);
             }
             
@@ -30538,69 +30538,69 @@ namespace OpenTK.Graphics.OpenGL
                 _TextureBarrierNV_fnptr();
             }
             
-            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, byte, void> _TexImage2DMultisampleCoverageNV_fnptr = &TexImage2DMultisampleCoverageNV_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, int, InternalFormat, int, int, byte, void> _TexImage2DMultisampleCoverageNV_fnptr = &TexImage2DMultisampleCoverageNV_Lazy;
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, byte fixedSampleLocations) => _TexImage2DMultisampleCoverageNV_fnptr(target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations);
+            public static void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, byte fixedSampleLocations) => _TexImage2DMultisampleCoverageNV_fnptr(target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations);
             [UnmanagedCallersOnly]
-            private static void TexImage2DMultisampleCoverageNV_Lazy(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, byte fixedSampleLocations)
+            private static void TexImage2DMultisampleCoverageNV_Lazy(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, byte fixedSampleLocations)
             {
-                _TexImage2DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage2DMultisampleCoverageNV");
+                _TexImage2DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureTarget, int, int, InternalFormat, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage2DMultisampleCoverageNV");
                 _TexImage2DMultisampleCoverageNV_fnptr(target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations);
             }
             
-            private static delegate* unmanaged<TextureTarget, int, int, int, int, int, int, byte, void> _TexImage3DMultisampleCoverageNV_fnptr = &TexImage3DMultisampleCoverageNV_Lazy;
+            private static delegate* unmanaged<TextureTarget, int, int, InternalFormat, int, int, int, byte, void> _TexImage3DMultisampleCoverageNV_fnptr = &TexImage3DMultisampleCoverageNV_Lazy;
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations) => _TexImage3DMultisampleCoverageNV_fnptr(target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations);
+            public static void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations) => _TexImage3DMultisampleCoverageNV_fnptr(target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations);
             [UnmanagedCallersOnly]
-            private static void TexImage3DMultisampleCoverageNV_Lazy(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations)
+            private static void TexImage3DMultisampleCoverageNV_Lazy(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations)
             {
-                _TexImage3DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureTarget, int, int, int, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage3DMultisampleCoverageNV");
+                _TexImage3DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureTarget, int, int, InternalFormat, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTexImage3DMultisampleCoverageNV");
                 _TexImage3DMultisampleCoverageNV_fnptr(target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, byte, void> _TextureImage2DMultisampleNV_fnptr = &TextureImage2DMultisampleNV_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, byte, void> _TextureImage2DMultisampleNV_fnptr = &TextureImage2DMultisampleNV_Lazy;
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureImage2DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, byte fixedSampleLocations) => _TextureImage2DMultisampleNV_fnptr(texture, target, samples, internalFormat, width, height, fixedSampleLocations);
+            public static void TextureImage2DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, byte fixedSampleLocations) => _TextureImage2DMultisampleNV_fnptr(texture, target, samples, internalFormat, width, height, fixedSampleLocations);
             [UnmanagedCallersOnly]
-            private static void TextureImage2DMultisampleNV_Lazy(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, byte fixedSampleLocations)
+            private static void TextureImage2DMultisampleNV_Lazy(TextureHandle texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, byte fixedSampleLocations)
             {
-                _TextureImage2DMultisampleNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage2DMultisampleNV");
+                _TextureImage2DMultisampleNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage2DMultisampleNV");
                 _TextureImage2DMultisampleNV_fnptr(texture, target, samples, internalFormat, width, height, fixedSampleLocations);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, byte, void> _TextureImage3DMultisampleNV_fnptr = &TextureImage3DMultisampleNV_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, int, byte, void> _TextureImage3DMultisampleNV_fnptr = &TextureImage3DMultisampleNV_Lazy;
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureImage3DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations) => _TextureImage3DMultisampleNV_fnptr(texture, target, samples, internalFormat, width, height, depth, fixedSampleLocations);
+            public static void TextureImage3DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations) => _TextureImage3DMultisampleNV_fnptr(texture, target, samples, internalFormat, width, height, depth, fixedSampleLocations);
             [UnmanagedCallersOnly]
-            private static void TextureImage3DMultisampleNV_Lazy(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations)
+            private static void TextureImage3DMultisampleNV_Lazy(TextureHandle texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations)
             {
-                _TextureImage3DMultisampleNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage3DMultisampleNV");
+                _TextureImage3DMultisampleNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, InternalFormat, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage3DMultisampleNV");
                 _TextureImage3DMultisampleNV_fnptr(texture, target, samples, internalFormat, width, height, depth, fixedSampleLocations);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, byte, void> _TextureImage2DMultisampleCoverageNV_fnptr = &TextureImage2DMultisampleCoverageNV_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, InternalFormat, int, int, byte, void> _TextureImage2DMultisampleCoverageNV_fnptr = &TextureImage2DMultisampleCoverageNV_Lazy;
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureImage2DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, byte fixedSampleLocations) => _TextureImage2DMultisampleCoverageNV_fnptr(texture, target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations);
+            public static void TextureImage2DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, byte fixedSampleLocations) => _TextureImage2DMultisampleCoverageNV_fnptr(texture, target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations);
             [UnmanagedCallersOnly]
-            private static void TextureImage2DMultisampleCoverageNV_Lazy(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, byte fixedSampleLocations)
+            private static void TextureImage2DMultisampleCoverageNV_Lazy(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, byte fixedSampleLocations)
             {
-                _TextureImage2DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage2DMultisampleCoverageNV");
+                _TextureImage2DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, InternalFormat, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage2DMultisampleCoverageNV");
                 _TextureImage2DMultisampleCoverageNV_fnptr(texture, target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations);
             }
             
-            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, byte, void> _TextureImage3DMultisampleCoverageNV_fnptr = &TextureImage3DMultisampleCoverageNV_Lazy;
+            private static delegate* unmanaged<TextureHandle, TextureTarget, int, int, InternalFormat, int, int, int, byte, void> _TextureImage3DMultisampleCoverageNV_fnptr = &TextureImage3DMultisampleCoverageNV_Lazy;
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureImage3DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations) => _TextureImage3DMultisampleCoverageNV_fnptr(texture, target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations);
+            public static void TextureImage3DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations) => _TextureImage3DMultisampleCoverageNV_fnptr(texture, target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations);
             [UnmanagedCallersOnly]
-            private static void TextureImage3DMultisampleCoverageNV_Lazy(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations)
+            private static void TextureImage3DMultisampleCoverageNV_Lazy(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, byte fixedSampleLocations)
             {
-                _TextureImage3DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, int, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage3DMultisampleCoverageNV");
+                _TextureImage3DMultisampleCoverageNV_fnptr = (delegate* unmanaged<TextureHandle, TextureTarget, int, int, InternalFormat, int, int, int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glTextureImage3DMultisampleCoverageNV");
                 _TextureImage3DMultisampleCoverageNV_fnptr(texture, target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations);
             }
             

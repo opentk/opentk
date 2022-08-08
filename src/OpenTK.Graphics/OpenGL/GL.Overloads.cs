@@ -58,13 +58,13 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage1D"/>
-        public static unsafe void TexImage1D(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        public static unsafe void TexImage1D(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage1D(target, level, internalformat, width, border, format, type, pixels_vptr);
         }
         /// <inheritdoc cref="TexImage1D"/>
-        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -73,7 +73,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage1D"/>
-        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
+        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -82,7 +82,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage1D"/>
-        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -91,13 +91,13 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        public static unsafe void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -106,7 +106,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -115,7 +115,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -579,13 +579,13 @@ namespace OpenTK.Graphics.OpenGL
             DrawRangeElements(mode, start, end, count, type, indices);
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        public static unsafe void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -594,7 +594,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -603,7 +603,7 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="TexImage3D"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -10351,12 +10351,12 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetDebugMessageLogAMD"/>
-            public static unsafe uint GetDebugMessageLogAMD(uint count, int bufSize, Span<All> categories, Span<uint> severities, Span<uint> ids, Span<int> lengths, out string message)
+            public static unsafe uint GetDebugMessageLogAMD(uint count, int bufSize, Span<All> categories, Span<DebugSeverity> severities, Span<uint> ids, Span<int> lengths, out string message)
             {
                 uint returnValue;
                 fixed (All* categories_ptr = categories)
                 {
-                    fixed (uint* severities_ptr = severities)
+                    fixed (DebugSeverity* severities_ptr = severities)
                     {
                         fixed (uint* ids_ptr = ids)
                         {
@@ -10373,12 +10373,12 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="GetDebugMessageLogAMD"/>
-            public static unsafe uint GetDebugMessageLogAMD(uint count, int bufSize, All[] categories, uint[] severities, uint[] ids, int[] lengths, out string message)
+            public static unsafe uint GetDebugMessageLogAMD(uint count, int bufSize, All[] categories, DebugSeverity[] severities, uint[] ids, int[] lengths, out string message)
             {
                 uint returnValue;
                 fixed (All* categories_ptr = categories)
                 {
-                    fixed (uint* severities_ptr = severities)
+                    fixed (DebugSeverity* severities_ptr = severities)
                     {
                         fixed (uint* ids_ptr = ids)
                         {
@@ -10395,11 +10395,11 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="GetDebugMessageLogAMD"/>
-            public static unsafe uint GetDebugMessageLogAMD(uint count, int bufSize, ref All categories, ref uint severities, ref uint ids, ref int lengths, out string message)
+            public static unsafe uint GetDebugMessageLogAMD(uint count, int bufSize, ref All categories, ref DebugSeverity severities, ref uint ids, ref int lengths, out string message)
             {
                 uint returnValue;
                 fixed (All* categories_ptr = &categories)
-                fixed (uint* severities_ptr = &severities)
+                fixed (DebugSeverity* severities_ptr = &severities)
                 fixed (uint* ids_ptr = &ids)
                 fixed (int* lengths_ptr = &lengths)
                 {
@@ -22269,7 +22269,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="SetFragmentShaderConstantATI"/>
-            public static unsafe void SetFragmentShaderConstantATI(uint dst, ReadOnlySpan<float> value)
+            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, ReadOnlySpan<float> value)
             {
                 fixed (float* value_ptr = value)
                 {
@@ -22277,7 +22277,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="SetFragmentShaderConstantATI"/>
-            public static unsafe void SetFragmentShaderConstantATI(uint dst, float[] value)
+            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, float[] value)
             {
                 fixed (float* value_ptr = value)
                 {
@@ -22285,7 +22285,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="SetFragmentShaderConstantATI"/>
-            public static unsafe void SetFragmentShaderConstantATI(uint dst, in float value)
+            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, in float value)
             {
                 fixed (float* value_ptr = &value)
                 {
@@ -24032,13 +24032,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage1DEXT"/>
-            public static unsafe void TextureImage1DEXT(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            public static unsafe void TextureImage1DEXT(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 TextureImage1DEXT(texture, target, level, internalformat, width, border, format, type, pixels_vptr);
             }
             /// <inheritdoc cref="TextureImage1DEXT"/>
-            public static unsafe void TextureImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            public static unsafe void TextureImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24047,7 +24047,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage1DEXT"/>
-            public static unsafe void TextureImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
+            public static unsafe void TextureImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24056,7 +24056,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage1DEXT"/>
-            public static unsafe void TextureImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureImage1DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -24065,13 +24065,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage2DEXT"/>
-            public static unsafe void TextureImage2DEXT(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            public static unsafe void TextureImage2DEXT(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 TextureImage2DEXT(texture, target, level, internalformat, width, height, border, format, type, pixels_vptr);
             }
             /// <inheritdoc cref="TextureImage2DEXT"/>
-            public static unsafe void TextureImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            public static unsafe void TextureImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24080,7 +24080,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage2DEXT"/>
-            public static unsafe void TextureImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+            public static unsafe void TextureImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24089,7 +24089,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage2DEXT"/>
-            public static unsafe void TextureImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureImage2DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -24293,13 +24293,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage3DEXT"/>
-            public static unsafe void TextureImage3DEXT(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            public static unsafe void TextureImage3DEXT(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 TextureImage3DEXT(texture, target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
             }
             /// <inheritdoc cref="TextureImage3DEXT"/>
-            public static unsafe void TextureImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            public static unsafe void TextureImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24308,7 +24308,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage3DEXT"/>
-            public static unsafe void TextureImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+            public static unsafe void TextureImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24317,7 +24317,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TextureImage3DEXT"/>
-            public static unsafe void TextureImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void TextureImage3DEXT<T1>(TextureHandle texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -24680,13 +24680,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage1DEXT"/>
-            public static unsafe void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            public static unsafe void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 MultiTexImage1DEXT(texunit, target, level, internalformat, width, border, format, type, pixels_vptr);
             }
             /// <inheritdoc cref="MultiTexImage1DEXT"/>
-            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24695,7 +24695,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage1DEXT"/>
-            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
+            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24704,7 +24704,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage1DEXT"/>
-            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -24713,13 +24713,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage2DEXT"/>
-            public static unsafe void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            public static unsafe void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 MultiTexImage2DEXT(texunit, target, level, internalformat, width, height, border, format, type, pixels_vptr);
             }
             /// <inheritdoc cref="MultiTexImage2DEXT"/>
-            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24728,7 +24728,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage2DEXT"/>
-            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24737,7 +24737,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage2DEXT"/>
-            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -24941,13 +24941,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage3DEXT"/>
-            public static unsafe void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            public static unsafe void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 MultiTexImage3DEXT(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
             }
             /// <inheritdoc cref="MultiTexImage3DEXT"/>
-            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24956,7 +24956,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage3DEXT"/>
-            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -24965,7 +24965,7 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="MultiTexImage3DEXT"/>
-            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -35867,37 +35867,37 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="TexImage2DMultisampleCoverageNV"/>
-            public static unsafe void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, bool fixedSampleLocations)
+            public static unsafe void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations)
             {
                 byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
                 TexImage2DMultisampleCoverageNV(target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations_byte);
             }
             /// <inheritdoc cref="TexImage3DMultisampleCoverageNV"/>
-            public static unsafe void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations)
+            public static unsafe void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations)
             {
                 byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
                 TexImage3DMultisampleCoverageNV(target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations_byte);
             }
             /// <inheritdoc cref="TextureImage2DMultisampleNV"/>
-            public static unsafe void TextureImage2DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, bool fixedSampleLocations)
+            public static unsafe void TextureImage2DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations)
             {
                 byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
                 TextureImage2DMultisampleNV(texture, target, samples, internalFormat, width, height, fixedSampleLocations_byte);
             }
             /// <inheritdoc cref="TextureImage3DMultisampleNV"/>
-            public static unsafe void TextureImage3DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations)
+            public static unsafe void TextureImage3DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations)
             {
                 byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
                 TextureImage3DMultisampleNV(texture, target, samples, internalFormat, width, height, depth, fixedSampleLocations_byte);
             }
             /// <inheritdoc cref="TextureImage2DMultisampleCoverageNV"/>
-            public static unsafe void TextureImage2DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, bool fixedSampleLocations)
+            public static unsafe void TextureImage2DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations)
             {
                 byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
                 TextureImage2DMultisampleCoverageNV(texture, target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations_byte);
             }
             /// <inheritdoc cref="TextureImage3DMultisampleCoverageNV"/>
-            public static unsafe void TextureImage3DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations)
+            public static unsafe void TextureImage3DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations)
             {
                 byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
                 TextureImage3DMultisampleCoverageNV(texture, target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations_byte);
