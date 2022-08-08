@@ -492,6 +492,15 @@ namespace Generator.Process
                     return new CSStruct(handle.Value.ToString(), bt.Constant, new CSPrimitive("int", bt.Constant));
 
                 case GLBaseType bt when handle == null:
+                    // For now we only expect int and uint to be able to be turned into enums.
+                    // - 2022-08-09
+                    // FIXME: We might want to make sure that the underlying type for the enum group is the same as the parameter group.
+                    //   Right now we blindly substituting the type for the enum.
+                    if (group != null && (bt.Type == PrimitiveType.Int || bt.Type == PrimitiveType.Uint))
+                    {
+                        Console.WriteLine($"Making {bt} into group {group}");
+                        return new CSPrimitive(group, bt.Constant);
+                    }
                     return bt.Type switch
                     {
                         // C# primitive types
