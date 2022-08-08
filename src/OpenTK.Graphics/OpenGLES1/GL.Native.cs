@@ -696,18 +696,18 @@ namespace OpenTK.Graphics.OpenGLES1
             _Color4x_fnptr(red, green, blue, alpha);
         }
         
-        private static delegate* unmanaged<byte, byte, byte, byte, void> _ColorMask_fnptr = &ColorMask_Lazy;
+        private static delegate* unmanaged<bool, bool, bool, bool, void> _ColorMask_fnptr = &ColorMask_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Enable and disable writing of color buffer        components. </summary>
         /// <param name="red">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
         /// <param name="green">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
         /// <param name="blue">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
         /// <param name="alpha">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glColorMask.xml" /></remarks>
-        public static void ColorMask(byte red, byte green, byte blue, byte alpha) => _ColorMask_fnptr(red, green, blue, alpha);
+        public static void ColorMask(bool red, bool green, bool blue, bool alpha) => _ColorMask_fnptr(red, green, blue, alpha);
         [UnmanagedCallersOnly]
-        private static void ColorMask_Lazy(byte red, byte green, byte blue, byte alpha)
+        private static void ColorMask_Lazy(bool red, bool green, bool blue, bool alpha)
         {
-            _ColorMask_fnptr = (delegate* unmanaged<byte, byte, byte, byte, void>)GLLoader.BindingsContext.GetProcAddress("glColorMask");
+            _ColorMask_fnptr = (delegate* unmanaged<bool, bool, bool, bool, void>)GLLoader.BindingsContext.GetProcAddress("glColorMask");
             _ColorMask_fnptr(red, green, blue, alpha);
         }
         
@@ -853,15 +853,15 @@ namespace OpenTK.Graphics.OpenGLES1
             _DepthFunc_fnptr(func);
         }
         
-        private static delegate* unmanaged<byte, void> _DepthMask_fnptr = &DepthMask_Lazy;
+        private static delegate* unmanaged<bool, void> _DepthMask_fnptr = &DepthMask_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Enable or disable writing into the depth buffer. </summary>
         /// <param name="flag">Specifies whether the depth buffer is enabled for writing. If flag is GL_FALSE, depth buffer writing is disabled, otherwise it is enabled. The initial value is GL_TRUE.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDepthMask.xml" /></remarks>
-        public static void DepthMask(byte flag) => _DepthMask_fnptr(flag);
+        public static void DepthMask(bool flag) => _DepthMask_fnptr(flag);
         [UnmanagedCallersOnly]
-        private static void DepthMask_Lazy(byte flag)
+        private static void DepthMask_Lazy(bool flag)
         {
-            _DepthMask_fnptr = (delegate* unmanaged<byte, void>)GLLoader.BindingsContext.GetProcAddress("glDepthMask");
+            _DepthMask_fnptr = (delegate* unmanaged<bool, void>)GLLoader.BindingsContext.GetProcAddress("glDepthMask");
             _DepthMask_fnptr(flag);
         }
         
@@ -1028,16 +1028,16 @@ namespace OpenTK.Graphics.OpenGLES1
             _Frustumx_fnptr(l, r, b, t, n, f);
         }
         
-        private static delegate* unmanaged<GetPName, byte*, void> _GetBooleanv_fnptr = &GetBooleanv_Lazy;
+        private static delegate* unmanaged<GetPName, bool*, void> _GetBooleanv_fnptr = &GetBooleanv_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Return the value or values of a selected parameter. </summary>
         /// <param name="pname">Specifies the parameter value to be returned. The symbolic constants in the list below are accepted.</param>
         /// <param name="parameters">Returns the value or values of the specified parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGet.xml" /></remarks>
-        public static void GetBooleanv(GetPName pname, byte* data) => _GetBooleanv_fnptr(pname, data);
+        public static void GetBooleanv(GetPName pname, bool* data) => _GetBooleanv_fnptr(pname, data);
         [UnmanagedCallersOnly]
-        private static void GetBooleanv_Lazy(GetPName pname, byte* data)
+        private static void GetBooleanv_Lazy(GetPName pname, bool* data)
         {
-            _GetBooleanv_fnptr = (delegate* unmanaged<GetPName, byte*, void>)GLLoader.BindingsContext.GetProcAddress("glGetBooleanv");
+            _GetBooleanv_fnptr = (delegate* unmanaged<GetPName, bool*, void>)GLLoader.BindingsContext.GetProcAddress("glGetBooleanv");
             _GetBooleanv_fnptr(pname, data);
         }
         
@@ -1253,39 +1253,39 @@ namespace OpenTK.Graphics.OpenGLES1
             _Hint_fnptr(target, mode);
         }
         
-        private static delegate* unmanaged<BufferHandle, byte> _IsBuffer_fnptr = &IsBuffer_Lazy;
+        private static delegate* unmanaged<BufferHandle, bool> _IsBuffer_fnptr = &IsBuffer_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Determine if a name corresponds to a buffer object. </summary>
         /// <param name="buffer"> Specifies a value that may be the name of a buffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsBuffer.xml" /></remarks>
-        public static byte IsBuffer(BufferHandle buffer) => _IsBuffer_fnptr(buffer);
+        public static bool IsBuffer(BufferHandle buffer) => _IsBuffer_fnptr(buffer);
         [UnmanagedCallersOnly]
-        private static byte IsBuffer_Lazy(BufferHandle buffer)
+        private static bool IsBuffer_Lazy(BufferHandle buffer)
         {
-            _IsBuffer_fnptr = (delegate* unmanaged<BufferHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsBuffer");
+            _IsBuffer_fnptr = (delegate* unmanaged<BufferHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsBuffer");
             return _IsBuffer_fnptr(buffer);
         }
         
-        private static delegate* unmanaged<EnableCap, byte> _IsEnabled_fnptr = &IsEnabled_Lazy;
+        private static delegate* unmanaged<EnableCap, bool> _IsEnabled_fnptr = &IsEnabled_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsEnabled.xml" /></remarks>
-        public static byte IsEnabled(EnableCap cap) => _IsEnabled_fnptr(cap);
+        public static bool IsEnabled(EnableCap cap) => _IsEnabled_fnptr(cap);
         [UnmanagedCallersOnly]
-        private static byte IsEnabled_Lazy(EnableCap cap)
+        private static bool IsEnabled_Lazy(EnableCap cap)
         {
-            _IsEnabled_fnptr = (delegate* unmanaged<EnableCap, byte>)GLLoader.BindingsContext.GetProcAddress("glIsEnabled");
+            _IsEnabled_fnptr = (delegate* unmanaged<EnableCap, bool>)GLLoader.BindingsContext.GetProcAddress("glIsEnabled");
             return _IsEnabled_fnptr(cap);
         }
         
-        private static delegate* unmanaged<TextureHandle, byte> _IsTexture_fnptr = &IsTexture_Lazy;
+        private static delegate* unmanaged<TextureHandle, bool> _IsTexture_fnptr = &IsTexture_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Determine if a name corresponds to a texture. </summary>
         /// <param name="texture"> Specifies a value that may be the name of a texture. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsTexture.xml" /></remarks>
-        public static byte IsTexture(TextureHandle texture) => _IsTexture_fnptr(texture);
+        public static bool IsTexture(TextureHandle texture) => _IsTexture_fnptr(texture);
         [UnmanagedCallersOnly]
-        private static byte IsTexture_Lazy(TextureHandle texture)
+        private static bool IsTexture_Lazy(TextureHandle texture)
         {
-            _IsTexture_fnptr = (delegate* unmanaged<TextureHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsTexture");
+            _IsTexture_fnptr = (delegate* unmanaged<TextureHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsTexture");
             return _IsTexture_fnptr(texture);
         }
         
@@ -1604,29 +1604,29 @@ namespace OpenTK.Graphics.OpenGLES1
             _Rotatex_fnptr(angle, x, y, z);
         }
         
-        private static delegate* unmanaged<float, byte, void> _SampleCoverage_fnptr = &SampleCoverage_Lazy;
+        private static delegate* unmanaged<float, bool, void> _SampleCoverage_fnptr = &SampleCoverage_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Specify mask to modify multisampled pixel fragments. </summary>
         /// <param name="value">Specifies the coverage of the modification mask. The value is clamped to the range [0, 1], where 0 represents no coverage and 1 full coverage. The initial value is 1.</param>
         /// <param name="invert">Specifies whether the modification mask implied by value is inverted or not. The initial value is GL_FALSE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glSampleCoverage.xml" /></remarks>
-        public static void SampleCoverage(float value, byte invert) => _SampleCoverage_fnptr(value, invert);
+        public static void SampleCoverage(float value, bool invert) => _SampleCoverage_fnptr(value, invert);
         [UnmanagedCallersOnly]
-        private static void SampleCoverage_Lazy(float value, byte invert)
+        private static void SampleCoverage_Lazy(float value, bool invert)
         {
-            _SampleCoverage_fnptr = (delegate* unmanaged<float, byte, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoverage");
+            _SampleCoverage_fnptr = (delegate* unmanaged<float, bool, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoverage");
             _SampleCoverage_fnptr(value, invert);
         }
         
-        private static delegate* unmanaged<int, byte, void> _SampleCoveragex_fnptr = &SampleCoveragex_Lazy;
+        private static delegate* unmanaged<int, bool, void> _SampleCoveragex_fnptr = &SampleCoveragex_Lazy;
         /// <summary> <b>[requires: v1.0]</b> Specify mask to modify multisampled pixel fragments. </summary>
         /// <param name="value">Specifies the coverage of the modification mask. The value is clamped to the range [0, 1], where 0 represents no coverage and 1 full coverage. The initial value is 1.</param>
         /// <param name="invert">Specifies whether the modification mask implied by value is inverted or not. The initial value is GL_FALSE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glSampleCoverage.xml" /></remarks>
-        public static void SampleCoveragex(int value, byte invert) => _SampleCoveragex_fnptr(value, invert);
+        public static void SampleCoveragex(int value, bool invert) => _SampleCoveragex_fnptr(value, invert);
         [UnmanagedCallersOnly]
-        private static void SampleCoveragex_Lazy(int value, byte invert)
+        private static void SampleCoveragex_Lazy(int value, bool invert)
         {
-            _SampleCoveragex_fnptr = (delegate* unmanaged<int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoveragex");
+            _SampleCoveragex_fnptr = (delegate* unmanaged<int, bool, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoveragex");
             _SampleCoveragex_fnptr(value, invert);
         }
         
@@ -1948,14 +1948,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 return _FenceSyncAPPLE_fnptr(condition, flags);
             }
             
-            private static delegate* unmanaged<GLSync, byte> _IsSyncAPPLE_fnptr = &IsSyncAPPLE_Lazy;
+            private static delegate* unmanaged<GLSync, bool> _IsSyncAPPLE_fnptr = &IsSyncAPPLE_Lazy;
             /// <summary> <b>[requires: GL_APPLE_sync]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsSyncAPPLE(GLSync sync) => _IsSyncAPPLE_fnptr(sync);
+            public static bool IsSyncAPPLE(GLSync sync) => _IsSyncAPPLE_fnptr(sync);
             [UnmanagedCallersOnly]
-            private static byte IsSyncAPPLE_Lazy(GLSync sync)
+            private static bool IsSyncAPPLE_Lazy(GLSync sync)
             {
-                _IsSyncAPPLE_fnptr = (delegate* unmanaged<GLSync, byte>)GLLoader.BindingsContext.GetProcAddress("glIsSyncAPPLE");
+                _IsSyncAPPLE_fnptr = (delegate* unmanaged<GLSync, bool>)GLLoader.BindingsContext.GetProcAddress("glIsSyncAPPLE");
                 return _IsSyncAPPLE_fnptr(sync);
             }
             
@@ -2298,14 +2298,14 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class KHR
         {
-            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
+            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void> _DebugMessageControl_fnptr = &DebugMessageControl_Lazy;
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
+            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
             [UnmanagedCallersOnly]
-            private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled)
+            private static void DebugMessageControl_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled)
             {
-                _DebugMessageControl_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControl");
+                _DebugMessageControl_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControl");
                 _DebugMessageControl_fnptr(source, type, severity, count, ids, enabled);
             }
             
@@ -2421,14 +2421,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 _GetPointerv_fnptr(pname, parameters);
             }
             
-            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void> _DebugMessageControlKHR_fnptr = &DebugMessageControlKHR_Lazy;
+            private static delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void> _DebugMessageControlKHR_fnptr = &DebugMessageControlKHR_Lazy;
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled) => _DebugMessageControlKHR_fnptr(source, type, severity, count, ids, enabled);
+            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => _DebugMessageControlKHR_fnptr(source, type, severity, count, ids, enabled);
             [UnmanagedCallersOnly]
-            private static void DebugMessageControlKHR_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, byte enabled)
+            private static void DebugMessageControlKHR_Lazy(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled)
             {
-                _DebugMessageControlKHR_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, byte, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControlKHR");
+                _DebugMessageControlKHR_fnptr = (delegate* unmanaged<DebugSource, DebugType, DebugSeverity, int, uint*, bool, void>)GLLoader.BindingsContext.GetProcAddress("glDebugMessageControlKHR");
                 _DebugMessageControlKHR_fnptr(source, type, severity, count, ids, enabled);
             }
             
@@ -2567,25 +2567,25 @@ namespace OpenTK.Graphics.OpenGLES1
                 _GenFencesNV_fnptr(n, fences);
             }
             
-            private static delegate* unmanaged<uint, byte> _IsFenceNV_fnptr = &IsFenceNV_Lazy;
+            private static delegate* unmanaged<uint, bool> _IsFenceNV_fnptr = &IsFenceNV_Lazy;
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsFenceNV(uint fence) => _IsFenceNV_fnptr(fence);
+            public static bool IsFenceNV(uint fence) => _IsFenceNV_fnptr(fence);
             [UnmanagedCallersOnly]
-            private static byte IsFenceNV_Lazy(uint fence)
+            private static bool IsFenceNV_Lazy(uint fence)
             {
-                _IsFenceNV_fnptr = (delegate* unmanaged<uint, byte>)GLLoader.BindingsContext.GetProcAddress("glIsFenceNV");
+                _IsFenceNV_fnptr = (delegate* unmanaged<uint, bool>)GLLoader.BindingsContext.GetProcAddress("glIsFenceNV");
                 return _IsFenceNV_fnptr(fence);
             }
             
-            private static delegate* unmanaged<uint, byte> _TestFenceNV_fnptr = &TestFenceNV_Lazy;
+            private static delegate* unmanaged<uint, bool> _TestFenceNV_fnptr = &TestFenceNV_Lazy;
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte TestFenceNV(uint fence) => _TestFenceNV_fnptr(fence);
+            public static bool TestFenceNV(uint fence) => _TestFenceNV_fnptr(fence);
             [UnmanagedCallersOnly]
-            private static byte TestFenceNV_Lazy(uint fence)
+            private static bool TestFenceNV_Lazy(uint fence)
             {
-                _TestFenceNV_fnptr = (delegate* unmanaged<uint, byte>)GLLoader.BindingsContext.GetProcAddress("glTestFenceNV");
+                _TestFenceNV_fnptr = (delegate* unmanaged<uint, bool>)GLLoader.BindingsContext.GetProcAddress("glTestFenceNV");
                 return _TestFenceNV_fnptr(fence);
             }
             
@@ -3448,14 +3448,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 _PointParameterxOES_fnptr(pname, param);
             }
             
-            private static delegate* unmanaged<int, byte, void> _SampleCoveragexOES_fnptr = &SampleCoveragexOES_Lazy;
+            private static delegate* unmanaged<int, bool, void> _SampleCoveragexOES_fnptr = &SampleCoveragexOES_Lazy;
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void SampleCoveragexOES(int value, byte invert) => _SampleCoveragexOES_fnptr(value, invert);
+            public static void SampleCoveragexOES(int value, bool invert) => _SampleCoveragexOES_fnptr(value, invert);
             [UnmanagedCallersOnly]
-            private static void SampleCoveragexOES_Lazy(int value, byte invert)
+            private static void SampleCoveragexOES_Lazy(int value, bool invert)
             {
-                _SampleCoveragexOES_fnptr = (delegate* unmanaged<int, byte, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoveragexOES");
+                _SampleCoveragexOES_fnptr = (delegate* unmanaged<int, bool, void>)GLLoader.BindingsContext.GetProcAddress("glSampleCoveragexOES");
                 _SampleCoveragexOES_fnptr(value, invert);
             }
             
@@ -4207,14 +4207,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 _Vertex4xvOES_fnptr(coords);
             }
             
-            private static delegate* unmanaged<RenderbufferHandle, byte> _IsRenderbufferOES_fnptr = &IsRenderbufferOES_Lazy;
+            private static delegate* unmanaged<RenderbufferHandle, bool> _IsRenderbufferOES_fnptr = &IsRenderbufferOES_Lazy;
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsRenderbufferOES(RenderbufferHandle renderbuffer) => _IsRenderbufferOES_fnptr(renderbuffer);
+            public static bool IsRenderbufferOES(RenderbufferHandle renderbuffer) => _IsRenderbufferOES_fnptr(renderbuffer);
             [UnmanagedCallersOnly]
-            private static byte IsRenderbufferOES_Lazy(RenderbufferHandle renderbuffer)
+            private static bool IsRenderbufferOES_Lazy(RenderbufferHandle renderbuffer)
             {
-                _IsRenderbufferOES_fnptr = (delegate* unmanaged<RenderbufferHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsRenderbufferOES");
+                _IsRenderbufferOES_fnptr = (delegate* unmanaged<RenderbufferHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsRenderbufferOES");
                 return _IsRenderbufferOES_fnptr(renderbuffer);
             }
             
@@ -4273,14 +4273,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 _GetRenderbufferParameterivOES_fnptr(target, pname, parameters);
             }
             
-            private static delegate* unmanaged<FramebufferHandle, byte> _IsFramebufferOES_fnptr = &IsFramebufferOES_Lazy;
+            private static delegate* unmanaged<FramebufferHandle, bool> _IsFramebufferOES_fnptr = &IsFramebufferOES_Lazy;
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsFramebufferOES(FramebufferHandle framebuffer) => _IsFramebufferOES_fnptr(framebuffer);
+            public static bool IsFramebufferOES(FramebufferHandle framebuffer) => _IsFramebufferOES_fnptr(framebuffer);
             [UnmanagedCallersOnly]
-            private static byte IsFramebufferOES_Lazy(FramebufferHandle framebuffer)
+            private static bool IsFramebufferOES_Lazy(FramebufferHandle framebuffer)
             {
-                _IsFramebufferOES_fnptr = (delegate* unmanaged<FramebufferHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsFramebufferOES");
+                _IsFramebufferOES_fnptr = (delegate* unmanaged<FramebufferHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsFramebufferOES");
                 return _IsFramebufferOES_fnptr(framebuffer);
             }
             
@@ -4383,14 +4383,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 return _MapBufferOES_fnptr(target, access);
             }
             
-            private static delegate* unmanaged<All, byte> _UnmapBufferOES_fnptr = &UnmapBufferOES_Lazy;
+            private static delegate* unmanaged<All, bool> _UnmapBufferOES_fnptr = &UnmapBufferOES_Lazy;
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte UnmapBufferOES(All target) => _UnmapBufferOES_fnptr(target);
+            public static bool UnmapBufferOES(All target) => _UnmapBufferOES_fnptr(target);
             [UnmanagedCallersOnly]
-            private static byte UnmapBufferOES_Lazy(All target)
+            private static bool UnmapBufferOES_Lazy(All target)
             {
-                _UnmapBufferOES_fnptr = (delegate* unmanaged<All, byte>)GLLoader.BindingsContext.GetProcAddress("glUnmapBufferOES");
+                _UnmapBufferOES_fnptr = (delegate* unmanaged<All, bool>)GLLoader.BindingsContext.GetProcAddress("glUnmapBufferOES");
                 return _UnmapBufferOES_fnptr(target);
             }
             
@@ -4650,14 +4650,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 _GenVertexArraysOES_fnptr(n, arrays);
             }
             
-            private static delegate* unmanaged<VertexArrayHandle, byte> _IsVertexArrayOES_fnptr = &IsVertexArrayOES_Lazy;
+            private static delegate* unmanaged<VertexArrayHandle, bool> _IsVertexArrayOES_fnptr = &IsVertexArrayOES_Lazy;
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte IsVertexArrayOES(VertexArrayHandle array) => _IsVertexArrayOES_fnptr(array);
+            public static bool IsVertexArrayOES(VertexArrayHandle array) => _IsVertexArrayOES_fnptr(array);
             [UnmanagedCallersOnly]
-            private static byte IsVertexArrayOES_Lazy(VertexArrayHandle array)
+            private static bool IsVertexArrayOES_Lazy(VertexArrayHandle array)
             {
-                _IsVertexArrayOES_fnptr = (delegate* unmanaged<VertexArrayHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glIsVertexArrayOES");
+                _IsVertexArrayOES_fnptr = (delegate* unmanaged<VertexArrayHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glIsVertexArrayOES");
                 return _IsVertexArrayOES_fnptr(array);
             }
             
@@ -4818,14 +4818,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 _ExtGetProgramsQCOM_fnptr(programs, maxPrograms, numPrograms);
             }
             
-            private static delegate* unmanaged<ProgramHandle, byte> _ExtIsProgramBinaryQCOM_fnptr = &ExtIsProgramBinaryQCOM_Lazy;
+            private static delegate* unmanaged<ProgramHandle, bool> _ExtIsProgramBinaryQCOM_fnptr = &ExtIsProgramBinaryQCOM_Lazy;
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static byte ExtIsProgramBinaryQCOM(ProgramHandle program) => _ExtIsProgramBinaryQCOM_fnptr(program);
+            public static bool ExtIsProgramBinaryQCOM(ProgramHandle program) => _ExtIsProgramBinaryQCOM_fnptr(program);
             [UnmanagedCallersOnly]
-            private static byte ExtIsProgramBinaryQCOM_Lazy(ProgramHandle program)
+            private static bool ExtIsProgramBinaryQCOM_Lazy(ProgramHandle program)
             {
-                _ExtIsProgramBinaryQCOM_fnptr = (delegate* unmanaged<ProgramHandle, byte>)GLLoader.BindingsContext.GetProcAddress("glExtIsProgramBinaryQCOM");
+                _ExtIsProgramBinaryQCOM_fnptr = (delegate* unmanaged<ProgramHandle, bool>)GLLoader.BindingsContext.GetProcAddress("glExtIsProgramBinaryQCOM");
                 return _ExtIsProgramBinaryQCOM_fnptr(program);
             }
             

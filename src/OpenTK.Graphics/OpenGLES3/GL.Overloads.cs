@@ -86,15 +86,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
-        /// <inheritdoc cref="ColorMask"/>
-        public static unsafe void ColorMask(bool red, bool green, bool blue, bool alpha)
-        {
-            byte red_byte = (byte)(red ? 1 : 0);
-            byte green_byte = (byte)(green ? 1 : 0);
-            byte blue_byte = (byte)(blue ? 1 : 0);
-            byte alpha_byte = (byte)(alpha ? 1 : 0);
-            ColorMask(red_byte, green_byte, blue_byte, alpha_byte);
-        }
         /// <inheritdoc cref="CompressedTexImage2D"/>
         public static unsafe void CompressedTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, IntPtr data)
         {
@@ -304,12 +295,6 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 DeleteTextures(n, textures_ptr);
             }
-        }
-        /// <inheritdoc cref="DepthMask"/>
-        public static unsafe void DepthMask(bool flag)
-        {
-            byte flag_byte = (byte)(flag ? 1 : 0);
-            DepthMask(flag_byte);
         }
         /// <inheritdoc cref="DrawElements"/>
         public static unsafe void DrawElements(PrimitiveType mode, int count, DrawElementsType type, nint offset)
@@ -800,25 +785,25 @@ namespace OpenTK.Graphics.OpenGLES3
             return returnValue;
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, Span<byte> data)
+        public static unsafe void GetBoolean(GetPName pname, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, byte[] data)
+        public static unsafe void GetBoolean(GetPName pname, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, ref byte data)
+        public static unsafe void GetBoolean(GetPName pname, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleanv(pname, data_ptr);
             }
@@ -1438,12 +1423,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="SampleCoverage"/>
-        public static unsafe void SampleCoverage(float value, bool invert)
-        {
-            byte invert_byte = (byte)(invert ? 1 : 0);
-            SampleCoverage(value, invert_byte);
-        }
         /// <inheritdoc cref="ShaderBinary"/>
         public static unsafe void ShaderBinary(ReadOnlySpan<ShaderHandle> shaders, ShaderBinaryFormat binaryFormat, IntPtr binary, int length)
         {
@@ -1880,8 +1859,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv"/>
@@ -1890,8 +1868,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv"/>
@@ -1900,8 +1877,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv"/>
@@ -1911,8 +1887,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv"/>
@@ -1921,8 +1896,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv"/>
@@ -1931,8 +1905,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
@@ -1942,8 +1915,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
@@ -1952,8 +1924,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
@@ -1962,8 +1933,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib1fv"/>
@@ -2066,8 +2036,7 @@ namespace OpenTK.Graphics.OpenGLES3
         public static unsafe void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, nint offset)
         {
             void* pointer = (void*)offset;
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribPointer(index, size, type, normalized_byte, stride, pointer);
+            VertexAttribPointer(index, size, type, normalized, stride, pointer);
         }
         /// <inheritdoc cref="DrawRangeElements"/>
         public static unsafe void DrawRangeElements(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, nint offset)
@@ -2392,8 +2361,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv"/>
@@ -2402,8 +2370,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv"/>
@@ -2412,8 +2379,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
@@ -2423,8 +2389,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
@@ -2433,8 +2398,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
@@ -2443,8 +2407,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv"/>
@@ -2454,8 +2417,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv"/>
@@ -2464,8 +2426,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv"/>
@@ -2474,8 +2435,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv"/>
@@ -2485,8 +2445,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv"/>
@@ -2495,8 +2454,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv"/>
@@ -2505,8 +2463,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv"/>
@@ -2516,8 +2473,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv"/>
@@ -2526,8 +2482,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv"/>
@@ -2536,8 +2491,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv"/>
@@ -2547,8 +2501,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv"/>
@@ -2557,8 +2510,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv"/>
@@ -2567,8 +2519,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="DeleteVertexArrays"/>
@@ -4531,8 +4482,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv"/>
@@ -4541,8 +4491,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv"/>
@@ -4551,8 +4500,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -4562,8 +4510,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -4572,8 +4519,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -4582,8 +4528,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -4593,8 +4538,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -4603,8 +4547,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -4613,8 +4556,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -4624,8 +4566,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -4634,8 +4575,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -4644,8 +4584,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -4655,8 +4594,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -4665,8 +4603,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -4675,8 +4612,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -4686,8 +4622,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -4696,8 +4631,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -4706,8 +4640,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -4717,8 +4650,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -4727,8 +4659,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -4737,8 +4668,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -4748,8 +4678,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -4758,8 +4687,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -4768,8 +4696,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -4779,8 +4706,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -4789,8 +4715,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -4799,8 +4724,7 @@ namespace OpenTK.Graphics.OpenGLES3
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="GetProgramPipelineInfoLog"/>
@@ -4875,41 +4799,29 @@ namespace OpenTK.Graphics.OpenGLES3
                 Marshal.FreeCoTaskMem((IntPtr)infoLog_ptr);
             }
         }
-        /// <inheritdoc cref="BindImageTexture"/>
-        public static unsafe void BindImageTexture(uint unit, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format)
-        {
-            byte layered_byte = (byte)(layered ? 1 : 0);
-            BindImageTexture(unit, texture, level, layered_byte, layer, access, format);
-        }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<byte> data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, byte[] data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref byte data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
-        }
-        /// <inheritdoc cref="TexStorage2DMultisample"/>
-        public static unsafe void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TexStorage2DMultisample(target, samples, internalformat, width, height, fixedsamplelocations_byte);
         }
         /// <inheritdoc cref="GetMultisamplefv"/>
         public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, Span<float> val)
@@ -4983,20 +4895,13 @@ namespace OpenTK.Graphics.OpenGLES3
                 GetTexLevelParameterfv(target, level, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="VertexAttribFormat"/>
-        public static unsafe void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset)
-        {
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribFormat(attribindex, size, type, normalized_byte, relativeoffset);
-        }
         /// <inheritdoc cref="DebugMessageControl"/>
         public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, ReadOnlySpan<uint> ids, bool enabled)
         {
             int count = (int)(ids.Length);
             fixed (uint* ids_ptr = ids)
             {
-                byte enabled_byte = (byte)(enabled ? 1 : 0);
-                DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
             }
         }
         /// <inheritdoc cref="DebugMessageControl"/>
@@ -5005,8 +4910,7 @@ namespace OpenTK.Graphics.OpenGLES3
             int count = (int)(ids.Length);
             fixed (uint* ids_ptr = ids)
             {
-                byte enabled_byte = (byte)(enabled ? 1 : 0);
-                DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
             }
         }
         /// <inheritdoc cref="DebugMessageControl"/>
@@ -5014,8 +4918,7 @@ namespace OpenTK.Graphics.OpenGLES3
         {
             fixed (uint* ids_ptr = &ids)
             {
-                byte enabled_byte = (byte)(enabled ? 1 : 0);
-                DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
             }
         }
         /// <inheritdoc cref="DebugMessageInsert"/>
@@ -5389,15 +5292,6 @@ namespace OpenTK.Graphics.OpenGLES3
         {
             GetPointerv(pname, parameters);
         }
-        /// <inheritdoc cref="ColorMaski"/>
-        public static unsafe void ColorMaski(uint index, bool r, bool g, bool b, bool a)
-        {
-            byte r_byte = (byte)(r ? 1 : 0);
-            byte g_byte = (byte)(g ? 1 : 0);
-            byte b_byte = (byte)(b ? 1 : 0);
-            byte a_byte = (byte)(a ? 1 : 0);
-            ColorMaski(index, r_byte, g_byte, b_byte, a_byte);
-        }
         /// <inheritdoc cref="DrawElementsBaseVertex"/>
         public static unsafe void DrawElementsBaseVertex(PrimitiveType mode, int count, DrawElementsType type, nint offset, int basevertex)
         {
@@ -5721,12 +5615,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 GetSamplerParameterIuiv(sampler, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexStorage3DMultisample"/>
-        public static unsafe void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TexStorage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
-        }
         public static unsafe partial class AMD
         {
             /// <inheritdoc cref="GetPerfMonitorGroupsAMD"/>
@@ -6037,8 +5925,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int numCounters = (int)(counterList.Length);
                 fixed (uint* counterList_ptr = counterList)
                 {
-                    byte enable_byte = (byte)(enable ? 1 : 0);
-                    SelectPerfMonitorCountersAMD(monitor, enable_byte, group, numCounters, counterList_ptr);
+                    SelectPerfMonitorCountersAMD(monitor, enable, group, numCounters, counterList_ptr);
                 }
             }
             /// <inheritdoc cref="SelectPerfMonitorCountersAMD"/>
@@ -6047,8 +5934,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int numCounters = (int)(counterList.Length);
                 fixed (uint* counterList_ptr = counterList)
                 {
-                    byte enable_byte = (byte)(enable ? 1 : 0);
-                    SelectPerfMonitorCountersAMD(monitor, enable_byte, group, numCounters, counterList_ptr);
+                    SelectPerfMonitorCountersAMD(monitor, enable, group, numCounters, counterList_ptr);
                 }
             }
             /// <inheritdoc cref="SelectPerfMonitorCountersAMD"/>
@@ -6056,8 +5942,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (uint* counterList_ptr = &counterList)
                 {
-                    byte enable_byte = (byte)(enable ? 1 : 0);
-                    SelectPerfMonitorCountersAMD(monitor, enable_byte, group, numCounters, counterList_ptr);
+                    SelectPerfMonitorCountersAMD(monitor, enable, group, numCounters, counterList_ptr);
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCounterDataAMD"/>
@@ -6745,15 +6630,6 @@ namespace OpenTK.Graphics.OpenGLES3
                     DrawBuffersEXT(n, bufs_ptr);
                 }
             }
-            /// <inheritdoc cref="ColorMaskiEXT"/>
-            public static unsafe void ColorMaskiEXT(uint index, bool r, bool g, bool b, bool a)
-            {
-                byte r_byte = (byte)(r ? 1 : 0);
-                byte g_byte = (byte)(g ? 1 : 0);
-                byte b_byte = (byte)(b ? 1 : 0);
-                byte a_byte = (byte)(a ? 1 : 0);
-                ColorMaskiEXT(index, r_byte, g_byte, b_byte, a_byte);
-            }
             /// <inheritdoc cref="DrawElementsBaseVertexEXT"/>
             public static unsafe void DrawElementsBaseVertexEXT(PrimitiveType mode, int count, DrawElementsType type, nint offset, int basevertex)
             {
@@ -6970,30 +6846,6 @@ namespace OpenTK.Graphics.OpenGLES3
                     GetMemoryObjectParameterivEXT(memoryObject, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexStorageMem2DMultisampleEXT"/>
-            public static unsafe void TexStorageMem2DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TexStorageMem2DMultisampleEXT(target, samples, internalFormat, width, height, fixedSampleLocations_byte, memory, offset);
-            }
-            /// <inheritdoc cref="TexStorageMem3DMultisampleEXT"/>
-            public static unsafe void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TexStorageMem3DMultisampleEXT(target, samples, internalFormat, width, height, depth, fixedSampleLocations_byte, memory, offset);
-            }
-            /// <inheritdoc cref="TextureStorageMem2DMultisampleEXT"/>
-            public static unsafe void TextureStorageMem2DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureStorageMem2DMultisampleEXT(texture, samples, internalFormat, width, height, fixedSampleLocations_byte, memory, offset);
-            }
-            /// <inheritdoc cref="TextureStorageMem3DMultisampleEXT"/>
-            public static unsafe void TextureStorageMem3DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureStorageMem3DMultisampleEXT(texture, samples, internalFormat, width, height, depth, fixedSampleLocations_byte, memory, offset);
-            }
             /// <inheritdoc cref="ImportMemoryWin32HandleEXT"/>
             public static unsafe void ImportMemoryWin32HandleEXT(uint memory, ulong size, ExternalHandleType handleType, IntPtr handle)
             {
@@ -7183,12 +7035,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 {
                     GetIntegeri_vEXT(target, index, data_ptr);
                 }
-            }
-            /// <inheritdoc cref="RasterSamplesEXT"/>
-            public static unsafe void RasterSamplesEXT(uint samples, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                RasterSamplesEXT(samples, fixedsamplelocations_byte);
             }
             /// <inheritdoc cref="ReadnPixelsEXT"/>
             public static unsafe void ReadnPixelsEXT(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, IntPtr data)
@@ -7806,8 +7652,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 4);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fvEXT"/>
@@ -7816,8 +7661,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 4);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fvEXT"/>
@@ -7825,8 +7669,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fvEXT"/>
@@ -7835,8 +7678,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 9);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fvEXT"/>
@@ -7845,8 +7687,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 9);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fvEXT"/>
@@ -7854,8 +7695,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT"/>
@@ -7864,8 +7704,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 16);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT"/>
@@ -7874,8 +7713,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 16);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT"/>
@@ -7883,8 +7721,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1uivEXT"/>
@@ -7997,8 +7834,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fvEXT"/>
@@ -8007,8 +7843,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fvEXT"/>
@@ -8016,8 +7851,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT"/>
@@ -8026,8 +7860,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT"/>
@@ -8036,8 +7869,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT"/>
@@ -8045,8 +7877,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fvEXT"/>
@@ -8055,8 +7886,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fvEXT"/>
@@ -8065,8 +7895,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fvEXT"/>
@@ -8074,8 +7903,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fvEXT"/>
@@ -8084,8 +7912,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fvEXT"/>
@@ -8094,8 +7921,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fvEXT"/>
@@ -8103,8 +7929,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fvEXT"/>
@@ -8113,8 +7938,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fvEXT"/>
@@ -8123,8 +7947,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fvEXT"/>
@@ -8132,8 +7955,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fvEXT"/>
@@ -8142,8 +7964,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fvEXT"/>
@@ -8152,8 +7973,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fvEXT"/>
@@ -8161,8 +7981,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ClearPixelLocalStorageuiEXT"/>
@@ -8190,12 +8009,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 {
                     ClearPixelLocalStorageuiEXT(offset, n, values_ptr);
                 }
-            }
-            /// <inheritdoc cref="TexPageCommitmentEXT"/>
-            public static unsafe void TexPageCommitmentEXT(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                TexPageCommitmentEXT(target, level, xoffset, yoffset, zoffset, width, height, depth, commit_byte);
             }
             /// <inheritdoc cref="TexParameterIivEXT"/>
             public static unsafe void TexParameterIivEXT(TextureTarget target, TextureParameterName pname, ReadOnlySpan<int> parameters)
@@ -8474,14 +8287,6 @@ namespace OpenTK.Graphics.OpenGLES3
                     GetSemaphoreParameterivNV(semaphore, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetImageHandleNV"/>
-            public static unsafe ulong GetImageHandleNV(TextureHandle texture, int level, bool layered, int layer, PixelFormat format)
-            {
-                ulong returnValue;
-                byte layered_byte = (byte)(layered ? 1 : 0);
-                returnValue = GetImageHandleNV(texture, level, layered_byte, layer, format);
-                return returnValue;
-            }
             /// <inheritdoc cref="UniformHandleui64vNV"/>
             public static unsafe void UniformHandleui64vNV(int location, ReadOnlySpan<ulong> value)
             {
@@ -8533,12 +8338,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 {
                     ProgramUniformHandleui64vNV(program, location, count, values_ptr);
                 }
-            }
-            /// <inheritdoc cref="CoverageMaskNV"/>
-            public static unsafe void CoverageMaskNV(bool mask)
-            {
-                byte mask_byte = (byte)(mask ? 1 : 0);
-                CoverageMaskNV(mask_byte);
             }
             /// <inheritdoc cref="DrawBuffersNV"/>
             public static unsafe void DrawBuffersNV(ReadOnlySpan<All> bufs)
@@ -8656,12 +8455,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 {
                     GetFenceivNV(fence, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="RasterSamplesEXT"/>
-            public static unsafe void RasterSamplesEXT(uint samples, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                RasterSamplesEXT(samples, fixedsamplelocations_byte);
             }
             /// <inheritdoc cref="CoverageModulationTableNV"/>
             public static unsafe void CoverageModulationTableNV(ReadOnlySpan<float> v)
@@ -9171,38 +8964,13 @@ namespace OpenTK.Graphics.OpenGLES3
                     GetMemoryObjectDetachedResourcesuivNV(memory, pname, first, count, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="BufferPageCommitmentMemNV"/>
-            public static unsafe void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                BufferPageCommitmentMemNV(target, offset, size, memory, memOffset, commit_byte);
-            }
-            /// <inheritdoc cref="TexPageCommitmentMemNV"/>
-            public static unsafe void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                TexPageCommitmentMemNV(target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit_byte);
-            }
-            /// <inheritdoc cref="NamedBufferPageCommitmentMemNV"/>
-            public static unsafe void NamedBufferPageCommitmentMemNV(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                NamedBufferPageCommitmentMemNV(buffer, offset, size, memory, memOffset, commit_byte);
-            }
-            /// <inheritdoc cref="TexturePageCommitmentMemNV"/>
-            public static unsafe void TexturePageCommitmentMemNV(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                TexturePageCommitmentMemNV(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit_byte);
-            }
             /// <inheritdoc cref="UniformMatrix2x3fvNV"/>
             public static unsafe void UniformMatrix2x3fvNV(int location, bool transpose, ReadOnlySpan<float> value)
             {
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x3fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x3fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3fvNV"/>
@@ -9211,8 +8979,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x3fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x3fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3fvNV"/>
@@ -9220,8 +8987,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x3fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x3fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2fvNV"/>
@@ -9230,8 +8996,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x2fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x2fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2fvNV"/>
@@ -9240,8 +9005,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x2fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x2fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2fvNV"/>
@@ -9249,8 +9013,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x2fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x2fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4fvNV"/>
@@ -9259,8 +9022,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x4fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x4fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4fvNV"/>
@@ -9269,8 +9031,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x4fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x4fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4fvNV"/>
@@ -9278,8 +9039,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x4fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x4fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2fvNV"/>
@@ -9288,8 +9048,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x2fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x2fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2fvNV"/>
@@ -9298,8 +9057,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x2fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x2fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2fvNV"/>
@@ -9307,8 +9065,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x2fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x2fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4fvNV"/>
@@ -9317,8 +9074,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x4fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x4fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4fvNV"/>
@@ -9327,8 +9083,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x4fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x4fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4fvNV"/>
@@ -9336,8 +9091,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x4fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x4fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3fvNV"/>
@@ -9346,8 +9100,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x3fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x3fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3fvNV"/>
@@ -9356,8 +9109,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x3fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x3fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3fvNV"/>
@@ -9365,8 +9117,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x3fvNV(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x3fvNV(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="PathCommandsNV"/>
@@ -10317,9 +10068,9 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -10336,9 +10087,9 @@ namespace OpenTK.Graphics.OpenGLES3
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -10355,9 +10106,9 @@ namespace OpenTK.Graphics.OpenGLES3
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = &x)
                 fixed (float* y_ptr = &y)
                 fixed (float* tangentX_ptr = &tangentX)
@@ -10892,12 +10643,6 @@ namespace OpenTK.Graphics.OpenGLES3
                     GetShadingRateSampleLocationivNV(rate, samples, index, location_ptr);
                 }
             }
-            /// <inheritdoc cref="ShadingRateImageBarrierNV"/>
-            public static unsafe void ShadingRateImageBarrierNV(bool synchronize)
-            {
-                byte synchronize_byte = (byte)(synchronize ? 1 : 0);
-                ShadingRateImageBarrierNV(synchronize_byte);
-            }
             /// <inheritdoc cref="ShadingRateImagePaletteNV"/>
             public static unsafe void ShadingRateImagePaletteNV(uint viewport, uint first, ReadOnlySpan<All> rates)
             {
@@ -11242,8 +10987,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControl"/>
@@ -11252,8 +10996,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControl"/>
@@ -11261,8 +11004,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsert"/>
@@ -11641,8 +11383,7 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsertKHR"/>
@@ -12249,15 +11990,6 @@ namespace OpenTK.Graphics.OpenGLES3
                     EGLImageTargetRenderbufferStorageOES(target, image_ptr);
                 }
             }
-            /// <inheritdoc cref="ColorMaskiOES"/>
-            public static unsafe void ColorMaskiOES(uint index, bool r, bool g, bool b, bool a)
-            {
-                byte r_byte = (byte)(r ? 1 : 0);
-                byte g_byte = (byte)(g ? 1 : 0);
-                byte b_byte = (byte)(b ? 1 : 0);
-                byte a_byte = (byte)(a ? 1 : 0);
-                ColorMaskiOES(index, r_byte, g_byte, b_byte, a_byte);
-            }
             /// <inheritdoc cref="DrawElementsBaseVertexOES"/>
             public static unsafe void DrawElementsBaseVertexOES(PrimitiveType mode, int count, DrawElementsType type, nint offset, int basevertex)
             {
@@ -12746,12 +12478,6 @@ namespace OpenTK.Graphics.OpenGLES3
                 {
                     GetSamplerParameterIuivOES(sampler, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="TexStorage3DMultisampleOES"/>
-            public static unsafe void TexStorage3DMultisampleOES(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TexStorage3DMultisampleOES(target, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
             }
             /// <inheritdoc cref="DeleteVertexArraysOES"/>
             public static unsafe void DeleteVertexArraysOES(ReadOnlySpan<VertexArrayHandle> arrays)
