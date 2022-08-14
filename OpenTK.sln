@@ -77,6 +77,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Graphics", "src\OpenTK.Graphics\OpenTK.Graphics.csproj", "{83D53823-B146-442F-B650-EDE6664D38EB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.UnitTests", "tests\OpenTK.UnitTests\OpenTK.UnitTests.csproj", "{EC2CE980-F2AF-440F-A20E-EAF7FFCD3D32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +149,10 @@ Global
 		{83D53823-B146-442F-B650-EDE6664D38EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83D53823-B146-442F-B650-EDE6664D38EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83D53823-B146-442F-B650-EDE6664D38EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC2CE980-F2AF-440F-A20E-EAF7FFCD3D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC2CE980-F2AF-440F-A20E-EAF7FFCD3D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC2CE980-F2AF-440F-A20E-EAF7FFCD3D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC2CE980-F2AF-440F-A20E-EAF7FFCD3D32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,6 +168,7 @@ Global
 		{ECC7271C-A5E5-4CDC-BA9F-A38A150CD2D4} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{172C1E62-DA67-4203-BBCB-9DA4D9111EF0} = {BBBE802B-9F6E-4299-97CE-97CDA43802B9}
 		{A31363E2-783D-4F6A-B447-130E7A344442} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{EC2CE980-F2AF-440F-A20E-EAF7FFCD3D32} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
