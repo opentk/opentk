@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
 
 </Project>
