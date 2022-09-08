@@ -55,6 +55,10 @@ namespace OpenTK.Audio.OpenAL
                     return Linux;
                 }
             }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
+            {
+                return Linux;
+            }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return Windows;
