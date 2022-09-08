@@ -139,13 +139,13 @@ namespace OpenTK.Mathematics
         [Pure]
         public bool Contains(Vector3 point)
         {
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y &&
-                   _min.Z < point.Z && point.Z < _max.Z;
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.Y && point.Y <= _max.Y &&
+                   _min.Z <= point.Z && point.Z <= _max.Z;
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point (borders inclusive).
+        /// Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="boundaryInclusive">
