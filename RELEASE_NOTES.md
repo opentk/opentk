@@ -1,3 +1,25 @@
+## 4.7.5
+
+* BREAKING: Removed the `ALTest` class from the OpenAL namespace. This was an internal test class that was accidentally included in the package. (@NogginBops)
+
+* API: Deprecated `Box.Contains` function in favor of `Box.ContainsInclusive` and `Box.ContainsExclusive` to explicitly state if the box boundary sould be considered contained. (@NogginBops, @Oribow)
+
+* API: Exposed EGL bindings to match the WGL bindings. (@NogginBops)
+
+* API: `Box2`, `Box2d`, `Box2i`, `Box3`, `Box3d`, and `Box3i` now support XML serialization. (@NogginBops)
+
+* API: Added `ProgramBinaryLength` to the `GetProgramParameterName` enum. (@NogginBops)
+
+* FIX: `MathHelper.ClampAngle` and `MathHelper.ClampRadians` now return correct results. (@FlashX64)
+
+* FIX: `MathHelper.NormalizeRadians` now return correct results. (@FlashX64)
+
+* FIX: OpenAL now correctly loads on FreeBSD. (@Partmedia)
+
+* Clarify in the readme that running on Windows requires "Visual C++ Redistributable 2015" (@NogginBops)
+
+* Update to GLFW 3.3.8 (@NogginBops)
+
 ## 4.7.4
 
 * FIX: Updated `OpenTK.redist.glfw` nuget reference to the latest version (`3.3.7.27`), the previous `3.3.7.25` had issues on linux.
