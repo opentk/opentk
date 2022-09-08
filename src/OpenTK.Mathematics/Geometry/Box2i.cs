@@ -159,13 +159,11 @@ namespace OpenTK.Mathematics
         {
             if (boundaryInclusive)
             {
-                return _min.X <= point.X && point.X <= _max.X &&
-                       _min.Y <= point.Y && point.Y <= _max.Y;
+                return ContainsInclusive(point);
             }
             else
             {
-                return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y;
+                return ContainsExclusive(point);
             }
         }
 
