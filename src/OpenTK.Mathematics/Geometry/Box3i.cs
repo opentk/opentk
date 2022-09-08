@@ -117,6 +117,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
+        [Obsolete("This function excludes borders even though it's documentation says otherwise. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
         public bool Contains(Vector3i point)
         {
             return _min.X < point.X && point.X < _max.X &&
@@ -128,6 +129,32 @@ namespace OpenTK.Mathematics
         /// Returns whether the box contains the specified point (borders inclusive).
         /// </summary>
         /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsInclusive(Vector3i point)
+        {
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.Y && point.Y <= _max.Y &&
+                   _min.Z <= point.Z && point.Z <= _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders exclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsExclusive(Vector3i point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
+                   _min.Z < point.Z && point.Z < _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point.
+        /// </summary>
+        /// <param name="point">The point to query.</param>
         /// <param name="boundaryInclusive">
         /// Whether points on the box boundary should be recognised as contained as well.
         /// </param>
@@ -137,15 +164,11 @@ namespace OpenTK.Mathematics
         {
             if (boundaryInclusive)
             {
-                return _min.X <= point.X && point.X <= _max.X &&
-                       _min.Y <= point.Y && point.Y <= _max.Y &&
-                       _min.Z <= point.Z && point.Z <= _max.Z;
+                return ContainsInclusive(point);
             }
             else
             {
-                return _min.X < point.X && point.X < _max.X &&
-                       _min.Y < point.Y && point.Y < _max.Y &&
-                       _min.Z < point.Z && point.Z < _max.Z;
+                return ContainsExclusive(point);
             }
         }
 
