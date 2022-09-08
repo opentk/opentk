@@ -145,7 +145,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns whether the box contains the specified point (borders inclusive).
+        /// Returns whether the box contains the specified point.
         /// </summary>
         /// <param name="point">The point to query.</param>
         /// <param name="boundaryInclusive">
