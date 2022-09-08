@@ -127,10 +127,35 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
+        [Obsolete("This function used to exclude borders, but to follow changes from the other Box structs it's deprecated. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
         public bool Contains(Vector2 point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders inclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsInclusive(Vector2 point)
         {
             return _min.X <= point.X && point.X <= _max.X &&
                    _min.Y <= point.Y && point.Y <= _max.Y;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders exclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsExclusive(Vector2 point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y;
         }
 
         /// <summary>
