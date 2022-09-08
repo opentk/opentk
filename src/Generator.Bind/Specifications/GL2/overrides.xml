@@ -4210,6 +4210,7 @@
       <use enum="VERSION_4_0" token="TESS_GEN_POINT_MODE" />
       <use enum="VERSION_4_1" token="PROGRAM_SEPARABLE" />
       <use enum="VERSION_4_1" token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use enum="VERSION_4_1" token="PROGRAM_BINARY_LENGTH" />
       <use enum="VERSION_4_2" token="ACTIVE_ATOMIC_COUNTER_BUFFERS" />
       <use enum="VERSION_4_3" token="MAX_COMPUTE_WORK_GROUP_SIZE" />
     </enum>
@@ -6171,6 +6172,7 @@
       <use token="ACTIVE_UNIFORMS" />
       <use token="ACTIVE_UNIFORM_MAX_LENGTH" />
       <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use token="PROGRAM_BINARY_LENGTH" />
     </enum>
 
     <enum name="ProgramParameterName">
@@ -7049,6 +7051,7 @@
     </enum>
     <enum name="GetProgramParameterName">
       <use token="PROGRAM_BINARY_RETRIEVABLE_HINT" />
+      <use token="PROGRAM_BINARY_LENGTH" />
     </enum>
     <enum name="GetQueryObjectParam">
       <use token="QUERY_RESULT" />
