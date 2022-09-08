@@ -2,7 +2,7 @@
 
 * BREAKING: Removed the `ALTest` class from the OpenAL namespace. This was an internal test class that was accidentally included in the package. (@NogginBops)
 
-* API: Deprecated `Box.Contains` function in favor of `Box.ContainsInclusive` and `Box.ContainsExclusive` to explicitly state if the box boundary sould be considered contained. (@NogginBops, @Oribow)
+* API: Deprecated `Box.Contains` function in favor of `Box.ContainsInclusive` and `Box.ContainsExclusive` to explicitly state if the box boundary should be considered contained. (@NogginBops, @Oribow)
 
 * API: Exposed EGL bindings to match the WGL bindings. (@NogginBops)
 
