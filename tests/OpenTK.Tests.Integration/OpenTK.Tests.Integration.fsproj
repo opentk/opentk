@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>OpenTK.Tests.Integration</RootNamespace>
     <AssemblyName>OpenTK.Tests.Integration</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Name>OpenTK.Tests.Integration</Name>

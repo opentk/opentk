@@ -1,5 +1,5 @@
 @echo off
-cls
+::cls
 
 .paket\paket.bootstrapper.exe
 if errorlevel 1 (
