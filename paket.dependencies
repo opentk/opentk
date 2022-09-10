@@ -14,4 +14,3 @@ nuget xunit.assert 2.2.0 restriction: >= net461
 nuget Mono.Cecil
 nuget FAKE 4.64.18
 nuget gtk-sharp3
-nuget FSharp.Core 5.0

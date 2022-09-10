@@ -22,8 +22,10 @@
   <ItemGroup>
     <PackageReference Include="FsCheck.Xunit" Version="2.9.2" />
     <PackageReference Include="xunit.assert" Version="2.2.0" />
+    <PackageReference Include="FSharp.Core" Version="4.4.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\OpenTK\OpenTK.csproj" />
   </ItemGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

@@ -11,12 +11,10 @@
     <Platforms>AnyCPU</Platforms>
     <!--<CodeAnalysisRuleSet>..\..\stylecop.ruleset</CodeAnalysisRuleSet>-->
   </PropertyGroup>
-
   <PropertyGroup>
     <DefaultItemExcludes>$(DefaultItemExcludes);Platform\Android\*</DefaultItemExcludes>
     <DefaultItemExcludes>$(DefaultItemExcludes);Platform\iPhoneOS\*</DefaultItemExcludes>
   </PropertyGroup>
-
   <!--
   <PropertyGroup>
     <SignAssembly>True</SignAssembly>
