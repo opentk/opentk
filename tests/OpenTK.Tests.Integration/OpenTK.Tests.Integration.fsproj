@@ -3,7 +3,6 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net461</TargetFramework>
-    <TargetFSharpCoreVersion>4.4.0.0</TargetFSharpCoreVersion>
     <RootNamespace>OpenTK.Tests.Integration</RootNamespace>
     <AssemblyName>OpenTK.Tests.Integration</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
