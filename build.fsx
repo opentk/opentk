@@ -135,7 +135,7 @@ let generateBindings() =
     for proj in buildProjects do
         DotNet.build id proj
 
-    let result = Shell.Exec("src/Generator.Bind/bin/Release/Bind.exe")
+    let result = Shell.Exec("src/Generator.Bind/bin/Release/net461/Bind.exe")
     if result <> 0 then
         failwith "Error running Bind.exe"
 
@@ -203,7 +203,7 @@ Target.create "UpdateSignatures" (fun _ ->
     
     let args = sprintf "--prefix gl --input-files %s --output-file %s" specUrl output
     
-    let result = Shell.Exec("src/Generator.Converter/bin/Release/Convert.exe", args)
+    let result = Shell.Exec("src/Generator.Converter/bin/Release/net461/Convert.exe", args)
     if result <> 0 then
         failwith "Error running Convert.exe"
 )
