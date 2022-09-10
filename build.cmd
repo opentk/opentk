@@ -21,6 +21,6 @@ if "%BuildRunner%" == "MyGet" (
 
 dotnet tool restore
 
-dotnet fake run build.fsx %* %BuildTarget%
+dotnet fake -v run build.fsx %* %BuildTarget%
 
 :: packages\FAKE\tools\FAKE.exe build.fsx %* 
