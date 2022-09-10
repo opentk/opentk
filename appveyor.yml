@@ -2,7 +2,7 @@ image: Visual Studio 2022
 init:
   - git config --global core.autocrlf input
 build_script:
-  - cmd: build.cmd NuGet
+  - cmd: build.cmd -t NuGet
   - cmd: .paket\paket.exe install
   - cmd: git diff --exit-code
 test: off
