@@ -1,5 +1,11 @@
+### 3.3.3
+	* OpenTK no longers alters the dll search path be default on windows platforms. Separate folders for `x86` and `x64` dlls can now be optionally turned on by using `ToolkitOptions.SetWindowsDLLPathAnyCPU = true`, see documentation comment for more details. (@NogginBops)
+	* New feature that allows you to use virtual keys on windows. This can be toggled on using `GameWindowFlags.UseVirtualKeys`. See https://github.com/opentk/opentk/pull/1360 for more details. (@tyronx)
+	* Deprecated `Vector3 Transform(Matrix3 mat, Vector3 vec)` (right multiplication) because of a bug meant this function was doing a left multiplication. Instead two new functions `TransformRow` and `TransformColumn` that handle the left and right multiplication correctly. (@NogginBops)
+	* A lot of enum entries where added to enums where they where missing. For example `SizedInternalFormat` now contains all allowed formats and `GetTextureParameter` now contains `TextureMaxAnisotropy`. (@NogginBops)
+
 ### 3.3.2
-	* Added ability to include architecture  dependent dlls (x86 vs x64) on windows by placing the files in `x86` and `x64` folders respectively (@leezer3)
+	* Added ability to include architecture dependent dlls (x86 vs x64) on windows by placing the files in `x86` and `x64` folders respectively (@leezer3)
 	* Fix: Mouse position no longer resets when scrolling in Wayland (@jascrain)
 	* Fix: `QuaternionD` euler angle constructor now produces the same result as the equivalent constructor in `Quaternion` (@leezer3)
 	* Fix: Changed to using `dlopen`/`dlsym` on MacOS as `NSLookupSymbolInImage` is deprecated and no longer works on MacOS Monterey (@BleuBleu)
