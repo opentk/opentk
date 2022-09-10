@@ -1,20 +1,14 @@
-@echo off
-cls
+::@echo off
 
 .paket\paket.bootstrapper.exe
 if errorlevel 1 (
   exit /b %errorlevel%
 )
 
-.paket\paket.exe restore
-if errorlevel 1 (
-  exit /b %errorlevel%
-)
-
-IF NOT EXIST build.fsx (
-  .paket\paket.exe update
-  packages\FAKE\tools\FAKE.exe init.fsx
-)
+::.paket\paket.exe restore
+::if errorlevel 1 (
+::  exit /b %errorlevel%
+::)
 
 SET BuildTarget=
 if "%BuildRunner%" == "MyGet" (
@@ -25,4 +19,8 @@ if "%BuildRunner%" == "MyGet" (
   echo 	* git build >> RELEASE_NOTES.md
 )
 
-packages\FAKE\tools\FAKE.exe build.fsx %* %BuildTarget%
+dotnet tool restore
+
+dotnet fake run build.fsx %* %BuildTarget%
+
+:: packages\FAKE\tools\FAKE.exe build.fsx %* 

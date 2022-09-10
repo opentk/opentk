@@ -1,19 +1,36 @@
-open Fake
-
 // --------------------------------------------------------------------------------------
 // FAKE build script
 // --------------------------------------------------------------------------------------
 
-#r @"packages/FAKE/tools/FakeLib.dll"
-open Fake
-open Fake.Git
-open Fake.AssemblyInfoFile
-open Fake.ReleaseNotesHelper
-open Fake.UserInputHelper
-open Fake.Testing
 open System
 open System.IO
-open System.Diagnostics
+open System.Threading
+open Fake.Core
+open Fake.DotNet
+open Fake.DotNet.NuGet
+open Fake.IO
+
+#r "paket:
+storage: packages
+nuget Fake.IO.FileSystem
+nuget Fake.DotNet.MSBuild
+nuget Fake.DotNet.Testing.XUnit2
+nuget Fake.DotNet.AssemblyInfoFile
+nuget Fake.DotNet.NuGet prerelease
+nuget Fake.DotNet.Paket
+nuget Fake.DotNet.Cli
+nuget Fake.Core.Target
+nuget Fake.Net.Http
+nuget Fake.Api.Github
+nuget xunit.runner.console
+nuget NuGet.CommandLine
+nuget Fake.Core.ReleaseNotes //"
+
+#load "./.fake/build.fsx/intellisense.fsx"
+
+open Fake.IO
+open Fake.IO.FileSystemOperators
+open Fake.IO.Globbing.Operators
 
 // --------------------------------------------------------------------------------------
 // START TODO: Provide project-specific details below
@@ -49,7 +66,9 @@ let copyright = "Copyright (c) 2006 - 2019 Stefanos Apostolopoulos <stapostol@gm
 let solutionFile  = "OpenTK.sln"
 
 // Pattern specifying assemblies to be tested using NUnit
-let testAssemblies = "tests/**/bin/Release/*Tests*.dll"
+let testAssemblies = 
+    !! "tests/**/bin/Release/net461/*Tests*.dll"
+    -- "tests/OpenTK.Tests.Integration/bin/Release/net461/*Tests*.dll"
 
 // Git configuration (used for publishing documentation in gh-pages branch)
 // The profile where the project is posted
@@ -60,14 +79,14 @@ let gitHome = "https://github.com/" + gitOwner
 let gitName = "opentk"
 
 // The url for the raw files hosted
-let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/opentk"
+let gitRaw = Environment.environVarOrDefault "gitRaw" "https://raw.github.com/opentk"
 
 // --------------------------------------------------------------------------------------
 // END TODO: The rest of the file includes standard build steps
 // --------------------------------------------------------------------------------------
 
 // Read additional information from the release notes document
-let release = LoadReleaseNotes "RELEASE_NOTES.md"
+let release = ReleaseNotes.load "RELEASE_NOTES.md"
 
 let isXamarinPlatform = false //EnvironmentHelper.isMacOS || Environment.OSVersion.Platform = PlatformID.Win32NT
 
@@ -79,9 +98,13 @@ let (|Fsproj|Csproj|Vbproj|) (projFileName:string) =
     | f when f.EndsWith "vbproj" -> Vbproj
     | _                           -> failwith (sprintf "Project file %s not supported. Unknown project type." projFileName)
 
+let asArgs args = args |> List.map (fun ( x: string) -> sprintf "\"%s\"" x) |> String.concat " "
 
 let buildProjects =
     !! "src/Generator.*/**.csproj"
+
+let opentkProject =
+    !! "src/OpenTK/OpenTK.csproj"
 
 let runtimeProjects =
     let xamarinFilter f =
@@ -94,39 +117,44 @@ let runtimeProjects =
 
     !! "src/**/*.??proj"
     ++ "tests/**/OpenTK.Tests*.??proj"
+    -- "tests/OpenTK.Tests.Integration/*.??proj"
     -- "src/Generator.*/**.csproj"
+    -- "src/OpenTK.GLControl/OpenTK.GLControl.csproj"
+    -- "src/OpenTK.GLWidget/OpenTK.GLWidget.csproj"
     |> xamarinFilter
+
+let testProjects = 
+    !! "tests/**/OpenTK.Tests*.??proj"
 
 let activeProjects =
     Seq.concat [buildProjects; runtimeProjects]
     
     
 let generateBindings() =
-    buildProjects
-        |> MSBuildRelease "" "Build"
-        |> ignore
-        
-        
+    // FIXME: How do we change this?
+    for proj in buildProjects do
+        DotNet.build id proj
+
     let result = Shell.Exec("src/Generator.Bind/bin/Release/Bind.exe")
     if result <> 0 then
         failwith "Error running Bind.exe"
 
 
 // Generate assembly info files with the right version & up-to-date information
-Target "AssemblyInfo" (fun _ ->
+Target.create "AssemblyInfo" (fun _ ->
     let getAssemblyInfoAttributes (projectName:string) =
         let projectName =
             if projectName.Contains(".iOS") || projectName.Contains(".Android") then
                 projectName.Split('.').[0]
             else
                 projectName
-        [ Attribute.Title (projectName)
-          Attribute.Product project
-          Attribute.Description summary
-          Attribute.Version release.AssemblyVersion
-          Attribute.FileVersion release.AssemblyVersion
-          Attribute.CLSCompliant true
-          Attribute.Copyright copyright
+        [ AssemblyInfo.Title (projectName)
+          AssemblyInfo.Product project
+          AssemblyInfo.Description summary
+          AssemblyInfo.Version release.AssemblyVersion
+          AssemblyInfo.FileVersion release.AssemblyVersion
+          AssemblyInfo.CLSCompliant true
+          AssemblyInfo.Copyright copyright
         ]
 
     let getProjectDetails projectPath =
@@ -141,34 +169,33 @@ Target "AssemblyInfo" (fun _ ->
     |> Seq.map getProjectDetails
     |> Seq.iter (fun (projFileName, projectName, folderName, attributes) ->
         match projFileName with
-        | Fsproj -> CreateFSharpAssemblyInfo (folderName @@ "AssemblyInfo.fs") attributes
-        | Csproj -> CreateCSharpAssemblyInfo ((folderName @@ "Properties") @@ "AssemblyInfo.cs") attributes
-        | Vbproj -> CreateVisualBasicAssemblyInfo ((folderName @@ "My Project") @@ "AssemblyInfo.vb") attributes
+        | Fsproj -> AssemblyInfoFile.createFSharp (folderName @@ "AssemblyInfo.fs") attributes
+        | Csproj -> AssemblyInfoFile.createCSharp ((folderName @@ "Properties") @@ "AssemblyInfo.cs") attributes
+        | Vbproj -> AssemblyInfoFile.createVisualBasic ((folderName @@ "My Project") @@ "AssemblyInfo.vb") attributes
         )
 )
 
 // Copies binaries from default VS location to expected bin folder
 // But keeps a subdirectory structure for each project in the
 // src folder to support multiple project outputs
-Target "CopyBinaries" (fun _ ->
+Target.create "CopyBinaries" (fun _ ->
     activeProjects
     |>  Seq.map (fun f -> ((System.IO.Path.GetDirectoryName f) @@ "bin/Release", "bin" @@ (System.IO.Path.GetFileNameWithoutExtension f)))
-    |>  Seq.iter (fun (fromDir, toDir) -> CopyDir toDir fromDir (fun _ -> true))
+    |>  Seq.iter (fun (fromDir, toDir) -> Shell.copyDir toDir fromDir (fun _ -> true))
 )
 
 // --------------------------------------------------------------------------------------
 // Clean build results
 
-Target "Clean" (fun _ ->
-    CleanDirs ["bin"; "temp"]
+Target.create "Clean" (fun _ ->
+    Shell.cleanDirs ["bin"; "temp"]
 )
 
 // --------------------------------------------------------------------------------------
 // Build Converter project and updates the signatures.xml file.
-Target "UpdateSignatures" (fun _ ->
-    buildProjects
-    |> MSBuildRelease "" "Build"
-    |> ignore
+Target.create "UpdateSignatures" (fun _ ->
+    for proj in buildProjects do
+        DotNet.build (fun a -> a) proj
     
     let specUrl = @"https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
 //    let wglSpecUrl = @"https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/master/xml/gl.xml"
@@ -183,13 +210,13 @@ Target "UpdateSignatures" (fun _ ->
 
 // --------------------------------------------------------------------------------------
 // Build generator projects, and generates the bindings.
-Target "GenerateBindings" (fun _ ->
+Target.create "GenerateBindings" (fun _ ->
     generateBindings()
 )
 
 // --------------------------------------------------------------------------------------
 // Build generator projects, and generate bindings if they do not exist.
-Target "GenerateBindingsIfNeeded" (fun _ ->
+Target.create "GenerateBindingsIfNeeded" (fun _ ->
     if not (File.Exists("src/OpenTK/Graphics/OpenGL/GL.cs")) then
         generateBindings()
 )
@@ -197,28 +224,57 @@ Target "GenerateBindingsIfNeeded" (fun _ ->
 // --------------------------------------------------------------------------------------
 // Build library & test project
 
-Target "Build" (fun _ ->
-    activeProjects
-    |> MSBuildRelease "" "Build"
-    |> ignore
+Target.create "Build" (fun _ ->
+    for proj in activeProjects do
+        DotNet.build id proj
+)
+
+Target.create "BuildRewriter" (fun _ ->
+    for proj in buildProjects do
+        DotNet.build id proj
+)
+
+Target.create "BuildOpenTK" (fun _ ->
+    for proj in opentkProject do
+        DotNet.build id proj
+)
+
+Target.create "BuildTests" (fun _ ->
+    for proj in testProjects do
+        DotNet.build id proj
+)
+
+Target.create "RewriteBindings" (fun _ ->
+    Trace.log " --- Rewriting bindings --- "
+    let framework = "net20"
+    let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
+    let bindingsFile = "OpenTK.dll"
+    let bindingsOutput = "src/OpenTK/bin/Release/net20"
+
+    let targetPath = (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
+    let args = [ "--assembly"; targetPath; "--signing-key"; "../../../OpenTK.snk" ] |> asArgs
+    Shell.Exec("src/Generator.Rewrite/bin/Release/net461/Rewrite.exe", args, ".") |> ignore
+    //DotNet.exec id "run" ("--project " + projFile + " " + args) |> ignore
 )
 
 // --------------------------------------------------------------------------------------
 // Run the unit tests using test runner
 
-Target "RunTests" (fun _ ->
-    !! testAssemblies
-    |> xUnit2 (fun p ->
+Target.create "RunTests" (fun _ ->
+    let assemblies = (seq<string>) testAssemblies
+    Testing.XUnit2.run (fun p ->
         { p with
             ShadowCopy = true
             TimeOut = TimeSpan.FromMinutes 2.
             XmlOutputPath = Some "TestResults.xml" })
+            assemblies
 )
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
-Target "NuGet" (fun _ ->
+Target.create "NuGet" (fun _ ->
+    let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
     let xamExcludes =
         if isXamarinPlatform then
             []
@@ -226,27 +282,31 @@ Target "NuGet" (fun _ ->
             [ "OpenTK.Android"
               "OpenTK.iOS" ]
 
-
-    Paket.Pack(fun p ->
+    Paket.pack(fun p ->
         { p with
             OutputPath = "bin"
             ExcludedTemplates = xamExcludes
             Version = release.NugetVersion
-            ReleaseNotes = toLines release.Notes})
+            ReleaseNotes = notes})
 )
 
 
-Target "BuildPackage" DoNothing
+Target.create "BuildPackage" ignore
 
 // --------------------------------------------------------------------------------------
 // Run all targets by default. Invoke 'build <Target>' to override
 
-Target "All" DoNothing
+Target.create "All" ignore
+
+open Fake.Core.TargetOperators
 
 "Clean"
   ==> "AssemblyInfo"
   ==> "GenerateBindingsIfNeeded"
-  ==> "Build"
+  ==> "BuildRewriter"
+  ==> "BuildOpenTK"
+  ==> "RewriteBindings"
+  ==> "BuildTests"
   ==> "CopyBinaries"
   ==> "RunTests"
   ==> "All"
@@ -255,4 +315,4 @@ Target "All" DoNothing
   ==> "NuGet"
 
 
-RunTargetOrDefault "All"
+Target.runOrDefault "All"

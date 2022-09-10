@@ -26983,6 +26983,10 @@ namespace OpenTK.Graphics.ES31
         /// </summary>
         GlComputeWorkGroupSize = ((int)0x8267),
         /// <summary>
+        /// Original was GL_PROGRAM_BINARY_LENGTH = 0x8741
+        /// </summary>
+        ProgramBinaryLength = ((int)0x8741),
+        /// <summary>
         /// Original was GL_DELETE_STATUS = 0x8B80
         /// </summary>
         DeleteStatus = ((int)0x8B80),
@@ -36308,6 +36312,10 @@ namespace OpenTK.Graphics.ES31
         /// Original was GL_PROGRAM_BINARY_RETRIEVABLE_HINT = 0x8257
         /// </summary>
         ProgramBinaryRetrievableHint = ((int)0x8257),
+        /// <summary>
+        /// Original was GL_PROGRAM_BINARY_LENGTH = 0x8741
+        /// </summary>
+        ProgramBinaryLength = ((int)0x8741),
         /// <summary>
         /// Original was GL_DELETE_STATUS = 0x8B80
         /// </summary>
