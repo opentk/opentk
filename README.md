@@ -1,7 +1,10 @@
 OpenTK
 ======
 
-OpenTK is a large project. There are many components to work on, and we'd welcome almost any contribution. The community is friendly, welcoming and always ready to help you get your PRs merged!
+OpenTK is a large project. There are many components to work on, and we'd welcome almost any contribution. The community is friendly, welcoming and always ready to help you get your PRs merged! 
+
+[![kandi X-Ray](https://kandi.openweaver.com/badges/xray.svg)](https://kandi.openweaver.com/csharp/opentk/opentk)
+[![kandi Featured](https://kandi.openweaver.com/badges/featured.svg)](https://kandi.openweaver.com/collections/csharp/csharp-game-development)
 
 We have a very active discord server, if you need help, want to help, or are just curious, come join us!
 
