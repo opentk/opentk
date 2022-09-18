@@ -7,11 +7,13 @@ namespace OpenTK.Platform.Native.X11
     public partial class X11AbstractionLayer : IPalComponent
     {
         public string Name => "X11";
-        public PalComponents Provides => PalComponents.OpenGL | PalComponents.Window;
+        public PalComponents Provides => PalComponents.OpenGL | PalComponents.Window | PalComponents.Display;
 
         public XDisplayPtr Display { get; private set; }
 
         public int DefaultScreen { get; private set; }
+
+        public XWindow DefaultRootWindow { get; private set; }
 
         public void Initialize(PalComponents which)
         {
@@ -34,10 +36,16 @@ namespace OpenTK.Platform.Native.X11
             }
 
             DefaultScreen = LibX11.XDefaultScreen(Display);
+            DefaultRootWindow = LibX11.XDefaultRootWindow(Display);
 
             if (which.HasFlag(PalComponents.OpenGL))
             {
                 InitializeGL();
+            }
+
+            if (which.HasFlag(PalComponents.Display))
+            {
+                InitializeDisplay();
             }
         }
     }

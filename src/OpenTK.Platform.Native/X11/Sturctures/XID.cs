@@ -3,6 +3,19 @@ using System.Diagnostics;
 namespace OpenTK.Platform.Native.X11
 {
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    public struct XAtom
+    {
+        public ulong Id { get; }
+
+        public static readonly XAtom None = new XAtom(0);
+
+        public XAtom(ulong id)
+        {
+            Id = id;
+        }
+    }
+
+    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     public struct XDrawable
     {
         public ulong Id { get; }
@@ -28,6 +41,22 @@ namespace OpenTK.Platform.Native.X11
         public static readonly XColorMap None = new XColorMap(0);
 
         public XColorMap(ulong id)
+        {
+            Id = id;
+        }
+    }
+
+    /// <summary>
+    /// Generic XID type.
+    /// </summary>
+    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    public struct XID
+    {
+        public ulong Id { get; }
+
+        public static readonly XID None = new XID(0);
+
+        public XID(ulong id)
         {
             Id = id;
         }
