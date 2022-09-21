@@ -596,7 +596,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         [Pure]
         public static Vector2d Lerp(Vector2d a, Vector2d b, double blend)
@@ -611,7 +611,7 @@ namespace OpenTK.Mathematics
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(in Vector2d a, in Vector2d b, double blend, out Vector2d result)
         {
