@@ -592,7 +592,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
@@ -607,7 +607,7 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
