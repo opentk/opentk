@@ -719,6 +719,38 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <returns>a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</returns>
+        [Pure]
+        public static Vector4d Lerp(Vector4d a, Vector4d b, Vector4d blend)
+        {
+            a.X = (blend.X * (b.X - a.X)) + a.X;
+            a.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
+            a.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
+            a.W = (blend.W * (b.W - a.W)) + a.W;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
+        public static void Lerp(in Vector4d a, in Vector4d b, Vector4d blend, out Vector4d result)
+        {
+            result.X = (blend.X * (b.X - a.X)) + a.X;
+            result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
+            result.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
+            result.W = (blend.W * (b.W - a.W)) + a.W;
+        }
+
+        /// <summary>
         /// Interpolate 3 Vectors using Barycentric coordinates.
         /// </summary>
         /// <param name="a">First input Vector.</param>
