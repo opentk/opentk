@@ -66,9 +66,6 @@ Preview releases are running non-trivial applications successfully on .Net 6 acr
 
 Please drop by the discord for the latest updates!
 
-News
-===
-
 ### 2020-10-02
 
 OpenTK 4.0.0 is released with full availability.
