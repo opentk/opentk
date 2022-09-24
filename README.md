@@ -58,6 +58,17 @@ See https://github.com/opentk/glfw-redist for more details.
 News
 ===
 
+### 2022-09-24
+
+OpenTK 5.0.0 is still under active development and usage.
+
+Preview releases are running non-trivial applications successfully on .Net 6 across all platforms.
+
+Please drop by the discord for the latest updates!
+
+News
+===
+
 ### 2020-10-02
 
 OpenTK 4.0.0 is released with full availability.
