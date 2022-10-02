@@ -36,7 +36,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4h : ISerializable, IEquatable<Vector4h>
+    public struct Vector4h : ISerializable, IEquatable<Vector4h>, IFormattable
     {
         /// <summary>
         /// The X component of the Half4.
@@ -1358,6 +1358,18 @@ namespace OpenTK.Mathematics
                 W.ToString(),
                 MathHelper.ListSeparator
             );
+        }
+
+        /// <inheritdoc />
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{4} {1}{4} {2}{4} {3})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                Z.ToString(format, formatProvider),
+                W.ToString(format, formatProvider),
+                MathHelper.ListSeparator);
         }
 
         /// <inheritdoc/>

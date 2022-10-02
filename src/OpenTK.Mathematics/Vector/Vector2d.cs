@@ -34,7 +34,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2d : IEquatable<Vector2d>
+    public struct Vector2d : IEquatable<Vector2d>, IFormattable
     {
         /// <summary>
         /// The X coordinate of this instance.
@@ -982,6 +982,16 @@ namespace OpenTK.Mathematics
         public override string ToString()
         {
             return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{2} {1})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                MathHelper.ListSeparator);
         }
 
         /// <inheritdoc/>

@@ -1038,7 +1038,11 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public string ToString(string format, IFormatProvider formatProvider)
         {
-            throw new NotImplementedException();
+            return string.Format(
+                "({0}{2} {1})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                MathHelper.ListSeparator);
         }
 
         /// <inheritdoc/>

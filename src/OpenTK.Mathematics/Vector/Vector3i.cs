@@ -24,7 +24,7 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector3i : IEquatable<Vector3i>
+    public struct Vector3i : IEquatable<Vector3i>, IFormattable
     {
         /// <summary>
         /// The X component of the Vector3i.
@@ -791,6 +791,17 @@ namespace OpenTK.Mathematics
         public override string ToString()
         {
             return string.Format("({0}{3} {1}{3} {2})", X, Y, Z, MathHelper.ListSeparator);
+        }
+
+        /// <inheritdoc />
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{3} {1}{3} {2})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                Z.ToString(format, formatProvider),
+                MathHelper.ListSeparator);
         }
 
         /// <inheritdoc />

@@ -36,7 +36,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2h : ISerializable, IEquatable<Vector2h>
+    public struct Vector2h : ISerializable, IEquatable<Vector2h>, IFormattable
     {
         /// <summary>
         /// The X component of the Half2.
@@ -332,6 +332,16 @@ namespace OpenTK.Mathematics
         public override string ToString()
         {
             return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{2} {1})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                MathHelper.ListSeparator);
         }
 
         /// <inheritdoc/>
