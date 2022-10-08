@@ -34,10 +34,22 @@ namespace OpenTK.Platform.Egl
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
-            WinWindowInfo win_win = (WinWindowInfo)window;
-            IntPtr egl_display = GetDisplay(win_win.DeviceContext);
-            EglWindowInfo egl_win = new OpenTK.Platform.Egl.EglWindowInfo(win_win.Handle, egl_display);
-            return new EglWinContext(mode, egl_win, shareContext, major, minor, flags);
+            var eglWindowInfo = window as EglWindowInfo;
+            // Keep compatibility with previouse version of OpenTK
+            // which could use only single window with given context
+            // because there were no way to create EglWindowInfo on windows.
+            if (eglWindowInfo == null)
+            {
+                var windowsWindowInfo = (WinWindowInfo)window;
+                // It is much better to get a default display on windows
+                // because it allows to use multiple window infos with single context.
+                var eglDisplay = GetDisplay(IntPtr.Zero);
+                eglDisplay = eglDisplay == IntPtr.Zero
+                    ? GetDisplay(windowsWindowInfo.DeviceContext)
+                    : eglDisplay;
+                eglWindowInfo = new EglWindowInfo(windowsWindowInfo.Handle, eglDisplay);
+            }
+            return new EglWinContext(mode, eglWindowInfo, shareContext, major, minor, flags);
         }
 
         public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)

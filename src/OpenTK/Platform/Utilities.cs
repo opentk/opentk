@@ -235,11 +235,26 @@ namespace OpenTK.Platform
         /// Creates an IWindowInfo instance for the windows platform.
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
+        /// <param name="flags">Graphics context flags.</param>
         /// <returns>A new IWindowInfo instance.</returns>
-        public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle)
+        public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle, GraphicsContextFlags flags = GraphicsContextFlags.Default)
         {
             #if WIN32
-            return new OpenTK.Platform.Windows.WinWindowInfo(windowHandle, null);
+            var windowInfo = new Windows.WinWindowInfo(windowHandle, null);
+            if ((flags & GraphicsContextFlags.Embedded) == GraphicsContextFlags.Embedded)
+            {
+                // It is much better to get a default display on windows
+                // because it allows to use multiple window infos with single context.
+                var eglDisplay = Egl.Egl.GetDisplay(IntPtr.Zero);
+                eglDisplay = eglDisplay == IntPtr.Zero
+                    ? Egl.Egl.GetDisplay(windowInfo.DeviceContext)
+                    : eglDisplay;
+                return new Egl.EglWindowInfo(windowInfo.Handle, eglDisplay);
+            }
+            else
+            {
+                return windowInfo;
+            }
             #else
             return new Dummy.DummyWindowInfo();
             #endif
