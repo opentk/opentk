@@ -8,16 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Windowing.Common\OpenTK.Windowing.Common.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Windowing.Desktop\OpenTK.Windowing.Desktop.csproj" />
     <ProjectReference Include="..\..\src\OpenTK.Windowing.GraphicsLibraryFramework\OpenTK.Windowing.GraphicsLibraryFramework.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="OpenTK.Graphics">
-      <HintPath>..\..\src\OpenTK.Graphics\bin\Release\netstandard2.1\OpenTK.Graphics.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

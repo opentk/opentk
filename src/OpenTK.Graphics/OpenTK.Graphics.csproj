@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -11,16 +10,50 @@
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
 
+  <!-- Define what files we depend on and which files are generated -->
   <ItemGroup>
+    <GLSpec Include="..\gl.xml" />
+    <GeneratedFiles Include="ES11/*.cs;ES20/*.cs;ES30/*.cs;OpenGL2/*.cs;OpenGL4/*.cs" Exclude="**/Helper.cs"/>
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' == 'Windows_NT' and '$(DontGenBindings)' != 'true'">
+  <!--  'DispatchToInnerBuilds' is so that this target is only run once in contrast to task that run after 'PreBuildEvent' which get run multiple times for each target framework  -->
+  <Target Name="Download gl xml" BeforeTargets="DispatchToInnerBuilds">
+    <!-- Here we check if gl.xml exists, if it doesn't we download the file. -->
+    <DownloadFile SourceUrl="https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml" DestinationFolder=".." SkipUnchangedFiles="true" Condition="Exists('../gl.xml') == 'false'" />
+  </Target>
+
+  <!-- After we've downloaded the spec file we can generate the bindings if needed. By setting Inputs and Outputs msbuild decides when we need to generate the bindings. -->
+  <Target Name="Generate bindings" AfterTargets="Download gl xml" Inputs="@(GLSpec)" Outputs="@(GeneratedFiles)">
+    <Exec Command="echo Generating bindings..." />
+    <Exec Command="dotnet run --project ./src/Generator.Bind/Generator.Bind.csproj --framework netcoreapp3.1" 
+          WorkingDirectory="../../" 
+          StandardOutputImportance="low" 
+          StandardErrorImportance="low" />
+    <Exec Command="echo Generated bindings!" />
+  </Target>
+
+  <!-- After we have compiled the dll we run the rewriter -->
+  <Target Name="PostBuild" BeforeTargets="PostBuildEvent">
+    <Exec Command="echo Rewriting src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" />
+    <Exec Command="dotnet run --project ./src/Generator.Rewrite/Generator.Rewrite.csproj --framework netcoreapp3.1  -- -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" />
+    <Exec Command="echo Rewrote bindings" />
+  </Target>
+
+  <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' == 'Windows_NT' and '$(DontGenBindings)' != 'true'">
     <Exec Command="build.cmd -t UpdateBindings" WorkingDirectory="../../" />
+    <Exec Command="echo ON" />
+    <Exec Command="echo UpdateBindings!" />
+    <Exec Command="dir" />
   </Target>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' != 'Windows_NT' and '$(DontGenBindings)' != 'true'">
     <Exec Command="bash build.sh -t UpdateBindings" WorkingDirectory="../../" />
+    <Exec Command="echo UpdateBindings!" />
   </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT' and '$(DontGenBindings)' != 'true'">
+    <Exec Command="echo Rewrite!" />
+  </Target>-->
 
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
