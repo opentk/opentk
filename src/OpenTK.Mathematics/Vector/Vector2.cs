@@ -641,11 +641,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         [Pure]
         public static Vector2 Lerp(Vector2 a, Vector2 b, float blend)
@@ -656,16 +656,44 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(in Vector2 a, in Vector2 b, float blend, out Vector2 result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
             result.Y = (blend * (b.Y - a.Y)) + a.Y;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <returns>a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</returns>
+        [Pure]
+        public static Vector2 Lerp(Vector2 a, Vector2 b, Vector2 blend)
+        {
+            a.X = (blend.X * (b.X - a.X)) + a.X;
+            a.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
+        public static void Lerp(in Vector2 a, in Vector2 b, Vector2 blend, out Vector2 result)
+        {
+            result.X = (blend.X * (b.X - a.X)) + a.X;
+            result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
         }
 
         /// <summary>
