@@ -88,7 +88,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public bool this[MouseButton button]
         {
             get => _buttons[(int)button];
-            internal set { _buttons[(int)button] = value; }
+            internal set => _buttons[(int)button] = value;
         }
 
         /// <summary>
