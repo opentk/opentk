@@ -176,6 +176,32 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         }
 
         /// <summary>
+        /// Gets whether the specified button is pressed in the current frame but released in the previous frame.
+        /// </summary>
+        /// <remarks>
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="button">The <see cref="MouseButton">button</see> to check.</param>
+        /// <returns>True if the button is pressed in this frame, but not the last frame.</returns>
+        public bool IsButtonPressed(MouseButton button)
+        {
+            return _buttons[(int)button] && !_buttonsPrevious[(int)button];
+        }
+
+        /// <summary>
+        /// Gets whether the specified button is released in the current frame but pressed in the previous frame.
+        /// </summary>
+        /// <remarks>
+        /// "Frame" refers to invocations of <see cref="NativeWindow.ProcessEvents()"/> here.
+        /// </remarks>
+        /// <param name="button">The <see cref="MouseButton">button</see> to check.</param>
+        /// <returns>True if the button is released in this frame, but pressed the last frame.</returns>
+        public bool IsButtonReleased(Keys button)
+        {
+            return !_buttons[(int)button] && _buttonsPrevious[(int)button];
+        }
+
+        /// <summary>
         /// Gets an immutable snapshot of this MouseState.
         /// This can be used to save the current mouse state for comparison later on.
         /// </summary>
