@@ -468,9 +468,10 @@ namespace Bind
 
         private void WriteEnums(BindStreamWriter sw, EnumCollection enums, FunctionCollection wrappers)
         {
-            //sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
+            sw.WriteLine("#pragma warning disable 3019");   // CLSCompliant attribute
+            sw.WriteLine("#pragma warning disable 3021");   // Unnecessary CLSCompliant attribute
             //sw.WriteLine("#pragma warning disable 1591");   // Missing doc comments
-            //sw.WriteLine();
+            sw.WriteLine();
 
             if ((Settings.Compatibility & Settings.Legacy.NestedEnums) != Settings.Legacy.None)
             {

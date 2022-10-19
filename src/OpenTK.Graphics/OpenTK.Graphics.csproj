@@ -13,7 +13,7 @@
   <!-- Define what files we depend on and which files are generated -->
   <ItemGroup>
     <GLSpec Include="..\gl.xml" />
-    <GeneratedFiles Include="ES11/ES11.cs;ES11/ES11Enums.cs;ES20/ES20.cs;ES20/ES20Enums.cs;ES30/ES30.cs;ES30/ES30Enums.cs;OpenGL2/GL.cs;OpenGL2/GLEnums.cs;OpenGL4/GL4.cs;OpenGL4/GL4Enums.cs" Exclude="**/Helper.cs"/>
+    <GeneratedFiles Include="ES11/ES11.cs;ES11/ES11Enums.cs;ES20/ES20.cs;ES20/ES20Enums.cs;ES30/ES30.cs;ES30/ES30Enums.cs;OpenGL2/GL.cs;OpenGL2/GLEnums.cs;OpenGL4/GL4.cs;OpenGL4/GL4Enums.cs" Exclude="**/Helper.cs" />
   </ItemGroup>
 
   <!--  'DispatchToInnerBuilds' is so that this target is only run once in contrast to task that run after 'PreBuildEvent' which get run multiple times for each target framework  -->
@@ -22,25 +22,21 @@
     <DownloadFile SourceUrl="https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml" DestinationFolder=".." SkipUnchangedFiles="true" Condition="Exists('../gl.xml') == 'false'" />
   </Target>
 
+  <!-- We build this project once for the entire build, then we can call into the exe directly to avoid having multiple processes trying to build the project at the same time and failing.  -->
   <Target Name="Build bindings generator" BeforeTargets="DispatchToInnerBuilds">
-    <Exec Command="dotnet build ./src/Generator.Bind/Generator.Bind.csproj --framework netcoreapp3.1" 
-          WorkingDirectory="../../" 
-          StandardOutputImportance="low" 
-          StandardErrorImportance="low" />
+    <Exec Command="dotnet build ./src/Generator.Bind/Generator.Bind.csproj --framework netcoreapp3.1" WorkingDirectory="../../" StandardOutputImportance="low" StandardErrorImportance="low" />
   </Target>
   
   <!-- After we've downloaded the spec file we can generate the bindings if needed. By setting Inputs and Outputs msbuild decides when we need to generate the bindings. -->
   <Target Name="Generate bindings" AfterTargets="Download gl xml" BeforeTargets="CoreCompile;CopyFilesToOutputDirectory" Inputs="@(GLSpec)" Outputs="@(GeneratedFiles)">
     <Exec Command="echo Generating bindings..." />
-    <Exec Command="dotnet run --no-build --project ./src/Generator.Bind/Generator.Bind.csproj --framework netcoreapp3.1" 
-          WorkingDirectory="../../" 
-          StandardOutputImportance="low" 
-          StandardErrorImportance="low"  Condition="false"/>
+
     <Exec Command=".\src\Generator.Bind\bin\$(Configuration)\netcoreapp3.1\Bind.exe" WorkingDirectory="../../" />
-    <Exec Command="echo Generated bindings!" />
     
+    <Exec Command="echo Generated bindings!" />
+
     <ItemGroup>
-      <Compile Include="@(GeneratedFiles)" />
+      <Compile Include="@(GeneratedFiles)" Condition="'%(Compile.Identity)' != '%(GeneratedFiles.GeneratedFiles)'"/>
       <!-- For clean to work properly -->
       <FileWrites Include="@(GeneratedFiles)" />
     </ItemGroup>
