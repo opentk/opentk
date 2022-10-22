@@ -11,20 +11,16 @@
 
     <!-- Add a project reference here so that the Generator.Bind project is built, 
     but make sure that we don't pass framework configs to it and exlude all assets from the final build. -->
-    <ProjectReference Include="..\Generator.Bind\Generator.Bind.csproj" 
-                      SkipGetTargetFrameworkProperties="true" 
-                      UndefineProperties="TargetFramework" 
-                      ReferenceOutputAssembly="false" 
-                      ExcludeAssets="all" />
+    <ProjectReference Include="..\Generator.Bind\Generator.Bind.csproj" SkipGetTargetFrameworkProperties="true" UndefineProperties="TargetFramework" ReferenceOutputAssembly="false" ExcludeAssets="all" />
 
     <!-- FIXME: Fix error MSB4057: The target "GetTargetPath" does not exist in the project -->
     <!-- Add a project reference here so that the Generator.Rewrite project is built, 
     but make sure that we don't pass framework configs to it and exlude all assets from the final build. -->
-    <!--<ProjectReference Include="..\Generator.Rewrite\Generator.Rewrite.csproj"
+    <ProjectReference Include="..\Generator.Rewrite\Generator.Rewrite.csproj"
                       SkipGetTargetFrameworkProperties="true"
                       UndefineProperties="TargetFramework"
                       ReferenceOutputAssembly="false"
-                      ExcludeAssets="all" />-->
+                      ExcludeAssets="all" />
   </ItemGroup>
 
   <!-- Define what files we depend on and which files are generated -->
@@ -41,8 +37,16 @@
     <DownloadFile SourceUrl="https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml" DestinationFolder=".." SkipUnchangedFiles="true" Condition="Exists('../gl.xml') == 'false'" />
   </Target>
 
+  <Target Name="BeforeResolveReferences" >
+    <Message Text="before resolve references" Importance="high" />
+  </Target>
+
+  <Target Name="AfterResolveReferences" >
+    <Message Text="after resolve references" Importance="high" />
+  </Target>
+  
   <!-- After we've downloaded the spec file we can generate the bindings if needed. By setting Inputs and Outputs msbuild decides when we need to generate the bindings. -->
-  <Target Name="Generate bindings" AfterTargets="Download gl xml" BeforeTargets="CoreCompile;CopyFilesToOutputDirectory" Inputs="@(GLSpec);@(GeneratorExe)" Outputs="@(GeneratedFiles)">
+  <Target Name="Generate bindings" DependsOnTargets="Download gl xml;AfterResolveReferences" BeforeTargets="CoreCompile;CopyFilesToOutputDirectory" Inputs="@(GLSpec);@(GeneratorExe)" Outputs="@(GeneratedFiles)">
     <Message Text="Generating bindings..." Importance="high" />
 
     <!-- Run the exe directly to avoid dotnet rebuilding anything. -->

@@ -94,18 +94,12 @@ let testDir = binDir </> "test"
 // Projects & Assemblies
 // ---------
 
-let toolProjects =
-    !! "src/Generators/**/*.??proj"
-
 let releaseProjects =
     !! "src/**/*.??proj"
-    -- "src/Generator/**"
     -- "src/Generator.Bind/**"
     -- "src/Generator.Converter/**"
     -- "src/Generator.Rewrite/**"
-    -- "src/SpecificationOpenGL/**"
     -- "src/OpenAL/OpenALGenerator/**"
-    -- "src/OpenAL/OpenALTest/**"
     -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
 
 
@@ -117,9 +111,6 @@ let allTestProjects =
 let ciTestProjects =
     allTestProjects
     -- "tests/**/*.Integration.??proj"
-
-let nugetCommandRunnerPath =
-    ".fake/build.fsx/packages/NuGet.CommandLine/tools/NuGet.exe" |> Fake.IO.Path.convertWindowsToCurrentPath
 
 // ---------
 // Other Targets
@@ -152,7 +143,7 @@ let specSource = "https://raw.githubusercontent.com/frederikja163/OpenGL-Registr
 
 let asArgs args = args |> List.map (fun ( x: string) -> sprintf "\"%s\"" x) |> String.concat " "
 
-
+// TODO: We can possibly remove this as this is in the OpenTK.Graphics project now. All we need to do is make sure the file gets deleted so that the build will download it.
 Target.create "UpdateSpec" (fun _ ->
     Trace.log " --- Updating spec --- "
     specSource
@@ -266,13 +257,13 @@ Target.create "RunCITests" (fun _ ->
     Trace.log " --- Testing CI-safe projects in parallel --- "
 
 
-    //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+    // Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
     runTests ciTestProjects)
 
 Target.create "RunAllTests" (fun _ ->
     Trace.log " --- Testing ALL projects in parallel --- "
 
-    //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+    // Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
     runTests allTestProjects)
 
 
@@ -383,9 +374,9 @@ open Fake.Core.TargetOperators
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
-  ==> "UpdateBindingsRewrite"
+//  ==> "UpdateBindingsRewrite"
   ==> "Build"
-  ==> "RewriteBindings"
+//  ==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
