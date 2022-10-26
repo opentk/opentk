@@ -5,7 +5,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Graphics
 {
-    public static unsafe partial class GLNative
+    public static unsafe partial class GLPointers
     {
         internal static delegate* unmanaged<uint, float, void> _Accum_fnptr = &Accum_Lazy;
         [UnmanagedCallersOnly]

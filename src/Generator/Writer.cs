@@ -64,7 +64,7 @@ namespace Generator.Writing
             writer.WriteLine($"namespace {GraphicsNamespace}");
             using (writer.CsScope())
             {
-                writer.WriteLine($"public static unsafe partial class GLNative");
+                writer.WriteLine($"public static unsafe partial class GLPointers");
                 using (writer.CsScope())
                 {
                     foreach (NativeFunction function in nativeFunctions)
@@ -82,7 +82,7 @@ namespace Generator.Writing
             // Write lazy loader function.
             string name, returnType;
             StringBuilder paramNames, delegateTypes, signature;
-            GetNativeFunctionSignature(function, postfixName, SwapUnderlyingTypeForPrimitive, out name, out paramNames, out delegateTypes, out signature, out bool _, out returnType);
+            GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: true, out name, out paramNames, out delegateTypes, out signature, out bool _, out returnType);
 
             writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
 
@@ -106,27 +106,7 @@ namespace Generator.Writing
             writer.WriteLine();
         }
 
-        private static string SwapUnderlyingTypeForPrimitive(BaseCSType type)
-        {
-            if (type is CSStruct csstruct)
-            {
-                return csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type.");
-            }
-            else if (type is CSEnum csenum)
-            {
-                return "uint";
-            }
-            else if (type is CSPointer cspointer)
-            {
-                return SwapUnderlyingTypeForPrimitive(cspointer.BaseType) + "*";
-            }
-            else
-            {
-                return type.ToCSString();
-            }
-        }
-
-        private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, Func<BaseCSType, string> typeToString,
+        private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, bool swapTypesForUnderlyingType,
             out string name, out StringBuilder paramNames, out StringBuilder delegateTypes, out StringBuilder signature, out bool castReturnType, out string returnType)
         {
             // Write delegate field initialized to the lazy loader.
@@ -141,7 +121,7 @@ namespace Generator.Writing
             for (int i = 0; i < function.Parameters.Count; i++)
             {
                 var param = function.Parameters[i];
-                string type = typeToString(param.Type);
+                string type = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(param.Type) : param.Type.ToCSString();
 
                 string primitiveType = SwapUnderlyingTypeForPrimitive(param.Type);
                 if (type != primitiveType)
@@ -162,7 +142,7 @@ namespace Generator.Writing
                 delegateTypes.Append(", ");
             }
 
-            returnType = typeToString(function.ReturnType);
+            returnType = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(function.ReturnType) : function.ReturnType.ToCSString();
             string primitiveReturnType = SwapUnderlyingTypeForPrimitive(function.ReturnType);
             if (returnType != primitiveReturnType)
             {
@@ -175,6 +155,26 @@ namespace Generator.Writing
             }
 
             delegateTypes.Append(returnType);
+
+            static string SwapUnderlyingTypeForPrimitive(BaseCSType type)
+            {
+                // Peel off all pointers
+                StringBuilder pointers = new StringBuilder();
+                while (type is CSPointer cspointer)
+                {
+                    type = cspointer.BaseType;
+                    pointers.Append('*');
+                }
+
+                string underlyingType = type switch
+                {
+                    CSStruct csstruct => csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type."),
+                    CSEnum => "uint",
+                    _ => type.ToCSString()
+                };
+
+                return underlyingType + pointers;
+            }
         }
 
         private static void WriteNativeFunctions(
@@ -219,12 +219,16 @@ namespace Generator.Writing
 
             writer.Flush();
         }
+
         private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
         {
-            string name, returnType;
-            StringBuilder paramNames, delegateTypes, signature;
-            bool handleAbiDifferenceForTypesafeHandles;
-            GetNativeFunctionSignature(function, postfixName, type => type.ToCSString(), out name, out paramNames, out delegateTypes, out signature, out handleAbiDifferenceForTypesafeHandles, out returnType);
+            GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: false,
+                out string name,
+                out StringBuilder paramNames,
+                out StringBuilder delegateTypes,
+                out StringBuilder signature,
+                out bool handleAbiDifferenceForTypesafeHandles,
+                out string returnType);
 
             if (documentation != null)
             {
@@ -237,11 +241,11 @@ namespace Generator.Writing
                 // This works because all of the structs that get here should have a defined cast from the primitive type to the struct type.
                 // These casts need to be added manually for this to work correctly.
                 // - 2021-06-22
-                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLNative._{name}_fnptr({paramNames});");
+                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLPointers._{name}_fnptr({paramNames});");
             }
             else
             {
-                writer.WriteLine($"public static {returnType} {name}({signature}) => GLNative._{function.FunctionName}_fnptr({paramNames});");
+                writer.WriteLine($"public static {returnType} {name}({signature}) => GLPointers._{function.FunctionName}_fnptr({paramNames});");
             }
 
             writer.WriteLine();
