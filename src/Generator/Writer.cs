@@ -69,20 +69,24 @@ namespace Generator.Writing
                 {
                     foreach (NativeFunction function in nativeFunctions)
                     {
-                        WriteNativeMethod(writer, function, false, null);
+                        WriteFunctionPointer(writer, function);
                     }
                 }
             }
         }
 
-        private static void WriteNativeMethod(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
+        private static void WriteFunctionPointer(IndentedTextWriter writer, NativeFunction function)
         {
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
             // Write lazy loader function.
-            string name, returnType;
-            StringBuilder paramNames, delegateTypes, signature;
-            GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: true, out name, out paramNames, out delegateTypes, out signature, out bool _, out returnType);
+            GetNativeFunctionSignature(function, postfixName: false, swapTypesForUnderlyingType: true,
+                out string name,
+                out StringBuilder paramNames,
+                out StringBuilder delegateTypes,
+                out StringBuilder signature,
+                out bool _,
+                out string returnType);
 
             writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
 
