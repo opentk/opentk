@@ -109,9 +109,6 @@ namespace Generator.Writing
         private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, bool swapTypesForUnderlyingType,
             out string name, out StringBuilder paramNames, out StringBuilder delegateTypes, out StringBuilder signature, out bool castReturnType, out string returnType)
         {
-            // Write delegate field initialized to the lazy loader.
-            // Write public function definition that calls delegate.
-            // Write lazy loader function.
             name = function.FunctionName;
             if (postfixName) name += "_";
 
