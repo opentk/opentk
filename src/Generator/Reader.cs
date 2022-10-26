@@ -46,12 +46,12 @@ namespace Generator
             FileStream stream;
             if (File.Exists(filePath))
             {
-                Logger.Info($"Found cache file for gl.xml, using that. (path: {Path.GetFullPath(filePath)})");
+                Logger.Info($"Found cache file for gl.xml, using that.");
                 stream = File.OpenRead(filePath);
             }
             else
             {
-                Logger.Info($"Didn't find cache file for gl.xml, downloading from {url}.");
+                Logger.Info($"Didn't find cache file for gl.xml, downloading from {url}. (looked for gl.xml in this directory: {Path.GetFullPath(filePath)})");
                 if (!Directory.Exists(TempDirectory))
                 {
                     Directory.CreateDirectory(TempDirectory);
