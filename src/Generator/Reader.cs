@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text.Json;
 using System.Linq;
+using System.Reflection;
 
 namespace Generator
 {
@@ -36,7 +37,7 @@ namespace Generator
 
     public static class Reader
     {
-        private static readonly string TempDirectory = Path.Combine("..", "..", "..", "SpecificationFiles");
+        private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
         public static FileStream ReadSpecFromGithub()
         {
