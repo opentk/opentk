@@ -119,7 +119,7 @@ namespace Generator.Writing
     {
         public override string ToCSString()
         {
-            return "byte";
+            return "bool";
         }
     }
 

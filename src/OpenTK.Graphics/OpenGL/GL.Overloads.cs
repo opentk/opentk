@@ -123,21 +123,6 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="ColorMask"/>
-        public static unsafe void ColorMask(bool red, bool green, bool blue, bool alpha)
-        {
-            byte red_byte = (byte)(red ? 1 : 0);
-            byte green_byte = (byte)(green ? 1 : 0);
-            byte blue_byte = (byte)(blue ? 1 : 0);
-            byte alpha_byte = (byte)(alpha ? 1 : 0);
-            ColorMask(red_byte, green_byte, blue_byte, alpha_byte);
-        }
-        /// <inheritdoc cref="DepthMask"/>
-        public static unsafe void DepthMask(bool flag)
-        {
-            byte flag_byte = (byte)(flag ? 1 : 0);
-            DepthMask(flag_byte);
-        }
         /// <inheritdoc cref="ReadPixels"/>
         public static unsafe void ReadPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, IntPtr pixels)
         {
@@ -172,25 +157,25 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, Span<byte> data)
+        public static unsafe void GetBoolean(GetPName pname, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, byte[] data)
+        public static unsafe void GetBoolean(GetPName pname, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleanv(pname, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleanv"/>
-        public static unsafe void GetBoolean(GetPName pname, ref byte data)
+        public static unsafe void GetBoolean(GetPName pname, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleanv(pname, data_ptr);
             }
@@ -478,10 +463,10 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteTextures"/>
-        public static unsafe void DeleteTexture(in TextureHandle textures)
+        public static unsafe void DeleteTexture(in TextureHandle texture)
         {
             int n = 1;
-            fixed(TextureHandle* textures_handle = &textures)
+            fixed(TextureHandle* textures_handle = &texture)
             {
                 DeleteTextures(n, textures_handle);
             }
@@ -515,9 +500,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenTextures"/>
         public static unsafe TextureHandle GenTexture()
         {
-            TextureHandle textures;
+            TextureHandle texture;
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -526,15 +511,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
-            return textures;
+            return texture;
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe void GenTexture(out TextureHandle textures)
+        public static unsafe void GenTexture(out TextureHandle texture)
         {
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -543,7 +528,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
         }
         /// <inheritdoc cref="GenTextures"/>
@@ -643,12 +628,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 TexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels_ptr);
             }
-        }
-        /// <inheritdoc cref="SampleCoverage"/>
-        public static unsafe void SampleCoverage(float value, bool invert)
-        {
-            byte invert_byte = (byte)(invert ? 1 : 0);
-            SampleCoverage(value, invert_byte);
         }
         /// <inheritdoc cref="CompressedTexImage3D"/>
         public static unsafe void CompressedTexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, IntPtr data)
@@ -997,11 +976,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GenQueries"/>
-        public static unsafe QueryHandle GenQuerie()
+        public static unsafe QueryHandle GenQuery()
         {
-            QueryHandle ids;
+            QueryHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -1010,15 +989,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             GenQueries(n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="GenQueries"/>
-        public static unsafe void GenQuerie(out QueryHandle ids)
+        public static unsafe void GenQuery(out QueryHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -1027,7 +1006,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             GenQueries(n, ids_handle);
         }
         /// <inheritdoc cref="GenQueries"/>
@@ -1057,10 +1036,10 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteQueries"/>
-        public static unsafe void DeleteQuerie(in QueryHandle ids)
+        public static unsafe void DeleteQuery(in QueryHandle id)
         {
             int n = 1;
-            fixed(QueryHandle* ids_handle = &ids)
+            fixed(QueryHandle* ids_handle = &id)
             {
                 DeleteQueries(n, ids_handle);
             }
@@ -1164,10 +1143,10 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteBuffers"/>
-        public static unsafe void DeleteBuffer(in BufferHandle buffers)
+        public static unsafe void DeleteBuffer(in BufferHandle buffer)
         {
             int n = 1;
-            fixed(BufferHandle* buffers_handle = &buffers)
+            fixed(BufferHandle* buffers_handle = &buffer)
             {
                 DeleteBuffers(n, buffers_handle);
             }
@@ -1201,9 +1180,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenBuffers"/>
         public static unsafe BufferHandle GenBuffer()
         {
-            BufferHandle buffers;
+            BufferHandle buffer;
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -1212,15 +1191,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
-            return buffers;
+            return buffer;
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe void GenBuffer(out BufferHandle buffers)
+        public static unsafe void GenBuffer(out BufferHandle buffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -1229,7 +1208,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="GenBuffers"/>
@@ -2320,8 +2299,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv"/>
@@ -2330,8 +2308,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv"/>
@@ -2340,8 +2317,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv"/>
@@ -2351,8 +2327,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv"/>
@@ -2361,8 +2336,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv"/>
@@ -2371,8 +2345,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
@@ -2382,8 +2355,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
@@ -2392,8 +2364,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
@@ -2402,8 +2373,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib1dv"/>
@@ -2987,8 +2957,7 @@ namespace OpenTK.Graphics.OpenGL
         public static unsafe void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, nint offset)
         {
             void* pointer = (void*)offset;
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribPointer(index, size, type, normalized_byte, stride, pointer);
+            VertexAttribPointer(index, size, type, normalized, stride, pointer);
         }
         /// <inheritdoc cref="UniformMatrix2x3fv"/>
         public static unsafe void UniformMatrix2x3f(int location, bool transpose, in Matrix2x3 value)
@@ -2997,8 +2966,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv"/>
@@ -3007,8 +2975,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv"/>
@@ -3017,8 +2984,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
@@ -3028,8 +2994,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
@@ -3038,8 +3003,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
@@ -3048,8 +3012,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv"/>
@@ -3059,8 +3022,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv"/>
@@ -3069,8 +3031,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv"/>
@@ -3079,8 +3040,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv"/>
@@ -3090,8 +3050,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv"/>
@@ -3100,8 +3059,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv"/>
@@ -3110,8 +3068,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv"/>
@@ -3121,8 +3078,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv"/>
@@ -3131,8 +3087,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv"/>
@@ -3141,8 +3096,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv"/>
@@ -3152,8 +3106,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv"/>
@@ -3162,8 +3115,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv"/>
@@ -3172,39 +3124,29 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3fv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
-        /// <inheritdoc cref="ColorMaski"/>
-        public static unsafe void ColorMaski(uint index, bool r, bool g, bool b, bool a)
-        {
-            byte r_byte = (byte)(r ? 1 : 0);
-            byte g_byte = (byte)(g ? 1 : 0);
-            byte b_byte = (byte)(b ? 1 : 0);
-            byte a_byte = (byte)(a ? 1 : 0);
-            ColorMaski(index, r_byte, g_byte, b_byte, a_byte);
-        }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<byte> data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, Span<bool> data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, byte[] data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, bool[] data)
         {
-            fixed (byte* data_ptr = data)
+            fixed (bool* data_ptr = data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
         }
         /// <inheritdoc cref="GetBooleani_v"/>
-        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref byte data)
+        public static unsafe void GetBoolean(BufferTargetARB target, uint index, ref bool data)
         {
-            fixed (byte* data_ptr = &data)
+            fixed (bool* data_ptr = &data)
             {
                 GetBooleani_v(target, index, data_ptr);
             }
@@ -4002,10 +3944,10 @@ namespace OpenTK.Graphics.OpenGL
             return returnValue_str;
         }
         /// <inheritdoc cref="DeleteRenderbuffers"/>
-        public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffers)
+        public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffer)
         {
             int n = 1;
-            fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffers)
+            fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffer)
             {
                 DeleteRenderbuffers(n, renderbuffers_handle);
             }
@@ -4039,9 +3981,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenRenderbuffers"/>
         public static unsafe RenderbufferHandle GenRenderbuffer()
         {
-            RenderbufferHandle renderbuffers;
+            RenderbufferHandle renderbuffer;
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4050,15 +3992,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             GenRenderbuffers(n, renderbuffers_handle);
-            return renderbuffers;
+            return renderbuffer;
         }
         /// <inheritdoc cref="GenRenderbuffers"/>
-        public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffers)
+        public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4067,7 +4009,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             GenRenderbuffers(n, renderbuffers_handle);
         }
         /// <inheritdoc cref="GenRenderbuffers"/>
@@ -4121,10 +4063,10 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteFramebuffers"/>
-        public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffers)
+        public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffer)
         {
             int n = 1;
-            fixed(FramebufferHandle* framebuffers_handle = &framebuffers)
+            fixed(FramebufferHandle* framebuffers_handle = &framebuffer)
             {
                 DeleteFramebuffers(n, framebuffers_handle);
             }
@@ -4158,9 +4100,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenFramebuffers"/>
         public static unsafe FramebufferHandle GenFramebuffer()
         {
-            FramebufferHandle framebuffers;
+            FramebufferHandle framebuffer;
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4169,15 +4111,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             GenFramebuffers(n, framebuffers_handle);
-            return framebuffers;
+            return framebuffer;
         }
         /// <inheritdoc cref="GenFramebuffers"/>
-        public static unsafe void GenFramebuffer(out FramebufferHandle framebuffers)
+        public static unsafe void GenFramebuffer(out FramebufferHandle framebuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4186,7 +4128,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             GenFramebuffers(n, framebuffers_handle);
         }
         /// <inheritdoc cref="GenFramebuffers"/>
@@ -4240,10 +4182,10 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteVertexArrays"/>
-        public static unsafe void DeleteVertexArray(in VertexArrayHandle arrays)
+        public static unsafe void DeleteVertexArray(in VertexArrayHandle array)
         {
             int n = 1;
-            fixed(VertexArrayHandle* arrays_handle = &arrays)
+            fixed(VertexArrayHandle* arrays_handle = &array)
             {
                 DeleteVertexArrays(n, arrays_handle);
             }
@@ -4277,9 +4219,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenVertexArrays"/>
         public static unsafe VertexArrayHandle GenVertexArray()
         {
-            VertexArrayHandle arrays;
+            VertexArrayHandle array;
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4288,15 +4230,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             GenVertexArrays(n, arrays_handle);
-            return arrays;
+            return array;
         }
         /// <inheritdoc cref="GenVertexArrays"/>
-        public static unsafe void GenVertexArray(out VertexArrayHandle arrays)
+        public static unsafe void GenVertexArray(out VertexArrayHandle array)
         {
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4305,7 +4247,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             GenVertexArrays(n, arrays_handle);
         }
         /// <inheritdoc cref="GenVertexArrays"/>
@@ -4728,18 +4670,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetBufferParameteri64v(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2DMultisample"/>
-        public static unsafe void TexImage2DMultisample(TextureTarget target, int samples, InternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TexImage2DMultisample(target, samples, internalformat, width, height, fixedsamplelocations_byte);
-        }
-        /// <inheritdoc cref="TexImage3DMultisample"/>
-        public static unsafe void TexImage3DMultisample(TextureTarget target, int samples, InternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TexImage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
-        }
         /// <inheritdoc cref="GetMultisamplefv"/>
         public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, Span<float> val)
         {
@@ -4783,9 +4713,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenSamplers"/>
         public static unsafe SamplerHandle GenSampler()
         {
-            SamplerHandle samplers;
+            SamplerHandle sampler;
             int count = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4794,15 +4724,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             GenSamplers(count, samplers_handle);
-            return samplers;
+            return sampler;
         }
         /// <inheritdoc cref="GenSamplers"/>
-        public static unsafe void GenSampler(out SamplerHandle samplers)
+        public static unsafe void GenSampler(out SamplerHandle sampler)
         {
             int count = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -4811,7 +4741,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             GenSamplers(count, samplers_handle);
         }
         /// <inheritdoc cref="GenSamplers"/>
@@ -4841,10 +4771,10 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteSamplers"/>
-        public static unsafe void DeleteSampler(in SamplerHandle samplers)
+        public static unsafe void DeleteSampler(in SamplerHandle sampler)
         {
             int count = 1;
-            fixed(SamplerHandle* samplers_handle = &samplers)
+            fixed(SamplerHandle* samplers_handle = &sampler)
             {
                 DeleteSamplers(count, samplers_handle);
             }
@@ -5115,19 +5045,12 @@ namespace OpenTK.Graphics.OpenGL
                 GetQueryObjectui64v(id, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="VertexAttribP1ui"/>
-        public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-        {
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribP1ui(index, type, normalized_byte, value);
-        }
         /// <inheritdoc cref="VertexAttribP1uiv"/>
         public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP1uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP1uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP1uiv"/>
@@ -5135,8 +5058,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP1uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP1uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP1uiv"/>
@@ -5144,23 +5066,15 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = &value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP1uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP1uiv(index, type, normalized, value_ptr);
             }
-        }
-        /// <inheritdoc cref="VertexAttribP2ui"/>
-        public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-        {
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribP2ui(index, type, normalized_byte, value);
         }
         /// <inheritdoc cref="VertexAttribP2uiv"/>
         public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP2uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP2uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP2uiv"/>
@@ -5168,8 +5082,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP2uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP2uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP2uiv"/>
@@ -5177,23 +5090,15 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = &value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP2uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP2uiv(index, type, normalized, value_ptr);
             }
-        }
-        /// <inheritdoc cref="VertexAttribP3ui"/>
-        public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-        {
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribP3ui(index, type, normalized_byte, value);
         }
         /// <inheritdoc cref="VertexAttribP3uiv"/>
         public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP3uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP3uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP3uiv"/>
@@ -5201,8 +5106,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP3uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP3uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP3uiv"/>
@@ -5210,23 +5114,15 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = &value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP3uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP3uiv(index, type, normalized, value_ptr);
             }
-        }
-        /// <inheritdoc cref="VertexAttribP4ui"/>
-        public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-        {
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribP4ui(index, type, normalized_byte, value);
         }
         /// <inheritdoc cref="VertexAttribP4uiv"/>
         public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP4uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP4uiv"/>
@@ -5234,8 +5130,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP4uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribP4uiv"/>
@@ -5243,8 +5138,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* value_ptr = &value)
             {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
+                VertexAttribP4uiv(index, type, normalized, value_ptr);
             }
         }
         /// <inheritdoc cref="DrawArraysIndirect"/>
@@ -5396,8 +5290,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2dv"/>
@@ -5406,8 +5299,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2dv"/>
@@ -5416,8 +5308,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3dv"/>
@@ -5427,8 +5318,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3dv"/>
@@ -5437,8 +5327,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3dv"/>
@@ -5447,8 +5336,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4dv"/>
@@ -5458,8 +5346,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4dv"/>
@@ -5468,8 +5355,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4dv"/>
@@ -5478,8 +5364,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3dv"/>
@@ -5489,8 +5374,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3dv"/>
@@ -5499,8 +5383,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3dv"/>
@@ -5509,8 +5392,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4dv"/>
@@ -5520,8 +5402,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4dv"/>
@@ -5530,8 +5411,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4dv"/>
@@ -5540,8 +5420,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix2x4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix2x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2dv"/>
@@ -5551,8 +5430,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2dv"/>
@@ -5561,8 +5439,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2dv"/>
@@ -5571,8 +5448,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4dv"/>
@@ -5582,8 +5458,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4dv"/>
@@ -5592,8 +5467,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4dv"/>
@@ -5602,8 +5476,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix3x4dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix3x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2dv"/>
@@ -5613,8 +5486,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2dv"/>
@@ -5623,8 +5495,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2dv"/>
@@ -5633,8 +5504,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x2dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3dv"/>
@@ -5644,8 +5514,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3dv"/>
@@ -5654,8 +5523,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3dv"/>
@@ -5664,8 +5532,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                UniformMatrix4x3dv(location, count, transpose_byte, value_ptr);
+                UniformMatrix4x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="GetUniformdv"/>
@@ -5977,10 +5844,10 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="DeleteTransformFeedbacks"/>
-        public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle ids)
+        public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle id)
         {
             int n = 1;
-            fixed(TransformFeedbackHandle* ids_handle = &ids)
+            fixed(TransformFeedbackHandle* ids_handle = &id)
             {
                 DeleteTransformFeedbacks(n, ids_handle);
             }
@@ -6014,9 +5881,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenTransformFeedbacks"/>
         public static unsafe TransformFeedbackHandle GenTransformFeedback()
         {
-            TransformFeedbackHandle ids;
+            TransformFeedbackHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -6025,15 +5892,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             GenTransformFeedbacks(n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="GenTransformFeedbacks"/>
-        public static unsafe void GenTransformFeedback(out TransformFeedbackHandle ids)
+        public static unsafe void GenTransformFeedback(out TransformFeedbackHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -6042,7 +5909,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             GenTransformFeedbacks(n, ids_handle);
         }
         /// <inheritdoc cref="GenTransformFeedbacks"/>
@@ -6313,10 +6180,10 @@ namespace OpenTK.Graphics.OpenGL
             return returnValue;
         }
         /// <inheritdoc cref="DeleteProgramPipelines"/>
-        public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipelines)
+        public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipeline)
         {
             int n = 1;
-            fixed(ProgramPipelineHandle* pipelines_handle = &pipelines)
+            fixed(ProgramPipelineHandle* pipelines_handle = &pipeline)
             {
                 DeleteProgramPipelines(n, pipelines_handle);
             }
@@ -6350,9 +6217,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="GenProgramPipelines"/>
         public static unsafe ProgramPipelineHandle GenProgramPipeline()
         {
-            ProgramPipelineHandle pipelines;
+            ProgramPipelineHandle pipeline;
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -6361,15 +6228,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             GenProgramPipelines(n, pipelines_handle);
-            return pipelines;
+            return pipeline;
         }
         /// <inheritdoc cref="GenProgramPipelines"/>
-        public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipelines)
+        public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipeline)
         {
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -6378,7 +6245,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             GenProgramPipelines(n, pipelines_handle);
         }
         /// <inheritdoc cref="GenProgramPipelines"/>
@@ -6872,8 +6739,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv"/>
@@ -6882,8 +6748,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv"/>
@@ -6892,8 +6757,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -6903,8 +6767,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -6913,8 +6776,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -6923,8 +6785,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -6934,8 +6795,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -6944,8 +6804,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -6954,8 +6813,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2dv"/>
@@ -6965,8 +6823,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2dv"/>
@@ -6975,8 +6832,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2dv"/>
@@ -6985,8 +6841,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3dv"/>
@@ -6996,8 +6851,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3dv"/>
@@ -7006,8 +6860,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3dv"/>
@@ -7016,8 +6869,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4dv"/>
@@ -7027,8 +6879,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4dv"/>
@@ -7037,8 +6888,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4dv"/>
@@ -7047,8 +6897,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -7058,8 +6907,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -7068,8 +6916,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -7078,8 +6925,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -7089,8 +6935,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -7099,8 +6944,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -7109,8 +6953,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -7120,8 +6963,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -7130,8 +6972,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -7140,8 +6981,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -7151,8 +6991,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -7161,8 +7000,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -7171,8 +7009,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -7182,8 +7019,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -7192,8 +7028,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -7202,8 +7037,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -7213,8 +7047,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -7223,8 +7056,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -7233,8 +7065,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3* tmp_vecPtr = value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3dv"/>
@@ -7244,8 +7075,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3dv"/>
@@ -7254,8 +7084,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3dv"/>
@@ -7264,8 +7093,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2dv"/>
@@ -7275,8 +7103,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2dv"/>
@@ -7285,8 +7112,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2dv"/>
@@ -7295,8 +7121,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4dv"/>
@@ -7306,8 +7131,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4dv"/>
@@ -7316,8 +7140,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4dv"/>
@@ -7326,8 +7149,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix2x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix2x4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2dv"/>
@@ -7337,8 +7159,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2dv"/>
@@ -7347,8 +7168,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2dv"/>
@@ -7357,8 +7177,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x2d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x2dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4dv"/>
@@ -7368,8 +7187,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4dv"/>
@@ -7378,8 +7196,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4dv"/>
@@ -7388,8 +7205,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix3x4d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix3x4dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3dv"/>
@@ -7399,8 +7215,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3d* tmp_vecPtr = &value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3dv"/>
@@ -7409,8 +7224,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3dv"/>
@@ -7419,8 +7233,7 @@ namespace OpenTK.Graphics.OpenGL
             fixed (Matrix4x3d* tmp_vecPtr = value)
             {
                 double* value_ptr = (double*)tmp_vecPtr;
-                byte transpose_byte = (byte)(transpose ? 1 : 0);
-                ProgramUniformMatrix4x3dv(program, location, count, transpose_byte, value_ptr);
+                ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="GetProgramPipelineInfoLog"/>
@@ -7851,12 +7664,6 @@ namespace OpenTK.Graphics.OpenGL
                 GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="BindImageTexture"/>
-        public static unsafe void BindImageTexture(uint unit, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format)
-        {
-            byte layered_byte = (byte)(layered ? 1 : 0);
-            BindImageTexture(unit, texture, level, layered_byte, layer, access, format);
-        }
         /// <inheritdoc cref="ClearBufferData"/>
         public static unsafe void ClearBufferData(BufferStorageTarget target, SizedInternalFormat internalformat, PixelFormat format, PixelType type, IntPtr data)
         {
@@ -8256,32 +8063,13 @@ namespace OpenTK.Graphics.OpenGL
             Marshal.FreeCoTaskMem((IntPtr)name_ptr);
             return returnValue;
         }
-        /// <inheritdoc cref="TexStorage2DMultisample"/>
-        public static unsafe void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TexStorage2DMultisample(target, samples, internalformat, width, height, fixedsamplelocations_byte);
-        }
-        /// <inheritdoc cref="TexStorage3DMultisample"/>
-        public static unsafe void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TexStorage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
-        }
-        /// <inheritdoc cref="VertexAttribFormat"/>
-        public static unsafe void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset)
-        {
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexAttribFormat(attribindex, size, type, normalized_byte, relativeoffset);
-        }
         /// <inheritdoc cref="DebugMessageControl"/>
         public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, ReadOnlySpan<uint> ids, bool enabled)
         {
             int count = (int)(ids.Length);
             fixed (uint* ids_ptr = ids)
             {
-                byte enabled_byte = (byte)(enabled ? 1 : 0);
-                DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
             }
         }
         /// <inheritdoc cref="DebugMessageControl"/>
@@ -8290,8 +8078,7 @@ namespace OpenTK.Graphics.OpenGL
             int count = (int)(ids.Length);
             fixed (uint* ids_ptr = ids)
             {
-                byte enabled_byte = (byte)(enabled ? 1 : 0);
-                DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
             }
         }
         /// <inheritdoc cref="DebugMessageControl"/>
@@ -8299,8 +8086,7 @@ namespace OpenTK.Graphics.OpenGL
         {
             fixed (uint* ids_ptr = &ids)
             {
-                byte enabled_byte = (byte)(enabled ? 1 : 0);
-                DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
             }
         }
         /// <inheritdoc cref="DebugMessageInsert"/>
@@ -8953,9 +8739,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateTransformFeedbacks"/>
         public static unsafe TransformFeedbackHandle CreateTransformFeedback()
         {
-            TransformFeedbackHandle ids;
+            TransformFeedbackHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8964,15 +8750,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             CreateTransformFeedbacks(n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="CreateTransformFeedbacks"/>
-        public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle ids)
+        public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -8981,7 +8767,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+            TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
             CreateTransformFeedbacks(n, ids_handle);
         }
         /// <inheritdoc cref="CreateTransformFeedbacks"/>
@@ -9037,9 +8823,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateBuffers"/>
         public static unsafe BufferHandle CreateBuffer()
         {
-            BufferHandle buffers;
+            BufferHandle buffer;
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9048,15 +8834,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             CreateBuffers(n, buffers_handle);
-            return buffers;
+            return buffer;
         }
         /// <inheritdoc cref="CreateBuffers"/>
-        public static unsafe void CreateBuffer(out BufferHandle buffers)
+        public static unsafe void CreateBuffer(out BufferHandle buffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out buffers);
+            Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9065,7 +8851,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
             CreateBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="CreateBuffers"/>
@@ -9246,9 +9032,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateFramebuffers"/>
         public static unsafe FramebufferHandle CreateFramebuffer()
         {
-            FramebufferHandle framebuffers;
+            FramebufferHandle framebuffer;
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9257,15 +9043,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             CreateFramebuffers(n, framebuffers_handle);
-            return framebuffers;
+            return framebuffer;
         }
         /// <inheritdoc cref="CreateFramebuffers"/>
-        public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffers)
+        public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out framebuffers);
+            Unsafe.SkipInit(out framebuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9274,7 +9060,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+            FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
             CreateFramebuffers(n, framebuffers_handle);
         }
         /// <inheritdoc cref="CreateFramebuffers"/>
@@ -9375,9 +9161,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateRenderbuffers"/>
         public static unsafe RenderbufferHandle CreateRenderbuffer()
         {
-            RenderbufferHandle renderbuffers;
+            RenderbufferHandle renderbuffer;
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9386,15 +9172,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             CreateRenderbuffers(n, renderbuffers_handle);
-            return renderbuffers;
+            return renderbuffer;
         }
         /// <inheritdoc cref="CreateRenderbuffers"/>
-        public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffers)
+        public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffer)
         {
             int n = 1;
-            Unsafe.SkipInit(out renderbuffers);
+            Unsafe.SkipInit(out renderbuffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9403,7 +9189,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+            RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
             CreateRenderbuffers(n, renderbuffers_handle);
         }
         /// <inheritdoc cref="CreateRenderbuffers"/>
@@ -9443,9 +9229,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateTextures"/>
         public static unsafe TextureHandle CreateTexture(TextureTarget target)
         {
-            TextureHandle textures;
+            TextureHandle texture;
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9454,15 +9240,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             CreateTextures(target, n, textures_handle);
-            return textures;
+            return texture;
         }
         /// <inheritdoc cref="CreateTextures"/>
-        public static unsafe void CreateTexture(TextureTarget target, out TextureHandle textures)
+        public static unsafe void CreateTexture(TextureTarget target, out TextureHandle texture)
         {
             int n = 1;
-            Unsafe.SkipInit(out textures);
+            Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9471,7 +9257,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
             CreateTextures(target, n, textures_handle);
         }
         /// <inheritdoc cref="CreateTextures"/>
@@ -9499,18 +9285,6 @@ namespace OpenTK.Graphics.OpenGL
             {
                 CreateTextures(target, n, textures_ptr);
             }
-        }
-        /// <inheritdoc cref="TextureStorage2DMultisample"/>
-        public static unsafe void TextureStorage2DMultisample(TextureHandle texture, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TextureStorage2DMultisample(texture, samples, internalformat, width, height, fixedsamplelocations_byte);
-        }
-        /// <inheritdoc cref="TextureStorage3DMultisample"/>
-        public static unsafe void TextureStorage3DMultisample(TextureHandle texture, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-        {
-            byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-            TextureStorage3DMultisample(texture, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
         }
         /// <inheritdoc cref="TextureSubImage1D"/>
         public static unsafe void TextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, PixelType type, IntPtr pixels)
@@ -9715,9 +9489,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateVertexArrays"/>
         public static unsafe VertexArrayHandle CreateVertexArray()
         {
-            VertexArrayHandle arrays;
+            VertexArrayHandle array;
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9726,15 +9500,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             CreateVertexArrays(n, arrays_handle);
-            return arrays;
+            return array;
         }
         /// <inheritdoc cref="CreateVertexArrays"/>
-        public static unsafe void CreateVertexArray(out VertexArrayHandle arrays)
+        public static unsafe void CreateVertexArray(out VertexArrayHandle array)
         {
             int n = 1;
-            Unsafe.SkipInit(out arrays);
+            Unsafe.SkipInit(out array);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9743,7 +9517,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+            VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
             CreateVertexArrays(n, arrays_handle);
         }
         /// <inheritdoc cref="CreateVertexArrays"/>
@@ -9782,12 +9556,6 @@ namespace OpenTK.Graphics.OpenGL
                 VertexArrayVertexBuffers(vaobj, first, count, buffers_ptr, offsets_ptr, strides_ptr);
             }
         }
-        /// <inheritdoc cref="VertexArrayAttribFormat"/>
-        public static unsafe void VertexArrayAttribFormat(VertexArrayHandle vaobj, uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset)
-        {
-            byte normalized_byte = (byte)(normalized ? 1 : 0);
-            VertexArrayAttribFormat(vaobj, attribindex, size, type, normalized_byte, relativeoffset);
-        }
         /// <inheritdoc cref="GetVertexArrayiv"/>
         public static unsafe void GetVertexArrayi(VertexArrayHandle vaobj, VertexArrayPName pname, ref int param)
         {
@@ -9815,9 +9583,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateSamplers"/>
         public static unsafe SamplerHandle CreateSampler()
         {
-            SamplerHandle samplers;
+            SamplerHandle sampler;
             int n = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9826,15 +9594,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             CreateSamplers(n, samplers_handle);
-            return samplers;
+            return sampler;
         }
         /// <inheritdoc cref="CreateSamplers"/>
-        public static unsafe void CreateSampler(out SamplerHandle samplers)
+        public static unsafe void CreateSampler(out SamplerHandle sampler)
         {
             int n = 1;
-            Unsafe.SkipInit(out samplers);
+            Unsafe.SkipInit(out sampler);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9843,7 +9611,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+            SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
             CreateSamplers(n, samplers_handle);
         }
         /// <inheritdoc cref="CreateSamplers"/>
@@ -9875,9 +9643,9 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="CreateProgramPipelines"/>
         public static unsafe ProgramPipelineHandle CreateProgramPipeline()
         {
-            ProgramPipelineHandle pipelines;
+            ProgramPipelineHandle pipeline;
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9886,15 +9654,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             CreateProgramPipelines(n, pipelines_handle);
-            return pipelines;
+            return pipeline;
         }
         /// <inheritdoc cref="CreateProgramPipelines"/>
-        public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipelines)
+        public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipeline)
         {
             int n = 1;
-            Unsafe.SkipInit(out pipelines);
+            Unsafe.SkipInit(out pipeline);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9903,7 +9671,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+            ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
             CreateProgramPipelines(n, pipelines_handle);
         }
         /// <inheritdoc cref="CreateProgramPipelines"/>
@@ -9933,11 +9701,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="CreateQueries"/>
-        public static unsafe QueryHandle CreateQuerie(QueryTarget target)
+        public static unsafe QueryHandle CreateQuery(QueryTarget target)
         {
-            QueryHandle ids;
+            QueryHandle id;
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9946,15 +9714,15 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             CreateQueries(target, n, ids_handle);
-            return ids;
+            return id;
         }
         /// <inheritdoc cref="CreateQueries"/>
-        public static unsafe void CreateQuerie(QueryTarget target, out QueryHandle ids)
+        public static unsafe void CreateQuery(QueryTarget target, out QueryHandle id)
         {
             int n = 1;
-            Unsafe.SkipInit(out ids);
+            Unsafe.SkipInit(out id);
             // FIXME: This could be a problem for the overloads that take an out parameter
             // as this parameter could *potentially* move while inside of this function
             // which would mean that the new value never gets written to the out parameter.
@@ -9963,7 +9731,7 @@ namespace OpenTK.Graphics.OpenGL
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+            QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
             CreateQueries(target, n, ids_handle);
         }
         /// <inheritdoc cref="CreateQueries"/>
@@ -10303,8 +10071,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageEnableAMD(category, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageEnableAMD(category, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageEnableAMD"/>
@@ -10313,8 +10080,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageEnableAMD(category, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageEnableAMD(category, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageEnableAMD"/>
@@ -10322,8 +10088,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageEnableAMD(category, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageEnableAMD(category, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsertAMD"/>
@@ -11332,8 +11097,7 @@ namespace OpenTK.Graphics.OpenGL
                 int numCounters = (int)(counterList.Length);
                 fixed (uint* counterList_ptr = counterList)
                 {
-                    byte enable_byte = (byte)(enable ? 1 : 0);
-                    SelectPerfMonitorCountersAMD(monitor, enable_byte, group, numCounters, counterList_ptr);
+                    SelectPerfMonitorCountersAMD(monitor, enable, group, numCounters, counterList_ptr);
                 }
             }
             /// <inheritdoc cref="SelectPerfMonitorCountersAMD"/>
@@ -11342,8 +11106,7 @@ namespace OpenTK.Graphics.OpenGL
                 int numCounters = (int)(counterList.Length);
                 fixed (uint* counterList_ptr = counterList)
                 {
-                    byte enable_byte = (byte)(enable ? 1 : 0);
-                    SelectPerfMonitorCountersAMD(monitor, enable_byte, group, numCounters, counterList_ptr);
+                    SelectPerfMonitorCountersAMD(monitor, enable, group, numCounters, counterList_ptr);
                 }
             }
             /// <inheritdoc cref="SelectPerfMonitorCountersAMD"/>
@@ -11351,8 +11114,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* counterList_ptr = &counterList)
                 {
-                    byte enable_byte = (byte)(enable ? 1 : 0);
-                    SelectPerfMonitorCountersAMD(monitor, enable_byte, group, numCounters, counterList_ptr);
+                    SelectPerfMonitorCountersAMD(monitor, enable, group, numCounters, counterList_ptr);
                 }
             }
             /// <inheritdoc cref="GetPerfMonitorCounterDataAMD"/>
@@ -11952,14 +11714,6 @@ namespace OpenTK.Graphics.OpenGL
                 void* indices = (void*)offset;
                 DrawElementsInstancedBaseVertexBaseInstance(mode, count, type, indices, instancecount, basevertex, baseinstance);
             }
-            /// <inheritdoc cref="GetImageHandleARB"/>
-            public static unsafe ulong GetImageHandleARB(TextureHandle texture, int level, bool layered, int layer, PixelFormat format)
-            {
-                ulong returnValue;
-                byte layered_byte = (byte)(layered ? 1 : 0);
-                returnValue = GetImageHandleARB(texture, level, layered_byte, layer, format);
-                return returnValue;
-            }
             /// <inheritdoc cref="UniformHandleui64vARB"/>
             public static unsafe void UniformHandleui64vARB(int location, ReadOnlySpan<ulong> value)
             {
@@ -12228,8 +11982,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControlARB(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControlARB(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControlARB"/>
@@ -12238,8 +11991,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControlARB(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControlARB(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControlARB"/>
@@ -12247,8 +11999,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControlARB(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControlARB(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsertARB"/>
@@ -12365,9 +12116,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateTransformFeedbacks"/>
             public static unsafe TransformFeedbackHandle CreateTransformFeedback()
             {
-                TransformFeedbackHandle ids;
+                TransformFeedbackHandle id;
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12376,15 +12127,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 CreateTransformFeedbacks(n, ids_handle);
-                return ids;
+                return id;
             }
             /// <inheritdoc cref="CreateTransformFeedbacks"/>
-            public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle ids)
+            public static unsafe void CreateTransformFeedback(out TransformFeedbackHandle id)
             {
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12393,7 +12144,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 CreateTransformFeedbacks(n, ids_handle);
             }
             /// <inheritdoc cref="CreateTransformFeedbacks"/>
@@ -12449,9 +12200,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateBuffers"/>
             public static unsafe BufferHandle CreateBuffer()
             {
-                BufferHandle buffers;
+                BufferHandle buffer;
                 int n = 1;
-                Unsafe.SkipInit(out buffers);
+                Unsafe.SkipInit(out buffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12460,15 +12211,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
                 CreateBuffers(n, buffers_handle);
-                return buffers;
+                return buffer;
             }
             /// <inheritdoc cref="CreateBuffers"/>
-            public static unsafe void CreateBuffer(out BufferHandle buffers)
+            public static unsafe void CreateBuffer(out BufferHandle buffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out buffers);
+                Unsafe.SkipInit(out buffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12477,7 +12228,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffers);
+                BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
                 CreateBuffers(n, buffers_handle);
             }
             /// <inheritdoc cref="CreateBuffers"/>
@@ -12658,9 +12409,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateFramebuffers"/>
             public static unsafe FramebufferHandle CreateFramebuffer()
             {
-                FramebufferHandle framebuffers;
+                FramebufferHandle framebuffer;
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12669,15 +12420,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 CreateFramebuffers(n, framebuffers_handle);
-                return framebuffers;
+                return framebuffer;
             }
             /// <inheritdoc cref="CreateFramebuffers"/>
-            public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffers)
+            public static unsafe void CreateFramebuffer(out FramebufferHandle framebuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12686,7 +12437,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 CreateFramebuffers(n, framebuffers_handle);
             }
             /// <inheritdoc cref="CreateFramebuffers"/>
@@ -12787,9 +12538,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateRenderbuffers"/>
             public static unsafe RenderbufferHandle CreateRenderbuffer()
             {
-                RenderbufferHandle renderbuffers;
+                RenderbufferHandle renderbuffer;
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12798,15 +12549,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 CreateRenderbuffers(n, renderbuffers_handle);
-                return renderbuffers;
+                return renderbuffer;
             }
             /// <inheritdoc cref="CreateRenderbuffers"/>
-            public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffers)
+            public static unsafe void CreateRenderbuffer(out RenderbufferHandle renderbuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12815,7 +12566,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 CreateRenderbuffers(n, renderbuffers_handle);
             }
             /// <inheritdoc cref="CreateRenderbuffers"/>
@@ -12855,9 +12606,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateTextures"/>
             public static unsafe TextureHandle CreateTexture(TextureTarget target)
             {
-                TextureHandle textures;
+                TextureHandle texture;
                 int n = 1;
-                Unsafe.SkipInit(out textures);
+                Unsafe.SkipInit(out texture);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12866,15 +12617,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
                 CreateTextures(target, n, textures_handle);
-                return textures;
+                return texture;
             }
             /// <inheritdoc cref="CreateTextures"/>
-            public static unsafe void CreateTexture(TextureTarget target, out TextureHandle textures)
+            public static unsafe void CreateTexture(TextureTarget target, out TextureHandle texture)
             {
                 int n = 1;
-                Unsafe.SkipInit(out textures);
+                Unsafe.SkipInit(out texture);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -12883,7 +12634,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref textures);
+                TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
                 CreateTextures(target, n, textures_handle);
             }
             /// <inheritdoc cref="CreateTextures"/>
@@ -12911,18 +12662,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     CreateTextures(target, n, textures_ptr);
                 }
-            }
-            /// <inheritdoc cref="TextureStorage2DMultisample"/>
-            public static unsafe void TextureStorage2DMultisample(TextureHandle texture, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TextureStorage2DMultisample(texture, samples, internalformat, width, height, fixedsamplelocations_byte);
-            }
-            /// <inheritdoc cref="TextureStorage3DMultisample"/>
-            public static unsafe void TextureStorage3DMultisample(TextureHandle texture, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TextureStorage3DMultisample(texture, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
             }
             /// <inheritdoc cref="TextureSubImage1D"/>
             public static unsafe void TextureSubImage1D(TextureHandle texture, int level, int xoffset, int width, PixelFormat format, PixelType type, IntPtr pixels)
@@ -13127,9 +12866,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateVertexArrays"/>
             public static unsafe VertexArrayHandle CreateVertexArray()
             {
-                VertexArrayHandle arrays;
+                VertexArrayHandle array;
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13138,15 +12877,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 CreateVertexArrays(n, arrays_handle);
-                return arrays;
+                return array;
             }
             /// <inheritdoc cref="CreateVertexArrays"/>
-            public static unsafe void CreateVertexArray(out VertexArrayHandle arrays)
+            public static unsafe void CreateVertexArray(out VertexArrayHandle array)
             {
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13155,7 +12894,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 CreateVertexArrays(n, arrays_handle);
             }
             /// <inheritdoc cref="CreateVertexArrays"/>
@@ -13194,12 +12933,6 @@ namespace OpenTK.Graphics.OpenGL
                     VertexArrayVertexBuffers(vaobj, first, count, buffers_ptr, offsets_ptr, strides_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexArrayAttribFormat"/>
-            public static unsafe void VertexArrayAttribFormat(VertexArrayHandle vaobj, uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexArrayAttribFormat(vaobj, attribindex, size, type, normalized_byte, relativeoffset);
-            }
             /// <inheritdoc cref="GetVertexArrayiv"/>
             public static unsafe void GetVertexArrayi(VertexArrayHandle vaobj, VertexArrayPName pname, ref int param)
             {
@@ -13227,9 +12960,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateSamplers"/>
             public static unsafe SamplerHandle CreateSampler()
             {
-                SamplerHandle samplers;
+                SamplerHandle sampler;
                 int n = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13238,15 +12971,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 CreateSamplers(n, samplers_handle);
-                return samplers;
+                return sampler;
             }
             /// <inheritdoc cref="CreateSamplers"/>
-            public static unsafe void CreateSampler(out SamplerHandle samplers)
+            public static unsafe void CreateSampler(out SamplerHandle sampler)
             {
                 int n = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13255,7 +12988,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 CreateSamplers(n, samplers_handle);
             }
             /// <inheritdoc cref="CreateSamplers"/>
@@ -13287,9 +13020,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="CreateProgramPipelines"/>
             public static unsafe ProgramPipelineHandle CreateProgramPipeline()
             {
-                ProgramPipelineHandle pipelines;
+                ProgramPipelineHandle pipeline;
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13298,15 +13031,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 CreateProgramPipelines(n, pipelines_handle);
-                return pipelines;
+                return pipeline;
             }
             /// <inheritdoc cref="CreateProgramPipelines"/>
-            public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipelines)
+            public static unsafe void CreateProgramPipeline(out ProgramPipelineHandle pipeline)
             {
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13315,7 +13048,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 CreateProgramPipelines(n, pipelines_handle);
             }
             /// <inheritdoc cref="CreateProgramPipelines"/>
@@ -13345,11 +13078,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="CreateQueries"/>
-            public static unsafe QueryHandle CreateQuerie(QueryTarget target)
+            public static unsafe QueryHandle CreateQuery(QueryTarget target)
             {
-                QueryHandle ids;
+                QueryHandle id;
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13358,15 +13091,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
                 CreateQueries(target, n, ids_handle);
-                return ids;
+                return id;
             }
             /// <inheritdoc cref="CreateQueries"/>
-            public static unsafe void CreateQuerie(QueryTarget target, out QueryHandle ids)
+            public static unsafe void CreateQuery(QueryTarget target, out QueryHandle id)
             {
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13375,7 +13108,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref ids);
+                QueryHandle* ids_handle = (QueryHandle*)Unsafe.AsPointer(ref id);
                 CreateQueries(target, n, ids_handle);
             }
             /// <inheritdoc cref="CreateQueries"/>
@@ -13896,10 +13629,10 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffers"/>
-            public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffers)
+            public static unsafe void DeleteRenderbuffer(in RenderbufferHandle renderbuffer)
             {
                 int n = 1;
-                fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffers)
+                fixed(RenderbufferHandle* renderbuffers_handle = &renderbuffer)
                 {
                     DeleteRenderbuffers(n, renderbuffers_handle);
                 }
@@ -13933,9 +13666,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="GenRenderbuffers"/>
             public static unsafe RenderbufferHandle GenRenderbuffer()
             {
-                RenderbufferHandle renderbuffers;
+                RenderbufferHandle renderbuffer;
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13944,15 +13677,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 GenRenderbuffers(n, renderbuffers_handle);
-                return renderbuffers;
+                return renderbuffer;
             }
             /// <inheritdoc cref="GenRenderbuffers"/>
-            public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffers)
+            public static unsafe void GenRenderbuffer(out RenderbufferHandle renderbuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out renderbuffers);
+                Unsafe.SkipInit(out renderbuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -13961,7 +13694,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffers);
+                RenderbufferHandle* renderbuffers_handle = (RenderbufferHandle*)Unsafe.AsPointer(ref renderbuffer);
                 GenRenderbuffers(n, renderbuffers_handle);
             }
             /// <inheritdoc cref="GenRenderbuffers"/>
@@ -14015,10 +13748,10 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffers"/>
-            public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffers)
+            public static unsafe void DeleteFramebuffer(in FramebufferHandle framebuffer)
             {
                 int n = 1;
-                fixed(FramebufferHandle* framebuffers_handle = &framebuffers)
+                fixed(FramebufferHandle* framebuffers_handle = &framebuffer)
                 {
                     DeleteFramebuffers(n, framebuffers_handle);
                 }
@@ -14052,9 +13785,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="GenFramebuffers"/>
             public static unsafe FramebufferHandle GenFramebuffer()
             {
-                FramebufferHandle framebuffers;
+                FramebufferHandle framebuffer;
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -14063,15 +13796,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 GenFramebuffers(n, framebuffers_handle);
-                return framebuffers;
+                return framebuffer;
             }
             /// <inheritdoc cref="GenFramebuffers"/>
-            public static unsafe void GenFramebuffer(out FramebufferHandle framebuffers)
+            public static unsafe void GenFramebuffer(out FramebufferHandle framebuffer)
             {
                 int n = 1;
-                Unsafe.SkipInit(out framebuffers);
+                Unsafe.SkipInit(out framebuffer);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -14080,7 +13813,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffers);
+                FramebufferHandle* framebuffers_handle = (FramebufferHandle*)Unsafe.AsPointer(ref framebuffer);
                 GenFramebuffers(n, framebuffers_handle);
             }
             /// <inheritdoc cref="GenFramebuffers"/>
@@ -14405,8 +14138,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2dv"/>
@@ -14415,8 +14147,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2dv"/>
@@ -14425,8 +14156,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3dv"/>
@@ -14436,8 +14166,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3dv"/>
@@ -14446,8 +14175,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3dv"/>
@@ -14456,8 +14184,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4dv"/>
@@ -14467,8 +14194,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4dv"/>
@@ -14477,8 +14203,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4dv"/>
@@ -14487,8 +14212,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3dv"/>
@@ -14498,8 +14222,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3dv"/>
@@ -14508,8 +14231,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3dv"/>
@@ -14518,8 +14240,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4dv"/>
@@ -14529,8 +14250,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4dv"/>
@@ -14539,8 +14259,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4dv"/>
@@ -14549,8 +14268,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2x4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2dv"/>
@@ -14560,8 +14278,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2dv"/>
@@ -14570,8 +14287,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2dv"/>
@@ -14580,8 +14296,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4dv"/>
@@ -14591,8 +14306,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4dv"/>
@@ -14601,8 +14315,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4dv"/>
@@ -14611,8 +14324,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3x4dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2dv"/>
@@ -14622,8 +14334,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2dv"/>
@@ -14632,8 +14343,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2dv"/>
@@ -14642,8 +14352,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x2dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3dv"/>
@@ -14653,8 +14362,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3dv"/>
@@ -14663,8 +14371,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3dv"/>
@@ -14673,8 +14380,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4x3dv(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="GetUniformdv"/>
@@ -15708,12 +15414,6 @@ namespace OpenTK.Graphics.OpenGL
                     MultiDrawElementsIndirect(mode, type, indirect_ptr, drawcount, stride);
                 }
             }
-            /// <inheritdoc cref="SampleCoverageARB"/>
-            public static unsafe void SampleCoverageARB(float value, bool invert)
-            {
-                byte invert_byte = (byte)(invert ? 1 : 0);
-                SampleCoverageARB(value, invert_byte);
-            }
             /// <inheritdoc cref="MultiTexCoord1dvARB"/>
             public static unsafe void MultiTexCoord1dvARB(TextureUnit target, ReadOnlySpan<double> v)
             {
@@ -16639,9 +16339,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="GenSamplers"/>
             public static unsafe SamplerHandle GenSampler()
             {
-                SamplerHandle samplers;
+                SamplerHandle sampler;
                 int count = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -16650,15 +16350,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 GenSamplers(count, samplers_handle);
-                return samplers;
+                return sampler;
             }
             /// <inheritdoc cref="GenSamplers"/>
-            public static unsafe void GenSampler(out SamplerHandle samplers)
+            public static unsafe void GenSampler(out SamplerHandle sampler)
             {
                 int count = 1;
-                Unsafe.SkipInit(out samplers);
+                Unsafe.SkipInit(out sampler);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -16667,7 +16367,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref samplers);
+                SamplerHandle* samplers_handle = (SamplerHandle*)Unsafe.AsPointer(ref sampler);
                 GenSamplers(count, samplers_handle);
             }
             /// <inheritdoc cref="GenSamplers"/>
@@ -16697,10 +16397,10 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteSamplers"/>
-            public static unsafe void DeleteSampler(in SamplerHandle samplers)
+            public static unsafe void DeleteSampler(in SamplerHandle sampler)
             {
                 int count = 1;
-                fixed(SamplerHandle* samplers_handle = &samplers)
+                fixed(SamplerHandle* samplers_handle = &sampler)
                 {
                     DeleteSamplers(count, samplers_handle);
                 }
@@ -16931,10 +16631,10 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="DeleteProgramPipelines"/>
-            public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipelines)
+            public static unsafe void DeleteProgramPipeline(in ProgramPipelineHandle pipeline)
             {
                 int n = 1;
-                fixed(ProgramPipelineHandle* pipelines_handle = &pipelines)
+                fixed(ProgramPipelineHandle* pipelines_handle = &pipeline)
                 {
                     DeleteProgramPipelines(n, pipelines_handle);
                 }
@@ -16968,9 +16668,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="GenProgramPipelines"/>
             public static unsafe ProgramPipelineHandle GenProgramPipeline()
             {
-                ProgramPipelineHandle pipelines;
+                ProgramPipelineHandle pipeline;
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -16979,15 +16679,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 GenProgramPipelines(n, pipelines_handle);
-                return pipelines;
+                return pipeline;
             }
             /// <inheritdoc cref="GenProgramPipelines"/>
-            public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipelines)
+            public static unsafe void GenProgramPipeline(out ProgramPipelineHandle pipeline)
             {
                 int n = 1;
-                Unsafe.SkipInit(out pipelines);
+                Unsafe.SkipInit(out pipeline);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -16996,7 +16696,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipelines);
+                ProgramPipelineHandle* pipelines_handle = (ProgramPipelineHandle*)Unsafe.AsPointer(ref pipeline);
                 GenProgramPipelines(n, pipelines_handle);
             }
             /// <inheritdoc cref="GenProgramPipelines"/>
@@ -17490,8 +17190,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv"/>
@@ -17500,8 +17199,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv"/>
@@ -17510,8 +17208,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -17521,8 +17218,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -17531,8 +17227,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
@@ -17541,8 +17236,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -17552,8 +17246,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -17562,8 +17255,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
@@ -17572,8 +17264,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv"/>
@@ -17583,8 +17274,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv"/>
@@ -17593,8 +17283,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv"/>
@@ -17603,8 +17292,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv"/>
@@ -17614,8 +17302,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv"/>
@@ -17624,8 +17311,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv"/>
@@ -17634,8 +17320,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv"/>
@@ -17645,8 +17330,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv"/>
@@ -17655,8 +17339,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv"/>
@@ -17665,8 +17348,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -17676,8 +17358,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -17686,8 +17367,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
@@ -17696,8 +17376,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -17707,8 +17386,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -17717,8 +17395,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
@@ -17727,8 +17404,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -17738,8 +17414,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -17748,8 +17423,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
@@ -17758,8 +17432,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -17769,8 +17442,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -17779,8 +17451,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
@@ -17789,8 +17460,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -17800,8 +17470,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -17810,8 +17479,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
@@ -17820,8 +17488,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -17831,8 +17498,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3* tmp_vecPtr = &value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -17841,8 +17507,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
@@ -17851,8 +17516,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3* tmp_vecPtr = value)
                 {
                     float* value_ptr = (float*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv"/>
@@ -17862,8 +17526,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv"/>
@@ -17872,8 +17535,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv"/>
@@ -17882,8 +17544,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv"/>
@@ -17893,8 +17554,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv"/>
@@ -17903,8 +17563,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv"/>
@@ -17913,8 +17572,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv"/>
@@ -17924,8 +17582,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv"/>
@@ -17934,8 +17591,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv"/>
@@ -17944,8 +17600,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix2x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv"/>
@@ -17955,8 +17610,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv"/>
@@ -17965,8 +17619,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv"/>
@@ -17975,8 +17628,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x2d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv"/>
@@ -17986,8 +17638,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv"/>
@@ -17996,8 +17647,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv"/>
@@ -18006,8 +17656,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix3x4d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv"/>
@@ -18017,8 +17666,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3d* tmp_vecPtr = &value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv"/>
@@ -18027,8 +17675,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv"/>
@@ -18037,8 +17684,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (Matrix4x3d* tmp_vecPtr = value)
                 {
                     double* value_ptr = (double*)tmp_vecPtr;
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3dv(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="GetProgramPipelineInfoLog"/>
@@ -18136,12 +17782,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetActiveAtomicCounterBufferiv(program, bufferIndex, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="BindImageTexture"/>
-            public static unsafe void BindImageTexture(uint unit, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format)
-            {
-                byte layered_byte = (byte)(layered ? 1 : 0);
-                BindImageTexture(unit, texture, level, layered_byte, layer, access, format);
             }
             /// <inheritdoc cref="ShaderSourceARB"/>
             public static unsafe void ShaderSourceARB(GLHandleARB shaderObj, int count, byte** str, ReadOnlySpan<int> length)
@@ -18381,8 +18021,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 4);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2fvARB"/>
@@ -18391,8 +18030,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 4);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2fvARB"/>
@@ -18400,8 +18038,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix2fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix2fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3fvARB"/>
@@ -18410,8 +18047,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 9);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3fvARB"/>
@@ -18420,8 +18056,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 9);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3fvARB"/>
@@ -18429,8 +18064,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix3fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix3fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fvARB"/>
@@ -18439,8 +18073,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 16);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fvARB"/>
@@ -18449,8 +18082,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 16);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fvARB"/>
@@ -18458,8 +18090,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    UniformMatrix4fvARB(location, count, transpose_byte, value_ptr);
+                    UniformMatrix4fvARB(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="GetObjectParameterfvARB"/>
@@ -19145,9 +18776,9 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="IsNamedStringARB"/>
-            public static unsafe byte IsNamedStringARB(int namelen, string name)
+            public static unsafe bool IsNamedStringARB(int namelen, string name)
             {
-                byte returnValue;
+                bool returnValue;
                 byte* name_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(name);
                 returnValue = IsNamedStringARB(namelen, name_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)name_ptr);
@@ -19266,30 +18897,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetNamedStringivARB(namelen, name_ptr, pname, parameters_ptr);
                     Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                 }
-            }
-            /// <inheritdoc cref="BufferPageCommitmentARB"/>
-            public static unsafe void BufferPageCommitmentARB(All target, IntPtr offset, nint size, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                BufferPageCommitmentARB(target, offset, size, commit_byte);
-            }
-            /// <inheritdoc cref="NamedBufferPageCommitmentEXT"/>
-            public static unsafe void NamedBufferPageCommitmentEXT(BufferHandle buffer, IntPtr offset, nint size, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                NamedBufferPageCommitmentEXT(buffer, offset, size, commit_byte);
-            }
-            /// <inheritdoc cref="NamedBufferPageCommitmentARB"/>
-            public static unsafe void NamedBufferPageCommitmentARB(BufferHandle buffer, IntPtr offset, nint size, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                NamedBufferPageCommitmentARB(buffer, offset, size, commit_byte);
-            }
-            /// <inheritdoc cref="TexPageCommitmentARB"/>
-            public static unsafe void TexPageCommitmentARB(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                TexPageCommitmentARB(target, level, xoffset, yoffset, zoffset, width, height, depth, commit_byte);
             }
             /// <inheritdoc cref="GetInteger64v"/>
             public static unsafe void GetInteger64(GetPName pname, Span<long> data)
@@ -19615,18 +19222,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetCompressedTexImageARB(target, level, img_ptr);
                 }
             }
-            /// <inheritdoc cref="TexImage2DMultisample"/>
-            public static unsafe void TexImage2DMultisample(TextureTarget target, int samples, InternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TexImage2DMultisample(target, samples, internalformat, width, height, fixedsamplelocations_byte);
-            }
-            /// <inheritdoc cref="TexImage3DMultisample"/>
-            public static unsafe void TexImage3DMultisample(TextureTarget target, int samples, InternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TexImage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
-            }
             /// <inheritdoc cref="GetMultisamplefv"/>
             public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, Span<float> val)
             {
@@ -19650,18 +19245,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetMultisamplefv(pname, index, val_ptr);
                 }
-            }
-            /// <inheritdoc cref="TexStorage2DMultisample"/>
-            public static unsafe void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TexStorage2DMultisample(target, samples, internalformat, width, height, fixedsamplelocations_byte);
-            }
-            /// <inheritdoc cref="TexStorage3DMultisample"/>
-            public static unsafe void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TexStorage3DMultisample(target, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
             }
             /// <inheritdoc cref="GetQueryObjecti64v"/>
             public static unsafe void GetQueryObjecti64(QueryHandle id, QueryObjectParameterName pname, Span<long> parameters)
@@ -19712,10 +19295,10 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteTransformFeedbacks"/>
-            public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle ids)
+            public static unsafe void DeleteTransformFeedback(in TransformFeedbackHandle id)
             {
                 int n = 1;
-                fixed(TransformFeedbackHandle* ids_handle = &ids)
+                fixed(TransformFeedbackHandle* ids_handle = &id)
                 {
                     DeleteTransformFeedbacks(n, ids_handle);
                 }
@@ -19749,9 +19332,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="GenTransformFeedbacks"/>
             public static unsafe TransformFeedbackHandle GenTransformFeedback()
             {
-                TransformFeedbackHandle ids;
+                TransformFeedbackHandle id;
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -19760,15 +19343,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 GenTransformFeedbacks(n, ids_handle);
-                return ids;
+                return id;
             }
             /// <inheritdoc cref="GenTransformFeedbacks"/>
-            public static unsafe void GenTransformFeedback(out TransformFeedbackHandle ids)
+            public static unsafe void GenTransformFeedback(out TransformFeedbackHandle id)
             {
                 int n = 1;
-                Unsafe.SkipInit(out ids);
+                Unsafe.SkipInit(out id);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -19777,7 +19360,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref ids);
+                TransformFeedbackHandle* ids_handle = (TransformFeedbackHandle*)Unsafe.AsPointer(ref id);
                 GenTransformFeedbacks(n, ids_handle);
             }
             /// <inheritdoc cref="GenTransformFeedbacks"/>
@@ -20185,10 +19768,10 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="DeleteVertexArrays"/>
-            public static unsafe void DeleteVertexArray(in VertexArrayHandle arrays)
+            public static unsafe void DeleteVertexArray(in VertexArrayHandle array)
             {
                 int n = 1;
-                fixed(VertexArrayHandle* arrays_handle = &arrays)
+                fixed(VertexArrayHandle* arrays_handle = &array)
                 {
                     DeleteVertexArrays(n, arrays_handle);
                 }
@@ -20222,9 +19805,9 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="GenVertexArrays"/>
             public static unsafe VertexArrayHandle GenVertexArray()
             {
-                VertexArrayHandle arrays;
+                VertexArrayHandle array;
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -20233,15 +19816,15 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 GenVertexArrays(n, arrays_handle);
-                return arrays;
+                return array;
             }
             /// <inheritdoc cref="GenVertexArrays"/>
-            public static unsafe void GenVertexArray(out VertexArrayHandle arrays)
+            public static unsafe void GenVertexArray(out VertexArrayHandle array)
             {
                 int n = 1;
-                Unsafe.SkipInit(out arrays);
+                Unsafe.SkipInit(out array);
                 // FIXME: This could be a problem for the overloads that take an out parameter
                 // as this parameter could *potentially* move while inside of this function
                 // which would mean that the new value never gets written to the out parameter.
@@ -20250,7 +19833,7 @@ namespace OpenTK.Graphics.OpenGL
                 // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
                 // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
                 // - 2021-05-18
-                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref arrays);
+                VertexArrayHandle* arrays_handle = (VertexArrayHandle*)Unsafe.AsPointer(ref array);
                 GenVertexArrays(n, arrays_handle);
             }
             /// <inheritdoc cref="GenVertexArrays"/>
@@ -20404,12 +19987,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetVertexAttribLdv(index, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="VertexAttribFormat"/>
-            public static unsafe void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribFormat(attribindex, size, type, normalized_byte, relativeoffset);
             }
             /// <inheritdoc cref="WeightbvARB"/>
             public static unsafe void WeightbvARB(ReadOnlySpan<sbyte> weights)
@@ -21389,8 +20966,7 @@ namespace OpenTK.Graphics.OpenGL
             public static unsafe void VertexAttribPointerARB(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, IntPtr pointer)
             {
                 void* pointer_vptr = (void*)pointer;
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribPointerARB(index, size, type, normalized_byte, stride, pointer_vptr);
+                VertexAttribPointerARB(index, size, type, normalized, stride, pointer_vptr);
             }
             /// <inheritdoc cref="VertexAttribPointerARB"/>
             public static unsafe void VertexAttribPointerARB<T1>(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, ReadOnlySpan<T1> pointer)
@@ -21398,8 +20974,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* pointer_ptr = pointer)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribPointerARB(index, size, type, normalized_byte, stride, pointer_ptr);
+                    VertexAttribPointerARB(index, size, type, normalized, stride, pointer_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribPointerARB"/>
@@ -21408,8 +20983,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* pointer_ptr = pointer)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribPointerARB(index, size, type, normalized_byte, stride, pointer_ptr);
+                    VertexAttribPointerARB(index, size, type, normalized, stride, pointer_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribPointerARB"/>
@@ -21418,8 +20992,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* pointer_ptr = &pointer)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribPointerARB(index, size, type, normalized_byte, stride, pointer_ptr);
+                    VertexAttribPointerARB(index, size, type, normalized, stride, pointer_ptr);
                 }
             }
             /// <inheritdoc cref="GetVertexAttribdvARB"/>
@@ -21610,19 +21183,12 @@ namespace OpenTK.Graphics.OpenGL
                 Marshal.FreeCoTaskMem((IntPtr)name_ptr);
                 return returnValue;
             }
-            /// <inheritdoc cref="VertexAttribP1ui"/>
-            public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP1ui(index, type, normalized_byte, value);
-            }
             /// <inheritdoc cref="VertexAttribP1uiv"/>
             public static unsafe void VertexAttribP1ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP1uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP1uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP1uiv"/>
@@ -21630,8 +21196,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP1uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP1uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP1uiv"/>
@@ -21639,23 +21204,15 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = &value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP1uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP1uiv(index, type, normalized, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="VertexAttribP2ui"/>
-            public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP2ui(index, type, normalized_byte, value);
             }
             /// <inheritdoc cref="VertexAttribP2uiv"/>
             public static unsafe void VertexAttribP2ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP2uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP2uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP2uiv"/>
@@ -21663,8 +21220,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP2uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP2uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP2uiv"/>
@@ -21672,23 +21228,15 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = &value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP2uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP2uiv(index, type, normalized, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="VertexAttribP3ui"/>
-            public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP3ui(index, type, normalized_byte, value);
             }
             /// <inheritdoc cref="VertexAttribP3uiv"/>
             public static unsafe void VertexAttribP3ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP3uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP3uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP3uiv"/>
@@ -21696,8 +21244,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP3uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP3uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP3uiv"/>
@@ -21705,23 +21252,15 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = &value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP3uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP3uiv(index, type, normalized, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="VertexAttribP4ui"/>
-            public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, uint value)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribP4ui(index, type, normalized_byte, value);
             }
             /// <inheritdoc cref="VertexAttribP4uiv"/>
             public static unsafe void VertexAttribP4ui(uint index, VertexAttribPointerType type, bool normalized, ReadOnlySpan<uint> value)
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP4uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP4uiv"/>
@@ -21729,8 +21268,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP4uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribP4uiv"/>
@@ -21738,8 +21276,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* value_ptr = &value)
                 {
-                    byte normalized_byte = (byte)(normalized ? 1 : 0);
-                    VertexAttribP4uiv(index, type, normalized_byte, value_ptr);
+                    VertexAttribP4uiv(index, type, normalized, value_ptr);
                 }
             }
             /// <inheritdoc cref="ViewportArrayv"/>
@@ -22513,12 +22050,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetVariantArrayObjectivATI(id, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="VertexAttribArrayObjectATI"/>
-            public static unsafe void VertexAttribArrayObjectATI(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, BufferHandle buffer, uint offset)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribArrayObjectATI(index, size, type, normalized_byte, stride, buffer, offset);
             }
             /// <inheritdoc cref="GetVertexAttribArrayObjectfvATI"/>
             public static unsafe void GetVertexAttribArrayObjectfvATI(uint index, ArrayObjectPNameATI pname, Span<float> parameters)
@@ -25079,25 +24610,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
-            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, Span<byte> data)
+            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
-            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, byte[] data)
+            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
-            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, ref byte data)
+            public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
@@ -26021,8 +25552,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 4);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fvEXT"/>
@@ -26031,8 +25561,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 4);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fvEXT"/>
@@ -26040,8 +25569,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fvEXT"/>
@@ -26050,8 +25578,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 9);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fvEXT"/>
@@ -26060,8 +25587,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 9);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fvEXT"/>
@@ -26069,8 +25595,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT"/>
@@ -26079,8 +25604,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 16);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT"/>
@@ -26089,8 +25613,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 16);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fvEXT"/>
@@ -26098,8 +25621,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fvEXT"/>
@@ -26108,8 +25630,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fvEXT"/>
@@ -26118,8 +25639,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fvEXT"/>
@@ -26127,8 +25647,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT"/>
@@ -26137,8 +25656,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT"/>
@@ -26147,8 +25665,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fvEXT"/>
@@ -26156,8 +25673,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fvEXT"/>
@@ -26166,8 +25682,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fvEXT"/>
@@ -26176,8 +25691,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fvEXT"/>
@@ -26185,8 +25699,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fvEXT"/>
@@ -26195,8 +25708,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fvEXT"/>
@@ -26205,8 +25717,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fvEXT"/>
@@ -26214,8 +25725,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fvEXT"/>
@@ -26224,8 +25734,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fvEXT"/>
@@ -26234,8 +25743,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fvEXT"/>
@@ -26243,8 +25751,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fvEXT"/>
@@ -26253,8 +25760,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fvEXT"/>
@@ -26263,8 +25769,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (float* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fvEXT"/>
@@ -26272,8 +25777,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (float* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3fvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="TextureParameterIivEXT"/>
@@ -27080,12 +26584,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetFramebufferParameterivEXT(framebuffer, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexArrayVertexAttribOffsetEXT"/>
-            public static unsafe void VertexArrayVertexAttribOffsetEXT(VertexArrayHandle vaobj, BufferHandle buffer, uint index, int size, VertexAttribPointerType type, bool normalized, int stride, IntPtr offset)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexArrayVertexAttribOffsetEXT(vaobj, buffer, index, size, type, normalized_byte, stride, offset);
-            }
             /// <inheritdoc cref="GetVertexArrayIntegervEXT"/>
             public static unsafe void GetVertexArrayIntegervEXT(VertexArrayHandle vaobj, VertexArrayPName pname, ref int param)
             {
@@ -27337,8 +26835,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 4);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dvEXT"/>
@@ -27347,8 +26844,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 4);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dvEXT"/>
@@ -27356,8 +26852,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dvEXT"/>
@@ -27366,8 +26861,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 9);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dvEXT"/>
@@ -27376,8 +26870,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 9);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dvEXT"/>
@@ -27385,8 +26878,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dvEXT"/>
@@ -27395,8 +26887,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 16);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dvEXT"/>
@@ -27405,8 +26896,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 16);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dvEXT"/>
@@ -27414,8 +26904,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dvEXT"/>
@@ -27424,8 +26913,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dvEXT"/>
@@ -27434,8 +26922,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dvEXT"/>
@@ -27443,8 +26930,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dvEXT"/>
@@ -27453,8 +26939,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dvEXT"/>
@@ -27463,8 +26948,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dvEXT"/>
@@ -27472,8 +26956,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix2x4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix2x4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dvEXT"/>
@@ -27482,8 +26965,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dvEXT"/>
@@ -27492,8 +26974,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 6);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dvEXT"/>
@@ -27501,8 +26982,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dvEXT"/>
@@ -27511,8 +26991,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dvEXT"/>
@@ -27521,8 +27000,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dvEXT"/>
@@ -27530,8 +27008,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix3x4dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix3x4dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dvEXT"/>
@@ -27540,8 +27017,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dvEXT"/>
@@ -27550,8 +27026,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 8);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dvEXT"/>
@@ -27559,8 +27034,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x2dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x2dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dvEXT"/>
@@ -27569,8 +27043,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dvEXT"/>
@@ -27579,8 +27052,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(value.Length / 12);
                 fixed (double* value_ptr = value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3dvEXT(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dvEXT"/>
@@ -27588,42 +27060,8 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (double* value_ptr = &value)
                 {
-                    byte transpose_byte = (byte)(transpose ? 1 : 0);
-                    ProgramUniformMatrix4x3dvEXT(program, location, count, transpose_byte, value_ptr);
+                    ProgramUniformMatrix4x3dvEXT(program, location, count, transpose, value_ptr);
                 }
-            }
-            /// <inheritdoc cref="TextureStorage2DMultisampleEXT"/>
-            public static unsafe void TextureStorage2DMultisampleEXT(TextureHandle texture, TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TextureStorage2DMultisampleEXT(texture, target, samples, internalformat, width, height, fixedsamplelocations_byte);
-            }
-            /// <inheritdoc cref="TextureStorage3DMultisampleEXT"/>
-            public static unsafe void TextureStorage3DMultisampleEXT(TextureHandle texture, All target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                TextureStorage3DMultisampleEXT(texture, target, samples, internalformat, width, height, depth, fixedsamplelocations_byte);
-            }
-            /// <inheritdoc cref="VertexArrayVertexAttribFormatEXT"/>
-            public static unsafe void VertexArrayVertexAttribFormatEXT(VertexArrayHandle vaobj, uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexArrayVertexAttribFormatEXT(vaobj, attribindex, size, type, normalized_byte, relativeoffset);
-            }
-            /// <inheritdoc cref="TexturePageCommitmentEXT"/>
-            public static unsafe void TexturePageCommitmentEXT(TextureHandle texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                TexturePageCommitmentEXT(texture, level, xoffset, yoffset, zoffset, width, height, depth, commit_byte);
-            }
-            /// <inheritdoc cref="ColorMaskIndexedEXT"/>
-            public static unsafe void ColorMaskIndexedEXT(uint index, bool r, bool g, bool b, bool a)
-            {
-                byte r_byte = (byte)(r ? 1 : 0);
-                byte g_byte = (byte)(g ? 1 : 0);
-                byte b_byte = (byte)(b ? 1 : 0);
-                byte a_byte = (byte)(a ? 1 : 0);
-                ColorMaskIndexedEXT(index, r_byte, g_byte, b_byte, a_byte);
             }
             /// <inheritdoc cref="DrawElementsInstancedEXT"/>
             public static unsafe void DrawElementsInstancedEXT(PrimitiveType mode, int count, DrawElementsType type, nint offset, int primcount)
@@ -28469,8 +27907,7 @@ namespace OpenTK.Graphics.OpenGL
             public static unsafe void GetHistogramEXT(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
             {
                 void* values_vptr = (void*)values;
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetHistogramEXT(target, reset_byte, format, type, values_vptr);
+                GetHistogramEXT(target, reset, format, type, values_vptr);
             }
             /// <inheritdoc cref="GetHistogramEXT"/>
             public static unsafe void GetHistogramEXT<T1>(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
@@ -28478,8 +27915,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* values_ptr = values)
                 {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetHistogramEXT(target, reset_byte, format, type, values_ptr);
+                    GetHistogramEXT(target, reset, format, type, values_ptr);
                 }
             }
             /// <inheritdoc cref="GetHistogramEXT"/>
@@ -28488,8 +27924,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* values_ptr = values)
                 {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetHistogramEXT(target, reset_byte, format, type, values_ptr);
+                    GetHistogramEXT(target, reset, format, type, values_ptr);
                 }
             }
             /// <inheritdoc cref="GetHistogramEXT"/>
@@ -28498,8 +27933,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* values_ptr = &values)
                 {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetHistogramEXT(target, reset_byte, format, type, values_ptr);
+                    GetHistogramEXT(target, reset, format, type, values_ptr);
                 }
             }
             /// <inheritdoc cref="GetHistogramParameterfvEXT"/>
@@ -28554,8 +27988,7 @@ namespace OpenTK.Graphics.OpenGL
             public static unsafe void GetMinmaxEXT(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, IntPtr values)
             {
                 void* values_vptr = (void*)values;
-                byte reset_byte = (byte)(reset ? 1 : 0);
-                GetMinmaxEXT(target, reset_byte, format, type, values_vptr);
+                GetMinmaxEXT(target, reset, format, type, values_vptr);
             }
             /// <inheritdoc cref="GetMinmaxEXT"/>
             public static unsafe void GetMinmaxEXT<T1>(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, Span<T1> values)
@@ -28563,8 +27996,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* values_ptr = values)
                 {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetMinmaxEXT(target, reset_byte, format, type, values_ptr);
+                    GetMinmaxEXT(target, reset, format, type, values_ptr);
                 }
             }
             /// <inheritdoc cref="GetMinmaxEXT"/>
@@ -28573,8 +28005,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* values_ptr = values)
                 {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetMinmaxEXT(target, reset_byte, format, type, values_ptr);
+                    GetMinmaxEXT(target, reset, format, type, values_ptr);
                 }
             }
             /// <inheritdoc cref="GetMinmaxEXT"/>
@@ -28583,8 +28014,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* values_ptr = &values)
                 {
-                    byte reset_byte = (byte)(reset ? 1 : 0);
-                    GetMinmaxEXT(target, reset_byte, format, type, values_ptr);
+                    GetMinmaxEXT(target, reset, format, type, values_ptr);
                 }
             }
             /// <inheritdoc cref="GetMinmaxParameterfvEXT"/>
@@ -28634,18 +28064,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetMinmaxParameterivEXT(target, pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="HistogramEXT"/>
-            public static unsafe void HistogramEXT(HistogramTargetEXT target, int width, InternalFormat internalformat, bool sink)
-            {
-                byte sink_byte = (byte)(sink ? 1 : 0);
-                HistogramEXT(target, width, internalformat, sink_byte);
-            }
-            /// <inheritdoc cref="MinmaxEXT"/>
-            public static unsafe void MinmaxEXT(MinmaxTargetEXT target, InternalFormat internalformat, bool sink)
-            {
-                byte sink_byte = (byte)(sink ? 1 : 0);
-                MinmaxEXT(target, internalformat, sink_byte);
             }
             /// <inheritdoc cref="GetUnsignedBytevEXT"/>
             public static unsafe void GetUnsignedBytevEXT(GetPName pname, Span<byte> data)
@@ -28745,30 +28163,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetMemoryObjectParameterivEXT(memoryObject, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexStorageMem2DMultisampleEXT"/>
-            public static unsafe void TexStorageMem2DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TexStorageMem2DMultisampleEXT(target, samples, internalFormat, width, height, fixedSampleLocations_byte, memory, offset);
-            }
-            /// <inheritdoc cref="TexStorageMem3DMultisampleEXT"/>
-            public static unsafe void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TexStorageMem3DMultisampleEXT(target, samples, internalFormat, width, height, depth, fixedSampleLocations_byte, memory, offset);
-            }
-            /// <inheritdoc cref="TextureStorageMem2DMultisampleEXT"/>
-            public static unsafe void TextureStorageMem2DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureStorageMem2DMultisampleEXT(texture, samples, internalFormat, width, height, fixedSampleLocations_byte, memory, offset);
-            }
-            /// <inheritdoc cref="TextureStorageMem3DMultisampleEXT"/>
-            public static unsafe void TextureStorageMem3DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureStorageMem3DMultisampleEXT(texture, samples, internalFormat, width, height, depth, fixedSampleLocations_byte, memory, offset);
-            }
             /// <inheritdoc cref="ImportMemoryWin32HandleEXT"/>
             public static unsafe void ImportMemoryWin32HandleEXT(uint memory, ulong size, ExternalHandleType handleType, IntPtr handle)
             {
@@ -28853,12 +28247,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     MultiDrawElementsEXT(mode, count_ptr, type, indices, primcount);
                 }
-            }
-            /// <inheritdoc cref="SampleMaskEXT"/>
-            public static unsafe void SampleMaskEXT(float value, bool invert)
-            {
-                byte invert_byte = (byte)(invert ? 1 : 0);
-                SampleMaskEXT(value, invert_byte);
             }
             /// <inheritdoc cref="ColorTableEXT"/>
             public static unsafe void ColorTableEXT(ColorTableTarget target, InternalFormat internalFormat, int width, PixelFormat format, PixelType type, IntPtr table)
@@ -29093,12 +28481,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     PointParameterfvEXT(pname, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="RasterSamplesEXT"/>
-            public static unsafe void RasterSamplesEXT(uint samples, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                RasterSamplesEXT(samples, fixedsamplelocations_byte);
             }
             /// <inheritdoc cref="GenSemaphoresEXT"/>
             public static unsafe void GenSemaphoresEXT(Span<uint> semaphores)
@@ -29640,12 +29022,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetProgramPipelineivEXT(pipeline, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="BindImageTextureEXT"/>
-            public static unsafe void BindImageTextureEXT(uint index, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, int format)
-            {
-                byte layered_byte = (byte)(layered ? 1 : 0);
-                BindImageTextureEXT(index, texture, level, layered_byte, layer, access, format);
-            }
             /// <inheritdoc cref="TexSubImage1DEXT"/>
             public static unsafe void TexSubImage1DEXT(TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, IntPtr pixels)
             {
@@ -29875,12 +29251,12 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="AreTexturesResidentEXT"/>
-            public static unsafe byte AreTexturesResidentEXT(int n, ReadOnlySpan<TextureHandle> textures, Span<byte> residences)
+            public static unsafe bool AreTexturesResidentEXT(int n, ReadOnlySpan<TextureHandle> textures, Span<bool> residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (TextureHandle* textures_ptr = textures)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreTexturesResidentEXT(n, textures_ptr, residences_ptr);
                     }
@@ -29888,12 +29264,12 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="AreTexturesResidentEXT"/>
-            public static unsafe byte AreTexturesResidentEXT(int n, TextureHandle[] textures, byte[] residences)
+            public static unsafe bool AreTexturesResidentEXT(int n, TextureHandle[] textures, bool[] residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (TextureHandle* textures_ptr = textures)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreTexturesResidentEXT(n, textures_ptr, residences_ptr);
                     }
@@ -29901,11 +29277,11 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="AreTexturesResidentEXT"/>
-            public static unsafe byte AreTexturesResidentEXT(int n, in TextureHandle textures, ref byte residences)
+            public static unsafe bool AreTexturesResidentEXT(int n, in TextureHandle textures, ref bool residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (TextureHandle* textures_ptr = &textures)
-                fixed (byte* residences_ptr = &residences)
+                fixed (bool* residences_ptr = &residences)
                 {
                     returnValue = AreTexturesResidentEXT(n, textures_ptr, residences_ptr);
                 }
@@ -30176,25 +29552,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="EdgeFlagPointerEXT"/>
-            public static unsafe void EdgeFlagPointerEXT(int stride, int count, ReadOnlySpan<byte> pointer)
+            public static unsafe void EdgeFlagPointerEXT(int stride, int count, ReadOnlySpan<bool> pointer)
             {
-                fixed (byte* pointer_ptr = pointer)
+                fixed (bool* pointer_ptr = pointer)
                 {
                     EdgeFlagPointerEXT(stride, count, pointer_ptr);
                 }
             }
             /// <inheritdoc cref="EdgeFlagPointerEXT"/>
-            public static unsafe void EdgeFlagPointerEXT(int stride, int count, byte[] pointer)
+            public static unsafe void EdgeFlagPointerEXT(int stride, int count, bool[] pointer)
             {
-                fixed (byte* pointer_ptr = pointer)
+                fixed (bool* pointer_ptr = pointer)
                 {
                     EdgeFlagPointerEXT(stride, count, pointer_ptr);
                 }
             }
             /// <inheritdoc cref="EdgeFlagPointerEXT"/>
-            public static unsafe void EdgeFlagPointerEXT(int stride, int count, in byte pointer)
+            public static unsafe void EdgeFlagPointerEXT(int stride, int count, in bool pointer)
             {
-                fixed (byte* pointer_ptr = &pointer)
+                fixed (bool* pointer_ptr = &pointer)
                 {
                     EdgeFlagPointerEXT(stride, count, pointer_ptr);
                 }
@@ -30778,25 +30154,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT"/>
-            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<byte> data)
+            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetVariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT"/>
-            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, byte[] data)
+            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetVariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetVariantBooleanvEXT"/>
-            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, ref byte data)
+            public static unsafe void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetVariantBooleanvEXT(id, value, data_ptr);
                 }
@@ -30850,25 +30226,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT"/>
-            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<byte> data)
+            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetInvariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT"/>
-            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, byte[] data)
+            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetInvariantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetInvariantBooleanvEXT"/>
-            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, ref byte data)
+            public static unsafe void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetInvariantBooleanvEXT(id, value, data_ptr);
                 }
@@ -30922,25 +30298,25 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT"/>
-            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, Span<byte> data)
+            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, Span<bool> data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetLocalConstantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT"/>
-            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, byte[] data)
+            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, bool[] data)
             {
-                fixed (byte* data_ptr = data)
+                fixed (bool* data_ptr = data)
                 {
                     GetLocalConstantBooleanvEXT(id, value, data_ptr);
                 }
             }
             /// <inheritdoc cref="GetLocalConstantBooleanvEXT"/>
-            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, ref byte data)
+            public static unsafe void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, ref bool data)
             {
-                fixed (byte* data_ptr = &data)
+                fixed (bool* data_ptr = &data)
                 {
                     GetLocalConstantBooleanvEXT(id, value, data_ptr);
                 }
@@ -31178,14 +30554,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     MultiDrawElementsIndirectBindlessCountNV(mode, type, indirect_ptr, drawCount, maxDrawCount, stride, vertexBufferCount);
                 }
-            }
-            /// <inheritdoc cref="GetImageHandleNV"/>
-            public static unsafe ulong GetImageHandleNV(TextureHandle texture, int level, bool layered, int layer, PixelFormat format)
-            {
-                ulong returnValue;
-                byte layered_byte = (byte)(layered ? 1 : 0);
-                returnValue = GetImageHandleNV(texture, level, layered_byte, layer, format);
-                return returnValue;
             }
             /// <inheritdoc cref="UniformHandleui64vNV"/>
             public static unsafe void UniformHandleui64vNV(int location, ReadOnlySpan<ulong> value)
@@ -31434,8 +30802,7 @@ namespace OpenTK.Graphics.OpenGL
             public static unsafe void MapControlPointsNV(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, int uorder, int vorder, bool packed, IntPtr points)
             {
                 void* points_vptr = (void*)points;
-                byte packed_byte = (byte)(packed ? 1 : 0);
-                MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed_byte, points_vptr);
+                MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed, points_vptr);
             }
             /// <inheritdoc cref="MapControlPointsNV"/>
             public static unsafe void MapControlPointsNV<T1>(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, int uorder, int vorder, bool packed, ReadOnlySpan<T1> points)
@@ -31443,8 +30810,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* points_ptr = points)
                 {
-                    byte packed_byte = (byte)(packed ? 1 : 0);
-                    MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed_byte, points_ptr);
+                    MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed, points_ptr);
                 }
             }
             /// <inheritdoc cref="MapControlPointsNV"/>
@@ -31453,8 +30819,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* points_ptr = points)
                 {
-                    byte packed_byte = (byte)(packed ? 1 : 0);
-                    MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed_byte, points_ptr);
+                    MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed, points_ptr);
                 }
             }
             /// <inheritdoc cref="MapControlPointsNV"/>
@@ -31463,8 +30828,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* points_ptr = &points)
                 {
-                    byte packed_byte = (byte)(packed ? 1 : 0);
-                    MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed_byte, points_ptr);
+                    MapControlPointsNV(target, index, type, ustride, vstride, uorder, vorder, packed, points_ptr);
                 }
             }
             /// <inheritdoc cref="MapParameterivNV"/>
@@ -31519,8 +30883,7 @@ namespace OpenTK.Graphics.OpenGL
             public static unsafe void GetMapControlPointsNV(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed, IntPtr points)
             {
                 void* points_vptr = (void*)points;
-                byte packed_byte = (byte)(packed ? 1 : 0);
-                GetMapControlPointsNV(target, index, type, ustride, vstride, packed_byte, points_vptr);
+                GetMapControlPointsNV(target, index, type, ustride, vstride, packed, points_vptr);
             }
             /// <inheritdoc cref="GetMapControlPointsNV"/>
             public static unsafe void GetMapControlPointsNV<T1>(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed, Span<T1> points)
@@ -31528,8 +30891,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* points_ptr = points)
                 {
-                    byte packed_byte = (byte)(packed ? 1 : 0);
-                    GetMapControlPointsNV(target, index, type, ustride, vstride, packed_byte, points_ptr);
+                    GetMapControlPointsNV(target, index, type, ustride, vstride, packed, points_ptr);
                 }
             }
             /// <inheritdoc cref="GetMapControlPointsNV"/>
@@ -31538,8 +30900,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* points_ptr = points)
                 {
-                    byte packed_byte = (byte)(packed ? 1 : 0);
-                    GetMapControlPointsNV(target, index, type, ustride, vstride, packed_byte, points_ptr);
+                    GetMapControlPointsNV(target, index, type, ustride, vstride, packed, points_ptr);
                 }
             }
             /// <inheritdoc cref="GetMapControlPointsNV"/>
@@ -31548,8 +30909,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (void* points_ptr = &points)
                 {
-                    byte packed_byte = (byte)(packed ? 1 : 0);
-                    GetMapControlPointsNV(target, index, type, ustride, vstride, packed_byte, points_ptr);
+                    GetMapControlPointsNV(target, index, type, ustride, vstride, packed, points_ptr);
                 }
             }
             /// <inheritdoc cref="GetMapParameterivNV"/>
@@ -31919,12 +31279,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     GetProgramNamedParameterdvNV(id, len, name_ptr, parameters_ptr);
                 }
-            }
-            /// <inheritdoc cref="RasterSamplesEXT"/>
-            public static unsafe void RasterSamplesEXT(uint samples, bool fixedsamplelocations)
-            {
-                byte fixedsamplelocations_byte = (byte)(fixedsamplelocations ? 1 : 0);
-                RasterSamplesEXT(samples, fixedsamplelocations_byte);
             }
             /// <inheritdoc cref="CoverageModulationTableNV"/>
             public static unsafe void CoverageModulationTableNV(ReadOnlySpan<float> v)
@@ -33443,30 +32797,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetMemoryObjectDetachedResourcesuivNV(memory, pname, first, count, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="BufferPageCommitmentMemNV"/>
-            public static unsafe void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                BufferPageCommitmentMemNV(target, offset, size, memory, memOffset, commit_byte);
-            }
-            /// <inheritdoc cref="TexPageCommitmentMemNV"/>
-            public static unsafe void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                TexPageCommitmentMemNV(target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit_byte);
-            }
-            /// <inheritdoc cref="NamedBufferPageCommitmentMemNV"/>
-            public static unsafe void NamedBufferPageCommitmentMemNV(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                NamedBufferPageCommitmentMemNV(buffer, offset, size, memory, memOffset, commit_byte);
-            }
-            /// <inheritdoc cref="TexturePageCommitmentMemNV"/>
-            public static unsafe void TexturePageCommitmentMemNV(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit)
-            {
-                byte commit_byte = (byte)(commit ? 1 : 0);
-                TexturePageCommitmentMemNV(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, commit_byte);
-            }
             /// <inheritdoc cref="GenOcclusionQueriesNV"/>
             public static unsafe void GenOcclusionQueriesNV(Span<uint> ids)
             {
@@ -34593,9 +33923,9 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, Span<float> x, Span<float> y, Span<float> tangentX, Span<float> tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -34612,9 +33942,9 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float[] x, float[] y, float[] tangentX, float[] tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = x)
                 {
                     fixed (float* y_ptr = y)
@@ -34631,9 +33961,9 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="PointAlongPathNV"/>
-            public static unsafe byte PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
+            public static unsafe bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, ref float x, ref float y, ref float tangentX, ref float tangentY)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (float* x_ptr = &x)
                 fixed (float* y_ptr = &y)
                 fixed (float* tangentX_ptr = &tangentX)
@@ -35374,14 +34704,6 @@ namespace OpenTK.Graphics.OpenGL
                     CombinerParameterivNV(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="CombinerOutputNV"/>
-            public static unsafe void CombinerOutputNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerRegisterNV abOutput, CombinerRegisterNV cdOutput, CombinerRegisterNV sumOutput, CombinerScaleNV scale, CombinerBiasNV bias, bool abDotProduct, bool cdDotProduct, bool muxSum)
-            {
-                byte abDotProduct_byte = (byte)(abDotProduct ? 1 : 0);
-                byte cdDotProduct_byte = (byte)(cdDotProduct ? 1 : 0);
-                byte muxSum_byte = (byte)(muxSum ? 1 : 0);
-                CombinerOutputNV(stage, portion, abOutput, cdOutput, sumOutput, scale, bias, abDotProduct_byte, cdDotProduct_byte, muxSum_byte);
-            }
             /// <inheritdoc cref="GetCombinerInputParameterfvNV"/>
             public static unsafe void GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, Span<float> parameters)
             {
@@ -35810,12 +35132,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetShadingRateSampleLocationivNV(rate, samples, index, location_ptr);
                 }
             }
-            /// <inheritdoc cref="ShadingRateImageBarrierNV"/>
-            public static unsafe void ShadingRateImageBarrierNV(bool synchronize)
-            {
-                byte synchronize_byte = (byte)(synchronize ? 1 : 0);
-                ShadingRateImageBarrierNV(synchronize_byte);
-            }
             /// <inheritdoc cref="ShadingRateImagePaletteNV"/>
             public static unsafe void ShadingRateImagePaletteNV(uint viewport, uint first, ReadOnlySpan<All> rates)
             {
@@ -35865,42 +35181,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     ShadingRateSampleOrderCustomNV(rate, samples, locations_ptr);
                 }
-            }
-            /// <inheritdoc cref="TexImage2DMultisampleCoverageNV"/>
-            public static unsafe void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, bool fixedSampleLocations)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TexImage2DMultisampleCoverageNV(target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations_byte);
-            }
-            /// <inheritdoc cref="TexImage3DMultisampleCoverageNV"/>
-            public static unsafe void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TexImage3DMultisampleCoverageNV(target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations_byte);
-            }
-            /// <inheritdoc cref="TextureImage2DMultisampleNV"/>
-            public static unsafe void TextureImage2DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, bool fixedSampleLocations)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureImage2DMultisampleNV(texture, target, samples, internalFormat, width, height, fixedSampleLocations_byte);
-            }
-            /// <inheritdoc cref="TextureImage3DMultisampleNV"/>
-            public static unsafe void TextureImage3DMultisampleNV(TextureHandle texture, TextureTarget target, int samples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureImage3DMultisampleNV(texture, target, samples, internalFormat, width, height, depth, fixedSampleLocations_byte);
-            }
-            /// <inheritdoc cref="TextureImage2DMultisampleCoverageNV"/>
-            public static unsafe void TextureImage2DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, bool fixedSampleLocations)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureImage2DMultisampleCoverageNV(texture, target, coverageSamples, colorSamples, internalFormat, width, height, fixedSampleLocations_byte);
-            }
-            /// <inheritdoc cref="TextureImage3DMultisampleCoverageNV"/>
-            public static unsafe void TextureImage3DMultisampleCoverageNV(TextureHandle texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations)
-            {
-                byte fixedSampleLocations_byte = (byte)(fixedSampleLocations ? 1 : 0);
-                TextureImage3DMultisampleCoverageNV(texture, target, coverageSamples, colorSamples, internalFormat, width, height, depth, fixedSampleLocations_byte);
             }
             /// <inheritdoc cref="TransformFeedbackAttribsNV"/>
             public static unsafe void TransformFeedbackAttribsNV(int count, ReadOnlySpan<int> attribs, All bufferMode)
@@ -36444,8 +35724,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (uint* textureNames_ptr = textureNames)
                 {
                     void* vdpSurface_vptr = (void*)vdpSurface;
-                    byte isFrameStructure_byte = (byte)(isFrameStructure ? 1 : 0);
-                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_vptr, target, numTextureNames, textureNames_ptr, isFrameStructure_byte);
+                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_vptr, target, numTextureNames, textureNames_ptr, isFrameStructure);
                 }
                 return returnValue;
             }
@@ -36457,8 +35736,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (uint* textureNames_ptr = textureNames)
                 {
                     void* vdpSurface_vptr = (void*)vdpSurface;
-                    byte isFrameStructure_byte = (byte)(isFrameStructure ? 1 : 0);
-                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_vptr, target, numTextureNames, textureNames_ptr, isFrameStructure_byte);
+                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_vptr, target, numTextureNames, textureNames_ptr, isFrameStructure);
                 }
                 return returnValue;
             }
@@ -36469,8 +35747,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (uint* textureNames_ptr = &textureNames)
                 {
                     void* vdpSurface_vptr = (void*)vdpSurface;
-                    byte isFrameStructure_byte = (byte)(isFrameStructure ? 1 : 0);
-                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_vptr, target, numTextureNames, textureNames_ptr, isFrameStructure_byte);
+                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_vptr, target, numTextureNames, textureNames_ptr, isFrameStructure);
                 }
                 return returnValue;
             }
@@ -36484,8 +35761,7 @@ namespace OpenTK.Graphics.OpenGL
                     int numTextureNames = (int)(textureNames.Length);
                     fixed (uint* textureNames_ptr = textureNames)
                     {
-                        byte isFrameStructure_byte = (byte)(isFrameStructure ? 1 : 0);
-                        returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_ptr, target, numTextureNames, textureNames_ptr, isFrameStructure_byte);
+                        returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_ptr, target, numTextureNames, textureNames_ptr, isFrameStructure);
                     }
                 }
                 return returnValue;
@@ -36500,8 +35776,7 @@ namespace OpenTK.Graphics.OpenGL
                     int numTextureNames = (int)(textureNames.Length);
                     fixed (uint* textureNames_ptr = textureNames)
                     {
-                        byte isFrameStructure_byte = (byte)(isFrameStructure ? 1 : 0);
-                        returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_ptr, target, numTextureNames, textureNames_ptr, isFrameStructure_byte);
+                        returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_ptr, target, numTextureNames, textureNames_ptr, isFrameStructure);
                     }
                 }
                 return returnValue;
@@ -36514,8 +35789,7 @@ namespace OpenTK.Graphics.OpenGL
                 fixed (void* vdpSurface_ptr = &vdpSurface)
                 fixed (uint* textureNames_ptr = &textureNames)
                 {
-                    byte isFrameStructure_byte = (byte)(isFrameStructure ? 1 : 0);
-                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_ptr, target, numTextureNames, textureNames_ptr, isFrameStructure_byte);
+                    returnValue = VDPAURegisterVideoSurfaceWithPictureStructureNV(vdpSurface_ptr, target, numTextureNames, textureNames_ptr, isFrameStructure);
                 }
                 return returnValue;
             }
@@ -36792,12 +36066,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetVertexAttribLui64vNV(index, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribFormatNV"/>
-            public static unsafe void VertexAttribFormatNV(uint index, int size, VertexAttribType type, bool normalized, int stride)
-            {
-                byte normalized_byte = (byte)(normalized ? 1 : 0);
-                VertexAttribFormatNV(index, size, type, normalized_byte, stride);
-            }
             /// <inheritdoc cref="GetIntegerui64i_vNV"/>
             public static unsafe void GetIntegerui64i_vNV(All value, uint index, Span<ulong> result)
             {
@@ -36823,12 +36091,12 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="AreProgramsResidentNV"/>
-            public static unsafe byte AreProgramsResidentNV(int n, ReadOnlySpan<ProgramHandle> programs, Span<byte> residences)
+            public static unsafe bool AreProgramsResidentNV(int n, ReadOnlySpan<ProgramHandle> programs, Span<bool> residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (ProgramHandle* programs_ptr = programs)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreProgramsResidentNV(n, programs_ptr, residences_ptr);
                     }
@@ -36836,12 +36104,12 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="AreProgramsResidentNV"/>
-            public static unsafe byte AreProgramsResidentNV(int n, ProgramHandle[] programs, byte[] residences)
+            public static unsafe bool AreProgramsResidentNV(int n, ProgramHandle[] programs, bool[] residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (ProgramHandle* programs_ptr = programs)
                 {
-                    fixed (byte* residences_ptr = residences)
+                    fixed (bool* residences_ptr = residences)
                     {
                         returnValue = AreProgramsResidentNV(n, programs_ptr, residences_ptr);
                     }
@@ -36849,11 +36117,11 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="AreProgramsResidentNV"/>
-            public static unsafe byte AreProgramsResidentNV(int n, in ProgramHandle programs, ref byte residences)
+            public static unsafe bool AreProgramsResidentNV(int n, in ProgramHandle programs, ref bool residences)
             {
-                byte returnValue;
+                bool returnValue;
                 fixed (ProgramHandle* programs_ptr = &programs)
-                fixed (byte* residences_ptr = &residences)
+                fixed (bool* residences_ptr = &residences)
                 {
                     returnValue = AreProgramsResidentNV(n, programs_ptr, residences_ptr);
                 }
@@ -38870,8 +38138,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControl"/>
@@ -38880,8 +38147,7 @@ namespace OpenTK.Graphics.OpenGL
                 int count = (int)(ids.Length);
                 fixed (uint* ids_ptr = ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageControl"/>
@@ -38889,8 +38155,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsert"/>
@@ -39264,8 +38529,7 @@ namespace OpenTK.Graphics.OpenGL
             {
                 fixed (uint* ids_ptr = &ids)
                 {
-                    byte enabled_byte = (byte)(enabled ? 1 : 0);
-                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled_byte);
+                    DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled);
                 }
             }
             /// <inheritdoc cref="DebugMessageInsertKHR"/>
@@ -41039,12 +40303,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetMaterialxvOES(face, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="SampleCoveragexOES"/>
-            public static unsafe void SampleCoveragexOES(int value, bool invert)
-            {
-                byte invert_byte = (byte)(invert ? 1 : 0);
-                SampleCoveragexOES(value, invert_byte);
-            }
             /// <inheritdoc cref="BitmapxOES"/>
             public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, ReadOnlySpan<byte> bitmap)
             {
@@ -42123,12 +41381,6 @@ namespace OpenTK.Graphics.OpenGL
                     GetFogFuncSGIS(points_ptr);
                 }
             }
-            /// <inheritdoc cref="SampleMaskSGIS"/>
-            public static unsafe void SampleMaskSGIS(float value, bool invert)
-            {
-                byte invert_byte = (byte)(invert ? 1 : 0);
-                SampleMaskSGIS(value, invert_byte);
-            }
             /// <inheritdoc cref="PixelTexGenParameterivSGIS"/>
             public static unsafe void PixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, ReadOnlySpan<int> parameters)
             {
@@ -42364,15 +41616,6 @@ namespace OpenTK.Graphics.OpenGL
                 {
                     TexSubImage4DSGIS(target, level, xoffset, yoffset, zoffset, woffset, width, height, depth, size4d, format, type, pixels_ptr);
                 }
-            }
-            /// <inheritdoc cref="TextureColorMaskSGIS"/>
-            public static unsafe void TextureColorMaskSGIS(bool red, bool green, bool blue, bool alpha)
-            {
-                byte red_byte = (byte)(red ? 1 : 0);
-                byte green_byte = (byte)(green ? 1 : 0);
-                byte blue_byte = (byte)(blue ? 1 : 0);
-                byte alpha_byte = (byte)(alpha ? 1 : 0);
-                TextureColorMaskSGIS(red_byte, green_byte, blue_byte, alpha_byte);
             }
             /// <inheritdoc cref="GetTexFilterFuncSGIS"/>
             public static unsafe void GetTexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, Span<float> weights)
