@@ -151,10 +151,11 @@ namespace Generator.Process
             GLOutputApi gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntryInfo>(), info);
             GLOutputApi gles3 = GetOutputApiFromRequireTags(OutputApi.GLES3, gles3Requires, gles3Removes, info);
 
-            return new OutputData(new List<GLOutputApi>()
-            {
-                gl, glCompat, gles1, gles3
-            });
+            return new OutputData(allFunctions.Select(kvp => kvp.Value.NativeFunction).ToList(),
+                new List<GLOutputApi>()
+                {
+                    gl, glCompat, gles1, gles3
+                });
         }
 
         private static List<RequireEntryInfo> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
@@ -515,7 +516,7 @@ namespace Generator.Process
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
 
                         // Enum
-                        PrimitiveType.Enum => new CSPrimitive(group ?? "All", bt.Constant),
+                        PrimitiveType.Enum => new CSEnum(group ?? "All", bt.Constant),
 
                         // Pointers
                         PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),

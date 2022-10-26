@@ -1169,6 +1169,10 @@ namespace Generator.Process
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
+                        case CSEnum bt:
+                            baseType = pt.BaseType;
+                            constant = bt.Constant;
+                            break;
                         case CSStruct bt:
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
