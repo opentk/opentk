@@ -125,11 +125,22 @@ namespace Generator.Writing
                 string type = swapTypesForUnderlyingType ? SwapUnderlyingTypeForPrimitive(param.Type) : param.Type.ToCSString();
 
                 string primitiveType = SwapUnderlyingTypeForPrimitive(param.Type);
+                
                 if (type != primitiveType)
                 {
                     paramNames.Append($"({primitiveType})");
                 }
-                paramNames.Append(param.Name);
+
+                // HACK: FIXME: You can't cast a bool to byte, sigh..
+                if (swapTypesForUnderlyingType == false && param.Type is CSBool8)
+                {
+                    paramNames.Append($"({param.Name} ? 1 : 0)");
+                }
+                else
+                {
+                    paramNames.Append(param.Name);
+                }
+                
                 delegateTypes.Append(type);
                 signature.Append($"{type} {param.Name}");
 
@@ -243,7 +254,16 @@ namespace Generator.Writing
                 // This works because all of the structs that get here should have a defined cast from the primitive type to the struct type.
                 // These casts need to be added manually for this to work correctly.
                 // - 2021-06-22
-                writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLPointers._{name}_fnptr({paramNames});");
+
+                if (function.ReturnType is CSBool8)
+                {
+                    // HACK: We can't cast byte to bool, sigh...
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => GLPointers._{name}_fnptr({paramNames}) != 0;");
+                }
+                else
+                {
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLPointers._{name}_fnptr({paramNames});");
+                }
             }
             else
             {

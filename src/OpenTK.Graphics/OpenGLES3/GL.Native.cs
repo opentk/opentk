@@ -132,7 +132,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglColorMask.xhtml" /></remarks>
-        public static void ColorMask(bool red, bool green, bool blue, bool alpha) => GLPointers._ColorMask_fnptr((byte)red, (byte)green, (byte)blue, (byte)alpha);
+        public static void ColorMask(bool red, bool green, bool blue, bool alpha) => GLPointers._ColorMask_fnptr((byte)(red ? 1 : 0), (byte)(green ? 1 : 0), (byte)(blue ? 1 : 0), (byte)(alpha ? 1 : 0));
         
         /// <summary> <b>[requires: v2.0]</b> Compiles a shader object. </summary>
         /// <param name="shader">Specifies the shader object to be compiled.</param>
@@ -244,7 +244,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v2.0]</b> Enable or disable writing into the depth buffer. </summary>
         /// <param name="flag"> Specifies whether the depth buffer is enabled for writing. If flag is GL_FALSE, depth buffer writing is disabled. Otherwise, it is enabled. Initially, depth buffer writing is enabled. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDepthMask.xhtml" /></remarks>
-        public static void DepthMask(bool flag) => GLPointers._DepthMask_fnptr((byte)flag);
+        public static void DepthMask(bool flag) => GLPointers._DepthMask_fnptr((byte)(flag ? 1 : 0));
         
         /// <summary> <b>[requires: v2.0]</b> Specify mapping of depth values from normalized device coordinates to window coordinates. </summary>
         /// <param name="n"> Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0. </param>
@@ -547,37 +547,37 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a buffer object. </summary>
         /// <param name="buffer"> Specifies a value that may be the name of a buffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsBuffer.xhtml" /></remarks>
-        public static bool IsBuffer(BufferHandle buffer) => (bool) GLPointers._IsBuffer_fnptr((int)buffer);
+        public static bool IsBuffer(BufferHandle buffer) => GLPointers._IsBuffer_fnptr((int)buffer) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsEnabled.xhtml" /></remarks>
-        public static bool IsEnabled(EnableCap cap) => (bool) GLPointers._IsEnabled_fnptr((uint)cap);
+        public static bool IsEnabled(EnableCap cap) => GLPointers._IsEnabled_fnptr((uint)cap) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a framebuffer object. </summary>
         /// <param name="framebuffer"> Specifies a value that may be the name of a framebuffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsFramebuffer.xhtml" /></remarks>
-        public static bool IsFramebuffer(FramebufferHandle framebuffer) => (bool) GLPointers._IsFramebuffer_fnptr((int)framebuffer);
+        public static bool IsFramebuffer(FramebufferHandle framebuffer) => GLPointers._IsFramebuffer_fnptr((int)framebuffer) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> Determines if a name corresponds to a program object. </summary>
         /// <param name="program">Specifies a potential program object.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsProgram.xhtml" /></remarks>
-        public static bool IsProgram(ProgramHandle program) => (bool) GLPointers._IsProgram_fnptr((int)program);
+        public static bool IsProgram(ProgramHandle program) => GLPointers._IsProgram_fnptr((int)program) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a renderbuffer object. </summary>
         /// <param name="renderbuffer"> Specifies a value that may be the name of a renderbuffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsRenderbuffer.xhtml" /></remarks>
-        public static bool IsRenderbuffer(RenderbufferHandle renderbuffer) => (bool) GLPointers._IsRenderbuffer_fnptr((int)renderbuffer);
+        public static bool IsRenderbuffer(RenderbufferHandle renderbuffer) => GLPointers._IsRenderbuffer_fnptr((int)renderbuffer) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> Determines if a name corresponds to a shader object. </summary>
         /// <param name="shader">Specifies a potential shader object.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsShader.xhtml" /></remarks>
-        public static bool IsShader(ShaderHandle shader) => (bool) GLPointers._IsShader_fnptr((int)shader);
+        public static bool IsShader(ShaderHandle shader) => GLPointers._IsShader_fnptr((int)shader) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> Determine if a name corresponds to a texture. </summary>
         /// <param name="texture"> Specifies a value that may be the name of a texture. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsTexture.xhtml" /></remarks>
-        public static bool IsTexture(TextureHandle texture) => (bool) GLPointers._IsTexture_fnptr((int)texture);
+        public static bool IsTexture(TextureHandle texture) => GLPointers._IsTexture_fnptr((int)texture) != 0;
         
         /// <summary> <b>[requires: v2.0]</b> Specify the width of rasterized lines. </summary>
         /// <param name="width"> Specifies the width of rasterized lines. The initial value is 1. </param>
@@ -628,7 +628,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="value"> Specify a single floating-point sample coverage value. The value is clamped to the range 0 1 . The initial value is 1.0. </param>
         /// <param name="invert"> Specify a single boolean value representing if the coverage masks should be inverted. GL_TRUE and GL_FALSE are accepted. The initial value is GL_FALSE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglSampleCoverage.xhtml" /></remarks>
-        public static void SampleCoverage(float value, bool invert) => GLPointers._SampleCoverage_fnptr(value, (byte)invert);
+        public static void SampleCoverage(float value, bool invert) => GLPointers._SampleCoverage_fnptr(value, (byte)(invert ? 1 : 0));
         
         /// <summary> <b>[requires: v2.0]</b> Define the scissor box. </summary>
         /// <param name="x"> Specify the lower left corner of the scissor box. Initially (0, 0). </param>
@@ -872,7 +872,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix2fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix2fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v2.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -880,7 +880,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix3fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix3fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v2.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -888,7 +888,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix4fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix4fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v2.0]</b> Installs a program object as part of current rendering state. </summary>
         /// <param name="program">Specifies the handle of the program object whose executables are to be used as part of current rendering state.</param>
@@ -962,7 +962,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="stride"> Specifies the byte offset between consecutive generic vertex attributes. If stride is 0, the generic vertex attributes are understood to be tightly packed in the array. The initial value is 0. </param>
         /// <param name="pointer"> Specifies a pointer to the first generic vertex attribute in the array. If a non-zero buffer is currently bound to the GL_ARRAY_BUFFER target, pointer specifies an offset of into the array in the data store of that buffer. The initial value is 0. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribPointer.xhtml" /></remarks>
-        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, void* pointer) => GLPointers._VertexAttribPointer_fnptr(index, size, (uint)type, (byte)normalized, stride, pointer);
+        public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, void* pointer) => GLPointers._VertexAttribPointer_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, pointer);
         
         /// <summary> <b>[requires: v2.0]</b> Set the viewport. </summary>
         /// <param name="x"> Specify the lower left corner of the viewport rectangle, in pixels. The initial value is (0,0). </param>
@@ -1072,7 +1072,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a query object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a query object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsQuery.xhtml" /></remarks>
-        public static bool IsQuery(QueryHandle id) => (bool) GLPointers._IsQuery_fnptr((int)id);
+        public static bool IsQuery(QueryHandle id) => GLPointers._IsQuery_fnptr((int)id) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> Delimit the boundaries of a query object. </summary>
         /// <param name="target"> Specifies the target type of query object established between glBeginQuery and the subsequent glEndQuery. The symbolic constant must be one of GL_ANY_SAMPLES_PASSED, GL_ANY_SAMPLES_PASSED_CONSERVATIVE, GL_PRIMITIVES_GENERATED, or GL_TRANSFORM_FEEDBACK_PRIMITIVES_WRITTEN. </param>
@@ -1102,7 +1102,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v3.0]</b> Map a section of a buffer object's data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glMapBufferRange, which must be one of the buffer binding targets in the following table: </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglMapBufferRange.xhtml" /></remarks>
-        public static bool UnmapBuffer(BufferTargetARB target) => (bool) GLPointers._UnmapBuffer_fnptr((uint)target);
+        public static bool UnmapBuffer(BufferTargetARB target) => GLPointers._UnmapBuffer_fnptr((uint)target) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> Return the pointer to a mapped buffer object's data store. </summary>
         /// <param name="target"> Specifies the target to which the buffer object is bound for glGetBufferPointerv, which must be one of the buffer binding targets in the following table: </param>
@@ -1123,7 +1123,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix2x3fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x3fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix2x3fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x3fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -1131,7 +1131,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix3x2fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x2fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix3x2fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x2fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -1139,7 +1139,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix2x4fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x4fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix2x4fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x4fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -1147,7 +1147,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix4x2fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x2fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix4x2fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x2fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -1155,7 +1155,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix3x4fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x4fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix3x4fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x4fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> Specify the value of a uniform variable for the current program object. </summary>
         /// <param name="location">Specifies the location of the uniform variable to be modified.</param>
@@ -1163,7 +1163,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglUniform.xhtml" /></remarks>
-        public static void UniformMatrix4x3fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x3fv_fnptr(location, count, (byte)transpose, value);
+        public static void UniformMatrix4x3fv(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x3fv_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.0]</b> Copy a block of pixels from the read framebuffer to the draw framebuffer. </summary>
         /// <param name="srcX0"> Specify the bounds of the source rectangle within the read buffer of the read framebuffer. </param>
@@ -1232,7 +1232,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a vertex array object. </summary>
         /// <param name="array"> Specifies a value that may be the name of a vertex array object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsVertexArray.xhtml" /></remarks>
-        public static bool IsVertexArray(VertexArrayHandle array) => (bool) GLPointers._IsVertexArray_fnptr((int)array);
+        public static bool IsVertexArray(VertexArrayHandle array) => GLPointers._IsVertexArray_fnptr((int)array) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> Return the value or values of a selected parameter. </summary>
         /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
@@ -1526,7 +1526,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a sync object. </summary>
         /// <param name="sync"> Specifies a value that may be the name of a sync object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsSync.xhtml" /></remarks>
-        public static bool IsSync(GLSync sync) => (bool) GLPointers._IsSync_fnptr((IntPtr)sync);
+        public static bool IsSync(GLSync sync) => GLPointers._IsSync_fnptr((IntPtr)sync) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> Delete a sync object. </summary>
         /// <param name="sync"> The sync object to be deleted. </param>
@@ -1591,7 +1591,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a sampler object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a sampler object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsSampler.xhtml" /></remarks>
-        public static bool IsSampler(SamplerHandle sampler) => (bool) GLPointers._IsSampler_fnptr((int)sampler);
+        public static bool IsSampler(SamplerHandle sampler) => GLPointers._IsSampler_fnptr((int)sampler) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> Bind a named sampler to a texturing target. </summary>
         /// <param name="unit"> Specifies the index of the texture unit to which the sampler is bound. </param>
@@ -1668,7 +1668,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v3.0]</b> Determine if a name corresponds to a transform feedback object. </summary>
         /// <param name="id"> Specifies a value that may be the name of a transform feedback object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsTransformFeedback.xhtml" /></remarks>
-        public static bool IsTransformFeedback(TransformFeedbackHandle id) => (bool) GLPointers._IsTransformFeedback_fnptr((int)id);
+        public static bool IsTransformFeedback(TransformFeedbackHandle id) => GLPointers._IsTransformFeedback_fnptr((int)id) != 0;
         
         /// <summary> <b>[requires: v3.0]</b> Pause transform feedback operations. </summary>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglPauseTransformFeedback.xhtml" /></remarks>
@@ -1871,7 +1871,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v3.1]</b> Determine if a name corresponds to a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies a value that may be the name of a program pipeline object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsProgramPipeline.xhtml" /></remarks>
-        public static bool IsProgramPipeline(ProgramPipelineHandle pipeline) => (bool) GLPointers._IsProgramPipeline_fnptr((int)pipeline);
+        public static bool IsProgramPipeline(ProgramPipelineHandle pipeline) => GLPointers._IsProgramPipeline_fnptr((int)pipeline) != 0;
         
         /// <summary> <b>[requires: v3.1]</b> Retrieve properties of a program pipeline object. </summary>
         /// <param name="pipeline"> Specifies the name of a program pipeline object whose parameter retrieve. </param>
@@ -2085,7 +2085,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2094,7 +2094,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2103,7 +2103,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2112,7 +2112,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix2x3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x3fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix2x3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x3fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2121,7 +2121,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix3x2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x2fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix3x2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x2fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2130,7 +2130,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix2x4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x4fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix2x4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x4fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2139,7 +2139,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix4x2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x2fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix4x2fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x2fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2148,7 +2148,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix3x4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x4fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix3x4fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x4fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the value of a uniform variable for a specified program object. </summary>
         /// <param name="program">Specifies the handle of the program containing the uniform variable to be modified.</param>
@@ -2157,7 +2157,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="transpose"> For the matrix commands, specifies whether to transpose the matrix as the values are loaded into the uniform variable. </param>
         /// <param name="value"> For the vector and matrix commands, specifies a pointer to an array of count values that will be used to update the specified uniform variable. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglProgramUniform.xhtml" /></remarks>
-        public static void ProgramUniformMatrix4x3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x3fv_fnptr((int)program, location, count, (byte)transpose, value);
+        public static void ProgramUniformMatrix4x3fv(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x3fv_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
         
         /// <summary> <b>[requires: v3.1]</b> Validate a program pipeline object against current GL state. </summary>
         /// <param name="pipeline"> Specifies the name of a program pipeline object to validate. </param>
@@ -2181,7 +2181,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="access"> Specifies a token indicating the type of access that will be performed on the image. </param>
         /// <param name="format"> Specifies the format that the elements of the image will be treated as for the purposes of formatted loads and stores. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglBindImageTexture.xhtml" /></remarks>
-        public static void BindImageTexture(uint unit, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format) => GLPointers._BindImageTexture_fnptr(unit, (int)texture, level, (byte)layered, layer, (uint)access, (uint)format);
+        public static void BindImageTexture(uint unit, TextureHandle texture, int level, bool layered, int layer, BufferAccessARB access, InternalFormat format) => GLPointers._BindImageTexture_fnptr(unit, (int)texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, (uint)format);
         
         /// <summary> <b>[requires: v3.1]</b> Return the value or values of a selected parameter. </summary>
         /// <param name="target"> Specifies the parameter value to be returned for indexed versions of glGet. The symbolic constants in the list below are accepted. </param>
@@ -2208,7 +2208,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="height"> Specifies the height of the texture, in texels. </param>
         /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage2DMultisample.xhtml" /></remarks>
-        public static void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations) => GLPointers._TexStorage2DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, (byte)fixedsamplelocations);
+        public static void TexStorage2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations) => GLPointers._TexStorage2DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, (byte)(fixedsamplelocations ? 1 : 0));
         
         /// <summary> <b>[requires: v3.1]</b> Retrieve the location of a sample. </summary>
         /// <param name="pname"> Specifies the sample parameter name. pname must be GL_SAMPLE_POSITION. </param>
@@ -2254,7 +2254,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="normalized"> Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed. This parameter is ignored if type is GL_FIXED. </param>
         /// <param name="relativeoffset"> An offset to the first element relative to the start of the vertex buffer binding. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglVertexAttribFormat.xhtml" /></remarks>
-        public static void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset) => GLPointers._VertexAttribFormat_fnptr(attribindex, size, (uint)type, (byte)normalized, relativeoffset);
+        public static void VertexAttribFormat(uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset) => GLPointers._VertexAttribFormat_fnptr(attribindex, size, (uint)type, (byte)(normalized ? 1 : 0), relativeoffset);
         
         /// <summary> <b>[requires: v3.1]</b> Specify the organization of vertex arrays. </summary>
         /// <param name="attribindex"> The generic vertex attribute array being described. </param>
@@ -2307,7 +2307,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
         /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageControl.xhtml" /></remarks>
-        public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)enabled);
+        public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
         
         /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> Inject an application-supplied message into the debug message queue. </summary>
         /// <param name="source"> The source of the debug message to insert. </param>
@@ -2435,13 +2435,13 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="blue"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <param name="alpha"> Specify whether red, green, blue, and alpha are to be written into the frame buffer. The initial values are all GL_TRUE, indicating that the color components are written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglColorMask.xhtml" /></remarks>
-        public static void ColorMaski(uint index, bool r, bool g, bool b, bool a) => GLPointers._ColorMaski_fnptr(index, (byte)r, (byte)g, (byte)b, (byte)a);
+        public static void ColorMaski(uint index, bool r, bool g, bool b, bool a) => GLPointers._ColorMaski_fnptr(index, (byte)(r ? 1 : 0), (byte)(g ? 1 : 0), (byte)(b ? 1 : 0), (byte)(a ? 1 : 0));
         
         /// <summary> <b>[requires: v3.2]</b> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <param name="index"> Specifies the index of the capability. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglIsEnabled.xhtml" /></remarks>
-        public static bool IsEnabledi(EnableCap target, uint index) => (bool) GLPointers._IsEnabledi_fnptr((uint)target, index);
+        public static bool IsEnabledi(EnableCap target, uint index) => GLPointers._IsEnabledi_fnptr((uint)target, index) != 0;
         
         /// <summary> <b>[requires: v3.2]</b> Render primitives from array data with a per-element offset. </summary>
         /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>
@@ -2625,7 +2625,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="depth"> Specifies the depth of the texture, in layers. </param>
         /// <param name="fixedsamplelocations"> Specifies whether the image will use identical sample locations and the same number of samples for all texels in the image, and the sample locations will not depend on the internal format or size of the image. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexStorage3DMultisample.xhtml" /></remarks>
-        public static void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._TexStorage3DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, depth, (byte)fixedsamplelocations);
+        public static void TexStorage3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._TexStorage3DMultisample_fnptr((uint)target, samples, (uint)internalformat, width, height, depth, (byte)(fixedsamplelocations ? 1 : 0));
         
         public static unsafe partial class AMD
         {
@@ -2667,7 +2667,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, uint* counterList) => GLPointers._SelectPerfMonitorCountersAMD_fnptr(monitor, (byte)enable, group, numCounters, counterList);
+            public static void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, uint* counterList) => GLPointers._SelectPerfMonitorCountersAMD_fnptr(monitor, (byte)(enable ? 1 : 0), group, numCounters, counterList);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -2729,7 +2729,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_APPLE_sync]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsSyncAPPLE(GLSync sync) => (bool) GLPointers._IsSyncAPPLE_fnptr((IntPtr)sync);
+            public static bool IsSyncAPPLE(GLSync sync) => GLPointers._IsSyncAPPLE_fnptr((IntPtr)sync) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_sync]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -2848,7 +2848,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_disjoint_timer_query | GL_EXT_occlusion_query_boolean]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsQueryEXT(QueryHandle id) => (bool) GLPointers._IsQueryEXT_fnptr((int)id);
+            public static bool IsQueryEXT(QueryHandle id) => GLPointers._IsQueryEXT_fnptr((int)id) != 0;
             
             /// <summary> <b>[requires: GL_EXT_disjoint_timer_query | GL_EXT_occlusion_query_boolean]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -2916,11 +2916,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_draw_buffers_indexed]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorMaskiEXT(uint index, bool r, bool g, bool b, bool a) => GLPointers._ColorMaskiEXT_fnptr(index, (byte)r, (byte)g, (byte)b, (byte)a);
+            public static void ColorMaskiEXT(uint index, bool r, bool g, bool b, bool a) => GLPointers._ColorMaskiEXT_fnptr(index, (byte)(r ? 1 : 0), (byte)(g ? 1 : 0), (byte)(b ? 1 : 0), (byte)(a ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_draw_buffers_indexed]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsEnablediEXT(EnableCap target, uint index) => (bool) GLPointers._IsEnablediEXT_fnptr((uint)target, index);
+            public static bool IsEnablediEXT(EnableCap target, uint index) => GLPointers._IsEnablediEXT_fnptr((uint)target, index) != 0;
             
             /// <summary> <b>[requires: GL_EXT_draw_elements_base_vertex]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -2992,7 +2992,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsMemoryObjectEXT(uint memoryObject) => (bool) GLPointers._IsMemoryObjectEXT_fnptr(memoryObject);
+            public static bool IsMemoryObjectEXT(uint memoryObject) => GLPointers._IsMemoryObjectEXT_fnptr(memoryObject) != 0;
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3012,7 +3012,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageMem2DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TexStorageMem2DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, (byte)fixedSampleLocations, memory, offset);
+            public static void TexStorageMem2DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TexStorageMem2DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3020,7 +3020,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TexStorageMem3DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, depth, (byte)fixedSampleLocations, memory, offset);
+            public static void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TexStorageMem3DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3032,7 +3032,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureStorageMem2DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TextureStorageMem2DMultisampleEXT_fnptr((int)texture, samples, (uint)internalFormat, width, height, (byte)fixedSampleLocations, memory, offset);
+            public static void TextureStorageMem2DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TextureStorageMem2DMultisampleEXT_fnptr((int)texture, samples, (uint)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3040,7 +3040,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureStorageMem3DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TextureStorageMem3DMultisampleEXT_fnptr((int)texture, samples, (uint)internalFormat, width, height, depth, (byte)fixedSampleLocations, memory, offset);
+            public static void TextureStorageMem3DMultisampleEXT(TextureHandle texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._TextureStorageMem3DMultisampleEXT_fnptr((int)texture, samples, (uint)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3112,7 +3112,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_raster_multisample | GL_NV_framebuffer_mixed_samples]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => GLPointers._RasterSamplesEXT_fnptr(samples, (byte)fixedsamplelocations);
+            public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => GLPointers._RasterSamplesEXT_fnptr(samples, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_robustness]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3140,7 +3140,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_semaphore]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsSemaphoreEXT(uint semaphore) => (bool) GLPointers._IsSemaphoreEXT_fnptr(semaphore);
+            public static bool IsSemaphoreEXT(uint semaphore) => GLPointers._IsSemaphoreEXT_fnptr(semaphore) != 0;
             
             /// <summary> <b>[requires: GL_EXT_semaphore]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3212,7 +3212,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsProgramPipelineEXT(ProgramPipelineHandle pipeline) => (bool) GLPointers._IsProgramPipelineEXT_fnptr((int)pipeline);
+            public static bool IsProgramPipelineEXT(ProgramPipelineHandle pipeline) => GLPointers._IsProgramPipelineEXT_fnptr((int)pipeline) != 0;
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3284,15 +3284,15 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3336,27 +3336,27 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix2x3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x3fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix2x3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x3fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix3x2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x2fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix3x2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x2fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix2x4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x4fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix2x4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix2x4fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix4x2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x2fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix4x2fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x2fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix3x4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x4fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix3x4fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix3x4fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ProgramUniformMatrix4x3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x3fvEXT_fnptr((int)program, location, count, (byte)transpose, value);
+            public static void ProgramUniformMatrix4x3fvEXT(ProgramHandle program, int location, int count, bool transpose, float* value) => GLPointers._ProgramUniformMatrix4x3fvEXT_fnptr((int)program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_shader_framebuffer_fetch_non_coherent]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3376,7 +3376,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_sparse_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexPageCommitmentEXT(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._TexPageCommitmentEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)commit);
+            public static void TexPageCommitmentEXT(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._TexPageCommitmentEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_tessellation_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3460,11 +3460,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_win32_keyed_mutex]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool AcquireKeyedMutexWin32EXT(uint memory, ulong key, uint timeout) => (bool) GLPointers._AcquireKeyedMutexWin32EXT_fnptr(memory, key, timeout);
+            public static bool AcquireKeyedMutexWin32EXT(uint memory, ulong key, uint timeout) => GLPointers._AcquireKeyedMutexWin32EXT_fnptr(memory, key, timeout) != 0;
             
             /// <summary> <b>[requires: GL_EXT_win32_keyed_mutex]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool ReleaseKeyedMutexWin32EXT(uint memory, ulong key) => (bool) GLPointers._ReleaseKeyedMutexWin32EXT_fnptr(memory, key);
+            public static bool ReleaseKeyedMutexWin32EXT(uint memory, ulong key) => GLPointers._ReleaseKeyedMutexWin32EXT_fnptr(memory, key) != 0;
             
             /// <summary> <b>[requires: GL_EXT_window_rectangles]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3503,7 +3503,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_bindless_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static ulong GetImageHandleNV(TextureHandle texture, int level, bool layered, int layer, PixelFormat format) => GLPointers._GetImageHandleNV_fnptr((int)texture, level, (byte)layered, layer, (uint)format);
+            public static ulong GetImageHandleNV(TextureHandle texture, int level, bool layered, int layer, PixelFormat format) => GLPointers._GetImageHandleNV_fnptr((int)texture, level, (byte)(layered ? 1 : 0), layer, (uint)format);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3531,11 +3531,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_bindless_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsTextureHandleResidentNV(ulong handle) => (bool) GLPointers._IsTextureHandleResidentNV_fnptr(handle);
+            public static bool IsTextureHandleResidentNV(ulong handle) => GLPointers._IsTextureHandleResidentNV_fnptr(handle) != 0;
             
             /// <summary> <b>[requires: GL_NV_bindless_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsImageHandleResidentNV(ulong handle) => (bool) GLPointers._IsImageHandleResidentNV_fnptr(handle);
+            public static bool IsImageHandleResidentNV(ulong handle) => GLPointers._IsImageHandleResidentNV_fnptr(handle) != 0;
             
             /// <summary> <b>[requires: GL_NV_blend_equation_advanced]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3571,7 +3571,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_coverage_sample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void CoverageMaskNV(bool mask) => GLPointers._CoverageMaskNV_fnptr((byte)mask);
+            public static void CoverageMaskNV(bool mask) => GLPointers._CoverageMaskNV_fnptr((byte)(mask ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_coverage_sample]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3619,11 +3619,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsFenceNV(uint fence) => (bool) GLPointers._IsFenceNV_fnptr(fence);
+            public static bool IsFenceNV(uint fence) => GLPointers._IsFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool TestFenceNV(uint fence) => (bool) GLPointers._TestFenceNV_fnptr(fence);
+            public static bool TestFenceNV(uint fence) => GLPointers._TestFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3647,7 +3647,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_raster_multisample | GL_NV_framebuffer_mixed_samples]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => GLPointers._RasterSamplesEXT_fnptr(samples, (byte)fixedsamplelocations);
+            public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => GLPointers._RasterSamplesEXT_fnptr(samples, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_framebuffer_mixed_samples]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3831,19 +3831,19 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._BufferPageCommitmentMemNV_fnptr((uint)target, offset, size, memory, memOffset, (byte)commit);
+            public static void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._BufferPageCommitmentMemNV_fnptr((uint)target, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._TexPageCommitmentMemNV_fnptr((uint)target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)commit);
+            public static void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._TexPageCommitmentMemNV_fnptr((uint)target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void NamedBufferPageCommitmentMemNV(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._NamedBufferPageCommitmentMemNV_fnptr((int)buffer, offset, size, memory, memOffset, (byte)commit);
+            public static void NamedBufferPageCommitmentMemNV(BufferHandle buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._NamedBufferPageCommitmentMemNV_fnptr((int)buffer, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexturePageCommitmentMemNV(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._TexturePageCommitmentMemNV_fnptr((int)texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)commit);
+            public static void TexturePageCommitmentMemNV(TextureHandle texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._TexturePageCommitmentMemNV_fnptr((int)texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_mesh_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3863,27 +3863,27 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix2x3fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x3fvNV_fnptr(location, count, (byte)transpose, value);
+            public static void UniformMatrix2x3fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x3fvNV_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix3x2fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x2fvNV_fnptr(location, count, (byte)transpose, value);
+            public static void UniformMatrix3x2fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x2fvNV_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix2x4fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x4fvNV_fnptr(location, count, (byte)transpose, value);
+            public static void UniformMatrix2x4fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix2x4fvNV_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix4x2fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x2fvNV_fnptr(location, count, (byte)transpose, value);
+            public static void UniformMatrix4x2fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x2fvNV_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix3x4fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x4fvNV_fnptr(location, count, (byte)transpose, value);
+            public static void UniformMatrix3x4fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix3x4fvNV_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_NV_non_square_matrices]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void UniformMatrix4x3fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x3fvNV_fnptr(location, count, (byte)transpose, value);
+            public static void UniformMatrix4x3fvNV(int location, int count, bool transpose, float* value) => GLPointers._UniformMatrix4x3fvNV_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3895,7 +3895,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsPathNV(uint path) => (bool) GLPointers._IsPathNV_fnptr(path);
+            public static bool IsPathNV(uint path) => GLPointers._IsPathNV_fnptr(path) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4039,11 +4039,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsPointInFillPathNV(uint path, uint mask, float x, float y) => (bool) GLPointers._IsPointInFillPathNV_fnptr(path, mask, x, y);
+            public static bool IsPointInFillPathNV(uint path, uint mask, float x, float y) => GLPointers._IsPointInFillPathNV_fnptr(path, mask, x, y) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsPointInStrokePathNV(uint path, float x, float y) => (bool) GLPointers._IsPointInStrokePathNV_fnptr(path, x, y);
+            public static bool IsPointInStrokePathNV(uint path, float x, float y) => GLPointers._IsPointInStrokePathNV_fnptr(path, x, y) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4051,7 +4051,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY) => (bool) GLPointers._PointAlongPathNV_fnptr(path, startSegment, numSegments, distance, x, y, tangentX, tangentY);
+            public static bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY) => GLPointers._PointAlongPathNV_fnptr(path, startSegment, numSegments, distance, x, y, tangentX, tangentY) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4231,7 +4231,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ShadingRateImageBarrierNV(bool synchronize) => GLPointers._ShadingRateImageBarrierNV_fnptr((byte)synchronize);
+            public static void ShadingRateImageBarrierNV(bool synchronize) => GLPointers._ShadingRateImageBarrierNV_fnptr((byte)(synchronize ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4291,7 +4291,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_viewport_array]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsEnablediNV(EnableCap target, uint index) => (bool) GLPointers._IsEnablediNV_fnptr((uint)target, index);
+            public static bool IsEnablediNV(EnableCap target, uint index) => GLPointers._IsEnablediNV_fnptr((uint)target, index) != 0;
             
             /// <summary> <b>[requires: GL_NV_viewport_swizzle]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4402,7 +4402,7 @@ namespace OpenTK.Graphics.OpenGLES3
             /// <param name="ids"> The address of an array of unsigned integers contianing the ids of the messages to enable or disable. </param>
             /// <param name="enabled"> A Boolean flag determining whether the selected messages should be enabled or disabled. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglDebugMessageControl.xhtml" /></remarks>
-            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)enabled);
+            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
             
             /// <summary> <b>[requires: v3.2 | GL_KHR_debug]</b> Inject an application-supplied message into the debug message queue. </summary>
             /// <param name="source"> The source of the debug message to insert. </param>
@@ -4484,7 +4484,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControlKHR_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)enabled);
+            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControlKHR_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
             
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4642,11 +4642,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_OES_draw_buffers_indexed]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorMaskiOES(uint index, bool r, bool g, bool b, bool a) => GLPointers._ColorMaskiOES_fnptr(index, (byte)r, (byte)g, (byte)b, (byte)a);
+            public static void ColorMaskiOES(uint index, bool r, bool g, bool b, bool a) => GLPointers._ColorMaskiOES_fnptr(index, (byte)(r ? 1 : 0), (byte)(g ? 1 : 0), (byte)(b ? 1 : 0), (byte)(a ? 1 : 0));
             
             /// <summary> <b>[requires: GL_OES_draw_buffers_indexed | GL_OES_viewport_array]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsEnablediOES(EnableCap target, uint index) => (bool) GLPointers._IsEnablediOES_fnptr((uint)target, index);
+            public static bool IsEnablediOES(EnableCap target, uint index) => GLPointers._IsEnablediOES_fnptr((uint)target, index) != 0;
             
             /// <summary> <b>[requires: GL_OES_draw_elements_base_vertex]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4682,7 +4682,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool UnmapBufferOES(All target) => (bool) GLPointers._UnmapBufferOES_fnptr((uint)target);
+            public static bool UnmapBufferOES(All target) => GLPointers._UnmapBufferOES_fnptr((uint)target) != 0;
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4766,7 +4766,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_OES_texture_storage_multisample_2d_array]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorage3DMultisampleOES(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._TexStorage3DMultisampleOES_fnptr((uint)target, samples, (uint)internalformat, width, height, depth, (byte)fixedsamplelocations);
+            public static void TexStorage3DMultisampleOES(TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._TexStorage3DMultisampleOES_fnptr((uint)target, samples, (uint)internalformat, width, height, depth, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_OES_texture_view]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4786,7 +4786,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsVertexArrayOES(VertexArrayHandle array) => (bool) GLPointers._IsVertexArrayOES_fnptr((int)array);
+            public static bool IsVertexArrayOES(VertexArrayHandle array) => GLPointers._IsVertexArrayOES_fnptr((int)array) != 0;
             
             /// <summary> <b>[requires: GL_OES_viewport_array]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4900,7 +4900,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool ExtIsProgramBinaryQCOM(ProgramHandle program) => (bool) GLPointers._ExtIsProgramBinaryQCOM_fnptr((int)program);
+            public static bool ExtIsProgramBinaryQCOM(ProgramHandle program) => GLPointers._ExtIsProgramBinaryQCOM_fnptr((int)program) != 0;
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>

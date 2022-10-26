@@ -331,7 +331,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="blue">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
         /// <param name="alpha">Specify whether red, green, blue, and alpha can or cannot be written into the color buffer. The initial values are all GL_TRUE, indicating that all color components can be written.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glColorMask.xml" /></remarks>
-        public static void ColorMask(bool red, bool green, bool blue, bool alpha) => GLPointers._ColorMask_fnptr((byte)red, (byte)green, (byte)blue, (byte)alpha);
+        public static void ColorMask(bool red, bool green, bool blue, bool alpha) => GLPointers._ColorMask_fnptr((byte)(red ? 1 : 0), (byte)(green ? 1 : 0), (byte)(blue ? 1 : 0), (byte)(alpha ? 1 : 0));
         
         /// <summary> <b>[requires: v1.0]</b> Define an array of colors. </summary>
         /// <param name="size">Specifies the number of components per color. Must be 4. The initial value is 4.</param>
@@ -415,7 +415,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> <b>[requires: v1.0]</b> Enable or disable writing into the depth buffer. </summary>
         /// <param name="flag">Specifies whether the depth buffer is enabled for writing. If flag is GL_FALSE, depth buffer writing is disabled, otherwise it is enabled. The initial value is GL_TRUE.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDepthMask.xml" /></remarks>
-        public static void DepthMask(bool flag) => GLPointers._DepthMask_fnptr((byte)flag);
+        public static void DepthMask(bool flag) => GLPointers._DepthMask_fnptr((byte)(flag ? 1 : 0));
         
         /// <summary> <b>[requires: v1.0]</b> Specify mapping of depth values from normalized        device coordinates to window coordinates. </summary>
         /// <param name="near">Specifies the mapping of the near clipping plane to window coordinates. The initial value is 0.</param>
@@ -598,17 +598,17 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> <b>[requires: v1.0]</b> Determine if a name corresponds to a buffer object. </summary>
         /// <param name="buffer"> Specifies a value that may be the name of a buffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsBuffer.xml" /></remarks>
-        public static bool IsBuffer(BufferHandle buffer) => (bool) GLPointers._IsBuffer_fnptr((int)buffer);
+        public static bool IsBuffer(BufferHandle buffer) => GLPointers._IsBuffer_fnptr((int)buffer) != 0;
         
         /// <summary> <b>[requires: v1.0]</b> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsEnabled.xml" /></remarks>
-        public static bool IsEnabled(EnableCap cap) => (bool) GLPointers._IsEnabled_fnptr((uint)cap);
+        public static bool IsEnabled(EnableCap cap) => GLPointers._IsEnabled_fnptr((uint)cap) != 0;
         
         /// <summary> <b>[requires: v1.0]</b> Determine if a name corresponds to a texture. </summary>
         /// <param name="texture"> Specifies a value that may be the name of a texture. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsTexture.xml" /></remarks>
-        public static bool IsTexture(TextureHandle texture) => (bool) GLPointers._IsTexture_fnptr((int)texture);
+        public static bool IsTexture(TextureHandle texture) => GLPointers._IsTexture_fnptr((int)texture) != 0;
         
         /// <summary> <b>[requires: v1.0]</b> Set the lighting model parameters. </summary>
         /// <param name="pname">Specifies a single-valued lighting model parameter. Must be GL_LIGHT_MODEL_TWO_SIDE.</param>
@@ -754,13 +754,13 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="value">Specifies the coverage of the modification mask. The value is clamped to the range [0, 1], where 0 represents no coverage and 1 full coverage. The initial value is 1.</param>
         /// <param name="invert">Specifies whether the modification mask implied by value is inverted or not. The initial value is GL_FALSE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glSampleCoverage.xml" /></remarks>
-        public static void SampleCoverage(float value, bool invert) => GLPointers._SampleCoverage_fnptr(value, (byte)invert);
+        public static void SampleCoverage(float value, bool invert) => GLPointers._SampleCoverage_fnptr(value, (byte)(invert ? 1 : 0));
         
         /// <summary> <b>[requires: v1.0]</b> Specify mask to modify multisampled pixel fragments. </summary>
         /// <param name="value">Specifies the coverage of the modification mask. The value is clamped to the range [0, 1], where 0 represents no coverage and 1 full coverage. The initial value is 1.</param>
         /// <param name="invert">Specifies whether the modification mask implied by value is inverted or not. The initial value is GL_FALSE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glSampleCoverage.xml" /></remarks>
-        public static void SampleCoveragex(int value, bool invert) => GLPointers._SampleCoveragex_fnptr(value, (byte)invert);
+        public static void SampleCoveragex(int value, bool invert) => GLPointers._SampleCoveragex_fnptr(value, (byte)(invert ? 1 : 0));
         
         /// <summary> <b>[requires: v1.0]</b> Multiply the current matrix by a general scalingmatrix. </summary>
         /// <param name="x">Specify scale factors along the x, y, and z axes, respectively.</param>
@@ -914,7 +914,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_APPLE_sync]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsSyncAPPLE(GLSync sync) => (bool) GLPointers._IsSyncAPPLE_fnptr((IntPtr)sync);
+            public static bool IsSyncAPPLE(GLSync sync) => GLPointers._IsSyncAPPLE_fnptr((IntPtr)sync) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_sync]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1047,7 +1047,7 @@ namespace OpenTK.Graphics.OpenGLES1
         {
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)enabled);
+            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControl_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
             
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1093,7 +1093,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControlKHR_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)enabled);
+            public static void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._DebugMessageControlKHR_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
             
             /// <summary> <b>[requires: GL_KHR_debug]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1148,11 +1148,11 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsFenceNV(uint fence) => (bool) GLPointers._IsFenceNV_fnptr(fence);
+            public static bool IsFenceNV(uint fence) => GLPointers._IsFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool TestFenceNV(uint fence) => (bool) GLPointers._TestFenceNV_fnptr(fence);
+            public static bool TestFenceNV(uint fence) => GLPointers._TestFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1483,7 +1483,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void SampleCoveragexOES(int value, bool invert) => GLPointers._SampleCoveragexOES_fnptr(value, (byte)invert);
+            public static void SampleCoveragexOES(int value, bool invert) => GLPointers._SampleCoveragexOES_fnptr(value, (byte)(invert ? 1 : 0));
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1759,7 +1759,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsRenderbufferOES(RenderbufferHandle renderbuffer) => (bool) GLPointers._IsRenderbufferOES_fnptr((int)renderbuffer);
+            public static bool IsRenderbufferOES(RenderbufferHandle renderbuffer) => GLPointers._IsRenderbufferOES_fnptr((int)renderbuffer) != 0;
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1783,7 +1783,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsFramebufferOES(FramebufferHandle framebuffer) => (bool) GLPointers._IsFramebufferOES_fnptr((int)framebuffer);
+            public static bool IsFramebufferOES(FramebufferHandle framebuffer) => GLPointers._IsFramebufferOES_fnptr((int)framebuffer) != 0;
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1823,7 +1823,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool UnmapBufferOES(All target) => (bool) GLPointers._UnmapBufferOES_fnptr((uint)target);
+            public static bool UnmapBufferOES(All target) => GLPointers._UnmapBufferOES_fnptr((uint)target) != 0;
             
             /// <summary> <b>[requires: GL_OES_mapbuffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1929,7 +1929,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsVertexArrayOES(VertexArrayHandle array) => (bool) GLPointers._IsVertexArrayOES_fnptr((int)array);
+            public static bool IsVertexArrayOES(VertexArrayHandle array) => GLPointers._IsVertexArrayOES_fnptr((int)array) != 0;
             
         }
         public static unsafe partial class QCOM
@@ -1992,7 +1992,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool ExtIsProgramBinaryQCOM(ProgramHandle program) => (bool) GLPointers._ExtIsProgramBinaryQCOM_fnptr((int)program);
+            public static bool ExtIsProgramBinaryQCOM(ProgramHandle program) => GLPointers._ExtIsProgramBinaryQCOM_fnptr((int)program) != 0;
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
