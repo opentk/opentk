@@ -376,8 +376,8 @@ namespace Generator.Process
             }
 
             // Go through all functions and build up a Dictionary from enum groups to functions using them
-            Dictionary<string, List<NativeFunction>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<NativeFunction>>();
-            foreach (var (_, functions) in functionsByVendor)
+            Dictionary<string, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<(string Vendor, NativeFunction Function)>>();
+            foreach (var (vendor, functions) in functionsByVendor)
             {
                 foreach (var function in functions)
                 {
@@ -385,13 +385,13 @@ namespace Generator.Process
                     {
                         if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var listOfFunctions) == false)
                         {
-                            listOfFunctions = new List<NativeFunction>();
+                            listOfFunctions = new List<(string Vendor, NativeFunction Function)>();
                             enumGroupToNativeFunctionsUsingThatEnumGroup.Add(group, listOfFunctions);
                         }
 
-                        if (listOfFunctions.Contains(function.NativeFunction) == false)
+                        if (listOfFunctions.Contains((vendor, function.NativeFunction)) == false)
                         {
-                            listOfFunctions.Add(function.NativeFunction);
+                            listOfFunctions.Add((vendor, function.NativeFunction));
                         }
                     }
                 }
@@ -428,7 +428,13 @@ namespace Generator.Process
                 }
 
                 // If there is a list, sort it by name
-                if (functionsUsingEnumGroup != null) functionsUsingEnumGroup.Sort((f1, f2) => f1.FunctionName.CompareTo(f2.FunctionName));
+                if (functionsUsingEnumGroup != null) functionsUsingEnumGroup.Sort((f1, f2) => {
+                    // We want to prioritize "core" functions before extensions.
+                    if (f1.Vendor == "" && f2.Vendor != "") return -1;
+                    if (f1.Vendor != "" && f2.Vendor == "") return 1;
+
+                    return f1.Function.FunctionName.CompareTo(f2.Function.FunctionName);
+                    });
 
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));
             }

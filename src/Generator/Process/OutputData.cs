@@ -64,7 +64,7 @@ namespace Generator.Writing
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
-        List<NativeFunction>? FunctionsUsingEnumGroup);
+        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup);
 
 
     public interface IOverloadLayer
