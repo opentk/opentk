@@ -151,10 +151,11 @@ namespace Generator.Process
             GLOutputApi gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntryInfo>(), info);
             GLOutputApi gles3 = GetOutputApiFromRequireTags(OutputApi.GLES3, gles3Requires, gles3Removes, info);
 
-            return new OutputData(new List<GLOutputApi>()
-            {
-                gl, glCompat, gles1, gles3
-            });
+            return new OutputData(allFunctions.Select(kvp => kvp.Value.NativeFunction).ToList(),
+                new List<GLOutputApi>()
+                {
+                    gl, glCompat, gles1, gles3
+                });
         }
 
         private static List<RequireEntryInfo> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
@@ -499,7 +500,14 @@ namespace Generator.Process
                     if (group != null && (bt.Type == PrimitiveType.Int || bt.Type == PrimitiveType.Uint))
                     {
                         Console.WriteLine($"Making {bt} into group {group}");
-                        return new CSPrimitive(group, bt.Constant);
+                        CSPrimitive baseType = bt.Type switch
+                        {
+                            PrimitiveType.Int => new CSPrimitive("int", bt.Constant),
+                            PrimitiveType.Uint => new CSPrimitive("uint", bt.Constant),
+                            _ => throw new Exception("This should not happen!"),
+                        };
+
+                        return new CSEnum(group, baseType, bt.Constant);
                     }
                     return bt.Type switch
                     {
@@ -524,7 +532,7 @@ namespace Generator.Process
                         PrimitiveType.Char8 => new CSChar8(bt.Constant),
 
                         // Enum
-                        PrimitiveType.Enum => new CSPrimitive(group ?? "All", bt.Constant),
+                        PrimitiveType.Enum => new CSEnum(group ?? "All", new CSPrimitive("uint", bt.Constant), bt.Constant),
 
                         // Pointers
                         PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),
