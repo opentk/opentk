@@ -171,6 +171,7 @@ namespace Generator.Writing
                 {
                     CSStruct csstruct => csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type."),
                     CSEnum => "uint",
+                    CSBool8 => "byte",
                     _ => type.ToCSString()
                 };
 
