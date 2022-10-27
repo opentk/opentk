@@ -106,7 +106,6 @@ let releaseProjects =
 // Absolutely all test projects.
 let allTestProjects =
     !! "tests/**/*.??proj"
-    -- "tests/OpenALTest/**"
 
 // Test projects excluding integration tests (don't run on CI).
 let ciTestProjects =
