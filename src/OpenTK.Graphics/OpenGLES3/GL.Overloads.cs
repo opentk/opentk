@@ -9680,7 +9680,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV"/>
-            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
             {
                 fixed (float* transformValues_ptr = transformValues)
                 {
@@ -9689,7 +9689,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV"/>
-            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
             {
                 fixed (float* transformValues_ptr = transformValues)
                 {
@@ -9698,7 +9698,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV"/>
-            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -9707,7 +9707,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV"/>
-            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = paths)
@@ -9719,7 +9719,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV"/>
-            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = paths)
@@ -9731,7 +9731,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverFillPathInstancedNV"/>
-            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -9741,7 +9741,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV"/>
-            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
             {
                 fixed (float* transformValues_ptr = transformValues)
                 {
@@ -9750,7 +9750,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV"/>
-            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
             {
                 fixed (float* transformValues_ptr = transformValues)
                 {
@@ -9759,7 +9759,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV"/>
-            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -9768,7 +9768,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV"/>
-            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = paths)
@@ -9780,7 +9780,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV"/>
-            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = paths)
@@ -9792,7 +9792,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="CoverStrokePathInstancedNV"/>
-            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, in float transformValues)
+            public static unsafe void CoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -10167,7 +10167,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV"/>
-            public static unsafe void StencilThenCoverFillPathInstancedNV(int numPaths, All pathNameType, IntPtr paths, uint pathBase, All fillMode, uint mask, All coverMode, All transformType, in float transformValues)
+            public static unsafe void StencilThenCoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+            {
+                fixed (float* transformValues_ptr = transformValues)
+                {
+                    void* paths_vptr = (void*)paths;
+                    StencilThenCoverFillPathInstancedNV(numPaths, pathNameType, paths_vptr, pathBase, fillMode, mask, coverMode, transformType, transformValues_ptr);
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV"/>
+            public static unsafe void StencilThenCoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+            {
+                fixed (float* transformValues_ptr = transformValues)
+                {
+                    void* paths_vptr = (void*)paths;
+                    StencilThenCoverFillPathInstancedNV(numPaths, pathNameType, paths_vptr, pathBase, fillMode, mask, coverMode, transformType, transformValues_ptr);
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV"/>
+            public static unsafe void StencilThenCoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -10176,7 +10194,31 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV"/>
-            public static unsafe void StencilThenCoverFillPathInstancedNV<T1>(int numPaths, All pathNameType, in T1 paths, uint pathBase, All fillMode, uint mask, All coverMode, All transformType, in float transformValues)
+            public static unsafe void StencilThenCoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+                where T1 : unmanaged
+            {
+                fixed (void* paths_ptr = paths)
+                {
+                    fixed (float* transformValues_ptr = transformValues)
+                    {
+                        StencilThenCoverFillPathInstancedNV(numPaths, pathNameType, paths_ptr, pathBase, fillMode, mask, coverMode, transformType, transformValues_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV"/>
+            public static unsafe void StencilThenCoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+                where T1 : unmanaged
+            {
+                fixed (void* paths_ptr = paths)
+                {
+                    fixed (float* transformValues_ptr = transformValues)
+                    {
+                        StencilThenCoverFillPathInstancedNV(numPaths, pathNameType, paths_ptr, pathBase, fillMode, mask, coverMode, transformType, transformValues_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverFillPathInstancedNV"/>
+            public static unsafe void StencilThenCoverFillPathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -10186,7 +10228,25 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV"/>
-            public static unsafe void StencilThenCoverStrokePathInstancedNV(int numPaths, All pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, All coverMode, All transformType, in float transformValues)
+            public static unsafe void StencilThenCoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+            {
+                fixed (float* transformValues_ptr = transformValues)
+                {
+                    void* paths_vptr = (void*)paths;
+                    StencilThenCoverStrokePathInstancedNV(numPaths, pathNameType, paths_vptr, pathBase, reference, mask, coverMode, transformType, transformValues_ptr);
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV"/>
+            public static unsafe void StencilThenCoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+            {
+                fixed (float* transformValues_ptr = transformValues)
+                {
+                    void* paths_vptr = (void*)paths;
+                    StencilThenCoverStrokePathInstancedNV(numPaths, pathNameType, paths_vptr, pathBase, reference, mask, coverMode, transformType, transformValues_ptr);
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV"/>
+            public static unsafe void StencilThenCoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, IntPtr paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
             {
                 fixed (float* transformValues_ptr = &transformValues)
                 {
@@ -10195,7 +10255,31 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV"/>
-            public static unsafe void StencilThenCoverStrokePathInstancedNV<T1>(int numPaths, All pathNameType, in T1 paths, uint pathBase, int reference, uint mask, All coverMode, All transformType, in float transformValues)
+            public static unsafe void StencilThenCoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, ReadOnlySpan<T1> paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, ReadOnlySpan<float> transformValues)
+                where T1 : unmanaged
+            {
+                fixed (void* paths_ptr = paths)
+                {
+                    fixed (float* transformValues_ptr = transformValues)
+                    {
+                        StencilThenCoverStrokePathInstancedNV(numPaths, pathNameType, paths_ptr, pathBase, reference, mask, coverMode, transformType, transformValues_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV"/>
+            public static unsafe void StencilThenCoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, T1[] paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float[] transformValues)
+                where T1 : unmanaged
+            {
+                fixed (void* paths_ptr = paths)
+                {
+                    fixed (float* transformValues_ptr = transformValues)
+                    {
+                        StencilThenCoverStrokePathInstancedNV(numPaths, pathNameType, paths_ptr, pathBase, reference, mask, coverMode, transformType, transformValues_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="StencilThenCoverStrokePathInstancedNV"/>
+            public static unsafe void StencilThenCoverStrokePathInstancedNV<T1>(int numPaths, PathElementType pathNameType, in T1 paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, in float transformValues)
                 where T1 : unmanaged
             {
                 fixed (void* paths_ptr = &paths)
@@ -10949,13 +11033,13 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="GetPerfQueryInfoINTEL"/>
-            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
             {
                 string queryName;
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
-                fixed (uint* capsMask_ptr = &capsMask)
+                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = &capsMask)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
@@ -10965,12 +11049,12 @@ namespace OpenTK.Graphics.OpenGLES3
                 return queryName;
             }
             /// <inheritdoc cref="GetPerfQueryInfoINTEL"/>
-            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
             {
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
-                fixed (uint* capsMask_ptr = &capsMask)
+                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = &capsMask)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);

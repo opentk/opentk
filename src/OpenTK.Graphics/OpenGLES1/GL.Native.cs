@@ -88,7 +88,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         /// <param name="parameters"> Returns the requested data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGetMaterial.xml" /></remarks>
-        public static void GetMaterialfv(MaterialFace face, MaterialParameter pname, float* parameters) => GLPointers._GetMaterialfv_fnptr((uint)face, (uint)pname, parameters);
+        public static void GetMaterialfv(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._GetMaterialfv_fnptr((uint)face, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> Return texture environment parameters. </summary>
         /// <param name="target"> Specifies a texture environment. May be GL_TEXTURE_ENV or GL_POINT_SPRITE_OES. </param>
@@ -136,9 +136,9 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="pname">Specifies the single-valued material parameter of the face or faces that is being updated. Must be GL_SHININESS.</param>
         /// <param name="param">Specifies the value that parameter GL_SHININESS will be set to.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glMaterial.xml" /></remarks>
-        public static void Materialf(MaterialFace face, MaterialParameter pname, float param) => GLPointers._Materialf_fnptr((uint)face, (uint)pname, param);
+        public static void Materialf(TriangleFace face, MaterialParameter pname, float param) => GLPointers._Materialf_fnptr((uint)face, (uint)pname, param);
         
-        public static void Materialfv(MaterialFace face, MaterialParameter pname, float* parameters) => GLPointers._Materialfv_fnptr((uint)face, (uint)pname, parameters);
+        public static void Materialfv(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._Materialfv_fnptr((uint)face, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> Multiply the current matrix with the specifiedmatrix. </summary>
         /// <param name="m">Points to 16 consecutive values that are used as the elements of a 4x4 column-major matrix.</param>
@@ -393,7 +393,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> <b>[requires: v1.0]</b> Specify whether front- or back-facing polygons are        culled. </summary>
         /// <param name="mode">Specifies whether front- or back-facing polygons are culled. Symbolic constants GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK are accepted. The initial value is GL_BACK.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glCullFace.xml" /></remarks>
-        public static void CullFace(CullFaceMode mode) => GLPointers._CullFace_fnptr((uint)mode);
+        public static void CullFace(TriangleFace mode) => GLPointers._CullFace_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v1.0]</b> Delete named buffer objects. </summary>
         /// <param name="n">Specifies the number of buffer objects to be deleted.</param>
@@ -548,7 +548,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="pname"> Specifies the material parameter to return. Accepted symbolic names are GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, and GL_SHININESS. </param>
         /// <param name="parameters"> Returns the requested data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGetMaterial.xml" /></remarks>
-        public static void GetMaterialxv(MaterialFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialxv_fnptr((uint)face, (uint)pname, parameters);
+        public static void GetMaterialxv(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialxv_fnptr((uint)face, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0 | GL_KHR_debug]</b> Return the address of the specified pointer. </summary>
         /// <param name="pname"> Specifies the array or buffer pointer to be returned. Accepted symbolic names are GL_COLOR_ARRAY_POINTER, GL_MATRIX_INDEX_ARRAY_POINTER_OES, GL_NORMAL_ARRAY_POINTER, GL_POINT_SIZE_ARRAY_POINTER_OES, GL_TEXTURE_COORD_ARRAY_POINTER, and GL_VERTEX_ARRAY_POINTER., and GL_WEIGHT_ARRAY_POINTER_OES. </param>
@@ -651,9 +651,9 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="pname">Specifies the single-valued material parameter of the face or faces that is being updated. Must be GL_SHININESS.</param>
         /// <param name="param">Specifies the value that parameter GL_SHININESS will be set to.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glMaterial.xml" /></remarks>
-        public static void Materialx(MaterialFace face, MaterialParameter pname, int param) => GLPointers._Materialx_fnptr((uint)face, (uint)pname, param);
+        public static void Materialx(TriangleFace face, MaterialParameter pname, int param) => GLPointers._Materialx_fnptr((uint)face, (uint)pname, param);
         
-        public static void Materialxv(MaterialFace face, MaterialParameter pname, int* param) => GLPointers._Materialxv_fnptr((uint)face, (uint)pname, param);
+        public static void Materialxv(TriangleFace face, MaterialParameter pname, int* param) => GLPointers._Materialxv_fnptr((uint)face, (uint)pname, param);
         
         /// <summary> <b>[requires: v1.0]</b> Specify which matrix is the current matrix. </summary>
         /// <param name="mode"> Specifies which matrix stack is the target for subsequent matrix operations. These values are accepted: GL_MODELVIEW, GL_PROJECTION, and GL_TEXTURE., and GL_MATRIX_PALETTE_OES. The initial value is GL_MODELVIEW. </param>
@@ -1407,11 +1407,11 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void MaterialxOES(MaterialFace face, MaterialParameter pname, int param) => GLPointers._MaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._MaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void MaterialxvOES(MaterialFace face, MaterialParameter pname, int* param) => GLPointers._MaterialxvOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxvOES(TriangleFace face, MaterialParameter pname, int* param) => GLPointers._MaterialxvOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1475,7 +1475,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetMaterialxvOES(MaterialFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1515,11 +1515,11 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterxOES(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int param) => GLPointers._ConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
+            public static void ConvolutionParameterxOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int param) => GLPointers._ConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int* parameters) => GLPointers._ConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._ConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1559,7 +1559,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetMaterialxOES(MaterialFace face, MaterialParameter pname, int param) => GLPointers._GetMaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void GetMaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._GetMaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>

@@ -877,6 +877,12 @@ namespace OpenTK.Graphics.OpenGLES1
         FrontAndBack = 1032,
         NoneOes = 0,
     }
+    public enum PixelTexGenModeSGIX : uint
+    {
+        Alpha = 6406,
+        Rgb = 6407,
+        Rgba = 6408,
+    }
     public enum ReadBufferMode : uint
     {
         Front = 1028,
@@ -968,27 +974,8 @@ namespace OpenTK.Graphics.OpenGLES1
         Gequal = 518,
         Always = 519,
     }
-    public enum ColorMaterialFace : uint
-    {
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
-    }
-    ///<summary>Used in <see cref="GL.CullFace" /></summary>
-    public enum CullFaceMode : uint
-    {
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
-    }
-    public enum StencilFaceDirection : uint
-    {
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
-    }
-    ///<summary>Used in <see cref="GL.GetMaterialfv" />, <see cref="GL.GetMaterialxv" />, <see cref="GL.Materialf" />, ...</summary>
-    public enum MaterialFace : uint
+    ///<summary>Used in <see cref="GL.CullFace" />, <see cref="GL.GetMaterialfv" />, <see cref="GL.GetMaterialxv" />, ...</summary>
+    public enum TriangleFace : uint
     {
         Front = 1028,
         Back = 1029,
@@ -1047,7 +1034,10 @@ namespace OpenTK.Graphics.OpenGLES1
         CurrentNormal = 2818,
         CurrentTextureCoords = 2819,
         PointSize = 2833,
+        PointSizeMin = 33062,
+        PointSizeMax = 33063,
         PointFadeThresholdSize = 33064,
+        PointDistanceAttenuation = 33065,
         SmoothPointSizeRange = 2834,
         LineWidth = 2849,
         SmoothLineWidthRange = 2850,
@@ -1143,7 +1133,10 @@ namespace OpenTK.Graphics.OpenGLES1
         MaxDebugGroupStackDepth = 33388,
         DebugGroupStackDepth = 33389,
         MaxLabelLength = 33512,
+        BlendEquationOes = 32777,
         TextureBindingCubeMapOes = 34068,
+        MaxCubeMapTextureSizeOes = 34076,
+        TextureGenStrOes = 36192,
     }
     public enum VertexShaderTextureUnitParameter : uint
     {
@@ -1194,6 +1187,7 @@ namespace OpenTK.Graphics.OpenGLES1
         DebugOutputSynchronous = 33346,
         DebugOutput = 37600,
         TextureCubeMapOes = 34067,
+        TextureGenStrOes = 36192,
     }
     ///<summary>Used in <see cref="GL.LightModelf" />, <see cref="GL.LightModelfv" />, <see cref="GL.LightModelx" />, ...</summary>
     public enum LightModelParameter : uint
@@ -1260,6 +1254,12 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         Texture2d = 3553,
         TextureCubeMapOes = 34067,
+        TextureCubeMapPositiveXOes = 34069,
+        TextureCubeMapNegativeXOes = 34070,
+        TextureCubeMapPositiveYOes = 34071,
+        TextureCubeMapNegativeYOes = 34072,
+        TextureCubeMapPositiveZOes = 34073,
+        TextureCubeMapNegativeZOes = 34074,
     }
     ///<summary>Used in <see cref="GL.GetPointerv" />, <see cref="GL.KHR.GetPointerv" /></summary>
     public enum GetPointervPName : uint
@@ -1287,6 +1287,8 @@ namespace OpenTK.Graphics.OpenGLES1
         TextureMinFilter = 10241,
         TextureWrapS = 10242,
         TextureWrapT = 10243,
+        NormalMapOes = 34065,
+        ReflectionMapOes = 34066,
     }
     ///<summary>Used in <see cref="GL.KHR.DebugMessageControl" />, <see cref="GL.KHR.DebugMessageControlKHR" />, <see cref="GL.KHR.DebugMessageInsert" />, ...</summary>
     public enum DebugSeverity : uint
@@ -1439,6 +1441,7 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedShort1555RevExt = 33638,
         UnsignedShort4444RevImg = 33637,
         UnsignedInt = 5125,
+        UnsignedInt248Oes = 34042,
     }
     public enum VertexAttribType : uint
     {
@@ -1533,11 +1536,6 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedInt = 5125,
     }
     public enum UniformType : uint
-    {
-        Float = 5126,
-        UnsignedInt = 5125,
-    }
-    public enum GlslTypeToken : uint
     {
         Float = 5126,
         UnsignedInt = 5125,
@@ -1672,13 +1670,6 @@ namespace OpenTK.Graphics.OpenGLES1
         Alpha = 6406,
         Rgb = 6407,
     }
-    public enum PixelTexGenMode : uint
-    {
-        Rgb = 6407,
-        Rgba = 6408,
-        Luminance = 6409,
-        LuminanceAlpha = 6410,
-    }
     ///<summary>Used in <see cref="GL.ShadeModel" /></summary>
     public enum ShadingModel : uint
     {
@@ -1696,12 +1687,34 @@ namespace OpenTK.Graphics.OpenGLES1
     ///<summary>Used in <see cref="GL.OES.GetTexGenfvOES" />, <see cref="GL.OES.GetTexGenivOES" />, <see cref="GL.OES.GetTexGenxvOES" />, ...</summary>
     public enum TextureCoordName : uint
     {
+        TextureGenStrOes = 36192,
     }
     ///<summary>Used in <see cref="GL.GetTexEnvfv" />, <see cref="GL.GetTexEnviv" />, <see cref="GL.GetTexEnvxv" />, ...</summary>
     public enum TextureEnvParameter : uint
     {
         TextureEnvMode = 8704,
         TextureEnvColor = 8705,
+        Combine = 34160,
+        CombineRgb = 34161,
+        CombineAlpha = 34162,
+        RgbScale = 34163,
+        AddSigned = 34164,
+        Interpolate = 34165,
+        Constant = 34166,
+        PrimaryColor = 34167,
+        Previous = 34168,
+        Operand0Rgb = 34192,
+        Operand1Rgb = 34193,
+        Operand2Rgb = 34194,
+        Operand0Alpha = 34200,
+        Operand1Alpha = 34201,
+        Operand2Alpha = 34202,
+        Src0Rgb = 34176,
+        Src1Rgb = 34177,
+        Src2Rgb = 34178,
+        Src0Alpha = 34184,
+        Src1Alpha = 34185,
+        Src2Alpha = 34186,
     }
     ///<summary>Used in <see cref="GL.GetTexEnvfv" />, <see cref="GL.GetTexEnviv" />, <see cref="GL.GetTexEnvxv" />, ...</summary>
     public enum TextureEnvTarget : uint
@@ -1711,6 +1724,7 @@ namespace OpenTK.Graphics.OpenGLES1
     ///<summary>Used in <see cref="GL.OES.GetTexGenfvOES" />, <see cref="GL.OES.GetTexGenivOES" />, <see cref="GL.OES.GetTexGenxvOES" />, ...</summary>
     public enum TextureGenParameter : uint
     {
+        TextureGenModeOes = 9472,
     }
     public enum BlitFramebufferFilter : uint
     {
@@ -1817,7 +1831,7 @@ namespace OpenTK.Graphics.OpenGLES1
     {
     }
     ///<summary>Used in <see cref="GL.OES.ConvolutionParameterxOES" />, <see cref="GL.OES.ConvolutionParameterxvOES" /></summary>
-    public enum ConvolutionParameterEXT : uint
+    public enum ConvolutionParameter : uint
     {
     }
     ///<summary>Used in <see cref="GL.OES.GetHistogramParameterxvOES" /></summary>
@@ -1839,17 +1853,13 @@ namespace OpenTK.Graphics.OpenGLES1
         ArrayBuffer = 34962,
         ElementArrayBuffer = 34963,
     }
-    public enum PointParameterNameSGIS : uint
+    ///<summary>Used in <see cref="GL.PointParameterf" />, <see cref="GL.PointParameterfv" />, <see cref="GL.PointParameterx" />, ...</summary>
+    public enum PointParameterNameARB : uint
     {
         PointSizeMin = 33062,
         PointSizeMax = 33063,
         PointFadeThresholdSize = 33064,
         PointDistanceAttenuation = 33065,
-    }
-    ///<summary>Used in <see cref="GL.PointParameterf" />, <see cref="GL.PointParameterfv" />, <see cref="GL.PointParameterx" />, ...</summary>
-    public enum PointParameterNameARB : uint
-    {
-        PointFadeThresholdSize = 33064,
     }
     ///<summary>Used in <see cref="GL.OES.GetFramebufferAttachmentParameterivOES" /></summary>
     public enum FramebufferAttachmentParameterName : uint
@@ -1868,11 +1878,6 @@ namespace OpenTK.Graphics.OpenGLES1
     ///<summary>Used in <see cref="GL.OES.FramebufferRenderbufferOES" />, <see cref="GL.EXT.FramebufferTexture2DMultisampleEXT" />, <see cref="GL.IMG.FramebufferTexture2DMultisampleIMG" />, ...</summary>
     public enum FramebufferAttachment : uint
     {
-    }
-    public enum VertexBufferObjectParameter : uint
-    {
-        BufferSize = 34660,
-        BufferUsage = 34661,
     }
     ///<summary>Used in <see cref="GL.GetBufferParameteriv" /></summary>
     public enum BufferPNameARB : uint
@@ -1965,30 +1970,6 @@ namespace OpenTK.Graphics.OpenGLES1
     public enum PathColor : uint
     {
         PrimaryColor = 34167,
-    }
-    public enum RegisterCombinerPname : uint
-    {
-        Combine = 34160,
-        CombineRgb = 34161,
-        CombineAlpha = 34162,
-        RgbScale = 34163,
-        AddSigned = 34164,
-        Interpolate = 34165,
-        Constant = 34166,
-        PrimaryColor = 34167,
-        Previous = 34168,
-        Operand0Rgb = 34192,
-        Operand1Rgb = 34193,
-        Operand2Rgb = 34194,
-        Operand0Alpha = 34200,
-        Operand1Alpha = 34201,
-        Operand2Alpha = 34202,
-        Src0Rgb = 34176,
-        Src1Rgb = 34177,
-        Src2Rgb = 34178,
-        Src0Alpha = 34184,
-        Src1Alpha = 34185,
-        Src2Alpha = 34186,
     }
     public enum CopyBufferSubDataTarget : uint
     {
