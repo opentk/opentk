@@ -20,7 +20,7 @@ function version_compare() {
     return 0
 }
 
-MINIMAL_DOTNET_VERSION=5.0.103
+MINIMAL_DOTNET_VERSION=5.0.408
 
 EXIT_CODE=0
 

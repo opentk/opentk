@@ -2,9 +2,11 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,7 +26,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets the native <see cref="Window"/> pointer for use with <see cref="GLFW"/> API.
         /// </summary>
-        public unsafe Window* WindowPtr { get; }
+        public unsafe Window* WindowPtr { get; protected set; }
 
         // Both of these are used to cache the size and location of the window before going into full screen mode.
         // When getting out of full screen mode, the location and size will be set to these value in all states other then minimized.
@@ -34,6 +36,9 @@ namespace OpenTK.Windowing.Desktop
 
         // Used for delta calculation in the mouse position changed event.
         private Vector2 _lastReportedMousePos;
+
+        // Stores exceptions thrown in callbacks so that we can rethrow them after ProcessEvents().
+        private static ConcurrentQueue<ExceptionDispatchInfo> _callbackExceptions = new ConcurrentQueue<ExceptionDispatchInfo>();
 
         // GLFW cursor we assigned to the window.
         // Null if the cursor is default.
@@ -116,6 +121,48 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <value><c>true</c> if any button is pressed; otherwise, <c>false</c>.</value>
         public bool IsAnyMouseButtonDown => MouseState.IsAnyButtonDown;
+
+        private VSyncMode _vSync;
+
+        /// <summary>
+        /// Gets or sets the VSync state of this <see cref="NativeWindow"/>.
+        /// </summary>
+        /// <value>
+        /// The VSync state.
+        /// </value>
+        public VSyncMode VSync
+        {
+            get
+            {
+                if (Context == null)
+                {
+                    throw new InvalidOperationException("Cannot control vsync when running with ContextAPI.NoAPI.");
+                }
+
+                return _vSync;
+            }
+
+            set
+            {
+                if (Context == null)
+                {
+                    throw new InvalidOperationException("Cannot control vsync when running with ContextAPI.NoAPI.");
+                }
+
+                // We don't do anything here for adaptive because that's handled in GameWindow.
+                switch (value)
+                {
+                    case VSyncMode.On:
+                        Context.SwapInterval = 1;
+                        break;
+
+                    case VSyncMode.Off:
+                        Context.SwapInterval = 0;
+                        break;
+                }
+                _vSync = value;
+            }
+        }
 
         private WindowIcon _icon;
 
@@ -307,11 +354,9 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets a value indicating whether the shutdown sequence has been initiated
-        /// for this window, by calling GameWindow.Close() or hitting the 'close' button.
-        /// If this property is true, it is no longer safe to use any OpenTK.Input or
-        /// OpenTK.Graphics.OpenGL functions or properties.
+        /// for this window, by calling NativeWindow.Close() or hitting the 'close' button.
         /// </summary>
-        public bool IsExiting { get; private set; }
+        public unsafe bool IsExiting => GLFW.WindowShouldClose(WindowPtr);
 
         private WindowState _windowState = WindowState.Normal;
 
@@ -427,6 +472,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         private Vector2i _size;
+        private Vector2i? _minimumSize;
+        private Vector2i? _maximumSize;
 
         /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the external size of this window.
@@ -438,6 +485,59 @@ namespace OpenTK.Windowing.Desktop
             {
                 _size = value;
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the minimum external size of this window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the minimum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public unsafe Vector2i? MinimumSize
+        {
+            get => _minimumSize;
+            set
+            {
+                _minimumSize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare, _maximumSize?.X ?? GLFW.DontCare, _maximumSize?.Y ?? GLFW.DontCare);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the maximum external size of this window.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> to remove the maximum size constraint.
+        /// If you set size limits and an aspect ratio that conflict, the results are undefined.
+        /// </remarks>
+        public unsafe Vector2i? MaximumSize
+        {
+            get => _maximumSize;
+            set
+            {
+                _maximumSize = value;
+                GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize?.X ?? GLFW.DontCare, _minimumSize?.Y ?? GLFW.DontCare, value?.X ?? GLFW.DontCare, value?.Y ?? GLFW.DontCare);
+            }
+        }
+
+        private (int numerator, int denominator)? _aspectRatio;
+
+        /// <summary>
+        /// Gets or sets the aspect ratio this window is locked to.
+        /// </summary>
+        /// <remarks>
+        /// Set to <c>null</c> disable aspect ratio locking.
+        /// If you set size limits and an aspect ratio lock that conflict, the results are undefined.
+        /// </remarks>
+        public unsafe (int numerator, int denominator)? AspectRatio
+        {
+            get => _aspectRatio;
+            set
+            {
+                _aspectRatio = value;
+                GLFW.SetWindowAspectRatio(WindowPtr, value?.numerator ?? GLFW.DontCare, value?.denominator ?? GLFW.DontCare);
             }
         }
 
@@ -518,8 +618,52 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Gets or sets the cursor state of the windows cursor.
+        /// </summary>
+        public unsafe CursorState CursorState
+        {
+            get
+            {
+                CursorModeValue inputMode = GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor);
+                switch (inputMode)
+                {
+                    case CursorModeValue.CursorNormal:
+                        return CursorState.Normal;
+                    case CursorModeValue.CursorHidden:
+                        return CursorState.Hidden;
+                    case CursorModeValue.CursorDisabled:
+                        return CursorState.Grabbed;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            set
+            {
+                CursorModeValue inputMode;
+                switch (value)
+                {
+                    case CursorState.Normal:
+                        inputMode = CursorModeValue.CursorNormal;
+                        break;
+                    case CursorState.Hidden:
+                        inputMode = CursorModeValue.CursorHidden;
+                        break;
+                    case CursorState.Grabbed:
+                        inputMode = CursorModeValue.CursorDisabled;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                GLFW.SetInputMode(WindowPtr, CursorStateAttribute.Cursor, inputMode);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the mouse cursor is visible.
         /// </summary>
+        [Obsolete("Use CursorState insatead.")]
         public unsafe bool CursorVisible
         {
             get
@@ -539,6 +683,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value indicating whether the mouse cursor is confined inside the window size.
         /// </summary>
+        [Obsolete("Use CursorState instead.")]
         public unsafe bool CursorGrabbed
         {
             get => GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor) == CursorModeValue.CursorDisabled;
@@ -566,11 +711,6 @@ namespace OpenTK.Windowing.Desktop
         public unsafe NativeWindow(NativeWindowSettings settings)
         {
             GLFWProvider.EnsureInitialized();
-            if (!GLFWProvider.IsOnMainThread)
-            {
-                throw new
-                    GLFWException("Can only create windows on the Glfw main thread. (Thread from which Glfw was first created).");
-            }
 
             _title = settings.Title;
 
@@ -653,6 +793,8 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.WindowHint(WindowHintInt.Samples, settings.NumberOfSamples);
 
+            GLFW.WindowHint(WindowHintBool.SrgbCapable, settings.SrgbCapable);
+
             // We do the work to set the hint bits outside of the CreateWindow conditional
             // so that the window will get the correct fullscreen red/green/blue bits stored
             // in its hidden fields regardless of how it gets created.  (The extra curly
@@ -661,9 +803,24 @@ namespace OpenTK.Windowing.Desktop
             {
                 var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                 var modePtr = GLFW.GetVideoMode(monitor);
-                GLFW.WindowHint(WindowHintInt.RedBits, modePtr->RedBits);
-                GLFW.WindowHint(WindowHintInt.GreenBits, modePtr->GreenBits);
-                GLFW.WindowHint(WindowHintInt.BlueBits, modePtr->BlueBits);
+                GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
+                GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
+                GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
+                if (settings.AlphaBits.HasValue)
+                {
+                    GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
+                }
+
+                if (settings.DepthBits.HasValue)
+                {
+                    GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
+                }
+
+                if (settings.StencilBits.HasValue)
+                {
+                    GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
+                }
+
                 GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
                 if (settings.WindowState == WindowState.Fullscreen && _isVisible)
@@ -679,13 +836,22 @@ namespace OpenTK.Windowing.Desktop
                 }
             }
 
-            Context = new GLFWGraphicsContext(WindowPtr);
+            // For Vulkan, we need to pass ContextAPI.NoAPI, otherweise we will get an exception.
+            // See https://github.com/glfw/glfw/blob/56a4cb0a3a2c7a44a2fd8ab3335adf915e19d30c/src/vulkan.c#L320
+            //
+            // But Calling MakeCurrent while using NoApi, we will get an exception from GLFW,
+            // because Vulkan does not have that concept.
+            // See https://github.com/glfw/glfw/blob/fd79b02840a36b74e4289cc53dc332de6403b8fd/src/context.c#L618
+            if (settings.API != ContextAPI.NoAPI)
+            {
+                Context = new GLFWGraphicsContext(WindowPtr);
+            }
 
             Exists = true;
 
             if (isOpenGl)
             {
-                Context.MakeCurrent();
+                Context?.MakeCurrent();
 
                 if (settings.AutoLoadBindings)
                 {
@@ -695,25 +861,6 @@ namespace OpenTK.Windowing.Desktop
 
             // Enables the caps lock modifier to be detected and updated
             GLFW.SetInputMode(WindowPtr, LockKeyModAttribute.LockKeyMods, true);
-
-            // These lambdas must be assigned to fields to prevent them from being garbage collected
-            _windowPosCallback = (w, posX, posY) => OnMove(new WindowPositionEventArgs(posX, posY));
-            _windowSizeCallback = (w, argsWidth, argsHeight) => OnResize(new ResizeEventArgs(argsWidth, argsHeight));
-            _windowIconifyCallback = (w, iconified) => OnMinimized(new MinimizedEventArgs(iconified));
-            _windowMaximizeCallback = (w, maximized) => OnMaximized(new MaximizedEventArgs(maximized));
-            _windowFocusCallback = (w, focused) => OnFocusedChanged(new FocusedChangedEventArgs(focused));
-            _charCallback = (w, codepoint) => OnTextInput(new TextInputEventArgs((int)codepoint));
-            _scrollCallback = ScrollCallback;
-            _monitorCallback = (monitor, eventCode) => OnMonitorConnected(new MonitorEventArgs(new MonitorHandle((IntPtr)monitor), eventCode == ConnectedState.Connected));
-            _windowRefreshCallback = w => OnRefresh();
-            // These must be assigned to fields even when they're methods
-            _windowCloseCallback = OnCloseCallback;
-            _keyCallback = KeyCallback;
-            _cursorEnterCallback = CursorEnterCallback;
-            _mouseButtonCallback = MouseButtonCallback;
-            _cursorPosCallback = CursorPosCallback;
-            _dropCallback = DropCallback;
-            _joystickCallback = JoystickCallback;
 
             RegisterWindowCallbacks();
 
@@ -742,6 +889,12 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetWindowSize(WindowPtr, out var width, out var height);
 
             HandleResize(width, height);
+
+            AspectRatio = settings.AspectRatio;
+            _minimumSize = settings.MinimumSize;
+            _maximumSize = settings.MaximumSize;
+
+            GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize?.X ?? GLFW.DontCare, _minimumSize?.Y ?? GLFW.DontCare, _maximumSize?.X ?? GLFW.DontCare, _maximumSize?.Y ?? GLFW.DontCare);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
             _location = new Vector2i(x, y);
@@ -880,41 +1033,75 @@ namespace OpenTK.Windowing.Desktop
             return WindowState.Normal;
         }
 
-        private readonly GLFWCallbacks.WindowPosCallback _windowPosCallback;
-        private readonly GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
-        private readonly GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
-        private readonly GLFWCallbacks.WindowMaximizeCallback _windowMaximizeCallback;
-        private readonly GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
-        private readonly GLFWCallbacks.CharCallback _charCallback;
-        private readonly GLFWCallbacks.ScrollCallback _scrollCallback;
-        private readonly GLFWCallbacks.MonitorCallback _monitorCallback;
-        private readonly GLFWCallbacks.WindowRefreshCallback _windowRefreshCallback;
-        private readonly GLFWCallbacks.WindowCloseCallback _windowCloseCallback;
-        private readonly GLFWCallbacks.KeyCallback _keyCallback;
-        private readonly GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
-        private readonly GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
-        private readonly GLFWCallbacks.CursorPosCallback _cursorPosCallback;
-        private readonly GLFWCallbacks.DropCallback _dropCallback;
-        private readonly GLFWCallbacks.JoystickCallback _joystickCallback;
+        private GLFWCallbacks.WindowPosCallback _windowPosCallback;
+        private GLFWCallbacks.WindowSizeCallback _windowSizeCallback;
+        private GLFWCallbacks.WindowIconifyCallback _windowIconifyCallback;
+        private GLFWCallbacks.WindowMaximizeCallback _windowMaximizeCallback;
+        private GLFWCallbacks.WindowFocusCallback _windowFocusCallback;
+        private GLFWCallbacks.CharCallback _charCallback;
+        private GLFWCallbacks.ScrollCallback _scrollCallback;
+        private GLFWCallbacks.WindowRefreshCallback _windowRefreshCallback;
+        private GLFWCallbacks.WindowCloseCallback _windowCloseCallback;
+        private GLFWCallbacks.KeyCallback _keyCallback;
+        private GLFWCallbacks.CursorEnterCallback _cursorEnterCallback;
+        private GLFWCallbacks.MouseButtonCallback _mouseButtonCallback;
+        private GLFWCallbacks.CursorPosCallback _cursorPosCallback;
+        private GLFWCallbacks.DropCallback _dropCallback;
+        private GLFWCallbacks.JoystickCallback _joystickCallback;
+
+        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
+        private GLFWCallbacks.MonitorCallback _monitorCallback;
 
         private unsafe void RegisterWindowCallbacks()
         {
+            // These must be assigned to fields even when they're methods
+
+            _windowPosCallback = WindowPosCallback;
+            _windowSizeCallback = WindowSizeCallback;
+            _windowCloseCallback = WindowCloseCallback;
+            _windowRefreshCallback = WindowRefreshCallback;
+            _windowFocusCallback = WindowFocusCallback;
+            _windowIconifyCallback = WindowIconifyCallback;
+            _windowMaximizeCallback = WindowMaximizeCallback;
+            // FIXME: Add FramebufferSizeCallback and WindowContentsScaleCallback
+
+            _mouseButtonCallback = MouseButtonCallback;
+            _cursorPosCallback = CursorPosCallback;
+            _cursorEnterCallback = CursorEnterCallback;
+            _scrollCallback = ScrollCallback;
+
+            _keyCallback = KeyCallback;
+            _charCallback = CharCallback;
+            // FIXME: CharModsCallback
+
+            _dropCallback = DropCallback;
+
+            _joystickCallback = JoystickCallback;
+
             GLFW.SetWindowPosCallback(WindowPtr, _windowPosCallback);
             GLFW.SetWindowSizeCallback(WindowPtr, _windowSizeCallback);
+            GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
+            GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
+            GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
             GLFW.SetWindowIconifyCallback(WindowPtr, _windowIconifyCallback);
             GLFW.SetWindowMaximizeCallback(WindowPtr, _windowMaximizeCallback);
-            GLFW.SetWindowFocusCallback(WindowPtr, _windowFocusCallback);
-            GLFW.SetCharCallback(WindowPtr, _charCallback);
-            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
-            GLFW.SetMonitorCallback(_monitorCallback);
-            GLFW.SetWindowRefreshCallback(WindowPtr, _windowRefreshCallback);
-            GLFW.SetWindowCloseCallback(WindowPtr, _windowCloseCallback);
-            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
-            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+
             GLFW.SetMouseButtonCallback(WindowPtr, _mouseButtonCallback);
             GLFW.SetCursorPosCallback(WindowPtr, _cursorPosCallback);
+            GLFW.SetCursorEnterCallback(WindowPtr, _cursorEnterCallback);
+            GLFW.SetScrollCallback(WindowPtr, _scrollCallback);
+
+            GLFW.SetKeyCallback(WindowPtr, _keyCallback);
+            GLFW.SetCharCallback(WindowPtr, _charCallback);
+
             GLFW.SetDropCallback(WindowPtr, _dropCallback);
-            GLFW.SetJoystickCallback(_joystickCallback);
+
+            Joysticks.JoystickCallback += _joystickCallback;
+        }
+
+        private void UnregisterWindowCallbacks()
+        {
+            Joysticks.JoystickCallback -= _joystickCallback;
         }
 
         private unsafe void InitialiseJoystickStates()
@@ -934,140 +1121,275 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private unsafe void KeyCallback(Window* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
+        private unsafe void WindowPosCallback(Window* window, int x, int y)
         {
-            var args = new KeyboardKeyEventArgs(key, scancode, mods, action == InputAction.Repeat);
-
-            if (action == InputAction.Release)
+            try
             {
-                if (key != Keys.Unknown)
-                {
-                    KeyboardState.SetKeyState(key, false);
-                }
-
-                OnKeyUp(args);
+                OnMove(new WindowPositionEventArgs(x, y));
             }
-            else
+            catch (Exception e)
             {
-                if (key != Keys.Unknown)
-                {
-                    KeyboardState.SetKeyState(key, true);
-                }
-
-                OnKeyDown(args);
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
-        private unsafe void CursorEnterCallback(Window* window, bool entered)
+        private unsafe void WindowSizeCallback(Window* window, int width, int height)
         {
-            if (entered)
+            try
             {
-                OnMouseEnter();
+                OnResize(new ResizeEventArgs(width, height));
             }
-            else
+            catch (Exception e)
             {
-                OnMouseLeave();
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void WindowCloseCallback(Window* window)
+        {
+            try
+            {
+                var c = new CancelEventArgs();
+                OnClosing(c);
+                if (c.Cancel)
+                {
+                    GLFW.SetWindowShouldClose(WindowPtr, false);
+                }
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void WindowRefreshCallback(Window* window)
+        {
+            try
+            {
+                OnRefresh();
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void WindowFocusCallback(Window* window, bool focused)
+        {
+            try
+            {
+                OnFocusedChanged(new FocusedChangedEventArgs(focused));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void WindowIconifyCallback(Window* window, bool iconified)
+        {
+            try
+            {
+                OnMinimized(new MinimizedEventArgs(iconified));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void WindowMaximizeCallback(Window* window, bool maximized)
+        {
+            try
+            {
+                OnMaximized(new MaximizedEventArgs(maximized));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
         private unsafe void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods)
         {
-            var args = new MouseButtonEventArgs(button, action, mods);
+            try
+            {
+                var args = new MouseButtonEventArgs(button, action, mods);
 
-            if (action == InputAction.Release)
-            {
-                MouseState[button] = false;
-                OnMouseUp(args);
+                if (action == InputAction.Release)
+                {
+                    MouseState[button] = false;
+                    OnMouseUp(args);
+                }
+                else
+                {
+                    MouseState[button] = true;
+                    OnMouseDown(args);
+                }
             }
-            else
+            catch (Exception e)
             {
-                MouseState[button] = true;
-                OnMouseDown(args);
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
         }
 
         private unsafe void CursorPosCallback(Window* window, double posX, double posY)
         {
-            var newPos = new Vector2((float)posX, (float)posY);
-            var delta = newPos - _lastReportedMousePos;
+            try
+            {
+                var newPos = new Vector2((float)posX, (float)posY);
+                var delta = newPos - _lastReportedMousePos;
 
-            _lastReportedMousePos = newPos;
+                _lastReportedMousePos = newPos;
 
-            OnMouseMove(new MouseMoveEventArgs(newPos, delta));
+                OnMouseMove(new MouseMoveEventArgs(newPos, delta));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
+        }
+
+        private unsafe void CursorEnterCallback(Window* window, bool entered)
+        {
+            try
+            {
+                if (entered)
+                {
+                    OnMouseEnter();
+                }
+                else
+                {
+                    OnMouseLeave();
+                }
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
         }
 
         private unsafe void ScrollCallback(Window* window, double offsetX, double offsetY)
         {
-            // GLFW says this function can be called not only in response to functions like glfwPollEvents();
-            // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
-            // We ignore this case for now and just accept that the scroll value will change after such a function call.
-            var offset = new Vector2((float)offsetX, (float)offsetY);
+            try
+            {
+                // GLFW says this function can be called not only in response to functions like glfwPollEvents();
+                // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
+                // We ignore this case for now and just accept that the scroll value will change after such a function call.
+                var offset = new Vector2((float)offsetX, (float)offsetY);
 
-            MouseState.Scroll += offset;
+                MouseState.Scroll += offset;
 
-            OnMouseWheel(new MouseWheelEventArgs(offset));
+                OnMouseWheel(new MouseWheelEventArgs(offset));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
         }
 
-        private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
+        private unsafe void KeyCallback(Window* window, Keys key, int scancode, InputAction action, KeyModifiers mods)
         {
-            if (eventCode == ConnectedState.Connected)
+            try
             {
-                // Initialize the first joystick state.
-                GLFW.GetJoystickHatsRaw(joy, out var hatCount);
-                GLFW.GetJoystickAxesRaw(joy, out var axisCount);
-                GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
-                var name = GLFW.GetJoystickName(joy);
+                var args = new KeyboardKeyEventArgs(key, scancode, mods, action == InputAction.Repeat);
 
-                _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                if (action == InputAction.Release)
+                {
+                    if (key != Keys.Unknown)
+                    {
+                        KeyboardState.SetKeyState(key, false);
+                    }
+
+                    OnKeyUp(args);
+                }
+                else
+                {
+                    if (key != Keys.Unknown)
+                    {
+                        KeyboardState.SetKeyState(key, true);
+                    }
+
+                    OnKeyDown(args);
+                }
             }
-            else
+            catch (Exception e)
             {
-                // Remove the joystick state from the array of joysticks.
-                _joystickStates[joy] = null;
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
             }
+        }
 
-            OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
+        private unsafe void CharCallback(Window* window, uint codepoint)
+        {
+            try
+            {
+                OnTextInput(new TextInputEventArgs((int)codepoint));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
         }
 
         private unsafe void DropCallback(Window* window, int count, byte** paths)
         {
-            var arrayOfPaths = new string[count];
-
-            for (var i = 0; i < count; i++)
+            try
             {
-                arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
-            }
+                var arrayOfPaths = new string[count];
 
-            OnFileDrop(new FileDropEventArgs(arrayOfPaths));
+                for (var i = 0; i < count; i++)
+                {
+                    arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
+                }
+
+                OnFileDrop(new FileDropEventArgs(arrayOfPaths));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
         }
 
-        private unsafe void OnCloseCallback(Window* window)
+        private unsafe void JoystickCallback(int joy, ConnectedState eventCode)
         {
-            var c = new CancelEventArgs();
-            OnClosing(c);
-            if (c.Cancel)
+            try
             {
-                GLFW.SetWindowShouldClose(WindowPtr, false);
-            }
-            else
-            {
-                IsExiting = true;
-            }
+                if (eventCode == ConnectedState.Connected)
+                {
+                    // Initialize the first joystick state.
+                    GLFW.GetJoystickHatsRaw(joy, out var hatCount);
+                    GLFW.GetJoystickAxesRaw(joy, out var axisCount);
+                    GLFW.GetJoystickButtonsRaw(joy, out var buttonCount);
+                    var name = GLFW.GetJoystickName(joy);
 
-            Dispose(true);
+                    _joystickStates[joy] = new JoystickState(hatCount, axisCount, buttonCount, joy, name);
+                }
+                else
+                {
+                    // Remove the joystick state from the array of joysticks.
+                    _joystickStates[joy] = null;
+                }
+
+                OnJoystickConnected(new JoystickEventArgs(joy, eventCode == ConnectedState.Connected));
+            }
+            catch (Exception e)
+            {
+                _callbackExceptions.Enqueue(ExceptionDispatchInfo.Capture(e));
+            }
         }
 
         /// <summary>
         /// Closes this window.
         /// </summary>
-        public virtual void Close()
+        public virtual unsafe void Close()
         {
-            unsafe
+            // We don't have to catch exceptions here as this code isn't called directly from unmanaged code
+            CancelEventArgs c = new CancelEventArgs();
+            OnClosing(c);
+            if (c.Cancel == false)
             {
-                OnCloseCallback(WindowPtr);
+                GLFW.SetWindowShouldClose(WindowPtr, true);
             }
-
-            Dispose(true);
         }
 
         /// <summary>
@@ -1075,63 +1397,50 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public void MakeCurrent()
         {
-            Context.MakeCurrent();
-        }
-
-        protected unsafe void DestroyWindow()
-        {
-            if (Exists)
+            if (Context == null)
             {
-                Exists = false;
-                GLFW.DestroyWindow(WindowPtr);
-
-                OnClosed();
-            }
-        }
-
-        private bool PreProcessEvents()
-        {
-            if (IsExiting)
-            {
-                DestroyWindow();
-                return false;
+                throw new InvalidOperationException("Cannot make a context current when running with ContextAPI.NoAPI.");
             }
 
-            return true;
+            Context?.MakeCurrent();
         }
 
         /// <summary>
         /// Processes pending window events and waits <paramref name="timeout"/> seconds for events.
         /// </summary>
         /// <param name="timeout">The timeout in seconds.</param>
-        /// <returns><c>true</c> if events where processed; otherwise <c>false</c>
-        /// (Event processing not possible anymore, window is about to be destroyed).</returns>
+        /// <returns>This function will always return true.</returns>
         public bool ProcessEvents(double timeout)
         {
-            if (!PreProcessEvents())
-            {
-                return false;
-            }
-
             GLFW.WaitEventsTimeout(timeout);
+
             ProcessInputEvents();
 
+            RethrowCallbackExceptionsIfNeeded();
+
+            // FIXME: Remove this return and the documentation comment about it
             return true;
         }
 
         /// <summary>
         /// Processes pending window events.
         /// </summary>
+        [Obsolete("This function wrongly implies that only events from this window are processed, while in fact events for all windows are processed. Use NativeWindow.ProcessWindowEvents() instead.")]
         public virtual void ProcessEvents()
         {
-            if (!PreProcessEvents())
-            {
-                return;
-            }
-
             ProcessInputEvents();
 
-            if (IsEventDriven)
+            ProcessWindowEvents(IsEventDriven);
+        }
+
+        /// <summary>
+        /// Processes pending window events, either by calling <see cref="GLFW.WaitEvents"/> or <see cref="GLFW.PollEvents"/> depending on if <paramref name="waitForEvents"/> is set to true or not.
+        /// </summary>
+        /// <remarks>This function should only be called from the main thread.</remarks>
+        /// <param name="waitForEvents">Whether to call <see cref="GLFW.WaitEvents()"/> or <see cref="GLFW.PollEvents()"/>.</param>
+        public static void ProcessWindowEvents(bool waitForEvents)
+        {
+            if (waitForEvents)
             {
                 GLFW.WaitEvents();
             }
@@ -1139,9 +1448,47 @@ namespace OpenTK.Windowing.Desktop
             {
                 GLFW.PollEvents();
             }
+
+            RethrowCallbackExceptionsIfNeeded();
         }
 
-        private unsafe void ProcessInputEvents()
+        // This list must only ever be accessed from the main thread, inside RethrowCallbackExceptionsIfNeeded().
+        private static List<ExceptionDispatchInfo> _localThreadExceptions = new List<ExceptionDispatchInfo>();
+
+        private static void RethrowCallbackExceptionsIfNeeded()
+        {
+            // Pull a thread-local copy of the exceptions from the queue.  This is thread-safe,
+            // always collecting up the queue to a known specific instant in time.
+            while (_callbackExceptions.TryDequeue(out ExceptionDispatchInfo exception))
+            {
+                _localThreadExceptions.Add(exception);
+            }
+
+            if (_localThreadExceptions.Count == 1)
+            {
+                ExceptionDispatchInfo exception = _localThreadExceptions[0];
+                _localThreadExceptions.Clear();
+                exception.Throw();
+            }
+            else if (_localThreadExceptions.Count > 1)
+            {
+                // FIXME: This doesn't seem to produce great exception messages... is there something we can do about this?
+                Exception[] exceptions = new Exception[_localThreadExceptions.Count];
+                for (int i = 0; i < _localThreadExceptions.Count; i++)
+                {
+                    exceptions[i] = _localThreadExceptions[i].SourceException;
+                }
+                Exception exception = new AggregateException("Multiple exceptions in callback handlers while processing events.", exceptions);
+                _localThreadExceptions.Clear();
+                throw exception;
+            }
+        }
+
+        /// <summary>
+        /// Updates the input state in preparation for a call to <see cref="GLFW.PollEvents"/> or <see cref="GLFW.WaitEvents"/>.
+        /// Do not call this function if you are calling <see cref="ProcessEvents()"/> or if you are running the window using <see cref="GameWindow.Run()"/>.
+        /// </summary>
+        public unsafe void ProcessInputEvents()
         {
             MouseState.Update();
             KeyboardState.Update();
@@ -1211,15 +1558,18 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Occurs after the window has closed.
         /// </summary>
+        [Obsolete("This event will never be invoked.")]
         public event Action Closed;
 
         /// <summary>
         /// Occurs when the window is minimized.
+        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MinimizedEventArgs> Minimized;
 
         /// <summary>
         /// Occurs when the window is maximized.
+        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MaximizedEventArgs> Maximized;
 
@@ -1251,6 +1601,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Occurs when a <see cref="MonitorHandle"/> is connected or disconnected.
         /// </summary>
+        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
         public event Action<MonitorEventArgs> MonitorConnected;
 
         /// <summary>
@@ -1367,25 +1718,13 @@ namespace OpenTK.Windowing.Desktop
         /// <remarks>
         /// This method first tries to find the monitor by querying the GLFW
         /// backend. However this rarely works, so this function invokes
-        /// <see cref="OpenTK.Windowing.Desktop.Monitors.GetMonitorFromWindow(NativeWindow)"/>
+        /// <see cref="Monitors.GetMonitorFromWindow(NativeWindow)"/>
         /// to find it.
         /// </remarks>
-        public unsafe MonitorHandle FindMonitor()
+        [Obsolete("Use Monitors.GetMonitorFromWindow instead", true)]
+        public unsafe MonitorInfo FindMonitor()
         {
-            /*
-             * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
-             * when the window is fullscreen.
-             *
-             * If the window is not fullscreen, find the monitor manually.
-             */
-            MonitorHandle value = new MonitorHandle((IntPtr)GLFW.GetWindowMonitor(WindowPtr));
-
-            if (value.Pointer == IntPtr.Zero)
-            {
-                value = Monitors.GetMonitorFromWindow(this);
-            }
-
-            return value;
+            return Monitors.GetMonitorFromWindow(WindowPtr);
         }
 
         /// <summary>
@@ -1396,17 +1735,10 @@ namespace OpenTK.Windowing.Desktop
         /// <returns><c>true</c>, if current monitor scale was gotten correctly, <c>false</c> otherwise.</returns>
         public unsafe bool TryGetCurrentMonitorScale(out float horizontalScale, out float verticalScale)
         {
-            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
-            {
-                horizontalScale = info.HorizontalScale;
-                verticalScale = info.VerticalScale;
-                return true;
-            }
-            else
-            {
-                horizontalScale = verticalScale = 1;
-                return false;
-            }
+            MonitorInfo info = Monitors.GetMonitorFromWindow(this);
+            horizontalScale = info.HorizontalScale;
+            verticalScale = info.VerticalScale;
+            return true;
         }
 
         /// <summary>
@@ -1422,43 +1754,29 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public unsafe bool TryGetCurrentMonitorDpi(out float horizontalDpi, out float verticalDpi)
         {
-            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
-            {
-                horizontalDpi = info.HorizontalDpi;
-                verticalDpi = info.VerticalDpi;
-                return true;
-            }
-            else
-            {
-                horizontalDpi = verticalDpi = 1;
-                return false;
-            }
+            MonitorInfo info = Monitors.GetMonitorFromWindow(this);
+            horizontalDpi = info.HorizontalDpi;
+            verticalDpi = info.VerticalDpi;
+            return true;
         }
 
         /// <summary>
         /// Gets the raw dpi of current monitor.
         /// </summary>
-        /// <param name="horizontalDpi">Horizontal dpi.</param>
-        /// <param name="verticalDpi">Vertical dpi.</param>
+        /// <param name="horizontalRawDpi">Raw horizontal dpi.</param>
+        /// <param name="verticalRawDpi">Raw vertical dpi.</param>
         /// <returns><c>true</c>, if current monitor's raw dpi was gotten correctly, <c>false</c> otherwise.</returns>
         /// <remarks>
         /// This method calculates dpi by retrieving monitor dimensions and resolution.
         /// However on certain platforms (such as Windows) these values may not
         /// be scaled correctly.
         /// </remarks>
-        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalDpi, out float verticalDpi)
+        public unsafe bool TryGetCurrentMonitorDpiRaw(out float horizontalRawDpi, out float verticalRawDpi)
         {
-            if (Monitors.TryGetMonitorInfo(FindMonitor(), out MonitorInfo info))
-            {
-                horizontalDpi = info.HorizontalDpi;
-                verticalDpi = info.VerticalDpi;
-                return true;
-            }
-            else
-            {
-                horizontalDpi = verticalDpi = 1;
-                return false;
-            }
+            MonitorInfo info = Monitors.GetMonitorFromWindow(this);
+            horizontalRawDpi = info.HorizontalRawDpi;
+            verticalRawDpi = info.VerticalRawDpi;
+            return true;
         }
 
         /// <summary>
@@ -1504,6 +1822,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Raises the <see cref="Closed"/> event.
         /// </summary>
+        [Obsolete("This method will never be called.")]
         protected virtual void OnClosed()
         {
             Closed?.Invoke();
@@ -1560,6 +1879,7 @@ namespace OpenTK.Windowing.Desktop
         /// Raises the <see cref="MonitorConnected"/> event.
         /// </summary>
         /// <param name="e">A <see cref="MonitorEventArgs"/> that contains the event data.</param>
+        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
         protected virtual void OnMonitorConnected(MonitorEventArgs e)
         {
             MonitorConnected?.Invoke(e);
@@ -1618,7 +1938,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="OnMinimized"/> event.
+        /// <para>Raises the <see cref="OnMinimized"/> event.</para>
+        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         /// <param name="e">A <see cref="MinimizedEventArgs"/> that contains the event data.</param>
         protected virtual void OnMinimized(MinimizedEventArgs e)
@@ -1629,7 +1950,8 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="OnMaximized"/> event.
+        /// <para>Raises the <see cref="OnMaximized"/> event.</para>
+        /// <para>WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         /// <param name="e">A <see cref="MaximizedEventArgs"/> that contains the event data.</param>
         protected virtual void OnMaximized(MaximizedEventArgs e)
@@ -1655,7 +1977,7 @@ namespace OpenTK.Windowing.Desktop
         private bool _disposedValue; // To detect redundant calls
 
         /// <inheritdoc cref="IDisposable.Dispose" />
-        protected virtual void Dispose(bool disposing)
+        protected virtual unsafe void Dispose(bool disposing)
         {
             if (_disposedValue)
             {
@@ -1664,6 +1986,17 @@ namespace OpenTK.Windowing.Desktop
 
             if (disposing)
             {
+            }
+
+            if (GLFWProvider.IsOnMainThread)
+            {
+                UnregisterWindowCallbacks();
+                GLFW.DestroyWindow(WindowPtr);
+                Exists = false;
+            }
+            else
+            {
+                throw new GLFWException("You can only dispose windows on the main thread. The window needs to be disposed as it cannot safely be disposed in the finalizer.");
             }
 
             _disposedValue = true;
@@ -1716,37 +2049,28 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="newSize">The size to make the centered window.</param>
         public void CenterWindow(Vector2i newSize)
         {
-            // Find out which monitor the window is already on.  If we can't find that out, then
-            // just try to find the first monitor attached to the computer and use that instead.
-            MonitorHandle currentMonitor = Monitors.GetMonitorFromWindow(this);
-            if (Monitors.TryGetMonitorInfo(currentMonitor, out MonitorInfo monitorInfo)
-                || Monitors.TryGetMonitorInfo(0, out monitorInfo))
+            // Find out which monitor the window is already on.
+            MonitorInfo monitorInfo = Monitors.GetMonitorFromWindow(this);
+
+            // Calculate a suitable upper-left corner for the window, based on this monitor's
+            // coordinates.  This should work correctly even in unusual multi-monitor layouts.
+            Box2i monitorRectangle = monitorInfo.ClientArea;
+            int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - newSize.X) / 2;
+            int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - newSize.Y) / 2;
+
+            // Avoid putting it offscreen.
+            if (x < monitorRectangle.Min.X)
             {
-                // Calculate a suitable upper-left corner for the window, based on this monitor's
-                // coordinates.  This should work correctly even in unusual multi-monitor layouts.
-                Box2i monitorRectangle = monitorInfo.ClientArea;
-                int x = (monitorRectangle.Min.X + monitorRectangle.Max.X - newSize.X) / 2;
-                int y = (monitorRectangle.Min.Y + monitorRectangle.Max.Y - newSize.Y) / 2;
-
-                // Avoid putting it offscreen.
-                if (x < monitorRectangle.Min.X)
-                {
-                    x = monitorRectangle.Min.X;
-                }
-
-                if (y < monitorRectangle.Min.Y)
-                {
-                    y = monitorRectangle.Min.Y;
-                }
-
-                // Actually move the window.
-                ClientRectangle = new Box2i(x, y, x + newSize.X, y + newSize.Y);
+                x = monitorRectangle.Min.X;
             }
-            else
+
+            if (y < monitorRectangle.Min.Y)
             {
-                // Something in GLFW has gone wrong, and we can't get monitor information.
-                throw new GLFWException("Could not get information about the current monitor nor the default monitor. Something is probably broken in GLFW.");
+                y = monitorRectangle.Min.Y;
             }
+
+            // Actually move the window.
+            ClientRectangle = new Box2i(x, y, x + newSize.X, y + newSize.Y);
         }
     }
 }

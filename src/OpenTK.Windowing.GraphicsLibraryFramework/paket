@@ -5,7 +5,7 @@ description
 dependencies
     framework: net5.0
         OpenTK.Core ~> #VERSION#
-        OpenTK.redist.glfw ~> 3.3.0-pre20200830200122
+        OpenTK.redist.glfw >= 3.3.8.30
 files
     bin\Release\net5.0\OpenTK.Windowing.GraphicsLibraryFramework.dll ==> lib\net5.0
     bin\Release\net5.0\OpenTK.Windowing.GraphicsLibraryFramework.xml ==> lib\net5.0

@@ -127,7 +127,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector2i UnitY = new Vector2i(0, 1);
 
         /// <summary>
-        /// Defines a zero-length <see cref="Vector2i"/>.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector2i Zero = new Vector2i(0, 0);
 
@@ -499,6 +499,20 @@ namespace OpenTK.Mathematics
         {
             vec.X /= scale;
             vec.Y /= scale;
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise division between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector2i operator /(Vector2i vec, Vector2i scale)
+        {
+            vec.X /= scale.X;
+            vec.Y /= scale.Y;
             return vec;
         }
 

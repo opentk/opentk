@@ -8,6 +8,7 @@
 //
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
@@ -22,6 +23,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="window">The window that received the event.</param>
         /// <param name="codepoint">The Unicode code point of the character.</param>
         /// <seealso cref="GLFW.SetCharCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CharCallback(Window* window, uint codepoint);
 
         /// <summary>
@@ -32,6 +34,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="codepoint">The Unicode code point of the character.</param>
         /// <param name="modifiers">Bit field describing which modifier keys were held down.</param>
         /// <seealso cref="GLFW.SetCharModsCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CharModsCallback(Window* window, uint codepoint, KeyModifiers modifiers);
 
         /// <summary>
@@ -40,6 +43,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="window">The window that received the event.</param>
         /// <param name="entered"><c>true</c> if the cursor entered the window's client area, or <c>false</c> if it left it.</param>
         /// <seealso cref="GLFW.SetCursorEnterCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CursorEnterCallback(Window* window, bool entered);
 
         /// <summary>
@@ -49,6 +53,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="x">The new cursor x-coordinate, relative to the left edge of the client area.</param>
         /// <param name="y">The new cursor y-coordinate, relative to the top edge of the client area.</param>
         /// <seealso cref="GLFW.SetCursorPosCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void CursorPosCallback(Window* window, double x, double y);
 
         /// <summary>
@@ -58,6 +63,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="count">The number of dropped files.</param>
         /// <param name="paths">The UTF-8 encoded file and/or directory path names.</param>
         /// <seealso cref="GLFW.SetDropCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void DropCallback(Window* window, int count, byte** paths);
 
         /// <summary>
@@ -68,6 +74,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// One of <see cref="ConnectedState.Connected"/> or <see cref="ConnectedState.Disconnected"/>.
         /// </param>
         /// <seealso cref="GLFW.SetJoystickCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void JoystickCallback(int joystick, ConnectedState state);
 
         /// <summary>
@@ -79,6 +86,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="action">The <see cref="InputAction"/> for that <paramref name="key"/>.</param>
         /// <param name="mods">Bit field describing which modifier keys were held down.</param>
         /// <seealso cref="GLFW.SetKeyCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void KeyCallback(Window* window, Keys key, int scanCode, InputAction action, KeyModifiers mods);
 
         /// <summary>
@@ -89,6 +97,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="action">One of <see cref="InputAction.Press"/> or <see cref="InputAction.Release"/>.</param>
         /// <param name="mods">Bit field describing which modifier keys were held down.</param>
         /// <seealso cref="GLFW.SetMouseButtonCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void MouseButtonCallback(Window* window, MouseButton button, InputAction action, KeyModifiers mods); // TODO: Make enums for int params in callback
 
         /// <summary>
@@ -98,6 +107,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="offsetX">The scroll offset along the x-axis.</param>
         /// <param name="offsetY">The scroll offset along the y-axis.</param>
         /// <seealso cref="GLFW.SetScrollCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void ScrollCallback(Window* window, double offsetX, double offsetY);
 
         /// <summary>
@@ -108,6 +118,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// One <see cref="ConnectedState.Connected"/> of  or <see cref="ConnectedState.Disconnected"/>.
         /// </param>
         /// <seealso cref="GLFW.SetMonitorCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void MonitorCallback(Monitor* monitor, ConnectedState state);
 
         /// <summary>
@@ -115,6 +126,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="window">The window that the user attempted to close.</param>
         /// <seealso cref="GLFW.SetWindowCloseCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowCloseCallback(Window* window);
 
         /// <summary>
@@ -123,6 +135,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="window">The window that gained or lost input focus.</param>
         /// <param name="focused"><c>true</c> if the window was given input focus, or <c>false</c> if it lost it.</param>
         /// <seealso cref="GLFW.SetWindowFocusCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowFocusCallback(Window* window, bool focused);
 
         /// <summary>
@@ -131,6 +144,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="window">The window that was iconified or restored.</param>
         /// <param name="iconified"><c>true</c> if the window was iconified(minimized), or <c>false</c> if it was restored.</param>
         /// <seealso cref="GLFW.SetWindowIconifyCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowIconifyCallback(Window* window, bool iconified);
 
         /// <summary>
@@ -139,6 +153,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="window">The window that was maximized or restored.</param>
         /// <param name="maximized"><c>true</c> if the window was maximized, or <c>false</c> if it was restored.</param>
         /// <seealso cref="GLFW.SetWindowMaximizeCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowMaximizeCallback(Window* window, bool maximized);
 
         /// <summary>
@@ -148,6 +163,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="width">The new width, in pixels, of the framebuffer.</param>
         /// <param name="height">The new height, in pixels, of the framebuffer.</param>
         /// <seealso cref="GLFW.SetFramebufferSizeCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void FramebufferSizeCallback(Window* window, int width, int height);
 
         /// <summary>
@@ -157,6 +173,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="xscale">The new x-axis content scale of the window. </param>
         /// <param name="yscale">The new y-axis content scale of the window.</param>
         /// <seealso cref="GLFW.SetWindowContentScaleCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowContentScaleCallback(Window* window, float xscale, float yscale);
 
         /// <summary>
@@ -170,6 +187,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// The new y-coordinate, in screen coordinates, of the upper-left corner of the client area of the window.
         /// </param>
         /// <seealso cref="GLFW.SetWindowPosCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowPosCallback(Window* window, int x, int y);
 
         /// <summary>
@@ -179,6 +197,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="width">The new width, in screen coordinates, of the window.</param>
         /// <param name="height">The new height, in screen coordinates, of the window.</param>
         /// <seealso cref="GLFW.SetWindowSizeCallback"/>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowSizeCallback(Window* window, int width, int height);
 
         /// <summary>
@@ -186,12 +205,14 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="error">An error code.</param>
         /// <param name="description">A UTF-8 encoded string describing the error.</param>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void ErrorCallback(ErrorCode error, string description);
 
         /// <summary>
         /// The function signature for window refresh functions.
         /// </summary>
         /// <param name="window">The window that needs to be refreshed.</param>
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate void WindowRefreshCallback(Window* window);
     }
 }

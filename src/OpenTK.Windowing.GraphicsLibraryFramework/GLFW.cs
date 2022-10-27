@@ -471,6 +471,75 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         /// <summary>
         /// <para>
+        /// This function returns the position, in screen coordinates, of the upper-left corner of the work area of the specified monitor along with the work area size in screen coordinates.
+        /// The work area is defined as the area of the monitor not occluded by the operating system task bar where present.
+        /// If no task bar exists then the work area is the monitor resolution in screen coordinates.
+        /// </para>
+        /// <para>
+        /// Any or all of the position and size arguments may be NULL.If an error occurs, all non-NULL position and size arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <param name="x">Where to store the monitor x-coordinate.</param>
+        /// <param name="y">Where to store the monitor y-coordinate.</param>
+        /// <param name="width">Where to store the monitor width.</param>
+        /// <param name="height">Where to store the monitor height.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include GLFW_NOT_INITIALIZED and GLFW_PLATFORM_ERROR.
+        /// </para>
+        /// <para>
+        /// Added in version GLFW 3.3.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetMonitorWorkarea(Monitor* monitor, out int x, out int y, out int width, out int height)
+        {
+            int localX, localY, localWidth, localHeight;
+
+            glfwGetMonitorWorkarea(monitor, &localX, &localY, &localWidth, &localHeight);
+
+            x = localX;
+            y = localY;
+            width = localWidth;
+            height = localHeight;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the position, in screen coordinates, of the upper-left corner of the work area of the specified monitor along with the work area size in screen coordinates.
+        /// The work area is defined as the area of the monitor not occluded by the operating system task bar where present.
+        /// If no task bar exists then the work area is the monitor resolution in screen coordinates.
+        /// </para>
+        /// <para>
+        /// Any or all of the position and size arguments may be NULL.If an error occurs, all non-NULL position and size arguments will be set to zero.
+        /// </para>
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <param name="x">Where to store the monitor x-coordinate, or NULL.</param>
+        /// <param name="y">Where to store the monitor y-coordinate, or NULL.</param>
+        /// <param name="width">Where to store the monitor width, or NULL.</param>
+        /// <param name="height">Where to store the monitor height, or NULL.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include GLFW_NOT_INITIALIZED and GLFW_PLATFORM_ERROR.
+        /// </para>
+        /// <para>
+        /// Added in version GLFW 3.3.
+        /// </para>
+        /// </remarks>
+        public static unsafe void GetMonitorWorkarea(Monitor* monitor, int* x, int* y, int* width, int* height)
+        {
+            glfwGetMonitorWorkarea(monitor, x, y, width, height);
+        }
+
+        /// <summary>
+        /// <para>
         /// This function returns the size, in millimetres, of the display area of the specified monitor.
         /// </para>
         /// <para>
@@ -3373,7 +3442,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="mode">
         /// Either <see cref="StickyAttributes.StickyKeys"/> or <see cref="StickyAttributes.StickyMouseButtons"/>.
         /// </param>
-        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>Whether sticky keys or sticky mouse buttons are enabled depending on the value of <paramref name="mode"/>.</returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3398,7 +3467,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="mode">
         /// <see cref="CursorStateAttribute.Cursor"/>.
         /// </param>
-        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>The current cursor mode.</returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3423,7 +3492,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="mode">
         /// <see cref="LockKeyModAttribute.LockKeyMods"/>.
         /// </param>
-        /// <returns>TODO: return value is either InputModeValue or bool dependant on <paramref name="mode"/>.</returns>
+        /// <returns>Whether or not lock key mods are enabled or not.</returns>
         /// <remarks>
         /// <para>
         /// This function must only be called from the main thread.
@@ -3434,6 +3503,31 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         /// <seealso cref="SetInputMode(Window*, LockKeyModAttribute, bool)"/>
         public static unsafe bool GetInputMode(Window* window, LockKeyModAttribute mode)
+        {
+            return glfwGetInputMode(window, mode) == GLFW_TRUE;
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function returns the value of an input option for the specified window.
+        /// The mode must be <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="mode">
+        /// <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </param>
+        /// <returns>Whether raw mouse motion is enabled or disabled for this window.</returns>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/> and <see cref="ErrorCode.InvalidEnum"/>.
+        /// </para>
+        /// </remarks>
+        /// <seealso cref="SetInputMode(Window*, RawMouseMotionAttribute, bool)"/>
+        public static unsafe bool GetInputMode(Window* window, RawMouseMotionAttribute mode)
         {
             return glfwGetInputMode(window, mode) == GLFW_TRUE;
         }
@@ -4329,6 +4423,34 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </para>
         /// </remarks>
         public static unsafe void SetInputMode(Window* window, LockKeyModAttribute mode, bool value)
+        {
+            glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
+        }
+
+        /// <summary>
+        /// <para>
+        /// This function sets an input mode option for the specified window.
+        /// The mode must be <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </para>
+        /// <para>
+        /// If the mode is <see cref="RawMouseMotionAttribute.RawMouseMotion"/>, the value must be either GLFW_TRUE to enable raw (unscaled and unaccelerated) mouse motion when the cursor is disabled, or GLFW_FALSE to disable it.
+        /// If raw motion is not supported, attempting to set this will emit GLFW_PLATFORM_ERROR. Call glfwRawMouseMotionSupported to check for support.
+        /// </para>
+        /// </summary>
+        /// <param name="window">The window whose raw mouse motion mode to set.</param>
+        /// <param name="mode">
+        /// The value <see cref="RawMouseMotionAttribute.RawMouseMotion"/>.
+        /// </param>
+        /// <param name="value">Whether raw mouse motion should be enabled or disabled.</param>
+        /// <remarks>
+        /// <para>
+        /// This function must only be called from the main thread.
+        /// </para>
+        /// <para>
+        /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
+        /// </para>
+        /// </remarks>
+        public static unsafe void SetInputMode(Window* window, RawMouseMotionAttribute mode, bool value)
         {
             glfwSetInputMode(window, mode, value ? GLFW_TRUE : GLFW_FALSE);
         }
@@ -5715,67 +5837,205 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         #region GLFW Native Access
 
         /// <summary>
-        /// This function returns the Windows specific window handle (HWND).
+        /// Returns the adapter device name of the specified monitor.
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <returns>The adapter device name (for example \\.\DISPLAY1) of the specified monitor, or <c>NULL</c> if an error occurred.</returns>
+        public static unsafe string GetWin32Adapter(Monitor* monitor)
+        {
+            byte* strPtr = glfwGetWin32Adapter(monitor);
+            string str = Marshal.PtrToStringUTF8((IntPtr)strPtr);
+            return str;
+        }
+
+        /// <summary>
+        /// Returns the display device name of the specified monitor.
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <returns>The display device name (for example \\.\DISPLAY1\Monitor0) of the specified monitor, or NULL if an error occurred.</returns>
+        public static unsafe string GetWin32Monitor(Monitor* monitor)
+        {
+            byte* strPtr = glfwGetWin32Monitor(monitor);
+            string str = Marshal.PtrToStringUTF8((IntPtr)strPtr);
+            return str;
+        }
+
+        /// <summary>
+        /// Returns the <c>HWND</c> of the specified window..
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <returns>The Windows specific window handle (HWND).</returns>
+        /// <returns>The <c>HWND</c> of the specified window, or <c>NULL</c> if an error occurred.</returns>
         public static unsafe IntPtr GetWin32Window(Window* window) => glfwGetWin32Window(window);
 
         /// <summary>
-        /// This function returns the WGL context associated with the window.
+        /// Returns the <c>HGLRC</c> of the specified window.
         /// </summary>
-        /// <param name="window">The window to get the context from.</param>
-        /// <returns>The HGLRC of the specified window, or NULL if an error occurred.</returns>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The <c>HGLRC</c> of the specified window, or <c>NULL</c> if an error occurred.</returns>
         public static unsafe IntPtr GetWGLContext(Window* window) => glfwGetWGLContext(window);
 
         /// <summary>
-        /// This function returns the macos specific window handle (NSWindow).
+        /// Returns the <c>CGDirectDisplayID</c> of the specified monitor.
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <returns>The <c>CGDirectDisplayID</c> of the specified monitor, or <c>kCGNullDirectDisplay</c> if an error occurred.</returns>
+        public static unsafe uint GetCocoaMonitor(Monitor* monitor) => glfwGetCocoaMonitor(monitor);
+
+        /// <summary>
+        /// Returns the <c>NSWindow</c> of the specified window.
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <returns>The macos specific window handle (NSWindow).</returns>
+        /// <returns>The <c>NSWindow</c> of the specified window, or <c>nil</c> if an error occurred.</returns>
         public static unsafe IntPtr GetCocoaWindow(Window* window) => glfwGetCocoaWindow(window);
 
         /// <summary>
-        /// This function returns the NSOpenGLContext (macos) associated with the window.
+        /// Returns the <c>NSOpenGLContext</c> of the specified window.
         /// </summary>
-        /// <param name="window">The window to get the context from.</param>
-        /// <returns>The NSOpenGLContext of the specified window, or nil if an error occurred.</returns>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The <c>NSOpenGLContext</c> of the specified window, or <c>nil</c> if an error occurred.</returns>
         public static unsafe IntPtr GetNSGLContext(Window* window) => glfwGetNSGLContext(window);
 
         /// <summary>
-        /// This function returns the x11 specific window handle (Window).
+        /// Returns the <c>Display</c> used by GLFW.
         /// </summary>
-        /// <param name="window">The window to query.</param>
-        /// <returns>The x11 specific window handle (Window).</returns>
-        public static unsafe uint GetX11Window(Window* window) => glfwGetX11Window(window);
+        /// <returns>The <c>Display</c> used by GLFW, or <c>NULL</c> if an error occurred.</returns>
+        public static unsafe IntPtr GetX11Display() => glfwGetX11Display();
 
         /// <summary>
-        /// This function returns the GLX context associated with the window.
+        /// Returns the <c>RRCrtc</c> of the specified monitor.
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <returns>The <c>RRCrtc</c> of the specified monitor, or <c>None</c> if an error occurred.</returns>
+        public static unsafe UIntPtr GetX11Adapter(Monitor* monitor) => glfwGetX11Adapter(monitor);
+
+        /// <summary>
+        /// Returns the <c>RROutput</c> of the specified monitor.
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <returns>The <c>RROutput</c> of the specified monitor, or <c>None</c> if an error occurred.</returns>
+        public static unsafe UIntPtr GetX11Monitor(Monitor* monitor) => glfwGetX11Monitor(monitor);
+
+        /// <summary>
+        /// Returns the <c>Window</c> of the specified window.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The <c>Window</c> of the specified window, or <c>None</c> if an error occurred.</returns>
+        public static unsafe UIntPtr GetX11Window(Window* window) => glfwGetX11Window(window);
+
+        /// <summary>
+        /// Sets the current primary selection to the specified string.
+        /// </summary>
+        /// <param name="string">The string.</param>
+        public static unsafe void SetX11SelectionString(string @string)
+        {
+            IntPtr strPtr = Marshal.StringToCoTaskMemUTF8(@string);
+            glfwSetX11SelectionString((byte*)strPtr);
+            Marshal.FreeCoTaskMem(strPtr);
+        }
+
+        /// <summary>
+        /// Returns the contents of the current primary selection as a string.
+        /// </summary>
+        /// <returns>The contents of the selection as a string, or <c>NULL</c> if an error occurred.</returns>
+        public static unsafe string GetX11SelectionString()
+        {
+            byte* strPtr = glfwGetX11SelectionString();
+            return Marshal.PtrToStringUTF8((IntPtr)strPtr);
+        }
+
+        /// <summary>
+        /// Returns the <c>GLXContext</c> of the specified window.
         /// </summary>
         /// <param name="window">The window to get the context from.</param>
-        /// <returns>The GLXContext of the specified window, or NULL if an error occurred.</returns>
+        /// <returns>The <c>GLXContext</c> of the specified window, or <c>NULL</c> if an error occurred.</returns>
         public static unsafe uint GetGLXContext(Window* window) => glfwGetGLXContext(window);
 
         /// <summary>
-        /// This function returns the glx specific window handle (Window).
+        /// Returns the <c>GLXWindow</c> of the specified window.
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <returns>The glx specific window handle (Window).</returns>
+        /// <returns>The <c>GLXWindow</c> of the specified window, or <c>None</c> if an error occurred.</returns>
         public static unsafe uint GetGLXWindow(Window* window) => glfwGetGLXWindow(window);
 
         /// <summary>
-        /// This function returns the wayland specific window handle (struct wl_surface*).
+        /// Returns the <c>struct wl_display*</c> used by GLFW.
+        /// </summary>
+        /// <returns>The <c>struct wl_display*</c> used by GLFW, or <c>NULL</c> if an error occurred.</returns>
+        public static unsafe IntPtr GetWaylandDisplay() => glfwGetWaylandDisplay();
+
+        /// <summary>
+        /// Returns the <c>struct wl_output*</c> of the specified monitor.
+        /// </summary>
+        /// <param name="monitor">The monitor to query.</param>
+        /// <returns>The <c>struct wl_output*</c> of the specified monitor, or <c>NULL</c> if an error occurred.</returns>
+        public static unsafe IntPtr GetWaylandMonitor(Monitor* monitor) => glfwGetWaylandMonitor(monitor);
+
+        /// <summary>
+        /// Returns the main <c>struct wl_surface*</c> of the specified window.
         /// </summary>
         /// <param name="window">The window to query.</param>
-        /// <returns>The wayland specific window handle (struct wl_surface*).</returns>
+        /// <returns>The main <c>xstruct wl_surface*</c> of the specified window, or <c>NULL</c> if an error occurred.</returns>
         public static unsafe IntPtr GetWaylandWindow(Window* window) => glfwGetWaylandWindow(window);
 
         /// <summary>
-        ///  This function returns the egl context associated with the window.
+        /// Returns the <c>EGLDisplay</c> used by GLFW.
+        /// </summary>
+        /// <returns>The <c>EGLDisplay</c> used by GLFW, or <c>EGL_NO_DISPLAY</c> if an error occurred.</returns>
+        public static unsafe IntPtr GetEGLDisplay() => glfwGetEGLDisplay();
+
+        /// <summary>
+        /// Returns the <c>EGLContext</c> of the specified window.
         /// </summary>
         /// <param name="window">The window to get the context from.</param>
-        /// <returns>The EGLContext of the specified window, or EGL_NO_CONTEXT if an error occurred.</returns>
+        /// <returns>The <c>EGLContext</c> of the specified window, or <c>EGL_NO_CONTEXT</c> if an error occurred.</returns>
         public static unsafe IntPtr GetEGLContext(Window* window) => glfwGetEGLContext(window);
+
+        /// <summary>
+        /// Returns the <c>EGLSurface</c> of the specified window.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <returns>The <c>EGLSurface</c> of the specified window, or <c>EGL_NO_SURFACE</c> if an error occurred.</returns>
+        public static unsafe IntPtr GetEGLSurface(Window* window) => glfwGetEGLSurface(window);
+
+        /// <summary>
+        /// Retrieves the color buffer associated with the specified window.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="width">The width of the color buffer.</param>
+        /// <param name="height">The height of the color buffer.</param>
+        /// <param name="format">The OSMesa pixel format of the color buffer.</param>
+        /// <param name="buffer">The addess of the color buffer.</param>
+        /// <returns><c>true</c> if successful, or <c>false</c> if an error occurred.</returns>
+        public static unsafe bool GetOSMesaColorBuffer(Window* window, out int width, out int height, out int format, out IntPtr buffer)
+        {
+            fixed (int* widthPtr = &width)
+            fixed (int* heightPtr = &height)
+            fixed (int* formatPtr = &format)
+            fixed (IntPtr* bufferPtr = &buffer)
+            {
+                return glfwGetOSMesaColorBuffer(window, widthPtr, heightPtr, formatPtr, (void**)bufferPtr) != 0;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the depth buffer associated with the specified window.
+        /// </summary>
+        /// <param name="window">The window to query.</param>
+        /// <param name="width">The width of the depth buffer.</param>
+        /// <param name="height">The height of the depth buffer.</param>
+        /// <param name="bytesPerValue">The number of bytes per depth buffer element.</param>
+        /// <param name="buffer">The address of the depth buffer.</param>
+        /// <returns><c>true</c> if successful, or <c>false</c> if an error occurred.</returns>
+        public static unsafe bool GetOSMesaDepthBuffer(Window* window, out int width, out int height, out int bytesPerValue, out IntPtr buffer)
+        {
+            fixed (int* widthPtr = &width)
+            fixed (int* heightPtr = &height)
+            fixed (int* bytesPerValuePtr = &bytesPerValue)
+            fixed (IntPtr* bufferPtr = &buffer)
+            {
+                return glfwGetOSMesaDepthBuffer(window, widthPtr, heightPtr, bytesPerValuePtr, (void**)bufferPtr) != 0;
+            }
+        }
 
         /// <summary>
         ///  This function returns the mesa context associated with the window.
@@ -5783,7 +6043,6 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <param name="window">The window to get the context from.</param>
         /// <returns>The OSMesaContext of the specified window, or NULL if an error occurred.</returns>
         public static unsafe IntPtr GetOSMesaContext(Window* window) => glfwGetOSMesaContext(window);
-
         #endregion
 #pragma warning restore SA1124 // Do not use regions
     }

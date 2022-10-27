@@ -124,7 +124,7 @@ let nugetCommandRunnerPath =
 let install =
     lazy
         (if (DotNet.getVersion id).StartsWith "5" then id
-         else DotNet.install (fun options -> { options with Version = DotNet.Version "5.0.103" }))
+         else DotNet.install (fun options -> { options with Version = DotNet.Version "5.0.408" }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
@@ -134,7 +134,7 @@ let inline dotnetSimple arg = DotNet.Options.lift install.Value arg
 
 module DotNet =
     let run optionsFn framework projFile args =
-        DotNet.exec (dotnetSimple >> optionsFn) "run" (sprintf "-f %s -p \"%s\" %s" framework projFile args)
+        DotNet.exec (dotnetSimple >> optionsFn) "run" (sprintf "-f %s --project \"%s\" -- %s" framework projFile args)
 
     let runWithDefaultOptions framework projFile args = run id framework projFile args
 
@@ -145,7 +145,7 @@ let pathToSpec = "src" </> "gl.xml"
 //let bindingsOutputPath =
 //    ""
 
-let asArgs args = args |> String.concat " "
+let asArgs args = args |> List.map (fun ( x: string) -> sprintf "\"%s\"" x) |> String.concat " "
 
 
 //Target.create "UpdateSpec" (fun _ ->
@@ -174,6 +174,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenTK.Graphics" </> "*.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "*.csproj")
     -- ("./src" </> "OpenTK.Graphics" </> "Wgl/*.*")
+    -- ("./src" </> "OpenTK.Graphics" </> "Egl/*.*")
     -- ("./src" </> "OpenTK.Graphics" </> "paket")
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "GL.Manual.cs")
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGL" </> "Compatibility" </> "GL.Manual.cs")
