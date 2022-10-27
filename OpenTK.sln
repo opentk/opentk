@@ -58,7 +58,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.OpenAL.Extensions", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALGenerator", "src\OpenALGenerator\OpenALGenerator.csproj", "{17FB3437-BD1A-423B-B333-B2D7F775BC79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "src\OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenALTest", "tests\OpenALTest\OpenALTest.csproj", "{5F47DB55-4BFC-4832-A68F-AB36CE7431CE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "src\Generator\Generator.csproj", "{9BED10DF-791A-4E43-AA85-6B4F0072B3A7}"
 EndProject
@@ -70,7 +70,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Desktop", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Compute", "src\OpenTK.Compute\OpenTK.Compute.csproj", "{7E163837-DD68-40D0-8B7B-758F7B230D5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "tests\OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
 	ProjectSection(ProjectDependencies) = postProject
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336} = {517AC4BF-6AF5-415D-B11C-FC6FE6710336}
 	EndProjectSection
