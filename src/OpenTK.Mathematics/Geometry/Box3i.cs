@@ -278,11 +278,6 @@ namespace OpenTK.Mathematics
                            && _max.X == 0 && _max.Y == 0 && _max.Z == 0;
 
         /// <summary>
-        /// Gets a box with all components zero.
-        /// </summary>
-        public static readonly Box3i Empty = new Box3i(0, 0, 0, 0, 0, 0);
-
-        /// <summary>
         /// Gets a box with a location 0,0,9 with the a size of 1.
         /// </summary>
         public static readonly Box3i UnitSquare = new Box3i(0, 0, 0, 1, 1, 1);

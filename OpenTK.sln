@@ -70,8 +70,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Windowing.Desktop", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Compute", "src\OpenTK.Compute\OpenTK.Compute.csproj", "{7E163837-DD68-40D0-8B7B-758F7B230D5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenToolkit.OpenCL.Tests", "tests\OpenToolkit.OpenCL.Tests\OpenToolkit.OpenCL.Tests.csproj", "{51A92F39-3444-4E07-9C4F-99C2D8F11879}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Benchmarks", "OpenTK.Benchmarks\OpenTK.Benchmarks.csproj", "{A31363E2-783D-4F6A-B447-130E7A344442}"
 	ProjectSection(ProjectDependencies) = postProject
 		{517AC4BF-6AF5-415D-B11C-FC6FE6710336} = {517AC4BF-6AF5-415D-B11C-FC6FE6710336}
