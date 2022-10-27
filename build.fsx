@@ -101,12 +101,12 @@ let releaseProjects =
     !! "src/**/*.??proj"
     -- "src/Generator/**"
     -- "src/OpenALGenerator/**"
-    -- "src/OpenALTest/**"
     -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
 
 // Absolutely all test projects.
 let allTestProjects =
     !! "tests/**/*.??proj"
+    -- "tests/OpenALTest/**"
 
 // Test projects excluding integration tests (don't run on CI).
 let ciTestProjects =
