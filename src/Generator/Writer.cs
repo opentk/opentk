@@ -290,6 +290,9 @@ namespace Generator.Writing
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (writer.CsScope())
             {
+                // FIXME: Maybe we want to fix this?
+                writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
+
                 writer.WriteLine($"public static unsafe partial class GL");
                 using (writer.CsScope())
                 {
@@ -314,6 +317,8 @@ namespace Generator.Writing
                         scope?.Dispose();
                     }
                 }
+
+                writer.WriteLineNoTabs("#pragma warning restore CS0419 // Ambiguous reference in cref attribute");
             }
         }
 

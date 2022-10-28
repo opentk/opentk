@@ -7,6 +7,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Graphics.OpenGLES3
 {
+#pragma warning disable CS0419 // Ambiguous reference in cref attribute
     public static unsafe partial class GL
     {
         /// <inheritdoc cref="BindAttribLocation"/>
@@ -12936,4 +12937,5 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
     }
+#pragma warning restore CS0419 // Ambiguous reference in cref attribute
 }
