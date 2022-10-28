@@ -100,7 +100,7 @@ let toolProjects =
 let releaseProjects =
     !! "src/**/*.??proj"
     -- "src/Generator/**"
-    -- "src/OpenALGenerator/**"
+    -- "src/OpenAL/OpenALGenerator/**"
     -- "src/OpenAL/OpenTK.OpenAL.Extensions/**"
 
 // Absolutely all test projects.

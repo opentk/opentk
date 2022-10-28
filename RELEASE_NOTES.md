@@ -1,3 +1,12 @@
+## 5.0-pre.8
+
+* Merged 5.0 with 4.7.5, this means that all changes made between 4.6.5 to 4.7.5 are also in this release.
+* Functions with `bool` parameters and return values are now correctly bound.
+* Enum groups now document a few functions where they are used.
+* The singular overload of `GenQuries` is now correctly named `GenQuery`.
+* Deduplicated internal function pointers to reduce the final binary size.
+* Fixes a few functions like `glTexImage3D` that took an `int` parameter when it should have taken an enum instead.
+
 ## 5.0-pre.7
 
 * Add documentation to all native and overloaded functions (and links to their refpage) (@frederikja163, @NogginBops)
