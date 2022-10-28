@@ -417,9 +417,13 @@ namespace Generator.Writing
             {
                 writer.WriteLineNoTabs("#pragma warning disable CA1069 // Enums values should not be duplicated");
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
+                // FIXME: Maybe we want to fix this?
+                writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
                 WriteEnumGroups(writer, enumGroups);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
+                // FIXME: Maybe we want to fix this?
+                writer.WriteLineNoTabs("#pragma warning restore CS0419 // Ambiguous reference in cref attribute");
             }
         }
 
