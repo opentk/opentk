@@ -200,7 +200,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v2.0]</b> Specify whether front- or back-facing polygons can be culled. </summary>
         /// <param name="mode"> Specifies whether front- or back-facing polygons are candidates for culling. Symbolic constants GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK are accepted. The initial value is GL_BACK. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCullFace.xhtml" /></remarks>
-        public static void CullFace(CullFaceMode mode) => GLPointers._CullFace_fnptr((uint)mode);
+        public static void CullFace(TriangleFace mode) => GLPointers._CullFace_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v2.0]</b> Delete named buffer objects. </summary>
         /// <param name="n"> Specifies the number of buffer objects to be deleted. </param>
@@ -668,7 +668,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="reference"> Specifies the reference value for the stencil test. Stencil comparison operations and queries of ref clamp its value to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
         /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilFuncSeparate.xhtml" /></remarks>
-        public static void StencilFuncSeparate(StencilFaceDirection face, StencilFunction func, int reference, uint mask) => GLPointers._StencilFuncSeparate_fnptr((uint)face, (uint)func, reference, mask);
+        public static void StencilFuncSeparate(TriangleFace face, StencilFunction func, int reference, uint mask) => GLPointers._StencilFuncSeparate_fnptr((uint)face, (uint)func, reference, mask);
         
         /// <summary> <b>[requires: v2.0]</b> Control the front and back writing of individual bits in the stencil planes. </summary>
         /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. </param>
@@ -679,7 +679,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="face"> Specifies whether the front and/or back stencil writemask is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
         /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilMaskSeparate.xhtml" /></remarks>
-        public static void StencilMaskSeparate(StencilFaceDirection face, uint mask) => GLPointers._StencilMaskSeparate_fnptr((uint)face, mask);
+        public static void StencilMaskSeparate(TriangleFace face, uint mask) => GLPointers._StencilMaskSeparate_fnptr((uint)face, mask);
         
         /// <summary> <b>[requires: v2.0]</b> Set front and back stencil test actions. </summary>
         /// <param name="sfail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
@@ -694,7 +694,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilOpSeparate.xhtml" /></remarks>
-        public static void StencilOpSeparate(StencilFaceDirection face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparate_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
+        public static void StencilOpSeparate(TriangleFace face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparate_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
         
         /// <summary> <b>[requires: v2.0]</b> Specify a two-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
@@ -707,7 +707,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage2D.xhtml" /></remarks>
-        public static void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._TexImage2D_fnptr((uint)target, level, internalformat, width, height, border, (uint)format, (uint)type, pixels);
+        public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._TexImage2D_fnptr((uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v2.0]</b> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
@@ -999,7 +999,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage3D.xhtml" /></remarks>
-        public static void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._TexImage3D_fnptr((uint)target, level, internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+        public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._TexImage3D_fnptr((uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v3.0]</b> Specify a three-dimensional texture subimage. </summary>
         /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
@@ -2962,6 +2962,22 @@ namespace OpenTK.Graphics.OpenGLES3
             /// <remarks><see href="" /></remarks>
             public static void NamedBufferStorageExternalEXT(BufferHandle buffer, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._NamedBufferStorageExternalEXT_fnptr((int)buffer, offset, size, clientBuffer, (uint)flags);
             
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void GetFragmentShadingRatesEXT(int samples, int maxCount, int* count, ShadingRate* shadingRates) => GLPointers._GetFragmentShadingRatesEXT_fnptr(samples, maxCount, count, (uint*)shadingRates);
+            
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void ShadingRateEXT(ShadingRate rate) => GLPointers._ShadingRateEXT_fnptr((uint)rate);
+            
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void ShadingRateCombinerOpsEXT(ShadingRateCombinerOp combinerOp0, ShadingRateCombinerOp combinerOp1) => GLPointers._ShadingRateCombinerOpsEXT_fnptr((uint)combinerOp0, (uint)combinerOp1);
+            
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void FramebufferShadingRateEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int baseLayer, int numLayers, int texelWidth, int texelHeight) => GLPointers._FramebufferShadingRateEXT_fnptr((uint)target, (uint)attachment, (int)texture, baseLayer, numLayers, texelWidth, texelHeight);
+            
             /// <summary> <b>[requires: GL_EXT_geometry_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
             public static void FramebufferTextureEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int level) => GLPointers._FramebufferTextureEXT_fnptr((uint)target, (uint)attachment, (int)texture, level);
@@ -3368,7 +3384,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_shader_pixel_local_storage2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static int GetFramebufferPixelLocalStorageSizeEXT(uint target) => GLPointers._GetFramebufferPixelLocalStorageSizeEXT_fnptr(target);
+            public static int GetFramebufferPixelLocalStorageSizeEXT(FramebufferTarget target) => GLPointers._GetFramebufferPixelLocalStorageSizeEXT_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_EXT_shader_pixel_local_storage2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3448,11 +3464,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_texture_storage_compression]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int* attrib_list) => GLPointers._TexStorageAttribs2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, attrib_list);
+            public static void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, TexStorageAttribs* attrib_list) => GLPointers._TexStorageAttribs2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, (int*)attrib_list);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage_compression]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, int* attrib_list) => GLPointers._TexStorageAttribs3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth, attrib_list);
+            public static void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, TexStorageAttribs* attrib_list) => GLPointers._TexStorageAttribs3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth, (int*)attrib_list);
             
             /// <summary> <b>[requires: GL_EXT_texture_view]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3999,11 +4015,11 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._CoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
+            public static void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._CoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, PathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._CoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
+            public static void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._CoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4079,19 +4095,19 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void StencilThenCoverFillPathNV(uint path, All fillMode, uint mask, All coverMode) => GLPointers._StencilThenCoverFillPathNV_fnptr(path, (uint)fillMode, mask, (uint)coverMode);
+            public static void StencilThenCoverFillPathNV(uint path, PathFillMode fillMode, uint mask, PathCoverMode coverMode) => GLPointers._StencilThenCoverFillPathNV_fnptr(path, (uint)fillMode, mask, (uint)coverMode);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void StencilThenCoverStrokePathNV(uint path, int reference, uint mask, All coverMode) => GLPointers._StencilThenCoverStrokePathNV_fnptr(path, reference, mask, (uint)coverMode);
+            public static void StencilThenCoverStrokePathNV(uint path, int reference, uint mask, PathCoverMode coverMode) => GLPointers._StencilThenCoverStrokePathNV_fnptr(path, reference, mask, (uint)coverMode);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void StencilThenCoverFillPathInstancedNV(int numPaths, All pathNameType, void* paths, uint pathBase, All fillMode, uint mask, All coverMode, All transformType, float* transformValues) => GLPointers._StencilThenCoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)fillMode, mask, (uint)coverMode, (uint)transformType, transformValues);
+            public static void StencilThenCoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._StencilThenCoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)fillMode, mask, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void StencilThenCoverStrokePathInstancedNV(int numPaths, All pathNameType, void* paths, uint pathBase, int reference, uint mask, All coverMode, All transformType, float* transformValues) => GLPointers._StencilThenCoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, reference, mask, (uint)coverMode, (uint)transformType, transformValues);
+            public static void StencilThenCoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._StencilThenCoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, reference, mask, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4191,7 +4207,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_polygon_mode]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void PolygonModeNV(MaterialFace face, PolygonMode mode) => GLPointers._PolygonModeNV_fnptr((uint)face, (uint)mode);
+            public static void PolygonModeNV(TriangleFace face, PolygonMode mode) => GLPointers._PolygonModeNV_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_NV_read_buffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -4385,7 +4401,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_INTEL_performance_query]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, uint* capsMask) => GLPointers._GetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, capsMask);
+            public static void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, PerformanceQueryCapsMaskINTEL* capsMask) => GLPointers._GetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, (uint*)capsMask);
             
         }
         public static unsafe partial class KHR

@@ -64,7 +64,7 @@ namespace Generator.Writing
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
-        List<NativeFunction>? FunctionsUsingEnumGroup);
+        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup);
 
 
     public interface IOverloadLayer
@@ -99,7 +99,7 @@ namespace Generator.Writing
         }
     }
 
-    public record CSEnum(string TypeName, bool Constant) : BaseCSType, IConstantCSType
+    public record CSEnum(string TypeName, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {

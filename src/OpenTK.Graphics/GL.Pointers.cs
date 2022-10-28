@@ -1391,11 +1391,11 @@ namespace OpenTK.Graphics
             _CallCommandListNV_fnptr(list);
         }
         
-        internal static delegate* unmanaged<uint, void> _CallList_fnptr = &CallList_Lazy;
+        internal static delegate* unmanaged<int, void> _CallList_fnptr = &CallList_Lazy;
         [UnmanagedCallersOnly]
-        private static void CallList_Lazy(uint list)
+        private static void CallList_Lazy(int list)
         {
-            _CallList_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glCallList");
+            _CallList_fnptr = (delegate* unmanaged<int, void>)GLLoader.BindingsContext.GetProcAddress("glCallList");
             _CallList_fnptr(list);
         }
         
@@ -6159,6 +6159,14 @@ namespace OpenTK.Graphics
             _FramebufferSamplePositionsfvAMD_fnptr(target, numsamples, pixelindex, values);
         }
         
+        internal static delegate* unmanaged<uint, uint, int, int, int, int, int, void> _FramebufferShadingRateEXT_fnptr = &FramebufferShadingRateEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void FramebufferShadingRateEXT_Lazy(uint target, uint attachment, int texture, int baseLayer, int numLayers, int texelWidth, int texelHeight)
+        {
+            _FramebufferShadingRateEXT_fnptr = (delegate* unmanaged<uint, uint, int, int, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glFramebufferShadingRateEXT");
+            _FramebufferShadingRateEXT_fnptr(target, attachment, texture, baseLayer, numLayers, texelWidth, texelHeight);
+        }
+        
         internal static delegate* unmanaged<uint, uint, int, int, void> _FramebufferTexture_fnptr = &FramebufferTexture_Lazy;
         [UnmanagedCallersOnly]
         private static void FramebufferTexture_Lazy(uint target, uint attachment, int texture, int level)
@@ -7519,6 +7527,14 @@ namespace OpenTK.Graphics
             _GetFragmentMaterialivSGIX_fnptr(face, pname, parameters);
         }
         
+        internal static delegate* unmanaged<int, int, int*, uint*, void> _GetFragmentShadingRatesEXT_fnptr = &GetFragmentShadingRatesEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void GetFragmentShadingRatesEXT_Lazy(int samples, int maxCount, int* count, uint* shadingRates)
+        {
+            _GetFragmentShadingRatesEXT_fnptr = (delegate* unmanaged<int, int, int*, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glGetFragmentShadingRatesEXT");
+            _GetFragmentShadingRatesEXT_fnptr(samples, maxCount, count, shadingRates);
+        }
+        
         internal static delegate* unmanaged<uint, uint, uint, int*, void> _GetFramebufferAttachmentParameteriv_fnptr = &GetFramebufferAttachmentParameteriv_Lazy;
         [UnmanagedCallersOnly]
         private static void GetFramebufferAttachmentParameteriv_Lazy(uint target, uint attachment, uint pname, int* parameters)
@@ -7887,19 +7903,19 @@ namespace OpenTK.Graphics
             _GetLightxvOES_fnptr(light, pname, parameters);
         }
         
-        internal static delegate* unmanaged<uint, uint, float*, void> _GetListParameterfvSGIX_fnptr = &GetListParameterfvSGIX_Lazy;
+        internal static delegate* unmanaged<int, uint, float*, void> _GetListParameterfvSGIX_fnptr = &GetListParameterfvSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void GetListParameterfvSGIX_Lazy(uint list, uint pname, float* parameters)
+        private static void GetListParameterfvSGIX_Lazy(int list, uint pname, float* parameters)
         {
-            _GetListParameterfvSGIX_fnptr = (delegate* unmanaged<uint, uint, float*, void>)GLLoader.BindingsContext.GetProcAddress("glGetListParameterfvSGIX");
+            _GetListParameterfvSGIX_fnptr = (delegate* unmanaged<int, uint, float*, void>)GLLoader.BindingsContext.GetProcAddress("glGetListParameterfvSGIX");
             _GetListParameterfvSGIX_fnptr(list, pname, parameters);
         }
         
-        internal static delegate* unmanaged<uint, uint, int*, void> _GetListParameterivSGIX_fnptr = &GetListParameterivSGIX_Lazy;
+        internal static delegate* unmanaged<int, uint, int*, void> _GetListParameterivSGIX_fnptr = &GetListParameterivSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void GetListParameterivSGIX_Lazy(uint list, uint pname, int* parameters)
+        private static void GetListParameterivSGIX_Lazy(int list, uint pname, int* parameters)
         {
-            _GetListParameterivSGIX_fnptr = (delegate* unmanaged<uint, uint, int*, void>)GLLoader.BindingsContext.GetProcAddress("glGetListParameterivSGIX");
+            _GetListParameterivSGIX_fnptr = (delegate* unmanaged<int, uint, int*, void>)GLLoader.BindingsContext.GetProcAddress("glGetListParameterivSGIX");
             _GetListParameterivSGIX_fnptr(list, pname, parameters);
         }
         
@@ -11895,11 +11911,11 @@ namespace OpenTK.Graphics
             _LinkProgramARB_fnptr(programObj);
         }
         
-        internal static delegate* unmanaged<uint, void> _ListBase_fnptr = &ListBase_Lazy;
+        internal static delegate* unmanaged<int, void> _ListBase_fnptr = &ListBase_Lazy;
         [UnmanagedCallersOnly]
-        private static void ListBase_Lazy(uint @base)
+        private static void ListBase_Lazy(int @base)
         {
-            _ListBase_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glListBase");
+            _ListBase_fnptr = (delegate* unmanaged<int, void>)GLLoader.BindingsContext.GetProcAddress("glListBase");
             _ListBase_fnptr(@base);
         }
         
@@ -11911,35 +11927,35 @@ namespace OpenTK.Graphics
             _ListDrawCommandsStatesClientNV_fnptr(list, segment, indirects, sizes, states, fbos, count);
         }
         
-        internal static delegate* unmanaged<uint, uint, float, void> _ListParameterfSGIX_fnptr = &ListParameterfSGIX_Lazy;
+        internal static delegate* unmanaged<int, uint, float, void> _ListParameterfSGIX_fnptr = &ListParameterfSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void ListParameterfSGIX_Lazy(uint list, uint pname, float param)
+        private static void ListParameterfSGIX_Lazy(int list, uint pname, float param)
         {
-            _ListParameterfSGIX_fnptr = (delegate* unmanaged<uint, uint, float, void>)GLLoader.BindingsContext.GetProcAddress("glListParameterfSGIX");
+            _ListParameterfSGIX_fnptr = (delegate* unmanaged<int, uint, float, void>)GLLoader.BindingsContext.GetProcAddress("glListParameterfSGIX");
             _ListParameterfSGIX_fnptr(list, pname, param);
         }
         
-        internal static delegate* unmanaged<uint, uint, float*, void> _ListParameterfvSGIX_fnptr = &ListParameterfvSGIX_Lazy;
+        internal static delegate* unmanaged<int, uint, float*, void> _ListParameterfvSGIX_fnptr = &ListParameterfvSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void ListParameterfvSGIX_Lazy(uint list, uint pname, float* parameters)
+        private static void ListParameterfvSGIX_Lazy(int list, uint pname, float* parameters)
         {
-            _ListParameterfvSGIX_fnptr = (delegate* unmanaged<uint, uint, float*, void>)GLLoader.BindingsContext.GetProcAddress("glListParameterfvSGIX");
+            _ListParameterfvSGIX_fnptr = (delegate* unmanaged<int, uint, float*, void>)GLLoader.BindingsContext.GetProcAddress("glListParameterfvSGIX");
             _ListParameterfvSGIX_fnptr(list, pname, parameters);
         }
         
-        internal static delegate* unmanaged<uint, uint, int, void> _ListParameteriSGIX_fnptr = &ListParameteriSGIX_Lazy;
+        internal static delegate* unmanaged<int, uint, int, void> _ListParameteriSGIX_fnptr = &ListParameteriSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void ListParameteriSGIX_Lazy(uint list, uint pname, int param)
+        private static void ListParameteriSGIX_Lazy(int list, uint pname, int param)
         {
-            _ListParameteriSGIX_fnptr = (delegate* unmanaged<uint, uint, int, void>)GLLoader.BindingsContext.GetProcAddress("glListParameteriSGIX");
+            _ListParameteriSGIX_fnptr = (delegate* unmanaged<int, uint, int, void>)GLLoader.BindingsContext.GetProcAddress("glListParameteriSGIX");
             _ListParameteriSGIX_fnptr(list, pname, param);
         }
         
-        internal static delegate* unmanaged<uint, uint, int*, void> _ListParameterivSGIX_fnptr = &ListParameterivSGIX_Lazy;
+        internal static delegate* unmanaged<int, uint, int*, void> _ListParameterivSGIX_fnptr = &ListParameterivSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void ListParameterivSGIX_Lazy(uint list, uint pname, int* parameters)
+        private static void ListParameterivSGIX_Lazy(int list, uint pname, int* parameters)
         {
-            _ListParameterivSGIX_fnptr = (delegate* unmanaged<uint, uint, int*, void>)GLLoader.BindingsContext.GetProcAddress("glListParameterivSGIX");
+            _ListParameterivSGIX_fnptr = (delegate* unmanaged<int, uint, int*, void>)GLLoader.BindingsContext.GetProcAddress("glListParameterivSGIX");
             _ListParameterivSGIX_fnptr(list, pname, parameters);
         }
         
@@ -14575,11 +14591,11 @@ namespace OpenTK.Graphics
             _NamedStringARB_fnptr(type, namelen, name, stringlen, str);
         }
         
-        internal static delegate* unmanaged<uint, uint, void> _NewList_fnptr = &NewList_Lazy;
+        internal static delegate* unmanaged<int, uint, void> _NewList_fnptr = &NewList_Lazy;
         [UnmanagedCallersOnly]
-        private static void NewList_Lazy(uint list, uint mode)
+        private static void NewList_Lazy(int list, uint mode)
         {
-            _NewList_fnptr = (delegate* unmanaged<uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glNewList");
+            _NewList_fnptr = (delegate* unmanaged<int, uint, void>)GLLoader.BindingsContext.GetProcAddress("glNewList");
             _NewList_fnptr(list, mode);
         }
         
@@ -18997,6 +19013,22 @@ namespace OpenTK.Graphics
         {
             _ShaderStorageBlockBinding_fnptr = (delegate* unmanaged<int, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glShaderStorageBlockBinding");
             _ShaderStorageBlockBinding_fnptr(program, storageBlockIndex, storageBlockBinding);
+        }
+        
+        internal static delegate* unmanaged<uint, void> _ShadingRateEXT_fnptr = &ShadingRateEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void ShadingRateEXT_Lazy(uint rate)
+        {
+            _ShadingRateEXT_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateEXT");
+            _ShadingRateEXT_fnptr(rate);
+        }
+        
+        internal static delegate* unmanaged<uint, uint, void> _ShadingRateCombinerOpsEXT_fnptr = &ShadingRateCombinerOpsEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void ShadingRateCombinerOpsEXT_Lazy(uint combinerOp0, uint combinerOp1)
+        {
+            _ShadingRateCombinerOpsEXT_fnptr = (delegate* unmanaged<uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateCombinerOpsEXT");
+            _ShadingRateCombinerOpsEXT_fnptr(combinerOp0, combinerOp1);
         }
         
         internal static delegate* unmanaged<byte, void> _ShadingRateImageBarrierNV_fnptr = &ShadingRateImageBarrierNV_Lazy;
