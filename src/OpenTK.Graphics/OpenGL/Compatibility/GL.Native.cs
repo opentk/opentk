@@ -10,7 +10,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v1.0]</b> Specify whether front- or back-facing facets can be culled. </summary>
         /// <param name="mode"> Specifies whether front- or back-facing facets are candidates for culling. Symbolic constants GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK are accepted. The initial value is GL_BACK. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glCullFace.xhtml" /></remarks>
-        public static void CullFace(TriangleFace mode) => GLPointers._CullFace_fnptr((uint)mode);
+        public static void CullFace(CullFaceMode mode) => GLPointers._CullFace_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v1.0]</b> Define front- and back-facing polygons. </summary>
         /// <param name="mode"> Specifies the orientation of front-facing polygons. GL_CW and GL_CCW are accepted. The initial value is GL_CCW. </param>
@@ -37,7 +37,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="face"> Specifies the polygons that mode applies to. Must be GL_FRONT_AND_BACK for front- and back-facing polygons. </param>
         /// <param name="mode"> Specifies how polygons will be rasterized. Accepted values are GL_POINT, GL_LINE, and GL_FILL. The initial value is GL_FILL for both front- and back-facing polygons. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glPolygonMode.xhtml" /></remarks>
-        public static void PolygonMode(TriangleFace face, PolygonMode mode) => GLPointers._PolygonMode_fnptr((uint)face, (uint)mode);
+        public static void PolygonMode(MaterialFace face, PolygonMode mode) => GLPointers._PolygonMode_fnptr((uint)face, (uint)mode);
         
         /// <summary> <b>[requires: v1.0]</b> Define the scissor box. </summary>
         /// <param name="x"> Specify the lower left corner of the scissor box. Initially (0, 0). </param>
@@ -1001,7 +1001,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="face"> Specifies whether front, back, or both front and back material parameters should track the current color. Accepted values are GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. The initial value is GL_FRONT_AND_BACK. </param>
         /// <param name="mode"> Specifies which of several material parameters track the current color. Accepted values are GL_EMISSION, GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, and GL_AMBIENT_AND_DIFFUSE. The initial value is GL_AMBIENT_AND_DIFFUSE. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glColorMaterial.xml" /></remarks>
-        public static void ColorMaterial(TriangleFace face, ColorMaterialParameter mode) => GLPointers._ColorMaterial_fnptr((uint)face, (uint)mode);
+        public static void ColorMaterial(MaterialFace face, ColorMaterialParameter mode) => GLPointers._ColorMaterial_fnptr((uint)face, (uint)mode);
         
         /// <summary> <b>[requires: v1.0]</b> Specify fog parameters. </summary>
         /// <param name="pname"> Specifies a single-valued fog parameter. GL_FOG_MODE, GL_FOG_DENSITY, GL_FOG_START, GL_FOG_END, GL_FOG_INDEX, and GL_FOG_COORD_SRC are accepted. </param>
@@ -1064,18 +1064,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="pname"> Specifies the single-valued material parameter of the face or faces that is being updated. Must be GL_SHININESS. </param>
         /// <param name="param"> Specifies the value that parameter GL_SHININESS will be set to. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glMaterial.xml" /></remarks>
-        public static void Materialf(TriangleFace face, MaterialParameter pname, float param) => GLPointers._Materialf_fnptr((uint)face, (uint)pname, param);
+        public static void Materialf(MaterialFace face, MaterialParameter pname, float param) => GLPointers._Materialf_fnptr((uint)face, (uint)pname, param);
         
-        public static void Materialfv(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._Materialfv_fnptr((uint)face, (uint)pname, parameters);
+        public static void Materialfv(MaterialFace face, MaterialParameter pname, float* parameters) => GLPointers._Materialfv_fnptr((uint)face, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> Specify material parameters for the lighting model. </summary>
         /// <param name="face"> Specifies which face or faces are being updated. Must be one of GL_FRONT, GL_BACK, or GL_FRONT_AND_BACK. </param>
         /// <param name="pname"> Specifies the single-valued material parameter of the face or faces that is being updated. Must be GL_SHININESS. </param>
         /// <param name="param"> Specifies the value that parameter GL_SHININESS will be set to. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glMaterial.xml" /></remarks>
-        public static void Materiali(TriangleFace face, MaterialParameter pname, int param) => GLPointers._Materiali_fnptr((uint)face, (uint)pname, param);
+        public static void Materiali(MaterialFace face, MaterialParameter pname, int param) => GLPointers._Materiali_fnptr((uint)face, (uint)pname, param);
         
-        public static void Materialiv(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._Materialiv_fnptr((uint)face, (uint)pname, parameters);
+        public static void Materialiv(MaterialFace face, MaterialParameter pname, int* parameters) => GLPointers._Materialiv_fnptr((uint)face, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> Set the polygon stippling pattern. </summary>
         /// <param name="pattern"> Specifies a pointer to a 32 32 stipple pattern that will be unpacked from memory in the same way that glDrawPixels unpacks pixels. </param>
@@ -1443,14 +1443,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="pname"> Specifies the material parameter to return. GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, GL_SHININESS, and GL_COLOR_INDEXES are accepted. </param>
         /// <param name="parameters"> Returns the requested data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetMaterial.xml" /></remarks>
-        public static void GetMaterialfv(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._GetMaterialfv_fnptr((uint)face, (uint)pname, parameters);
+        public static void GetMaterialfv(MaterialFace face, MaterialParameter pname, float* parameters) => GLPointers._GetMaterialfv_fnptr((uint)face, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> Return material parameters. </summary>
         /// <param name="face"> Specifies which of the two materials is being queried. GL_FRONT or GL_BACK are accepted, representing the front and back materials, respectively. </param>
         /// <param name="pname"> Specifies the material parameter to return. GL_AMBIENT, GL_DIFFUSE, GL_SPECULAR, GL_EMISSION, GL_SHININESS, and GL_COLOR_INDEXES are accepted. </param>
         /// <param name="parameters"> Returns the requested data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetMaterial.xml" /></remarks>
-        public static void GetMaterialiv(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialiv_fnptr((uint)face, (uint)pname, parameters);
+        public static void GetMaterialiv(MaterialFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialiv_fnptr((uint)face, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.0]</b> Return the specified pixel map. </summary>
         /// <param name="map"> Specifies the name of the pixel map to return. Accepted values are GL_PIXEL_MAP_I_TO_I, GL_PIXEL_MAP_S_TO_S, GL_PIXEL_MAP_I_TO_R, GL_PIXEL_MAP_I_TO_G, GL_PIXEL_MAP_I_TO_B, GL_PIXEL_MAP_I_TO_A, GL_PIXEL_MAP_R_TO_R, GL_PIXEL_MAP_G_TO_G, GL_PIXEL_MAP_B_TO_B, and GL_PIXEL_MAP_A_TO_A. </param>
@@ -2414,14 +2414,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v1.5]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjectiv(QueryHandle id, QueryObjectParameterName pname, int* parameters) => GLPointers._GetQueryObjectiv_fnptr((int)id, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v1.5]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjectuiv(QueryHandle id, QueryObjectParameterName pname, uint* parameters) => GLPointers._GetQueryObjectuiv_fnptr((int)id, (uint)pname, parameters);
@@ -2516,7 +2516,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glStencilOpSeparate.xhtml" /></remarks>
-        public static void StencilOpSeparate(TriangleFace face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparate_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
+        public static void StencilOpSeparate(StencilFaceDirection face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparate_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
         
         /// <summary> <b>[requires: v2.0]</b> Set front and/or back function and reference value for stencil testing. </summary>
         /// <param name="face"> Specifies whether front and/or back stencil state is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
@@ -2524,13 +2524,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="reference"> Specifies the reference value for the stencil test. ref is clamped to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
         /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glStencilFuncSeparate.xhtml" /></remarks>
-        public static void StencilFuncSeparate(TriangleFace face, StencilFunction func, int reference, uint mask) => GLPointers._StencilFuncSeparate_fnptr((uint)face, (uint)func, reference, mask);
+        public static void StencilFuncSeparate(StencilFaceDirection face, StencilFunction func, int reference, uint mask) => GLPointers._StencilFuncSeparate_fnptr((uint)face, (uint)func, reference, mask);
         
         /// <summary> <b>[requires: v2.0]</b> Control the front and/or back writing of individual bits in the stencil planes. </summary>
         /// <param name="face"> Specifies whether the front and/or back stencil writemask is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
         /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glStencilMaskSeparate.xhtml" /></remarks>
-        public static void StencilMaskSeparate(TriangleFace face, uint mask) => GLPointers._StencilMaskSeparate_fnptr((uint)face, mask);
+        public static void StencilMaskSeparate(StencilFaceDirection face, uint mask) => GLPointers._StencilMaskSeparate_fnptr((uint)face, mask);
         
         /// <summary> <b>[requires: v2.0]</b> Attaches a shader object to a program object. </summary>
         /// <param name="program">Specifies the program object to which a shader object will be attached.</param>
@@ -2623,7 +2623,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v2.0]</b> Returns a parameter from a program object. </summary>
         /// <param name="program">Specifies the program object to be queried.</param>
-        /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_DELETE_STATUS, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_INFO_LOG_LENGTH, GL_ATTACHED_SHADERS, GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_COMPUTE_WORK_GROUP_SIZE, GL_PROGRAM_BINARY_LENGTH, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH, GL_GEOMETRY_VERTICES_OUT, GL_GEOMETRY_INPUT_TYPE, and GL_GEOMETRY_OUTPUT_TYPE.</param>
+        /// <param name="pname">Specifies the object parameter. Accepted symbolic names are GL_DELETE_STATUS, GL_LINK_STATUS, GL_VALIDATE_STATUS, GL_INFO_LOG_LENGTH, GL_ATTACHED_SHADERS, GL_ACTIVE_ATOMIC_COUNTER_BUFFERS, GL_ACTIVE_ATTRIBUTES, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, GL_ACTIVE_UNIFORMS, GL_ACTIVE_UNIFORM_BLOCKS, GL_ACTIVE_UNIFORM_BLOCK_MAX_NAME_LENGTH, GL_ACTIVE_UNIFORM_MAX_LENGTH, GL_COMPUTE_WORK_GROUP_SIZE GL_PROGRAM_BINARY_LENGTH, GL_TRANSFORM_FEEDBACK_BUFFER_MODE, GL_TRANSFORM_FEEDBACK_VARYINGS, GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH, GL_GEOMETRY_VERTICES_OUT, GL_GEOMETRY_INPUT_TYPE, and GL_GEOMETRY_OUTPUT_TYPE.</param>
         /// <param name="parameters">Returns the requested object parameter.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetProgram.xhtml" /></remarks>
         public static void GetProgramiv(ProgramHandle program, ProgramPropertyARB pname, int* parameters) => GLPointers._GetProgramiv_fnptr((int)program, (uint)pname, parameters);
@@ -4111,14 +4111,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjecti64v(QueryHandle id, QueryObjectParameterName pname, long* parameters) => GLPointers._GetQueryObjecti64v_fnptr((int)id, (uint)pname, parameters);
         
         /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryObjectui64v(QueryHandle id, QueryObjectParameterName pname, ulong* parameters) => GLPointers._GetQueryObjectui64v_fnptr((int)id, (uint)pname, parameters);
@@ -6488,7 +6488,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjecti64v(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjecti64v_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -6496,7 +6496,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjectiv(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjectiv_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -6504,7 +6504,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjectui64v(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjectui64v_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -6512,7 +6512,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
         /// <param name="id"> Specifies the name of a query object. </param>
         /// <param name="buffer"> Specifies the name of a buffer object. </param>
-        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+        /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
         /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
         public static void GetQueryBufferObjectuiv(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjectuiv_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -6679,7 +6679,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_AMD_debug_output]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static uint GetDebugMessageLogAMD(uint count, int bufSize, All* categories, DebugSeverity* severities, uint* ids, int* lengths, byte* message) => GLPointers._GetDebugMessageLogAMD_fnptr(count, bufSize, (uint*)categories, (uint*)severities, ids, lengths, message);
+            public static uint GetDebugMessageLogAMD(uint count, int bufSize, All* categories, uint* severities, uint* ids, int* lengths, byte* message) => GLPointers._GetDebugMessageLogAMD_fnptr(count, bufSize, (uint*)categories, severities, ids, lengths, message);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -6943,7 +6943,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_AMD_stencil_operation_extended]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void StencilOpValueAMD(TriangleFace face, uint value) => GLPointers._StencilOpValueAMD_fnptr((uint)face, value);
+            public static void StencilOpValueAMD(StencilFaceDirection face, uint value) => GLPointers._StencilOpValueAMD_fnptr((uint)face, value);
             
             /// <summary> <b>[requires: GL_AMD_vertex_shader_tessellator]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -8133,7 +8133,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
             /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjecti64v(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjecti64v_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -8141,7 +8141,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
             /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjectiv(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjectiv_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -8149,7 +8149,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
             /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjectui64v(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjectui64v_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -8157,7 +8157,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access]</b> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
             /// <param name="buffer"> Specifies the name of a buffer object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
             /// <param name="offset"> Specifies the byte offset into buffer's data store where the queried result will be written. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryBufferObjectuiv(QueryHandle id, BufferHandle buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._GetQueryBufferObjectuiv_fnptr((int)id, (int)buffer, (uint)pname, offset);
@@ -8801,14 +8801,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="pname"> The symbolic name of a texture color lookup table parameter. Must be one of GL_COLOR_TABLE_SCALE or GL_COLOR_TABLE_BIAS. </param>
             /// <param name="parameters"> A pointer to an array where the values of the parameters are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glColorTableParameter.xml" /></remarks>
-            public static void ColorTableParameterfv(ColorTableTarget target, ColorTableParameterPName pname, float* parameters) => GLPointers._ColorTableParameterfv_fnptr((uint)target, (uint)pname, parameters);
+            public static void ColorTableParameterfv(ColorTableTarget target, ColorTableParameterPNameSGI pname, float* parameters) => GLPointers._ColorTableParameterfv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Set color lookup table parameters. </summary>
             /// <param name="target"> The target color table. Must be GL_COLOR_TABLE, GL_POST_CONVOLUTION_COLOR_TABLE, or GL_POST_COLOR_MATRIX_COLOR_TABLE. </param>
             /// <param name="pname"> The symbolic name of a texture color lookup table parameter. Must be one of GL_COLOR_TABLE_SCALE or GL_COLOR_TABLE_BIAS. </param>
             /// <param name="parameters"> A pointer to an array where the values of the parameters are stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glColorTableParameter.xml" /></remarks>
-            public static void ColorTableParameteriv(ColorTableTarget target, ColorTableParameterPName pname, int* parameters) => GLPointers._ColorTableParameteriv_fnptr((uint)target, (uint)pname, parameters);
+            public static void ColorTableParameteriv(ColorTableTarget target, ColorTableParameterPNameSGI pname, int* parameters) => GLPointers._ColorTableParameteriv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Copy pixels into a color table. </summary>
             /// <param name="target"> The color table target. Must be GL_COLOR_TABLE, GL_POST_CONVOLUTION_COLOR_TABLE, or GL_POST_COLOR_MATRIX_COLOR_TABLE. </param>
@@ -8832,14 +8832,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="pname"> The symbolic name of a color lookup table parameter. Must be one of GL_COLOR_TABLE_BIAS, GL_COLOR_TABLE_SCALE, GL_COLOR_TABLE_FORMAT, GL_COLOR_TABLE_WIDTH, GL_COLOR_TABLE_RED_SIZE, GL_COLOR_TABLE_GREEN_SIZE, GL_COLOR_TABLE_BLUE_SIZE, GL_COLOR_TABLE_ALPHA_SIZE, GL_COLOR_TABLE_LUMINANCE_SIZE, or GL_COLOR_TABLE_INTENSITY_SIZE. </param>
             /// <param name="parameters"> A pointer to an array where the values of the parameter will be stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetColorTableParameter.xml" /></remarks>
-            public static void GetColorTableParameterfv(ColorTableTarget target, ColorTableParameterPName pname, float* parameters) => GLPointers._GetColorTableParameterfv_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterfv(ColorTableTarget target, GetColorTableParameterPNameSGI pname, float* parameters) => GLPointers._GetColorTableParameterfv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Get color lookup table parameters. </summary>
             /// <param name="target"> The target color table. Must be GL_COLOR_TABLE, GL_POST_CONVOLUTION_COLOR_TABLE, GL_POST_COLOR_MATRIX_COLOR_TABLE, GL_PROXY_COLOR_TABLE, GL_PROXY_POST_CONVOLUTION_COLOR_TABLE, or GL_PROXY_POST_COLOR_MATRIX_COLOR_TABLE. </param>
             /// <param name="pname"> The symbolic name of a color lookup table parameter. Must be one of GL_COLOR_TABLE_BIAS, GL_COLOR_TABLE_SCALE, GL_COLOR_TABLE_FORMAT, GL_COLOR_TABLE_WIDTH, GL_COLOR_TABLE_RED_SIZE, GL_COLOR_TABLE_GREEN_SIZE, GL_COLOR_TABLE_BLUE_SIZE, GL_COLOR_TABLE_ALPHA_SIZE, GL_COLOR_TABLE_LUMINANCE_SIZE, or GL_COLOR_TABLE_INTENSITY_SIZE. </param>
             /// <param name="parameters"> A pointer to an array where the values of the parameter will be stored. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetColorTableParameter.xml" /></remarks>
-            public static void GetColorTableParameteriv(ColorTableTarget target, ColorTableParameterPName pname, int* parameters) => GLPointers._GetColorTableParameteriv_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameteriv(ColorTableTarget target, GetColorTableParameterPNameSGI pname, int* parameters) => GLPointers._GetColorTableParameteriv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Respecify a portion of a color table. </summary>
             /// <param name="target"> Must be one of GL_COLOR_TABLE, GL_POST_CONVOLUTION_COLOR_TABLE, or GL_POST_COLOR_MATRIX_COLOR_TABLE. </param>
@@ -8886,22 +8886,22 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="pname"> The parameter to be set. Must be GL_CONVOLUTION_BORDER_MODE. </param>
             /// <param name="parameters"> The parameter value. Must be one of GL_REDUCE, GL_CONSTANT_BORDER, GL_REPLICATE_BORDER. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glConvolutionParameter.xml" /></remarks>
-            public static void ConvolutionParameterf(ConvolutionTarget target, ConvolutionParameter pname, float parameters) => GLPointers._ConvolutionParameterf_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterf(ConvolutionTarget target, ConvolutionParameterEXT pname, float parameters) => GLPointers._ConvolutionParameterf_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterfv(ConvolutionTarget target, ConvolutionParameter pname, float* parameters) => GLPointers._ConvolutionParameterfv_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterfv(ConvolutionTarget target, ConvolutionParameterEXT pname, float* parameters) => GLPointers._ConvolutionParameterfv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Set convolution parameters. </summary>
             /// <param name="target"> The target for the convolution parameter. Must be one of GL_CONVOLUTION_1D, GL_CONVOLUTION_2D, or GL_SEPARABLE_2D. </param>
             /// <param name="pname"> The parameter to be set. Must be GL_CONVOLUTION_BORDER_MODE. </param>
             /// <param name="parameters"> The parameter value. Must be one of GL_REDUCE, GL_CONSTANT_BORDER, GL_REPLICATE_BORDER. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glConvolutionParameter.xml" /></remarks>
-            public static void ConvolutionParameteri(ConvolutionTarget target, ConvolutionParameter pname, int parameters) => GLPointers._ConvolutionParameteri_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameteri(ConvolutionTarget target, ConvolutionParameterEXT pname, int parameters) => GLPointers._ConvolutionParameteri_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameteriv(ConvolutionTarget target, ConvolutionParameter pname, int* parameters) => GLPointers._ConvolutionParameteriv_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameteriv(ConvolutionTarget target, ConvolutionParameterEXT pname, int* parameters) => GLPointers._ConvolutionParameteriv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Copy pixels into a one-dimensional convolution filter. </summary>
             /// <param name="target"> Must be GL_CONVOLUTION_1D. </param>
@@ -8935,14 +8935,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="pname"> The parameter to be retrieved. Must be one of GL_CONVOLUTION_BORDER_MODE, GL_CONVOLUTION_BORDER_COLOR, GL_CONVOLUTION_FILTER_SCALE, GL_CONVOLUTION_FILTER_BIAS, GL_CONVOLUTION_FORMAT, GL_CONVOLUTION_WIDTH, GL_CONVOLUTION_HEIGHT, GL_MAX_CONVOLUTION_WIDTH, or GL_MAX_CONVOLUTION_HEIGHT. </param>
             /// <param name="parameters"> Pointer to storage for the parameters to be retrieved. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetConvolutionParameter.xml" /></remarks>
-            public static void GetConvolutionParameterfv(ConvolutionTarget target, ConvolutionParameter pname, float* parameters) => GLPointers._GetConvolutionParameterfv_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameterfv(ConvolutionTarget target, ConvolutionParameterEXT pname, float* parameters) => GLPointers._GetConvolutionParameterfv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Get convolution parameters. </summary>
             /// <param name="target"> The filter whose parameters are to be retrieved. Must be one of GL_CONVOLUTION_1D, GL_CONVOLUTION_2D, or GL_SEPARABLE_2D. </param>
             /// <param name="pname"> The parameter to be retrieved. Must be one of GL_CONVOLUTION_BORDER_MODE, GL_CONVOLUTION_BORDER_COLOR, GL_CONVOLUTION_FILTER_SCALE, GL_CONVOLUTION_FILTER_BIAS, GL_CONVOLUTION_FORMAT, GL_CONVOLUTION_WIDTH, GL_CONVOLUTION_HEIGHT, GL_MAX_CONVOLUTION_WIDTH, or GL_MAX_CONVOLUTION_HEIGHT. </param>
             /// <param name="parameters"> Pointer to storage for the parameters to be retrieved. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glGetConvolutionParameter.xml" /></remarks>
-            public static void GetConvolutionParameteriv(ConvolutionTarget target, ConvolutionParameter pname, int* parameters) => GLPointers._GetConvolutionParameteriv_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameteriv(ConvolutionTarget target, ConvolutionParameterEXT pname, int* parameters) => GLPointers._GetConvolutionParameteriv_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_imaging]</b> Get separable convolution filter kernel images. </summary>
             /// <param name="target"> The separable filter to be retrieved. Must be GL_SEPARABLE_2D. </param>
@@ -10087,7 +10087,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_ARB_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static GLHandleARB GetHandleARB(ContainerType pname) => (GLHandleARB) GLPointers._GetHandleARB_fnptr((uint)pname);
+            public static GLHandleARB GetHandleARB(All pname) => (GLHandleARB) GLPointers._GetHandleARB_fnptr((uint)pname);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -10553,14 +10553,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
             /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryObjecti64v(QueryHandle id, QueryObjectParameterName pname, long* parameters) => GLPointers._GetQueryObjecti64v_fnptr((int)id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_timer_query]</b> Return parameters of a query object. </summary>
             /// <param name="id"> Specifies the name of a query object. </param>
-            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT, GL_QUERY_RESULT_AVAILABLE, GL_QUERY_RESULT_NO_WAIT, or GL_QUERY_TARGET. </param>
+            /// <param name="pname"> Specifies the symbolic name of a query object parameter. Accepted values are GL_QUERY_RESULT or GL_QUERY_RESULT_AVAILABLE. </param>
             /// <param name="parameters"> If a buffer is bound to the GL_QUERY_RESULT_BUFFER target, then params is treated as an offset to a location within that buffer's data store to receive the result of the query. If no buffer is bound to GL_QUERY_RESULT_BUFFER, then params is treated as an address in client memory of a variable to receive the resulting data. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetQueryObject.xhtml" /></remarks>
             public static void GetQueryObjectui64v(QueryHandle id, QueryObjectParameterName pname, ulong* parameters) => GLPointers._GetQueryObjectui64v_fnptr((int)id, (uint)pname, parameters);
@@ -11522,27 +11522,27 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorFragmentOp1ATI(FragmentOp1ATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => GLPointers._ColorFragmentOp1ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod);
+            public static void ColorFragmentOp1ATI(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => GLPointers._ColorFragmentOp1ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorFragmentOp2ATI(FragmentOp2ATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => GLPointers._ColorFragmentOp2ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
+            public static void ColorFragmentOp2ATI(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => GLPointers._ColorFragmentOp2ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorFragmentOp3ATI(FragmentOp3ATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => GLPointers._ColorFragmentOp3ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
+            public static void ColorFragmentOp3ATI(FragmentOpATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => GLPointers._ColorFragmentOp3ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void AlphaFragmentOp1ATI(FragmentOp1ATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => GLPointers._AlphaFragmentOp1ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod);
+            public static void AlphaFragmentOp1ATI(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => GLPointers._AlphaFragmentOp1ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void AlphaFragmentOp2ATI(FragmentOp2ATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => GLPointers._AlphaFragmentOp2ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
+            public static void AlphaFragmentOp2ATI(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => GLPointers._AlphaFragmentOp2ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void AlphaFragmentOp3ATI(FragmentOp3ATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => GLPointers._AlphaFragmentOp3ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
+            public static void AlphaFragmentOp3ATI(FragmentOpATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => GLPointers._AlphaFragmentOp3ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -11566,7 +11566,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_ATI_separate_stencil]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void StencilOpSeparateATI(TriangleFace face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparateATI_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
+            public static void StencilOpSeparateATI(StencilFaceDirection face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparateATI_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
             
             /// <summary> <b>[requires: GL_ATI_separate_stencil]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -11877,19 +11877,19 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterfEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, float parameters) => GLPointers._ConvolutionParameterfEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterfEXT(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, float parameters) => GLPointers._ConvolutionParameterfEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, float* parameters) => GLPointers._ConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, float* parameters) => GLPointers._ConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameteriEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, int parameters) => GLPointers._ConvolutionParameteriEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameteriEXT(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int parameters) => GLPointers._ConvolutionParameteriEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._ConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int* parameters) => GLPointers._ConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -11905,11 +11905,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, float* parameters) => GLPointers._GetConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, float* parameters) => GLPointers._GetConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._GetConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int* parameters) => GLPointers._GetConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -13393,7 +13393,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_index_material]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void IndexMaterialEXT(TriangleFace face, IndexMaterialParameterEXT mode) => GLPointers._IndexMaterialEXT_fnptr((uint)face, (uint)mode);
+            public static void IndexMaterialEXT(MaterialFace face, IndexMaterialParameterEXT mode) => GLPointers._IndexMaterialEXT_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_light_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -13405,7 +13405,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_light_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureMaterialEXT(TriangleFace face, MaterialParameter mode) => GLPointers._TextureMaterialEXT_fnptr((uint)face, (uint)mode);
+            public static void TextureMaterialEXT(MaterialFace face, MaterialParameter mode) => GLPointers._TextureMaterialEXT_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_memory_object | GL_EXT_semaphore]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -13521,11 +13521,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_paletted_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetColorTableParameterivEXT(ColorTableTarget target, ColorTableParameterPName pname, int* parameters) => GLPointers._GetColorTableParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterivEXT(ColorTableTarget target, GetColorTableParameterPNameSGI pname, int* parameters) => GLPointers._GetColorTableParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_paletted_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetColorTableParameterfvEXT(ColorTableTarget target, ColorTableParameterPName pname, float* parameters) => GLPointers._GetColorTableParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterfvEXT(ColorTableTarget target, GetColorTableParameterPNameSGI pname, float* parameters) => GLPointers._GetColorTableParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_pixel_transform]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -13753,7 +13753,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_stencil_two_side]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ActiveStencilFaceEXT(TriangleFace face) => GLPointers._ActiveStencilFaceEXT_fnptr((uint)face);
+            public static void ActiveStencilFaceEXT(StencilFaceDirection face) => GLPointers._ActiveStencilFaceEXT_fnptr((uint)face);
             
             /// <summary> <b>[requires: GL_EXT_subtexture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -13873,7 +13873,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TransformFeedbackVaryingsEXT(ProgramHandle program, int count, byte** varyings, TransformFeedbackBufferMode bufferMode) => GLPointers._TransformFeedbackVaryingsEXT_fnptr((int)program, count, varyings, (uint)bufferMode);
+            public static void TransformFeedbackVaryingsEXT(ProgramHandle program, int count, byte** varyings, All bufferMode) => GLPointers._TransformFeedbackVaryingsEXT_fnptr((int)program, count, varyings, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -14065,7 +14065,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static uint BindMaterialParameterEXT(TriangleFace face, MaterialParameter value) => GLPointers._BindMaterialParameterEXT_fnptr((uint)face, (uint)value);
+            public static uint BindMaterialParameterEXT(MaterialFace face, MaterialParameter value) => GLPointers._BindMaterialParameterEXT_fnptr((uint)face, (uint)value);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -14268,7 +14268,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_NV_command_list]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static uint GetCommandHeaderNV(CommandOpcodesNV tokenID, uint size) => GLPointers._GetCommandHeaderNV_fnptr((uint)tokenID, size);
+            public static uint GetCommandHeaderNV(All tokenID, uint size) => GLPointers._GetCommandHeaderNV_fnptr((uint)tokenID, size);
             
             /// <summary> <b>[requires: GL_NV_command_list]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -15668,7 +15668,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_NV_transform_feedback]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TransformFeedbackVaryingsNV(ProgramHandle program, int count, int* locations, TransformFeedbackBufferMode bufferMode) => GLPointers._TransformFeedbackVaryingsNV_fnptr((int)program, count, locations, (uint)bufferMode);
+            public static void TransformFeedbackVaryingsNV(ProgramHandle program, int count, int* locations, All bufferMode) => GLPointers._TransformFeedbackVaryingsNV_fnptr((int)program, count, locations, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17007,11 +17007,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void MaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._MaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxOES(MaterialFace face, MaterialParameter pname, int param) => GLPointers._MaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void MaterialxvOES(TriangleFace face, MaterialParameter pname, int* param) => GLPointers._MaterialxvOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxvOES(MaterialFace face, MaterialParameter pname, int* param) => GLPointers._MaterialxvOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17075,7 +17075,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetMaterialxvOES(MaterialFace face, MaterialParameter pname, int* parameters) => GLPointers._GetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17115,11 +17115,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterxOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int param) => GLPointers._ConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
+            public static void ConvolutionParameterxOES(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int param) => GLPointers._ConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._ConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int* parameters) => GLPointers._ConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17159,7 +17159,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetMaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._GetMaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void GetMaterialxOES(MaterialFace face, MaterialParameter pname, int param) => GLPointers._GetMaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17519,7 +17519,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FragmentColorMaterialSGIX(TriangleFace face, MaterialParameter mode) => GLPointers._FragmentColorMaterialSGIX_fnptr((uint)face, (uint)mode);
+            public static void FragmentColorMaterialSGIX(MaterialFace face, MaterialParameter mode) => GLPointers._FragmentColorMaterialSGIX_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17555,19 +17555,19 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FragmentMaterialfSGIX(TriangleFace face, MaterialParameter pname, float param) => GLPointers._FragmentMaterialfSGIX_fnptr((uint)face, (uint)pname, param);
+            public static void FragmentMaterialfSGIX(MaterialFace face, MaterialParameter pname, float param) => GLPointers._FragmentMaterialfSGIX_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._FragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void FragmentMaterialfvSGIX(MaterialFace face, MaterialParameter pname, float* parameters) => GLPointers._FragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FragmentMaterialiSGIX(TriangleFace face, MaterialParameter pname, int param) => GLPointers._FragmentMaterialiSGIX_fnptr((uint)face, (uint)pname, param);
+            public static void FragmentMaterialiSGIX(MaterialFace face, MaterialParameter pname, int param) => GLPointers._FragmentMaterialiSGIX_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._FragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void FragmentMaterialivSGIX(MaterialFace face, MaterialParameter pname, int* parameters) => GLPointers._FragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17579,11 +17579,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetFragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._GetFragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetFragmentMaterialfvSGIX(MaterialFace face, MaterialParameter pname, float* parameters) => GLPointers._GetFragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetFragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._GetFragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetFragmentMaterialivSGIX(MaterialFace face, MaterialParameter pname, int* parameters) => GLPointers._GetFragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17698,11 +17698,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_SGI_color_table]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, float* parameters) => GLPointers._ColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPNameSGI pname, float* parameters) => GLPointers._ColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGI_color_table]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, int* parameters) => GLPointers._ColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void ColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPNameSGI pname, int* parameters) => GLPointers._ColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGI_color_table]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -17714,11 +17714,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             
             /// <summary> <b>[requires: GL_SGI_color_table]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, float* parameters) => GLPointers._GetColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterfvSGI(ColorTableTargetSGI target, GetColorTableParameterPNameSGI pname, float* parameters) => GLPointers._GetColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGI_color_table]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, int* parameters) => GLPointers._GetColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterivSGI(ColorTableTargetSGI target, GetColorTableParameterPNameSGI pname, int* parameters) => GLPointers._GetColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
             
         }
         public static unsafe partial class SUNX

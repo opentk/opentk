@@ -411,8 +411,10 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 writer.WriteLineNoTabs("#pragma warning disable CA1069 // Enums values should not be duplicated");
+                writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
                 WriteEnumGroups(writer, enumGroups);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
+                writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
             }
         }
 
