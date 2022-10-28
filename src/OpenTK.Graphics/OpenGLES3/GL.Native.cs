@@ -200,7 +200,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <summary> <b>[requires: v2.0]</b> Specify whether front- or back-facing polygons can be culled. </summary>
         /// <param name="mode"> Specifies whether front- or back-facing polygons are candidates for culling. Symbolic constants GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK are accepted. The initial value is GL_BACK. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglCullFace.xhtml" /></remarks>
-        public static void CullFace(CullFaceMode mode) => GLPointers._CullFace_fnptr((uint)mode);
+        public static void CullFace(TriangleFace mode) => GLPointers._CullFace_fnptr((uint)mode);
         
         /// <summary> <b>[requires: v2.0]</b> Delete named buffer objects. </summary>
         /// <param name="n"> Specifies the number of buffer objects to be deleted. </param>
@@ -668,7 +668,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="reference"> Specifies the reference value for the stencil test. Stencil comparison operations and queries of ref clamp its value to the range 0 2 n - 1 , where n is the number of bitplanes in the stencil buffer. The initial value is 0. </param>
         /// <param name="mask"> Specifies a mask that is ANDed with both the reference value and the stored stencil value when the test is done. The initial value is all 1's. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilFuncSeparate.xhtml" /></remarks>
-        public static void StencilFuncSeparate(StencilFaceDirection face, StencilFunction func, int reference, uint mask) => GLPointers._StencilFuncSeparate_fnptr((uint)face, (uint)func, reference, mask);
+        public static void StencilFuncSeparate(TriangleFace face, StencilFunction func, int reference, uint mask) => GLPointers._StencilFuncSeparate_fnptr((uint)face, (uint)func, reference, mask);
         
         /// <summary> <b>[requires: v2.0]</b> Control the front and back writing of individual bits in the stencil planes. </summary>
         /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. </param>
@@ -679,7 +679,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="face"> Specifies whether the front and/or back stencil writemask is updated. Three symbolic constants are valid: GL_FRONT, GL_BACK, and GL_FRONT_AND_BACK. </param>
         /// <param name="mask"> Specifies a bit mask to enable and disable writing of individual bits in the stencil planes. Initially, the mask is all 1's. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilMaskSeparate.xhtml" /></remarks>
-        public static void StencilMaskSeparate(StencilFaceDirection face, uint mask) => GLPointers._StencilMaskSeparate_fnptr((uint)face, mask);
+        public static void StencilMaskSeparate(TriangleFace face, uint mask) => GLPointers._StencilMaskSeparate_fnptr((uint)face, mask);
         
         /// <summary> <b>[requires: v2.0]</b> Set front and back stencil test actions. </summary>
         /// <param name="sfail"> Specifies the action to take when the stencil test fails. Eight symbolic constants are accepted: GL_KEEP, GL_ZERO, GL_REPLACE, GL_INCR, GL_INCR_WRAP, GL_DECR, GL_DECR_WRAP, and GL_INVERT. The initial value is GL_KEEP. </param>
@@ -694,7 +694,7 @@ namespace OpenTK.Graphics.OpenGLES3
         /// <param name="dpfail"> Specifies the stencil action when the stencil test passes, but the depth test fails. dpfail accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <param name="dppass"> Specifies the stencil action when both the stencil test and the depth test pass, or when the stencil test passes and either there is no depth buffer or depth testing is not enabled. dppass accepts the same symbolic constants as sfail. The initial value is GL_KEEP. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglStencilOpSeparate.xhtml" /></remarks>
-        public static void StencilOpSeparate(StencilFaceDirection face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparate_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
+        public static void StencilOpSeparate(TriangleFace face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._StencilOpSeparate_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
         
         /// <summary> <b>[requires: v2.0]</b> Specify a two-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, or GL_TEXTURE_CUBE_MAP_NEGATIVE_Z. </param>
@@ -2962,6 +2962,22 @@ namespace OpenTK.Graphics.OpenGLES3
             /// <remarks><see href="" /></remarks>
             public static void NamedBufferStorageExternalEXT(BufferHandle buffer, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._NamedBufferStorageExternalEXT_fnptr((int)buffer, offset, size, clientBuffer, (uint)flags);
             
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void GetFragmentShadingRatesEXT(int samples, int maxCount, int* count, ShadingRate* shadingRates) => GLPointers._GetFragmentShadingRatesEXT_fnptr(samples, maxCount, count, (uint*)shadingRates);
+            
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void ShadingRateEXT(ShadingRate rate) => GLPointers._ShadingRateEXT_fnptr((uint)rate);
+            
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void ShadingRateCombinerOpsEXT(ShadingRateCombinerOp combinerOp0, ShadingRateCombinerOp combinerOp1) => GLPointers._ShadingRateCombinerOpsEXT_fnptr((uint)combinerOp0, (uint)combinerOp1);
+            
+            /// <summary> <b>[requires: GL_EXT_fragment_shading_rate]</b>  </summary>
+            /// <remarks><see href="" /></remarks>
+            public static void FramebufferShadingRateEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int baseLayer, int numLayers, int texelWidth, int texelHeight) => GLPointers._FramebufferShadingRateEXT_fnptr((uint)target, (uint)attachment, (int)texture, baseLayer, numLayers, texelWidth, texelHeight);
+            
             /// <summary> <b>[requires: GL_EXT_geometry_shader]</b>  </summary>
             /// <remarks><see href="" /></remarks>
             public static void FramebufferTextureEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureHandle texture, int level) => GLPointers._FramebufferTextureEXT_fnptr((uint)target, (uint)attachment, (int)texture, level);
@@ -4191,7 +4207,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_polygon_mode]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void PolygonModeNV(MaterialFace face, PolygonMode mode) => GLPointers._PolygonModeNV_fnptr((uint)face, (uint)mode);
+            public static void PolygonModeNV(TriangleFace face, PolygonMode mode) => GLPointers._PolygonModeNV_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_NV_read_buffer]</b>  </summary>
             /// <remarks><see href="" /></remarks>

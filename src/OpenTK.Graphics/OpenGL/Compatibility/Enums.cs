@@ -5237,16 +5237,20 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     {
         TextureStorageSparseBitAmd = 1,
     }
+    ///<summary>Used in <see cref="GL.ColorFragmentOp1ATI" />, <see cref="GL.ColorFragmentOp2ATI" />, <see cref="GL.ColorFragmentOp3ATI" /></summary>
     [Flags]
     public enum FragmentShaderDestMaskATI : uint
     {
+        None = 0,
         RedBitAti = 1,
         GreenBitAti = 2,
         BlueBitAti = 4,
     }
+    ///<summary>Used in <see cref="GL.AlphaFragmentOp1ATI" />, <see cref="GL.AlphaFragmentOp2ATI" />, <see cref="GL.AlphaFragmentOp3ATI" />, ...</summary>
     [Flags]
     public enum FragmentShaderDestModMaskATI : uint
     {
+        None = 0,
         _2xBitAti = 1,
         _4xBitAti = 2,
         _8xBitAti = 4,
@@ -5255,9 +5259,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         EighthBitAti = 32,
         SaturateBitAti = 64,
     }
+    ///<summary>Used in <see cref="GL.AlphaFragmentOp1ATI" />, <see cref="GL.AlphaFragmentOp2ATI" />, <see cref="GL.AlphaFragmentOp3ATI" />, ...</summary>
     [Flags]
     public enum FragmentShaderColorModMaskATI : uint
     {
+        _2xBitAti = 1,
         CompBitAti = 2,
         NegateBitAti = 4,
         BiasBitAti = 8,
@@ -5298,12 +5304,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         FontHasKerningBitNv = 268435456,
         FontNumGlyphIndicesBitNv = 536870912,
     }
+    ///<summary>Used in <see cref="GL.GetPerfQueryInfoINTEL" /></summary>
     [Flags]
     public enum PerformanceQueryCapsMaskINTEL : uint
     {
         PerfquerySingleContextIntel = 0,
         PerfqueryGlobalContextIntel = 1,
     }
+    ///<summary>Used in <see cref="GL.HintPGI" /></summary>
     [Flags]
     public enum VertexHintsMaskPGI : uint
     {
@@ -5333,6 +5341,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         TextureDeformationBitSgix = 1,
         GeometryDeformationBitSgix = 2,
     }
+    ///<summary>Used in <see cref="GL.GetCommandHeaderNV" /></summary>
     public enum CommandOpcodesNV : uint
     {
         TerminateSequenceCommandNv = 0,
@@ -5410,6 +5419,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ConicCurveToNv = 26,
         RelativeConicCurveToNv = 27,
     }
+    ///<summary>Used in <see cref="GL.TransformFeedbackVaryingsNV" /></summary>
     public enum TransformFeedbackTokenNV : uint
     {
         NextBufferNv = 4294967294,
@@ -5418,6 +5428,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         SkipComponents2Nv = 4294967291,
         SkipComponents1Nv = 4294967290,
     }
+    ///<summary>Used in <see cref="GL.ReplacementCodeuiColor3fVertex3fSUN" />, <see cref="GL.ReplacementCodeuiColor3fVertex3fvSUN" />, <see cref="GL.ReplacementCodeuiColor4fNormal3fVertex3fSUN" />, ...</summary>
     public enum TriangleListSUN : uint
     {
         RestartSun = 1,
@@ -5512,6 +5523,89 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         OneMinusSrc1Color = 35066,
         OneMinusSrc1Alpha = 35067,
     }
+    ///<summary>Used in <see cref="GL.AlphaFragmentOp1ATI" />, <see cref="GL.AlphaFragmentOp2ATI" />, <see cref="GL.AlphaFragmentOp3ATI" />, ...</summary>
+    public enum FragmentShaderGenericSourceATI : uint
+    {
+        Zero = 0,
+        One = 1,
+        PrimaryColor = 34167,
+        PrimaryColorArb = 34167,
+        Reg0Ati = 35105,
+        Reg1Ati = 35106,
+        Reg2Ati = 35107,
+        Reg3Ati = 35108,
+        Reg4Ati = 35109,
+        Reg5Ati = 35110,
+        Reg6Ati = 35111,
+        Reg7Ati = 35112,
+        Reg8Ati = 35113,
+        Reg9Ati = 35114,
+        Reg10Ati = 35115,
+        Reg11Ati = 35116,
+        Reg12Ati = 35117,
+        Reg13Ati = 35118,
+        Reg14Ati = 35119,
+        Reg15Ati = 35120,
+        Reg16Ati = 35121,
+        Reg17Ati = 35122,
+        Reg18Ati = 35123,
+        Reg19Ati = 35124,
+        Reg20Ati = 35125,
+        Reg21Ati = 35126,
+        Reg22Ati = 35127,
+        Reg23Ati = 35128,
+        Reg24Ati = 35129,
+        Reg25Ati = 35130,
+        Reg26Ati = 35131,
+        Reg27Ati = 35132,
+        Reg28Ati = 35133,
+        Reg29Ati = 35134,
+        Reg30Ati = 35135,
+        Reg31Ati = 35136,
+        Con0Ati = 35137,
+        Con1Ati = 35138,
+        Con2Ati = 35139,
+        Con3Ati = 35140,
+        Con4Ati = 35141,
+        Con5Ati = 35142,
+        Con6Ati = 35143,
+        Con7Ati = 35144,
+        Con8Ati = 35145,
+        Con9Ati = 35146,
+        Con10Ati = 35147,
+        Con11Ati = 35148,
+        Con12Ati = 35149,
+        Con13Ati = 35150,
+        Con14Ati = 35151,
+        Con15Ati = 35152,
+        Con16Ati = 35153,
+        Con17Ati = 35154,
+        Con18Ati = 35155,
+        Con19Ati = 35156,
+        Con20Ati = 35157,
+        Con21Ati = 35158,
+        Con22Ati = 35159,
+        Con23Ati = 35160,
+        Con24Ati = 35161,
+        Con25Ati = 35162,
+        Con26Ati = 35163,
+        Con27Ati = 35164,
+        Con28Ati = 35165,
+        Con29Ati = 35166,
+        Con30Ati = 35167,
+        Con31Ati = 35168,
+        SecondaryInterpolatorAti = 35181,
+        PrimaryColorExt = 34167,
+    }
+    ///<summary>Used in <see cref="GL.AlphaFragmentOp1ATI" />, <see cref="GL.AlphaFragmentOp2ATI" />, <see cref="GL.AlphaFragmentOp3ATI" />, ...</summary>
+    public enum FragmentShaderValueRepATI : uint
+    {
+        None = 0,
+        Red = 6403,
+        Green = 6404,
+        Blue = 6405,
+        Alpha = 6406,
+    }
     ///<summary>Used in <see cref="GL.FenceSync" />, <see cref="GL.WaitSync" /></summary>
     public enum SyncBehaviorFlags : uint
     {
@@ -5598,13 +5692,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ColorAttachment30 = 36094,
         ColorAttachment31 = 36095,
     }
-    public enum PixelTexGenMode : uint
+    ///<summary>Used in <see cref="GL.PixelTexGenSGIX" /></summary>
+    public enum PixelTexGenModeSGIX : uint
     {
         None = 0,
+        Alpha = 6406,
         Rgb = 6407,
         Rgba = 6408,
-        Luminance = 6409,
-        LuminanceAlpha = 6410,
     }
     ///<summary>Used in <see cref="GL.FramebufferReadBufferEXT" />, <see cref="GL.ReadBuffer" /></summary>
     public enum ReadBufferMode : uint
@@ -5752,6 +5846,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ReplaceExt = 32866,
         TextureEnvBiasSgix = 32958,
     }
+    ///<summary>Used in <see cref="GL.LightEnviSGIX" /></summary>
     public enum LightEnvModeSGIX : uint
     {
         Replace = 7681,
@@ -5806,28 +5901,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Gequal = 518,
         Always = 519,
     }
-    public enum ColorMaterialFace : uint
-    {
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
-    }
-    ///<summary>Used in <see cref="GL.CullFace" /></summary>
-    public enum CullFaceMode : uint
-    {
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
-    }
-    ///<summary>Used in <see cref="GL.ActiveStencilFaceEXT" />, <see cref="GL.StencilFuncSeparate" />, <see cref="GL.StencilMaskSeparate" />, ...</summary>
-    public enum StencilFaceDirection : uint
-    {
-        Front = 1028,
-        Back = 1029,
-        FrontAndBack = 1032,
-    }
-    ///<summary>Used in <see cref="GL.BindMaterialParameterEXT" />, <see cref="GL.ColorMaterial" />, <see cref="GL.FragmentColorMaterialSGIX" />, ...</summary>
-    public enum MaterialFace : uint
+    ///<summary>Used in <see cref="GL.ActiveStencilFaceEXT" />, <see cref="GL.BindMaterialParameterEXT" />, <see cref="GL.ColorMaterial" />, ...</summary>
+    public enum TriangleFace : uint
     {
         Front = 1028,
         Back = 1029,
@@ -6153,7 +6228,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         BlendSrcAlpha = 32971,
         PointFadeThresholdSize = 33064,
         MaxTextureLodBias = 34045,
+        PointSizeMin = 33062,
+        PointSizeMax = 33063,
+        PointDistanceAttenuation = 33065,
         BlendColor = 32773,
+        BlendEquation = 32777,
         ArrayBufferBinding = 34964,
         ElementArrayBufferBinding = 34965,
         BlendEquationRgb = 32777,
@@ -6296,8 +6375,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         VertexBindingStride = 33496,
         MaxVertexAttribRelativeOffset = 33497,
         MaxVertexAttribBindings = 33498,
+        PointSizeMinArb = 33062,
+        PointSizeMaxArb = 33063,
+        PointFadeThresholdSizeArb = 33064,
+        PointDistanceAttenuationArb = 33065,
         TextureBindingCubeMapArb = 34068,
+        MaxCubeMapTextureSizeArb = 34076,
         TextureBindingRectangleArb = 34038,
+        FragmentShaderAti = 35104,
         BlendColorExt = 32773,
         BlendEquationExt = 32777,
         PackCmykHintExt = 32782,
@@ -6321,6 +6406,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         DriverUuidExt = 38296,
         DeviceLuidExt = 38297,
         DeviceNodeMaskExt = 38298,
+        PointSizeMinExt = 33062,
+        PointSizeMaxExt = 33063,
+        PointFadeThresholdSizeExt = 33064,
+        DistanceAttenuationExt = 33065,
         PolygonOffsetBiasExt = 32825,
         RescaleNormalExt = 32826,
         SharedTexturePaletteExt = 33275,
@@ -6331,6 +6420,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Texture3dExt = 32879,
         Max3dTextureSizeExt = 32883,
         TextureBindingCubeMapExt = 34068,
+        MaxCubeMapTextureSizeExt = 34076,
         Texture3dBindingExt = 32874,
         MaxTimelineSemaphoreValueDifferenceNv = 38326,
         VertexArrayCountExt = 32893,
@@ -6703,19 +6793,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         PixelMapBToB = 3192,
         PixelMapAToA = 3193,
     }
-    public enum GetPixelMap : uint
-    {
-        PixelMapIToI = 3184,
-        PixelMapSToS = 3185,
-        PixelMapIToR = 3186,
-        PixelMapIToG = 3187,
-        PixelMapIToB = 3188,
-        PixelMapIToA = 3189,
-        PixelMapRToR = 3190,
-        PixelMapGToG = 3191,
-        PixelMapBToB = 3192,
-        PixelMapAToA = 3193,
-    }
     ///<summary>Used in <see cref="GL.PixelStoref" />, <see cref="GL.PixelStorei" />, <see cref="GL.PixelStorex" /></summary>
     public enum PixelStoreParameter : uint
     {
@@ -6882,6 +6959,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         TextureCubeMapArray = 36873,
         ProxyTextureCubeMapArray = 36875,
         TextureCubeMapArb = 34067,
+        TextureCubeMapPositiveXArb = 34069,
+        TextureCubeMapNegativeXArb = 34070,
+        TextureCubeMapPositiveYArb = 34071,
+        TextureCubeMapNegativeYArb = 34072,
+        TextureCubeMapPositiveZArb = 34073,
+        TextureCubeMapNegativeZArb = 34074,
         ProxyTextureCubeMapArb = 34075,
         TextureCubeMapArrayArb = 36873,
         ProxyTextureCubeMapArrayArb = 36875,
@@ -6894,6 +6977,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ProxyTexture1dArrayExt = 35865,
         ProxyTexture2dArrayExt = 35867,
         TextureCubeMapExt = 34067,
+        TextureCubeMapPositiveXExt = 34069,
+        TextureCubeMapNegativeXExt = 34070,
+        TextureCubeMapPositiveYExt = 34071,
+        TextureCubeMapNegativeYExt = 34072,
+        TextureCubeMapPositiveZExt = 34073,
+        TextureCubeMapNegativeZExt = 34074,
         ProxyTextureCubeMapExt = 34075,
         TextureRectangleNv = 34037,
         ProxyTextureRectangleNv = 34039,
@@ -6963,6 +7052,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         TextureDepthExt = 32881,
         TextureWrapRExt = 32882,
         TexturePriorityExt = 32870,
+        TextureMemoryLayoutIntel = 33791,
         DetailTextureLevelSgis = 32922,
         DetailTextureModeSgis = 32923,
         DetailTextureFuncPointsSgis = 32924,
@@ -7018,8 +7108,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         TextureIntensitySize = 32865,
         TexturePriority = 32870,
         TextureResident = 32871,
+        NormalMap = 34065,
+        ReflectionMap = 34066,
+        NormalMapArb = 34065,
+        ReflectionMapArb = 34066,
         TextureDepthExt = 32881,
         TextureWrapRExt = 32882,
+        NormalMapExt = 34065,
+        ReflectionMapExt = 34066,
+        NormalMapNv = 34065,
+        ReflectionMapNv = 34066,
         DetailTextureLevelSgis = 32922,
         DetailTextureModeSgis = 32923,
         DetailTextureFuncPointsSgis = 32924,
@@ -7242,11 +7340,31 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         UnsignedShort5551 = 32820,
         UnsignedInt8888 = 32821,
         UnsignedInt1010102 = 32822,
+        UnsignedByte233Rev = 33634,
+        UnsignedShort565 = 33635,
+        UnsignedShort565Rev = 33636,
+        UnsignedShort4444Rev = 33637,
+        UnsignedShort1555Rev = 33638,
+        UnsignedInt8888Rev = 33639,
+        UnsignedInt2101010Rev = 33640,
+        UnsignedInt10f11f11fRev = 35899,
+        UnsignedInt5999Rev = 35902,
+        Float32UnsignedInt248Rev = 36269,
+        UnsignedInt248 = 34042,
+        HalfFloat = 5131,
+        HalfApple = 5131,
+        HalfFloatArb = 5131,
+        UnsignedInt248Ext = 34042,
+        UnsignedInt10f11f11fRevExt = 35899,
         UnsignedByte332Ext = 32818,
         UnsignedShort4444Ext = 32819,
         UnsignedShort5551Ext = 32820,
         UnsignedInt8888Ext = 32821,
         UnsignedInt1010102Ext = 32822,
+        UnsignedInt5999RevExt = 35902,
+        Float32UnsignedInt248RevNv = 36269,
+        HalfFloatNv = 5131,
+        UnsignedInt248Nv = 34042,
     }
     ///<summary>Used in <see cref="GL.VertexArrayAttribFormat" />, <see cref="GL.VertexArrayVertexAttribFormatEXT" />, <see cref="GL.VertexArrayVertexAttribIOffsetEXT" />, ...</summary>
     public enum VertexAttribType : uint
@@ -7382,6 +7500,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Rg = 33319,
         RgInteger = 33320,
         AbgrExt = 32768,
+        BgrExt = 32992,
+        BgraExt = 32993,
         CmykExt = 32780,
         CmykaExt = 32781,
         Ycrcb422Sgix = 33211,
@@ -7612,115 +7732,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         DoubleMat3x4 = 36684,
         DoubleMat4x2 = 36685,
         DoubleMat4x3 = 36686,
-    }
-    public enum GlslTypeToken : uint
-    {
-        Int = 5124,
-        UnsignedInt = 5125,
-        Float = 5126,
-        Double = 5130,
-        FloatVec2 = 35664,
-        FloatVec3 = 35665,
-        FloatVec4 = 35666,
-        IntVec2 = 35667,
-        IntVec3 = 35668,
-        IntVec4 = 35669,
-        Bool = 35670,
-        BoolVec2 = 35671,
-        BoolVec3 = 35672,
-        BoolVec4 = 35673,
-        FloatMat2 = 35674,
-        FloatMat3 = 35675,
-        FloatMat4 = 35676,
-        Sampler1d = 35677,
-        Sampler2d = 35678,
-        Sampler3d = 35679,
-        SamplerCube = 35680,
-        Sampler1dShadow = 35681,
-        Sampler2dShadow = 35682,
-        FloatMat2x3 = 35685,
-        FloatMat2x4 = 35686,
-        FloatMat3x2 = 35687,
-        FloatMat3x4 = 35688,
-        FloatMat4x2 = 35689,
-        FloatMat4x3 = 35690,
-        Sampler1dArray = 36288,
-        Sampler2dArray = 36289,
-        Sampler1dArrayShadow = 36291,
-        Sampler2dArrayShadow = 36292,
-        SamplerCubeShadow = 36293,
-        UnsignedIntVec2 = 36294,
-        UnsignedIntVec3 = 36295,
-        UnsignedIntVec4 = 36296,
-        IntSampler1d = 36297,
-        IntSampler2d = 36298,
-        IntSampler3d = 36299,
-        IntSamplerCube = 36300,
-        IntSampler1dArray = 36302,
-        IntSampler2dArray = 36303,
-        UnsignedIntSampler1d = 36305,
-        UnsignedIntSampler2d = 36306,
-        UnsignedIntSampler3d = 36307,
-        UnsignedIntSamplerCube = 36308,
-        UnsignedIntSampler1dArray = 36310,
-        UnsignedIntSampler2dArray = 36311,
-        Sampler2dRect = 35683,
-        Sampler2dRectShadow = 35684,
-        SamplerBuffer = 36290,
-        IntSampler2dRect = 36301,
-        IntSamplerBuffer = 36304,
-        UnsignedIntSampler2dRect = 36309,
-        UnsignedIntSamplerBuffer = 36312,
-        Sampler2dMultisample = 37128,
-        IntSampler2dMultisample = 37129,
-        UnsignedIntSampler2dMultisample = 37130,
-        Sampler2dMultisampleArray = 37131,
-        IntSampler2dMultisampleArray = 37132,
-        UnsignedIntSampler2dMultisampleArray = 37133,
-        SamplerCubeMapArray = 36876,
-        SamplerCubeMapArrayShadow = 36877,
-        IntSamplerCubeMapArray = 36878,
-        UnsignedIntSamplerCubeMapArray = 36879,
-        DoubleVec2 = 36860,
-        DoubleVec3 = 36861,
-        DoubleVec4 = 36862,
-        DoubleMat2 = 36678,
-        DoubleMat3 = 36679,
-        DoubleMat4 = 36680,
-        UnsignedIntAtomicCounter = 37595,
-        Image1d = 36940,
-        Image2d = 36941,
-        Image3d = 36942,
-        Image2dRect = 36943,
-        ImageCube = 36944,
-        ImageBuffer = 36945,
-        Image1dArray = 36946,
-        Image2dArray = 36947,
-        ImageCubeMapArray = 36948,
-        Image2dMultisample = 36949,
-        Image2dMultisampleArray = 36950,
-        IntImage1d = 36951,
-        IntImage2d = 36952,
-        IntImage3d = 36953,
-        IntImage2dRect = 36954,
-        IntImageCube = 36955,
-        IntImageBuffer = 36956,
-        IntImage1dArray = 36957,
-        IntImage2dArray = 36958,
-        IntImageCubeMapArray = 36959,
-        IntImage2dMultisample = 36960,
-        IntImage2dMultisampleArray = 36961,
-        UnsignedIntImage1d = 36962,
-        UnsignedIntImage2d = 36963,
-        UnsignedIntImage3d = 36964,
-        UnsignedIntImage2dRect = 36965,
-        UnsignedIntImageCube = 36966,
-        UnsignedIntImageBuffer = 36967,
-        UnsignedIntImage1dArray = 36968,
-        UnsignedIntImage2dArray = 36969,
-        UnsignedIntImageCubeMapArray = 36970,
-        UnsignedIntImage2dMultisample = 36971,
-        UnsignedIntImage2dMultisampleArray = 36972,
     }
     ///<summary>Used in <see cref="GL.GetMapControlPointsNV" />, <see cref="GL.MapControlPointsNV" /></summary>
     public enum MapTypeNV : uint
@@ -8256,6 +8267,80 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     {
         TextureEnvMode = 8704,
         TextureEnvColor = 8705,
+        Combine = 34160,
+        CombineRgb = 34161,
+        CombineAlpha = 34162,
+        Source0Rgb = 34176,
+        Source1Rgb = 34177,
+        Source2Rgb = 34178,
+        Source0Alpha = 34184,
+        Source1Alpha = 34185,
+        Source2Alpha = 34186,
+        Operand0Rgb = 34192,
+        Operand1Rgb = 34193,
+        Operand2Rgb = 34194,
+        Operand0Alpha = 34200,
+        Operand1Alpha = 34201,
+        Operand2Alpha = 34202,
+        RgbScale = 34163,
+        AddSigned = 34164,
+        Interpolate = 34165,
+        Constant = 34166,
+        PrimaryColor = 34167,
+        Previous = 34168,
+        Src1Alpha = 34185,
+        Src0Rgb = 34176,
+        Src1Rgb = 34177,
+        Src2Rgb = 34178,
+        Src0Alpha = 34184,
+        Src2Alpha = 34186,
+        CombineArb = 34160,
+        CombineRgbArb = 34161,
+        CombineAlphaArb = 34162,
+        Source0RgbArb = 34176,
+        Source1RgbArb = 34177,
+        Source2RgbArb = 34178,
+        Source0AlphaArb = 34184,
+        Source1AlphaArb = 34185,
+        Source2AlphaArb = 34186,
+        Operand0RgbArb = 34192,
+        Operand1RgbArb = 34193,
+        Operand2RgbArb = 34194,
+        Operand0AlphaArb = 34200,
+        Operand1AlphaArb = 34201,
+        Operand2AlphaArb = 34202,
+        RgbScaleArb = 34163,
+        AddSignedArb = 34164,
+        InterpolateArb = 34165,
+        ConstantArb = 34166,
+        PrimaryColorArb = 34167,
+        PreviousArb = 34168,
+        CombineExt = 34160,
+        CombineRgbExt = 34161,
+        CombineAlphaExt = 34162,
+        RgbScaleExt = 34163,
+        AddSignedExt = 34164,
+        InterpolateExt = 34165,
+        ConstantExt = 34166,
+        PrimaryColorExt = 34167,
+        PreviousExt = 34168,
+        Source0RgbExt = 34176,
+        Source1RgbExt = 34177,
+        Source2RgbExt = 34178,
+        Source0AlphaExt = 34184,
+        Source1AlphaExt = 34185,
+        Source2AlphaExt = 34186,
+        Operand0RgbExt = 34192,
+        Operand1RgbExt = 34193,
+        Operand2RgbExt = 34194,
+        Operand0AlphaExt = 34200,
+        Operand1AlphaExt = 34201,
+        Operand2AlphaExt = 34202,
+        ConstantNv = 34166,
+        Source3RgbNv = 34179,
+        Source3AlphaNv = 34187,
+        Operand3RgbNv = 34195,
+        Operand3AlphaNv = 34203,
     }
     ///<summary>Used in <see cref="GL.GetMultiTexEnvfvEXT" />, <see cref="GL.GetMultiTexEnvivEXT" />, <see cref="GL.GetTexEnvfv" />, ...</summary>
     public enum TextureEnvTarget : uint
@@ -8692,7 +8777,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Separable2d = 32786,
         Separable2dExt = 32786,
     }
-    public enum GetConvolutionParameter : uint
+    ///<summary>Used in <see cref="GL.ConvolutionParameterf" />, <see cref="GL.ConvolutionParameterfEXT" />, <see cref="GL.ConvolutionParameterfv" />, ...</summary>
+    public enum ConvolutionParameter : uint
     {
         ConvolutionBorderMode = 32787,
         ConvolutionFilterScale = 32788,
@@ -8711,16 +8797,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ConvolutionHeightExt = 32793,
         MaxConvolutionWidthExt = 32794,
         MaxConvolutionHeightExt = 32795,
-    }
-    ///<summary>Used in <see cref="GL.ConvolutionParameterf" />, <see cref="GL.ConvolutionParameterfEXT" />, <see cref="GL.ConvolutionParameterfv" />, ...</summary>
-    public enum ConvolutionParameterEXT : uint
-    {
-        ConvolutionBorderMode = 32787,
-        ConvolutionFilterScale = 32788,
-        ConvolutionFilterBias = 32789,
-        ConvolutionBorderModeExt = 32787,
-        ConvolutionFilterScaleExt = 32788,
-        ConvolutionFilterBiasExt = 32789,
     }
     public enum ConvolutionBorderModeEXT : uint
     {
@@ -8912,67 +8988,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ProxyPostConvolutionColorTable = 32980,
         ProxyPostColorMatrixColorTable = 32981,
     }
-    ///<summary>Used in <see cref="GL.GetColorTableParameterfv" />, <see cref="GL.GetColorTableParameterfvEXT" />, <see cref="GL.GetColorTableParameterfvSGI" />, ...</summary>
-    public enum GetColorTableParameterPNameSGI : uint
-    {
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
-        ColorTableScaleSgi = 32982,
-        ColorTableBiasSgi = 32983,
-        ColorTableFormatSgi = 32984,
-        ColorTableWidthSgi = 32985,
-        ColorTableRedSizeSgi = 32986,
-        ColorTableGreenSizeSgi = 32987,
-        ColorTableBlueSizeSgi = 32988,
-        ColorTableAlphaSizeSgi = 32989,
-        ColorTableLuminanceSizeSgi = 32990,
-        ColorTableIntensitySizeSgi = 32991,
-    }
     ///<summary>Used in <see cref="GL.ColorTableParameterfv" />, <see cref="GL.ColorTableParameterfvSGI" />, <see cref="GL.ColorTableParameteriv" />, ...</summary>
-    public enum ColorTableParameterPNameSGI : uint
-    {
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
-        ColorTableScaleSgi = 32982,
-        ColorTableBiasSgi = 32983,
-        ColorTableFormatSgi = 32984,
-        ColorTableWidthSgi = 32985,
-        ColorTableRedSizeSgi = 32986,
-        ColorTableGreenSizeSgi = 32987,
-        ColorTableBlueSizeSgi = 32988,
-        ColorTableAlphaSizeSgi = 32989,
-        ColorTableLuminanceSizeSgi = 32990,
-        ColorTableIntensitySizeSgi = 32991,
-    }
-    public enum GetColorTableParameterPName : uint
-    {
-        ColorTableScale = 32982,
-        ColorTableBias = 32983,
-        ColorTableFormat = 32984,
-        ColorTableWidth = 32985,
-        ColorTableRedSize = 32986,
-        ColorTableGreenSize = 32987,
-        ColorTableBlueSize = 32988,
-        ColorTableAlphaSize = 32989,
-        ColorTableLuminanceSize = 32990,
-        ColorTableIntensitySize = 32991,
-    }
     public enum ColorTableParameterPName : uint
     {
         ColorTableScale = 32982,
@@ -8985,6 +9001,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ColorTableAlphaSize = 32989,
         ColorTableLuminanceSize = 32990,
         ColorTableIntensitySize = 32991,
+        ColorTableScaleSgi = 32982,
+        ColorTableBiasSgi = 32983,
+        ColorTableFormatSgi = 32984,
+        ColorTableWidthSgi = 32985,
+        ColorTableRedSizeSgi = 32986,
+        ColorTableGreenSizeSgi = 32987,
+        ColorTableBlueSizeSgi = 32988,
+        ColorTableAlphaSizeSgi = 32989,
+        ColorTableLuminanceSizeSgi = 32990,
+        ColorTableIntensitySizeSgi = 32991,
     }
     ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BindBufferARB" />, <see cref="GL.BindBufferBase" />, ...</summary>
     public enum BufferTargetARB : uint
@@ -9005,7 +9031,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         QueryBuffer = 37266,
         ParameterBuffer = 33006,
     }
-    public enum PointParameterNameSGIS : uint
+    ///<summary>Used in <see cref="GL.PointParameterf" />, <see cref="GL.PointParameterfARB" />, <see cref="GL.PointParameterfEXT" />, ...</summary>
+    public enum PointParameterNameARB : uint
     {
         PointFadeThresholdSize = 33064,
         PointSizeMin = 33062,
@@ -9024,20 +9051,8 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         PointFadeThresholdSizeSgis = 33064,
         DistanceAttenuationSgis = 33065,
     }
-    ///<summary>Used in <see cref="GL.PointParameterf" />, <see cref="GL.PointParameterfARB" />, <see cref="GL.PointParameterfEXT" />, ...</summary>
-    public enum PointParameterNameARB : uint
-    {
-        PointFadeThresholdSize = 33064,
-        PointSizeMinExt = 33062,
-        PointSizeMaxExt = 33063,
-        PointFadeThresholdSizeExt = 33064,
-    }
     ///<summary>Used in <see cref="GL.GetTexFilterFuncSGIS" />, <see cref="GL.TexFilterFuncSGIS" /></summary>
     public enum TextureFilterSGIS : uint
-    {
-        Filter4Sgis = 33094,
-    }
-    public enum TextureFilterFuncSGIS : uint
     {
         Filter4Sgis = 33094,
     }
@@ -9069,10 +9084,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     public enum ListParameterName : uint
     {
         ListPrioritySgix = 33154,
-    }
-    ///<summary>Used in <see cref="GL.PixelTexGenSGIX" /></summary>
-    public enum PixelTexGenModeSGIX : uint
-    {
     }
     ///<summary>Used in <see cref="GL.DeformationMap3dSGIX" />, <see cref="GL.DeformationMap3fSGIX" /></summary>
     public enum FfdTargetSGIX : uint
@@ -9183,18 +9194,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ColorAttachment31 = 36095,
         DepthAttachment = 36096,
         StencilAttachment = 36128,
-    }
-    public enum VertexBufferObjectParameter : uint
-    {
-        BufferSize = 34660,
-        BufferUsage = 34661,
-        BufferAccess = 35003,
-        BufferMapped = 35004,
-        BufferAccessFlags = 37151,
-        BufferMapLength = 37152,
-        BufferMapOffset = 37153,
-        BufferImmutableStorage = 33311,
-        BufferStorageFlags = 33312,
     }
     ///<summary>Used in <see cref="GL.GetBufferParameteri64v" />, <see cref="GL.GetBufferParameteriv" />, <see cref="GL.GetBufferParameterivARB" />, ...</summary>
     public enum BufferPNameARB : uint
@@ -9321,6 +9320,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     ///<summary>Used in <see cref="GL.ApplyTextureEXT" /></summary>
     public enum LightTextureModeEXT : uint
     {
+        FragmentDepth = 33874,
         FragmentDepthExt = 33874,
         FragmentMaterialExt = 33609,
         FragmentNormalExt = 33610,
@@ -9369,6 +9369,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ResampleZeroFillSgix = 33844,
         ResampleDecimateSgix = 33840,
     }
+    public enum FogCoordSrc : uint
+    {
+        FogCoordinate = 33873,
+        FragmentDepth = 33874,
+        FogCoord = 33873,
+        FogCoordinateExt = 33873,
+        FragmentDepthExt = 33874,
+    }
     ///<summary>Used in <see cref="GL.ActiveTexture" />, <see cref="GL.ActiveTextureARB" />, <see cref="GL.BindMultiTextureEXT" />, ...</summary>
     public enum TextureUnit : uint
     {
@@ -9404,6 +9412,74 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Texture29 = 34013,
         Texture30 = 34014,
         Texture31 = 34015,
+    }
+    ///<summary>Used in <see cref="GL.PassTexCoordATI" />, <see cref="GL.SampleMapATI" /></summary>
+    public enum FragmentShaderTextureSourceATI : uint
+    {
+        Texture0 = 33984,
+        Texture1 = 33985,
+        Texture2 = 33986,
+        Texture3 = 33987,
+        Texture4 = 33988,
+        Texture5 = 33989,
+        Texture6 = 33990,
+        Texture7 = 33991,
+        Texture8 = 33992,
+        Texture9 = 33993,
+        Texture10 = 33994,
+        Texture11 = 33995,
+        Texture12 = 33996,
+        Texture13 = 33997,
+        Texture14 = 33998,
+        Texture15 = 33999,
+        Texture16 = 34000,
+        Texture17 = 34001,
+        Texture18 = 34002,
+        Texture19 = 34003,
+        Texture20 = 34004,
+        Texture21 = 34005,
+        Texture22 = 34006,
+        Texture23 = 34007,
+        Texture24 = 34008,
+        Texture25 = 34009,
+        Texture26 = 34010,
+        Texture27 = 34011,
+        Texture28 = 34012,
+        Texture29 = 34013,
+        Texture30 = 34014,
+        Texture31 = 34015,
+        Reg0Ati = 35105,
+        Reg1Ati = 35106,
+        Reg2Ati = 35107,
+        Reg3Ati = 35108,
+        Reg4Ati = 35109,
+        Reg5Ati = 35110,
+        Reg6Ati = 35111,
+        Reg7Ati = 35112,
+        Reg8Ati = 35113,
+        Reg9Ati = 35114,
+        Reg10Ati = 35115,
+        Reg11Ati = 35116,
+        Reg12Ati = 35117,
+        Reg13Ati = 35118,
+        Reg14Ati = 35119,
+        Reg15Ati = 35120,
+        Reg16Ati = 35121,
+        Reg17Ati = 35122,
+        Reg18Ati = 35123,
+        Reg19Ati = 35124,
+        Reg20Ati = 35125,
+        Reg21Ati = 35126,
+        Reg22Ati = 35127,
+        Reg23Ati = 35128,
+        Reg24Ati = 35129,
+        Reg25Ati = 35130,
+        Reg26Ati = 35131,
+        Reg27Ati = 35132,
+        Reg28Ati = 35133,
+        Reg29Ati = 35134,
+        Reg30Ati = 35135,
+        Reg31Ati = 35136,
     }
     ///<summary>Used in <see cref="GL.CombinerInputNV" />, <see cref="GL.CombinerOutputNV" />, <see cref="GL.FinalCombinerInputNV" /></summary>
     public enum CombinerRegisterNV : uint
@@ -9490,83 +9566,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Combiner5Nv = 34133,
         Combiner6Nv = 34134,
         Combiner7Nv = 34135,
-    }
-    public enum RegisterCombinerPname : uint
-    {
-        Combine = 34160,
-        CombineRgb = 34161,
-        CombineAlpha = 34162,
-        Source0Rgb = 34176,
-        Source1Rgb = 34177,
-        Source2Rgb = 34178,
-        Source0Alpha = 34184,
-        Source1Alpha = 34185,
-        Source2Alpha = 34186,
-        Operand0Rgb = 34192,
-        Operand1Rgb = 34193,
-        Operand2Rgb = 34194,
-        Operand0Alpha = 34200,
-        Operand1Alpha = 34201,
-        Operand2Alpha = 34202,
-        RgbScale = 34163,
-        AddSigned = 34164,
-        Interpolate = 34165,
-        Constant = 34166,
-        PrimaryColor = 34167,
-        Previous = 34168,
-        Src1Alpha = 34185,
-        Src0Rgb = 34176,
-        Src1Rgb = 34177,
-        Src2Rgb = 34178,
-        Src0Alpha = 34184,
-        Src2Alpha = 34186,
-        CombineArb = 34160,
-        CombineRgbArb = 34161,
-        CombineAlphaArb = 34162,
-        Source0RgbArb = 34176,
-        Source1RgbArb = 34177,
-        Source2RgbArb = 34178,
-        Source0AlphaArb = 34184,
-        Source1AlphaArb = 34185,
-        Source2AlphaArb = 34186,
-        Operand0RgbArb = 34192,
-        Operand1RgbArb = 34193,
-        Operand2RgbArb = 34194,
-        Operand0AlphaArb = 34200,
-        Operand1AlphaArb = 34201,
-        Operand2AlphaArb = 34202,
-        RgbScaleArb = 34163,
-        AddSignedArb = 34164,
-        InterpolateArb = 34165,
-        ConstantArb = 34166,
-        PrimaryColorArb = 34167,
-        PreviousArb = 34168,
-        CombineExt = 34160,
-        CombineRgbExt = 34161,
-        CombineAlphaExt = 34162,
-        RgbScaleExt = 34163,
-        AddSignedExt = 34164,
-        InterpolateExt = 34165,
-        ConstantExt = 34166,
-        PrimaryColorExt = 34167,
-        PreviousExt = 34168,
-        Source0RgbExt = 34176,
-        Source1RgbExt = 34177,
-        Source2RgbExt = 34178,
-        Source0AlphaExt = 34184,
-        Source1AlphaExt = 34185,
-        Source2AlphaExt = 34186,
-        Operand0RgbExt = 34192,
-        Operand1RgbExt = 34193,
-        Operand2RgbExt = 34194,
-        Operand0AlphaExt = 34200,
-        Operand1AlphaExt = 34201,
-        Operand2AlphaExt = 34202,
-        ConstantNv = 34166,
-        Source3RgbNv = 34179,
-        Source3AlphaNv = 34187,
-        Operand3RgbNv = 34195,
-        Operand3AlphaNv = 34203,
     }
     public enum PixelStoreSubsampleRate : uint
     {
@@ -9872,14 +9871,94 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         ClampReadColorArb = 35100,
     }
     ///<summary>Used in <see cref="GL.AlphaFragmentOp1ATI" />, <see cref="GL.AlphaFragmentOp2ATI" />, <see cref="GL.AlphaFragmentOp3ATI" />, ...</summary>
-    public enum FragmentOpATI : uint
+    public enum FragmentShaderRegATI : uint
+    {
+        Reg0Ati = 35105,
+        Reg1Ati = 35106,
+        Reg2Ati = 35107,
+        Reg3Ati = 35108,
+        Reg4Ati = 35109,
+        Reg5Ati = 35110,
+        Reg6Ati = 35111,
+        Reg7Ati = 35112,
+        Reg8Ati = 35113,
+        Reg9Ati = 35114,
+        Reg10Ati = 35115,
+        Reg11Ati = 35116,
+        Reg12Ati = 35117,
+        Reg13Ati = 35118,
+        Reg14Ati = 35119,
+        Reg15Ati = 35120,
+        Reg16Ati = 35121,
+        Reg17Ati = 35122,
+        Reg18Ati = 35123,
+        Reg19Ati = 35124,
+        Reg20Ati = 35125,
+        Reg21Ati = 35126,
+        Reg22Ati = 35127,
+        Reg23Ati = 35128,
+        Reg24Ati = 35129,
+        Reg25Ati = 35130,
+        Reg26Ati = 35131,
+        Reg27Ati = 35132,
+        Reg28Ati = 35133,
+        Reg29Ati = 35134,
+        Reg30Ati = 35135,
+        Reg31Ati = 35136,
+    }
+    ///<summary>Used in <see cref="GL.SetFragmentShaderConstantATI" /></summary>
+    public enum FragmentShaderConATI : uint
+    {
+        Con0Ati = 35137,
+        Con1Ati = 35138,
+        Con2Ati = 35139,
+        Con3Ati = 35140,
+        Con4Ati = 35141,
+        Con5Ati = 35142,
+        Con6Ati = 35143,
+        Con7Ati = 35144,
+        Con8Ati = 35145,
+        Con9Ati = 35146,
+        Con10Ati = 35147,
+        Con11Ati = 35148,
+        Con12Ati = 35149,
+        Con13Ati = 35150,
+        Con14Ati = 35151,
+        Con15Ati = 35152,
+        Con16Ati = 35153,
+        Con17Ati = 35154,
+        Con18Ati = 35155,
+        Con19Ati = 35156,
+        Con20Ati = 35157,
+        Con21Ati = 35158,
+        Con22Ati = 35159,
+        Con23Ati = 35160,
+        Con24Ati = 35161,
+        Con25Ati = 35162,
+        Con26Ati = 35163,
+        Con27Ati = 35164,
+        Con28Ati = 35165,
+        Con29Ati = 35166,
+        Con30Ati = 35167,
+        Con31Ati = 35168,
+    }
+    ///<summary>Used in <see cref="GL.AlphaFragmentOp1ATI" />, <see cref="GL.ColorFragmentOp1ATI" /></summary>
+    public enum FragmentOp1ATI : uint
     {
         MovAti = 35169,
+    }
+    ///<summary>Used in <see cref="GL.AlphaFragmentOp2ATI" />, <see cref="GL.ColorFragmentOp2ATI" /></summary>
+    public enum FragmentOp2ATI : uint
+    {
         AddAti = 35171,
         MulAti = 35172,
         SubAti = 35173,
         Dot3Ati = 35174,
         Dot4Ati = 35175,
+    }
+    ///<summary>Used in <see cref="GL.AlphaFragmentOp3ATI" />, <see cref="GL.ColorFragmentOp3ATI" /></summary>
+    public enum FragmentOp3ATI : uint
+    {
         MadAti = 35176,
         LerpAti = 35177,
         CndAti = 35178,
@@ -9933,6 +10012,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         FragmentShaderArb = 35632,
         VertexShaderArb = 35633,
     }
+    ///<summary>Used in <see cref="GL.GetHandleARB" /></summary>
     public enum ContainerType : uint
     {
         ProgramObjectArb = 35648,
@@ -9961,7 +10041,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         TransformFeedbackActive = 36388,
         TransformFeedbackPaused = 36387,
     }
-    ///<summary>Used in <see cref="GL.TransformFeedbackVaryings" /></summary>
+    ///<summary>Used in <see cref="GL.TransformFeedbackVaryings" />, <see cref="GL.TransformFeedbackVaryingsEXT" />, <see cref="GL.TransformFeedbackVaryingsNV" /></summary>
     public enum TransformFeedbackBufferMode : uint
     {
         InterleavedAttribs = 35980,
@@ -9996,12 +10076,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     {
         LowerLeft = 36001,
         UpperLeft = 36002,
-    }
-    public enum CheckFramebufferStatusTarget : uint
-    {
-        ReadFramebuffer = 36008,
-        DrawFramebuffer = 36009,
-        Framebuffer = 36160,
     }
     ///<summary>Used in <see cref="GL.BindFramebuffer" />, <see cref="GL.BindFramebufferEXT" />, <see cref="GL.CheckFramebufferStatus" />, ...</summary>
     public enum FramebufferTarget : uint

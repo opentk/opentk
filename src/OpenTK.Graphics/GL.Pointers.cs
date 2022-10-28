@@ -6159,6 +6159,14 @@ namespace OpenTK.Graphics
             _FramebufferSamplePositionsfvAMD_fnptr(target, numsamples, pixelindex, values);
         }
         
+        internal static delegate* unmanaged<uint, uint, int, int, int, int, int, void> _FramebufferShadingRateEXT_fnptr = &FramebufferShadingRateEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void FramebufferShadingRateEXT_Lazy(uint target, uint attachment, int texture, int baseLayer, int numLayers, int texelWidth, int texelHeight)
+        {
+            _FramebufferShadingRateEXT_fnptr = (delegate* unmanaged<uint, uint, int, int, int, int, int, void>)GLLoader.BindingsContext.GetProcAddress("glFramebufferShadingRateEXT");
+            _FramebufferShadingRateEXT_fnptr(target, attachment, texture, baseLayer, numLayers, texelWidth, texelHeight);
+        }
+        
         internal static delegate* unmanaged<uint, uint, int, int, void> _FramebufferTexture_fnptr = &FramebufferTexture_Lazy;
         [UnmanagedCallersOnly]
         private static void FramebufferTexture_Lazy(uint target, uint attachment, int texture, int level)
@@ -7517,6 +7525,14 @@ namespace OpenTK.Graphics
         {
             _GetFragmentMaterialivSGIX_fnptr = (delegate* unmanaged<uint, uint, int*, void>)GLLoader.BindingsContext.GetProcAddress("glGetFragmentMaterialivSGIX");
             _GetFragmentMaterialivSGIX_fnptr(face, pname, parameters);
+        }
+        
+        internal static delegate* unmanaged<int, int, int*, uint*, void> _GetFragmentShadingRatesEXT_fnptr = &GetFragmentShadingRatesEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void GetFragmentShadingRatesEXT_Lazy(int samples, int maxCount, int* count, uint* shadingRates)
+        {
+            _GetFragmentShadingRatesEXT_fnptr = (delegate* unmanaged<int, int, int*, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glGetFragmentShadingRatesEXT");
+            _GetFragmentShadingRatesEXT_fnptr(samples, maxCount, count, shadingRates);
         }
         
         internal static delegate* unmanaged<uint, uint, uint, int*, void> _GetFramebufferAttachmentParameteriv_fnptr = &GetFramebufferAttachmentParameteriv_Lazy;
@@ -18997,6 +19013,22 @@ namespace OpenTK.Graphics
         {
             _ShaderStorageBlockBinding_fnptr = (delegate* unmanaged<int, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glShaderStorageBlockBinding");
             _ShaderStorageBlockBinding_fnptr(program, storageBlockIndex, storageBlockBinding);
+        }
+        
+        internal static delegate* unmanaged<uint, void> _ShadingRateEXT_fnptr = &ShadingRateEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void ShadingRateEXT_Lazy(uint rate)
+        {
+            _ShadingRateEXT_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateEXT");
+            _ShadingRateEXT_fnptr(rate);
+        }
+        
+        internal static delegate* unmanaged<uint, uint, void> _ShadingRateCombinerOpsEXT_fnptr = &ShadingRateCombinerOpsEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void ShadingRateCombinerOpsEXT_Lazy(uint combinerOp0, uint combinerOp1)
+        {
+            _ShadingRateCombinerOpsEXT_fnptr = (delegate* unmanaged<uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glShadingRateCombinerOpsEXT");
+            _ShadingRateCombinerOpsEXT_fnptr(combinerOp0, combinerOp1);
         }
         
         internal static delegate* unmanaged<byte, void> _ShadingRateImageBarrierNV_fnptr = &ShadingRateImageBarrierNV_Lazy;

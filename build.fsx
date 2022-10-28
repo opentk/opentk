@@ -123,7 +123,7 @@ let nugetCommandRunnerPath =
 let install =
     lazy
         (if (DotNet.getVersion id).StartsWith "5" then id
-         else DotNet.install (fun options -> { options with Version = DotNet.Version "5.0.408" }))
+         else DotNet.install (fun options -> { options with Channel = DotNet.CliChannel.Version 5 0 }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd

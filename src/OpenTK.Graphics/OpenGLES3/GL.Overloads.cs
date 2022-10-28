@@ -6715,6 +6715,39 @@ namespace OpenTK.Graphics.OpenGLES3
                     NamedBufferStorageExternalEXT(buffer, offset, size, clientBuffer_ptr, flags);
                 }
             }
+            /// <inheritdoc cref="GetFragmentShadingRatesEXT"/>
+            public static unsafe void GetFragmentShadingRatesEXT(int samples, Span<int> count, Span<ShadingRate> shadingRates)
+            {
+                fixed (int* count_ptr = count)
+                {
+                    int maxCount = (int)(shadingRates.Length);
+                    fixed (ShadingRate* shadingRates_ptr = shadingRates)
+                    {
+                        GetFragmentShadingRatesEXT(samples, maxCount, count_ptr, shadingRates_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="GetFragmentShadingRatesEXT"/>
+            public static unsafe void GetFragmentShadingRatesEXT(int samples, int[] count, ShadingRate[] shadingRates)
+            {
+                fixed (int* count_ptr = count)
+                {
+                    int maxCount = (int)(shadingRates.Length);
+                    fixed (ShadingRate* shadingRates_ptr = shadingRates)
+                    {
+                        GetFragmentShadingRatesEXT(samples, maxCount, count_ptr, shadingRates_ptr);
+                    }
+                }
+            }
+            /// <inheritdoc cref="GetFragmentShadingRatesEXT"/>
+            public static unsafe void GetFragmentShadingRatesEXT(int samples, int maxCount, ref int count, ref ShadingRate shadingRates)
+            {
+                fixed (int* count_ptr = &count)
+                fixed (ShadingRate* shadingRates_ptr = &shadingRates)
+                {
+                    GetFragmentShadingRatesEXT(samples, maxCount, count_ptr, shadingRates_ptr);
+                }
+            }
             /// <inheritdoc cref="GetUnsignedBytevEXT"/>
             public static unsafe void GetUnsignedBytevEXT(GetPName pname, Span<byte> data)
             {
