@@ -4,6 +4,8 @@ using System;
 namespace OpenTK.Graphics.OpenGLES3
 {
 #pragma warning disable CA1069 // Enums values should not be duplicated
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning disable CS0419 // Ambiguous reference in cref attribute
     public enum All : uint
     {
         DepthBufferBit = 256,
@@ -5241,4 +5243,6 @@ namespace OpenTK.Graphics.OpenGLES3
         FragmentShadingRateCombinerOpMulExt = 38614,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore CS0419 // Ambiguous reference in cref attribute
 }

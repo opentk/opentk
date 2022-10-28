@@ -77,7 +77,7 @@ namespace OpenTK.Windowing.Common
         public bool Shift => Modifiers.HasFlag(KeyModifiers.Shift);
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Windowing.Common.Input.KeyModifiers.Shift" /> is pressed.
+        /// Gets a value indicating whether <see cref="OpenTK.Windowing.Common.Input.KeyModifiers.Super" /> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Command => Modifiers.HasFlag(KeyModifiers.Super);

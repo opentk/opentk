@@ -11,6 +11,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
 {
@@ -18,6 +19,7 @@ namespace OpenTK.Mathematics
     /// Defines an axis-aligned 2d box (rectangle).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
     public struct Box2 : IEquatable<Box2>
     {
         private Vector2 _min;
@@ -106,6 +108,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector2 HalfSize
         {
             get => CenteredSize / 2;
@@ -115,6 +118,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector2 Center
         {
             get => HalfSize + _min;
@@ -419,7 +423,32 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
+        [Obsolete("This function used to exclude borders, but to follow changes from the other Box structs it's deprecated. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
         public bool Contains(Vector2 point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders inclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsInclusive(Vector2 point)
+        {
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.Y && point.Y <= _max.Y;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders exclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsExclusive(Vector2 point)
         {
             return _min.X < point.X && point.X < _max.X &&
                    _min.Y < point.Y && point.Y < _max.Y;
@@ -438,11 +467,12 @@ namespace OpenTK.Mathematics
         {
             if (boundaryInclusive)
             {
-                return _min.X <= point.X && point.X <= _max.X &&
-                       _min.Y <= point.Y && point.Y <= _max.Y;
+                return ContainsInclusive(point);
             }
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y;
+            else
+            {
+                return ContainsExclusive(point);
+            }
         }
 
         /// <summary>

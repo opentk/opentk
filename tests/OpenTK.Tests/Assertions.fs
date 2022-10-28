@@ -35,6 +35,8 @@ module private AssertHelpers =
     /// not equal with an epsilon value.
     let neqEpsilon a b epsilon = not <| approxEqSingleEpsilonWithError(a, b, epsilon)
 
+    let neqTolerance a b tol = not <| approxEqEpsilon a b tol
+
 /// We use a full type here instead of a module, as the overloading semantics are more suitable for our desired goal.
 [<Sealed>]
 type internal Assert =
@@ -68,6 +70,10 @@ type internal Assert =
         if neqEpsilon a.X b.X epsilon || neqEpsilon a.Y b.Y epsilon || neqEpsilon a.Z b.Z epsilon then
             raise <| new Xunit.Sdk.EqualException(a,b)
 
+    static member ApproximatelyEqualEpsilon(a : Vector3, b : Vector3, epsilon:Vector3) =
+        if neqEpsilon a.X b.X epsilon.X || neqEpsilon a.Y b.Y epsilon.Y || neqEpsilon a.Z b.Z epsilon.Z then
+            raise <| new Xunit.Sdk.EqualException(a,b)
+
     static member ApproximatelyEqualEpsilon(a : Vector4, b : Vector4, epsilon:float32) =
         if neqEpsilon a.X b.X epsilon || neqEpsilon a.Y b.Y epsilon || neqEpsilon a.Z b.Z epsilon || neqEpsilon a.W b.W epsilon then
             raise <| new Xunit.Sdk.EqualException(a,b)
@@ -86,6 +92,14 @@ type internal Assert =
 
     static member ApproximatelyEqualDelta(a : float32, b : float32, c : float32) =
         if not <| approxEqEpsilon a b c then raise <| new Xunit.Sdk.EqualException(a,b)
+
+    static member ApproximatelyEqualDelta(a : Vector3, b : Vector3, tol : Vector3) =
+        if neqTolerance a.X b.X tol.X || neqTolerance a.Y b.Y tol.Y || neqTolerance a.Z b.Z tol.Z then
+            raise <| new Xunit.Sdk.EqualException(a,b)
+
+    static member ApproximatelyEqualDelta(a : Vector2, b : Vector2, tol : Vector2) =
+        if neqTolerance a.X b.X tol.X || neqTolerance a.Y b.Y tol.Y then
+            raise <| new Xunit.Sdk.EqualException(a,b)
 
     static member NotApproximatelyEqualEpsilon(a : float32, b : float32) =
         if approxEqSingleEpsilon a b then raise <| new Xunit.Sdk.EqualException(a,b)
@@ -106,3 +120,6 @@ type internal Assert =
 
     static member ApproximatelyEqual(a : float32, b : float32) =
         if not <| approxEqDelta a b then raise <| new Xunit.Sdk.EqualException(a, b)
+
+    static member EpsilonFromValue4Digits(v : float32) =
+        MathF.Max(MathF.Pow(10.0f, MathF.Floor(MathF.Log10(MathF.Abs(v))) - 4.0f), 0.0001f)

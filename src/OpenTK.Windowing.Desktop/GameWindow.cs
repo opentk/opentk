@@ -105,6 +105,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Do not enable this unless your code is thread safe.
         ///   </para>
         /// </remarks>
+        [Obsolete("There is not one size fits all multithreading solution, especially for OpenGL. This option will be removed in future versions, and you will have to implement what you need instead.")]
         public bool IsMultiThreaded { get; }
 
         /// <summary>
@@ -181,35 +182,6 @@ namespace OpenTK.Windowing.Desktop
             }
         }
 
-        private VSyncMode _vSync;
-
-        /// <summary>
-        /// Gets or sets the VSyncMode.
-        /// </summary>
-        public VSyncMode VSync
-        {
-            get => _vSync;
-            set
-            {
-                switch (value)
-                {
-                    case VSyncMode.On:
-                        GLFW.SwapInterval(1);
-                        break;
-
-                    case VSyncMode.Off:
-                        GLFW.SwapInterval(0);
-                        break;
-
-                    case VSyncMode.Adaptive:
-                        GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
-                        break;
-                    }
-
-                _vSync = value;
-            }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
         /// </summary>
@@ -230,12 +202,12 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow.
+        /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
         /// </summary>
-        public virtual void Run()
+        public virtual unsafe void Run()
         {
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
-            Context.MakeCurrent();
+            Context?.MakeCurrent();
 
             // Send the OnLoad event, to load all user code.
             OnLoad();
@@ -247,7 +219,7 @@ namespace OpenTK.Windowing.Desktop
             if (IsMultiThreaded)
             {
                 // We want to move the context to the render thread so make sure it's no longer current
-                Context.MakeNoneCurrent();
+                Context?.MakeNoneCurrent();
 
                 _renderThread = new Thread(StartRenderThread);
                 _renderThread.Start();
@@ -255,39 +227,43 @@ namespace OpenTK.Windowing.Desktop
 
             _watchRender.Start();
             _watchUpdate.Start();
-            while (true)
+            while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
-                ProcessEvents();
-                DispatchUpdateFrame();
+                double timeToNextUpdateFrame = DispatchUpdateFrame();
 
-                if (!Exists || IsExiting)
-                {
-                    DestroyWindow();
-                    return;
-                }
-
+                double sleepTime = timeToNextUpdateFrame;
                 if (!IsMultiThreaded)
                 {
-                    DispatchRenderFrame();
+                    double timeToNextRenderFrame = DispatchRenderFrame();
+
+                    sleepTime = Math.Min(sleepTime, timeToNextRenderFrame);
+                }
+
+                if (sleepTime > 0)
+                {
+                    Thread.Sleep((int)Math.Floor(sleepTime * 1000));
                 }
             }
+
+            OnUnload();
         }
 
-        private void StartRenderThread()
+        private unsafe void StartRenderThread()
         {
             // If we are starting a render thread we want the context to be current there.
             // So when creating the render thread the graphics context needs to be made not current on the thread creating the render thread.
-            Context.MakeCurrent();
+            Context?.MakeCurrent();
 
             OnRenderThreadStarted();
             _watchRender.Start();
-            while (Exists && !IsExiting)
+            while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
                 DispatchRenderFrame();
             }
         }
 
-        private void DispatchUpdateFrame()
+        /// <returns>Time to next update frame.</returns>
+        private double DispatchUpdateFrame()
         {
             var isRunningSlowlyRetries = 4;
             var elapsed = _watchUpdate.Elapsed.TotalSeconds;
@@ -296,10 +272,14 @@ namespace OpenTK.Windowing.Desktop
 
             while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
             {
-                _watchUpdate.Restart();
-                OnUpdateFrame(new FrameEventArgs(elapsed));
+                // Update input state for next frame
+                ProcessInputEvents();
+                // Handle events for this frame
+                ProcessWindowEvents(IsEventDriven);
 
-                UpdateTime = _watchUpdate.Elapsed.TotalSeconds;
+                _watchUpdate.Restart();
+                UpdateTime = elapsed;
+                OnUpdateFrame(new FrameEventArgs(elapsed));
 
                 // Calculate difference (positive or negative) between
                 // actual elapsed time and target elapsed time. We must
@@ -320,30 +300,35 @@ namespace OpenTK.Windowing.Desktop
                 {
                     // If UpdateFrame consistently takes longer than TargetUpdateFrame
                     // stop raising events to avoid hanging inside the UpdateFrame loop.
+                    _updateEpsilon = 0;
                     break;
                 }
 
                 elapsed = _watchUpdate.Elapsed.TotalSeconds;
             }
+
+            return UpdateFrequency == 0 ? 0 : updatePeriod - elapsed;
         }
 
-        private void DispatchRenderFrame()
+        /// <returns>Time to next render frame.</returns>
+        private double DispatchRenderFrame()
         {
             var elapsed = _watchRender.Elapsed.TotalSeconds;
             var renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
             if (elapsed > 0 && elapsed >= renderPeriod)
             {
                 _watchRender.Restart();
+                RenderTime = elapsed;
                 OnRenderFrame(new FrameEventArgs(elapsed));
 
-                RenderTime = _watchRender.Elapsed.TotalSeconds;
-
                 // Update VSync if set to adaptive
-                if (_vSync == VSyncMode.Adaptive)
+                if (VSync == VSyncMode.Adaptive)
                 {
                     GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                 }
             }
+
+            return RenderFrequency == 0 ? 0 : renderPeriod - elapsed;
         }
 
         /// <summary>
@@ -351,13 +336,17 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual void SwapBuffers()
         {
+            if (Context == null)
+            {
+                throw new InvalidOperationException("Cannot use SwapBuffers when running with ContextAPI.NoAPI.");
+            }
+
             Context.SwapBuffers();
         }
 
         /// <inheritdoc />
         public override void Close()
         {
-            OnUnload();
             base.Close();
         }
 

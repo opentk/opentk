@@ -22,31 +22,26 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public static class Monitors
     {
-        private static List<MonitorInfo> _monitorInfos = new List<MonitorInfo>();
+        static unsafe Monitors()
+        {
+            GLFWProvider.EnsureInitialized();
 
-        // I am not sure how well of an idea this is.
-        private static Dictionary<IntPtr, int> _monitorIndexLookup = new Dictionary<IntPtr, int>();
+            _monitorCallback = MonitorCallback;
+            GLFW.SetMonitorCallback(_monitorCallback);
+        }
 
-        private static bool _isCacheBuilt = false;
-        private static bool _isHookSet = false;
+        private static readonly GLFWCallbacks.MonitorCallback _monitorCallback;
+
+        /// <summary>
+        /// Occurs when a <see cref="MonitorHandle"/> is connected or disconnected.
+        /// </summary>
+        public static event Action<MonitorEventArgs> OnMonitorConnected;
 
         /// <summary>
         /// The number of monitors available.
         /// </summary>
-        public static int Count
-        {
-            get
-            {
-                if (CheckCache())
-                {
-                    return _monitorInfos.Count;
-                }
-                else
-                {
-                    throw new GLFWException("This information is not cached and cannot be queried outside of the GLFW main thread");
-                }
-            }
-        }
+        [Obsolete("Use GetMonitors() instead.", true)]
+        public static unsafe int Count => throw new Exception("This property is Obsolete, use GetMonitors() instead.");
 
         /// <summary>
         /// Gets the default dpi for platforms.
@@ -75,42 +70,31 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Find the monitor a window is in.
+        /// Get the primary monitor. This is usually the monitor where elements like the task bar or global menu bar are located.
         /// </summary>
-        /// <param name="window">The window to find.</param>
-        /// <returns>The window the monitor was found in.</returns>
-        /// <remarks>
-        /// This function searches for the window by finding which monitor has the largest
-        /// intersection area with the given monitor.
-        /// </remarks>
-        public static unsafe MonitorHandle GetMonitorFromWindow(Window* window)
+        /// <returns>The primary monitor.</returns>
+        public static unsafe MonitorInfo GetPrimaryMonitor()
         {
-            if (!CheckCache())
+            MonitorHandle monitor = new MonitorHandle((IntPtr)GLFW.GetPrimaryMonitor());
+            return new MonitorInfo(monitor);
+        }
+
+        /// <summary>
+        /// Retrives a list of connected monitors.
+        /// </summary>
+        /// <returns>A list of connected monitors.</returns>
+        public static unsafe List<MonitorInfo> GetMonitors()
+        {
+            Monitor** monitorsRaw = GLFW.GetMonitorsRaw(out int count);
+
+            List<MonitorInfo> monitors = new List<MonitorInfo>(count);
+
+            for (int i = 0; i < count; i++)
             {
-                throw new Exception("This method can only be called from the main GLFW thread.");
+                monitors.Add(new MonitorInfo(new MonitorHandle((IntPtr)monitorsRaw[i])));
             }
 
-            Box2i windowArea;
-            {
-                int windowX, windowY, windowWidth, windowHeight;
-                GLFW.GetWindowPos(window, out windowX, out windowY);
-                GLFW.GetWindowSize(window, out windowWidth, out windowHeight);
-                windowArea = new Box2i(windowX, windowY, windowX + windowWidth, windowY + windowHeight);
-            }
-
-            int selectedIndex = 0;
-            for (int i = 0; i < _monitorInfos.Count; i++)
-            {
-                if (
-                    GetRectangleIntersectionArea(_monitorInfos[i].ClientArea, windowArea) >
-                    GetRectangleIntersectionArea(_monitorInfos[selectedIndex].ClientArea, windowArea)
-                )
-                {
-                    selectedIndex = i;
-                }
-            }
-
-            return _monitorInfos[selectedIndex].Handle;
+            return monitors;
         }
 
         /// <summary>
@@ -122,27 +106,68 @@ namespace OpenTK.Windowing.Desktop
         /// This function searches for the window by finding which monitor has the largest
         /// intersection area with the given monitor.
         /// </remarks>
-        public static unsafe MonitorHandle GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
+        public static unsafe MonitorInfo GetMonitorFromWindow(Window* window)
+        {
+            /*
+             * According to the GLFW documentation, glfwGetWindowMonitor will return a value only
+             * when the window is fullscreen.
+             *
+             * If the window is not fullscreen, find the monitor manually.
+             */
+            MonitorHandle value = new MonitorHandle((IntPtr)GLFW.GetWindowMonitor(window));
+            if (value.Pointer != IntPtr.Zero)
+            {
+                // We where in fullscreen so just return the monitor.
+                return new MonitorInfo(value);
+            }
+
+            /*
+             * Here we compare the instersection area of the window with the monitors client area
+             * and choose the monitor which has the largest overlapping area.
+             *
+             * This might not always be the *best* thing to look for.
+             * Operating systems like Windows limits the max size of a window
+             * to the size of the monitor which contains the top left corner of the window.
+            */
+
+            Box2i windowArea;
+            {
+                GLFW.GetWindowPos(window, out int windowX, out int windowY);
+                GLFW.GetWindowSize(window, out int windowWidth, out int windowHeight);
+                windowArea = new Box2i(windowX, windowY, windowX + windowWidth, windowY + windowHeight);
+            }
+
+            List<MonitorInfo> monitors = GetMonitors();
+
+            int selectedIndex = 0;
+            for (int i = 0; i < monitors.Count; i++)
+            {
+                if (
+                    GetRectangleIntersectionArea(monitors[i].ClientArea, windowArea) >
+                    GetRectangleIntersectionArea(monitors[selectedIndex].ClientArea, windowArea)
+                )
+                {
+                    selectedIndex = i;
+                }
+            }
+
+            return monitors[selectedIndex];
+        }
 
         /// <summary>
-        /// Checks wheter the cache has been built or builds it if it can.
+        /// Find the monitor a window is in.
         /// </summary>
-        /// <returns>Wether the current cache is valid or not.</returns>
-        public static unsafe bool CheckCache()
+        /// <param name="window">The window to find.</param>
+        /// <returns>The window the monitor was found in.</returns>
+        /// <remarks>
+        /// This function searches for the window by finding which monitor has the largest
+        /// intersection area with the given monitor.
+        /// </remarks>
+        public static unsafe MonitorInfo GetMonitorFromWindow(NativeWindow window) => GetMonitorFromWindow(window.WindowPtr);
+
+        private static unsafe void MonitorCallback(Monitor* monitor, ConnectedState state)
         {
-            GLFWProvider.EnsureInitialized();
-
-            if (!_isCacheBuilt && GLFWProvider.IsOnMainThread)
-            {
-                BuildMonitorCache();
-            }
-
-            if (!_isHookSet && GLFWProvider.IsOnMainThread)
-            {
-                GLFW.SetMonitorCallback(DpiMonitorCallback);
-            }
-
-            return _isCacheBuilt;
+            OnMonitorConnected?.Invoke(new MonitorEventArgs(new MonitorHandle((IntPtr)monitor), state == ConnectedState.Connected));
         }
 
         /// <summary>
@@ -151,19 +176,8 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="index">The index of the monitor.</param>
         /// <param name="info">Monitor information.</param>
         /// <returns>True when the object was retrieved from cache, or built successfully.</returns>
-        public static bool TryGetMonitorInfo(int index, out MonitorInfo info)
-        {
-            if (CheckCache())
-            {
-                info = _monitorInfos.ElementAtOrDefault(index);
-            }
-            else
-            {
-                info = null;
-            }
-
-            return info != null;
-        }
+        [Obsolete("Use GetMonitors() instead.", true)]
+        public static bool TryGetMonitorInfo(int index, out MonitorInfo info) => throw new Exception("This function is Obsolete, use GetMonitors() instead.");
 
         /// <summary>
         /// Try to get information about a monitor.
@@ -171,53 +185,20 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="monitor">The window handle.</param>
         /// <param name="info">Monitor information.</param>
         /// <returns>True when the object was retrieved from cache, or built successfully.</returns>
-        public static bool TryGetMonitorInfo(MonitorHandle monitor, out MonitorInfo info)
-        {
-            if (_monitorIndexLookup.TryGetValue(monitor.Pointer, out int index))
-            {
-                return TryGetMonitorInfo(index, out info);
-            }
+        [Obsolete("Use GetMonitors() instead.", true)]
+        public static bool TryGetMonitorInfo(MonitorHandle monitor, out MonitorInfo info) => throw new Exception("This function is Obsolete, use GetMonitors() instead.");
 
-            info = null;
-            return false;
-        }
+        /// <summary>
+        /// Checks wheter the cache has been built or builds it if it can.
+        /// </summary>
+        /// <returns>Wether the current cache is valid or not.</returns>
+        [Obsolete("There is no cache anymore", true)]
+        public static unsafe bool CheckCache() => throw new Exception("There is no cache anymore, don't call this function.");
 
         /// <summary>
         /// Builds the monitor cache (again if previously called).
         /// </summary>
-        public static unsafe void BuildMonitorCache()
-        {
-            GLFWProvider.EnsureInitialized();
-
-            if (!GLFWProvider.IsOnMainThread)
-            {
-                throw new InvalidOperationException("Only GLFW main thread can build the monitor cache.");
-            }
-
-            var newInfos = new List<MonitorInfo>();
-            var newIndexLookup = new Dictionary<IntPtr, int>();
-
-            var monitors = GLFW.GetMonitorsRaw(out int monitorCount);
-
-            for (int i = 0; i < monitorCount; i++)
-            {
-                var monitor = *(monitors + i);
-
-                newInfos.Add(new MonitorInfo(new MonitorHandle((IntPtr)monitor)));
-                newIndexLookup.Add((IntPtr)monitor, i);
-            }
-
-            _monitorInfos = newInfos;
-            _monitorIndexLookup = newIndexLookup;
-
-            _isCacheBuilt = true;
-        }
-
-        private static unsafe void DpiMonitorCallback(Monitor* monitor, ConnectedState state)
-        {
-            // Normally, adding or removing from the cache would be nice, but this breaks
-            // getting the info from an index, thus the cache must be built from scratch.
-            BuildMonitorCache();
-        }
+        [Obsolete("There is no cache anymore", true)]
+        public static unsafe void BuildMonitorCache() => throw new Exception("There is no cache anymore, don't call this function.");
     }
 }

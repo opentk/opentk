@@ -109,18 +109,31 @@ module Box3 =
             let v = new Vector3(Math.Abs(v1.X), Math.Abs(v1.Y), Math.Abs(v1.Z))
             
             b.Scale(v, v2)
-            
-            Assert.ApproximatelyEqualEpsilon(v * f, b.Size, (float32)0.001)
+
+            let epsilon = new Vector3(
+                Assert.EpsilonFromValue4Digits(v.X),
+                Assert.EpsilonFromValue4Digits(v.Y),
+                Assert.EpsilonFromValue4Digits(v.Z)
+            )
+
+            Assert.ApproximatelyEqualDelta(v * f, b.Size, epsilon)
             
         [<Property>]
         let ``Scaling from the center of a box should have the same result as multiplying the size`` (b1 : Box3, v1 : Vector3) =
             let v2 = b1.Size * v1
+
             b1.Scale(v1, b1.Center)
+
+            let epsilon = new Vector3(
+                Assert.EpsilonFromValue4Digits(v1.X),
+                Assert.EpsilonFromValue4Digits(v1.Y),
+                Assert.EpsilonFromValue4Digits(v1.Z)
+            )
             
-            Assert.ApproximatelyEqualEpsilon(b1.Size, v2, (float32)0.001)
+            Assert.ApproximatelyEqualDelta(b1.Size, v2, epsilon)
             
         [<Property>]
-        let ``Box2.Scale is equivelant to Box2.Scaled`` (b1 : Box3, v1 : Vector3, v2 : Vector3) =
+        let ``Box3.Scale is equivelant to Box3.Scaled`` (b1 : Box3, v1 : Vector3, v2 : Vector3) =
             let mutable b = b1
             
             b.Scale(v1, v2)
@@ -136,7 +149,7 @@ module Box3 =
             Assert.Equal(b, b1.Translated(v1))
         
         [<Property>]
-        let ``Box2.Translate is equivelant to Box2.Translated`` (b1 : Box3, v1 : Vector3) =
+        let ``Box3.Translate is equivelant to Box3.Translated`` (b1 : Box3, v1 : Vector3) =
             let mutable b = b1
             
             b.Translate(v1)
@@ -158,7 +171,7 @@ module Box3 =
             Assert.True(b1.Inflated(v1).Contains(v1, true))
 
         [<Property>]
-        let ``Box2.Inflate is equivalent to Box2.Inflated`` (b1 : Box3, v1 : Vector3) =
+        let ``Box3.Inflate is equivalent to Box3.Inflated`` (b1 : Box3, v1 : Vector3) =
             let mutable b = b1
             
             b.Inflate(v1)
@@ -184,10 +197,16 @@ module Box3 =
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Contains =
         [<Property>]
-        let ``Box3.Contains should only return true if the point is enclosed in the box`` (b1 : Box3, v1 : Vector3) =
+        let ``Box3.Contains should only return true if the point is enclosed in the box (exclusive)`` (b1 : Box3, v1 : Vector3) =
             let c = b1.Min.X < v1.X && v1.X < b1.Max.X && b1.Min.Y < v1.Y && v1.Y < b1.Max.Y && b1.Min.Z < v1.Z && v1.Z < b1.Max.Z
             
-            Assert.Equal(c, b1.Contains(v1))
+            Assert.Equal(c, b1.ContainsExclusive(v1))
+
+        [<Property>]
+        let ``Box3.Contains should only return true if the point is enclosed in the box (inclusive)`` (b1 : Box3, v1 : Vector3) =
+            let c = b1.Min.X <= v1.X && v1.X <= b1.Max.X && b1.Min.Y <= v1.Y && v1.Y <= b1.Max.Y && b1.Min.Z <= v1.Z && v1.Z <= b1.Max.Z
+            
+            Assert.Equal(c, b1.ContainsInclusive(v1))
 
         [<Property>]
         let ``Box3.Contains should only return true if the other box is partly within in the box`` (b1 : Box3, b2 : Box3) =

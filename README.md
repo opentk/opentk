@@ -13,9 +13,9 @@ Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your
 
 OpenTK comes with simple and easy to follow tutorials for learning *modern* OpenGL. These are written by the community and represent all of the best practices to get you started.
 
-#### Learn how to use OpenTK here: https://opentk.net/learn/index.html
+#### Learn how to use OpenTK here: https://github.com/opentk/LearnOpenTK
 
-Sample projects that accompany the tutorial can be found here: https://github.com/opentk/LearnOpenTK
+Older OpenTK 3 tutorials here: https://opentk.net/learn/index.html
 
 Project website: https://opentk.net
 
@@ -52,8 +52,19 @@ Instructions
 
 OpenTK is available as a [NuGet Package](http://www.nuget.org/packages/OpenTK/).
 
+OpenTK 4 running on Windows requires "Visual C++ Redistributable 2015" to be installed to run.
+See https://github.com/opentk/glfw-redist for more details.
+
 News
 ===
+
+### 2022-09-24
+
+OpenTK 5.0.0 is still under active development and usage.
+
+Preview releases are running non-trivial applications successfully on .Net 6 across all platforms.
+
+Please drop by the discord for the latest updates!
 
 ### 2020-10-02
 

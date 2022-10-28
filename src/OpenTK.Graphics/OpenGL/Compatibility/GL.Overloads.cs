@@ -7,6 +7,7 @@ using OpenTK.Graphics;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
 {
+#pragma warning disable CS0419 // Ambiguous reference in cref attribute
     public static unsafe partial class GL
     {
         /// <inheritdoc cref="TexParameterfv"/>
@@ -50667,4 +50668,5 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
     }
+#pragma warning restore CS0419 // Ambiguous reference in cref attribute
 }

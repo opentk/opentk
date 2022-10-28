@@ -3,14 +3,11 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <StartupObject>OpenTK.Audio.OpenAL.ALTest</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\src\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
+    <ProjectReference Include="..\..\src\OpenAL\OpenTK.OpenAL\OpenTK.OpenAL.csproj" />
   </ItemGroup>
 
 </Project>
