@@ -181,7 +181,7 @@ namespace Generator.Writing
                 string underlyingType = type switch
                 {
                     CSStruct csstruct => csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type."),
-                    CSEnum => "uint",
+                    CSEnum csenum => csenum.PrimitiveType.ToCSString(),
                     CSBool8 => "byte",
                     _ => type.ToCSString()
                 };
@@ -431,11 +431,11 @@ namespace Generator.Writing
                 {
                     if (group.FunctionsUsingEnumGroup.Count > 3)
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{f.FunctionName}\" />"))}, ...</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");
                     }
                     else
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{f.FunctionName}\" />"))}</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}</summary>");
                     }
                 }
 

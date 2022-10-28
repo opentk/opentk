@@ -131,7 +131,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetMaterialfv"/>
-        public static unsafe void GetMaterialf(MaterialFace face, MaterialParameter pname, Span<float> parameters)
+        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
             {
@@ -139,7 +139,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetMaterialfv"/>
-        public static unsafe void GetMaterialf(MaterialFace face, MaterialParameter pname, float[] parameters)
+        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
             {
@@ -147,7 +147,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetMaterialfv"/>
-        public static unsafe void GetMaterialf(MaterialFace face, MaterialParameter pname, ref float parameters)
+        public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -275,7 +275,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Materialfv"/>
-        public static unsafe void Materialf(MaterialFace face, MaterialParameter pname, ReadOnlySpan<float> parameters)
+        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
             {
@@ -283,7 +283,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Materialfv"/>
-        public static unsafe void Materialf(MaterialFace face, MaterialParameter pname, float[] parameters)
+        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
             {
@@ -291,7 +291,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Materialfv"/>
-        public static unsafe void Materialf(MaterialFace face, MaterialParameter pname, in float parameters)
+        public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
             {
@@ -945,7 +945,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetMaterialxv"/>
-        public static unsafe void GetMaterialx(MaterialFace face, MaterialParameter pname, Span<int> parameters)
+        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
             {
@@ -953,7 +953,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetMaterialxv"/>
-        public static unsafe void GetMaterialx(MaterialFace face, MaterialParameter pname, int[] parameters)
+        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
             {
@@ -961,7 +961,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GetMaterialxv"/>
-        public static unsafe void GetMaterialx(MaterialFace face, MaterialParameter pname, ref int parameters)
+        public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
@@ -1151,7 +1151,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Materialxv"/>
-        public static unsafe void Materialx(MaterialFace face, MaterialParameter pname, ReadOnlySpan<int> param)
+        public static unsafe void Materialx(TriangleFace face, MaterialParameter pname, ReadOnlySpan<int> param)
         {
             fixed (int* param_ptr = param)
             {
@@ -1159,7 +1159,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Materialxv"/>
-        public static unsafe void Materialx(MaterialFace face, MaterialParameter pname, int[] param)
+        public static unsafe void Materialx(TriangleFace face, MaterialParameter pname, int[] param)
         {
             fixed (int* param_ptr = param)
             {
@@ -1167,7 +1167,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="Materialxv"/>
-        public static unsafe void Materialx(MaterialFace face, MaterialParameter pname, in int param)
+        public static unsafe void Materialx(TriangleFace face, MaterialParameter pname, in int param)
         {
             fixed (int* param_ptr = &param)
             {
@@ -1370,13 +1370,13 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        public static unsafe void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -1385,7 +1385,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -1394,7 +1394,7 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="TexImage2D"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -3210,7 +3210,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="MaterialxvOES"/>
-            public static unsafe void MaterialxvOES(MaterialFace face, MaterialParameter pname, ReadOnlySpan<int> param)
+            public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, ReadOnlySpan<int> param)
             {
                 fixed (int* param_ptr = param)
                 {
@@ -3218,7 +3218,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="MaterialxvOES"/>
-            public static unsafe void MaterialxvOES(MaterialFace face, MaterialParameter pname, int[] param)
+            public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, int[] param)
             {
                 fixed (int* param_ptr = param)
                 {
@@ -3226,7 +3226,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="MaterialxvOES"/>
-            public static unsafe void MaterialxvOES(MaterialFace face, MaterialParameter pname, in int param)
+            public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, in int param)
             {
                 fixed (int* param_ptr = &param)
                 {
@@ -3354,7 +3354,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetMaterialxvOES"/>
-            public static unsafe void GetMaterialxvOES(MaterialFace face, MaterialParameter pname, Span<int> parameters)
+            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
                 {
@@ -3362,7 +3362,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetMaterialxvOES"/>
-            public static unsafe void GetMaterialxvOES(MaterialFace face, MaterialParameter pname, int[] parameters)
+            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
                 {
@@ -3370,7 +3370,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetMaterialxvOES"/>
-            public static unsafe void GetMaterialxvOES(MaterialFace face, MaterialParameter pname, ref int parameters)
+            public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -3450,7 +3450,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ConvolutionParameterxvOES"/>
-            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, ReadOnlySpan<int> parameters)
+            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
                 {
@@ -3458,7 +3458,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ConvolutionParameterxvOES"/>
-            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, int[] parameters)
+            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
                 {
@@ -3466,7 +3466,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ConvolutionParameterxvOES"/>
-            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameterEXT pname, in int parameters)
+            public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
