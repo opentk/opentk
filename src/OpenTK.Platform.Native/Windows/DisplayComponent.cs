@@ -132,6 +132,7 @@ namespace OpenTK.Platform.Native.Windows
                         {
                             Monitor = hMonitor,
                             Name = monitor.DeviceName,
+                            AdapterName = adapter.DeviceName,
                             PublicName = monitor.DeviceString,
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
                             Position = lpDevMode.dmPosition,
@@ -266,8 +267,6 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool CanGetVirtualPosition => true;
 
-        public bool CanGetDisplaySize => throw new NotImplementedException();
-
         public int GetDisplayCount()
         {
             int count = Win32.GetSystemMetrics(SystemMetric.CMonitors);
@@ -338,19 +337,52 @@ namespace OpenTK.Platform.Native.Windows
 
         public int GetSupportedVideoModeCount(DisplayHandle handle)
         {
-            throw new NotImplementedException();
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            // FIXME: Calling this function with 0 rebuilds the cache, which means that between
+            // a call to GetSupportedVideoModeCount and GetSupportedVideoModes the cache could have changed.
+            // This is not great... would be good if we could combine the calls into one.
+            int modeIndex = 0;
+            Win32.DEVMODE lpDevMode = default;
+            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
+            {
+            }
+
+            return modeIndex - 1;
         }
 
         public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
         {
-            throw new NotImplementedException();
-        }
+            HMonitor hmonitor = handle.As<HMonitor>(this);
 
-        public void GetDisplaySize(DisplayHandle handle, out float width, out float height)
-        {
+            // FIXME: Should the scale really be part of the video mode?
+            // Is it something that can be set independently of video mode?
+            GetDisplayScale(handle, out float scaleX, out float scaleY);
 
+            int modeIndex = 0;
+            Win32.DEVMODE lpDevMode = default;
+            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
+            {
+                // FIXME: What do we do with duplicated video modes?
+                // For now we keep them, but there is no possibility of
+                // differentiating them.
+                // Should we decide or should we pass platform specific info to the user?
 
-            throw new NotImplementedException();
+                const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
+
+                if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
+                    throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
+
+                // FIXME: Scale and DPI
+                modes[modeIndex - 1] = new VideoMode(
+                    (int)lpDevMode.dmPelsWidth,
+                    (int)lpDevMode.dmPelsHeight,
+                    lpDevMode.dmDisplayFrequency,
+                    scaleX,
+                    96);
+            }
         }
 
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)

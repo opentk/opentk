@@ -10,8 +10,6 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class OpenGLComponent : IOpenGLComponent
     {
-        public IntPtr HelperHWnd { get; private set; }
-
         public string Name => "Win32OpenGL";
 
         public PalComponents Provides => PalComponents.OpenGL;
@@ -44,8 +42,8 @@ namespace OpenTK.Platform.Native.Windows
                 cAccumGreenBits = 0,
                 cAccumBlueBits = 0,
                 cAccumAlphaBits = 0,
-                cDepthBits = 24, // FIXME: Ability to configure!
-                cStencilBits = 8, // FIXME: Ability to configure!
+                cDepthBits = 0,
+                cStencilBits = 0,
                 cAuxBuffers = 0,
                 iLayerType = 0,
                 bReserved = 0,
@@ -73,7 +71,11 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
-            Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+            int maxFormat = Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+            if (maxFormat == 0)
+            {
+                throw new Win32Exception();
+            }
             Console.WriteLine($"=== Chosen Format ===");
             Console.WriteLine($"Version: {chosenFormat.nVersion}");
             Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
@@ -494,7 +496,11 @@ namespace OpenTK.Platform.Native.Windows
                 }
 
                 Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
-                Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+                int maxFormat = Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+                if (maxFormat == 0)
+                {
+                    throw new Win32Exception();
+                }
                 Console.WriteLine($"=== Chosen Format ===");
                 Console.WriteLine($"Version: {chosenFormat.nVersion}");
                 Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
@@ -622,10 +628,12 @@ namespace OpenTK.Platform.Native.Windows
 
         public unsafe IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
             return (IntPtr)Wgl.GetAnyProcAddress(procedureName);
         }
 
-        public OpenGLContextHandle GetCurrentContext()
+        public OpenGLContextHandle? GetCurrentContext()
         {
             IntPtr hGlrc = Wgl.GetCurrentContext();
             if (hGlrc == IntPtr.Zero)
@@ -638,9 +646,9 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public bool SetCurrentContext(OpenGLContextHandle handle)
+        public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
-            HGLRC hglrc = handle?.As<HGLRC>(this);
+            HGLRC? hglrc = handle?.As<HGLRC>(this);
 
             if (hglrc == null)
             {
@@ -665,20 +673,10 @@ namespace OpenTK.Platform.Native.Windows
             return true;
         }
 
-        public OpenGLContextHandle GetSharedContext()
-        {
-            throw new NotImplementedException();
-        }
-
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
             return hglrc.SharedContext;
-        }
-
-        public void SetSharedContext(OpenGLContextHandle handle)
-        {
-            throw new NotImplementedException();
         }
     }
 }

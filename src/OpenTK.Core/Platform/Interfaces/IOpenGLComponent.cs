@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
+#nullable enable
 
 namespace OpenTK.Core.Platform
 {
@@ -55,21 +58,14 @@ namespace OpenTK.Core.Platform
         /// Get the current OpenGL context for this thread.
         /// </summary>
         /// <returns>Handle to the current OpenGL context, null if none are current.</returns>
-        OpenGLContextHandle GetCurrentContext();
+        OpenGLContextHandle? GetCurrentContext();
 
         /// <summary>
         /// Set the current OpenGL context for this thread.
         /// </summary>
         /// <param name="handle">Handle to the OpenGL context to make current, or null to make none current.</param>
         /// <returns>True when the OpenGL context is successfully made current.</returns>
-        bool SetCurrentContext(OpenGLContextHandle handle);
-
-        /// <summary>
-        /// Get the context which newly created contexts will share display lists with.
-        /// </summary>
-        /// <returns>The OpenGL context handle, or null if unset.</returns>
-        /// <remarks>The return value of this method is thread static.</remarks>
-        OpenGLContextHandle GetSharedContext();
+        bool SetCurrentContext(OpenGLContextHandle? handle);
 
         /// <summary>
         /// Gets the context which the given context shares display lists with.
@@ -77,17 +73,5 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to the OpenGL context.</param>
         /// <returns>Handle to the OpenGL context the given context shares display lists with.</returns>
         OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle);
-
-        /// <summary>
-        /// Set a context to share display lists with newly created OpenGL contexts.
-        /// </summary>
-        /// <param name="handle">Handle to an OpenGL context or null.</param>
-        /// <remarks>
-        /// When set, contexts created from calls to <see cref="CreateFromWindow"/> and
-        /// <see cref="CreateFromSurface"/> will share display lists with the given context
-        /// until unset.
-        /// The shared OpenGL context value must be thread static within the driver.
-        /// </remarks>
-        void SetSharedContext(OpenGLContextHandle handle);
     }
 }

@@ -111,6 +111,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public string Name { get; set; }
 
+        public string AdapterName { get; set; }
+
         public string PublicName { get; set; }
 
         public bool IsPrimary { get; set; }

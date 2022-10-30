@@ -18,11 +18,6 @@ namespace OpenTK.Core.Platform
         bool CanGetVirtualPosition { get; }
 
         /// <summary>
-        /// True if the driver can get the physical size of the display.
-        /// </summary>
-        bool CanGetDisplaySize { get; }
-
-        /// <summary>
         /// Get the number of available displays.
         /// </summary>
         /// <returns>Number of displays available.</returns>
@@ -90,16 +85,6 @@ namespace OpenTK.Core.Platform
         /// <param name="modes">Span where supported display modes will be written to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes);
-
-        /// <summary>
-        /// Get the physical size of the display.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <param name="width">Width of the display in millimeters.</param>
-        /// <param name="height">Height of the display in millimeters.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver cannot get display physical size. See <see cref="CanGetDisplaySize"/>.</exception>
-        void GetDisplaySize(DisplayHandle handle, out float width, out float height);
 
         /// <summary>
         /// Get the position of the display in the virtual desktop.

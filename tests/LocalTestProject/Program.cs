@@ -16,7 +16,7 @@ namespace LocalTestProject
         static WindowHandle WindowHandle;
         static WindowHandle WindowHandle2;
 
-        static OpenGLComponent glComp = new OpenGLComponent();
+        static IOpenGLComponent glComp = new OpenGLComponent();
         static OpenGLContextHandle WindowContext;
         static OpenGLContextHandle Window2Context;
 
@@ -65,6 +65,17 @@ namespace LocalTestProject
                 Console.WriteLine($"  Dpi: {videoMode.Dpi}");
                 Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
 
+                int modeCount = dispComp.GetSupportedVideoModeCount(PrimaryDisplayHandle);
+                Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
+
+                if (dispComp.GetDisplayCount() > 1)
+                {
+                    var secondaryHandle = dispComp.Create(1);
+                    modeCount = dispComp.GetSupportedVideoModeCount(secondaryHandle);
+                    Console.WriteLine($"Secondary monitor supports {modeCount} video modes.");
+                }
+                
+                Console.WriteLine();
             }
 
             Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
@@ -400,10 +411,13 @@ void main()
 
         public static TextureHandle GetIconImage(IconHandle handle)
         {
-            iconComp.GetDimensions(handle, out int width, out int height);
-            byte[] data = new byte[width * height * 4];
+            int size = iconComp.GetBitmapSize(handle);
+            byte[] data = new byte[size];
+            
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
             iconComp.GetBitmap(handle, data);
+
+            iconComp.GetDimensions(handle, out int width, out int height);
 
             TextureHandle tex = GL.GenTexture();
 

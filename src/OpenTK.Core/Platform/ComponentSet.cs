@@ -570,9 +570,6 @@ namespace OpenTK.Core.Platform
         bool IDisplayComponent.CanGetVirtualPosition => _displayComponent!.CanGetVirtualPosition;
 
         /// <inheritdoc/>
-        bool IDisplayComponent.CanGetDisplaySize => _displayComponent!.CanGetDisplaySize;
-
-        /// <inheritdoc/>
         int IDisplayComponent.GetDisplayCount()
         {
             return _displayComponent!.GetDisplayCount();
@@ -660,12 +657,6 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IDisplayComponent.GetDisplaySize(DisplayHandle handle, out float width, out float height)
-        {
-            _displayComponent!.GetDisplaySize(handle, out width, out height);
-        }
-
-        /// <inheritdoc/>
         void IDisplayComponent.GetVirtualPosition(DisplayHandle handle, out int x, out int y)
         {
             _displayComponent!.GetVirtualPosition(handle, out x, out y);
@@ -746,33 +737,21 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        OpenGLContextHandle IOpenGLComponent.GetCurrentContext()
+        OpenGLContextHandle? IOpenGLComponent.GetCurrentContext()
         {
             return _openGLComponent!.GetCurrentContext();
         }
 
         /// <inheritdoc/>
-        bool IOpenGLComponent.SetCurrentContext(OpenGLContextHandle handle)
+        bool IOpenGLComponent.SetCurrentContext(OpenGLContextHandle? handle)
         {
             return _openGLComponent!.SetCurrentContext(handle);
         }
 
         /// <inheritdoc/>
-        OpenGLContextHandle IOpenGLComponent.GetSharedContext()
-        {
-            return _openGLComponent!.GetSharedContext();
-        }
-
-        /// <inheritdoc/>
-        OpenGLContextHandle IOpenGLComponent.GetSharedContext(OpenGLContextHandle handle)
+        OpenGLContextHandle? IOpenGLComponent.GetSharedContext(OpenGLContextHandle handle)
         {
             return _openGLComponent!.GetSharedContext(handle);
-        }
-
-        /// <inheritdoc/>
-        void IOpenGLComponent.SetSharedContext(OpenGLContextHandle handle)
-        {
-            _openGLComponent!.SetSharedContext(handle);
         }
 
         /// <inheritdoc/>
