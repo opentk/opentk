@@ -214,8 +214,7 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETFOCUS:
                     {
                         HWND h = HWndDict[hWnd];
-                        //EventQueue.Raise(h, WindowEventType.GotFocus, null);
-                        Console.WriteLine("Got focus");
+                        EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(true));
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.KILLFOCUS:
@@ -223,8 +222,7 @@ namespace OpenTK.Platform.Native.Windows
                         // This message can be sent after WM_CLOSE which means that the specificed window might not exist any more.
                         if (HWndDict.TryGetValue(hWnd, out HWND? h))
                         {
-                            //EventQueue.Raise(h, WindowEventType.LostFocus, null);
-                            Console.WriteLine("Lost focus");
+                            EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(false));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -885,6 +883,41 @@ namespace OpenTK.Platform.Native.Windows
 
             // A hCursor = null means a hidden cursor, as we want.
             Win32.SetCursor(hcursor?.Cursor ?? IntPtr.Zero);
+        }
+
+        /// <inheritdoc/>
+        public void FocusWindow(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // If SetFocus returns NULL and last error is Success we don't throw an exception.
+            // https://stackoverflow.com/questions/24073695/winapi-can-setfocus-return-null-without-an-error-because-thats-what-im-see
+            IntPtr prev = Win32.SetFocus(hwnd.HWnd);
+            if (prev == IntPtr.Zero)
+            {
+                int lastError = Marshal.GetLastWin32Error();
+                if (lastError != 0)
+                {
+                    throw new Win32Exception(lastError);
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void RequestAttention(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // FIXME: Figure out what settings we want here,
+            // or if the user should be able to set them?
+            Win32.FLASHWINFO flashInfo;
+            flashInfo.cbSize = (uint)Marshal.SizeOf<Win32.FLASHWINFO>();
+            flashInfo.hwnd = hwnd.HWnd;
+            flashInfo.dwFlags = FLASHW.All | FLASHW.TimerNoFG;
+            flashInfo.uCount = 0;
+            flashInfo.dwTimeout = 0;
+
+            Win32.FlashWindowEx(in flashInfo);
         }
 
         /// <inheritdoc/>

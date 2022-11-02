@@ -297,6 +297,19 @@ namespace LocalTestProject
 
                 return;
             }
+            else if (type == PlatformEventType.Focus)
+            {
+                FocusEventArgs focus = (FocusEventArgs)args;
+
+                if (focus.GotFocus)
+                {
+                    Console.WriteLine("Got focus");
+                }
+                else
+                {
+                    Console.WriteLine("Lost focus");
+                }
+            }
             else if (type == PlatformEventType.TextInput)
             {
                 TextInputEventArgs input = (TextInputEventArgs)args;
@@ -304,6 +317,19 @@ namespace LocalTestProject
                 Console.WriteLine($"Input: {input.Text}");
 
                 return;
+            }
+            else if (type == PlatformEventType.MouseEnter)
+            {
+                MouseEnterEventArgs enter = (MouseEnterEventArgs)args;
+
+                if (enter.Entered)
+                {
+                    Console.WriteLine($"Mouse entered.");
+                }
+                else
+                {
+                    Console.WriteLine("Mouse exited.");
+                }
             }
 
             return;
@@ -576,8 +602,15 @@ void main()
             return program;
         }
 
+        static Stopwatch watch = new Stopwatch();
+
         public static bool Render()
         {
+            float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
+            watch.Restart();
+
+            Console.WriteLine($"Delta time: {deltaTime * 1000f}ms");
+
             if (WindowHandle.UserData is not false)
             {
                 glComp.SetCurrentContext(WindowContext);

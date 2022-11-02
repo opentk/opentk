@@ -229,6 +229,18 @@ namespace OpenTK.Core.Platform
         void SetCursor(WindowHandle handle, CursorHandle cursor);
 
         /// <summary>
+        /// Gives the window input focus.
+        /// </summary>
+        /// <param name="handle">Handle to the window to focus.</param>
+        void FocusWindow(WindowHandle handle);
+
+        /// <summary>
+        /// Requests that the user pay attention to the window.
+        /// </summary>
+        /// <param name="handle">A handle to the window that requests attention.</param>
+        void RequestAttention(WindowHandle handle);
+
+        /// <summary>
         /// Converts screen coordinates to window relative coordinates.
         /// </summary>
         /// <param name="handle">The window handle.</param>

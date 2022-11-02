@@ -119,6 +119,10 @@ namespace OpenTK.Platform.Native.Windows
 
                 Wgl._CreateContextAttribsARB__fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)Wgl.GetProcAddress("wglCreateContextAttribsARB");
 
+                Wgl._SwapIntervalEXT__fnptr = (delegate* unmanaged<int, void>)Wgl.GetProcAddress("wglSwapIntervalEXT");
+
+                Wgl._GetSwapIntervalEXT__fnptr = (delegate* unmanaged<int>)Wgl.GetProcAddress("wglGetSwapIntervalEXT");
+
                 if (Wgl._GetExtensionsStringARB__fnptr != null)
                 {
                     string[] wglExts = Wgl.GetExtensionsStringARB(hDC)?.Split(" ") ?? Array.Empty<string>();
@@ -677,6 +681,39 @@ namespace OpenTK.Platform.Native.Windows
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
             return hglrc.SharedContext;
+        }
+
+        public void SetSwapInterval(int interval)
+        {
+            // FIXME: Maybe implement DWM hack?
+            // https://github.com/glfw/glfw/issues/1072
+            // https://github.com/libsdl-org/SDL/issues/5797
+
+            // Relevant glfw source:
+            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L340
+            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L315
+
+            // Source from love2d:
+            // https://github.com/love2d/love/blob/5175b0d1b599ea4c7b929f6b4282dd379fa116b8/src/modules/window/sdl/Window.cpp#L1024
+
+
+            if (EXT_swap_control)
+            {
+                Wgl.SwapIntervalEXT(interval);
+            }
+        }
+
+        public int GetSwapInterval()
+        {
+            if (EXT_swap_control)
+            {
+                return Wgl.GetSwapIntervalEXT();
+            }
+
+            // We can't get the swap interval. For now we return 0,
+            // but we could change it to null if we change the return to int? or
+            // make it a Try* function.
+            return 0;
         }
     }
 }

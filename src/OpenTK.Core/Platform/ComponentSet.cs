@@ -348,6 +348,18 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IWindowComponent.FocusWindow(WindowHandle handle)
+        {
+            _windowComponent!.FocusWindow(handle);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.RequestAttention(WindowHandle handle)
+        {
+            _windowComponent!.RequestAttention(handle);
+        }
+
+        /// <inheritdoc/>
         void IWindowComponent.ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
         {
             _windowComponent!.ScreenToClient(handle, x, y, out clientX, out clientY);
@@ -752,6 +764,18 @@ namespace OpenTK.Core.Platform
         OpenGLContextHandle? IOpenGLComponent.GetSharedContext(OpenGLContextHandle handle)
         {
             return _openGLComponent!.GetSharedContext(handle);
+        }
+
+        /// <inheritdoc/>
+        void IOpenGLComponent.SetSwapInterval(int interval)
+        {
+            _openGLComponent!.SetSwapInterval(interval);
+        }
+
+        /// <inheritdoc/>
+        int IOpenGLComponent.GetSwapInterval()
+        {
+            return _openGLComponent!.GetSwapInterval();
         }
 
         /// <inheritdoc/>

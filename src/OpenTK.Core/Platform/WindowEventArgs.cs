@@ -9,6 +9,16 @@ namespace OpenTK.Core.Platform
     {
     }
 
+    public class FocusEventArgs : EventArgs
+    {
+        public bool GotFocus { get; private set; }
+
+        public FocusEventArgs(bool gotFocus)
+        {
+            GotFocus = gotFocus;
+        }
+    }
+
     public class KeyDownEventArgs : WindowEventArgs
     {
         // FIXME: These properties are for testing with the Win32 backend.

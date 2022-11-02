@@ -201,6 +201,23 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool SetCursorPos(int X, int Y);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll")]
+        internal static extern bool FlashWindow(IntPtr /* HWND */ hWnd, bool bInvert);
+
+        [DllImport("user32.dll")]
+        internal static extern bool FlashWindowEx(in FLASHWINFO pfwi);
+
+        public struct FLASHWINFO {
+            public uint cbSize;
+            public IntPtr /* HWND */ hwnd;
+            public FLASHW dwFlags;
+            public uint uCount;
+            public uint dwTimeout;
+        }
+    
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool AdjustWindowRect(ref RECT lpRect, WindowStyles dwStyle, bool bMenu);
 

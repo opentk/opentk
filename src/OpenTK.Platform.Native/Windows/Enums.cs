@@ -2412,6 +2412,40 @@ namespace OpenTK.Platform.Native.Windows
         SZ = 1,
     }
 
+    [Flags]
+    internal enum FLASHW : uint
+    {
+        /// <summary>
+        /// Flash both the window caption and taskbar button. This is equivalent to setting the <see cref="Caption"/> | <see cref="Tray"/> flags.
+        /// </summary>
+        All = 0x00000003,
+
+        /// <summary>
+        /// Flash the window caption.
+        /// </summary>
+        Caption = 0x00000001,
+
+        /// <summary>
+        /// Stop flashing. The system restores the window to its original state.
+        /// </summary>
+        Stop = 0,
+
+        /// <summary>
+        /// Flash continuously, until the FLASHW_STOP flag is set.
+        /// </summary>
+        Timer = 0x00000004,
+
+        /// <summary>
+        /// Flash continuously until the window comes to the foreground.
+        /// </summary>
+        TimerNoFG = 0x0000000C,
+
+        /// <summary>
+        /// Flash the taskbar button.
+        /// </summary>
+        Tray = 0x00000002,
+    }
+
     /// <summary>
     /// Windows Messages
     /// Defined in winuser.h from Windows SDK v6.1

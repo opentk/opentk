@@ -73,5 +73,19 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to the OpenGL context.</param>
         /// <returns>Handle to the OpenGL context the given context shares display lists with.</returns>
         OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle);
+
+        /// <summary>
+        /// Sets the swap interval of the current OpenGL context.
+        /// </summary>
+        /// <param name="interval">The new swap interval.</param>
+        // FIXME: Better documentation.
+        void SetSwapInterval(int interval);
+
+        /// <summary>
+        /// Gets the swap interval of the current OpenGL context.
+        /// </summary>
+        /// <returns>The current swap interval.</returns>
+        // FIXME: Better documentation.
+        int GetSwapInterval();
     }
 }

@@ -248,6 +248,16 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
+        public void FocusWindow(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RequestAttention(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
         {
             throw new NotImplementedException();
