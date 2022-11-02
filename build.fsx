@@ -123,8 +123,8 @@ let nugetCommandRunnerPath =
 // Lazily install DotNet SDK in the correct version if not available
 let install =
     lazy
-        (if (DotNet.getVersion id).StartsWith "5" then id
-         else DotNet.install (fun options -> { options with Version = DotNet.Version "5.0.103" }))
+        (if (DotNet.getVersion id).StartsWith "6" then id
+         else DotNet.install (fun options -> { options with Channel = DotNet.CliChannel.Version 6 0 }))
 
 // Define general properties across various commands (with arguments)
 let inline withWorkDir wd = DotNet.Options.lift install.Value >> DotNet.Options.withWorkingDirectory wd
