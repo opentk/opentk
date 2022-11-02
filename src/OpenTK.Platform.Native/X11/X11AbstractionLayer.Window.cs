@@ -243,6 +243,16 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
+        void IWindowComponent.SetFloating(WindowHandle handle, bool floating)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IWindowComponent.IsFloating(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetCursor(WindowHandle handle, CursorHandle cursor)
         {
             throw new NotImplementedException();

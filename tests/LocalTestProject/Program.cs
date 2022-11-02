@@ -331,7 +331,7 @@ namespace LocalTestProject
                     Console.WriteLine("Mouse exited.");
                 }
             }
-
+            
             return;
 
             if (enabled_sRGB == false)
@@ -603,13 +603,24 @@ void main()
         }
 
         static Stopwatch watch = new Stopwatch();
+        static float time = 0;
+        static int frames = 0;
 
         public static bool Render()
         {
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
             watch.Restart();
 
-            Console.WriteLine($"Delta time: {deltaTime * 1000f}ms");
+            time += deltaTime;
+            frames++;
+
+            if (time > 1.5f)
+            {
+                // FIXME: Only write this out every so often.
+                Console.WriteLine($"Delta time: {(time / frames) * 1000f}ms");
+                time = 0;
+                frames = 0;
+            }
 
             if (WindowHandle.UserData is not false)
             {

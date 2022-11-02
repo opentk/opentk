@@ -873,6 +873,35 @@ namespace OpenTK.Platform.Native.Windows
             Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
         }
 
+        public void SetFloating(WindowHandle handle, bool floating)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            const nint HWND_TOPMOST = -1;
+            const nint HWND_NOTOPMOST = -2;
+
+            nint topmost = floating ? HWND_TOPMOST : HWND_NOTOPMOST;
+
+            bool success = Win32.SetWindowPos(hwnd.HWnd, topmost, 0, 0, 0, 0, SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoMove);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+        }
+
+        public bool IsFloating(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // We need ToInt64 here as Style is a uint which means that 0x00000000_ffffffff could be returned,
+            // and ToInt32 is going to throw in that case
+            WindowStylesEx windowStyleEx = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+
+            Console.WriteLine($"StyleEx: {windowStyleEx}");
+
+            return (windowStyleEx & WindowStylesEx.WS_EX_TOPMOST) == WindowStylesEx.WS_EX_TOPMOST;
+        }
+
         /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle cursor)
         {

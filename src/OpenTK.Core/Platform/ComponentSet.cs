@@ -342,6 +342,18 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IWindowComponent.SetFloating(WindowHandle handle, bool floating)
+        {
+            _windowComponent!.SetFloating(handle, floating);
+        }
+
+        /// <inheritdoc/>
+        bool IWindowComponent.IsFloating(WindowHandle handle)
+        {
+            return _windowComponent!.IsFloating(handle);
+        }
+
+        /// <inheritdoc/>
         void IWindowComponent.SetCursor(WindowHandle handle, CursorHandle cursor)
         {
             _windowComponent!.SetCursor(handle, cursor);
