@@ -258,6 +258,18 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int FillRect(IntPtr hDC, in RECT lprc, IntPtr hbr);
 
+        [DllImport("shell32.dll")]
+        internal static extern void DragAcceptFiles(IntPtr /* HWND */ hWnd, bool fAccept);
+
+        [DllImport("shell32.dll")]
+        internal static extern bool DragQueryPoint(IntPtr /* HDROP */ hDrop, out POINT ppt);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        internal static extern uint DragQueryFile(IntPtr /* HDROP */ hDrop, uint iFile, [Out]StringBuilder? lpszFile, uint cch);
+
+        [DllImport("shell32.dll")]
+        internal static extern void DragFinish(IntPtr /* HDROP */ hDrop);
+
         internal struct RECT
         {
             public int left;

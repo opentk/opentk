@@ -453,6 +453,33 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.DROPFILES:
+                    {
+                        IntPtr /* HDROP */ hdrop = (IntPtr)wParam.ToUInt64();
+
+                        uint count = Win32.DragQueryFile(hdrop, 0xFFFFFFFF, null, 0);
+                        Console.WriteLine($"Drop! {count}");
+
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < count; i++)
+                        {
+                            uint size = Win32.DragQueryFile(hdrop, (uint)i, null, 0);
+
+                            sb.EnsureCapacity((int)size);
+
+                            uint success = Win32.DragQueryFile(hdrop, (uint)i, sb, (uint)sb.Capacity);
+                            if (success == 0)
+                            {
+                                throw new Exception();
+                            }
+
+                            Console.WriteLine($"File {i}: {sb}");
+                        }
+
+                        Win32.DragFinish(hdrop);
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 default:
                     {
                         //Console.WriteLine(uMsg);
@@ -481,6 +508,9 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception("CreateWindowEx failed!");
             }
+
+            // We accept drag and drop operations.
+            Win32.DragAcceptFiles(hWnd, true);
 
             HWND hwnd = new HWND(hWnd, this, hints);
 
@@ -873,6 +903,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
         }
 
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -889,6 +920,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool IsAlwaysOnTop(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
