@@ -331,37 +331,12 @@ namespace LocalTestProject
                     Console.WriteLine("Mouse exited.");
                 }
             }
-            
-            return;
-
-            if (enabled_sRGB == false)
+            else if (type == PlatformEventType.FileDrop)
             {
-                Console.WriteLine("Enabled sRGB");
-                GL.Enable(EnableCap.FramebufferSrgb);
-                enabled_sRGB = true;
-            }
-            else
-            {
-                Console.WriteLine("Disabled sRGB");
-                GL.Disable(EnableCap.FramebufferSrgb);
-                enabled_sRGB = false;
-            }
+                FileDropEventArgs fileDrop = (FileDropEventArgs)args;
 
-            if (is_ibeam)
-            {
-                //cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+                Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, In Window: {fileDrop.DroppedInWindow}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
             }
-            else
-            {
-                //cursorComp.Load(CursorHandle, SystemCursorType.Default);
-            }
-            //windowComp.SetCursor(handle, CursorHandle);
-
-            is_ibeam = !is_ibeam;
-
-            cursorComp.GetSize(ImageCursorHandle, out int width, out int height);
-            cursorComp.GetHotspot(ImageCursorHandle, out int x, out int y);
-            cursorComp.SetHotspot(ImageCursorHandle, (x + 1) % width, y);
         }
 
         static BufferHandle buffer;

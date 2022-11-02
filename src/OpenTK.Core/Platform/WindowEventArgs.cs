@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Core.Platform
 {
@@ -97,6 +99,22 @@ namespace OpenTK.Core.Platform
         public CloseEventArgs(WindowHandle window)
         {
             Window = window;
+        }
+    }
+
+    public class FileDropEventArgs : WindowEventArgs
+    {
+        public IReadOnlyList<string> FilePaths { get; private set; }
+
+        public Vector2i Position { get; private set; }
+
+        public bool DroppedInWindow { get; private set; }
+
+        public FileDropEventArgs(IReadOnlyList<string> filePaths, Vector2i position, bool droppedInWindow)
+        {
+            FilePaths = filePaths;
+            Position = position;
+            DroppedInWindow = droppedInWindow;
         }
     }
 }

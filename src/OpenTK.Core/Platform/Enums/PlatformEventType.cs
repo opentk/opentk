@@ -30,5 +30,7 @@ namespace OpenTK.Core.Platform
         KeyUp,
 
         TextInput,
+
+        FileDrop,
     }
 }

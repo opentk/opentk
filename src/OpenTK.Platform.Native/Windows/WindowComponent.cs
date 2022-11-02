@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -460,23 +461,33 @@ namespace OpenTK.Platform.Native.Windows
                         uint count = Win32.DragQueryFile(hdrop, 0xFFFFFFFF, null, 0);
                         Console.WriteLine($"Drop! {count}");
 
+                        List<string> paths = new List<string>();
+
                         StringBuilder sb = new StringBuilder();
                         for (int i = 0; i < count; i++)
                         {
                             uint size = Win32.DragQueryFile(hdrop, (uint)i, null, 0);
 
-                            sb.EnsureCapacity((int)size);
+                            //  size does not include null terminator.
+                            sb.EnsureCapacity((int)size + 1);
 
                             uint success = Win32.DragQueryFile(hdrop, (uint)i, sb, (uint)sb.Capacity);
                             if (success == 0)
                             {
+                                // FIXME: Is is an issue? Can this happen?
                                 throw new Exception();
                             }
 
-                            Console.WriteLine($"File {i}: {sb}");
+                            paths.Add(sb.ToString());
                         }
 
+                        bool inWindow = Win32.DragQueryPoint(hdrop, out Win32.POINT point);
+
                         Win32.DragFinish(hdrop);
+
+                        HWND h = HWndDict[hWnd];
+
+                        EventQueue.Raise(h, PlatformEventType.FileDrop, new FileDropEventArgs(paths, new Vector2i(point.X, point.Y), inWindow));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
