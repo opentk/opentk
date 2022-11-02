@@ -342,15 +342,15 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IWindowComponent.SetFloating(WindowHandle handle, bool floating)
+        void IWindowComponent.SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
-            _windowComponent!.SetFloating(handle, floating);
+            _windowComponent!.SetAlwaysOnTop(handle, floating);
         }
 
         /// <inheritdoc/>
-        bool IWindowComponent.IsFloating(WindowHandle handle)
+        bool IWindowComponent.IsAlwaysOnTop(WindowHandle handle)
         {
-            return _windowComponent!.IsFloating(handle);
+            return _windowComponent!.IsAlwaysOnTop(handle);
         }
 
         /// <inheritdoc/>

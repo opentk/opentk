@@ -873,7 +873,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
         }
 
-        public void SetFloating(WindowHandle handle, bool floating)
+        public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -889,7 +889,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public bool IsFloating(WindowHandle handle)
+        public bool IsAlwaysOnTop(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
 

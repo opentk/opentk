@@ -216,19 +216,18 @@ namespace OpenTK.Core.Platform
         void SetBorderStyle(WindowHandle handle, WindowStyle style);
 
         /// <summary>
-        /// Set if the window is a floating window or not.
-        /// A floating window is always on top of all windows even it it doesn't have focus.
+        /// Set if the window is an always on top window or not.
         /// </summary>
-        /// <param name="handle">A handle to the window to make floating.</param>
-        /// <param name="floating">Whether the window should be floating or not.</param>
-        public void SetFloating(WindowHandle handle, bool floating);
+        /// <param name="handle">A handle to the window to make always on top.</param>
+        /// <param name="floating">Whether the window should be always on top or not.</param>
+        public void SetAlwaysOnTop(WindowHandle handle, bool floating);
 
         /// <summary>
-        /// Gets if the current window is floating or not.
+        /// Gets if the current window is always on top or not.
         /// </summary>
-        /// <param name="handle">A handle to the window to get whether or not is floating.</param>
-        /// <returns>Whether the window is floating or not.</returns>
-        public bool IsFloating(WindowHandle handle);
+        /// <param name="handle">A handle to the window to get whether or not is always on top.</param>
+        /// <returns>Whether the window is always on top or not.</returns>
+        public bool IsAlwaysOnTop(WindowHandle handle);
 
         /// <summary>
         /// Set the cursor object for a window.
