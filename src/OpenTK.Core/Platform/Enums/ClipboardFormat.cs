@@ -1,0 +1,46 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OpenTK.Core.Platform
+{
+    /// <summary>
+    /// Represents a clipboard data format.
+    /// </summary>
+    public enum ClipboardFormat
+    {
+        /// <summary>
+        /// Unknown format, or the clipboard is empty.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Unicode text.
+        /// </summary>
+        Text = 1,
+
+        /// <summary>
+        /// Audio data.
+        /// FIXME: Figure out a format to use here!
+        /// </summary>
+        Audio = 2,
+
+        /// <summary>
+        /// A bitmap.
+        /// FIXME: Figure out a format to use here!
+        /// </summary>
+        Bitmap = 3,
+
+        /// <summary>
+        /// HTML data.
+        /// </summary>
+        HTML = 4,
+
+        /// <summary>
+        /// A list of files.
+        /// </summary>
+        Files = 5,
+    }
+}

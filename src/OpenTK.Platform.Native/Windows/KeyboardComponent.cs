@@ -134,7 +134,7 @@ namespace OpenTK.Platform.Native.Windows
                 // FIXME: Make the entire rect
                 Win32.COMPOSITIONFORM compForm = new Win32.COMPOSITIONFORM()
                 {
-                    dwStyle = CFS.CFS_FORCE_POSITION,
+                    dwStyle = CFS.ForcePosition,
                     ptCurrentPos = new Win32.POINT(x, y),
                     rcArea = default
                 };

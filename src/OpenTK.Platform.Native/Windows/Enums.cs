@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -300,6 +301,37 @@ namespace OpenTK.Platform.Native.Windows
         VerticalRedraw = 0x1
     }
 
+    internal enum GMEM : uint
+    {
+        /// <summary>
+        /// Allocates fixed memory. The return value is a pointer.
+        /// </summary>
+        Fixed = 0x0000,
+
+        /// <summary>
+        /// Allocates movable memory. Memory blocks are never moved in physical memory, but they can be moved within the default heap.
+        /// The return value is a handle to the memory object. To translate the handle into a pointer, use the GlobalLock function.
+        ///
+        /// This value cannot be combined with GMEM_FIXED.
+        /// </summary>
+        Moveable = 0x0002,
+
+        /// <summary>
+        /// Initializes memory contents to zero.
+        /// </summary>
+        ZeroInit = 0x0040,
+
+        /// <summary>
+        /// Combines GMEM_MOVEABLE and GMEM_ZEROINIT.
+        /// </summary>
+        GHND = 0x0042,
+
+        /// <summary>
+        /// Combines GMEM_FIXED and GMEM_ZEROINIT.
+        /// </summary>
+        GPTR = 0x0040
+    }
+
     internal enum CFS : uint
     {
         /// <summary>
@@ -307,7 +339,7 @@ namespace OpenTK.Platform.Native.Windows
         /// The IME window can display the composition window
         /// outside the client area, such as in a floating window.
         /// </summary>
-        CFS_DEFAULT = 0,
+        Default = 0,
 
         /// <summary>
         /// Display the upper left corner of the composition window
@@ -316,7 +348,7 @@ namespace OpenTK.Platform.Native.Windows
         /// of the window containing the composition window
         /// and are not subject to adjustment by the IME.
         /// </summary>
-        CFS_FORCE_POSITION = 32,
+        ForcePosition = 32,
 
         /// <summary>
         /// Display the upper left corner of the composition window
@@ -325,14 +357,175 @@ namespace OpenTK.Platform.Native.Windows
         /// of the window containing the composition window
         /// and are subject to adjustment by the IME.
         /// </summary>
-        CFS_POINT = 2,
+        Point = 2,
 
         /// <summary>
         /// Display the composition window at the position specified by rcArea.
         /// The coordinates are relative to the upper left
         /// of the window containing the composition window.
         /// </summary>
-        CFS_RECT = 1,
+        Rect = 1,
+    }
+
+    internal enum CF
+    {
+        /// <summary>
+        /// A handle to a bitmap (HBITMAP).
+        /// </summary>
+        Bitmap = 2,
+
+        /// <summary>
+        /// A memory object containing a <see cref="Win32.BITMAPINFO"/> structure followed by the bitmap bits.
+        /// </summary>
+        DIB = 8,
+
+        /// <summary>
+        /// A memory object containing a <see cref="Win32.BITMAPV5HEADER"/> structure followed by the bitmap color space information and the bitmap bits.
+        /// </summary>
+        DIBV5 = 17,
+
+        /// <summary>
+        /// Software Arts' Data Interchange Format.
+        /// </summary>
+        DIF = 5,
+
+        /// <summary>
+        /// Bitmap display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in bitmap format in lieu of the privately formatted data.
+        /// </summary>
+        DSPBitmap = 0x0082,
+
+        /// <summary>
+        /// Enhanced metafile display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in enhanced metafile format in lieu of the privately formatted data.
+        /// </summary>
+        DSPEnhancedMetafile = 0x008E,
+
+        /// <summary>
+        /// Metafile-picture display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in metafile-picture format in lieu of the privately formatted data.
+        /// </summary>
+        DSPMetafilePicture = 0x0083,
+
+        /// <summary>
+        /// Text display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in text format in lieu of the privately formatted data.
+        /// </summary>
+        DSPText = 0x0081,
+
+        /// <summary>
+        /// A handle to an enhanced metafile (HENHMETAFILE).
+        /// </summary>
+        EnhancedMetafile = 14,
+
+        /// <summary>
+        /// Start of a range of integer values for application-defined GDI object clipboard formats.The end of the range is <see cref="GDIObjectLast"/>.
+        /// Handles associated with clipboard formats in this range are not automatically deleted using the GlobalFree function when the clipboard is emptied.
+        /// Also, when using values in this range, the hMem parameter is not a handle to a GDI object, but is a handle allocated by the GlobalAlloc function with the GMEM_MOVEABLE flag.
+        /// </summary>
+        GDIObjectFirst = 0x0300,
+
+        /// <summary>
+        /// See <see cref="GDIObjectFirst"/>
+        /// </summary>
+        GDIObjectLast = 0x03FF,
+
+        /// <summary>
+        /// A handle to type HDROP that identifies a list of files.
+        /// An application can retrieve information about the files by passing the handle to the DragQueryFile function.
+        /// </summary>
+        HDrop = 15,
+
+        /// <summary>
+        /// The data is a handle (HGLOBAL) to the locale identifier (LCID) associated with text in the clipboard.
+        /// When you close the clipboard, if it contains <see cref="Text"/> data but no <see cref="Locale"/> data, the system automatically sets the <see cref="Locale"/> format to the current input language.
+        /// You can use the <see cref="Locale"/> format to associate a different locale with the clipboard text.
+        /// An application that pastes text from the clipboard can retrieve this format to determine which character set was used to generate the text.
+        /// Note that the clipboard does not support plain text in multiple character sets.To achieve this, use a formatted text data type such as RTF instead.
+        /// The system uses the code page associated with <see cref="Locale"/> to implicitly convert from <see cref="Text"/> to <see cref="UnicodeText"/>.
+        /// Therefore, the correct code page table is used for the conversion.
+        /// </summary>
+        Locale = 16,
+
+        /// <summary>
+        /// Handle to a metafile picture format as defined by the METAFILEPICT structure.When passing a <see cref="MetafilePicture"/> handle by means of DDE,
+        /// the application responsible for deleting hMem should also free the metafile referred to by the <see cref="MetafilePicture"/> handle.
+        /// </summary>
+        MetafilePicture = 3,
+
+        /// <summary>
+        /// Text format containing characters in the OEM character set.
+        /// Each line ends with a carriage return/linefeed (CR-LF) combination.
+        /// A null character signals the end of the data.
+        /// </summary>
+        OEMText = 7,
+
+        /// <summary>
+        /// Owner-display format.
+        /// The clipboard owner must display and update the clipboard viewer window, and receive the WM_ASKCBFORMATNAME, WM_HSCROLLCLIPBOARD, WM_PAINTCLIPBOARD, WM_SIZECLIPBOARD, and WM_VSCROLLCLIPBOARD messages.
+        /// The hMem parameter must be NULL.
+        /// </summary>
+        OwnerDisplay = 0x0080,
+
+        /// <summary>
+        /// Handle to a color palette. Whenever an application places data in the clipboard that depends on or assumes a color palette, it should place the palette on the clipboard as well.
+        /// If the clipboard contains data in the <see cref="Palette"/> (logical color palette) format, the application should use the SelectPalette and RealizePalette functions to realize (compare) any other data in the clipboard against that logical palette.
+        /// When displaying clipboard data, the clipboard always uses as its current palette any object on the clipboard that is in the <see cref="Palette"/> format.
+        /// </summary>
+        Palette = 9,
+
+        /// <summary>
+        /// Data for the pen extensions to the Microsoft Windows for Pen Computing.
+        /// </summary>
+        PenData = 10,
+
+        /// <summary>
+        /// Start of a range of integer values for private clipboard formats.
+        /// The range ends with <see cref="PrivateLast"/>.
+        /// Handles associated with private clipboard formats are not freed automatically;
+        /// the clipboard owner must free such handles, typically in response to the WM_DESTROYCLIPBOARD message.
+        /// </summary>
+        PrivateFirst = 0x0200,
+
+        /// <summary>
+        /// See <see cref="PrivateFirst"/>.
+        /// </summary>
+        PrivateLast = 0x02FF,
+
+        /// <summary>
+        /// Represents audio data more complex than can be represented in a <see cref="Wave"/> standard wave format.
+        /// </summary>
+        RIFF = 11,
+
+        /// <summary>
+        /// Microsoft Symbolic Link (SYLK) format.
+        /// </summary>
+        SYLK = 4,
+
+        /// <summary>
+        /// Text format.
+        /// Each line ends with a carriage return/linefeed (CR-LF) combination.
+        /// A null character signals the end of the data.
+        /// Use this format for ANSI text.
+        /// </summary>
+        Text = 1,
+
+        /// <summary>
+        /// Tagged-image file format.
+        /// </summary>
+        TIFF = 6,
+
+        /// <summary>
+        /// Unicode text format.
+        /// Each line ends with a carriage return/linefeed (CR-LF) combination.
+        /// A null character signals the end of the data.
+        /// </summary>
+        UnicodeText = 13,
+
+        /// <summary>
+        /// Represents audio data in one of the standard wave formats, such as 11 kHz or 22 kHz PCM.
+        /// </summary>
+        Wave = 12,
     }
 
     internal enum ShowWindowCommands

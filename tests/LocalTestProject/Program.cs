@@ -30,6 +30,8 @@ namespace LocalTestProject
 
         static IKeyboardComponent keyboardComp = new KeyboardComponent();
 
+        static IClipboardComponent clipComp = new ClipboardComponent();
+
         static CursorHandle CursorHandle;
         static CursorHandle ImageCursorHandle;
         static CursorHandle FileCursorHandle;
@@ -336,6 +338,41 @@ namespace LocalTestProject
                 FileDropEventArgs fileDrop = (FileDropEventArgs)args;
 
                 Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, In Window: {fileDrop.DroppedInWindow}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
+            }
+            else if (type == PlatformEventType.KeyDown)
+            {
+                KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
+
+                if (keyDown.VirtualKey == 'C')
+                {
+                    clipComp.SetClipboardText("Copy");
+                }
+                else if (keyDown.VirtualKey == 'V')
+                {
+                    clipComp.SetClipboardText("Paste");
+                }
+                else if (keyDown.VirtualKey == 'P')
+                {
+                    var format = clipComp.GetClipboardFormat();
+                    Console.WriteLine($"Clipboard format: {format}");
+                    switch (format)
+                    {
+                        case ClipboardFormat.Text:
+                            Console.WriteLine($"Current clipboard: '{clipComp.GetClipboardText()}'");
+                            break;
+                        case ClipboardFormat.HTML:
+                            Console.WriteLine($"Current clipboard: '{clipComp.GetClipboardHTML()}'");
+                            break;
+                        case ClipboardFormat.Files:
+                            Console.WriteLine($"Current clipboard: '{string.Join(", ", clipComp.GetClipboardFiles()!)}'");
+                            break;
+                        case ClipboardFormat.Audio:
+                        case ClipboardFormat.Bitmap:
+                        case ClipboardFormat.None:
+                        default:
+                            break;
+                    }
+                }
             }
         }
 

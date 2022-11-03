@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -821,15 +822,30 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool EmptyClipboard();
 
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern IntPtr /* HANDLE */ SetClipboardData(uint uFormat, IntPtr /* HANDLE */ hMem);
+        internal static extern IntPtr /* HANDLE */ SetClipboardData(CF uFormat, IntPtr /* HANDLE */ hMem);
 
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern IntPtr /* HGLOBAL */ GlobalAlloc(uint uFlags, ulong dwBytes);
+        internal static extern IntPtr /* HANDLE */ GetClipboardData(CF uFormat);
 
         [DllImport("user32.dll", SetLastError = true)]
+        internal static extern CF EnumClipboardFormats(CF format);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int GetClipboardFormatName(CF format, [Out] StringBuilder lpszFormatName, int cchMaxCount);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HGLOBAL */ GlobalAlloc(GMEM uFlags, ulong dwBytes);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HGLOBAL */ GlobalFree(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern IntPtr /* LPVOID */ GlobalLock(IntPtr /* HGLOBAL */ hMem);
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern bool GlobalUnlock(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern ulong GlobalSize(IntPtr /* HGLOBAL */ hMem);
     }
 }
