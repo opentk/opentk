@@ -810,5 +810,26 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool OpenClipboard(IntPtr /* HWND */ hWndNewOwner);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool CloseClipboard();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool EmptyClipboard();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HANDLE */ SetClipboardData(uint uFormat, IntPtr /* HANDLE */ hMem);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HGLOBAL */ GlobalAlloc(uint uFlags, ulong dwBytes);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* LPVOID */ GlobalLock(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GlobalUnlock(IntPtr /* HGLOBAL */ hMem);
     }
 }
