@@ -140,5 +140,37 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern unsafe int XFetchName(XDisplayPtr display, XWindow window, out byte* name);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XAtom XInternAtom(XDisplayPtr display, string atomName, bool onlyIfExists);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XInternAtoms(
+            XDisplayPtr display,
+            [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr, SizeParamIndex = 3)]
+            string[] names,
+            int count,
+            [MarshalAs(UnmanagedType.I4)] bool onlyIfExists,
+            [Out, MarshalAs(UnmanagedType.LPArray)] XAtom[] atoms);
+
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern IntPtr XGetAtomName(XDisplayPtr display, XAtom atom);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern unsafe int XGetWindowProperty(
+            XDisplayPtr display,
+            XWindow window,
+            XAtom property,
+            long offset,
+            long length,
+            bool delete,
+            XAtom requestType,
+            out XAtom actualType,
+            out int actualFormat,
+            out long numberOfItems,
+            out long remainingBytes,
+            out IntPtr contents
+        );
     }
 }
