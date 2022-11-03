@@ -353,7 +353,7 @@ namespace LocalTestProject
                 }
                 else if (keyDown.VirtualKey == 'P')
                 {
-                    var format = clipComp.GetClipboardFormat();
+                    ClipboardFormat format = clipComp.GetClipboardFormat();
                     Console.WriteLine($"Clipboard format: {format}");
                     switch (format)
                     {
