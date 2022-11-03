@@ -1,17 +1,48 @@
+using System;
 using System.Diagnostics;
 
 namespace OpenTK.Platform.Native.X11
 {
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct XAtom
+    public struct XAtom : IEquatable<XAtom>
     {
         public ulong Id { get; }
+
+        public bool IsNone => Id == 0;
 
         public static readonly XAtom None = new XAtom(0);
 
         public XAtom(ulong id)
         {
             Id = id;
+        }
+
+        public bool Equals(XAtom other)
+        {
+            return other.Id == this.Id;
+        }
+
+        public static bool operator ==(XAtom a, XAtom b)
+        {
+            return a.Id == b.Id;
+        }
+
+        public static bool operator !=(XAtom a, XAtom b)
+        {
+            return a.Id != b.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return
+                obj != null ?
+                    this.Id == 0 :
+                    (obj is XAtom atom) && this == atom;
         }
     }
 
