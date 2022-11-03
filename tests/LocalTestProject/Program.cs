@@ -242,8 +242,7 @@ namespace LocalTestProject
             Console.WriteLine($"Border: {border}");
         }
 
-        static bool enabled_sRGB = false;
-        static bool is_ibeam = false;
+        static List<ulong> vks = new List<ulong>();
 
         static Vector2i MousePos = (0, 0);
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
@@ -318,6 +317,10 @@ namespace LocalTestProject
 
                 Console.WriteLine($"Input: {input.Text}");
 
+                Console.WriteLine($"Scancodes: {string.Join(", ", vks)}");
+
+                vks.Clear();
+
                 return;
             }
             else if (type == PlatformEventType.MouseEnter)
@@ -342,6 +345,9 @@ namespace LocalTestProject
             else if (type == PlatformEventType.KeyDown)
             {
                 KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
+
+                if (keyDown.WasDown == false)
+                    vks.Add(keyDown.VirtualKey);
 
                 if (keyDown.VirtualKey == 'C')
                 {
@@ -629,7 +635,7 @@ void main()
             if (time > 1.5f)
             {
                 // FIXME: Only write this out every so often.
-                Console.WriteLine($"Delta time: {(time / frames) * 1000f}ms");
+                //Console.WriteLine($"Delta time: {(time / frames) * 1000f}ms");
                 time = 0;
                 frames = 0;
             }
