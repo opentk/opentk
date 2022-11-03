@@ -35,6 +35,8 @@ namespace OpenTK.Core.Platform
 
         /// <summary>
         /// HTML data.
+        /// If the clipboard contains this format,
+        /// it is also possible to get the unformated string using <see cref="IClipboardComponent.GetClipboardText"/>.
         /// </summary>
         HTML = 4,
 
