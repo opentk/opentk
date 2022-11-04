@@ -41,7 +41,7 @@ namespace OpenTK.Core.Platform
         HTML = 4,
 
         /// <summary>
-        /// A list of files.
+        /// A list of files and directories.
         /// </summary>
         Files = 5,
     }

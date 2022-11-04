@@ -59,10 +59,10 @@ namespace OpenTK.Core.Platform
         string? GetClipboardHTML();
 
         /// <summary>
-        /// Gets a list of files currently in the clipboard.
+        /// Gets a list of files and directories currently in the clipboard.
         /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.Files"/> format.
         /// </summary>
-        /// <returns>The list of files currently in the clipboard.</returns>
+        /// <returns>The list of files and directories currently in the clipboard.</returns>
         List<string>? GetClipboardFiles();
     }
 }
