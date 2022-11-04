@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Core.Platform
 {
+    /// <summary>
+    /// Interface for drivers which provide the clipboard component of the platform abstraction layer.
+    /// </summary>
     // GOAL: We want to support unicode text, rich text and images.
     public interface IClipboardComponent : IPalComponent
     {

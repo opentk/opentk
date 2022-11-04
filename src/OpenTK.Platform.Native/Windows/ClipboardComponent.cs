@@ -11,10 +11,14 @@ using OpenTK.Core.Platform;
 
 namespace OpenTK.Platform.Native.Windows
 {
-    // FIXME: Some way to get the plain text version of HTML.
-
     public class ClipboardComponent : IClipboardComponent
     {
+        // FIXME: Some way to specify the
+        // "ExcludeClipboardContentFromMonitorProcessing",
+        // "CanIncludeInClipboardHistory", or
+        // "CanUploadToCloudClipboard"
+        // on win32 to handle cloud clipboards.
+
         public string Name => "Win32 Clipboard component";
 
         public PalComponents Provides => PalComponents.Clipboard;
@@ -25,7 +29,17 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new PalException(this, "ClipboardComponent can only initialize the Clipboard component.");
             }
+
+            // Get the HTML format
+            CF_HTML = Win32.RegisterClipboardFormat("HTML Format");
+            if (CF_HTML == 0)
+            {
+                throw new Win32Exception();
+            }
         }
+
+        // (0xC095): Rich Text Format
+        private static CF CF_HTML;
 
         public IReadOnlyList<ClipboardFormat> SupportedFormats => _SupportedFormats;
 
@@ -35,11 +49,6 @@ namespace OpenTK.Platform.Native.Windows
             ClipboardFormat.HTML,
             ClipboardFormat.Files,
         };
-
-        // FIXME: It seems like this isn't a consistent enum??
-        // (0xC10F): HTML Format??
-        // (0xC095): Rich Text Format??
-        private const CF CF_HTML = (CF)0xC11E;
 
         public ClipboardFormat GetClipboardFormat()
         {
@@ -58,9 +67,6 @@ namespace OpenTK.Platform.Native.Windows
             {
                 switch (cf)
                 {
-                    case CF_HTML:
-                        format = ClipboardFormat.HTML;
-                        break;
                     case CF.HDrop:
                         format = ClipboardFormat.Files;
                         break;
@@ -71,6 +77,11 @@ namespace OpenTK.Platform.Native.Windows
                         format = ClipboardFormat.Bitmap;
                         break;
                     default:
+                        if (cf == CF_HTML)
+                        {
+                            format = ClipboardFormat.HTML;
+                            break;
+                        }
                         break;
                 }
 

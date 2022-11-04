@@ -831,6 +831,9 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern CF EnumClipboardFormats(CF format);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern CF RegisterClipboardFormat(string lpszFormat);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int GetClipboardFormatName(CF format, [Out] StringBuilder lpszFormatName, int cchMaxCount);
 
         [DllImport("kernel32.dll", SetLastError = true)]

@@ -51,6 +51,8 @@ namespace LocalTestProject
             iconComp.Initialize(PalComponents.WindowIcon);
             cursorComp.Initialize(PalComponents.MouseCursor);
 
+            clipComp.Initialize(PalComponents.Clipboard);
+
             Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout()}");
 
             Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", keyboardComp.GetAvailableKeyboardLayouts())}");
