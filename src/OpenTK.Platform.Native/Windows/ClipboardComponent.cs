@@ -36,6 +36,9 @@ namespace OpenTK.Platform.Native.Windows
             ClipboardFormat.Files,
         };
 
+        // FIXME: It seems like this isn't a consistent enum??
+        // (0xC10F): HTML Format??
+        // (0xC095): Rich Text Format??
         private const CF CF_HTML = (CF)0xC11E;
 
         public ClipboardFormat GetClipboardFormat()
@@ -63,6 +66,9 @@ namespace OpenTK.Platform.Native.Windows
                         break;
                     case CF.UnicodeText:
                         format = ClipboardFormat.Text;
+                        break;
+                    case CF.Bitmap:
+                        format = ClipboardFormat.Bitmap;
                         break;
                     default:
                         break;
@@ -204,9 +210,102 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
-        public object? GetClipboardBitmap()
+        public unsafe Bitmap? GetClipboardBitmap()
         {
-            throw new NotImplementedException();
+            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr hbitmap = Win32.GetClipboardData(CF.Bitmap);
+            if (hbitmap == IntPtr.Zero)
+            {
+                // We couldn't get a bitmap.
+                return null;
+            }
+
+            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+
+            int width = 0;
+            int height = 0;
+            if (Win32.GetObject(hbitmap, sizeof(Win32.BITMAP), out Win32.BITMAP bmpInfo) != 0)
+            {
+                width = bmpInfo.bmWidth;
+                height = bmpInfo.bmHeight;
+            }
+            else
+            {
+                Win32.CloseClipboard();
+                throw new Exception("Failed to get clipboard bitmap!");
+            }
+
+            byte[] image = new byte[width * height * 4];
+
+            GetImage(hDC, hbitmap, image);
+
+            // Convert from Bgra to Rgba.
+            for (int i = 0; i < image.Length; i += 4)
+            {
+                (image[i + 0], image[i + 2]) = (image[i + 2], image[i + 0]);
+            }
+
+            bool succeess = Win32.CloseClipboard();
+            if (succeess == false)
+            {
+                throw new Win32Exception();
+            }
+
+            // FIXME: This is the same as in IconComponent, we might want to fix that!
+            static void GetImage(IntPtr hDC, IntPtr hbm, Span<byte> image)
+            {
+                Win32.BITMAPINFO bmInfo = default;
+                bmInfo.bmiHeader.biSize = (uint)sizeof(Win32.BITMAPINFOHEADER);
+                int success = Win32.GetDIBits(hDC, hbm, 0, 0, null, ref bmInfo, DIB.RGBColors);
+                if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
+                {
+                    throw new Exception("GetDIBits failed.");
+                }
+
+                // FIXME: biSizeImage can be 0 if biCompression = RGB
+                if (image.Length < bmInfo.bmiHeader.biSizeImage)
+                {
+                    throw new Exception("Image buffer not big enough!");
+                }
+
+                bmInfo.bmiHeader.biBitCount = 32;
+                bmInfo.bmiHeader.biPlanes = 1;
+                bmInfo.bmiHeader.biCompression = BI.RGB;
+
+                fixed (byte* ptr = image)
+                {
+                    success = Win32.GetDIBits(hDC, hbm, 0, (uint)Math.Abs(bmInfo.bmiHeader.biHeight), (void*)ptr, ref bmInfo, DIB.RGBColors);
+                    if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
+                    {
+                        throw new Exception("GetDIBits failed.");
+                    }
+                }
+
+                if (bmInfo.bmiHeader.biHeight < 0)
+                {
+                    // FIXME: Overflow?
+                    bmInfo.bmiHeader.biHeight = -bmInfo.bmiHeader.biHeight;
+
+                    // A negative height means we have a top-down bitmap.
+                    // For consistency we need to flip this image vertically.
+                    for (int y = 0; y < bmInfo.bmiHeader.biHeight / 2; y++)
+                    {
+                        for (int x = 0; x < bmInfo.bmiHeader.biWidth; x++)
+                        {
+                            int index = ((y * bmInfo.bmiHeader.biWidth) + x) * 4;
+                            int indexFlipped = (((bmInfo.bmiHeader.biHeight - y - 1) * bmInfo.bmiHeader.biWidth) + x) * 4;
+                            (image[index], image[indexFlipped]) = (image[indexFlipped], image[index]);
+                        }
+                    }
+                }
+            }
+
+            return new Bitmap(width, height, image);
         }
 
         public unsafe string? GetClipboardHTML()

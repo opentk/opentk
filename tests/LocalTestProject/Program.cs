@@ -372,8 +372,38 @@ namespace LocalTestProject
                         case ClipboardFormat.Files:
                             Console.WriteLine($"Current clipboard: '{string.Join(", ", clipComp.GetClipboardFiles()!)}'");
                             break;
-                        case ClipboardFormat.Audio:
                         case ClipboardFormat.Bitmap:
+                            {
+                                Bitmap bitmap = clipComp.GetClipboardBitmap()!;
+                                Console.WriteLine($"Current clipboard: width: {bitmap.Width}, height: {bitmap.Height}");
+
+                                var tex = GL.GenTexture();
+
+                                GL.ActiveTexture(TextureUnit.Texture0);
+                                GL.BindTexture(TextureTarget.Texture2d, tex);
+
+                                GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
+
+                                GL.GenerateMipmap(TextureTarget.Texture2d);
+
+                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+
+                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+
+                                GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
+
+                                if (clipboard_tex != TextureHandle.Zero)
+                                {
+                                    GL.DeleteTexture(clipboard_tex);
+                                }
+
+                                clipboard_tex = tex;
+
+                                break;
+                            }
+                        case ClipboardFormat.Audio:
                         case ClipboardFormat.None:
                         default:
                             break;
@@ -484,6 +514,8 @@ void main()
 
         static TextureHandle cursor_tex;
         static TextureHandle icon_tex;
+
+        static TextureHandle clipboard_tex;
 
         public static void Init()
         {
@@ -658,7 +690,11 @@ void main()
                 //windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
 
                 GL.ActiveTexture(TextureUnit.Texture0);
-                GL.BindTexture(TextureTarget.Texture2d, cursor_tex);
+
+                TextureHandle tex = cursor_tex;
+                if (clipboard_tex != TextureHandle.Zero) tex = clipboard_tex;
+
+                GL.BindTexture(TextureTarget.Texture2d, tex);
 
                 GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
                 GL.Enable(EnableCap.Blend);

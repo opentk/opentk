@@ -49,7 +49,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <returns>The bitmap currently in the clipboard.</returns>
         // FIXME: Figure out the return type!
-        object? GetClipboardBitmap();
+        Bitmap? GetClipboardBitmap();
 
         /// <summary>
         /// Gets the HTML string currently in the clipboard.
