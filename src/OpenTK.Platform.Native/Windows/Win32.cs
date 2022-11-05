@@ -6,6 +6,7 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 #nullable enable
 
@@ -84,7 +85,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr GetModuleHandle(string? lpModuleName);
+        internal static extern IntPtr /* HMODULE */ GetModuleHandle(string? lpModuleName);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPTStr)] string lpLibFileName);
@@ -245,6 +246,9 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool IsWindowVisible(IntPtr hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -375,6 +379,12 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Use LoadImage instead.
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, IDC lpCursorName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HICON */ LoadIcon(IntPtr /* HINSTANCE */ hInstance, string lpIconName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HICON */ LoadIcon(IntPtr /* HINSTANCE */ hInstance, IDI lpIconName);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadImage(
@@ -732,6 +742,9 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool SetProcessDpiAwarenessContext(IntPtr /* DpiAwarenessContext */ value);
 
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* HMONITOR */ MonitorFromWindow(IntPtr /* HWND */ hwnd, MonitorDefaultTo dwFlags);
+
         [DllImport("imm32.dll", SetLastError = false)]
         internal static extern IntPtr /* HIMC */ ImmGetContext(IntPtr /* HWND */ hwnd);
 
@@ -856,5 +869,20 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, out uint pvParam, SPIF fWinIni);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        internal static extern IntPtr SHGetFileInfo(string pszPath, FileAttribute dwFileAttributes, [In, Out] SHFILEINFO psfi, uint cbFileInfo, SHGFI uFlags);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        internal struct SHFILEINFO
+        {
+            IntPtr /* HICON */ hIcon;
+            int iIcon;
+            uint dwAttributes;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260 /* MAX_PATH */)]
+            string szDisplayName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+            string szTypeName;
+        }
     }
 }

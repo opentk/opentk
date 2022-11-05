@@ -100,10 +100,10 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool CanSetIcon => throw new NotImplementedException();
+        public bool CanSetIcon => true;
 
         /// <inheritdoc/>
-        public bool CanGetDisplay => throw new NotImplementedException();
+        public bool CanGetDisplay => true;
 
         /// <inheritdoc/>
         public bool CanSetCursor => true;
@@ -629,21 +629,55 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public IconHandle GetIcon(WindowHandle handle)
+        public unsafe IconHandle GetIcon(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            // FIXME: If the user has changed the icon outside of our API this will not return the correct results
-            // We could make a custom response to WM.SETICON that only returns the icons set with our API.
-            // But ideally we would avoid this.
-            if (hwnd.HIcon != null)
+            IntPtr hicon;
+
+            // https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/winmsg/wm-geticon.md
+            // First we try to get the icon through the WM_GETICON message
+            // if that doesn't work we try GetClassLongPtr, and if that doesn't work
+            // we use LoadIcon.
+
+            hicon = Win32.SendMessage(hwnd.HWnd, WM.GETICON, new UIntPtr(1), new IntPtr(96));
+            if (hicon != IntPtr.Zero)
             {
-                return hwnd.HIcon;
+                HIcon icon = new HIcon
+                {
+                    // We do not manage this icon, at least not through this handle.
+                    // So pretending this is a system icon will avoid deleting this icon.
+                    Mode = HIcon.IconMode.SystemIcon,
+                    Icon = hicon
+                };
+
+                return icon;
             }
-            else
+
+            hicon = (IntPtr)Win32.GetClassLongPtr(hwnd.HWnd, GCLP.HIcon).ToPointer();
+            if (hicon != IntPtr.Zero)
             {
-                // FIXME: Return a (new?) iconHandle for the window default icon.
-                throw new NotImplementedException();
+                HIcon icon = new HIcon
+                {
+                    // We do not manage this icon, at least not through this handle.
+                    // So pretending this is a system icon will avoid deleting this icon.
+                    Mode = HIcon.IconMode.SystemIcon,
+                    Icon = hicon
+                };
+
+                return icon;
+            }
+
+            hicon = Win32.LoadIcon(IntPtr.Zero, IDI.Application);
+            {
+                HIcon icon = new HIcon
+                {
+                    // This is a system icon.
+                    Mode = HIcon.IconMode.SystemIcon,
+                    Icon = hicon
+                };
+
+                return icon;
             }
         }
 
@@ -813,7 +847,17 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            HWND hwnd = handle.As<HWND>(this);
+
+            IntPtr hmonitor = Win32.MonitorFromWindow(hwnd.HWnd, MonitorDefaultTo.Nearest);
+
+            HMonitor? monitor = DisplayComponent.FindMonitor(hmonitor);
+            if (monitor == null)
+            {
+                throw new PalException(this, $"Couldn't get monitor from window. (hwnd: {hwnd.HWnd}, hmonitor: {hmonitor})");
+            }
+
+            return monitor;
         }
 
         /// <inheritdoc/>

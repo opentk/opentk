@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using OpenTK.Mathematics;
 
 #nullable enable
 
@@ -119,6 +120,7 @@ namespace OpenTK.Core.Platform
                 PalComponents.Window => _windowComponent,
                 PalComponents.WindowIcon => _iconComponent,
                 PalComponents.OpenGL => _openGLComponent,
+                PalComponents.Clipboard => _clipboardComponent,
                 _ => throw new ArgumentException("Components are a bitfield or out of range.", nameof(which))
             };
             set
@@ -160,6 +162,10 @@ namespace OpenTK.Core.Platform
                 {
                     _openGLComponent = value as IOpenGLComponent;
                 }
+                if ((which & PalComponents.Clipboard) != 0)
+                {
+                    _clipboardComponent = value as IClipboardComponent;
+                }
             }
         }
 
@@ -186,6 +192,7 @@ namespace OpenTK.Core.Platform
             _surfaceComponent?.Initialize(which & PalComponents.Surface);
             _windowComponent?.Initialize(which & PalComponents.Window);
             _openGLComponent?.Initialize(which & PalComponents.OpenGL);
+            _clipboardComponent?.Initialize(which & PalComponents.Clipboard);
 
             Initialized = true;
         }
@@ -690,6 +697,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        bool IDisplayComponent.IsPrimary(DisplayHandle handle)
+        {
+            return _displayComponent!.IsPrimary(handle);
+        }
+
+        /// <inheritdoc/>
         string IDisplayComponent.GetName(DisplayHandle handle)
         {
             return _displayComponent!.GetName(handle);
@@ -725,6 +738,25 @@ namespace OpenTK.Core.Platform
             _displayComponent!.GetVirtualPosition(handle, out x, out y);
         }
 
+        /// <inheritdoc/>
+        void IDisplayComponent.GetResolution(DisplayHandle handle, out int width, out int height)
+        {
+            _displayComponent!.GetResolution(handle, out width, out height);
+        }
+
+        /// <inheritdoc/>
+        void IDisplayComponent.GetWorkArea(DisplayHandle handle, out Box2i area)
+        {
+            _displayComponent!.GetWorkArea(handle, out area);
+        }
+
+        /// <inheritdoc/>
+        void IDisplayComponent.GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        {
+            _displayComponent!.GetRefreshRate(handle, out refreshRate);
+        }
+
+        /// <inheritdoc/>
         void IDisplayComponent.GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
             _displayComponent!.GetDisplayScale(handle, out scaleX, out scaleY);

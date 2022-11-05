@@ -411,6 +411,17 @@ namespace LocalTestProject
                             break;
                     }
                 }
+                else if (keyDown.VirtualKey == 'D')
+                {
+                    DisplayHandle disp = windowComp.GetDisplay(WindowHandle);
+                    bool isPrimary = dispComp.IsPrimary(disp);
+                    dispComp.GetResolution(disp, out int resX, out int resY);
+                    dispComp.GetRefreshRate(disp, out float refreshRate);
+
+                    string name = dispComp.GetName(disp);
+                    
+                    Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
+                }
             }
         }
 
@@ -547,7 +558,7 @@ void main()
 
             cursor_tex = GetCursorImage(ImageCursorHandle);
             icon_tex = GetIconImage(IconHandle2);
-
+            
             CheckError("get cursor tex");
 
             glComp.SetCurrentContext(Window2Context);

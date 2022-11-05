@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,19 @@ namespace OpenTK.Platform.Native.Windows
         public PalComponents Provides => PalComponents.Display;
 
         private static List<HMonitor> _displays = new List<HMonitor>();
+
+        internal static HMonitor? FindMonitor(IntPtr hMonitor)
+        {
+            foreach (var display in _displays)
+            {
+                if (display.Monitor == hMonitor)
+                {
+                    return display;
+                }
+            }
+
+            return null;
+        }
 
         private static IntPtr FindMonitorHandle(string adapterName)
         {
@@ -278,6 +292,9 @@ namespace OpenTK.Platform.Native.Windows
             return count;
         }
 
+        // FIXME: Indices for monitors is ill defined.
+        // Need to look more into documentation for the monitor API.
+
         // FIXME: You probably shouldn't "create" a monitor handle.
         public DisplayHandle Create(int index)
         {
@@ -308,11 +325,18 @@ namespace OpenTK.Platform.Native.Windows
             HMonitor hmonitor = handle.As<HMonitor>(this);
         }
 
+        public bool IsPrimary(DisplayHandle handle)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.IsPrimary;
+        }
+
         public string GetName(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            return hmonitor.Name;
+            return hmonitor.PublicName;
         }
 
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
@@ -391,6 +415,30 @@ namespace OpenTK.Platform.Native.Windows
 
             x = hmonitor.Position.X;
             y = hmonitor.Position.Y;
+        }
+
+        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            width = hmonitor.Resolution.ResolutionX;
+            height = hmonitor.Resolution.ResolutionY;
+        }
+
+        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            Win32.RECT workArea = hmonitor.WorkArea;
+
+            area = new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
+        }
+
+        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            refreshRate = hmonitor.RefreshRate;
         }
 
         public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)

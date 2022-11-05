@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -712,6 +713,67 @@ namespace OpenTK.Platform.Native.Windows
         SetMinPosition = 0x0001,
     }
 
+    internal enum GCLP : int
+    {
+        /// <summary>
+        /// Retrieves an ATOM value that uniquely identifies the window class. This is the same atom that the RegisterClassEx function returns.
+        /// </summary>
+        Atom = -32,
+
+        /// <summary>
+        /// Retrieves the size, in bytes, of the extra memory associated with the class.
+        /// </summary>
+        CBCLSExtra = -20,
+
+        /// <summary>
+        /// Retrieves the size, in bytes, of the extra window memory associated with each window in the class. For information on how to access this memory, see GetWindowLongPtr.
+        /// </summary>
+        CBWNDExtra = -18,
+
+        /// <summary>
+        /// Retrieves a handle to the background brush associated with the class.
+        /// </summary>
+        HBRBackground = -10,
+
+        /// <summary>
+        /// Retrieves a handle to the cursor associated with the class.
+        /// </summary>
+        HCursor = -12,
+
+        /// <summary>
+        /// Retrieves a handle to the icon associated with the class.
+        /// </summary>
+        HIcon = -14,
+
+        /// <summary>
+        /// Retrieves a handle to the small icon associated with the class.
+        /// </summary>
+        HIconSM = -34,
+
+        /// <summary>
+        /// Retrieves a handle to the module that registered the class.
+        /// </summary>
+        HModule = -16,
+
+        /// <summary>
+        /// Retrieves the pointer to the menu name string.
+        /// The string identifies the menu resource associated with the class.
+        /// </summary>
+        MenumName = -8,
+
+        /// <summary>
+        /// Retrieves the window-class style bits.
+        /// </summary>
+        Style = -26,
+
+        /// <summary>
+        /// Retrieves the address of the window procedure,
+        /// or a handle representing the address of the window procedure.
+        /// You must use the CallWindowProc function to call the window procedure.
+        /// </summary>
+        WNDProc = -24,
+    }
+
     // FIXME: There are additional values for when the hWnd is a dialog box.
     // See DWL values:
     // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongw
@@ -1108,6 +1170,61 @@ namespace OpenTK.Platform.Native.Windows
         /// Hour
         /// </summary>
         Wait = 32514,
+    }
+
+    internal enum IDI : int
+    {
+        /// <summary>
+        /// Default application icon.
+        /// </summary>
+        Application = 32512,
+
+        /// <summary>
+        /// Asterisk icon. Same as <see cref="Information"/>.
+        /// </summary>
+        Asterisk = 32516,
+
+        /// <summary>
+        /// Hand-shaped icon.
+        /// </summary>
+        Error = 32513,
+
+        /// <summary>
+        /// Exclamation point icon. Same as <see cref="Warning"/>.
+        /// </summary>
+        Exclamation = 32515,
+
+        /// <summary>
+        /// Hand-shaped icon. Same as <see cref="Error"/>.
+        /// </summary>
+        Hand = 32513,
+
+        /// <summary>
+        /// Asterisk icon.
+        /// </summary>
+        Information = 32516,
+
+        /// <summary>
+        /// Question mark icon.
+        /// </summary>
+        Question = 32514,
+
+        /// <summary>
+        /// Security Shield icon.
+        /// </summary>
+        Shield = 32518,
+
+        /// <summary>
+        /// Exclamation point icon.
+        /// </summary>
+        Warning = 32515,
+
+        /// <summary>
+        /// Default application icon.
+        ///
+        /// Windows 2000:  Windows logo icon.
+        /// </summary>
+        WinLogo = 32517,
     }
 
     internal enum OCR
@@ -1981,12 +2098,301 @@ namespace OpenTK.Platform.Native.Windows
         SendWinINIChange = 0x02
     }
 
+    [Flags]
+    internal enum SHGFI : uint
+    {
+        /// <summary>
+        /// Version 5.0.
+        /// Apply the appropriate overlays to the file's icon.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        AddOverlays = 0x000000020,
+
+        /// <summary>
+        /// Modify SHGFI_ATTRIBUTES to indicate that the dwAttributes member of the SHFILEINFO structure at psfi contains the specific attributes that are desired.
+        /// These attributes are passed to IShellFolder::GetAttributesOf.
+        /// If this flag is not specified, 0xFFFFFFFF is passed to IShellFolder::GetAttributesOf, requesting all attributes.
+        /// This flag cannot be specified with the SHGFI_ICON flag.
+        /// </summary>
+        AttrSpecified = 0x000020000,
+
+        /// <summary>
+        /// Retrieve the item attributes.
+        /// The attributes are copied to the dwAttributes member of the structure specified in the psfi parameter.
+        /// These are the same attributes that are obtained from IShellFolder::GetAttributesOf.
+        /// </summary>
+        Attributes = 0x000000800,
+
+        /// <summary>
+        /// Retrieve the display name for the file, which is the name as it appears in Windows Explorer.
+        /// The name is copied to the szDisplayName member of the structure specified in psfi.
+        /// The returned display name uses the long file name, if there is one, rather than the 8.3 form of the file name.
+        /// Note that the display name can be affected by settings such as whether extensions are shown.
+        /// </summary>
+        DisplayName = 0x000000200,
+
+        /// <summary>
+        /// Retrieve the type of the executable file if pszPath identifies an executable file.
+        /// The information is packed into the return value.
+        /// This flag cannot be specified with any other flags.
+        /// </summary>
+        ExeType = 0x000002000,
+
+        /// <summary>
+        /// Retrieve the handle to the icon that represents the file and the index of the icon within the system image list.
+        /// The handle is copied to the hIcon member of the structure specified by psfi, and the index is copied to the iIcon member.
+        /// </summary>
+        Icon = 0x000000100,
+
+        /// <summary>
+        /// Retrieve the name of the file that contains the icon representing the file specified by pszPath, as returned by the IExtractIcon::GetIconLocation method of the file's icon handler.
+        /// Also retrieve the icon index within that file.
+        /// The name of the file containing the icon is copied to the szDisplayName member of the structure specified by psfi.
+        /// The icon's index is copied to that structure's iIcon member.
+        /// </summary>
+        IconLocation = 0x000001000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve the file's large icon.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        LargeIcon = 0x000000000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to add the link overlay to the file's icon.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        LinkOverlay = 0x000008000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve the file's open icon.
+        /// Also used to modify SHGFI_SYSICONINDEX, causing the function to return the handle to the system image list that contains the file's small open icon.
+        /// A container object displays an open icon to indicate that the container is open.
+        /// The SHGFI_ICON and/or SHGFI_SYSICONINDEX flag must also be set.
+        /// </summary>
+        OpenIcon = 0x000000002,
+
+        /// <summary>
+        /// Version 5.0.
+        /// Return the index of the overlay icon.
+        /// The value of the overlay index is returned in the upper eight bits of the iIcon member of the structure specified by psfi.
+        /// This flag requires that the SHGFI_ICON be set as well.
+        /// </summary>
+        OverlayIndex = 0x000000040,
+
+        /// <summary>
+        /// Indicate that pszPath is the address of an ITEMIDLIST structure rather than a path name.
+        /// </summary>
+        PIDL = 0x000000008,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to blend the file's icon with the system highlight color.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        Selected = 0x000010000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve a Shell-sized icon.
+        /// If this flag is not specified the function sizes the icon according to the system metric values.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        ShellIconSize = 0x000000004,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve the file's small icon.
+        /// Also used to modify SHGFI_SYSICONINDEX, causing the function to return the handle to the system image list that contains small icon images.
+        /// The SHGFI_ICON and/or SHGFI_SYSICONINDEX flag must also be set.
+        /// </summary>
+        SmallIcon = 0x000000001,
+
+        /// <summary>
+        /// Retrieve the index of a system image list icon.
+        /// If successful, the index is copied to the iIcon member of psfi.
+        /// The return value is a handle to the system image list.
+        /// Only those images whose indices are successfully copied to iIcon are valid.
+        /// Attempting to access other images in the system image list will result in undefined behavior.
+        /// </summary>
+        SysIconIndex = 0x000004000,
+
+        /// <summary>
+        /// Retrieve the string that describes the file's type.
+        /// The string is copied to the szTypeName member of the structure specified in psfi.
+        /// </summary>
+        TypeName = 0x000000400,
+
+        /// <summary>
+        /// Indicates that the function should not attempt to access the file specified by pszPath.
+        /// Rather, it should act as if the file specified by pszPath exists with the file attributes passed in dwFileAttributes.
+        /// This flag cannot be combined with the SHGFI_ATTRIBUTES, SHGFI_EXETYPE, or SHGFI_PIDL flags.
+        /// </summary>
+        UseFileAttributes = 0x000000010,
+    }
+
+    [Flags]
+    internal enum FileAttribute : uint
+    {
+        /// <summary>
+        /// A file or directory that is an archive file or directory.
+        /// Applications typically use this attribute to mark files for backup or removal .
+        /// </summary>
+        Archive= 0x20,
+
+        /// <summary>
+        /// A file or directory that is compressed.
+        /// For a file, all of the data in the file is compressed.
+        /// For a directory, compression is the default for newly created files and subdirectories.
+        /// </summary>
+        Compressed = 0x800,
+
+        /// <summary>
+        /// This value is reserved for system use.
+        /// </summary>
+        Device = 0x40,
+
+        /// <summary>
+        /// The handle that identifies a directory.
+        /// </summary>
+        Directory = 0x10,
+
+        /// <summary>
+        /// A file or directory that is encrypted.
+        /// For a file, all data streams in the file are encrypted.
+        /// For a directory, encryption is the default for newly created files and subdirectories.
+        /// </summary>
+        Encrypted = 0x4000,
+
+        /// <summary>
+        /// The file or directory is hidden.
+        /// It is not included in an ordinary directory listing.
+        /// </summary>
+        Hidden = 0x2,
+
+        /// <summary>
+        /// The directory or user data stream is configured with integrity (only supported on ReFS volumes).
+        /// It is not included in an ordinary directory listing.
+        /// The integrity setting persists with the file if it's renamed.
+        /// If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.
+        /// Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003 and Windows XP: This flag is not supported until Windows Server 2012.
+        /// </summary>
+        IntegrityStream = 0x8000,
+
+        /// <summary>
+        /// A file that does not have other attributes set.
+        /// This attribute is valid only when used alone.
+        /// </summary>
+        Normal = 0x80,
+
+        /// <summary>
+        /// The file or directory is not to be indexed by the content indexing service.
+        /// </summary>
+        NotContextIndexed = 0x2000,
+
+        /// <summary>
+        /// The user data stream not to be read by the background data integrity scanner (AKA scrubber).
+        /// When set on a directory it only provides inheritance.
+        /// This flag is only supported on Storage Spaces and ReFS volumes.
+        /// It is not included in an ordinary directory listing.
+        /// Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003 and Windows XP: This flag is not supported until Windows 8 and Windows Server 2012.
+        /// </summary>
+        NoScrubData = 0x20000,
+
+        /// <summary>
+        /// The data of a file is not available immediately.
+        /// This attribute indicates that the file data is physically moved to offline storage.
+        /// This attribute is used by Remote Storage, which is the hierarchical storage management software.
+        /// Applications should not arbitrarily change this attribute.
+        /// </summary>
+        Offline = 0x1000,
+
+        /// <summary>
+        /// A file that is read-only.
+        /// Applications can read the file, but cannot write to it or delete it.
+        /// This attribute is not honored on directories.
+        /// For more information, see You cannot view or change the Read-only or the System attributes of folders in Windows Server 2003, in Windows XP, in Windows Vista or in Windows 7.
+        /// </summary>
+        Readonly = 0x1,
+
+        /// <summary>
+        /// When this attribute is set, it means that the file or directory is not fully present locally.
+        /// For a file that means that not all of its data is on local storage (e.g. it may be sparse with some data still in remote storage).
+        /// For a directory it means that some of the directory contents are being virtualized from another location.
+        /// Reading the file / enumerating the directory will be more expensive than normal, e.g. it will cause at least some of the file/directory content to be fetched from a remote store.
+        /// Only kernel-mode callers can set this bit.
+        /// </summary>
+        RecallOnDataAccess = 0x400000,
+
+        /// <summary>
+        /// This attribute only appears in directory enumeration classes (FILE_DIRECTORY_INFORMATION, FILE_BOTH_DIR_INFORMATION, etc.).
+        /// When this attribute is set, it means that the file or directory has no physical representation on the local system; the item is virtual.
+        /// Opening the item will be more expensive than normal, e.g. it will cause at least some of it to be fetched from a remote store.
+        /// </summary>
+        RecallOnOpen = 0x40000,
+
+        /// <summary>
+        /// A file or directory that has an associated reparse point, or a file that is a symbolic link.
+        /// </summary>
+        ReparsePoint = 0x400,
+
+        /// <summary>
+        /// A file that is a sparse file.
+        /// </summary>
+        SparseFile = 0x200,
+
+        /// <summary>
+        /// A file or directory that the operating system uses a part of, or uses exclusively.
+        /// </summary>
+        System = 0x4,
+
+        /// <summary>
+        /// A file that is being used for temporary storage.
+        /// File systems avoid writing data back to mass storage if sufficient cache memory is available, because typically, an application deletes a temporary file after the handle is closed.
+        /// In that scenario, the system can entirely avoid writing the data.
+        /// Otherwise, the data is written after the handle is closed.
+        /// </summary>
+        Temporary = 0x100,
+
+        /// <summary>
+        /// This value is reserved for system use.
+        /// </summary>
+        Virtual = 0x10000,
+
+        /// <summary>
+        /// This attribute indicates user intent that the file or directory should be kept fully present locally even when not being actively accessed.
+        /// This attribute is for use with hierarchical storage management software.
+        /// </summary>
+        Pinned = 0x80000,
+
+        /// <summary>
+        /// This attribute indicates that the file or directory should not be kept fully present locally except when being actively accessed.
+        /// This attribute is for use with hierarchical storage management software.
+        /// </summary>
+        Unpinned = 0x100000,
+    }
+
     internal enum MonitorDpiType : int
     {
         EffectiveDpi = 0,
         AngularDpi = 1,
         RawDpi = 2,
         Default = EffectiveDpi,
+    }
+
+    internal enum MonitorDefaultTo : uint
+    {
+        /// <summary>
+        /// Returns NULL.
+        /// </summary>
+        Null = 0,
+
+        /// <summary>
+        /// Returns a handle to the primary display monitor.
+        /// </summary>
+        Primary = 1,
+
+        /// <summary>
+        /// Returns a handle to the display monitor that is nearest to the window.
+        /// </summary>
+        Nearest = 2,
     }
 
     internal enum ProcessDPIAwareness : int
