@@ -29,7 +29,8 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         public static IntPtr HelperHWnd { get; private set; }
 
-        private static Win32.WNDPROC WindowProc = Win32WindowProc;
+        // A handle to a windowproc delegate so it doesn't get GC collected.
+        private Win32.WNDPROC? WindowProc;
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
@@ -52,6 +53,10 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Exception("WindowComponent can only initialize the Window component.");
             }
+
+            // Set the WindowProc delegate so that we capture "this".
+            // FIXME: Does this cause GC issues?
+            WindowProc = (hWnd, uMsg, wParam, lParam) => this.Win32WindowProc(hWnd, uMsg, wParam, lParam);
 
             // Here we register the window class that we will use for all created windows.
             Win32.WNDCLASSEX wndClass = Win32.WNDCLASSEX.Create();
@@ -153,14 +158,13 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        private static IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
+        private IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
             //Console.WriteLine("WinProc " + message + " " + hWnd);
             switch (uMsg)
             {
                 case WM.KEYDOWN:
                     {
-                        // FIXME: Ability to "eat" key down presses?
                         HWND h = HWndDict[hWnd];
 
                         ulong vk = wParam.ToUInt64();
@@ -169,6 +173,18 @@ namespace OpenTK.Platform.Native.Windows
                         bool extended = (l & (1 << 24)) != 0;
 
                         EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(vk, wasDown, extended));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.KEYUP:
+                    {
+                        HWND h = HWndDict[hWnd];
+
+                        ulong vk = wParam.ToUInt64();
+                        long l = lParam.ToInt64();
+                        bool extended = (l & (1 << 24)) != 0;
+
+                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(vk, extended));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -378,6 +394,38 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.MOUSEWHEEL:
+                    {
+                        float delta = ((int)(wParam.ToUInt32() & Win32.HiWordMask) >> 16) / 120f;
+                        
+                        bool success = Win32.SystemParametersInfo(SPI.GetWheelScrollLines, 0, out uint lines, SPIF.None);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
+
+                        HWND h = HWndDict[hWnd];
+
+                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(new Vector2(0, delta), new Vector2(0, delta * lines)));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.MOUSEHWHEEL:
+                    {
+                        float delta = ((int)(wParam.ToUInt32() & Win32.HiWordMask) >> 16) / 120f;
+
+                        bool success = Win32.SystemParametersInfo(SPI.GetWheelScrollChars, 0, out uint chars, SPIF.None);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
+
+                        HWND h = HWndDict[hWnd];
+
+                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(new Vector2(delta, 0), new Vector2(delta * chars, 0)));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 case WM.SIZE:
                     {
                         SIZE size = (SIZE)wParam.ToUInt32();
@@ -415,14 +463,14 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.CLOSE:
                     {
-                        // FIXME: Get the result back from the user here!
-                        // Or delay the closing of the window until the user has handled the message.
-                        // This could hang the window if the user code is stuck.
                         HWND h = HWndDict[hWnd];
                         EventQueue.Raise(h, PlatformEventType.Close, new CloseEventArgs(h));
 
-                        // FIXME: HACK! This is not the greatest way to get the WindowComponent...
-                        h.WindowComponent.Destroy(h);
+                        // By not calling Destroy we allow the user to decide
+                        // themselves if they want to destroy the window or not.
+                        // Destroy(h);
+
+                        // This could hang the window if the user code is stuck.
 
                         return IntPtr.Zero;
                     }
@@ -523,7 +571,8 @@ namespace OpenTK.Platform.Native.Windows
             // We accept drag and drop operations.
             Win32.DragAcceptFiles(hWnd, true);
 
-            HWND hwnd = new HWND(hWnd, this, hints);
+            // FIXME: Set HWND.WindowState!
+            HWND hwnd = new HWND(hWnd, hints);
 
             HWndDict.Add(hwnd.HWnd, hwnd);
 

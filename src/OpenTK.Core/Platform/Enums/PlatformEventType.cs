@@ -25,6 +25,8 @@ namespace OpenTK.Core.Platform
         MouseDown,
         MouseUp,
 
+        Scroll,
+
         // FIXME: Maybe merge up and down events and add a property to the event?
         KeyDown,
         KeyUp,

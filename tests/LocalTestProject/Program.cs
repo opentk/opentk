@@ -293,10 +293,10 @@ namespace LocalTestProject
             else if (type == PlatformEventType.Close)
             {
                 CloseEventArgs closeArgs = (CloseEventArgs)args;
-                
-                handle!.UserData = false;
 
-                //closeArgs.Window.UserData = false;
+                closeArgs.Window.UserData = false;
+
+                windowComp.Destroy(closeArgs.Window);
 
                 return;
             }

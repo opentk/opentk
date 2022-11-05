@@ -850,5 +850,11 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern ulong GlobalSize(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, void* pvParam, SPIF fWinIni);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, out uint pvParam, SPIF fWinIni);
     }
 }

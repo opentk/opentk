@@ -31,13 +31,9 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Initialize this property properly!
         public WindowState WindowState { get; set; }
 
-        // FIXME: This is kind of a hack so that we can get access to the window component in the WndProc...
-        public WindowComponent WindowComponent { get; private set; }
-
-        public HWND(IntPtr hWnd, WindowComponent windowComponent, GraphicsApiHints hints)
+        public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {
             HWnd = hWnd;
-            WindowComponent = windowComponent;
             GraphicsApiHints = hints;
         }
     }

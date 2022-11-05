@@ -74,6 +74,10 @@ namespace OpenTK.Platform.Native.Windows
                         format = ClipboardFormat.Text;
                         break;
                     case CF.Bitmap:
+                    case CF.DIB:
+                    case CF.DIBV5:
+                        // All of these formats can be synthesized into CF_BITMAP.
+                        // https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats#synthesized-clipboard-formats
                         format = ClipboardFormat.Bitmap;
                         break;
                     default:

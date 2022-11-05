@@ -39,6 +39,21 @@ namespace OpenTK.Core.Platform
         }
     }
 
+    public class KeyUpEventArgs : WindowEventArgs
+    {
+        // FIXME: These properties are for testing with the Win32 backend.
+
+        public ulong VirtualKey { get; private set; }
+
+        public bool Extended { get; private set; }
+
+        public KeyUpEventArgs(ulong virtualKey, bool extended)
+        {
+            VirtualKey = virtualKey;
+            Extended = extended;
+        }
+    }
+
     public class TextInputEventArgs : WindowEventArgs
     {
         public string Text { get; private set; }
@@ -72,6 +87,7 @@ namespace OpenTK.Core.Platform
         }
     }
 
+    // FIXME: Maybe make MouseButtonDown and MouseButtonUp the same event type?
     public class MouseButtonDownEventArgs : WindowEventArgs
     {
         public MouseButton Button { get; private set; }
@@ -89,6 +105,28 @@ namespace OpenTK.Core.Platform
         public MouseButtonUpEventArgs(MouseButton button)
         {
             Button = button;
+        }
+    }
+
+    public class ScrollEventArgs : WindowEventArgs
+    {
+        /// <summary>
+        /// How much the mouse wheel has moved.
+        /// </summary>
+        public Vector2 Delta { get; private set; }
+
+        /// <summary>
+        /// The distance to move screen content.
+        /// This takes into account user settings for scrolling speed.
+        /// Measured in vertical lines and horizontal characters.
+        /// </summary>
+        // FIXME? Explain this better. Also does this exist on other platforms?
+        public Vector2 Distance { get; private set; }
+
+        public ScrollEventArgs(Vector2 delta, Vector2 distance)
+        {
+            Delta = delta;
+            Distance = distance;
         }
     }
 

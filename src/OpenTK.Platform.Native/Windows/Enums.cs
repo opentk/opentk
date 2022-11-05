@@ -1940,6 +1940,47 @@ namespace OpenTK.Platform.Native.Windows
         YVirtualScreen = 77,
     }
 
+    internal enum SPI : uint
+    {
+        // There are more possible values than are defined here.
+        // See: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfoa#parameters
+
+        /// <summary>
+        /// Retrieves the number of characters to scroll when the horizontal mouse wheel is moved.
+        /// The pvParam parameter must point to a UINT variable that receives the number of lines.
+        /// The default value is 3.
+        /// </summary>
+        GetWheelScrollChars = 0x006C,
+
+        /// <summary>
+        /// Retrieves the number of lines to scroll when the vertical mouse wheel is moved.
+        /// The pvParam parameter must point to a UINT variable that receives the number of lines.
+        /// The default value is 3.
+        /// </summary>
+        GetWheelScrollLines = 0x0068,
+    }
+
+    [Flags]
+    internal enum SPIF : uint
+    {
+        None = 0,
+
+        /// <summary>
+        /// Writes the new system-wide parameter setting to the user profile.
+        /// </summary>
+        UpdateINIFile = 0x01,
+
+        /// <summary>
+        /// Broadcasts the <see cref="WM.SETTINGCHANGE"/> message after updating the user profile.
+        /// </summary>
+        SendChange = 0x02,
+
+        /// <summary>
+        /// Same as <see cref="SendChange"/>.
+        /// </summary>
+        SendWinINIChange = 0x02
+    }
+
     internal enum MonitorDpiType : int
     {
         EffectiveDpi = 0,
