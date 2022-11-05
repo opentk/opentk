@@ -56,7 +56,7 @@ namespace OpenTK.Platform.Native.Windows
 
             // Set the WindowProc delegate so that we capture "this".
             // FIXME: Does this cause GC issues?
-            WindowProc = (hWnd, uMsg, wParam, lParam) => this.Win32WindowProc(hWnd, uMsg, wParam, lParam);
+            WindowProc = Win32WindowProc;
 
             // Here we register the window class that we will use for all created windows.
             Win32.WNDCLASSEX wndClass = Win32.WNDCLASSEX.Create();
