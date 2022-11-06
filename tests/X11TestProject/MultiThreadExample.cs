@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using OpenTK.Core.Platform;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -18,7 +20,7 @@ namespace X11TestProject
         public static readonly ConcurrentQueue<Task> XTasks = new ConcurrentQueue<Task>();
 
         // MAIN THREAD:
-        public static void Main()
+        public static void MultiThreadMain()
         {
             X11AbstractionLayer layer = new X11AbstractionLayer();
             layer.Initialize(PalComponents.Window | PalComponents.OpenGL);
