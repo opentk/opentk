@@ -277,6 +277,12 @@ namespace OpenTK.Core.Platform
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
 
         /// <summary>
+        /// Swaps the buffer of the specified window.
+        /// </summary>
+        /// <param name="handle">Handle to the window.</param>
+        void SwapBuffers(WindowHandle handle);
+
+        /// <summary>
         /// Get the event queue object for a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>

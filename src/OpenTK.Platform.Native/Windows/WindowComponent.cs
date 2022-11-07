@@ -143,21 +143,6 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public void SwapBuffers(WindowHandle handle)
-        {
-            HWND hwnd = handle.As<HWND>(this);
-
-            IntPtr hDC = Win32.GetDC(hwnd.HWnd);
-
-            bool success = Win32.SwapBuffers(hDC);
-
-            if (success == false)
-            {
-                throw new Win32Exception();
-                throw new Win32Exception("SwapBuffers failed");
-            }
-        }
-
         private IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
             //Console.WriteLine("WinProc " + message + " " + hWnd);
@@ -1119,6 +1104,20 @@ namespace OpenTK.Platform.Native.Windows
 
             x = point.X;
             y = point.Y;
+        }
+
+        public void SwapBuffers(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            IntPtr hDC = Win32.GetDC(hwnd.HWnd);
+
+            bool success = Win32.SwapBuffers(hDC);
+
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
         }
 
         /// <inheritdoc/>

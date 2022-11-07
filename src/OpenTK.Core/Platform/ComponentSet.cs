@@ -429,6 +429,11 @@ namespace OpenTK.Core.Platform
             _windowComponent!.ClientToScreen(handle, clientX, clientY, out x, out y);
         }
 
+        void IWindowComponent.SwapBuffers(WindowHandle handle)
+        {
+            _windowComponent!.SwapBuffers(handle);
+        }
+
         /// <inheritdoc/>
         IEventQueue<PlatformEventType, WindowEventArgs> IWindowComponent.GetEventQueue(WindowHandle handle)
         {
