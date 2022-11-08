@@ -193,14 +193,7 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                ulong black = XBlackPixel(Display, DefaultScreen);
-                ulong white = XWhitePixel(Display, DefaultScreen);
-                window = XCreateSimpleWindow(
-                    Display,
-                    XDefaultRootWindow(Display),
-                    0, 0, 800, 600,
-                    0,
-                    black);
+                throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
 
             XSetStandardProperties(
@@ -232,9 +225,8 @@ namespace OpenTK.Platform.Native.X11
             string str;
             IntPtr name;
 
-            if (IsWindowManagerFreedesktop)
-            {
-                XGetWindowProperty(
+            // Prefer to fetch the freedesktop name.
+            int status = XGetWindowProperty(
                     window.Display,
                     window.Window,
                     _atoms![KnownAtoms._NET_WM_NAME],
@@ -242,52 +234,46 @@ namespace OpenTK.Platform.Native.X11
                     long.MaxValue,
                     false,
                     _atoms![KnownAtoms.UTF8_STRING],
-                    out _,
+                    out XAtom returnedType,
                     out _,
                     out long count,
                     out _,
                     out name);
-                str = Marshal.PtrToStringUTF8(name) ?? string.Empty;
-                XFree(name);
-            }
-            else
+
+            // If the property is empty or does not exist or an error,
+            // fetch the classic name.
+            if (returnedType.IsNone || status != 0)
             {
                 XFetchName(window.Display, window.Window, out name);
             }
 
-            str = Marshal.PtrToStringAnsi(name) ?? string.Empty;
+            str = Marshal.PtrToStringUTF8(name) ?? string.Empty;
             XFree(name);
-
             return str;
         }
 
         public void SetTitle(WindowHandle handle, string title)
         {
             var window = handle.As<XWindowHandle>(this);
-            if (IsWindowManagerFreedesktop)
-            {
-                byte[] titleBytes = System.Text.Encoding.UTF8.GetBytes(title);
+            byte[] titleBytes = System.Text.Encoding.UTF8.GetBytes(title);
 
-                unsafe
-                {
-                    fixed(byte *titlePtr = &titleBytes[0])
-                    {
-                        XChangeProperty(
-                            window.Display,
-                            window.Window,
-                            _atoms![KnownAtoms._NET_WM_NAME],
-                            _atoms![KnownAtoms.UTF8_STRING],
-                            8,
-                            XPropertyMode.Replace,
-                            (IntPtr)titlePtr,
-                            titleBytes.Length
-                            );
-                    }
-                }
-            }
-            else
+            XStoreName(window.Display, window.Window, title);   // Set classic name,
+            unsafe
             {
-                XStoreName(window.Display, window.Window, title);
+                fixed(byte *titlePtr = &titleBytes[0])
+                {
+                    // Set freedesktop name.
+                    XChangeProperty(
+                        window.Display,
+                        window.Window,
+                        _atoms![KnownAtoms._NET_WM_NAME],
+                        _atoms![KnownAtoms.UTF8_STRING],
+                        8,
+                        XPropertyMode.Replace,
+                        (IntPtr)titlePtr,
+                        titleBytes.Length
+                        );
+                }
             }
         }
 
