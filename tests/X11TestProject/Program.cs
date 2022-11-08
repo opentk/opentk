@@ -8,22 +8,28 @@ using OpenTK.Core.Platform;
 using OpenTK.Graphics;
 using OpenTK.Platform.Native.X11;
 using static OpenTK.Platform.Native.X11.LibX11;
+using static OpenTK.Platform.Native.X11.XRandR;
 using OpenTK.Graphics.OpenGL;
 
 namespace X11TestProject
 {
     public class Program
     {
-        public static void SingleWindowMain()
+        public static void Main()
         {
             X11AbstractionLayer layer = new X11AbstractionLayer();
-            layer.Initialize(PalComponents.Window | PalComponents.OpenGL);
+            layer.Initialize(PalComponents.Window | PalComponents.OpenGL | PalComponents.Display);
             IWindowComponent windowComponent = layer;
             XWindowHandle window = (XWindowHandle)layer.Create(new OpenGLGraphicsApiHints());
             XOpenGLContextHandle context = (XOpenGLContextHandle)layer.CreateFromWindow(window);
             layer.SetCurrentContext(context);
 
-            XSelectInput(layer.Display, window.Window, XEventMask.All);
+            XSelectInput(
+                layer.Display, window.Window,
+                    XEventMask.StructureNotify |
+                    XEventMask.SubstructureNotify |
+                    XEventMask.VisibilityChanged
+                    );
 
             // XGC gc = XCreateGC(layer.Display, window.Window, 0, IntPtr.Zero);
             // XSetBackground(layer.Display, gc, XWhitePixel(layer.Display, XDefaultScreen(layer.Display)));
@@ -34,6 +40,9 @@ namespace X11TestProject
 
             GLLoader.LoadBindings(new TestBindingsContext(layer, context));
 
+            // DisplayHandle handle = layer.CreatePrimary();
+            XAtomDictionary dict = new XAtomDictionary(layer.Display);
+
             XEvent ea = new XEvent();
             int frames = 0;
             for (;;)
@@ -41,7 +50,7 @@ namespace X11TestProject
                 while (XEventsQueued(layer.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
                 {
                     XNextEvent(layer.Display, out ea);
-                    Console.WriteLine(ea.Type);
+                    // Console.WriteLine(ea.Type);
                 }
 
                 layer.GetClientSize(window, out int width, out int height);
@@ -52,10 +61,10 @@ namespace X11TestProject
 
                 GLX.glXSwapBuffers(window.Display, window.Window);
 
-                layer.SetTitle(window, $"OpenTK Window [Native:X11] [frame={++frames}]");
-
-                layer.GetClientPosition(window, out int x, out int y);
-                Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
+                layer.GetSize(window, out int w, out int h);
+                layer.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
+                // layer.GetClientPosition(window, out int x, out int y);
+                // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
             }
 
             layer.Destroy(window);
