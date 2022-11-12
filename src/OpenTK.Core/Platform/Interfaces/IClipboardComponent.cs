@@ -44,7 +44,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <returns>The audio data currently in the clipboard.</returns>
         // FIXME: Figure out the return type!
-        object? GetClipboardAudio();
+        AudioData? GetClipboardAudio();
 
         /// <summary>
         /// Gets the bitmap currently in the clipboard.

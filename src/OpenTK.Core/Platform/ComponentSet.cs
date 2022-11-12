@@ -214,7 +214,7 @@ namespace OpenTK.Core.Platform
             return _clipboardComponent!.GetClipboardText();
         }
 
-        object? IClipboardComponent.GetClipboardAudio()
+        AudioData? IClipboardComponent.GetClipboardAudio()
         {
             return _clipboardComponent!.GetClipboardAudio();
         }

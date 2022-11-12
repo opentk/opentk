@@ -359,6 +359,31 @@ namespace LocalTestProject
                 {
                     clipComp.SetClipboardText("Paste");
                 }
+                else if (keyDown.VirtualKey == 'A')
+                {
+                    AudioData data = new AudioData();
+                    data.SampleRate = 44100;
+                    data.Stereo = false;
+                    data.Audio = new short[44100 * 2];
+                    for (int i = 0; i < data.Audio.Length; i++)
+                    {
+                        float t = i / (float)data.SampleRate;
+
+                        float sample = MathF.Sin(t * MathHelper.TwoPi * 440);
+
+                        short s = (short)(sample * short.MaxValue);
+
+                        data.Audio[i] = s;
+                    }
+
+                    ((ClipboardComponent)clipComp).SetClipboardAudio(data);
+                }
+                else if (keyDown.VirtualKey == 'B')
+                {
+                    Bitmap bitmap = new Bitmap(1, 1, new byte[4] { 0xFF, 0xAA, 0x77, 0x99 });
+
+                    ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
+                }
                 else if (keyDown.VirtualKey == 'P')
                 {
                     ClipboardFormat format = clipComp.GetClipboardFormat();
@@ -406,6 +431,17 @@ namespace LocalTestProject
                                 break;
                             }
                         case ClipboardFormat.Audio:
+                            {
+                                var audio = clipComp.GetClipboardAudio()!;
+
+                                int samples = audio.Audio.Length;
+                                if (audio.Stereo) samples /= 2;
+                                float time = samples * (1f / audio.SampleRate);
+
+                                Console.WriteLine($"Current clipboard: Sample rate: {audio.SampleRate / 1000f}kHz, Stereo: {audio.Stereo}, Length: {time}s");
+
+                                break;
+                            }
                         case ClipboardFormat.None:
                         default:
                             break;

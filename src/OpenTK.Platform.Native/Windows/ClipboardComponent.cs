@@ -48,6 +48,8 @@ namespace OpenTK.Platform.Native.Windows
             ClipboardFormat.Text,
             ClipboardFormat.HTML,
             ClipboardFormat.Files,
+            ClipboardFormat.Bitmap,
+            ClipboardFormat.Audio,
         };
 
         public ClipboardFormat GetClipboardFormat()
@@ -79,6 +81,9 @@ namespace OpenTK.Platform.Native.Windows
                         // All of these formats can be synthesized into CF_BITMAP.
                         // https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats#synthesized-clipboard-formats
                         format = ClipboardFormat.Bitmap;
+                        break;
+                    case CF.Wave:
+                        format = ClipboardFormat.Audio;
                         break;
                     default:
                         if (cf == CF_HTML)
@@ -160,7 +165,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 }
             }
-            
+
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
             if (success == false)
             {
@@ -171,7 +176,203 @@ namespace OpenTK.Platform.Native.Windows
 
             Win32.EmptyClipboard();
 
-            Win32.SetClipboardData(CF.UnicodeText, hmem);
+            IntPtr handle = Win32.SetClipboardData(CF.UnicodeText, hmem);
+            if (handle == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            Win32.CloseClipboard();
+        }
+
+        unsafe struct wav_header
+        {
+            // RIFF Header
+            public fixed byte riff_header[4]; // Contains "RIFF"
+            public int wav_size; // Size of the wav portion of the file, which follows the first 8 bytes. File size - 8
+            public fixed byte wave_header[4]; // Contains "WAVE"
+
+            // Format Header
+            public fixed byte fmt_header[4]; // Contains "fmt " (includes trailing space)
+            public int fmt_chunk_size; // Should be 16 for PCM
+            public short audio_format; // Should be 1 for PCM. 3 for IEEE Float
+            public short num_channels;
+            public int sample_rate;
+            public int byte_rate; // Number of bytes per second. sample_rate * num_channels * Bytes Per Sample
+            public short sample_alignment; // num_channels * Bytes Per Sample
+            public short bit_depth; // Number of bits per sample
+
+            // Data
+            public fixed byte data_header[4]; // Contains "data"
+            public int data_bytes; // Number of bytes in data. Number of samples * num_channels * sample byte size
+                            // uint8_t bytes[]; // Remainder of wave file is bytes
+        }
+
+        public unsafe void SetClipboardAudio(AudioData data)
+        {
+            int bytes = sizeof(wav_header) + data.Audio.Length * sizeof(short);
+
+            wav_header header;
+
+            header.riff_header[0] = (byte)'R';
+            header.riff_header[1] = (byte)'I';
+            header.riff_header[2] = (byte)'F';
+            header.riff_header[3] = (byte)'F';
+
+            header.wav_size = bytes - 8; // file size - 8
+
+            header.wave_header[0] = (byte)'W';
+            header.wave_header[1] = (byte)'A';
+            header.wave_header[2] = (byte)'V';
+            header.wave_header[3] = (byte)'E';
+
+            header.fmt_header[0] = (byte)'f';
+            header.fmt_header[1] = (byte)'m';
+            header.fmt_header[2] = (byte)'t';
+            header.fmt_header[3] = (byte)' ';
+
+            header.fmt_chunk_size = 16;
+            header.audio_format = 1; // 1 for PCM. FIXME: Find the valid constants!
+            
+            header.num_channels = (short)(data.Stereo ? 2 : 1);
+            header.sample_rate = data.SampleRate;
+            header.byte_rate = header.sample_rate * header.num_channels * sizeof(short);
+            header.sample_alignment = (short)(header.num_channels * sizeof(short));
+            header.bit_depth = 16;
+
+            header.data_header[0] = (byte)'d';
+            header.data_header[1] = (byte)'a';
+            header.data_header[2] = (byte)'t';
+            header.data_header[3] = (byte)'a';
+
+            header.data_bytes = data.Audio.Length * sizeof(short);
+
+            IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable, (ulong)bytes);
+            if (hmem == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            {
+                void* memory = (char*)Win32.GlobalLock(hmem);
+                if (memory == null)
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    Win32.GlobalFree(hmem);
+                    throw new Win32Exception(error);
+                }
+
+                Span<byte> memorySpan = new Span<byte>(memory, bytes);
+
+                // First we copy over the wav header
+                MemoryMarshal.Cast<byte, wav_header>(memorySpan)[0] = header;
+
+                // Then copy the wav data
+                data.Audio.AsSpan().CopyTo(MemoryMarshal.Cast<byte, short>(memorySpan.Slice(sizeof(wav_header))));
+
+                bool stillLocked = Win32.GlobalUnlock(hmem);
+                if (stillLocked == false)
+                {
+                    // If the function returns NO_ERROR then there is no error.
+                    int errorCode = Marshal.GetLastWin32Error();
+                    if (errorCode != 0)
+                    {
+                        throw new Win32Exception(errorCode);
+                    }
+                }
+            }
+
+            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
+            if (success == false)
+            {
+                int error = Marshal.GetLastWin32Error();
+                Win32.GlobalFree(hmem);
+                throw new Win32Exception(error);
+            }
+
+            Win32.EmptyClipboard();
+
+            IntPtr handle = Win32.SetClipboardData(CF.Wave, hmem);
+            if (handle == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            Win32.CloseClipboard();
+        }
+
+        public unsafe void SetClipboardBitmap(Bitmap bitmap)
+        {
+            Win32.BITMAPV5HEADER header = new Win32.BITMAPV5HEADER();
+
+            header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
+
+            header.bV5Width = bitmap.Width;
+            header.bV5Height = bitmap.Height;
+            header.bV5Planes = 1;
+            header.bV5BitCount = 32;
+            header.bV5Compression = BI.RGB;
+            header.bV5RedMask = 0x00_FF_00_00;
+            header.bV5GreenMask = 0x00_00_FF_00;
+            header.bV5BlueMask = 0x00_00_00_FF;
+            header.bV5AlphaMask = 0xFF_00_00_00;
+
+            // FIXME: Allocate the bitmap
+            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+            IntPtr hbitmap = Win32.CreateDIBSection(hDC, header, DIB.RGBColors, out IntPtr ppvBits, IntPtr.Zero, 0);
+            if (hbitmap == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            Win32.DeleteDC(hDC);
+
+            IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable, (ulong)(sizeof(Win32.BITMAPV5HEADER) + bitmap.Data.Length));
+            if (hmem == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            int bytes = (int)Win32.GlobalSize(hmem);
+
+            {
+                void* memory = (char*)Win32.GlobalLock(hmem);
+                if (memory == null)
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    Win32.GlobalFree(hmem);
+                    throw new Win32Exception(error);
+                }
+
+                Span<byte> memorySpan = new Span<byte>(memory, bytes);
+
+                bool stillLocked = Win32.GlobalUnlock(hmem);
+                if (stillLocked == false)
+                {
+                    // If the function returns NO_ERROR then there is no error.
+                    int errorCode = Marshal.GetLastWin32Error();
+                    if (errorCode != 0)
+                    {
+                        throw new Win32Exception(errorCode);
+                    }
+                }
+            }
+
+            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
+            if (success == false)
+            {
+                int error = Marshal.GetLastWin32Error();
+                Win32.GlobalFree(hmem);
+                throw new Win32Exception(error);
+            }
+
+            Win32.EmptyClipboard();
+
+            IntPtr handle = Win32.SetClipboardData(CF.DIBV5, hmem);
+            if (handle == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
 
             Win32.CloseClipboard();
         }
@@ -220,9 +421,70 @@ namespace OpenTK.Platform.Native.Windows
             return str;
         }
 
-        public object? GetClipboardAudio()
+        public unsafe AudioData? GetClipboardAudio()
         {
-            throw new NotImplementedException();
+            bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            IntPtr obj = Win32.GetClipboardData(CF.Wave);
+            if (obj == IntPtr.Zero)
+            {
+                // We couldn't get any text.
+                return null;
+            }
+
+            int waveDataSize = (int)Win32.GlobalSize(obj);
+
+            void* waveData = (void*)Win32.GlobalLock(obj);
+            if (waveData == null)
+            {
+                throw new Win32Exception();
+            }
+
+            Span<byte> span = new Span<byte>(waveData, waveDataSize);
+
+            wav_header header = MemoryMarshal.Cast<byte, wav_header>(span)[0];
+
+            Console.WriteLine($"wav_size: {header.wav_size}");
+
+
+            Console.WriteLine($"fmt_chunk_size: {header.fmt_chunk_size}");
+            Console.WriteLine($"audio_format: {header.audio_format}");
+            Console.WriteLine($"num_channels: {header.num_channels}");
+            Console.WriteLine($"sample_rate: {header.sample_rate}");
+            Console.WriteLine($"byte_rate: {header.byte_rate}");
+            Console.WriteLine($"sample_alignment: {header.sample_alignment}");
+            Console.WriteLine($"bit_depth: {header.bit_depth}");
+            Console.WriteLine($"data_bytes: {header.data_bytes}");
+
+            AudioData data = new AudioData();
+
+            data.SampleRate = header.sample_rate;
+            data.Stereo = header.num_channels == 2 ? true : false; // More than 2 channels?
+            // FIXME: Consider sample alignment, format etc
+            data.Audio = MemoryMarshal.Cast<byte, short>(span.Slice(sizeof(wav_header))).ToArray();
+
+            bool stillLocked = Win32.GlobalUnlock(obj);
+            if (stillLocked)
+            {
+                // If the function returns NO_ERROR then there is no error.
+                int errorCode = Marshal.GetLastWin32Error();
+                if (errorCode != 0)
+                {
+                    throw new Win32Exception(errorCode);
+                }
+            }
+
+            bool succeess = Win32.CloseClipboard();
+            if (succeess == false)
+            {
+                throw new Win32Exception();
+            }
+
+            return data;
         }
 
         public unsafe Bitmap? GetClipboardBitmap()
