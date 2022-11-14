@@ -31,6 +31,11 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Initialize this property properly!
         public WindowState WindowState { get; set; }
 
+        public int? MaxWidth { get; set; }
+        public int? MaxHeight { get; set; }
+        public int? MinWidth { get; set; }
+        public int? MinHeight { get; set; }
+
         public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {
             HWnd = hWnd;

@@ -358,6 +358,30 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        void IWindowComponent.GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            _windowComponent!.GetMaxClientSize(handle, out width, out height);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.SetMaxClientSize(WindowHandle handle, int? width, int? height)
+        {
+            _windowComponent!.SetMaxClientSize(handle, width, height);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.GetMinClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            _windowComponent!.GetMinClientSize(handle, out width, out height);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.SetMinClientSize(WindowHandle handle, int? width, int? height)
+        {
+            _windowComponent!.SetMinClientSize(handle, width, height);
+        }
+
+        /// <inheritdoc/>
         DisplayHandle IWindowComponent.GetDisplay(WindowHandle handle)
         {
             return _windowComponent!.GetDisplay(handle);

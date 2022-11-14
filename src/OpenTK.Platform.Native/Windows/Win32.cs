@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using static OpenTK.Platform.Native.Windows.Win32;
 
 #nullable enable
 
@@ -185,6 +186,15 @@ namespace OpenTK.Platform.Native.Windows
             int cy,
             SetWindowPosFlags uFlags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool MoveWindow(
+            IntPtr /* HWND */ hWnd,
+            int X,
+            int Y,
+            int nWidth,
+            int nHeight,
+            bool bRepaint);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
@@ -220,8 +230,14 @@ namespace OpenTK.Platform.Native.Windows
             public uint dwTimeout;
         }
     
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AdjustWindowRect(ref RECT lpRect, WindowStyles dwStyle, bool bMenu);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool AdjustWindowRectEx(ref RECT lpRect, WindowStyles dwStyle, bool bMenu, WindowStylesEx dwExStyle);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool AdjustWindowRectExForDpi(ref RECT lpRect, WindowStyles dwStyle, bool bMenu, WindowStylesEx dwExStyle, uint dpi);
 
         /// <summary>
         /// Sets the specified window's show state.
@@ -886,6 +902,16 @@ namespace OpenTK.Platform.Native.Windows
             string szDisplayName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
             string szTypeName;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct MINMAXINFO
+        {
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
         }
     }
 }

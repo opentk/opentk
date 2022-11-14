@@ -395,6 +395,26 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
+        public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetMinClientSize(WindowHandle handle, int? width, int? height)
+        {
+            throw new NotImplementedException();
+        }
+
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
             throw new NotImplementedException();

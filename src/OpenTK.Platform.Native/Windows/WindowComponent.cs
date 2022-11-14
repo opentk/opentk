@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -97,6 +98,11 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);
             }
+
+            // FIXME: Should we set SetThreadExecutionState?
+            // Long cutscenes could make the screensaver to kick in and we probably don't want that.
+            // Should this be a user setting? Tools should allow the screensaver while games shouldn't.
+            // Doesn't really fit into any of the current components.
         }
 
         /// <inheritdoc/>
@@ -445,6 +451,52 @@ namespace OpenTK.Platform.Native.Windows
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.GETMINMAXINFO:
+                    {
+                        if (HWndDict.TryGetValue(hWnd, out HWND? h) == false)
+                        {
+                            // We don't have the window in our dictionary, we can't do anything.
+                            // This message will be sent during the call to CreateWindowEx, and
+                            // at that time we don't have the hwnd pointer nor the HWND object setup.
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
+
+                        Win32.RECT insets = default;
+                        // We need ToInt64 here as Style is a uint which means that 0x00000000_ffffffff could be returned,
+                        // and ToInt32 is going to throw in that case
+                        WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(h.HWnd, GetGWLPIndex.Style).ToInt64();
+                        WindowStylesEx exStyle = (WindowStylesEx)Win32.GetWindowLongPtr(h.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+
+                        // FIXME: Maybe we should be calling AdjustWindowRectExForDpi if it is available?
+                        Win32.AdjustWindowRectEx(ref insets, style, false, exStyle);
+
+                        unsafe
+                        {
+                            ref Win32.MINMAXINFO minMaxInfo = ref Unsafe.AsRef<Win32.MINMAXINFO>((void*)lParam);
+
+                            if (h.MinWidth is int minWidth)
+                            {
+                                minMaxInfo.ptMinTrackSize.X = minWidth + insets.Width;
+                            }
+
+                            if (h.MinHeight is int minHeight)
+                            {
+                                minMaxInfo.ptMinTrackSize.Y = minHeight + insets.Height;
+                            }
+
+                            if (h.MaxWidth is int maxWidth)
+                            {
+                                minMaxInfo.ptMaxTrackSize.X = maxWidth + insets.Width;
+                            }
+
+                            if (h.MaxHeight is int maxHeight)
+                            {
+                                minMaxInfo.ptMaxTrackSize.Y = maxHeight + insets.Height;
+                            }
+                        }
+
+                        return IntPtr.Zero;
                     }
                 case WM.CLOSE:
                     {
@@ -827,6 +879,50 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception("SetWindowPos failed");
             }
+        }
+
+        public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            width = hwnd.MaxWidth;
+            height = hwnd.MaxHeight;
+        }
+
+        public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            hwnd.MaxWidth = width;
+            hwnd.MaxHeight = height;
+
+            // Call MoveWindow to trigger a recalculation of the window size.
+            // MoveWindow causes WM_WINDOWPOSCHANGING to be sent which causes
+            // WM_GETMINMAXINFO to be sent.
+            Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT rect);
+            Win32.MoveWindow(hwnd.HWnd, rect.left, rect.top, rect.Width, rect.Height, true);
+        }
+
+        public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            width = hwnd.MinWidth;
+            height = hwnd.MinHeight;
+        }
+
+        public void SetMinClientSize(WindowHandle handle, int? width, int? height)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            hwnd.MinWidth = width;
+            hwnd.MinHeight = height;
+
+            // Call MoveWindow to trigger a recalculation of the window size.
+            // MoveWindow causes WM_WINDOWPOSCHANGING to be sent which causes
+            // WM_GETMINMAXINFO to be sent.
+            Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT rect);
+            Win32.MoveWindow(hwnd.HWnd, rect.left, rect.top, rect.Width, rect.Height, true);
         }
 
         /// <inheritdoc/>

@@ -133,6 +133,9 @@ namespace LocalTestProject
             windowComp.SetClientSize(WindowHandle, 600, 400);
             windowComp.SetClientPosition(WindowHandle, 100, 100);
 
+            windowComp.SetMinClientSize(WindowHandle, 200, 200);
+            windowComp.SetMaxClientSize(WindowHandle, 1600, 900);
+
             windowComp.GetPosition(WindowHandle, out x, out y);
             windowComp.GetSize(WindowHandle, out width, out height);
             windowComp.GetClientPosition(WindowHandle, out cx, out cy);
@@ -521,6 +524,11 @@ namespace LocalTestProject
                     string name = dispComp.GetName(disp);
                     
                     Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
+                }
+                else if (keyDown.VirtualKey == 'S')
+                {
+                    windowComp.GetClientSize(WindowHandle, out int width, out int height);
+                    Console.WriteLine($"Window 1 client size: ({width}, {height})");
                 }
             }
         }

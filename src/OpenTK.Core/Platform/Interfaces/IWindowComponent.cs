@@ -165,6 +165,38 @@ namespace OpenTK.Core.Platform
         void SetClientSize(WindowHandle handle, int width, int height);
 
         /// <summary>
+        /// Gets the maximum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">The maximum width of the client area of the window, or null if no limit is set.</param>
+        /// <param name="height">The maximum height of the client area of the window, or null if no limit is set.</param>
+        void GetMaxClientSize(WindowHandle handle, out int? width, out int? height);
+
+        /// <summary>
+        /// Sets the maximum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">New maximum width of the client area of the window, or null to remove limit.</param>
+        /// <param name="height">New maximum height of the client area of the window, or null to remove limit.</param>
+        void SetMaxClientSize(WindowHandle handle, int? width, int? height);
+
+        /// <summary>
+        /// Gets the minimum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">The minimum width of the client area of the window, or null if no limit is set.</param>
+        /// <param name="height">The minimum height of the client area of the window, or null if no limit is set.</param>
+        void GetMinClientSize(WindowHandle handle, out int? width, out int? height);
+
+        /// <summary>
+        /// Sets the minimum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">New minimum width of the client area of the window, or null to remove limit.</param>
+        /// <param name="height">New minimum height of the client area of the window, or null to remove limit.</param>
+        void SetMinClientSize(WindowHandle handle, int? width, int? height);
+
+        /// <summary>
         /// Get the display handle a window is in.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
