@@ -149,6 +149,8 @@ namespace LocalTestProject
             windowComp.SetMode(WindowHandle, WindowMode.Normal);
             windowComp.SetMode(WindowHandle2, WindowMode.Normal);
 
+            windowComp.SetPosition(WindowHandle2, 0, 0);
+
             mode = windowComp.GetMode(WindowHandle);
             Console.WriteLine($"Mode: {mode}");
 
@@ -531,8 +533,25 @@ namespace LocalTestProject
                     Console.WriteLine($"Window 1 client size: ({width}, {height})");
                 }
             }
-        }
+            else if (type == PlatformEventType.WindowMove)
+            {
+                WindowMoveEventArgs move = (WindowMoveEventArgs)args;
 
+                Console.WriteLine($"Window '{windowComp.GetTitle(move.Window)}' at client pos: ({move.ClientAreaPosition}), window pos: {move.WindowPosition}");
+            }
+            else if (type == PlatformEventType.WindowResize)
+            {
+                WindowResizeEventArgs resize = (WindowResizeEventArgs)args;
+
+                Console.WriteLine($"Window '{windowComp.GetTitle(resize.Window)}' new size: ({resize.NewSize})");
+            }
+            else if (type == PlatformEventType.WindowModeChange)
+            {
+                WindowModeChangeEventArgs modeChange = (WindowModeChangeEventArgs)args;
+
+                Console.WriteLine($"Window '{windowComp.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
+            }
+        }
         static BufferHandle buffer;
 
         static VertexArrayHandle vao;

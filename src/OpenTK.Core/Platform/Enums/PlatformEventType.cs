@@ -13,6 +13,10 @@ namespace OpenTK.Core.Platform
         Close,
 
         Focus,
+        WindowMove,
+        WindowResize,
+
+        WindowModeChange,
 
         MouseEnter,
 

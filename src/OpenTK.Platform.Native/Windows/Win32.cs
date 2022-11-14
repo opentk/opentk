@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
-using static OpenTK.Platform.Native.Windows.Win32;
 
 #nullable enable
 
@@ -18,8 +15,8 @@ namespace OpenTK.Platform.Native.Windows
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
 
-        internal static int GET_X_LPARAM(IntPtr lParam) => ((short)lParam & LoWordMask);
-        internal static int GET_Y_LPARAM(IntPtr lParam) => (((int)lParam >> 16) & LoWordMask);
+        internal static int GET_X_LPARAM(IntPtr lParam) => (short)(lParam.ToInt64() & LoWordMask);
+        internal static int GET_Y_LPARAM(IntPtr lParam) => (short)((lParam.ToInt64() >> 16) & LoWordMask);
 
         // FIXME: Potentially change HTCLIENT into an enum later.
 
@@ -913,5 +910,19 @@ namespace OpenTK.Platform.Native.Windows
             public POINT ptMinTrackSize;
             public POINT ptMaxTrackSize;
         }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmGetWindowAttribute(
+            IntPtr /* HWND */ hwnd,
+            DWMWindowAttribute dwAttribute,
+            out IntPtr pvAttribute,
+            uint cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmGetWindowAttribute(
+            IntPtr /* HWND */ hwnd,
+            DWMWindowAttribute dwAttribute,
+            out RECT pvAttribute,
+            uint cbAttribute);
     }
 }

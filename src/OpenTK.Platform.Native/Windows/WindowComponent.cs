@@ -56,7 +56,7 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // Set the WindowProc delegate so that we capture "this".
-            // FIXME: Does this cause GC issues?
+            // FIXME: Does this cause GC issues where "this" is circularly referenced?
             WindowProc = Win32WindowProc;
 
             // Here we register the window class that we will use for all created windows.
@@ -423,24 +423,27 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
+                        WindowState prevWindowState = h.WindowState;
+
+                        // FIXME: Decide if we should merge WindowResize with WindowModeChange! if not, what is the order??
                         switch (size)
                         {
                             case SIZE.Maximized:
                                 h.WindowState = WindowState.Maximized;
-                                Console.WriteLine($"Move: {size}");
-                                //EventQueue.Raise(h, WindowEventType.Maximized, null);
+
+                                EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Maximized));
                                 break;
                             case SIZE.Minimized:
                                 h.WindowState = WindowState.Minimized;
-                                Console.WriteLine($"Move: {size}");
-                                //EventQueue.Raise(h, WindowEventType.Minimized, null);
+
+                                EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Minimized));
                                 break;
                             case SIZE.Restored:
                                 if (h.WindowState != WindowState.Restored)
                                 {
                                     h.WindowState = WindowState.Restored;
-                                    Console.WriteLine($"Move: {size}");
-                                    //EventQueue.Raise(h, WindowEventType.Restored, null);
+
+                                    EventQueue.Raise(h, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(h, WindowMode.Normal));
                                 }
                                 break;
                             case SIZE.MaxShow:
@@ -449,6 +452,24 @@ namespace OpenTK.Platform.Native.Windows
                                 // Igonre these for now!
                                 break;
                         }
+
+                        int x = Win32.GET_X_LPARAM(lParam);
+                        int y = Win32.GET_Y_LPARAM(lParam);
+
+                        EventQueue.Raise(h, PlatformEventType.WindowResize, new WindowResizeEventArgs(h, new Vector2i(x, y)));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.MOVE:
+                    {
+                        int x = Win32.GET_X_LPARAM(lParam);
+                        int y = Win32.GET_Y_LPARAM(lParam);
+
+                        HWND h = HWndDict[hWnd];
+
+                        Win32.GetWindowRect(hWnd, out Win32.RECT rect);
+                        
+                        EventQueue.Raise(h, PlatformEventType.WindowMove, new WindowMoveEventArgs(h, new Vector2i(rect.left, rect.top), new Vector2i(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }

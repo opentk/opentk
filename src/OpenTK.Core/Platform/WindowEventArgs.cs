@@ -11,13 +11,55 @@ namespace OpenTK.Core.Platform
     {
     }
 
-    public class FocusEventArgs : EventArgs
+    public class FocusEventArgs : WindowEventArgs
     {
         public bool GotFocus { get; private set; }
 
         public FocusEventArgs(bool gotFocus)
         {
             GotFocus = gotFocus;
+        }
+    }
+
+    public class WindowMoveEventArgs : WindowEventArgs
+    {
+        public WindowHandle Window { get; private set; }
+
+        public Vector2i WindowPosition { get; private set; }
+
+        public Vector2i ClientAreaPosition { get; private set; }
+
+        public WindowMoveEventArgs(WindowHandle window, Vector2i windowPosition, Vector2i clientAreaPosition)
+        {
+            Window = window;
+            WindowPosition = windowPosition;
+            ClientAreaPosition = clientAreaPosition;
+        }
+    }
+
+    public class WindowResizeEventArgs : WindowEventArgs
+    {
+        public WindowHandle Window { get; private set; }
+
+        public Vector2i NewSize { get; private set; }
+
+        public WindowResizeEventArgs(WindowHandle window, Vector2i newSize)
+        {
+            Window = window;
+            NewSize = newSize;
+        }
+    }
+
+    public class WindowModeChangeEventArgs : WindowEventArgs
+    {
+        public WindowHandle Window { get; private set; }
+
+        public WindowMode NewMode { get; private set; }
+
+        public WindowModeChangeEventArgs(WindowHandle window, WindowMode newMode)
+        {
+            Window = window;
+            NewMode = newMode;
         }
     }
 
