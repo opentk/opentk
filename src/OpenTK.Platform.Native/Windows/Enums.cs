@@ -1429,6 +1429,44 @@ namespace OpenTK.Platform.Native.Windows
 
     }
 
+    /// <summary>
+    /// <see href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-wmf/9fec0834-607d-427d-abd5-ab240fb0db38"/>
+    /// </summary>
+    internal enum GamutMappingIntent : uint
+    {
+        /// <summary>
+        /// <para>Intent: Match</para>
+        /// <para>ICC Name: Absolute Colorimetric</para>
+        /// Maintains the white point.
+        /// Matches the colors to their nearest color in the destination gamut.
+        /// </summary>
+        AbsColorimetric = 0x00000008,
+
+        /// <summary>
+        /// <para>Intent: Graphic</para>
+        /// <para>ICC Name: Saturation</para>
+        /// Maintains saturation.
+        /// Used for business charts and other situations in which undithered colors are required.
+        /// </summary>
+        Business = 0x00000001,
+
+        /// <summary>
+        /// <para>Intent: Proof</para>
+        /// <para>ICC Name: Relative Colorimetric</para>
+        /// Maintains colorimetric match.
+        /// Used for graphic designs and named colors.
+        /// </summary>
+        Graphics = 0x00000002,
+
+        /// <summary>
+        /// <para>Intent: Picture</para>
+        /// <para>ICC Name: Perceptual</para>
+        /// Maintains contrast.
+        /// Used for photographs and natural images.
+        /// </summary>
+        Images = 0x00000004,
+    }
+
     [Flags]
     internal enum LR : uint
     {

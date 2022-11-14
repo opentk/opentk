@@ -587,7 +587,7 @@ namespace OpenTK.Platform.Native.Windows
             public uint bV5GammaRed;
             public uint bV5GammaGreen;
             public uint bV5GammaBlue;
-            public uint bV5Intent;
+            public GamutMappingIntent bV5Intent;
             public uint bV5ProfileData;
             public uint bV5ProfileSize;
             public uint bV5Reserved;

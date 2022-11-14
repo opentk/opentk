@@ -323,15 +323,15 @@ namespace OpenTK.Platform.Native.Windows
 
         public unsafe void SetClipboardBitmap(Bitmap bitmap)
         {
-            // FIXME: Do we need to consider stride more carefully?
-            int bytesPerRow = bitmap.Width * 4;
-
+            // We don't need to consider alignment as 32bpp image data will always align to DWORDs
+            // independent of the width of the image.
+            // This is not true for 24bpp images at certain widths, but we don't have to worry.
             // See https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader#calculating-surface-stride
-            int stride = ((((bitmap.Width * 32) + 31) & ~31) >> 3);
+            int bytesPerRow = bitmap.Width * 4;
 
             int bytes = (int)sizeof(Win32.BITMAPV5HEADER) + bytesPerRow * bitmap.Height;
 
-            IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable, (ulong)bytes);
+            IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable | GMEM.ZeroInit, (ulong)bytes);
             if (hmem == IntPtr.Zero)
             {
                 throw new Win32Exception();
@@ -346,8 +346,6 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception(error);
                 }
 
-                Console.WriteLine($"Writing bitmap to 0x{(ulong)memory:X} (0b{Convert.ToString((long)memory, 2)})");
-
                 Span<byte> memorySpan = new Span<byte>(memory, bytes);
 
                 // First we set the header
@@ -361,38 +359,23 @@ namespace OpenTK.Platform.Native.Windows
                 header.bV5BitCount = 32;
                 header.bV5Compression = BI.RGB;
                 header.bV5CSType = CSType.sRGB;
-                //header.bV5SizeImage = (uint)(bitmap.Width * bitmap.Height * 4);
-                //header.bV5RedMask = 0x00_00_00_FF;
-                //header.bV5GreenMask = 0x00_00_FF_00;
-                //header.bV5BlueMask = 0x00_FF_00_00;
-                //header.bV5AlphaMask = 0xFF_00_00_00;
-                // Copy over RGBA data into BGRA format.
-                // FIXME: This can probably be done more efficiently
-                //bitmap.Data.AsSpan().CopyTo(memorySpan.Slice(sizeof(Win32.BITMAPV5HEADER)));
+                header.bV5SizeImage = (uint)(bytesPerRow * bitmap.Height);
+                header.bV5RedMask = 0x00_FF_00_00;
+                header.bV5GreenMask = 0x00_00_FF_00;
+                header.bV5BlueMask = 0x00_00_00_FF;
+                header.bV5AlphaMask = 0x00_00_00_00;
+                header.bV5Intent = GamutMappingIntent.Graphics;
 
-                int c = 0;
-                foreach (ref byte item in memorySpan.Slice(Marshal.SizeOf<Win32.BITMAPV5HEADER>()))
+                Span<byte> image = memorySpan.Slice(sizeof(Win32.BITMAPV5HEADER));
+
+                // FIXME: This copy plus RGBA to BGRA conversion can probably be done more efficiently
+                bitmap.Data.AsSpan().CopyTo(image);
+
+                // Convert from RGBA data into BGRA data.
+                for (int i = 0; i < image.Length; i += 4)
                 {
-                    c++;
-                    item = (byte)(c / (bitmap.Width * 4));
-                    if (c % 4 == 0) item = 255;
+                    (image[i + 0], image[i + 2]) = (image[i + 2], image[i + 0]);
                 }
-                /*
-                Span<int> pixels = MemoryMarshal.Cast<byte, int>(memorySpan.Slice(sizeof(Win32.BITMAPV5HEADER)));
-                for (int i = 0; i < bitmap.Data.Length/4; i++)
-                {
-                    int index = (i * 4);
-                    // pixels is bgra, bitmap.Data is rgba
-                    //pixels[i] = bitmap.Data[index + 3] << 24 | bitmap.Data[index + 2] << 16 | bitmap.Data[index + 1] << 8 | bitmap.Data[index + 0];
-
-                    //pixels[i] = bitmap.Data[index + 2] << 24 | bitmap.Data[index + 1] << 16 | bitmap.Data[index + 0] << 8 | bitmap.Data[index + 3];
-
-                    //pixels[i] = bitmap.Data[index + 2]; // b
-                    //pixels[i] = bitmap.Data[index + 1]; // g
-                    //pixels[i] = bitmap.Data[index + 0]; // r
-                    //pixels[i] = bitmap.Data[index + 3]; // a
-                }
-                */
 
                 bool stillLocked = Win32.GlobalUnlock(hmem);
                 if (stillLocked == false)
@@ -410,7 +393,8 @@ namespace OpenTK.Platform.Native.Windows
             if (success == false)
             {
                 int error = Marshal.GetLastWin32Error();
-                //Win32.GlobalFree(hbitmap);
+                // We assume the clipboard didn't take ownership of the memory.
+                Win32.GlobalFree(hmem);
                 Win32.CloseClipboard();
                 throw new Win32Exception(error);
             }
@@ -420,7 +404,9 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr handle = Win32.SetClipboardData(CF.DIBV5, hmem);
             if (handle == IntPtr.Zero)
             {
-                throw new Win32Exception();
+                int error = Marshal.GetLastWin32Error();
+                Win32.CloseClipboard();
+                throw new Win32Exception(error);
             }
 
             success = Win32.CloseClipboard();

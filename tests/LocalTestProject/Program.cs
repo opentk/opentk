@@ -386,45 +386,60 @@ namespace LocalTestProject
                 }
                 else if (keyDown.VirtualKey == 'B')
                 {
-                    const int W = 10;
-                    const int H = 10;
+                    const int W = 600;
+                    const int H = 600;
                     byte[] b = new byte[W * H * 4];
-                    for (int x = 0; x < W; x++)
+                    for (int xi = 0; xi < W; xi++)
                     {
-                        for (int y = 0; y < H; y++)
+                        for (int yi = 0; yi < H; yi++)
                         {
-                            int index = (y * W + x) * 4;
+                            int index = (yi * W + xi) * 4;
 
                             static byte ftob(float f) => (byte)(f * 255);
 
-                            //b[index + 0] = ftob((MathF.Sin((x / (float)W) * MathHelper.TwoPi * 4) + 1) / 2);
-                            //b[index + 1] = ftob((MathF.Sin((x / (float)W) * MathHelper.TwoPi * 2) + 1) / 2);
-                            //b[index + 2] = ftob((MathF.Sin((y / (float)H) * MathHelper.TwoPi * 5) + 1) / 2);
-                            //b[index + 3] = ftob((MathF.Sin((y / (float)H) * MathHelper.TwoPi * 3) + 1) / 2);
-                            b[index + 0] = 255;
-                            b[index + 1] = 255;
-                            b[index + 2] = 255;
+                            float x0 = MathHelper.MapRange(xi, 0f, W, -2f, 0.47f);
+                            float y0 = MathHelper.MapRange(yi, 0f, H, -1.12f, 1.12f);
+
+                            float x = 0;
+                            float y = 0;
+                            const int maxIterations = 1000;
+                            int iteration = 0;
+                            while (x*x + y*y < 2*2 && iteration < maxIterations)
+                            {
+                                iteration++;
+
+                                float xTemp = x * x - y * y + x0;
+                                y = 2 * x * y + y0;
+                                x = xTemp;
+                            }
+
+                            // See https://stackoverflow.com/a/22681410/9316430
+                            static void SpectralColor(float l, out float r, out float g, out float b) // RGB <0,1> <- lambda l <400,700> [nm]
+                            {
+                                float t; r = 0.0f; g = 0.0f; b = 0.0f;
+                                if ((l >= 400.0) && (l < 410.0)) { t = (l - 400.0f) / (410.0f - 400.0f); r = +(0.33f * t) - (0.20f * t * t); }
+                                else if ((l >= 410.0) && (l < 475.0)) { t = (l - 410.0f) / (475.0f - 410.0f); r = 0.14f - (0.13f * t * t); }
+                                else if ((l >= 545.0) && (l < 595.0)) { t = (l - 545.0f) / (595.0f - 545.0f); r = +(1.98f * t) - (t * t); }
+                                else if ((l >= 595.0) && (l < 650.0)) { t = (l - 595.0f) / (650.0f - 595.0f); r = 0.98f + (0.06f * t) - (0.40f * t * t); }
+                                else if ((l >= 650.0) && (l < 700.0)) { t = (l - 650.0f) / (700.0f - 650.0f); r = 0.65f - (0.84f * t) + (0.20f * t * t); }
+                                if ((l >= 415.0) && (l < 475.0)) { t = (l - 415.0f) / (475.0f - 415.0f); g = +(0.80f * t * t); }
+                                else if ((l >= 475.0) && (l < 590.0)) { t = (l - 475.0f) / (590.0f - 475.0f); g = 0.8f + (0.76f * t) - (0.80f * t * t); }
+                                else if ((l >= 585.0) && (l < 639.0)) { t = (l - 585.0f) / (639.0f - 585.0f); g = 0.84f - (0.84f * t); }
+                                if ((l >= 400.0) && (l < 475.0)) { t = (l - 400.0f) / (475.0f - 400.0f); b = +(2.20f * t) - (1.50f * t * t); }
+                                else if ((l >= 475.0) && (l < 560.0)) { t = (l - 475.0f) / (560.0f - 475.0f); b = 0.7f - (t) + (0.30f * t * t); }
+                            }
+
+                            float l = MathHelper.MapRange(iteration, 0, maxIterations, 400.0f, 700.0f);
+                            SpectralColor(l, out float red, out float green, out float blue);
+
+                            b[index + 0] = ftob(red);
+                            b[index + 1] = ftob(green);
+                            b[index + 2] = ftob(blue);
                             b[index + 3] = 255;
                         }
                     }
-                    b[0] = 255;
-                    b[1] = 255;
-                    b[2] = 255;
-                    b[3] = 255;
-
-                    for (int i = 0; i < W; i++)
-                    {
-                        b[2 * W + i+1] = 0;
-                    }
-
-                    Bitmap bitmap = new Bitmap(W, H, b);
-
-                    ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
-                }
-                else if (keyDown.VirtualKey == 'N')
-                {
                     
-                    Bitmap bitmap = new Bitmap(1, 1, new byte[4] { 0xFF, 0x00, 0xFF, 0xFF });
+                    Bitmap bitmap = new Bitmap(W, H, b);
 
                     ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
                 }
