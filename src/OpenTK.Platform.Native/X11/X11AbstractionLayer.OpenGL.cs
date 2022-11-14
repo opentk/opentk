@@ -48,7 +48,8 @@ namespace OpenTK.Platform.Native.X11
                 attribs.Add(hints.Profile switch
                 {
                     OpenGLProfile.Compatibility => GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
-                    OpenGLProfile.Core => GLX_CONTEXT_CORE_PROFILE_BIT_ARB
+                    OpenGLProfile.Core => GLX_CONTEXT_CORE_PROFILE_BIT_ARB,
+                    _ => throw new Exception() // This exception satisfies the linter.
                 });
             }
 
@@ -196,7 +197,7 @@ namespace OpenTK.Platform.Native.X11
                 $"    Versions: {GLXServerVersion?.ToString() ?? "???"}\n" +
                 $"    Vendor: {GLXServerVendor}\n" +
                 $"    Extensions: ({GLXServerExtensions.Count}) {serverExtensions}",
-                "PAL-2.0/X11"
+                "PAL-2.0/Linux/X11/OpenGL"
             );
         }
     }

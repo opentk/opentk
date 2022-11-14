@@ -14,6 +14,34 @@ namespace OpenTK.Platform.Native.X11
         public XEventType Type;
         [FieldOffset(0)]
         public XAnyEvent Any;
+
+        #region XRandR
+
+        [FieldOffset(0)]
+        public XRRScreenChangeNotifyEvent RRScreenChangeNotify;
+
+        [FieldOffset(0)]
+        public XRRNotifyEvent RRNotify;
+
+        [FieldOffset(0)]
+        public XRROutputChangeNotifyEvent RROutputChangeNotify;
+
+        [FieldOffset(0)]
+        public XRRCrtcChangedNotifyEvent RRCrtcChanged;
+
+        [FieldOffset(0)]
+        public XRROutputPropertyNotifyEvent RROutputPropertyNotify;
+
+        [FieldOffset(0)]
+        public XRRProviderChangeNotifyEvent RRProviderChangeNotify;
+
+        [FieldOffset(0)]
+        public XRRProviderPropertyNotifyEvent RRProviderPropertyNotify;
+
+        [FieldOffset(0)]
+        public XRRResourceChangeNotifyEvent RRResourceChangeNotify;
+
+        #endregion
     }
 
     public struct XAnyEvent
