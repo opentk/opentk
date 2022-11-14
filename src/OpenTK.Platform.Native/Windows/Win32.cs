@@ -582,7 +582,7 @@ namespace OpenTK.Platform.Native.Windows
             public uint bV5GreenMask;
             public uint bV5BlueMask;
             public uint bV5AlphaMask;
-            public uint bV5CSType;
+            public CSType bV5CSType;
             public CIEXYZTRIPLE bV5Endpoints;
             public uint bV5GammaRed;
             public uint bV5GammaGreen;
@@ -842,6 +842,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern CF EnumClipboardFormats(CF format);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool IsClipboardFormatAvailable(CF fromat);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern CF RegisterClipboardFormat(string lpszFormat);

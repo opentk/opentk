@@ -196,7 +196,7 @@ namespace OpenTK.Platform.Native.Windows
                                 str = new string(lo, 1);
                             }
 
-                            Console.WriteLine($"wParam: 0x{wParam.ToUInt64():X16}, lo: {(ushort)lo:X4}, hi: 0x{(ushort)hi:X4}");
+                            //Console.WriteLine($"wParam: 0x{wParam.ToUInt64():X16}, lo: {(ushort)lo:X4}, hi: 0x{(ushort)hi:X4}");
 
                             if (char.IsSurrogate(lo))
                             {

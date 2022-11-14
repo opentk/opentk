@@ -1359,7 +1359,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <summary>
         /// An uncompressed format.
         /// </summary>
-        RGB,
+        RGB = 0x0000,
 
         /// <summary>
         /// A run-length encoded (RLE) format for bitmaps with 8 bpp.
@@ -1367,7 +1367,7 @@ namespace OpenTK.Platform.Native.Windows
         /// a count byte followed by a byte containing a color index.
         /// For more information, see Bitmap Compression.
         /// </summary>
-        RLE8,
+        RLE8 = 0x0001,
 
         /// <summary>
         /// An RLE format for bitmaps with 4 bpp.
@@ -1375,7 +1375,7 @@ namespace OpenTK.Platform.Native.Windows
         /// a count byte followed by two word-length color indexes.
         /// For more information, see Bitmap Compression.
         /// </summary>
-        RLE4,
+        RLE4 = 0x0002,
 
         /// <summary>
         /// Specifies that the bitmap is not compressed and that
@@ -1384,17 +1384,49 @@ namespace OpenTK.Platform.Native.Windows
         /// respectively, of each pixel.
         /// This is valid when used with 16- and 32-bpp bitmaps.
         /// </summary>
-        Bitfields,
+        Bitfields = 0x0003,
 
         /// <summary>
         /// Indicates that the image is a JPEG image.
         /// </summary>
-        JPEG,
+        JPEG = 0x0004,
 
         /// <summary>
         /// Indicates that the image is a PNG image.
         /// </summary>
-        PNG,
+        PNG = 0x0005,
+    }
+
+    /// <summary>
+    /// Color Space enum. Contains LCS constants as well as PROFILE_EMBEDDED and PROFILE_LINKED.
+    /// </summary>
+    internal enum CSType : uint
+    {
+        /// <summary>
+        /// This value implies that end points and gammas are given in the appropriate fields. Bogus values cause trouble.
+        /// </summary>
+        CalibratedRGB = 0x00000000,
+
+        /// <summary>
+        /// This value implies that the bitmap is in sRGB color space (gammas and endpoints ignored).
+        /// </summary>
+        sRGB = 0x73524742,
+
+        /// <summary>
+        /// This value implies that the bitmap is in Windows default color space.
+        /// </summary>
+        WindowsColorSpace = 0x57696E20,
+
+        /// <summary>
+        /// This value implies that bV5ProfileData points to the file name of the profile to use (gammas and endpoints are ignored).
+        /// </summary>
+        Linked = 0x4C494E4B,
+
+        /// <summary>
+        /// This value implies that bV5ProfileData points to a memory buffer that contains the profile to use (gammas and endpoints are ignored).
+        /// </summary>
+        Embedded = 0x4D424544,
+
     }
 
     [Flags]

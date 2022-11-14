@@ -298,6 +298,12 @@ namespace LocalTestProject
 
                 windowComp.Destroy(closeArgs.Window);
 
+                if (closeArgs.Window == WindowHandle && WindowHandle2.UserData is not false)
+                {
+                    WindowHandle2.UserData = false;
+                    windowComp.Destroy(WindowHandle2);
+                }
+
                 return;
             }
             else if (type == PlatformEventType.Focus)
@@ -380,7 +386,45 @@ namespace LocalTestProject
                 }
                 else if (keyDown.VirtualKey == 'B')
                 {
-                    Bitmap bitmap = new Bitmap(1, 1, new byte[4] { 0xFF, 0xAA, 0x77, 0x99 });
+                    const int W = 10;
+                    const int H = 10;
+                    byte[] b = new byte[W * H * 4];
+                    for (int x = 0; x < W; x++)
+                    {
+                        for (int y = 0; y < H; y++)
+                        {
+                            int index = (y * W + x) * 4;
+
+                            static byte ftob(float f) => (byte)(f * 255);
+
+                            //b[index + 0] = ftob((MathF.Sin((x / (float)W) * MathHelper.TwoPi * 4) + 1) / 2);
+                            //b[index + 1] = ftob((MathF.Sin((x / (float)W) * MathHelper.TwoPi * 2) + 1) / 2);
+                            //b[index + 2] = ftob((MathF.Sin((y / (float)H) * MathHelper.TwoPi * 5) + 1) / 2);
+                            //b[index + 3] = ftob((MathF.Sin((y / (float)H) * MathHelper.TwoPi * 3) + 1) / 2);
+                            b[index + 0] = 255;
+                            b[index + 1] = 255;
+                            b[index + 2] = 255;
+                            b[index + 3] = 255;
+                        }
+                    }
+                    b[0] = 255;
+                    b[1] = 255;
+                    b[2] = 255;
+                    b[3] = 255;
+
+                    for (int i = 0; i < W; i++)
+                    {
+                        b[2 * W + i+1] = 0;
+                    }
+
+                    Bitmap bitmap = new Bitmap(W, H, b);
+
+                    ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
+                }
+                else if (keyDown.VirtualKey == 'N')
+                {
+                    
+                    Bitmap bitmap = new Bitmap(1, 1, new byte[4] { 0xFF, 0x00, 0xFF, 0xFF });
 
                     ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
                 }
@@ -401,7 +445,12 @@ namespace LocalTestProject
                             break;
                         case ClipboardFormat.Bitmap:
                             {
-                                Bitmap bitmap = clipComp.GetClipboardBitmap()!;
+                                Bitmap? bitmap = clipComp.GetClipboardBitmap();
+                                if (bitmap == null)
+                                {
+                                    Console.WriteLine("Could not get clipboard image!");
+                                    break;
+                                }
                                 Console.WriteLine($"Current clipboard: width: {bitmap.Width}, height: {bitmap.Height}");
 
                                 var tex = GL.GenTexture();
@@ -416,8 +465,8 @@ namespace LocalTestProject
                                 GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
                                 GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
 
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+                                GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
 
                                 GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
 
@@ -705,6 +754,8 @@ void main()
         static float time = 0;
         static int frames = 0;
 
+        static float colorTimer = 0;
+
         public static bool Render()
         {
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
@@ -727,7 +778,11 @@ void main()
 
                 GL.UseProgram(program);
 
-                GL.ClearColor(new Color4<Rgba>(127 / 255f, 0, 64 / 255f, 255));
+                colorTimer += deltaTime / 5;
+                colorTimer %= 1;
+                Color4<Hsva> color = new Color4<Hsva>(colorTimer, 1f, 1f, 1f);
+
+                GL.ClearColor(Color4.ToRgba(color));
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
                 windowComp.GetClientSize(WindowHandle, out int width, out int height);
                 GL.Viewport(0, 0, width, height);

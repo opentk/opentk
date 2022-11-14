@@ -57,7 +57,9 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
             if (success == false)
             {
-                throw new Win32Exception();
+                // FIXME: Log this issue!
+                // throw new Win32Exception();
+                return ClipboardFormat.None;
             }
 
             StringBuilder name = new StringBuilder(1024);
@@ -94,6 +96,24 @@ namespace OpenTK.Platform.Native.Windows
                         break;
                 }
 
+                if ((uint)cf > 0xC000u && (uint)cf < 0xFFFFu)
+                {
+                    int length = Win32.GetClipboardFormatName(cf, name, name.Capacity);
+                    if (length == 0)
+                    {
+                        throw new Win32Exception();
+                    }
+
+                    Console.WriteLine($"Format (0x{(uint)cf:X4}): {name}");
+                }
+                else
+                {
+                    Console.WriteLine($"Format (0x{(uint)cf:X4}): {cf}");
+                }
+            }
+
+            while ((cf = Win32.EnumClipboardFormats(cf)) != 0)
+            {
                 if ((uint)cf > 0xC000u && (uint)cf < 0xFFFFu)
                 {
                     int length = Win32.GetClipboardFormatName(cf, name, name.Capacity);
@@ -303,37 +323,19 @@ namespace OpenTK.Platform.Native.Windows
 
         public unsafe void SetClipboardBitmap(Bitmap bitmap)
         {
-            Win32.BITMAPV5HEADER header = new Win32.BITMAPV5HEADER();
+            // FIXME: Do we need to consider stride more carefully?
+            int bytesPerRow = bitmap.Width * 4;
 
-            header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
+            // See https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-bitmapinfoheader#calculating-surface-stride
+            int stride = ((((bitmap.Width * 32) + 31) & ~31) >> 3);
 
-            header.bV5Width = bitmap.Width;
-            header.bV5Height = bitmap.Height;
-            header.bV5Planes = 1;
-            header.bV5BitCount = 32;
-            header.bV5Compression = BI.RGB;
-            header.bV5RedMask = 0x00_FF_00_00;
-            header.bV5GreenMask = 0x00_00_FF_00;
-            header.bV5BlueMask = 0x00_00_00_FF;
-            header.bV5AlphaMask = 0xFF_00_00_00;
+            int bytes = (int)sizeof(Win32.BITMAPV5HEADER) + bytesPerRow * bitmap.Height;
 
-            // FIXME: Allocate the bitmap
-            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
-            IntPtr hbitmap = Win32.CreateDIBSection(hDC, header, DIB.RGBColors, out IntPtr ppvBits, IntPtr.Zero, 0);
-            if (hbitmap == IntPtr.Zero)
-            {
-                throw new Win32Exception();
-            }
-
-            Win32.DeleteDC(hDC);
-
-            IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable, (ulong)(sizeof(Win32.BITMAPV5HEADER) + bitmap.Data.Length));
+            IntPtr hmem = Win32.GlobalAlloc(GMEM.Moveable, (ulong)bytes);
             if (hmem == IntPtr.Zero)
             {
                 throw new Win32Exception();
             }
-
-            int bytes = (int)Win32.GlobalSize(hmem);
 
             {
                 void* memory = (char*)Win32.GlobalLock(hmem);
@@ -344,7 +346,53 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception(error);
                 }
 
+                Console.WriteLine($"Writing bitmap to 0x{(ulong)memory:X} (0b{Convert.ToString((long)memory, 2)})");
+
                 Span<byte> memorySpan = new Span<byte>(memory, bytes);
+
+                // First we set the header
+                ref Win32.BITMAPV5HEADER header = ref MemoryMarshal.Cast<byte, Win32.BITMAPV5HEADER>(memorySpan)[0];
+
+                header.bV5Size = (uint)Marshal.SizeOf<Win32.BITMAPV5HEADER>();
+
+                header.bV5Width = bitmap.Width;
+                header.bV5Height = bitmap.Height;
+                header.bV5Planes = 1;
+                header.bV5BitCount = 32;
+                header.bV5Compression = BI.RGB;
+                header.bV5CSType = CSType.sRGB;
+                //header.bV5SizeImage = (uint)(bitmap.Width * bitmap.Height * 4);
+                //header.bV5RedMask = 0x00_00_00_FF;
+                //header.bV5GreenMask = 0x00_00_FF_00;
+                //header.bV5BlueMask = 0x00_FF_00_00;
+                //header.bV5AlphaMask = 0xFF_00_00_00;
+                // Copy over RGBA data into BGRA format.
+                // FIXME: This can probably be done more efficiently
+                //bitmap.Data.AsSpan().CopyTo(memorySpan.Slice(sizeof(Win32.BITMAPV5HEADER)));
+
+                int c = 0;
+                foreach (ref byte item in memorySpan.Slice(Marshal.SizeOf<Win32.BITMAPV5HEADER>()))
+                {
+                    c++;
+                    item = (byte)(c / (bitmap.Width * 4));
+                    if (c % 4 == 0) item = 255;
+                }
+                /*
+                Span<int> pixels = MemoryMarshal.Cast<byte, int>(memorySpan.Slice(sizeof(Win32.BITMAPV5HEADER)));
+                for (int i = 0; i < bitmap.Data.Length/4; i++)
+                {
+                    int index = (i * 4);
+                    // pixels is bgra, bitmap.Data is rgba
+                    //pixels[i] = bitmap.Data[index + 3] << 24 | bitmap.Data[index + 2] << 16 | bitmap.Data[index + 1] << 8 | bitmap.Data[index + 0];
+
+                    //pixels[i] = bitmap.Data[index + 2] << 24 | bitmap.Data[index + 1] << 16 | bitmap.Data[index + 0] << 8 | bitmap.Data[index + 3];
+
+                    //pixels[i] = bitmap.Data[index + 2]; // b
+                    //pixels[i] = bitmap.Data[index + 1]; // g
+                    //pixels[i] = bitmap.Data[index + 0]; // r
+                    //pixels[i] = bitmap.Data[index + 3]; // a
+                }
+                */
 
                 bool stillLocked = Win32.GlobalUnlock(hmem);
                 if (stillLocked == false)
@@ -362,7 +410,8 @@ namespace OpenTK.Platform.Native.Windows
             if (success == false)
             {
                 int error = Marshal.GetLastWin32Error();
-                Win32.GlobalFree(hmem);
+                //Win32.GlobalFree(hbitmap);
+                Win32.CloseClipboard();
                 throw new Win32Exception(error);
             }
 
@@ -374,7 +423,11 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
-            Win32.CloseClipboard();
+            success = Win32.CloseClipboard();
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
         }
 
         public unsafe string? GetClipboardText()
@@ -495,11 +548,71 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
+            /*
+            IntPtr dibv5 = Win32.GetClipboardData(CF.DIBV5);
+
+            IntPtr ptr = Win32.GlobalLock(dibv5);
+
+            Span<Win32.BITMAPV5HEADER> testP = new Span<Win32.BITMAPV5HEADER>((void*)ptr, 1);
+            //if (testP[0].bV5Height < 0) testP[0].bV5Height = -testP[0].bV5Height;
+            int size = testP[0].bV5Width * Math.Abs(testP[0].bV5Height) * (testP[0].bV5BitCount / 8);
+            Span<byte> data = new Span<byte>(((Win32.BITMAPV5HEADER*)ptr) + 1, size);
+
+            byte[] pixels = new byte[size];
+            if (testP[0].bV5Height < 0)
+            {
+                for (int i = 0; i < -testP[0].bV5Height; i++)
+                {
+                    var row = data.Slice((-testP[0].bV5Height - i - 1) * testP[0].bV5Width * 4, testP[0].bV5Width * 4);
+                    
+                    row.CopyTo(pixels.AsSpan().Slice(i * testP[0].bV5Width * 4));
+                }
+            }
+            else
+            {
+                data.CopyTo(pixels.AsSpan());
+            }
+
+            
+
+            Win32.GlobalUnlock(dibv5);
+
+            success = Win32.CloseClipboard();
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            return new Bitmap(testP[0].bV5Width, Math.Abs(testP[0].bV5Height), pixels);
+            */
+
             IntPtr hbitmap = Win32.GetClipboardData(CF.Bitmap);
             if (hbitmap == IntPtr.Zero)
             {
-                // We couldn't get a bitmap.
-                return null;
+                int lastError = Marshal.GetLastWin32Error();
+                if (lastError == 0)
+                {
+                    IntPtr test = Win32.GetClipboardData(CF.DIBV5);
+
+                    bool test2 = Win32.IsClipboardFormatAvailable(CF.Bitmap);
+
+                    success = Win32.CloseClipboard();
+                    if (success == false)
+                    {
+                        throw new Win32Exception();
+                    }
+                    // We couldn't get a bitmap.
+                    return null;
+                }
+                else
+                {
+                    success = Win32.CloseClipboard();
+                    if (success == false)
+                    {
+                        throw new Win32Exception();
+                    }
+                    throw new Win32Exception(lastError);
+                }
             }
 
             IntPtr hDC = Win32.GetDC(IntPtr.Zero);
@@ -527,8 +640,8 @@ namespace OpenTK.Platform.Native.Windows
                 (image[i + 0], image[i + 2]) = (image[i + 2], image[i + 0]);
             }
 
-            bool succeess = Win32.CloseClipboard();
-            if (succeess == false)
+            success = Win32.CloseClipboard();
+            if (success == false)
             {
                 throw new Win32Exception();
             }
