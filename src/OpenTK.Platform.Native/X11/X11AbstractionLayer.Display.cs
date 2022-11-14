@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
@@ -110,6 +111,11 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        public bool IsPrimary(DisplayHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetName(DisplayHandle handle)
         {
             switch (DisplayExtension)
@@ -160,6 +166,21 @@ namespace OpenTK.Platform.Native.X11
                     x = y = 0;
                     break;
             }
+        }
+
+        public void GetResolution(DisplayHandle handle, out int width, out int  height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        {
+            throw new NotImplementedException();
         }
 
         public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
