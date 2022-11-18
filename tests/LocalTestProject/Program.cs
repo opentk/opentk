@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using System.Text;
 using System.Diagnostics;
+using OpenTK.Core.Utility;
 
 namespace LocalTestProject
 {
@@ -41,6 +42,18 @@ namespace LocalTestProject
 
         public static void Main(string[] args)
         {
+            // Set the logger for all of the components
+            // FIXME: A better way to set all of the loggers at the same time.
+            var logger = new ConsoleLogger();
+            windowComp.Logger = logger;
+            glComp.Logger = logger;
+            mouseComp.Logger = logger;
+            cursorComp.Logger = logger;
+            iconComp.Logger = logger;
+            dispComp.Logger = logger;
+            keyboardComp.Logger = logger;
+            clipComp.Logger = logger;
+
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
 
@@ -331,7 +344,7 @@ namespace LocalTestProject
                 Console.WriteLine($"Input: {input.Text}");
 
                 Console.WriteLine($"Scancodes: {string.Join(", ", vks)}");
-
+                
                 vks.Clear();
 
                 return;

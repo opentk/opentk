@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -48,11 +49,14 @@ namespace OpenTK.Platform.Native.Windows
         public PalComponents Provides => PalComponents.Window;
 
         /// <inheritdoc/>
+        public ILogger? Logger { get; set; }
+
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Window)
             {
-                throw new Exception("WindowComponent can only initialize the Window component.");
+                throw new PalException(this, "WindowComponent can only initialize the Window component.");
             }
 
             // Set the WindowProc delegate so that we capture "this".
@@ -188,25 +192,37 @@ namespace OpenTK.Platform.Native.Windows
                             string str;
 
                             ulong chars = wParam.ToUInt64();
-                            char hi = (char)(chars >> 16);
-                            char lo = (char)(chars & 0xFFFF);
-                            if (char.IsSurrogatePair(hi, lo))
+                            
+                            switch (chars)
                             {
-                                Span<char> text = stackalloc char[2];
-                                text[0] = hi;
-                                text[1] = lo;
-                                str = new string(text);
-                            }
-                            else
-                            {
-                                str = new string(lo, 1);
-                            }
-
-                            //Console.WriteLine($"wParam: 0x{wParam.ToUInt64():X16}, lo: {(ushort)lo:X4}, hi: 0x{(ushort)hi:X4}");
-
-                            if (char.IsSurrogate(lo))
-                            {
-                                ;
+                                case 0x0A: // linefeed, SHIFT + ENTER
+                                case 0x0D: // carriage return, ENTER
+                                    str = "\r\n";
+                                    break;
+                                case 0x08: // backspace
+                                case 0x09: // tab
+                                case 0x1B: // escape
+                                    // FIXME: For now we just send these to the user directly,
+                                    // but maybe we want something better?
+                                    // or we just formalize this?
+                                default:
+                                    {
+                                        // FIXME: Do we even need to handle this??
+                                        char hi = (char)(chars >> 16);
+                                        char lo = (char)(chars & 0xFFFF);
+                                        if (char.IsSurrogatePair(hi, lo))
+                                        {
+                                            Span<char> text = stackalloc char[2];
+                                            text[0] = hi;
+                                            text[1] = lo;
+                                            str = new string(text);
+                                        }
+                                        else
+                                        {
+                                            str = new string(lo, 1);
+                                        }
+                                        break;
+                                    }
                             }
 
                             EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(str));
@@ -316,7 +332,8 @@ namespace OpenTK.Platform.Native.Windows
                                     }
                                     else
                                     {
-                                        Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        //Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        Logger?.LogDebug($"Unknown xbutton: {(uint)hiWord}");
                                         button = null;
                                     }
 
@@ -367,7 +384,8 @@ namespace OpenTK.Platform.Native.Windows
                                     }
                                     else
                                     {
-                                        Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        //Console.WriteLine($"Unknown xbutton: {(uint)hiWord}");
+                                        Logger?.LogDebug($"Unknown xbutton: {(uint)hiWord}");
                                         button = null;
                                     }
 
@@ -556,16 +574,36 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DPICHANGED:
                     {
-                        Console.WriteLine($"DPI Changed! dpiY: {(wParam.ToUInt32() & Win32.HiWordMask) >> 16}, dpiX: {wParam.ToUInt32() & Win32.LoWordMask}");
+                        const int USER_DEFAULT_SCREEN_DPI = 96;
 
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        int dpiX = (int)(wParam.ToUInt32() & Win32.LoWordMask);
+                        int dpiY = (int)((wParam.ToUInt32() & Win32.HiWordMask) >> 16);
+
+                        float scaleX = dpiX / (float)USER_DEFAULT_SCREEN_DPI;
+                        float scaleY = dpiY / (float)USER_DEFAULT_SCREEN_DPI;
+
+                        Logger?.LogDebug($"DPI Changed! dpiY: {dpiY}, dpiX: {dpiX}");
+
+                        HWND h = HWndDict[hWnd];
+
+                        // FIXME: Should we send this message before or after resizing the application?
+                        EventQueue.Raise(h, PlatformEventType.WindowDpiChange, new WindowDpiChangeEventArgs(h, dpiX, dpiY, scaleX, scaleY));
+
+                        // FIXME: glfw limits this to windows 10 only??
+                        // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/win32_window.c#L1186
+
+                        Win32.RECT suggested = Marshal.PtrToStructure<Win32.RECT>(lParam);
+
+                        Win32.SetWindowPos(hWnd, IntPtr.Zero /* HWND_TOP */, suggested.left, suggested.top, suggested.Width, suggested.Height,
+                            SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder);
+
+                        return IntPtr.Zero;
                     }
                 case WM.DROPFILES:
                     {
                         IntPtr /* HDROP */ hdrop = (IntPtr)wParam.ToUInt64();
 
                         uint count = Win32.DragQueryFile(hdrop, 0xFFFFFFFF, null, 0);
-                        Console.WriteLine($"Drop! {count}");
 
                         List<string> paths = new List<string>();
 
@@ -646,7 +684,7 @@ namespace OpenTK.Platform.Native.Windows
 
             bool success = Win32.DestroyWindow(hwnd.HWnd);
 
-            // FIXME: Do we add back the hglrc to HGLRCDict?
+            // FIXME: Do we add back the hwnd to HWndDict?
             if (success == false)
             {
                 throw new Win32Exception("DestroyWindow failed!");
@@ -668,7 +706,12 @@ namespace OpenTK.Platform.Native.Windows
 
             StringBuilder title = new StringBuilder(textLength + 1);
 
-            Win32.GetWindowText(hwnd.HWnd, title, title.Capacity);
+            int written = Win32.GetWindowText(hwnd.HWnd, title, title.Capacity);
+            error = Marshal.GetLastWin32Error();
+            if (written == 0 && error != 0)
+            {
+                throw new Win32Exception(error);
+            }
 
             return title.ToString();
         }
@@ -902,6 +945,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -910,6 +954,7 @@ namespace OpenTK.Platform.Native.Windows
             height = hwnd.MaxHeight;
         }
 
+        /// <inheritdoc/>
         public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -924,6 +969,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.MoveWindow(hwnd.HWnd, rect.left, rect.top, rect.Width, rect.Height, true);
         }
 
+        /// <inheritdoc/>
         public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -932,6 +978,7 @@ namespace OpenTK.Platform.Native.Windows
             height = hwnd.MinHeight;
         }
 
+        /// <inheritdoc/>
         public void SetMinClientSize(WindowHandle handle, int? width, int? height)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -1223,6 +1270,7 @@ namespace OpenTK.Platform.Native.Windows
             y = point.Y;
         }
 
+        /// <inheritdoc/>
         public void SwapBuffers(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);

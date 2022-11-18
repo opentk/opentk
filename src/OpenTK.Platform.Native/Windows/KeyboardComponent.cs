@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace OpenTK.Platform.Native.Windows
         public string Name => "Win32KeyboardComponent";
 
         public PalComponents Provides => PalComponents.KeyboardInput;
+
+        public ILogger? Logger { get; set; }
 
         public void Initialize(PalComponents which)
         {
@@ -117,7 +120,11 @@ namespace OpenTK.Platform.Native.Windows
 
         public void BeginIme(WindowHandle window)
         {
-            // FIXME: Check that we've not already begun ime
+            if (_imeActive)
+            {
+                Logger?.LogWarning($"IME input is already active. Did you forget to call {nameof(EndIme)}?");
+            }
+
             _imeActive = true;
         }
 
@@ -146,7 +153,11 @@ namespace OpenTK.Platform.Native.Windows
 
         public void EndIme(WindowHandle window)
         {
-            // Check so that we are not double closing ime
+            if (_imeActive == false)
+            {
+                Logger?.LogWarning($"IME input is not active. Are you calling {nameof(EndIme)} twice?");
+            }
+
             _imeActive = false;
         }
     }

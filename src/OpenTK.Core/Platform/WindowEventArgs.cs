@@ -63,6 +63,28 @@ namespace OpenTK.Core.Platform
         }
     }
 
+    public class WindowDpiChangeEventArgs : WindowEventArgs
+    {
+        public WindowHandle Window { get; private set; }
+
+        public int DpiX { get; private set; }
+
+        public int DpiY { get; private set; }
+
+        public float ScaleX { get; private set; }
+
+        public float ScaleY { get; private set; }
+
+        public WindowDpiChangeEventArgs(WindowHandle window, int dpiX, int dpiY, float scaleX, float scaleY)
+        {
+            Window = window;
+            DpiX = dpiX;
+            DpiY = dpiY;
+            ScaleX = scaleX;
+            ScaleY = scaleY;
+        }
+    }
+
     public class KeyDownEventArgs : WindowEventArgs
     {
         // FIXME: These properties are for testing with the Win32 backend.

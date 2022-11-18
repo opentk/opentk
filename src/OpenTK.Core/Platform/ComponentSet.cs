@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 
 #nullable enable
@@ -98,6 +99,40 @@ namespace OpenTK.Core.Platform
                                          (_openGLComponent is not null ? PalComponents.OpenGL : 0) |
                                          (_surfaceComponent is not null ? PalComponents.Surface : 0) |
                                          (_windowComponent is not null ? PalComponents.Window : 0);
+
+        private ILogger? _logger;
+
+        /// <inheritdoc/>
+        public ILogger? Logger
+        {
+            get => _logger;
+            set
+            {
+                _logger = value;
+
+#pragma warning disable SA1503 // Braces should not be omitted
+
+                if (_clipboardComponent != null) _clipboardComponent.Logger = _logger;
+
+                if (_cursorComponent != null) _cursorComponent.Logger = _logger;
+
+                if (_displayComponent != null) _displayComponent.Logger = _logger;
+
+                if (_iconComponent != null) _iconComponent.Logger = _logger;
+
+                if (_keyboardComponent != null) _keyboardComponent.Logger = _logger;
+
+                if (_mouseComponent != null) _mouseComponent.Logger = _logger;
+
+                if (_openGLComponent != null) _openGLComponent.Logger = _logger;
+
+                if (_surfaceComponent != null) _surfaceComponent.Logger = _logger;
+
+                if (_windowComponent != null) _windowComponent.Logger = _logger;
+
+#pragma warning restore SA1503 // Braces should not be omitted
+            }
+        }
 
         /// <summary>
         /// Get or set which components are in the set.

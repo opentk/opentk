@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -22,6 +23,8 @@ namespace OpenTK.Platform.Native.Windows
         public string Name => "Win32 Clipboard component";
 
         public PalComponents Provides => PalComponents.Clipboard;
+
+        public ILogger? Logger { get; set; }
 
         public void Initialize(PalComponents which)
         {
@@ -57,8 +60,7 @@ namespace OpenTK.Platform.Native.Windows
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
             if (success == false)
             {
-                // FIXME: Log this issue!
-                // throw new Win32Exception();
+                Logger?.LogInfo("Could not open clipboard to get clipboard format!");
                 return ClipboardFormat.None;
             }
 
@@ -427,8 +429,24 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr obj = Win32.GetClipboardData(CF.UnicodeText);
             if (obj == IntPtr.Zero)
             {
-                // We couldn't get any text.
-                return null;
+                int lastError = Marshal.GetLastWin32Error();
+
+                success = Win32.CloseClipboard();
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (lastError == 0)
+                {
+                    // FIXME: Don't get the logger from WindowComponent...
+                    Logger?.LogDebug($"Could not get CF_UNICODETEXT data from clipboard.");
+                    return null;
+                }
+                else
+                {
+                    throw new Win32Exception(lastError);
+                }
             }
 
             char* strData = (char*)Win32.GlobalLock(obj);
@@ -471,8 +489,24 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr obj = Win32.GetClipboardData(CF.Wave);
             if (obj == IntPtr.Zero)
             {
-                // We couldn't get any text.
-                return null;
+                int lastError = Marshal.GetLastWin32Error();
+
+                success = Win32.CloseClipboard();
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (lastError == 0)
+                {
+                    // FIXME: Don't get the logger from WindowComponent...
+                    Logger?.LogDebug($"Could not get CF_WAVE data from clipboard.");
+                    return null;
+                }
+                else
+                {
+                    throw new Win32Exception(lastError);
+                }
             }
 
             int waveDataSize = (int)Win32.GlobalSize(obj);
@@ -534,69 +568,25 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
 
-            /*
-            IntPtr dibv5 = Win32.GetClipboardData(CF.DIBV5);
-
-            IntPtr ptr = Win32.GlobalLock(dibv5);
-
-            Span<Win32.BITMAPV5HEADER> testP = new Span<Win32.BITMAPV5HEADER>((void*)ptr, 1);
-            //if (testP[0].bV5Height < 0) testP[0].bV5Height = -testP[0].bV5Height;
-            int size = testP[0].bV5Width * Math.Abs(testP[0].bV5Height) * (testP[0].bV5BitCount / 8);
-            Span<byte> data = new Span<byte>(((Win32.BITMAPV5HEADER*)ptr) + 1, size);
-
-            byte[] pixels = new byte[size];
-            if (testP[0].bV5Height < 0)
-            {
-                for (int i = 0; i < -testP[0].bV5Height; i++)
-                {
-                    var row = data.Slice((-testP[0].bV5Height - i - 1) * testP[0].bV5Width * 4, testP[0].bV5Width * 4);
-                    
-                    row.CopyTo(pixels.AsSpan().Slice(i * testP[0].bV5Width * 4));
-                }
-            }
-            else
-            {
-                data.CopyTo(pixels.AsSpan());
-            }
-
-            
-
-            Win32.GlobalUnlock(dibv5);
-
-            success = Win32.CloseClipboard();
-            if (success == false)
-            {
-                throw new Win32Exception();
-            }
-
-            return new Bitmap(testP[0].bV5Width, Math.Abs(testP[0].bV5Height), pixels);
-            */
-
             IntPtr hbitmap = Win32.GetClipboardData(CF.Bitmap);
             if (hbitmap == IntPtr.Zero)
             {
                 int lastError = Marshal.GetLastWin32Error();
+
+                success = Win32.CloseClipboard();
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
                 if (lastError == 0)
                 {
-                    IntPtr test = Win32.GetClipboardData(CF.DIBV5);
-
-                    bool test2 = Win32.IsClipboardFormatAvailable(CF.Bitmap);
-
-                    success = Win32.CloseClipboard();
-                    if (success == false)
-                    {
-                        throw new Win32Exception();
-                    }
-                    // We couldn't get a bitmap.
+                    // FIXME: Don't get the logger from WindowComponent...
+                    Logger?.LogDebug($"Could not get CF_BITMAP data from clipboard.");
                     return null;
                 }
                 else
                 {
-                    success = Win32.CloseClipboard();
-                    if (success == false)
-                    {
-                        throw new Win32Exception();
-                    }
                     throw new Win32Exception(lastError);
                 }
             }
@@ -695,8 +685,24 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr obj = Win32.GetClipboardData(CF_HTML);
             if (obj == IntPtr.Zero)
             {
-                // We couldn't get any text.
-                return null;
+                int lastError = Marshal.GetLastWin32Error();
+
+                success = Win32.CloseClipboard();
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (lastError == 0)
+                {
+                    // FIXME: Don't get the logger from WindowComponent...
+                    Logger?.LogDebug($"Could not get CF_HTML data from clipboard.");
+                    return null;
+                }
+                else
+                {
+                    throw new Win32Exception(lastError);
+                }
             }
 
             int strSize = (int)Win32.GlobalSize(obj);
@@ -745,8 +751,24 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hdrop = Win32.GetClipboardData(CF.HDrop);
             if (hdrop == IntPtr.Zero)
             {
-                // We couldn't get any text.
-                return null;
+                int lastError = Marshal.GetLastWin32Error();
+
+                success = Win32.CloseClipboard();
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                if (lastError == 0)
+                {
+                    // FIXME: Don't get the logger from WindowComponent...
+                    Logger?.LogDebug($"Could not get CF_HDROP data from clipboard.");
+                    return null;
+                }
+                else
+                {
+                    throw new Win32Exception(lastError);
+                }
             }
 
             uint count = Win32.DragQueryFile(hdrop, 0xFFFFFFFF, null, 0);

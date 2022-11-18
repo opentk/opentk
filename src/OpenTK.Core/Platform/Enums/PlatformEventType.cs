@@ -18,6 +18,8 @@ namespace OpenTK.Core.Platform
 
         WindowModeChange,
 
+        WindowDpiChange,
+
         MouseEnter,
 
         /// <summary>

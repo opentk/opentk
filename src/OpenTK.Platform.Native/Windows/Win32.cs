@@ -210,6 +210,12 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool SetCursorPos(int X, int Y);
 
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ SetCapture(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool ReleaseCapture();
+
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);
 
