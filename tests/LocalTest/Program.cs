@@ -54,11 +54,6 @@ namespace LocalTest
             watch.Start();
         }
 
-        double timer, timer2;
-        int frames;
-
-        Utils.SleepTimings timings = new Utils.SleepTimings(2);
-
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
@@ -70,54 +65,23 @@ namespace LocalTest
         }
 
         Stopwatch watch = new Stopwatch();
-        Stopwatch watch2 = new Stopwatch();
-        bool sync = true;
-        double initialDiff = 0;
-
-        int n = 0;
-        double sum = 0;
-        double sumOfSquares = 0;
-        double mean = 0;
-        double variance = 0;
+        int frames;
+        double time = 0;
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
 
-            if (sync)
-            {
-                double time = watch.ElapsedTicks / (double)Stopwatch.Frequency;
-                initialDiff = time - args.Time;
-
-                sync = false;
-
-                watch2.Start();
-            }
-
             frames++;
+            time += args.Time;
 
-            n++;
-            sum += args.Time * 1000;
-            sumOfSquares += args.Time * args.Time * 1000_000;
-
-            mean = sum / n;
-
-            variance = (sumOfSquares / n) - (mean * mean);
-
-            timer += watch2.Elapsed.TotalSeconds;
-            watch2.Restart();
-            timer2 += args.Time;
-            if (timer >= 1.0)
+            if (watch.Elapsed.TotalSeconds >= 1.0)
             {
-                Console.WriteLine($"fps {frames}");
+                Console.WriteLine($"fps {frames}, avg frame time: {(time / frames) * 1000:0.000}");
                 frames = 0;
-                timer = 0;
+                time = 0;
 
-                var diff = timer2 - watch.Elapsed.TotalSeconds;
-
-                //Console.WriteLine($"opentk {timer2:0.00000} | stopwatch {watch.Elapsed.TotalSeconds:0.00000} | diff {diff:0.00000} | drift {initialDiff - diff:0.00000}");
-
-                //Console.WriteLine($"Time {sum/1000d}s, Mean frame time: {mean}ms, Frame time variance: {variance}");
+                watch.Restart();
             }
         }
     }
