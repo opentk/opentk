@@ -1,6 +1,7 @@
 using System;
 using OpenTK.Core.Platform;
 using System.Diagnostics;
+using OpenTK.Core.Utility;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -10,7 +11,10 @@ namespace OpenTK.Platform.Native.X11
     public partial class X11AbstractionLayer : IPalComponent
     {
         public string Name => "X11";
+
         public PalComponents Provides => PalComponents.OpenGL | PalComponents.Window | PalComponents.Display;
+
+        public ILogger? Logger { get; set; }
 
         public XDisplayPtr Display { get; private set; }
 

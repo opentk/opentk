@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,8 @@ namespace OpenTK.Platform.Native.Windows
         public string Name => "Win32IconComponent";
 
         public PalComponents Provides => PalComponents.WindowIcon;
+
+        public ILogger? Logger { get; set; }
 
         public void Initialize(PalComponents which)
         {

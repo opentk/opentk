@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace OpenTK.Platform.Native.Windows
         public string Name => "Win32DisplayComponent";
 
         public PalComponents Provides => PalComponents.Display;
+
+        public ILogger? Logger { get; set; }
 
         private static List<HMonitor> _displays = new List<HMonitor>();
 
