@@ -14,8 +14,7 @@ namespace LocalTest
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
-                //UpdateFrequency = 10,
-                //RenderFrequency = 10,
+                UpdateFrequency = 144,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -48,24 +47,77 @@ namespace LocalTest
         {
             base.OnLoad();
 
+            VSync = VSyncMode.Off;
 
+            watch.Start();
         }
+
+        double timer, timer2;
+        int frames, updates;
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
 
-            GL.ClearColor(Color4.Black);
+            frames++;
+
+            GL.ClearColor(Color4.Coral);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             SwapBuffers();
         }
 
+        Stopwatch watch = new Stopwatch();
+        Stopwatch watch2 = new Stopwatch();
+        bool sync = true;
+        double initialDiff = 0;
+
+        int n = 0;
+        double sum = 0;
+        double sumOfSquares = 0;
+        double mean = 0;
+        double variance = 0;
+
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
 
+            if (sync)
+            {
+                double time = watch.ElapsedTicks / (double)Stopwatch.Frequency;
+                initialDiff = time - args.Time;
 
+                sync = false;
+
+                watch2.Start();
+            }
+
+            updates++;
+
+            n++;
+            sum += args.Time * 1000;
+            sumOfSquares += args.Time * args.Time * 1000_000;
+
+            mean = sum / n;
+
+            variance = (sumOfSquares / n) - (mean * mean);
+
+            timer += watch2.Elapsed.TotalSeconds;
+            watch2.Restart();
+            timer2 += args.Time;
+            if (timer >= 1.0)
+            {
+                Console.WriteLine("fps {0} | ups {1}", frames, updates);
+                frames = 0;
+                updates = 0;
+                timer = 0;
+
+                var diff = timer2 - watch.Elapsed.TotalSeconds;
+
+                Console.WriteLine($"opentk {timer2:0.00000} | stopwatch {watch.Elapsed.TotalSeconds:0.00000} | diff {diff:0.00000} | drift {initialDiff - diff:0.00000}");
+
+                Console.WriteLine($"Time {sum/1000d}s, Mean frame time: {mean}ms, Frame time variance: {variance}");
+            }
         }
     }
 }

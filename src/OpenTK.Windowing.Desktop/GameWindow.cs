@@ -9,7 +9,10 @@
 
 using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Threading;
+using OpenTK.Core;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -67,11 +70,13 @@ namespace OpenTK.Windowing.Desktop
         /// occurs when the update thread has started. This would be a good place to initialize thread specific stuff (like
         /// setting a synchronization context).
         /// </summary>
+        [Obsolete("There is no longer a separate render thread.")]
         public event Action RenderThreadStarted;
 
         /// <summary>
         /// Occurs when it is time to render a frame.
         /// </summary>
+        [Obsolete("Use UpdateFrame instead. We no longer separate UpdateFrame and RenderFrame.")]
         public event Action<FrameEventArgs> RenderFrame;
 
         /// <summary>
@@ -79,7 +84,9 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         private const double MaxFrequency = 500.0;
 
+        [Obsolete]
         private readonly Stopwatch _watchRender = new Stopwatch();
+
         private readonly Stopwatch _watchUpdate = new Stopwatch();
 
         /// <summary>
@@ -91,10 +98,7 @@ namespace OpenTK.Windowing.Desktop
 
         private double _updateEpsilon; // quantization error for UpdateFrame events
 
-        private double _renderFrequency;
         private double _updateFrequency;
-
-        private Thread _renderThread;
 
         /// <summary>
         /// Gets a value indicating whether or not the GameWindow should use a separate thread for rendering.
@@ -105,7 +109,7 @@ namespace OpenTK.Windowing.Desktop
         ///     Do not enable this unless your code is thread safe.
         ///   </para>
         /// </remarks>
-        [Obsolete("There is not one size fits all multithreading solution, especially for OpenGL. This option will be removed in future versions, and you will have to implement what you need instead.")]
+        [Obsolete("There is not one size fits all multithreading solution, especially for OpenGL. This feature has been removed and will not work.", true)]
         public bool IsMultiThreaded { get; }
 
         /// <summary>
@@ -118,31 +122,17 @@ namespace OpenTK.Windowing.Desktop
         ///  </para>
         ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
+        [Obsolete("Use UpdateFrame instead. We no longer separate UpdateFrame and RenderFrame.", true)]
         public double RenderFrequency
         {
-            get => _renderFrequency;
-
-            set
-            {
-                if (value <= 1.0)
-                {
-                    _renderFrequency = 0.0;
-                }
-                else if (value <= MaxFrequency)
-                {
-                    _renderFrequency = value;
-                }
-                else
-                {
-                    Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
-                    _renderFrequency = MaxFrequency;
-                }
-            }
+            get => throw new Exception($"This property is obsolete. Use UpdateFrame instead.");
+            set => throw new Exception($"This property is obsolete. Use UpdateFrame instead.");
         }
 
         /// <summary>
         /// Gets a double representing the time spent in the RenderFrame function, in seconds.
         /// </summary>
+        [Obsolete("Use UpdateTime instead. We no longer separate UpdateFrame and RenderFrame.", true)]
         public double RenderTime { get; protected set; }
 
         /// <summary>
@@ -195,9 +185,6 @@ namespace OpenTK.Windowing.Desktop
         public GameWindow(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings)
             : base(nativeWindowSettings)
         {
-            IsMultiThreaded = gameWindowSettings.IsMultiThreaded;
-
-            RenderFrequency = gameWindowSettings.RenderFrequency;
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
         }
 
@@ -216,119 +203,165 @@ namespace OpenTK.Windowing.Desktop
             OnResize(new ResizeEventArgs(Size));
 
             Debug.Print("Entering main loop.");
-            if (IsMultiThreaded)
-            {
-                // We want to move the context to the render thread so make sure it's no longer current
-                Context?.MakeNoneCurrent();
 
-                _renderThread = new Thread(StartRenderThread);
-                _renderThread.Start();
-            }
+            // FIXME: Some way for users to make the context not current when calling Run()?
+            // Context?.MakeNoneCurrent();
 
-            _watchRender.Start();
+            RunUpdates();
+
+            /*
             _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
+                // FIXME: We should just time both.
                 double timeToNextUpdateFrame = DispatchUpdateFrame();
 
-                double sleepTime = timeToNextUpdateFrame;
-                if (!IsMultiThreaded)
+                if (timeToNextUpdateFrame > 0)
                 {
-                    double timeToNextRenderFrame = DispatchRenderFrame();
-
-                    sleepTime = Math.Min(sleepTime, timeToNextRenderFrame);
+                    Thread.Sleep((int)Math.Floor(timeToNextUpdateFrame * 1000));
                 }
-
-                if (sleepTime > 0)
-                {
-                    Thread.Sleep((int)Math.Floor(sleepTime * 1000));
-                }
-            }
+            }*/
 
             OnUnload();
         }
 
-        private unsafe void StartRenderThread()
-        {
-            // If we are starting a render thread we want the context to be current there.
-            // So when creating the render thread the graphics context needs to be made not current on the thread creating the render thread.
-            Context?.MakeCurrent();
+        [DllImport("kernel32", SetLastError = true)]
+        private static extern IntPtr SetThreadAffinityMask(IntPtr hThread, IntPtr dwThreadAffinityMask);
 
-            OnRenderThreadStarted();
-            _watchRender.Start();
+        [DllImport("kernel32")]
+        private static extern IntPtr GetCurrentThread();
+
+        [DllImport("winmm")]
+        private static extern uint timeBeginPeriod(uint uPeriod);
+
+        private unsafe void RunUpdates()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                SetThreadAffinityMask(GetCurrentThread(), new IntPtr(1));
+
+                // Make Thread.Sleep more accurate.
+                // FIXME: We probably only care about this if we are not event driven.
+                timeBeginPeriod(1);
+            }
+
+            Utils.SleepTimings runSleepTimings = new Utils.SleepTimings(2);
+
+            _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
-                DispatchRenderFrame();
+                double updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
+
+                double overshoot = 0;
+                double timeToNextUpdate = 0;
+
+                double elapsed = _watchUpdate.Elapsed.TotalSeconds;
+                if (elapsed > updatePeriod)
+                {
+                    _watchUpdate.Restart();
+
+                    overshoot = elapsed - updatePeriod;
+
+                    // Update input state for next frame
+                    ProcessInputEvents();
+
+                    // Handle events for this frame
+                    ProcessWindowEvents(IsEventDriven);
+
+                    Debug.Print($"Update Elapsed: {elapsed * 1000:0.0000}ms, UpdatePeriod: {updatePeriod * 1000:0.0000}ms, Overshoot: {overshoot * 1000:0.00000}ms");
+
+                    OnUpdateFrame(new FrameEventArgs(elapsed));
+                    OnRenderFrame(new FrameEventArgs(elapsed));
+
+                    //double updateTime = _watchUpdate.Elapsed.TotalSeconds;
+                    //timeToNextUpdate = updatePeriod - _watchUpdate.Elapsed.TotalSeconds;
+                    //Debug.Print($"Time to next update: {timeToNextUpdate * 1000:0.000}ms, Update took: {updateTime * 1000:0.000}");
+                }
+                else
+                {
+                    //Debug.Print($"Time left to update: {(updatePeriod - elapsed) * 1000:0.000}ms");
+                }
+
+                // The time we have left to the next update.
+                timeToNextUpdate = updatePeriod - _watchUpdate.Elapsed.TotalSeconds;
+
+                const double bias = 0 / 1000.0;
+                if (timeToNextUpdate - bias > 0)
+                {
+                    //Debug.Print($"Sleep(1)");
+
+                    //var t1 = Stopwatch.GetTimestamp();
+                    runSleepTimings.PreciseSleep(timeToNextUpdate);
+                    //Thread.Sleep(1);
+                    //var t2 = Stopwatch.GetTimestamp();
+
+                    //Debug.Print($"Sleep({timeToNextUpdate * 1000:0.000}) took {((t2 - t1) / (double)Stopwatch.Frequency) * 1000:0.000}ms, Time to update: {(updatePeriod - _watchUpdate.Elapsed.TotalSeconds) * 1000:0.000}ms");
+                }
             }
         }
 
         /// <returns>Time to next update frame.</returns>
         private double DispatchUpdateFrame()
         {
-            var isRunningSlowlyRetries = 4;
-            var elapsed = _watchUpdate.Elapsed.TotalSeconds;
+            int isRunningSlowlyRetries = 4;
 
-            var updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
+            double updatePeriod = UpdateFrequency == 0 ? 0 : 1 / UpdateFrequency;
 
-            while (elapsed > 0 && elapsed + _updateEpsilon >= updatePeriod)
+            double elapsed = _watchUpdate.Elapsed.TotalSeconds;
+            if (elapsed /*+ _updateEpsilon*/ >= updatePeriod)
             {
+                Debug.Print($"Update Elapsed: {elapsed * 1000}ms, UpdatePeriod: {updatePeriod * 1000}ms, Overshoot: {(elapsed - updatePeriod) * 1000}ms, Epsilon: {_updateEpsilon}");
+
                 // Update input state for next frame
                 ProcessInputEvents();
+
                 // Handle events for this frame
                 ProcessWindowEvents(IsEventDriven);
 
+                elapsed = _watchUpdate.Elapsed.TotalSeconds;
                 _watchUpdate.Restart();
+
                 UpdateTime = elapsed;
+
                 OnUpdateFrame(new FrameEventArgs(elapsed));
 
-                // Calculate difference (positive or negative) between
-                // actual elapsed time and target elapsed time. We must
-                // compensate for this difference.
-                _updateEpsilon += elapsed - updatePeriod;
+                // We call this here to perserve some kind of backwards compat.
+                OnRenderFrame(new FrameEventArgs(elapsed));
 
                 if (UpdateFrequency <= double.Epsilon)
                 {
                     // An UpdateFrequency of zero means we will raise
                     // UpdateFrame events as fast as possible (one event
                     // per ProcessEvents() call)
-                    break;
+                    return 0;
                 }
 
+                // Calculate difference (positive or negative) between
+                // actual elapsed time and target elapsed time. We must
+                // compensate for this difference.
+                _updateEpsilon += elapsed - updatePeriod;
+
+                // This assumes updatePeriod is not zero, which it isn't if we get here.
                 IsRunningSlowly = _updateEpsilon >= updatePeriod;
-
-                if (IsRunningSlowly && --isRunningSlowlyRetries == 0)
-                {
-                    // If UpdateFrame consistently takes longer than TargetUpdateFrame
-                    // stop raising events to avoid hanging inside the UpdateFrame loop.
-                    _updateEpsilon = 0;
-                    break;
-                }
-
-                elapsed = _watchUpdate.Elapsed.TotalSeconds;
-            }
-
-            return UpdateFrequency == 0 ? 0 : updatePeriod - elapsed;
-        }
-
-        /// <returns>Time to next render frame.</returns>
-        private double DispatchRenderFrame()
-        {
-            var elapsed = _watchRender.Elapsed.TotalSeconds;
-            var renderPeriod = RenderFrequency == 0 ? 0 : 1 / RenderFrequency;
-            if (elapsed > 0 && elapsed >= renderPeriod)
-            {
-                _watchRender.Restart();
-                RenderTime = elapsed;
-                OnRenderFrame(new FrameEventArgs(elapsed));
 
                 // Update VSync if set to adaptive
                 if (VSync == VSyncMode.Adaptive)
                 {
                     GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
                 }
+
+                if (IsRunningSlowly && --isRunningSlowlyRetries == 0)
+                {
+                    // If UpdateFrame consistently takes longer than TargetUpdateFrame
+                    // stop raising events to avoid hanging inside the UpdateFrame loop.
+                    _updateEpsilon = 0;
+                    return 0;
+                }
+
+                elapsed = _watchUpdate.Elapsed.TotalSeconds;
             }
 
-            return RenderFrequency == 0 ? 0 : renderPeriod - elapsed;
+            return UpdateFrequency == 0 ? 0 : updatePeriod - elapsed;
         }
 
         /// <summary>
@@ -387,6 +420,7 @@ namespace OpenTK.Windowing.Desktop
         /// Run when the window is ready to update.
         /// </summary>
         /// <param name="args">The event arguments for this frame.</param>
+        [Obsolete("Use OnUpdateFrame instead. We no longer separate UpdateFrame and RenderFrame.")]
         protected virtual void OnRenderFrame(FrameEventArgs args)
         {
             RenderFrame?.Invoke(args);

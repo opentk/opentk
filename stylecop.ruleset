@@ -65,7 +65,7 @@
     <Rule Id="SA1125" Action="Error" /> <!-- Use shorthand for nullable types -->
     <Rule Id="SA1127" Action="None" Intentional="true" /> <!-- Generic type constraints must be on their own line -->
     <Rule Id="SA1128" Action="Error" /> <!-- Put constructor initializers on their own line -->
-    <Rule Id="SA1129" Action="Error" /> <!-- Do not use default value type constructor -->
+    <Rule Id="SA1129" Action="None" Intentional="true" /> <!-- Do not use default value type constructor -->
     <Rule Id="SA1130" Action="Error" /> <!-- Use lambda syntax -->
     <Rule Id="SA1131" Action="Error" /> <!-- Use readable conditions -->
     <Rule Id="SA1132" Action="Error" /> <!-- Do not combine fields -->

@@ -25,7 +25,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value indicating whether the game window should use a separate thread for render events.
         /// </summary>
-        [Obsolete("There is not one size fits all multithreading solution, especially for OpenGL. This option will be removed in future versions, and you will have to implement what you need instead.")]
+        [Obsolete("There is not one size fits all multithreading solution, especially for OpenGL. This feature has been removed and will no longer work.", true)]
         public bool IsMultiThreaded { get; set; } = false;
 
         /// <summary>
@@ -38,6 +38,7 @@ namespace OpenTK.Windowing.Desktop
         ///  </para>
         ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 200.0Hz.</para>
         /// </remarks>
+        [Obsolete("Use UpdateFrame instead. We no longer separate UpdateFrame and RenderFrame.", true)]
         public double RenderFrequency { get; set; } = 0.0;
 
         /// <summary>
