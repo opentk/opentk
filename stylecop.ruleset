@@ -61,7 +61,7 @@
     <Rule Id="SA1121" Action="Error" /> <!-- Use built-in type alias -->
     <Rule Id="SA1122" Action="Error" /> <!-- Use string.Empty for empty strings -->
     <Rule Id="SA1123" Action="Error" /> <!-- Do not place regions within elements -->
-    <Rule Id="SA1124" Action="Error" /> <!-- Do not use regions -->
+    <Rule Id="SA1124" Action="None" /> <!-- Do not use regions -->
     <Rule Id="SA1125" Action="Error" /> <!-- Use shorthand for nullable types -->
     <Rule Id="SA1127" Action="None" Intentional="true" /> <!-- Generic type constraints must be on their own line -->
     <Rule Id="SA1128" Action="Error" /> <!-- Put constructor initializers on their own line -->

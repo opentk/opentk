@@ -1,10 +1,12 @@
-﻿using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Core;
+using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace LocalTest
 {
@@ -14,7 +16,7 @@ namespace LocalTest
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
-                UpdateFrequency = 144,
+                UpdateFrequency = 100,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -53,13 +55,13 @@ namespace LocalTest
         }
 
         double timer, timer2;
-        int frames, updates;
+        int frames;
+
+        Utils.SleepTimings timings = new Utils.SleepTimings(2);
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
-
-            frames++;
 
             GL.ClearColor(Color4.Coral);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -92,7 +94,7 @@ namespace LocalTest
                 watch2.Start();
             }
 
-            updates++;
+            frames++;
 
             n++;
             sum += args.Time * 1000;
@@ -107,16 +109,15 @@ namespace LocalTest
             timer2 += args.Time;
             if (timer >= 1.0)
             {
-                Console.WriteLine("fps {0} | ups {1}", frames, updates);
+                Console.WriteLine($"fps {frames}");
                 frames = 0;
-                updates = 0;
                 timer = 0;
 
                 var diff = timer2 - watch.Elapsed.TotalSeconds;
 
-                Console.WriteLine($"opentk {timer2:0.00000} | stopwatch {watch.Elapsed.TotalSeconds:0.00000} | diff {diff:0.00000} | drift {initialDiff - diff:0.00000}");
+                //Console.WriteLine($"opentk {timer2:0.00000} | stopwatch {watch.Elapsed.TotalSeconds:0.00000} | diff {diff:0.00000} | drift {initialDiff - diff:0.00000}");
 
-                Console.WriteLine($"Time {sum/1000d}s, Mean frame time: {mean}ms, Frame time variance: {variance}");
+                //Console.WriteLine($"Time {sum/1000d}s, Mean frame time: {mean}ms, Frame time variance: {variance}");
             }
         }
     }
