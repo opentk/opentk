@@ -4630,6 +4630,17 @@
       <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
+      <token name="SHADING_RATE_EXT" value="0x96D0" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D7" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D8" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96D9" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96DA" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_ASPECT_RATIO_EXT" value="0x96DB" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_LAYERS_EXT" value="0x96DC" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SHADER_DEPTH_STENCIL_WRITES_SUPPORTED_EXT" value="0x96DD" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SAMPLE_MASK_SUPPORTED_EXT" value="0x96DE" />
+      <token name="FRAGMENT_SHADING_RATE_ATTACHMENT_WITH_DEFAULT_FRAMEBUFFER_SUPPORTED_EXT" value="0x96DF" />
+      <token name="FRAGMENT_SHADING_RATE_NON_TRIVIAL_COMBINERS_SUPPORTED_EXT" value="0x8F6F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -7795,6 +7806,24 @@
     <enum name="ShadingModel">
       <token name="FLAT" value="0x1D00" deprecated="3.2" />
       <token name="SMOOTH" value="0x1D01" deprecated="3.2" />
+    </enum>
+    <enum name="ShadingRate">
+      <token name="SHADING_RATE_1X1_PIXELS_EXT" value="0x96A6" />
+      <token name="SHADING_RATE_1X2_PIXELS_EXT" value="0x96A7" />
+      <token name="SHADING_RATE_2X1_PIXELS_EXT" value="0x96A8" />
+      <token name="SHADING_RATE_2X2_PIXELS_EXT" value="0x96A9" />
+      <token name="SHADING_RATE_1X4_PIXELS_EXT" value="0x96AA" />
+      <token name="SHADING_RATE_4X1_PIXELS_EXT" value="0x96AB" />
+      <token name="SHADING_RATE_4X2_PIXELS_EXT" value="0x96AC" />
+      <token name="SHADING_RATE_2X4_PIXELS_EXT" value="0x96AD" />
+      <token name="SHADING_RATE_4X4_PIXELS_EXT" value="0x96AE" />
+    </enum>
+    <enum name="ShadingRateCombinerOp">
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_EXT" value="0x96D2" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_EXT" value="0x96D3" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_EXT" value="0x96D4" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_EXT" value="0x96D5" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_EXT" value="0x96D6" />
     </enum>
     <enum name="StencilFaceDirection">
       <token name="FRONT" value="0x0404" />
@@ -34018,6 +34047,17 @@
       <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
+      <token name="SHADING_RATE_EXT" value="0x96D0" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D7" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D8" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96D9" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96DA" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_ASPECT_RATIO_EXT" value="0x96DB" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_LAYERS_EXT" value="0x96DC" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SHADER_DEPTH_STENCIL_WRITES_SUPPORTED_EXT" value="0x96DD" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SAMPLE_MASK_SUPPORTED_EXT" value="0x96DE" />
+      <token name="FRAGMENT_SHADING_RATE_ATTACHMENT_WITH_DEFAULT_FRAMEBUFFER_SUPPORTED_EXT" value="0x96DF" />
+      <token name="FRAGMENT_SHADING_RATE_NON_TRIVIAL_COMBINERS_SUPPORTED_EXT" value="0x8F6F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER_EXT" value="0x8090" />
@@ -35911,6 +35951,24 @@
       <token name="VERTEX_SHADER_ARB" value="0x8B31" />
     </enum>
     <enum name="ShadingModel" />
+    <enum name="ShadingRate">
+      <token name="SHADING_RATE_1X1_PIXELS_EXT" value="0x96A6" />
+      <token name="SHADING_RATE_1X2_PIXELS_EXT" value="0x96A7" />
+      <token name="SHADING_RATE_2X1_PIXELS_EXT" value="0x96A8" />
+      <token name="SHADING_RATE_2X2_PIXELS_EXT" value="0x96A9" />
+      <token name="SHADING_RATE_1X4_PIXELS_EXT" value="0x96AA" />
+      <token name="SHADING_RATE_4X1_PIXELS_EXT" value="0x96AB" />
+      <token name="SHADING_RATE_4X2_PIXELS_EXT" value="0x96AC" />
+      <token name="SHADING_RATE_2X4_PIXELS_EXT" value="0x96AD" />
+      <token name="SHADING_RATE_4X4_PIXELS_EXT" value="0x96AE" />
+    </enum>
+    <enum name="ShadingRateCombinerOp">
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_EXT" value="0x96D2" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_EXT" value="0x96D3" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_EXT" value="0x96D4" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_EXT" value="0x96D5" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_EXT" value="0x96D6" />
+    </enum>
     <enum name="StencilFaceDirection">
       <token name="FRONT" value="0x0404" />
       <token name="BACK" value="0x0405" />
@@ -51376,6 +51434,17 @@
       <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
+      <token name="SHADING_RATE_EXT" value="0x96D0" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D7" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D8" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96D9" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96DA" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_ASPECT_RATIO_EXT" value="0x96DB" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_LAYERS_EXT" value="0x96DC" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SHADER_DEPTH_STENCIL_WRITES_SUPPORTED_EXT" value="0x96DD" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SAMPLE_MASK_SUPPORTED_EXT" value="0x96DE" />
+      <token name="FRAGMENT_SHADING_RATE_ATTACHMENT_WITH_DEFAULT_FRAMEBUFFER_SUPPORTED_EXT" value="0x96DF" />
+      <token name="FRAGMENT_SHADING_RATE_NON_TRIVIAL_COMBINERS_SUPPORTED_EXT" value="0x8F6F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -52980,6 +53049,24 @@
     <enum name="ShadingModel">
       <token name="FLAT" value="0x1D00" deprecated="3.2" />
       <token name="SMOOTH" value="0x1D01" deprecated="3.2" />
+    </enum>
+    <enum name="ShadingRate">
+      <token name="SHADING_RATE_1X1_PIXELS_EXT" value="0x96A6" />
+      <token name="SHADING_RATE_1X2_PIXELS_EXT" value="0x96A7" />
+      <token name="SHADING_RATE_2X1_PIXELS_EXT" value="0x96A8" />
+      <token name="SHADING_RATE_2X2_PIXELS_EXT" value="0x96A9" />
+      <token name="SHADING_RATE_1X4_PIXELS_EXT" value="0x96AA" />
+      <token name="SHADING_RATE_4X1_PIXELS_EXT" value="0x96AB" />
+      <token name="SHADING_RATE_4X2_PIXELS_EXT" value="0x96AC" />
+      <token name="SHADING_RATE_2X4_PIXELS_EXT" value="0x96AD" />
+      <token name="SHADING_RATE_4X4_PIXELS_EXT" value="0x96AE" />
+    </enum>
+    <enum name="ShadingRateCombinerOp">
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_EXT" value="0x96D2" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_EXT" value="0x96D3" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_EXT" value="0x96D4" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_EXT" value="0x96D5" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_EXT" value="0x96D6" />
     </enum>
     <enum name="StencilFaceDirection">
       <token name="FRONT" value="0x0404" />
@@ -57078,6 +57165,34 @@
     <enum name="EXT_EGL_image_array" />
     <enum name="EXT_external_buffer" />
     <enum name="EXT_float_blend" />
+    <enum name="EXT_fragment_shading_rate">
+      <token name="SHADING_RATE_1X1_PIXELS_EXT" value="0x96A6" />
+      <token name="SHADING_RATE_1X2_PIXELS_EXT" value="0x96A7" />
+      <token name="SHADING_RATE_2X1_PIXELS_EXT" value="0x96A8" />
+      <token name="SHADING_RATE_2X2_PIXELS_EXT" value="0x96A9" />
+      <token name="SHADING_RATE_1X4_PIXELS_EXT" value="0x96AA" />
+      <token name="SHADING_RATE_4X1_PIXELS_EXT" value="0x96AB" />
+      <token name="SHADING_RATE_4X2_PIXELS_EXT" value="0x96AC" />
+      <token name="SHADING_RATE_2X4_PIXELS_EXT" value="0x96AD" />
+      <token name="SHADING_RATE_4X4_PIXELS_EXT" value="0x96AE" />
+      <token name="SHADING_RATE_EXT" value="0x96D0" />
+      <token name="SHADING_RATE_ATTACHMENT_EXT" value="0x96D1" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_EXT" value="0x96D2" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_EXT" value="0x96D3" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_EXT" value="0x96D4" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_EXT" value="0x96D5" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_EXT" value="0x96D6" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D7" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D8" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96D9" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96DA" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_ASPECT_RATIO_EXT" value="0x96DB" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_LAYERS_EXT" value="0x96DC" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SHADER_DEPTH_STENCIL_WRITES_SUPPORTED_EXT" value="0x96DD" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SAMPLE_MASK_SUPPORTED_EXT" value="0x96DE" />
+      <token name="FRAGMENT_SHADING_RATE_ATTACHMENT_WITH_DEFAULT_FRAMEBUFFER_SUPPORTED_EXT" value="0x96DF" />
+      <token name="FRAGMENT_SHADING_RATE_NON_TRIVIAL_COMBINERS_SUPPORTED_EXT" value="0x8F6F" />
+    </enum>
     <enum name="EXT_geometry_point_size" />
     <enum name="EXT_geometry_shader">
       <token name="GEOMETRY_SHADER_EXT" value="0x8DD9" />
@@ -58247,6 +58362,17 @@
       <token name="SUBGROUP_QUAD_ALL_STAGES_KHR" value="0x9535" />
       <token name="SCISSOR_TEST_EXCLUSIVE_NV" value="0x9555" />
       <token name="SCISSOR_BOX_EXCLUSIVE_NV" value="0x9556" />
+      <token name="SHADING_RATE_EXT" value="0x96D0" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D7" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_WIDTH_EXT" value="0x96D8" />
+      <token name="MIN_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96D9" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_HEIGHT_EXT" value="0x96DA" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_TEXEL_ASPECT_RATIO_EXT" value="0x96DB" />
+      <token name="MAX_FRAGMENT_SHADING_RATE_ATTACHMENT_LAYERS_EXT" value="0x96DC" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SHADER_DEPTH_STENCIL_WRITES_SUPPORTED_EXT" value="0x96DD" />
+      <token name="FRAGMENT_SHADING_RATE_WITH_SAMPLE_MASK_SUPPORTED_EXT" value="0x96DE" />
+      <token name="FRAGMENT_SHADING_RATE_ATTACHMENT_WITH_DEFAULT_FRAMEBUFFER_SUPPORTED_EXT" value="0x96DF" />
+      <token name="FRAGMENT_SHADING_RATE_NON_TRIVIAL_COMBINERS_SUPPORTED_EXT" value="0x8F6F" />
     </enum>
     <enum name="GetPointervPName">
       <token name="COLOR_ARRAY_POINTER" value="0x8090" deprecated="3.2" />
@@ -60781,6 +60907,24 @@
       <token name="FLAT" value="0x1D00" deprecated="3.2" />
       <token name="SMOOTH" value="0x1D01" deprecated="3.2" />
     </enum>
+    <enum name="ShadingRate">
+      <token name="SHADING_RATE_1X1_PIXELS_EXT" value="0x96A6" />
+      <token name="SHADING_RATE_1X2_PIXELS_EXT" value="0x96A7" />
+      <token name="SHADING_RATE_2X1_PIXELS_EXT" value="0x96A8" />
+      <token name="SHADING_RATE_2X2_PIXELS_EXT" value="0x96A9" />
+      <token name="SHADING_RATE_1X4_PIXELS_EXT" value="0x96AA" />
+      <token name="SHADING_RATE_4X1_PIXELS_EXT" value="0x96AB" />
+      <token name="SHADING_RATE_4X2_PIXELS_EXT" value="0x96AC" />
+      <token name="SHADING_RATE_2X4_PIXELS_EXT" value="0x96AD" />
+      <token name="SHADING_RATE_4X4_PIXELS_EXT" value="0x96AE" />
+    </enum>
+    <enum name="ShadingRateCombinerOp">
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_KEEP_EXT" value="0x96D2" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_REPLACE_EXT" value="0x96D3" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MIN_EXT" value="0x96D4" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MAX_EXT" value="0x96D5" />
+      <token name="FRAGMENT_SHADING_RATE_COMBINER_OP_MUL_EXT" value="0x96D6" />
+    </enum>
     <enum name="StencilFaceDirection">
       <token name="FRONT" value="0x0404" />
       <token name="BACK" value="0x0405" />
@@ -62147,6 +62291,16 @@
       <param name="v" type="GLfloat *" flow="in" />
       <returns type="void" />
     </function>
+    <function name="FramebufferShadingRateEXT" category="EXT_fragment_shading_rate" extension="EXT">
+      <param name="target" type="FramebufferTarget" flow="in" />
+      <param name="attachment" type="FramebufferAttachment" flow="in" />
+      <param name="texture" type="GLuint" flow="in" />
+      <param name="baseLayer" type="GLint" flow="in" />
+      <param name="numLayers" type="GLsizei" flow="in" />
+      <param name="texelWidth" type="GLsizei" flow="in" />
+      <param name="texelHeight" type="GLsizei" flow="in" />
+      <returns type="void" />
+    </function>
     <function name="FramebufferTexture2DDownsampleIMG" category="IMG_framebuffer_downsample" extension="IMG">
       <param name="target" type="FramebufferTarget" flow="in" />
       <param name="attachment" type="FramebufferAttachment" flow="in" />
@@ -62333,6 +62487,13 @@
       <param name="program" type="GLuint" flow="in" />
       <param name="name" type="GLchar *" flow="in" />
       <returns type="GLint" />
+    </function>
+    <function name="GetFragmentShadingRatesEXT" category="EXT_fragment_shading_rate" extension="EXT">
+      <param name="samples" type="GLsizei" flow="in" />
+      <param name="maxCount" type="GLsizei" flow="in" />
+      <param name="count" type="GLsizei *" flow="out" count="1" />
+      <param name="shadingRates" type="ShadingRate *" flow="out" count="maxCount" />
+      <returns type="void" />
     </function>
     <function name="GetFramebufferPixelLocalStorageSizeEXT" category="EXT_shader_pixel_local_storage2" extension="EXT">
       <param name="target" type="FramebufferTarget" flow="in" />
@@ -64110,6 +64271,15 @@
     <function name="SetFenceNV" category="NV_fence" extension="NV">
       <param name="fence" type="FenceNV" flow="in" />
       <param name="condition" type="FenceConditionNV" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateCombinerOpsEXT" category="EXT_fragment_shading_rate" extension="EXT">
+      <param name="combinerOp0" type="ShadingRateCombinerOp" flow="in" />
+      <param name="combinerOp1" type="ShadingRateCombinerOp" flow="in" />
+      <returns type="void" />
+    </function>
+    <function name="ShadingRateEXT" category="EXT_fragment_shading_rate" extension="EXT">
+      <param name="rate" type="ShadingRate" flow="in" />
       <returns type="void" />
     </function>
     <function name="ShadingRateImageBarrierNV" category="NV_shading_rate_image" extension="NV">
