@@ -35939,6 +35939,7 @@
       <token name="COMPILE_STATUS" value="0x8B81" />
       <token name="INFO_LOG_LENGTH" value="0x8B84" />
       <token name="SHADER_SOURCE_LENGTH" value="0x8B88" />
+      <token name="SHADER_BINARY_FORMAT_SPIR_V" value="0x9551" />
     </enum>
     <enum name="ShaderType">
       <token name="COMPUTE_SHADER" value="0x91B9" />
@@ -53035,6 +53036,7 @@
       <token name="COMPILE_STATUS" value="0x8B81" />
       <token name="INFO_LOG_LENGTH" value="0x8B84" />
       <token name="SHADER_SOURCE_LENGTH" value="0x8B88" />
+      <token name="SHADER_BINARY_FORMAT_SPIR_V" value="0x9551" />
     </enum>
     <enum name="ShaderType">
       <token name="COMPUTE_SHADER" value="0x91B9" />

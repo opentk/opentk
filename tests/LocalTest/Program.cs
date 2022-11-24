@@ -55,7 +55,7 @@ namespace LocalTest
         {
             base.OnRenderFrame(args);
 
-            GL.ClearColor(Color4.Black);
+            GL.ClearColor(Color4.Coral);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             SwapBuffers();

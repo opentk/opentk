@@ -2773,6 +2773,8 @@
     </enum>
     <enum name="BinaryFormat">
       <!-- Tokens must be queried at runtime. -->
+      <use enum="ARB_gl_spirv" token="SHADER_BINARY_FORMAT_SPIR_V_ARB" />
+      <use enum="VERSION_4_6" token="SHADER_BINARY_FORMAT_SPIR_V" />
     </enum>
     <enum name="BlendEquationMode">
       <token name="FUNC_ADD" value="0x8006" />
