@@ -251,5 +251,19 @@ namespace OpenTK.Windowing.Desktop
         /// Gets or sets a value indicating whether the backbuffer should be sRGB capable.
         /// </summary>
         public bool SrgbCapable { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the framebuffer should be transparent or not.
+        /// <c>null</c> and <c>false</c> does not result in a transparent framebuffer while <c>true</c> will result in a transparent framebuffer.
+        /// </summary>
+        public bool? TransparentFramebuffer { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the vsync mode to use.
+        /// A pure NativeWindow supports <see cref="VSyncMode.Off"/> and <see cref="VSyncMode.On"/>.
+        /// <see cref="GameWindow"/> adds support for <see cref="VSyncMode.Adaptive"/>,
+        /// if you are not using <see cref="GameWindow"/> you will have to handle adaptive vsync yourself.
+        /// </summary>
+        public VSyncMode Vsync { get; set; } = VSyncMode.Off;
     }
 }
