@@ -6,8 +6,6 @@ namespace OpenTK.Compute.OpenCL
 {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1614 // Element parameter documentation should have text
-#pragma warning disable SA1615 // Element return value should be documented
-#pragma warning disable SA1611 // Element parameters should be documented
     public class CLGL : CLBase
     {
         public enum ObjectType : uint
@@ -218,6 +216,4 @@ namespace OpenTK.Compute.OpenCL
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning restore SA1614 // Element parameter documentation should have text
-#pragma warning restore SA1615 // Element return value should be documented
-#pragma warning restore SA1611 // Element parameters should be documented
 }

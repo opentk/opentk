@@ -167,7 +167,7 @@ namespace OpenTK.Compute.OpenCL
         AllocHostPtr = 1 << 4,
         CopyHostPtr = 1 << 5,
 
-        //Reserved = 1 << 6,
+        // Reserved = 1 << 6,
         HostWriteOnly = 1 << 7,
         HostReadOnly = 1 << 8,
         HostNoAccess = 1 << 9,
@@ -182,9 +182,9 @@ namespace OpenTK.Compute.OpenCL
         UseGrallocPtrImg = 1 << 28,
         ExtHostPtrQcom = 1 << 29,
 
-        //Unused
+        // Unused
         //  BusAddressableAmd = 1 << 30,
-        //Unused
+        // Unused
         //  ExternalMemoryAmd = 1 << 31,
 
         CL_MEM_RESERVED0_ARM = 1 << 32,
