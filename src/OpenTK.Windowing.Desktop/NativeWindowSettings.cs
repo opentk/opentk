@@ -82,8 +82,9 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Gets or sets a value representing the current graphics profile flags.
+        /// Default value is <see cref="ContextFlags.ForwardCompatible"/> to work out of the box on macos.
         /// </summary>
-        public ContextFlags Flags { get; set; } = ContextFlags.Default;
+        public ContextFlags Flags { get; set; } = ContextFlags.ForwardCompatible;
 
         /// <summary>
         /// Gets or sets a value indicating whether or not OpenGL bindings should be automatically loaded
