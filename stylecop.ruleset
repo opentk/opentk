@@ -1,4 +1,4 @@
-<RuleSet Name="OpenTK Rules" ToolsVersion="12.0">
+<RuleSet Name="OpenTK Rules" ToolsVersion="15.0">
   <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
 
     <!-- Special rules -->
@@ -61,7 +61,7 @@
     <Rule Id="SA1121" Action="Error" /> <!-- Use built-in type alias -->
     <Rule Id="SA1122" Action="Error" /> <!-- Use string.Empty for empty strings -->
     <Rule Id="SA1123" Action="Error" /> <!-- Do not place regions within elements -->
-    <Rule Id="SA1124" Action="Error" /> <!-- Do not use regions -->
+    <Rule Id="SA1124" Action="None" Intentional="true"/> <!-- Do not use regions -->
     <Rule Id="SA1125" Action="Error" /> <!-- Use shorthand for nullable types -->
     <Rule Id="SA1127" Action="None" Intentional="true" /> <!-- Generic type constraints must be on their own line -->
     <Rule Id="SA1128" Action="Error" /> <!-- Put constructor initializers on their own line -->
@@ -86,7 +86,6 @@
     <Rule Id="SA1207" Action="Error" /> <!-- Protected must come before internal -->
     <Rule Id="SA1208" Action="Error" /> <!-- System using directives must be placed before other using directives -->
     <Rule Id="SA1209" Action="Error" /> <!-- Using alias directives must be placed after other using directives -->
-    <Rule Id="SA1210" Action="Error" /> <!-- Using directives must be ordered alphabetically by namespace -->
     <Rule Id="SA1210" Action="Error" /> <!-- Using directives must be ordered alphabetically by namespace -->
     <Rule Id="SA1211" Action="Error" /> <!-- Using alias directives must be ordered alphabetically by alias name -->
     <Rule Id="SA1212" Action="Error" /> <!-- Property accessors must follow order -->
@@ -116,7 +115,7 @@
     <!-- Maintainability rules -->
     <Rule Id="SA1400" Action="Error" /> <!-- Access modifier must be declared -->
     <Rule Id="SA1401" Action="Error" /> <!-- Fields must be private -->
-    <Rule Id="SA1402" Action="Error" /> <!-- File may only contain a single class -->
+    <Rule Id="SA1402" Action="Info" /> <!-- File may only contain a single class -->
     <Rule Id="SA1403" Action="Error" /> <!-- File may only contain a single namespace -->
     <Rule Id="SA1404" Action="Error" /> <!-- Code analysis suppression must have justification -->
     <Rule Id="SA1405" Action="Error" /> <!-- Debug.Assert must provide message text -->
@@ -193,7 +192,7 @@
     <Rule Id="SA1643" Action="Error" /> <!-- Destructor summary documentation must begin with standard text -->
     <Rule Id="SA1644" Action="None" Intentional="true" /> <!-- Documentation header must not contain blank lines -->
     <Rule Id="SA1648" Action="Error" /> <!-- inheritdoc must be used with inheriting class -->
-    <Rule Id="SA1649" Action="Error" /> <!-- File name must match first type name -->
+    <Rule Id="SA1649" Action="Info" /> <!-- File name must match first type name -->
     <Rule Id="SA1651" Action="Error" /> <!-- Do not use placeholder elements -->
   </Rules>
 </RuleSet>
