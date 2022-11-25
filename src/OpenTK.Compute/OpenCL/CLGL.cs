@@ -73,7 +73,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         /// <param name="context"></param>
         /// <param name="flags"></param>
-        /// <param name="target">This corresponds to the texture target used in OpenGL; e.g. (int)TextureTarget.Texture2D</param>
+        /// <param name="target">This corresponds to the texture target used in OpenGL; e.g. (int)TextureTarget.Texture2D.</param>
         /// <param name="mipLevel"></param>
         /// <param name="texture"></param>
         /// <param name="error"></param>
