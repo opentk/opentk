@@ -175,7 +175,6 @@ namespace OpenTK.Compute.OpenCL
         SvmAtomics = 1 << 11,
         KernelReadAndWrite = 1 << 12,
 
-
         NoAccessIntel = 1 << 24,
         AccessFlagsUnrestrictedIntel = 1 << 25,
         UseUncachedCpuMemoryImg = 1 << 26,
@@ -448,6 +447,5 @@ namespace OpenTK.Compute.OpenCL
     [Flags]
     public enum CommandQueueProperty : ulong
     {
-
     }
 }
