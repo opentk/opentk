@@ -45,8 +45,16 @@
     <DownloadFile SourceUrl="https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml" DestinationFolder=".." SkipUnchangedFiles="true" Condition="Exists('../gl.xml') == 'false'" />
   </Target>
 
-  <!-- After we've downloaded the spec file we can generate the bindings if needed. By setting Inputs and Outputs msbuild decides when we need to generate the bindings. -->
-  <Target Name="Generate bindings" DependsOnTargets="Download gl xml;AfterResolveReferences" BeforeTargets="CoreCompile;CopyFilesToOutputDirectory" Inputs="@(GLSpec);@(GeneratorExe)" Outputs="@(GeneratedFiles)">
+  <!-- After we've downloaded the spec file we can generate the bindings if needed. -->
+  <Target Name="Generate bindings" DependsOnTargets="Download gl xml" BeforeTargets="DispatchToInnerBuilds;BeforeBuild">
+    <!-- Use the solution presented here https://github.com/dotnet/msbuild/issues/2781#issuecomment-350118208 -->
+    <!-- The idea is to set TargetFramework to "once" for all target frameworks, msbuild will not execute the same project with the same settings twice. -->
+    <!-- This way we can make sure that we only generate the bindings once for this csproj file. -->
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Generate bindings inner" Properties="TargetFramework=once" />
+  </Target>
+
+  <!-- By setting Inputs and Outputs msbuild decides when we need to generate the bindings. -->
+  <Target Name="Generate bindings inner" Inputs="@(GLSpec);@(GeneratorExe)" Outputs="@(GeneratedFiles)">
     <Message Text="Generating bindings..." Importance="high" />
 
     <!-- Run the exe directly to avoid dotnet rebuilding anything. -->
@@ -63,7 +71,7 @@
   </Target>
 
   <!-- After we have compiled the dll we run the rewriter -->
-  <Target Name="Rewrite" BeforeTargets="PostBuildEvent">
+  <Target Name="Rewrite" BeforeTargets="PostBuildEvent" Condition="false" >
     <Message Text="Rewriting src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
     <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" />
     <Message Text="Rewrote src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
