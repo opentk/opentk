@@ -71,7 +71,7 @@
   </Target>
 
   <!-- After we have compiled the dll we run the rewriter -->
-  <Target Name="Rewrite" BeforeTargets="PostBuildEvent" Condition="false" >
+  <Target Name="Rewrite" BeforeTargets="PostBuildEvent" >
     <Message Text="Rewriting src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
     <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" />
     <Message Text="Rewrote src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
