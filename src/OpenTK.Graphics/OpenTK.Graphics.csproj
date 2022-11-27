@@ -39,6 +39,8 @@
   </ItemGroup>
 
   <!--  'DispatchToInnerBuilds' is so that this target is only run once in contrast to task that run after 'PreBuildEvent' which get run multiple times for each target framework  -->
+  <!-- The downloaded gl.xml file isn't acually used by the build, it needs to be processed by Generator.Convert first, -->
+  <!-- but we don't do this here as it's been a long time since the bindings where generated directly from gl.xml and it has diverged quite a bit. -->
   <Target Name="Download gl xml" BeforeTargets="DispatchToInnerBuilds">
     <!-- Here we check if gl.xml exists, if it doesn't we download the file. -->
     <DownloadFile SourceUrl="https://raw.githubusercontent.com/frederikja163/OpenGL-Registry/master/xml/gl.xml" DestinationFolder=".." SkipUnchangedFiles="true" Condition="Exists('../gl.xml') == 'false'" />

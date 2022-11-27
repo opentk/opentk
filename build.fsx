@@ -151,40 +151,6 @@ Target.create "UpdateSpec" (fun _ ->
     |> Trace.logfn "Saved spec at %s"
     ())
 
-Target.create "UpdateBindings" (fun _ ->
-    Trace.log " --- Updating bindings --- "
-    let framework = "netcoreapp3.1"
-    let projFile = "src/Generator/Generator.fsproj"
-
-    let args =
-        [ "-i"; System.IO.Path.GetFullPath pathToSpec;
-          "-o"; System.IO.Path.GetFullPath "src" </> "OpenGL" ]
-        |> asArgs
-    DotNet.runWithDefaultOptions framework projFile args |> ignore)
-
-Target.create "UpdateBindingsRewrite" (fun _ ->
-    Trace.log " --- Updating bindings (rewrite) --- "
-    let framework = "netcoreapp3.1"
-    let projFile = "src/Generator.Bind/Generator.Bind.csproj"
-
-    let args = [  ] |> asArgs
-    DotNet.runWithDefaultOptions framework projFile args |> ignore)
-
-let rewriteBindsForTfm tfm =
-    Trace.log (sprintf " --- Rewriting bindings for %s (calli) --- " tfm)
-    let framework = "netcoreapp3.1"
-    let projFile = "src/Generator.Rewrite/Generator.Rewrite.csproj"
-    let bindingsFile = "OpenTK.Graphics.dll"
-    let bindingsOutput = sprintf "src/OpenTK.Graphics/bin/Release/%s" tfm
-
-    let targetPath = (System.IO.Path.GetFullPath bindingsOutput </> bindingsFile)
-    let args = [ "-a"; targetPath ] |> asArgs
-    DotNet.runWithDefaultOptions framework projFile args |> ignore
-
-Target.create "RewriteBindings" (fun _ ->
-    rewriteBindsForTfm "netstandard2.1"
-    rewriteBindsForTfm "netcoreapp3.1")
-
 // ---------
 // Build Targets
 // ---------
@@ -374,9 +340,7 @@ open Fake.Core.TargetOperators
   ==> "Restore"
   ==> "AssemblyInfo"
   ==> "UpdateSpec"
-//  ==> "UpdateBindingsRewrite"
   ==> "Build"
-//  ==> "RewriteBindings"
 //  ==> "RunAllTests"
   ==> "All"
   ==> "CreateNuGetPackage"
