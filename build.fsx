@@ -238,7 +238,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
     let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
 
     for proj in releaseProjects do
-        Trace.logf "Creating nuget package for Project: %s" proj
+        Trace.logf "Creating nuget package for Project: %s\n" proj
 
         let dir = Path.GetDirectoryName proj
         let templatePath = Path.Combine(dir, "paket")
