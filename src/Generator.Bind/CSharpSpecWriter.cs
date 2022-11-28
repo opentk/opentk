@@ -351,9 +351,13 @@ namespace Bind
                         if (docparam.Name != param.RawName &&
                             docparam.Name != param.RawName.Substring(1)) // '@ref' -> 'ref' etc
                         {
-                            Console.Error.WriteLine(
-                                "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
-                                param.RawName, f.Name, docparam.Name);
+                            // This isn't really that interesting currently as this warning is basically only ignored.
+                            // We don't really care for this warning in OpenTK 4.
+                            // - 2022-11-28 Noggin_Bops
+
+                            // Console.Error.WriteLine(
+                            //    "[Warning] Parameter '{0}' in function '{1}' has incorrect doc name '{2}'",
+                            //    param.RawName, f.Name, docparam.Name);
                         }
 
                         // Note: we use param.Name, because the documentation sometimes
