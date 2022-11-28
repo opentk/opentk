@@ -140,10 +140,10 @@
     <Rule Id="SA1509" Action="Error" /> <!-- Opening braces must not be preceded by blank line -->
     <Rule Id="SA1510" Action="Error" /> <!-- Chained statement blocks must not be preceded by blank line -->
     <Rule Id="SA1511" Action="Error" /> <!-- While-do footer must not be preceded by blank line -->
-    <Rule Id="SA1512" Action="Warning" Intentional="true" Reason="Used for spacing"/> <!-- Single-line comments must not be followed by blank line -->
+    <Rule Id="SA1512" Action="None" Intentional="true" /> <!-- Single-line comments must not be followed by blank line -->
     <Rule Id="SA1513" Action="None" Intentional="true" Reason="Waiting for configurable option for enums"/> <!-- Closing brace must be followed by blank line -->
     <Rule Id="SA1514" Action="Error" /> <!-- Element documentation header must be preceded by blank line -->
-    <Rule Id="SA1515" Action="Warning" Intentional="true" Reason="Used for spacing"/> <!-- Single-line comment must be preceded by blank line -->
+    <Rule Id="SA1515" Action="None" Intentional="true" /> <!-- Single-line comment must be preceded by blank line -->
     <Rule Id="SA1516" Action="Error" /> <!-- Elements must be separated by blank line -->
     <Rule Id="SA1517" Action="Error" /> <!-- Code must not contain blank lines at start of file -->
     <Rule Id="SA1518" Action="None" /> <!-- Use line endings correctly at end of file -->
