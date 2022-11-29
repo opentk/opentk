@@ -9,4 +9,4 @@
 $env:PATH += ";%LOCALAPPDATA%\Microsoft\dotnet"
 dotnet tool restore
 dotnet paket restore
-dotnet fake run build.fsx $args
+dotnet fake run build.fsx "$($args)"
