@@ -5,6 +5,8 @@ image:
 
 version: 4.0.0.{build}
 
+clone_depth: 1 # we only care about the commit we are building
+
 nuget:
   project_feed: true
 
