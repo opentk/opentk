@@ -1,6 +1,7 @@
 image:
   - Visual Studio 2022
-  - Ubuntu
+# FIXME: At some point we want to test our builds on Ubuntu?
+#  - Ubuntu
 
 version: 4.0.0.{build}
 
