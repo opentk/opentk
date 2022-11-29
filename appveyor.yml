@@ -7,13 +7,7 @@ version: 4.0.0.{build}
 init:
   - git config --global core.autocrlf input
 
-install:
-  # Install OpenGL
-  - ps: ./install-opengl.ps1
 configuration: Release
 
 build_script:
   - build.cmd -t RunCITests
-
-on_finish:
-  - ps: ./install-opengl.ps1 uninstall
