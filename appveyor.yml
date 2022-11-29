@@ -1,4 +1,6 @@
-image: Visual Studio 2019
+image:
+  - Visual Studio 2019
+  - Ubuntu
 
 version: 4.0.0.{build}
 
@@ -7,11 +9,11 @@ init:
 
 install:
   # Install OpenGL
-  - "powershell ./install-opengl.ps1"
+  - ps: ./install-opengl.ps1
 configuration: Release
 
 build_script:
   - build.cmd -t RunCITests
 
 on_finish:
-  - "powershell ./install-opengl.ps1 uninstall"
+  - ps: ./install-opengl.ps1 uninstall
