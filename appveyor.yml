@@ -5,6 +5,9 @@ image:
 
 version: 4.0.0.{build}
 
+nuget:
+  project_feed: true
+
 artifacts:
   - path: bin/nuget/*.nupkg
     name: OpenTK Nuget Packages
