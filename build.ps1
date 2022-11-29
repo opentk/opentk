@@ -6,9 +6,3 @@
 dotnet tool restore
 dotnet paket restore
 dotnet fake run build.fsx $($args)
-
-$nupgk_files = Get-ChildItem ./bin/nuget/*.nupkg
-
-foreach ($nupkg_file in $nupgk_files) {
-    Push-AppveyorArtifact $($nupkg_file)
-}
