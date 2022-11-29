@@ -359,7 +359,8 @@ open Fake.Core.TargetOperators
   ==> "ReleaseOnGithub"
   ==> "ReleaseOnAll"
 
-"Build"
+// We build the nuget package so that appvayor can get the artifacts
+"CreateMetaPackage"
   ==> "RunCITests"
 
 //"Build"

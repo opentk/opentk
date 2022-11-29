@@ -4,10 +4,14 @@ image:
 
 version: 4.0.0.{build}
 
+artifacts:
+  - path: bin/nuget/*.nupkg
+    name: MyApp
+
 init:
   - git config --global core.autocrlf input
 
 configuration: Release
 
 build_script:
-  - build.cmd -t RunCITests
+  - ps: build.ps1 -t RunCITests
