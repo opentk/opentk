@@ -1,4 +1,4 @@
-REM "Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)"
+# Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script)
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
 
@@ -9,4 +9,4 @@ REM "Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotne
 $env:PATH += ";%LOCALAPPDATA%\Microsoft\dotnet"
 dotnet tool restore
 dotnet paket restore
-dotnet fake run build.fsx %* 
+dotnet fake run build.fsx $args
