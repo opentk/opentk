@@ -250,6 +250,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
         File.WriteAllText(templatePath + ".template", newTmplCont)
         let setParams (p:Paket.PaketPackParams) =
             { p with
+                ToolType = ToolType.CreateLocalTool()
                 ReleaseNotes = notes
                 OutputPath = Path.GetFullPath(nugetDir)
                 WorkingDir = dir
