@@ -1114,6 +1114,13 @@ namespace OpenTK.Platform.X11
         braceright                  = 0x007d,  /* U+007D RIGHT CURLY BRACKET */
         asciitilde                  = 0x007e,  /* U+007E TILDE */
 
+        // These keys are present by default on a standard German keyboard (as opposed to being shift modified etc.)
+        A_diaeresis                 = 0x00c4,  /* U+00C4 LATIN CAPITAL LETTER A WITH DIAERESIS */
+        O_diaeresis                 = 0x00d6,  /* U+00D6 LATIN CAPITAL LETTER O WITH DIAERESIS */
+        U_diaeresis                 = 0x00dc,  /* U+00DC LATIN CAPITAL LETTER U WITH DIAERESIS */
+        a_diaeresis                 = 0x00e4,  /* U+00E4 LATIN SMALL LETTER A WITH DIAERESIS */
+        o_diaeresis                 = 0x00f6,  /* U+00F6 LATIN SMALL LETTER O WITH DIAERESIS */
+        u_diaeresis                 = 0x00fc,  /* U+00FC LATIN SMALL LETTER U WITH DIAERESIS */
         // Extra keys
 
         XF86AudioMute = 0x1008ff12,

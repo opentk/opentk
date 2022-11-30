@@ -376,5 +376,13 @@ namespace OpenTK.Input
         /// <summary>The Command key.</summary>
         /// <remarks>Valid on OS-X only</remarks>
         Command,
+
+        //German keys
+        /// <summary>Letter A with diaeresis</summary>
+        A_diaeresis,
+        /// <summary>Letter O with diaeresis</summary>
+        O_diaeresis,
+        /// <summary>Letter U with diaeresis</summary>
+        U_diaeresis,
     }
 }
