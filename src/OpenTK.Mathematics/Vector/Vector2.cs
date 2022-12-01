@@ -1035,6 +1035,18 @@ namespace OpenTK.Mathematics
             return ToString(null, null);
         }
 
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
         /// <inheritdoc/>
         public string ToString(string format, IFormatProvider formatProvider)
         {
