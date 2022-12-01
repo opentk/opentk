@@ -1032,7 +1032,7 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
+            return ToString(null, null);
         }
 
         /// <inheritdoc/>
