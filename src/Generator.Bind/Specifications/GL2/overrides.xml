@@ -2773,6 +2773,8 @@
     </enum>
     <enum name="BinaryFormat">
       <!-- Tokens must be queried at runtime. -->
+      <use enum="ARB_gl_spirv" token="SHADER_BINARY_FORMAT_SPIR_V_ARB" />
+      <use enum="VERSION_4_6" token="SHADER_BINARY_FORMAT_SPIR_V" />
     </enum>
     <enum name="BlendEquationMode">
       <token name="FUNC_ADD" value="0x8006" />
@@ -4544,6 +4546,16 @@
       <use enum="PixelInternalFormat" token="RGBA16UI" />
       <use enum="PixelInternalFormat" token="RGBA32I" />
       <use enum="PixelInternalFormat" token="RGBA32UI" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT16" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT24" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32" />
+      <use enum="PixelInternalFormat" token="DEPTH_COMPONENT32F" />
+      <use enum="PixelInternalFormat" token="DEPTH24_STENCIL8" />
+      <use enum="PixelInternalFormat" token="DEPTH32F_STENCIL8" />
+      <use enum="PixelInternalFormat" token="STENCIL_INDEX1" />
+      <use enum="PixelInternalFormat" token="STENCIL_INDEX4" />
+      <use enum="PixelInternalFormat" token="STENCIL_INDEX8" />
+      <use enum="PixelInternalFormat" token="STENCIL_INDEX16" />
     </enum>
     <enum name="StencilFace">
       <use enum="DrawBufferMode" token="FRONT" />

@@ -1321,7 +1321,7 @@ namespace OpenTK.Mathematics
             return angle;
         }
 
-        internal static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        internal static string ListSeparator => CultureInfo.CurrentCulture.TextInfo.ListSeparator;
 
         internal static string GetListSeparator(IFormatProvider formatProvider)
         {

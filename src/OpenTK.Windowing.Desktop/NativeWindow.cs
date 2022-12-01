@@ -795,6 +795,11 @@ namespace OpenTK.Windowing.Desktop
 
             GLFW.WindowHint(WindowHintBool.SrgbCapable, settings.SrgbCapable);
 
+            if (settings.TransparentFramebuffer is bool transparent)
+            {
+                GLFW.WindowHint(WindowHintBool.TransparentFramebuffer, transparent);
+            }
+
             // We do the work to set the hint bits outside of the CreateWindow conditional
             // so that the window will get the correct fullscreen red/green/blue bits stored
             // in its hidden fields regardless of how it gets created.  (The extra curly
@@ -904,6 +909,12 @@ namespace OpenTK.Windowing.Desktop
             MouseState.Position = _lastReportedMousePos;
 
             _isFocused = GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.Focused);
+
+            // We can't set Vsync if we are using ContextAPI.NoAPI.
+            if (API != ContextAPI.NoAPI)
+            {
+                VSync = settings.Vsync;
+            }
         }
 
         private static void InitializeGlBindings()
