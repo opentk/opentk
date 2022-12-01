@@ -1322,5 +1322,12 @@ namespace OpenTK.Mathematics
         }
 
         internal static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+
+        internal static string GetListSeparator(IFormatProvider formatProvider)
+        {
+            return formatProvider is CultureInfo cultureInfo
+                ? cultureInfo.TextInfo.ListSeparator
+                : ListSeparator;
+        }
     }
 }

@@ -1054,7 +1054,7 @@ namespace OpenTK.Mathematics
                 "({0}{2} {1})",
                 X.ToString(format, formatProvider),
                 Y.ToString(format, formatProvider),
-                MathHelper.ListSeparator);
+                MathHelper.GetListSeparator(formatProvider));
         }
 
         /// <inheritdoc/>
