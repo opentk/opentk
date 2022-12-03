@@ -152,8 +152,6 @@ namespace Generator.Process
 
     public class ColorTypeOverloader : IOverloader
     {
-        private static readonly Regex VectorNameMatch = new Regex("Color([3-4])([fdhisb])v$", RegexOptions.Compiled);
-
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             NameTable nameTable = overload.NameTable.New();
