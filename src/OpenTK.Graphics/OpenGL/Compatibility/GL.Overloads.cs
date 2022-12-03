@@ -487,7 +487,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color3fv"/>
-        public static unsafe void Color3f(in Color3<Rgb> v)
+        public static unsafe void Color3fv(in Color3<Rgb> v)
         {
             fixed (Color3<Rgb>* tmp_v = &v)
             {
@@ -654,7 +654,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="Color4fv"/>
-        public static unsafe void Color4f(in Color4<Rgba> v)
+        public static unsafe void Color4fv(in Color4<Rgba> v)
         {
             fixed (Color4<Rgba>* tmp_v = &v)
             {
@@ -4319,7 +4319,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
         /// <inheritdoc cref="SecondaryColor3fv"/>
-        public static unsafe void SecondaryColor3f(in Color3<Rgb> v)
+        public static unsafe void SecondaryColor3fv(in Color3<Rgb> v)
         {
             fixed (Color3<Rgb>* tmp_v = &v)
             {
@@ -35071,26 +35071,11 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="SecondaryColor3fvEXT"/>
-            public static unsafe void SecondaryColor3fvEXT(ReadOnlySpan<float> v)
+            public static unsafe void SecondaryColor3fvEXT(in Color3<Rgb> v)
             {
-                fixed (float* v_ptr = v)
+                fixed (Color3<Rgb>* tmp_v = &v)
                 {
-                    SecondaryColor3fvEXT(v_ptr);
-                }
-            }
-            /// <inheritdoc cref="SecondaryColor3fvEXT"/>
-            public static unsafe void SecondaryColor3fvEXT(float[] v)
-            {
-                fixed (float* v_ptr = v)
-                {
-                    SecondaryColor3fvEXT(v_ptr);
-                }
-            }
-            /// <inheritdoc cref="SecondaryColor3fvEXT"/>
-            public static unsafe void SecondaryColor3fvEXT(in float v)
-            {
-                fixed (float* v_ptr = &v)
-                {
+                    float* v_ptr = (float*)tmp_v;
                     SecondaryColor3fvEXT(v_ptr);
                 }
             }
@@ -49180,34 +49165,39 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color3fVertex3fvSUN"/>
-            public static unsafe void Color3fVertex3fvSUN(ReadOnlySpan<float> c, ReadOnlySpan<float> v)
+            public static unsafe void Color3fVertex3fvSUN(in Color3<Rgb> c, ReadOnlySpan<float> v)
             {
-                fixed (float* c_ptr = c)
+                fixed (float* v_ptr = v)
                 {
-                    fixed (float* v_ptr = v)
+                    fixed (Color3<Rgb>* tmp_c = &c)
                     {
+                        float* c_ptr = (float*)tmp_c;
                         Color3fVertex3fvSUN(c_ptr, v_ptr);
                     }
                 }
             }
             /// <inheritdoc cref="Color3fVertex3fvSUN"/>
-            public static unsafe void Color3fVertex3fvSUN(float[] c, float[] v)
+            public static unsafe void Color3fVertex3fvSUN(in Color3<Rgb> c, float[] v)
             {
-                fixed (float* c_ptr = c)
+                fixed (float* v_ptr = v)
                 {
-                    fixed (float* v_ptr = v)
+                    fixed (Color3<Rgb>* tmp_c = &c)
                     {
+                        float* c_ptr = (float*)tmp_c;
                         Color3fVertex3fvSUN(c_ptr, v_ptr);
                     }
                 }
             }
             /// <inheritdoc cref="Color3fVertex3fvSUN"/>
-            public static unsafe void Color3fVertex3fvSUN(in float c, in float v)
+            public static unsafe void Color3fVertex3fvSUN(in Color3<Rgb> c, in float v)
             {
-                fixed (float* c_ptr = &c)
                 fixed (float* v_ptr = &v)
                 {
-                    Color3fVertex3fvSUN(c_ptr, v_ptr);
+                    fixed (Color3<Rgb>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        Color3fVertex3fvSUN(c_ptr, v_ptr);
+                    }
                 }
             }
             /// <inheritdoc cref="Normal3fVertex3fvSUN"/>
@@ -49242,41 +49232,46 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="Color4fNormal3fVertex3fvSUN"/>
-            public static unsafe void Color4fNormal3fVertex3fvSUN(ReadOnlySpan<float> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void Color4fNormal3fVertex3fvSUN(in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
-                fixed (float* c_ptr = c)
+                fixed (float* n_ptr = n)
                 {
-                    fixed (float* n_ptr = n)
+                    fixed (float* v_ptr = v)
                     {
-                        fixed (float* v_ptr = v)
+                        fixed (Color4<Rgba>* tmp_c = &c)
                         {
+                            float* c_ptr = (float*)tmp_c;
                             Color4fNormal3fVertex3fvSUN(c_ptr, n_ptr, v_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="Color4fNormal3fVertex3fvSUN"/>
-            public static unsafe void Color4fNormal3fVertex3fvSUN(float[] c, float[] n, float[] v)
+            public static unsafe void Color4fNormal3fVertex3fvSUN(in Color4<Rgba> c, float[] n, float[] v)
             {
-                fixed (float* c_ptr = c)
+                fixed (float* n_ptr = n)
                 {
-                    fixed (float* n_ptr = n)
+                    fixed (float* v_ptr = v)
                     {
-                        fixed (float* v_ptr = v)
+                        fixed (Color4<Rgba>* tmp_c = &c)
                         {
+                            float* c_ptr = (float*)tmp_c;
                             Color4fNormal3fVertex3fvSUN(c_ptr, n_ptr, v_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="Color4fNormal3fVertex3fvSUN"/>
-            public static unsafe void Color4fNormal3fVertex3fvSUN(in float c, in float n, in float v)
+            public static unsafe void Color4fNormal3fVertex3fvSUN(in Color4<Rgba> c, in float n, in float v)
             {
-                fixed (float* c_ptr = &c)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
                 {
-                    Color4fNormal3fVertex3fvSUN(c_ptr, n_ptr, v_ptr);
+                    fixed (Color4<Rgba>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        Color4fNormal3fVertex3fvSUN(c_ptr, n_ptr, v_ptr);
+                    }
                 }
             }
             /// <inheritdoc cref="TexCoord2fVertex3fvSUN"/>
@@ -49380,41 +49375,46 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor3fVertex3fvSUN"/>
-            public static unsafe void TexCoord2fColor3fVertex3fvSUN(ReadOnlySpan<float> tc, ReadOnlySpan<float> c, ReadOnlySpan<float> v)
+            public static unsafe void TexCoord2fColor3fVertex3fvSUN(ReadOnlySpan<float> tc, in Color3<Rgb> c, ReadOnlySpan<float> v)
             {
                 fixed (float* tc_ptr = tc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* v_ptr = v)
                     {
-                        fixed (float* v_ptr = v)
+                        fixed (Color3<Rgb>* tmp_c = &c)
                         {
+                            float* c_ptr = (float*)tmp_c;
                             TexCoord2fColor3fVertex3fvSUN(tc_ptr, c_ptr, v_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor3fVertex3fvSUN"/>
-            public static unsafe void TexCoord2fColor3fVertex3fvSUN(float[] tc, float[] c, float[] v)
+            public static unsafe void TexCoord2fColor3fVertex3fvSUN(float[] tc, in Color3<Rgb> c, float[] v)
             {
                 fixed (float* tc_ptr = tc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* v_ptr = v)
                     {
-                        fixed (float* v_ptr = v)
+                        fixed (Color3<Rgb>* tmp_c = &c)
                         {
+                            float* c_ptr = (float*)tmp_c;
                             TexCoord2fColor3fVertex3fvSUN(tc_ptr, c_ptr, v_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor3fVertex3fvSUN"/>
-            public static unsafe void TexCoord2fColor3fVertex3fvSUN(in float tc, in float c, in float v)
+            public static unsafe void TexCoord2fColor3fVertex3fvSUN(in float tc, in Color3<Rgb> c, in float v)
             {
                 fixed (float* tc_ptr = &tc)
-                fixed (float* c_ptr = &c)
                 fixed (float* v_ptr = &v)
                 {
-                    TexCoord2fColor3fVertex3fvSUN(tc_ptr, c_ptr, v_ptr);
+                    fixed (Color3<Rgb>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        TexCoord2fColor3fVertex3fvSUN(tc_ptr, c_ptr, v_ptr);
+                    }
                 }
             }
             /// <inheritdoc cref="TexCoord2fNormal3fVertex3fvSUN"/>
@@ -49456,16 +49456,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<float> tc, ReadOnlySpan<float> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (float* tc_ptr = tc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* n_ptr = n)
                     {
-                        fixed (float* n_ptr = n)
+                        fixed (float* v_ptr = v)
                         {
-                            fixed (float* v_ptr = v)
+                            fixed (Color4<Rgba>* tmp_c = &c)
                             {
+                                float* c_ptr = (float*)tmp_c;
                                 TexCoord2fColor4fNormal3fVertex3fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
                             }
                         }
@@ -49473,16 +49474,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(float[] tc, float[] c, float[] n, float[] v)
+            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(float[] tc, in Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (float* tc_ptr = tc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* n_ptr = n)
                     {
-                        fixed (float* n_ptr = n)
+                        fixed (float* v_ptr = v)
                         {
-                            fixed (float* v_ptr = v)
+                            fixed (Color4<Rgba>* tmp_c = &c)
                             {
+                                float* c_ptr = (float*)tmp_c;
                                 TexCoord2fColor4fNormal3fVertex3fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
                             }
                         }
@@ -49490,27 +49492,31 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord2fColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(in float tc, in float c, in float n, in float v)
+            public static unsafe void TexCoord2fColor4fNormal3fVertex3fvSUN(in float tc, in Color4<Rgba> c, in float n, in float v)
             {
                 fixed (float* tc_ptr = &tc)
-                fixed (float* c_ptr = &c)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
                 {
-                    TexCoord2fColor4fNormal3fVertex3fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
+                    fixed (Color4<Rgba>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        TexCoord2fColor4fNormal3fVertex3fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
+                    }
                 }
             }
             /// <inheritdoc cref="TexCoord4fColor4fNormal3fVertex4fvSUN"/>
-            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(ReadOnlySpan<float> tc, ReadOnlySpan<float> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (float* tc_ptr = tc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* n_ptr = n)
                     {
-                        fixed (float* n_ptr = n)
+                        fixed (float* v_ptr = v)
                         {
-                            fixed (float* v_ptr = v)
+                            fixed (Color4<Rgba>* tmp_c = &c)
                             {
+                                float* c_ptr = (float*)tmp_c;
                                 TexCoord4fColor4fNormal3fVertex4fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
                             }
                         }
@@ -49518,16 +49524,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4fColor4fNormal3fVertex4fvSUN"/>
-            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(float[] tc, float[] c, float[] n, float[] v)
+            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(float[] tc, in Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (float* tc_ptr = tc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* n_ptr = n)
                     {
-                        fixed (float* n_ptr = n)
+                        fixed (float* v_ptr = v)
                         {
-                            fixed (float* v_ptr = v)
+                            fixed (Color4<Rgba>* tmp_c = &c)
                             {
+                                float* c_ptr = (float*)tmp_c;
                                 TexCoord4fColor4fNormal3fVertex4fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
                             }
                         }
@@ -49535,14 +49542,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="TexCoord4fColor4fNormal3fVertex4fvSUN"/>
-            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(in float tc, in float c, in float n, in float v)
+            public static unsafe void TexCoord4fColor4fNormal3fVertex4fvSUN(in float tc, in Color4<Rgba> c, in float n, in float v)
             {
                 fixed (float* tc_ptr = &tc)
-                fixed (float* c_ptr = &c)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
                 {
-                    TexCoord4fColor4fNormal3fVertex4fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
+                    fixed (Color4<Rgba>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        TexCoord4fColor4fNormal3fVertex4fvSUN(tc_ptr, c_ptr, n_ptr, v_ptr);
+                    }
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN"/>
@@ -49615,41 +49625,46 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> c, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, in Color3<Rgb> c, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = rc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* v_ptr = v)
                     {
-                        fixed (float* v_ptr = v)
+                        fixed (Color3<Rgb>* tmp_c = &c)
                         {
+                            float* c_ptr = (float*)tmp_c;
                             ReplacementCodeuiColor3fVertex3fvSUN(rc_ptr, c_ptr, v_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN[] rc, float[] c, float[] v)
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN[] rc, in Color3<Rgb> c, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = rc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* v_ptr = v)
                     {
-                        fixed (float* v_ptr = v)
+                        fixed (Color3<Rgb>* tmp_c = &c)
                         {
+                            float* c_ptr = (float*)tmp_c;
                             ReplacementCodeuiColor3fVertex3fvSUN(rc_ptr, c_ptr, v_ptr);
                         }
                     }
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(in TriangleListSUN rc, in float c, in float v)
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(in TriangleListSUN rc, in Color3<Rgb> c, in float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
-                fixed (float* c_ptr = &c)
                 fixed (float* v_ptr = &v)
                 {
-                    ReplacementCodeuiColor3fVertex3fvSUN(rc_ptr, c_ptr, v_ptr);
+                    fixed (Color3<Rgb>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        ReplacementCodeuiColor3fVertex3fvSUN(rc_ptr, c_ptr, v_ptr);
+                    }
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN"/>
@@ -49691,16 +49706,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = rc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* n_ptr = n)
                     {
-                        fixed (float* n_ptr = n)
+                        fixed (float* v_ptr = v)
                         {
-                            fixed (float* v_ptr = v)
+                            fixed (Color4<Rgba>* tmp_c = &c)
                             {
+                                float* c_ptr = (float*)tmp_c;
                                 ReplacementCodeuiColor4fNormal3fVertex3fvSUN(rc_ptr, c_ptr, n_ptr, v_ptr);
                             }
                         }
@@ -49708,16 +49724,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN[] rc, float[] c, float[] n, float[] v)
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN[] rc, in Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = rc)
                 {
-                    fixed (float* c_ptr = c)
+                    fixed (float* n_ptr = n)
                     {
-                        fixed (float* n_ptr = n)
+                        fixed (float* v_ptr = v)
                         {
-                            fixed (float* v_ptr = v)
+                            fixed (Color4<Rgba>* tmp_c = &c)
                             {
+                                float* c_ptr = (float*)tmp_c;
                                 ReplacementCodeuiColor4fNormal3fVertex3fvSUN(rc_ptr, c_ptr, n_ptr, v_ptr);
                             }
                         }
@@ -49725,14 +49742,17 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in float c, in float n, in float v)
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in Color4<Rgba> c, in float n, in float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
-                fixed (float* c_ptr = &c)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
                 {
-                    ReplacementCodeuiColor4fNormal3fVertex3fvSUN(rc_ptr, c_ptr, n_ptr, v_ptr);
+                    fixed (Color4<Rgba>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        ReplacementCodeuiColor4fNormal3fVertex3fvSUN(rc_ptr, c_ptr, n_ptr, v_ptr);
+                    }
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN"/>
@@ -49819,18 +49839,19 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
                 fixed (TriangleListSUN* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
-                        fixed (float* c_ptr = c)
+                        fixed (float* n_ptr = n)
                         {
-                            fixed (float* n_ptr = n)
+                            fixed (float* v_ptr = v)
                             {
-                                fixed (float* v_ptr = v)
+                                fixed (Color4<Rgba>* tmp_c = &c)
                                 {
+                                    float* c_ptr = (float*)tmp_c;
                                     ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(rc_ptr, tc_ptr, c_ptr, n_ptr, v_ptr);
                                 }
                             }
@@ -49839,18 +49860,19 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN[] rc, float[] tc, float[] c, float[] n, float[] v)
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN[] rc, float[] tc, in Color4<Rgba> c, float[] n, float[] v)
             {
                 fixed (TriangleListSUN* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
-                        fixed (float* c_ptr = c)
+                        fixed (float* n_ptr = n)
                         {
-                            fixed (float* n_ptr = n)
+                            fixed (float* v_ptr = v)
                             {
-                                fixed (float* v_ptr = v)
+                                fixed (Color4<Rgba>* tmp_c = &c)
                                 {
+                                    float* c_ptr = (float*)tmp_c;
                                     ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(rc_ptr, tc_ptr, c_ptr, n_ptr, v_ptr);
                                 }
                             }
@@ -49859,15 +49881,18 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
             }
             /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in float tc, in float c, in float n, in float v)
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in float tc, in Color4<Rgba> c, in float n, in float v)
             {
                 fixed (TriangleListSUN* rc_ptr = &rc)
                 fixed (float* tc_ptr = &tc)
-                fixed (float* c_ptr = &c)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
                 {
-                    ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(rc_ptr, tc_ptr, c_ptr, n_ptr, v_ptr);
+                    fixed (Color4<Rgba>* tmp_c = &c)
+                    {
+                        float* c_ptr = (float*)tmp_c;
+                        ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(rc_ptr, tc_ptr, c_ptr, n_ptr, v_ptr);
+                    }
                 }
             }
         }

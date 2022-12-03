@@ -156,59 +156,34 @@ namespace Generator.Process
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            // FIXME: Replace this with kind= attributes when those are merged in the gl spec.
-            Match match = VectorNameMatch.Match(overload.OverloadName);
+            NameTable nameTable = overload.NameTable.New();
 
-            if (match.Success)
+            Parameter[] parameters = overload.InputParameters.ToArray();
+            List<Parameter> colorParameters = new List<Parameter>();
+            List<Parameter> pointerParameters = new List<Parameter>();
+            bool isOverloaded = false;
+            for (int i = 0; i < parameters.Length; i++)
             {
-                int colorSize = int.Parse(match.Groups[1].Value);
-                string colorType = match.Groups[2].Value switch {
-                    "f" => "float",
-                    "d" => "double",
-                    "h" => "half",
-                    "i" => "int",
-                    "s" => "short",
-                    "b" => "byte",
-                    _ => throw new Exception($"This should not happen, we got an unknown color type: {match.Groups[2].Value}"),
-                };
+                Parameter parameter = parameters[i];
 
-                // For now we only support floating point colors
-                // - 2022-12-03 NogginBops
-                if (colorType != "float")
+                if (parameter.Type is CSPointer pointer && parameter.Kinds.Contains("Color"))
                 {
-                    newOverloads = null;
-                    return false;
-                }
-
-                NameTable nameTable = overload.NameTable.New();
-
-                Parameter[] parameters = overload.InputParameters.ToArray();
-                List<Parameter> colorParameters = new List<Parameter>();
-                List<Parameter> pointerParameters = new List<Parameter>();
-                for (int i = 0; i < parameters.Length; i++)
-                {
-                    Parameter parameter = parameters[i];
-                    // If this parameter is a pointer to the color type value
-                    if (parameter.Type is CSPointer pointer &&  pointer.BaseType is CSPrimitive prim && prim.TypeName == colorType)
+                    // We only support float colors!
+                    if (pointer.BaseType is not CSPrimitive primitive || primitive.TypeName != "float")
                     {
-                        if (parameter.Length != null)
-                        {
-                            if (parameter.Length is Constant constant)
-                            {
-                                if (constant.Value != colorSize)
-                                {
-                                    // The length of the parameter and the size of the color didn't match.
-                                    continue;
-                                }
-                            }
-                        }
+                        continue;
+                    }
 
-                        // For functions with more than one parameter, the color argument is called "c"
-                        // FIXME: This is a major hack while we are waiting for kind=Color attributes in gl.xml.
-                        if (parameters.Length != 1 && parameter.Name != "c")
-                        {
-                            continue;
-                        }
+                    if (parameter.Length == null)
+                    {
+                        continue;
+                    }
+
+                    if (parameter.Length is Constant constant)
+                    {
+                        int colorSize = constant.Value;
+                        if (colorSize > 4 || colorSize < 3)
+                            throw new Exception($"The kind=Color parameter {parameter.Name} in {overload.NativeFunction.EntryPoint} was marked with a size that was not 3 or 4. length: {colorSize}");
 
                         string colorSpace = colorSize == 4 ? "Rgba" : "Rgb";
 
@@ -220,16 +195,27 @@ namespace Generator.Process
                         pointerParameters.Add(parameter);
                         colorParameters.Add(colorParameter);
                         parameters[i] = colorParameter;
+
+                        isOverloaded = true;
+                    }
+                    else
+                    {
+                        throw new Exception();
                     }
                 }
-                
-                string overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
+            }
+
+            if (isOverloaded)
+            {
+                // FIXME: We want to remove the v postfix, but vendor names are still in the overload names...
+                // We probably want to remove the extension name from the overload name.
+                //string overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
 
                 newOverloads = new List<Overload>()
                 {
                     overload with
                     {
-                        OverloadName = overloadName,
+                        OverloadName = overload.OverloadName,
                         InputParameters = parameters,
                         MarshalLayerToNested = new ColorLayer(colorParameters, pointerParameters),
                         NameTable = nameTable,
