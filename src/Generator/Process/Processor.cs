@@ -472,7 +472,8 @@ namespace Generator.Process
             foreach (GLParameter parameter in command.Parameters)
             {
                 BaseCSType type = MakeCSType(parameter.Type.Type, parameter.Type.Handle, parameter.Type.Group);
-                parameters.Add(new Parameter(type, NameMangler.MangleParameterName(parameter.Name), parameter.Length));
+                // FIXME: Maybe we want to do some kind of processing on parameter.Kind to not pass it directly as it is in gl.xml
+                parameters.Add(new Parameter(type, parameter.Kinds, NameMangler.MangleParameterName(parameter.Name), parameter.Length));
                 if (parameter.Type.Group != null)
                 {
                     referencedEnumGroups.Add(parameter.Type.Group);

@@ -50,6 +50,8 @@ namespace Generator.Writing
 
     public record Parameter(
         BaseCSType Type,
+        // FIXME: Should we expose this exactly like it's exposed in gl.xml?
+        string[] Kinds,
         string Name,
         Expression? Length);
 
