@@ -1630,9 +1630,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform1fv"/>
-        public static unsafe void Uniform1f(int location, in float value)
+        public static unsafe void Uniform1f(int location, int count, in float value)
         {
-            int count = 1;
             fixed (float* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1658,9 +1657,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform1iv"/>
-        public static unsafe void Uniform1i(int location, in int value)
+        public static unsafe void Uniform1i(int location, int count, in int value)
         {
-            int count = 1;
             fixed (int* tmp_vecPtr = &value)
             {
                 int* value_ptr = (int*)tmp_vecPtr;
@@ -1686,9 +1684,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform2fv"/>
-        public static unsafe void Uniform2f(int location, in Vector2 value)
+        public static unsafe void Uniform2f(int location, int count, in Vector2 value)
         {
-            int count = 1;
             fixed (Vector2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1714,9 +1711,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform2fv"/>
-        public static unsafe void Uniform2f(int location, in System.Numerics.Vector2 value)
+        public static unsafe void Uniform2f(int location, int count, in System.Numerics.Vector2 value)
         {
-            int count = 1;
             fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1742,9 +1738,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform2iv"/>
-        public static unsafe void Uniform2i(int location, in Vector2i value)
+        public static unsafe void Uniform2i(int location, int count, in Vector2i value)
         {
-            int count = 1;
             fixed (Vector2i* tmp_vecPtr = &value)
             {
                 int* value_ptr = (int*)tmp_vecPtr;
@@ -1770,9 +1765,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform3fv"/>
-        public static unsafe void Uniform3f(int location, in Vector3 value)
+        public static unsafe void Uniform3f(int location, int count, in Vector3 value)
         {
-            int count = 1;
             fixed (Vector3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1798,9 +1792,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform3fv"/>
-        public static unsafe void Uniform3f(int location, in System.Numerics.Vector3 value)
+        public static unsafe void Uniform3f(int location, int count, in System.Numerics.Vector3 value)
         {
-            int count = 1;
             fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1826,9 +1819,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform3iv"/>
-        public static unsafe void Uniform3i(int location, in Vector3i value)
+        public static unsafe void Uniform3i(int location, int count, in Vector3i value)
         {
-            int count = 1;
             fixed (Vector3i* tmp_vecPtr = &value)
             {
                 int* value_ptr = (int*)tmp_vecPtr;
@@ -1854,9 +1846,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform4fv"/>
-        public static unsafe void Uniform4f(int location, in Vector4 value)
+        public static unsafe void Uniform4f(int location, int count, in Vector4 value)
         {
-            int count = 1;
             fixed (Vector4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1882,9 +1873,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform4fv"/>
-        public static unsafe void Uniform4f(int location, in System.Numerics.Vector4 value)
+        public static unsafe void Uniform4f(int location, int count, in System.Numerics.Vector4 value)
         {
-            int count = 1;
             fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1910,9 +1900,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="Uniform4iv"/>
-        public static unsafe void Uniform4i(int location, in Vector4i value)
+        public static unsafe void Uniform4i(int location, int count, in Vector4i value)
         {
-            int count = 1;
             fixed (Vector4i* tmp_vecPtr = &value)
             {
                 int* value_ptr = (int*)tmp_vecPtr;
@@ -1938,9 +1927,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv"/>
-        public static unsafe void UniformMatrix2f(int location, bool transpose, in Matrix2 value)
+        public static unsafe void UniformMatrix2f(int location, int count, bool transpose, in Matrix2 value)
         {
-            int count = 1;
             fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1966,9 +1954,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv"/>
-        public static unsafe void UniformMatrix3f(int location, bool transpose, in Matrix3 value)
+        public static unsafe void UniformMatrix3f(int location, int count, bool transpose, in Matrix3 value)
         {
-            int count = 1;
             fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -1994,9 +1981,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
-        public static unsafe void UniformMatrix4f(int location, bool transpose, in Matrix4 value)
+        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, in Matrix4 value)
         {
-            int count = 1;
             fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2022,9 +2008,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv"/>
-        public static unsafe void UniformMatrix4f(int location, bool transpose, in System.Numerics.Matrix4x4 value)
+        public static unsafe void UniformMatrix4f(int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
         {
-            int count = 1;
             fixed (System.Numerics.Matrix4x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2050,98 +2035,65 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="VertexAttrib1fv"/>
-        public static unsafe void VertexAttrib1fv(uint index, ReadOnlySpan<float> v)
+        public static unsafe void VertexAttrib1f(uint index, in float v)
         {
-            fixed (float* v_ptr = v)
+            fixed (float* tmp_vecPtr = &v)
             {
-                VertexAttrib1fv(index, v_ptr);
-            }
-        }
-        /// <inheritdoc cref="VertexAttrib1fv"/>
-        public static unsafe void VertexAttrib1fv(uint index, float[] v)
-        {
-            fixed (float* v_ptr = v)
-            {
-                VertexAttrib1fv(index, v_ptr);
-            }
-        }
-        /// <inheritdoc cref="VertexAttrib1fv"/>
-        public static unsafe void VertexAttrib1fv(uint index, in float v)
-        {
-            fixed (float* v_ptr = &v)
-            {
+                float* v_ptr = (float*)tmp_vecPtr;
                 VertexAttrib1fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib2fv"/>
-        public static unsafe void VertexAttrib2fv(uint index, ReadOnlySpan<float> v)
+        public static unsafe void VertexAttrib2f(uint index, in Vector2 v)
         {
-            fixed (float* v_ptr = v)
+            fixed (Vector2* tmp_vecPtr = &v)
             {
+                float* v_ptr = (float*)tmp_vecPtr;
                 VertexAttrib2fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib2fv"/>
-        public static unsafe void VertexAttrib2fv(uint index, float[] v)
+        public static unsafe void VertexAttrib2f(uint index, in System.Numerics.Vector2 v)
         {
-            fixed (float* v_ptr = v)
+            fixed (System.Numerics.Vector2* tmp_vecPtr = &v)
             {
-                VertexAttrib2fv(index, v_ptr);
-            }
-        }
-        /// <inheritdoc cref="VertexAttrib2fv"/>
-        public static unsafe void VertexAttrib2fv(uint index, in float v)
-        {
-            fixed (float* v_ptr = &v)
-            {
+                float* v_ptr = (float*)tmp_vecPtr;
                 VertexAttrib2fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib3fv"/>
-        public static unsafe void VertexAttrib3fv(uint index, ReadOnlySpan<float> v)
+        public static unsafe void VertexAttrib3f(uint index, in Vector3 v)
         {
-            fixed (float* v_ptr = v)
+            fixed (Vector3* tmp_vecPtr = &v)
             {
+                float* v_ptr = (float*)tmp_vecPtr;
                 VertexAttrib3fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib3fv"/>
-        public static unsafe void VertexAttrib3fv(uint index, float[] v)
+        public static unsafe void VertexAttrib3f(uint index, in System.Numerics.Vector3 v)
         {
-            fixed (float* v_ptr = v)
+            fixed (System.Numerics.Vector3* tmp_vecPtr = &v)
             {
-                VertexAttrib3fv(index, v_ptr);
-            }
-        }
-        /// <inheritdoc cref="VertexAttrib3fv"/>
-        public static unsafe void VertexAttrib3fv(uint index, in float v)
-        {
-            fixed (float* v_ptr = &v)
-            {
+                float* v_ptr = (float*)tmp_vecPtr;
                 VertexAttrib3fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib4fv"/>
-        public static unsafe void VertexAttrib4fv(uint index, ReadOnlySpan<float> v)
+        public static unsafe void VertexAttrib4f(uint index, in Vector4 v)
         {
-            fixed (float* v_ptr = v)
+            fixed (Vector4* tmp_vecPtr = &v)
             {
+                float* v_ptr = (float*)tmp_vecPtr;
                 VertexAttrib4fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib4fv"/>
-        public static unsafe void VertexAttrib4fv(uint index, float[] v)
+        public static unsafe void VertexAttrib4f(uint index, in System.Numerics.Vector4 v)
         {
-            fixed (float* v_ptr = v)
+            fixed (System.Numerics.Vector4* tmp_vecPtr = &v)
             {
-                VertexAttrib4fv(index, v_ptr);
-            }
-        }
-        /// <inheritdoc cref="VertexAttrib4fv"/>
-        public static unsafe void VertexAttrib4fv(uint index, in float v)
-        {
-            fixed (float* v_ptr = &v)
-            {
+                float* v_ptr = (float*)tmp_vecPtr;
                 VertexAttrib4fv(index, v_ptr);
             }
         }
@@ -2468,9 +2420,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv"/>
-        public static unsafe void UniformMatrix2x3f(int location, bool transpose, in Matrix2x3 value)
+        public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, in Matrix2x3 value)
         {
-            int count = 1;
             fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2496,9 +2447,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
-        public static unsafe void UniformMatrix3x2f(int location, bool transpose, in Matrix3x2 value)
+        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, in Matrix3x2 value)
         {
-            int count = 1;
             fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2524,9 +2474,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv"/>
-        public static unsafe void UniformMatrix3x2f(int location, bool transpose, in System.Numerics.Matrix3x2 value)
+        public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
         {
-            int count = 1;
             fixed (System.Numerics.Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2552,9 +2501,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv"/>
-        public static unsafe void UniformMatrix2x4f(int location, bool transpose, in Matrix2x4 value)
+        public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, in Matrix2x4 value)
         {
-            int count = 1;
             fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2580,9 +2528,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv"/>
-        public static unsafe void UniformMatrix4x2f(int location, bool transpose, in Matrix4x2 value)
+        public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, in Matrix4x2 value)
         {
-            int count = 1;
             fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2608,9 +2555,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv"/>
-        public static unsafe void UniformMatrix3x4f(int location, bool transpose, in Matrix3x4 value)
+        public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, in Matrix3x4 value)
         {
-            int count = 1;
             fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2636,9 +2582,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv"/>
-        public static unsafe void UniformMatrix4x3f(int location, bool transpose, in Matrix4x3 value)
+        public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, in Matrix4x3 value)
         {
-            int count = 1;
             fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -2937,26 +2882,11 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="VertexAttribI4iv"/>
-        public static unsafe void VertexAttribI4iv(uint index, ReadOnlySpan<int> v)
+        public static unsafe void VertexAttribI4i(uint index, in Vector4i v)
         {
-            fixed (int* v_ptr = v)
+            fixed (Vector4i* tmp_vecPtr = &v)
             {
-                VertexAttribI4iv(index, v_ptr);
-            }
-        }
-        /// <inheritdoc cref="VertexAttribI4iv"/>
-        public static unsafe void VertexAttribI4iv(uint index, int[] v)
-        {
-            fixed (int* v_ptr = v)
-            {
-                VertexAttribI4iv(index, v_ptr);
-            }
-        }
-        /// <inheritdoc cref="VertexAttribI4iv"/>
-        public static unsafe void VertexAttribI4iv(uint index, in int v)
-        {
-            fixed (int* v_ptr = &v)
-            {
+                int* v_ptr = (int*)tmp_vecPtr;
                 VertexAttribI4iv(index, v_ptr);
             }
         }
@@ -4319,9 +4249,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform2iv"/>
-        public static unsafe void ProgramUniform2i(ProgramHandle program, int location, in Vector2i value)
+        public static unsafe void ProgramUniform2i(ProgramHandle program, int location, int count, in Vector2i value)
         {
-            int count = 1;
             fixed (Vector2i* tmp_vecPtr = &value)
             {
                 int* value_ptr = (int*)tmp_vecPtr;
@@ -4347,9 +4276,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform3iv"/>
-        public static unsafe void ProgramUniform3i(ProgramHandle program, int location, in Vector3i value)
+        public static unsafe void ProgramUniform3i(ProgramHandle program, int location, int count, in Vector3i value)
         {
-            int count = 1;
             fixed (Vector3i* tmp_vecPtr = &value)
             {
                 int* value_ptr = (int*)tmp_vecPtr;
@@ -4375,9 +4303,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform4iv"/>
-        public static unsafe void ProgramUniform4i(ProgramHandle program, int location, in Vector4i value)
+        public static unsafe void ProgramUniform4i(ProgramHandle program, int location, int count, in Vector4i value)
         {
-            int count = 1;
             fixed (Vector4i* tmp_vecPtr = &value)
             {
                 int* value_ptr = (int*)tmp_vecPtr;
@@ -4533,9 +4460,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv"/>
-        public static unsafe void ProgramUniform2f(ProgramHandle program, int location, in Vector2 value)
+        public static unsafe void ProgramUniform2f(ProgramHandle program, int location, int count, in Vector2 value)
         {
-            int count = 1;
             fixed (Vector2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4561,9 +4487,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv"/>
-        public static unsafe void ProgramUniform2f(ProgramHandle program, int location, in System.Numerics.Vector2 value)
+        public static unsafe void ProgramUniform2f(ProgramHandle program, int location, int count, in System.Numerics.Vector2 value)
         {
-            int count = 1;
             fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4589,9 +4514,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv"/>
-        public static unsafe void ProgramUniform3f(ProgramHandle program, int location, in Vector3 value)
+        public static unsafe void ProgramUniform3f(ProgramHandle program, int location, int count, in Vector3 value)
         {
-            int count = 1;
             fixed (Vector3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4617,9 +4541,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv"/>
-        public static unsafe void ProgramUniform3f(ProgramHandle program, int location, in System.Numerics.Vector3 value)
+        public static unsafe void ProgramUniform3f(ProgramHandle program, int location, int count, in System.Numerics.Vector3 value)
         {
-            int count = 1;
             fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4645,9 +4568,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv"/>
-        public static unsafe void ProgramUniform4f(ProgramHandle program, int location, in Vector4 value)
+        public static unsafe void ProgramUniform4f(ProgramHandle program, int location, int count, in Vector4 value)
         {
-            int count = 1;
             fixed (Vector4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4673,9 +4595,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv"/>
-        public static unsafe void ProgramUniform4f(ProgramHandle program, int location, in System.Numerics.Vector4 value)
+        public static unsafe void ProgramUniform4f(ProgramHandle program, int location, int count, in System.Numerics.Vector4 value)
         {
-            int count = 1;
             fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4701,9 +4622,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv"/>
-        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, bool transpose, in Matrix2 value)
+        public static unsafe void ProgramUniformMatrix2f(ProgramHandle program, int location, int count, bool transpose, in Matrix2 value)
         {
-            int count = 1;
             fixed (Matrix2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4729,9 +4649,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv"/>
-        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, bool transpose, in Matrix3 value)
+        public static unsafe void ProgramUniformMatrix3f(ProgramHandle program, int location, int count, bool transpose, in Matrix3 value)
         {
-            int count = 1;
             fixed (Matrix3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4757,9 +4676,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
-        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, bool transpose, in Matrix4 value)
+        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, in Matrix4 value)
         {
-            int count = 1;
             fixed (Matrix4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4785,9 +4703,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv"/>
-        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, bool transpose, in System.Numerics.Matrix4x4 value)
+        public static unsafe void ProgramUniformMatrix4f(ProgramHandle program, int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
         {
-            int count = 1;
             fixed (System.Numerics.Matrix4x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4813,9 +4730,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv"/>
-        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, bool transpose, in Matrix2x3 value)
+        public static unsafe void ProgramUniformMatrix2x3f(ProgramHandle program, int location, int count, bool transpose, in Matrix2x3 value)
         {
-            int count = 1;
             fixed (Matrix2x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4841,9 +4757,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
-        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, bool transpose, in Matrix3x2 value)
+        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, in Matrix3x2 value)
         {
-            int count = 1;
             fixed (Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4869,9 +4784,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv"/>
-        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, bool transpose, in System.Numerics.Matrix3x2 value)
+        public static unsafe void ProgramUniformMatrix3x2f(ProgramHandle program, int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
         {
-            int count = 1;
             fixed (System.Numerics.Matrix3x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4897,9 +4811,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv"/>
-        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, bool transpose, in Matrix2x4 value)
+        public static unsafe void ProgramUniformMatrix2x4f(ProgramHandle program, int location, int count, bool transpose, in Matrix2x4 value)
         {
-            int count = 1;
             fixed (Matrix2x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4925,9 +4838,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv"/>
-        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, bool transpose, in Matrix4x2 value)
+        public static unsafe void ProgramUniformMatrix4x2f(ProgramHandle program, int location, int count, bool transpose, in Matrix4x2 value)
         {
-            int count = 1;
             fixed (Matrix4x2* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4953,9 +4865,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv"/>
-        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, bool transpose, in Matrix3x4 value)
+        public static unsafe void ProgramUniformMatrix3x4f(ProgramHandle program, int location, int count, bool transpose, in Matrix3x4 value)
         {
-            int count = 1;
             fixed (Matrix3x4* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
@@ -4981,9 +4892,8 @@ namespace OpenTK.Graphics.OpenGLES3
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv"/>
-        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, bool transpose, in Matrix4x3 value)
+        public static unsafe void ProgramUniformMatrix4x3f(ProgramHandle program, int location, int count, bool transpose, in Matrix4x3 value)
         {
-            int count = 1;
             fixed (Matrix4x3* tmp_vecPtr = &value)
             {
                 float* value_ptr = (float*)tmp_vecPtr;
