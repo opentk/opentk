@@ -25,6 +25,11 @@ namespace OpenTK.Core.Platform
         private readonly ConcurrentQueue<EventInstance> _events = new ConcurrentQueue<EventInstance>();
 
         /// <summary>
+        /// Reference to the event queue instance raised delegate.
+        /// </summary>
+        private EventRaisedInternalHandler? _eventRaisedInternalHandler;
+
+        /// <summary>
         /// Indicates which handle the queue is filtered for.
         /// </summary>
         public PalHandle? FilteredHandle { get; }
@@ -37,6 +42,8 @@ namespace OpenTK.Core.Platform
         private EventQueue(PalHandle? handle)
         {
             FilteredHandle = handle;
+            _eventRaisedInternalHandler = OnEventRaisedInternal;
+            EventRaisedInternal += _eventRaisedInternalHandler;
         }
 
         /// <summary>
@@ -47,6 +54,14 @@ namespace OpenTK.Core.Platform
         private void OnEventDispatched(in EventInstance instance)
         {
             EventDispatched?.Invoke(instance.Handle, instance.Type, instance.Args);
+        }
+
+        private void OnEventRaisedInternal(in EventInstance instance)
+        {
+            if (FilteredHandle is null || instance.Handle == FilteredHandle)
+            {
+                _events.Enqueue(instance);
+            }
         }
 
         /// <summary>
@@ -84,11 +99,8 @@ namespace OpenTK.Core.Platform
 
             if (isDisposing)
             {
-                // FIXME: Potential deadlock ahead???
-                lock (_queueLockObj)
-                {
-                    _queues.Remove(this);
-                }
+                EventRaisedInternal -= _eventRaisedInternalHandler;
+                _eventRaisedInternalHandler = null;
 
                 GC.SuppressFinalize(this);
             }
@@ -97,21 +109,29 @@ namespace OpenTK.Core.Platform
         /// <inheritdoc />
         public void Dispose() => Dispose(true);
 
-        // FIXME: ugly mutex, couldn't find a concurrent queue that fit my needs.
-        private static object _queueLockObj = new object();
-        private static List<EventQueue> _queues = new List<EventQueue>();
-
         /// <summary>
         /// Invoke when an event is raised.
         /// </summary>
         /// <remarks>
         /// This event handler is potentially called across threads. If thread safety is required,
-        /// or you would like to control when events are dispatched, use <see cref="Subscribe()"/> instead.
+        /// or you would like to control when events are dispatched, use <see cref="Subscribe"/> instead.
         /// </remarks>
         public static event PlatformEventHandler? EventRaised;
 
+        /// <summary>
+        /// Internal event handler type for event queue instances.
+        /// </summary>
+        /// <param name="instance">Event instance.</param>
+        private delegate void EventRaisedInternalHandler(in EventInstance instance);
+
+        /// <summary>
+        /// Internal event for event queue instances.
+        /// </summary>
+        private static event EventRaisedInternalHandler? EventRaisedInternal;
+
         private static void OnEventRaised(in EventInstance instance)
         {
+            EventRaisedInternal?.Invoke(instance);
             EventRaised?.Invoke(instance.Handle, instance.Type, instance.Args);
         }
 
@@ -122,14 +142,7 @@ namespace OpenTK.Core.Platform
         /// <returns>The queue instance.</returns>
         public static EventQueue Subscribe(PalHandle? handle = null)
         {
-            EventQueue queue = new EventQueue(handle);
-
-            lock (_queueLockObj)
-            {
-                _queues.Add(queue);
-            }
-
-            return queue;
+            return new EventQueue(handle);
         }
 
         /// <summary>
@@ -141,18 +154,6 @@ namespace OpenTK.Core.Platform
         public static void Raise(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             EventInstance instance = new EventInstance(handle, type, args);
-
-            lock (_queueLockObj)
-            {
-                foreach (EventQueue queue in _queues)
-                {
-                    if (queue.FilteredHandle == handle || queue.FilteredHandle is null)
-                    {
-                        queue._events.Enqueue(instance);
-                    }
-                }
-            }
-
             OnEventRaised(instance);
         }
 
