@@ -207,13 +207,17 @@ namespace Generator.Process
             {
                 // FIXME: We want to remove the v postfix, but vendor names are still in the overload names...
                 // We probably want to remove the extension name from the overload name.
-                //string overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
+                string overloadName = overload.OverloadName;
+                if (overloadName.EndsWith('v'))
+                {
+                    overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
+                }
 
                 newOverloads = new List<Overload>()
                 {
                     overload with
                     {
-                        OverloadName = overload.OverloadName,
+                        OverloadName = overloadName,
                         InputParameters = parameters,
                         MarshalLayerToNested = new ColorLayer(colorParameters, pointerParameters),
                         NameTable = nameTable,
@@ -329,6 +333,14 @@ namespace Generator.Process
             "Matrix4",
         };
 
+        private static readonly HashSet<string> _vectorKinds = new HashSet<string>()
+        {
+            // Vectors.
+            "Vector2",
+            "Vector3",
+            "Vector4",
+        };
+
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             // Match with either a regex or a vector.
@@ -363,12 +375,64 @@ namespace Generator.Process
             }
             else
             {
-                newOverloads = null;
-                return false;
+                // Make the compiler happy...
+                vectorSize = 0;
+                typeName = "";
+
+                // FIXME: Do this for matrices too.
+                for (int i = 0; i < overload.InputParameters.Length; i++)
+                {
+                    Parameter param = overload.InputParameters[i];
+
+                    // What if the parameter still has a Vector2 kind?
+                    if (param.Type is not CSPointer pointerType)
+                    {
+                        continue;
+                    }
+
+                    string? typePostfix = pointerType.BaseType switch
+                    {
+                        CSPrimitive { TypeName: "int" } => "i",
+                        CSPrimitive { TypeName: "half" } => "h",
+                        CSPrimitive { TypeName: "float" } => "",
+                        CSPrimitive { TypeName: "double" } => "d",
+                        _ => null,
+                    };
+                    if (typePostfix == null)
+                    {
+                        continue;
+                    }
+
+                    string? kind = param.Kinds.GetMatching(_vectorKinds);
+                    if (kind == null) continue;
+
+                    vectorSize = kind switch
+                    {
+                        "Vector2" => 2,
+                        "Vector3" => 3,
+                        "Vector4" => 4,
+                        _ => throw new Exception($"We got an unknown vector type kind: '{kind}'")
+                    };
+
+                    typeName = $"Vector{vectorSize}{typePostfix}";
+                    break;
+                }
+
+                if (vectorSize == 0 || typeName == "")
+                {
+                    newOverloads = null;
+                    return false;
+                }
             }
 
+            // FIXME: We want to remove the v postfix, but vendor names are still in the overload names...
+            // We probably want to remove the extension name from the overload name.
             // Remove the 'v' from the overloaded name.
-            string overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
+            string overloadName = overload.OverloadName;
+            if (overloadName.EndsWith('v'))
+            {
+                overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
+            }
 
             bool created = false;
             List<Overload> overloads = new List<Overload>();

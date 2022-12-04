@@ -7682,158 +7682,245 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fvEXT"/>
-            public static unsafe void ProgramUniform2fvEXT(int program, int location, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (float* value_ptr = value)
+                fixed (Vector2* tmp_vecPtr = &value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform2fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fvEXT"/>
-            public static unsafe void ProgramUniform2fvEXT(int program, int location, float[] value)
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (float* value_ptr = value)
+                fixed (Vector2* tmp_vecPtr = value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform2fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fvEXT"/>
-            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, in float value)
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, Vector2[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Vector2* tmp_vecPtr = value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform2fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2fvEXT"/>
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform2fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2fvEXT"/>
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform2fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2fvEXT"/>
+            public static unsafe void ProgramUniform2fvEXT(int program, int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform2fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ivEXT"/>
-            public static unsafe void ProgramUniform2ivEXT(int program, int location, ReadOnlySpan<int> value)
+            public static unsafe void ProgramUniform2ivEXT(int program, int location, int count, in Vector2i value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (int* value_ptr = value)
+                fixed (Vector2i* tmp_vecPtr = &value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform2ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ivEXT"/>
-            public static unsafe void ProgramUniform2ivEXT(int program, int location, int[] value)
+            public static unsafe void ProgramUniform2ivEXT(int program, int location, int count, ReadOnlySpan<Vector2i> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (int* value_ptr = value)
+                fixed (Vector2i* tmp_vecPtr = value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform2ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ivEXT"/>
-            public static unsafe void ProgramUniform2ivEXT(int program, int location, int count, in int value)
+            public static unsafe void ProgramUniform2ivEXT(int program, int location, int count, Vector2i[] value)
             {
-                fixed (int* value_ptr = &value)
+                fixed (Vector2i* tmp_vecPtr = value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform2ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fvEXT"/>
-            public static unsafe void ProgramUniform3fvEXT(int program, int location, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (float* value_ptr = value)
+                fixed (Vector3* tmp_vecPtr = &value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform3fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fvEXT"/>
-            public static unsafe void ProgramUniform3fvEXT(int program, int location, float[] value)
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (float* value_ptr = value)
+                fixed (Vector3* tmp_vecPtr = value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform3fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fvEXT"/>
-            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, in float value)
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, Vector3[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Vector3* tmp_vecPtr = value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform3fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3fvEXT"/>
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform3fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3fvEXT"/>
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform3fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3fvEXT"/>
+            public static unsafe void ProgramUniform3fvEXT(int program, int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform3fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ivEXT"/>
-            public static unsafe void ProgramUniform3ivEXT(int program, int location, ReadOnlySpan<int> value)
+            public static unsafe void ProgramUniform3ivEXT(int program, int location, int count, in Vector3i value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (int* value_ptr = value)
+                fixed (Vector3i* tmp_vecPtr = &value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform3ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ivEXT"/>
-            public static unsafe void ProgramUniform3ivEXT(int program, int location, int[] value)
+            public static unsafe void ProgramUniform3ivEXT(int program, int location, int count, ReadOnlySpan<Vector3i> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (int* value_ptr = value)
+                fixed (Vector3i* tmp_vecPtr = value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform3ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ivEXT"/>
-            public static unsafe void ProgramUniform3ivEXT(int program, int location, int count, in int value)
+            public static unsafe void ProgramUniform3ivEXT(int program, int location, int count, Vector3i[] value)
             {
-                fixed (int* value_ptr = &value)
+                fixed (Vector3i* tmp_vecPtr = value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform3ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fvEXT"/>
-            public static unsafe void ProgramUniform4fvEXT(int program, int location, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (float* value_ptr = value)
+                fixed (Vector4* tmp_vecPtr = &value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform4fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fvEXT"/>
-            public static unsafe void ProgramUniform4fvEXT(int program, int location, float[] value)
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (float* value_ptr = value)
+                fixed (Vector4* tmp_vecPtr = value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform4fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fvEXT"/>
-            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, in float value)
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, Vector4[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Vector4* tmp_vecPtr = value)
                 {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform4fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4fvEXT"/>
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, in System.Numerics.Vector4 value)
+            {
+                fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform4fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4fvEXT"/>
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
+            {
+                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
+                    ProgramUniform4fvEXT(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4fvEXT"/>
+            public static unsafe void ProgramUniform4fvEXT(int program, int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                {
+                    float* value_ptr = (float*)tmp_vecPtr;
                     ProgramUniform4fvEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ivEXT"/>
-            public static unsafe void ProgramUniform4ivEXT(int program, int location, ReadOnlySpan<int> value)
+            public static unsafe void ProgramUniform4ivEXT(int program, int location, int count, in Vector4i value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (int* value_ptr = value)
+                fixed (Vector4i* tmp_vecPtr = &value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform4ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ivEXT"/>
-            public static unsafe void ProgramUniform4ivEXT(int program, int location, int[] value)
+            public static unsafe void ProgramUniform4ivEXT(int program, int location, int count, ReadOnlySpan<Vector4i> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (int* value_ptr = value)
+                fixed (Vector4i* tmp_vecPtr = value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform4ivEXT(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ivEXT"/>
-            public static unsafe void ProgramUniform4ivEXT(int program, int location, int count, in int value)
+            public static unsafe void ProgramUniform4ivEXT(int program, int location, int count, Vector4i[] value)
             {
-                fixed (int* value_ptr = &value)
+                fixed (Vector4i* tmp_vecPtr = value)
                 {
+                    int* value_ptr = (int*)tmp_vecPtr;
                     ProgramUniform4ivEXT(program, location, count, value_ptr);
                 }
             }
