@@ -5185,7 +5185,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="instancecount"> Specifies the number of instances of the specified range of indices to be rendered. </param>
         /// <param name="baseinstance"> Specifies the base instance for use in fetching instanced vertex attributes. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElementsInstancedBaseInstance.xhtml" /></remarks>
-        public static void DrawElementsInstancedBaseInstance(PrimitiveType mode, int count, PrimitiveType type, void* indices, int instancecount, uint baseinstance) => GLPointers._DrawElementsInstancedBaseInstance_fnptr((uint)mode, count, (uint)type, indices, instancecount, baseinstance);
+        public static void DrawElementsInstancedBaseInstance(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount, uint baseinstance) => GLPointers._DrawElementsInstancedBaseInstance_fnptr((uint)mode, count, (uint)type, indices, instancecount, baseinstance);
         
         /// <summary> <b>[requires: v4.2 | GL_ARB_base_instance]</b> Render multiple instances of a set of primitives from array data with a per-element offset. </summary>
         /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>
@@ -7153,7 +7153,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <param name="instancecount"> Specifies the number of instances of the specified range of indices to be rendered. </param>
             /// <param name="baseinstance"> Specifies the base instance for use in fetching instanced vertex attributes. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawElementsInstancedBaseInstance.xhtml" /></remarks>
-            public static void DrawElementsInstancedBaseInstance(PrimitiveType mode, int count, PrimitiveType type, void* indices, int instancecount, uint baseinstance) => GLPointers._DrawElementsInstancedBaseInstance_fnptr((uint)mode, count, (uint)type, indices, instancecount, baseinstance);
+            public static void DrawElementsInstancedBaseInstance(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount, uint baseinstance) => GLPointers._DrawElementsInstancedBaseInstance_fnptr((uint)mode, count, (uint)type, indices, instancecount, baseinstance);
             
             /// <summary> <b>[requires: v4.2 | GL_ARB_base_instance]</b> Render multiple instances of a set of primitives from array data with a per-element offset. </summary>
             /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>

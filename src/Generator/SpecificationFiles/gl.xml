@@ -86,12 +86,17 @@ typedef unsigned int GLhandleARB;
 
         <kind name="Matrix3x2" desc="This parameter represents a 3x2 matrix." />
         <kind name="Matrix3x3" desc="This parameter represents a 3x3 matrix." />
-        <kind name="Matrix3x4" desc="This parameter represents a 3x4 matrix." />>
+        <kind name="Matrix3x4" desc="This parameter represents a 3x4 matrix." />
 
-        <kind name="Matrix4x2" desc="This parameter represents a 4x2 matrix." />>
-        <kind name="Matrix4x3" desc="This parameter represents a 4x3 matrix." />>
-        <kind name="Matrix4x4" desc="This parameter represents a 4x4 matrix." />>
+        <kind name="Matrix4x2" desc="This parameter represents a 4x2 matrix." />
+        <kind name="Matrix4x3" desc="This parameter represents a 4x3 matrix." />
+        <kind name="Matrix4x4" desc="This parameter represents a 4x4 matrix." />
 
+        <kind name="Vector1" desc="This parameter represents a vector with 1 components" />
+        <kind name="Vector2" desc="This parameter represents a vector with 2 components" />
+        <kind name="Vector3" desc="This parameter represents a vector with 3 components" />
+        <kind name="Vector4" desc="This parameter represents a vector with 4 components" />
+        
         <!-- Applicable to legacy OpenGL functions -->
         <kind name="ColorIndexValue" desc="This parameter represents a color in the color index." />
         <kind name="ColorIndexMask" desc="This parameter represents a color index mask. A color index value will be masked using this parameter." />
@@ -8400,7 +8405,7 @@ typedef unsigned int GLhandleARB;
             <param group="SizedInternalFormat"><ptype>GLenum</ptype> <name>internalformat</name></param>
             <param group="PixelFormat"><ptype>GLenum</ptype> <name>format</name></param>
             <param group="PixelType"><ptype>GLenum</ptype> <name>type</name></param>
-            <param>const void *<name>data</name></param>
+            <param len="COMPSIZE(format,type)">const void *<name>data</name></param>
         </command>
         <command>
             <proto>void <name>glClearNamedBufferDataEXT</name></proto>
@@ -9528,7 +9533,7 @@ typedef unsigned int GLhandleARB;
             <param><ptype>GLsizei</ptype> <name>width</name></param>
             <param group="InternalFormat"><ptype>GLenum</ptype> <name>format</name></param>
             <param><ptype>GLsizei</ptype> <name>imageSize</name></param>
-            <param>const void *<name>data</name></param>
+            <param len="imageSize">const void *<name>data</name></param>
         </command>
         <command>
             <proto>void <name>glCompressedTextureSubImage1DEXT</name></proto>
@@ -9551,7 +9556,7 @@ typedef unsigned int GLhandleARB;
             <param><ptype>GLsizei</ptype> <name>height</name></param>
             <param group="InternalFormat"><ptype>GLenum</ptype> <name>format</name></param>
             <param><ptype>GLsizei</ptype> <name>imageSize</name></param>
-            <param>const void *<name>data</name></param>
+            <param len="imageSize">const void *<name>data</name></param>
         </command>
         <command>
             <proto>void <name>glCompressedTextureSubImage2DEXT</name></proto>
@@ -9578,7 +9583,7 @@ typedef unsigned int GLhandleARB;
             <param><ptype>GLsizei</ptype> <name>depth</name></param>
             <param group="InternalFormat"><ptype>GLenum</ptype> <name>format</name></param>
             <param><ptype>GLsizei</ptype> <name>imageSize</name></param>
-            <param>const void *<name>data</name></param>
+            <param len="imageSize">const void *<name>data</name></param>
         </command>
         <command>
             <proto>void <name>glCompressedTextureSubImage3DEXT</name></proto>
@@ -10335,7 +10340,7 @@ typedef unsigned int GLhandleARB;
             <proto class="program"><ptype>GLuint</ptype> <name>glCreateShaderProgramvEXT</name></proto>
             <param group="ShaderType"><ptype>GLenum</ptype> <name>type</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLchar</ptype> **<name>strings</name></param>
+            <param len="count">const <ptype>GLchar</ptype> *const*<name>strings</name></param>
         </command>
         <command>
             <proto>void <name>glCreateStatesNV</name></proto>
@@ -11210,7 +11215,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glDrawElementsInstancedANGLE</name></proto>
             <param group="PrimitiveType"><ptype>GLenum</ptype> <name>mode</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param group="PrimitiveType"><ptype>GLenum</ptype> <name>type</name></param>
+            <param group="DrawElementsType"><ptype>GLenum</ptype> <name>type</name></param>
             <param len="COMPSIZE(count,type)">const void *<name>indices</name></param>
             <param><ptype>GLsizei</ptype> <name>primcount</name></param>
             <alias name="glDrawElementsInstanced"/>
@@ -11228,7 +11233,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glDrawElementsInstancedBaseInstance</name></proto>
             <param group="PrimitiveType"><ptype>GLenum</ptype> <name>mode</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param group="PrimitiveType"><ptype>GLenum</ptype> <name>type</name></param>
+            <param group="DrawElementsType"><ptype>GLenum</ptype> <name>type</name></param>
             <param len="count">const void *<name>indices</name></param>
             <param><ptype>GLsizei</ptype> <name>instancecount</name></param>
             <param><ptype>GLuint</ptype> <name>baseinstance</name></param>
@@ -11237,7 +11242,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glDrawElementsInstancedBaseInstanceEXT</name></proto>
             <param group="PrimitiveType"><ptype>GLenum</ptype> <name>mode</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param group="PrimitiveType"><ptype>GLenum</ptype> <name>type</name></param>
+            <param group="DrawElementsType"><ptype>GLenum</ptype> <name>type</name></param>
             <param len="count">const void *<name>indices</name></param>
             <param><ptype>GLsizei</ptype> <name>instancecount</name></param>
             <param><ptype>GLuint</ptype> <name>baseinstance</name></param>
@@ -11306,7 +11311,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glDrawElementsInstancedNV</name></proto>
             <param group="PrimitiveType"><ptype>GLenum</ptype> <name>mode</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param group="PrimitiveType"><ptype>GLenum</ptype> <name>type</name></param>
+            <param group="DrawElementsType"><ptype>GLenum</ptype> <name>type</name></param>
             <param len="COMPSIZE(count,type)">const void *<name>indices</name></param>
             <param><ptype>GLsizei</ptype> <name>primcount</name></param>
             <alias name="glDrawElementsInstanced"/>
@@ -14179,7 +14184,7 @@ typedef unsigned int GLhandleARB;
             <param class="buffer"><ptype>GLuint</ptype> <name>buffer</name></param>
             <param><ptype>GLintptr</ptype> <name>offset</name></param>
             <param kind="BufferSize"><ptype>GLsizeiptr</ptype> <name>size</name></param>
-            <param>void *<name>data</name></param>
+            <param len="size">void *<name>data</name></param>
         </command>
         <command>
             <proto>void <name>glGetNamedBufferSubDataEXT</name></proto>
@@ -20796,14 +20801,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1dvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1f</name></proto>
@@ -20823,14 +20828,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1fvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glProgramUniform1fv"/>
         </command>
         <command>
@@ -20856,14 +20861,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1i64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1iEXT</name></proto>
@@ -20877,14 +20882,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1ivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform1iv"/>
         </command>
         <command>
@@ -20910,14 +20915,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1ui64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1uiEXT</name></proto>
@@ -20931,14 +20936,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform1uivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform1uiv"/>
         </command>
         <command>
@@ -20960,14 +20965,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2dvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2f</name></proto>
@@ -20989,14 +20994,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2fvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glProgramUniform2fv"/>
         </command>
         <command>
@@ -21025,14 +21030,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2i64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2iEXT</name></proto>
@@ -21047,14 +21052,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2ivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform2iv"/>
         </command>
         <command>
@@ -21083,14 +21088,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2ui64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2uiEXT</name></proto>
@@ -21105,14 +21110,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform2uivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform2uiv"/>
         </command>
         <command>
@@ -21136,14 +21141,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3dvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3f</name></proto>
@@ -21167,14 +21172,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3fvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glProgramUniform3fv"/>
         </command>
         <command>
@@ -21206,14 +21211,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3i64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3iEXT</name></proto>
@@ -21229,14 +21234,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3ivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform3iv"/>
         </command>
         <command>
@@ -21268,14 +21273,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3ui64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3uiEXT</name></proto>
@@ -21291,14 +21296,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform3uivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform3uiv"/>
         </command>
         <command>
@@ -21324,14 +21329,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4dvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4f</name></proto>
@@ -21357,14 +21362,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4fvEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glProgramUniform4fv"/>
         </command>
         <command>
@@ -21399,14 +21404,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4i64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4iEXT</name></proto>
@@ -21423,14 +21428,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4ivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform4iv"/>
         </command>
         <command>
@@ -21465,14 +21470,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4ui64vNV</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4uiEXT</name></proto>
@@ -21489,14 +21494,14 @@ typedef unsigned int GLhandleARB;
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniform4uivEXT</name></proto>
             <param class="program"><ptype>GLuint</ptype> <name>program</name></param>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glProgramUniform4uiv"/>
         </command>
         <command>
@@ -21546,7 +21551,7 @@ typedef unsigned int GLhandleARB;
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
             <param><ptype>GLboolean</ptype> <name>transpose</name></param>
-            <param len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Matrix2x2" len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniformMatrix2dvEXT</name></proto>
@@ -21554,7 +21559,7 @@ typedef unsigned int GLhandleARB;
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
             <param><ptype>GLboolean</ptype> <name>transpose</name></param>
-            <param len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Matrix2x2" len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glProgramUniformMatrix2fv</name></proto>
@@ -21702,7 +21707,7 @@ typedef unsigned int GLhandleARB;
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
             <param><ptype>GLboolean</ptype> <name>transpose</name></param>
-            <param len="count*6">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Matrix3x2" len="count*6">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glProgramUniformMatrix3x2fv"/>
         </command>
         <command>
@@ -25555,7 +25560,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform1dv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1f</name></proto>
@@ -25572,13 +25577,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform1fv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1fvARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glUniform1fv"/>
         </command>
         <command>
@@ -25600,13 +25605,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform1i64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1i64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1iARB</name></proto>
@@ -25618,13 +25623,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform1iv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1ivARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glUniform1iv"/>
         </command>
         <command>
@@ -25646,13 +25651,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform1ui64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1ui64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1uiEXT</name></proto>
@@ -25664,13 +25669,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform1uiv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform1uivEXT</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*1">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector1" len="count*1">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glUniform1uiv"/>
         </command>
         <command>
@@ -25683,7 +25688,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform2dv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2f</name></proto>
@@ -25702,13 +25707,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform2fv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2fvARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glUniform2fv"/>
         </command>
         <command>
@@ -25733,13 +25738,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform2i64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2i64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2iARB</name></proto>
@@ -25752,13 +25757,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform2iv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2ivARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glUniform2iv"/>
         </command>
         <command>
@@ -25783,13 +25788,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform2ui64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2ui64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2uiEXT</name></proto>
@@ -25802,13 +25807,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform2uiv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform2uivEXT</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector2" len="count*2">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glUniform2uiv"/>
         </command>
         <command>
@@ -25822,7 +25827,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform3dv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3f</name></proto>
@@ -25843,13 +25848,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform3fv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3fvARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glUniform3fv"/>
         </command>
         <command>
@@ -25877,13 +25882,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform3i64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3i64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3iARB</name></proto>
@@ -25897,13 +25902,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform3iv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3ivARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glUniform3iv"/>
         </command>
         <command>
@@ -25931,13 +25936,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform3ui64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3ui64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3uiEXT</name></proto>
@@ -25951,13 +25956,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform3uiv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform3uivEXT</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector3" len="count*3">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glUniform3uiv"/>
         </command>
         <command>
@@ -25972,7 +25977,7 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform4dv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4f</name></proto>
@@ -25995,13 +26000,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform4fv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4fvARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLfloat</ptype> *<name>value</name></param>
             <alias name="glUniform4fv"/>
         </command>
         <command>
@@ -26032,13 +26037,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform4i64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint64</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4i64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4iARB</name></proto>
@@ -26053,13 +26058,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform4iv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4ivARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLint</ptype> *<name>value</name></param>
             <alias name="glUniform4iv"/>
         </command>
         <command>
@@ -26090,13 +26095,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform4ui64vARB</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint64</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint64</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4ui64vNV</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint64EXT</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4uiEXT</name></proto>
@@ -26111,13 +26116,13 @@ typedef unsigned int GLhandleARB;
             <proto>void <name>glUniform4uiv</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniform4uivEXT</name></proto>
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
-            <param len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
+            <param kind="Vector4" len="count*4">const <ptype>GLuint</ptype> *<name>value</name></param>
             <alias name="glUniform4uiv"/>
         </command>
         <command>
@@ -26173,7 +26178,7 @@ typedef unsigned int GLhandleARB;
             <param><ptype>GLint</ptype> <name>location</name></param>
             <param><ptype>GLsizei</ptype> <name>count</name></param>
             <param><ptype>GLboolean</ptype> <name>transpose</name></param>
-            <param len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
+            <param kind="Matrix2x2" len="count*4">const <ptype>GLdouble</ptype> *<name>value</name></param>
         </command>
         <command>
             <proto>void <name>glUniformMatrix2fv</name></proto>

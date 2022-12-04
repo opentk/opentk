@@ -6173,7 +6173,7 @@ namespace OpenTK.Graphics.OpenGLES3
         public static unsafe partial class ANGLE
         {
             /// <inheritdoc cref="DrawElementsInstancedANGLE"/>
-            public static unsafe void DrawElementsInstancedANGLE(PrimitiveType mode, int count, PrimitiveType type, nint offset, int primcount)
+            public static unsafe void DrawElementsInstancedANGLE(PrimitiveType mode, int count, DrawElementsType type, nint offset, int primcount)
             {
                 void* indices = (void*)offset;
                 DrawElementsInstancedANGLE(mode, count, type, indices, primcount);
@@ -6336,7 +6336,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="DrawElementsInstancedBaseInstanceEXT"/>
-            public static unsafe void DrawElementsInstancedBaseInstanceEXT(PrimitiveType mode, int count, PrimitiveType type, nint offset, int instancecount, uint baseinstance)
+            public static unsafe void DrawElementsInstancedBaseInstanceEXT(PrimitiveType mode, int count, DrawElementsType type, nint offset, int instancecount, uint baseinstance)
             {
                 void* indices = (void*)offset;
                 DrawElementsInstancedBaseInstanceEXT(mode, count, type, indices, instancecount, baseinstance);
@@ -8557,7 +8557,7 @@ namespace OpenTK.Graphics.OpenGLES3
                 }
             }
             /// <inheritdoc cref="DrawElementsInstancedNV"/>
-            public static unsafe void DrawElementsInstancedNV(PrimitiveType mode, int count, PrimitiveType type, nint offset, int primcount)
+            public static unsafe void DrawElementsInstancedNV(PrimitiveType mode, int count, DrawElementsType type, nint offset, int primcount)
             {
                 void* indices = (void*)offset;
                 DrawElementsInstancedNV(mode, count, type, indices, primcount);

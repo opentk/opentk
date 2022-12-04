@@ -2698,7 +2698,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_ANGLE_instanced_arrays]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DrawElementsInstancedANGLE(PrimitiveType mode, int count, PrimitiveType type, void* indices, int primcount) => GLPointers._DrawElementsInstancedANGLE_fnptr((uint)mode, count, (uint)type, indices, primcount);
+            public static void DrawElementsInstancedANGLE(PrimitiveType mode, int count, DrawElementsType type, void* indices, int primcount) => GLPointers._DrawElementsInstancedANGLE_fnptr((uint)mode, count, (uint)type, indices, primcount);
             
             /// <summary> <b>[requires: GL_ANGLE_instanced_arrays]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -2768,7 +2768,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_EXT_base_instance]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DrawElementsInstancedBaseInstanceEXT(PrimitiveType mode, int count, PrimitiveType type, void* indices, int instancecount, uint baseinstance) => GLPointers._DrawElementsInstancedBaseInstanceEXT_fnptr((uint)mode, count, (uint)type, indices, instancecount, baseinstance);
+            public static void DrawElementsInstancedBaseInstanceEXT(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount, uint baseinstance) => GLPointers._DrawElementsInstancedBaseInstanceEXT_fnptr((uint)mode, count, (uint)type, indices, instancecount, baseinstance);
             
             /// <summary> <b>[requires: GL_EXT_base_instance]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -3603,7 +3603,7 @@ namespace OpenTK.Graphics.OpenGLES3
             
             /// <summary> <b>[requires: GL_NV_draw_instanced]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DrawElementsInstancedNV(PrimitiveType mode, int count, PrimitiveType type, void* indices, int primcount) => GLPointers._DrawElementsInstancedNV_fnptr((uint)mode, count, (uint)type, indices, primcount);
+            public static void DrawElementsInstancedNV(PrimitiveType mode, int count, DrawElementsType type, void* indices, int primcount) => GLPointers._DrawElementsInstancedNV_fnptr((uint)mode, count, (uint)type, indices, primcount);
             
             /// <summary> <b>[requires: GL_NV_draw_vulkan_image]</b>  </summary>
             /// <remarks><see href="" /></remarks>
