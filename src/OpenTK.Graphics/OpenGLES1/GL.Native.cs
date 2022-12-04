@@ -245,13 +245,13 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="target"> Specifies the target to which the buffer is bound. The symbolic constant must be GL_ARRAY_BUFFER or GL_ELEMENT_ARRAY_BUFFER. </param>
         /// <param name="buffer">Specifies the name of a buffer object.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glBindBuffer.xml" /></remarks>
-        public static void BindBuffer(BufferTargetARB target, BufferHandle buffer) => GLPointers._BindBuffer_fnptr((uint)target, (int)buffer);
+        public static void BindBuffer(BufferTargetARB target, int buffer) => GLPointers._BindBuffer_fnptr((uint)target, buffer);
         
         /// <summary> <b>[requires: v1.0]</b> Bind a named texture to a texturing target. </summary>
         /// <param name="target">Specifies the target to which the texture is bound. Must be GL_TEXTURE_2D.</param>
         /// <param name="texture">Specifies the name of a texture.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glBindTexture.xml" /></remarks>
-        public static void BindTexture(TextureTarget target, TextureHandle texture) => GLPointers._BindTexture_fnptr((uint)target, (int)texture);
+        public static void BindTexture(TextureTarget target, int texture) => GLPointers._BindTexture_fnptr((uint)target, texture);
         
         /// <summary> <b>[requires: v1.0]</b> Specify pixel arithmetic. </summary>
         /// <param name="sfactor"> Specifies how the red, green, blue, and alpha source blending factors are computed. The following symbolic constants are accepted: GL_ZERO, GL_ONE, GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA, and GL_SRC_ALPHA_SATURATE. The initial value is GL_ONE. </param>
@@ -399,13 +399,13 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="n">Specifies the number of buffer objects to be deleted.</param>
         /// <param name="buffers">Specifies an array of buffer object names to be deleted.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDeleteBuffers.xml" /></remarks>
-        public static void DeleteBuffers(int n, BufferHandle* buffers) => GLPointers._DeleteBuffers_fnptr(n, (int*)buffers);
+        public static void DeleteBuffers(int n, int* buffers) => GLPointers._DeleteBuffers_fnptr(n, buffers);
         
         /// <summary> <b>[requires: v1.0]</b> Delete named textures. </summary>
         /// <param name="n">Specifies the number of textures to be deleted.</param>
         /// <param name="textures">Specifies an array of textures to be deleted.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDeleteTextures.xml" /></remarks>
-        public static void DeleteTextures(int n, TextureHandle* textures) => GLPointers._DeleteTextures_fnptr(n, (int*)textures);
+        public static void DeleteTextures(int n, int* textures) => GLPointers._DeleteTextures_fnptr(n, textures);
         
         /// <summary> <b>[requires: v1.0]</b> Specify the value used for depth buffer comparisons. </summary>
         /// <param name="func">Specifies the depth comparison function. Symbolic constants GL_NEVER, GL_LESS, GL_EQUAL, GL_LEQUAL, GL_GREATER, GL_NOTEQUAL, GL_GEQUAL, and GL_ALWAYS are accepted. The initial value is GL_LESS.</param>
@@ -512,13 +512,13 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="n">Specifies the number of buffer object names to be generated.</param>
         /// <param name="buffers">Specifies an array in which the generated buffer object names are stored.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGenBuffers.xml" /></remarks>
-        public static void GenBuffers(int n, BufferHandle* buffers) => GLPointers._GenBuffers_fnptr(n, (int*)buffers);
+        public static void GenBuffers(int n, int* buffers) => GLPointers._GenBuffers_fnptr(n, buffers);
         
         /// <summary> <b>[requires: v1.0]</b> Generate texture names. </summary>
         /// <param name="n">Specifies the number of texture names to be generated.</param>
         /// <param name="textures">Specifies an array in which the generated texture names are stored.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGenTextures.xml" /></remarks>
-        public static void GenTextures(int n, TextureHandle* textures) => GLPointers._GenTextures_fnptr(n, (int*)textures);
+        public static void GenTextures(int n, int* textures) => GLPointers._GenTextures_fnptr(n, textures);
         
         /// <summary> <b>[requires: v1.0]</b> Return error information. </summary>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glGetError.xml" /></remarks>
@@ -598,7 +598,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> <b>[requires: v1.0]</b> Determine if a name corresponds to a buffer object. </summary>
         /// <param name="buffer"> Specifies a value that may be the name of a buffer object. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsBuffer.xml" /></remarks>
-        public static bool IsBuffer(BufferHandle buffer) => GLPointers._IsBuffer_fnptr((int)buffer) != 0;
+        public static bool IsBuffer(int buffer) => GLPointers._IsBuffer_fnptr(buffer) != 0;
         
         /// <summary> <b>[requires: v1.0]</b> Test whether a capability is enabled. </summary>
         /// <param name="cap"> Specifies a symbolic constant indicating a GL capability. </param>
@@ -608,7 +608,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <summary> <b>[requires: v1.0]</b> Determine if a name corresponds to a texture. </summary>
         /// <param name="texture"> Specifies a value that may be the name of a texture. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glIsTexture.xml" /></remarks>
-        public static bool IsTexture(TextureHandle texture) => GLPointers._IsTexture_fnptr((int)texture) != 0;
+        public static bool IsTexture(int texture) => GLPointers._IsTexture_fnptr(texture) != 0;
         
         /// <summary> <b>[requires: v1.0]</b> Set the lighting model parameters. </summary>
         /// <param name="pname">Specifies a single-valued lighting model parameter. Must be GL_LIGHT_MODEL_TWO_SIDE.</param>
@@ -981,7 +981,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_EXT_multisampled_render_to_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FramebufferTexture2DMultisampleEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, TextureHandle texture, int level, int samples) => GLPointers._FramebufferTexture2DMultisampleEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, (int)texture, level, samples);
+            public static void FramebufferTexture2DMultisampleEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int samples) => GLPointers._FramebufferTexture2DMultisampleEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, samples);
             
             /// <summary> <b>[requires: GL_EXT_robustness]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -993,11 +993,11 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_EXT_robustness]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetnUniformfvEXT(ProgramHandle program, int location, int bufSize, float* parameters) => GLPointers._GetnUniformfvEXT_fnptr((int)program, location, bufSize, parameters);
+            public static void GetnUniformfvEXT(int program, int location, int bufSize, float* parameters) => GLPointers._GetnUniformfvEXT_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_EXT_robustness]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GetnUniformivEXT(ProgramHandle program, int location, int bufSize, int* parameters) => GLPointers._GetnUniformivEXT_fnptr((int)program, location, bufSize, parameters);
+            public static void GetnUniformivEXT(int program, int location, int bufSize, int* parameters) => GLPointers._GetnUniformivEXT_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1013,15 +1013,15 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureStorage1DEXT(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._TextureStorage1DEXT_fnptr((int)texture, (uint)target, levels, (uint)internalformat, width);
+            public static void TextureStorage1DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._TextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureStorage2DEXT(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._TextureStorage2DEXT_fnptr((int)texture, (uint)target, levels, (uint)internalformat, width, height);
+            public static void TextureStorage2DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._TextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void TextureStorage3DEXT(TextureHandle texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._TextureStorage3DEXT_fnptr((int)texture, (uint)target, levels, (uint)internalformat, width, height, depth);
+            public static void TextureStorage3DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._TextureStorage3DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height, depth);
             
         }
         public static unsafe partial class IMG
@@ -1032,7 +1032,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_IMG_multisampled_render_to_texture]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FramebufferTexture2DMultisampleIMG(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, TextureHandle texture, int level, int samples) => GLPointers._FramebufferTexture2DMultisampleIMG_fnptr((uint)target, (uint)attachment, (uint)textarget, (int)texture, level, samples);
+            public static void FramebufferTexture2DMultisampleIMG(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int samples) => GLPointers._FramebufferTexture2DMultisampleIMG_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, samples);
             
             /// <summary> <b>[requires: GL_IMG_user_clip_plane]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1659,7 +1659,7 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void PrioritizeTexturesxOES(int n, TextureHandle* textures, int* priorities) => GLPointers._PrioritizeTexturesxOES_fnptr(n, (int*)textures, priorities);
+            public static void PrioritizeTexturesxOES(int n, int* textures, int* priorities) => GLPointers._PrioritizeTexturesxOES_fnptr(n, textures, priorities);
             
             /// <summary> <b>[requires: GL_OES_fixed_point]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1759,19 +1759,19 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsRenderbufferOES(RenderbufferHandle renderbuffer) => GLPointers._IsRenderbufferOES_fnptr((int)renderbuffer) != 0;
+            public static bool IsRenderbufferOES(int renderbuffer) => GLPointers._IsRenderbufferOES_fnptr(renderbuffer) != 0;
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void BindRenderbufferOES(RenderbufferTarget target, RenderbufferHandle renderbuffer) => GLPointers._BindRenderbufferOES_fnptr((uint)target, (int)renderbuffer);
+            public static void BindRenderbufferOES(RenderbufferTarget target, int renderbuffer) => GLPointers._BindRenderbufferOES_fnptr((uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DeleteRenderbuffersOES(int n, RenderbufferHandle* renderbuffers) => GLPointers._DeleteRenderbuffersOES_fnptr(n, (int*)renderbuffers);
+            public static void DeleteRenderbuffersOES(int n, int* renderbuffers) => GLPointers._DeleteRenderbuffersOES_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GenRenderbuffersOES(int n, RenderbufferHandle* renderbuffers) => GLPointers._GenRenderbuffersOES_fnptr(n, (int*)renderbuffers);
+            public static void GenRenderbuffersOES(int n, int* renderbuffers) => GLPointers._GenRenderbuffersOES_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1783,19 +1783,19 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsFramebufferOES(FramebufferHandle framebuffer) => GLPointers._IsFramebufferOES_fnptr((int)framebuffer) != 0;
+            public static bool IsFramebufferOES(int framebuffer) => GLPointers._IsFramebufferOES_fnptr(framebuffer) != 0;
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void BindFramebufferOES(FramebufferTarget target, FramebufferHandle framebuffer) => GLPointers._BindFramebufferOES_fnptr((uint)target, (int)framebuffer);
+            public static void BindFramebufferOES(FramebufferTarget target, int framebuffer) => GLPointers._BindFramebufferOES_fnptr((uint)target, framebuffer);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DeleteFramebuffersOES(int n, FramebufferHandle* framebuffers) => GLPointers._DeleteFramebuffersOES_fnptr(n, (int*)framebuffers);
+            public static void DeleteFramebuffersOES(int n, int* framebuffers) => GLPointers._DeleteFramebuffersOES_fnptr(n, framebuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GenFramebuffersOES(int n, FramebufferHandle* framebuffers) => GLPointers._GenFramebuffersOES_fnptr(n, (int*)framebuffers);
+            public static void GenFramebuffersOES(int n, int* framebuffers) => GLPointers._GenFramebuffersOES_fnptr(n, framebuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1803,11 +1803,11 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FramebufferRenderbufferOES(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, RenderbufferHandle renderbuffer) => GLPointers._FramebufferRenderbufferOES_fnptr((uint)target, (uint)attachment, (uint)renderbuffertarget, (int)renderbuffer);
+            public static void FramebufferRenderbufferOES(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._FramebufferRenderbufferOES_fnptr((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void FramebufferTexture2DOES(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, TextureHandle texture, int level) => GLPointers._FramebufferTexture2DOES_fnptr((uint)target, (uint)attachment, (uint)textarget, (int)texture, level);
+            public static void FramebufferTexture2DOES(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._FramebufferTexture2DOES_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1917,19 +1917,19 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void BindVertexArrayOES(VertexArrayHandle array) => GLPointers._BindVertexArrayOES_fnptr((int)array);
+            public static void BindVertexArrayOES(int array) => GLPointers._BindVertexArrayOES_fnptr(array);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void DeleteVertexArraysOES(int n, VertexArrayHandle* arrays) => GLPointers._DeleteVertexArraysOES_fnptr(n, (int*)arrays);
+            public static void DeleteVertexArraysOES(int n, int* arrays) => GLPointers._DeleteVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void GenVertexArraysOES(int n, VertexArrayHandle* arrays) => GLPointers._GenVertexArraysOES_fnptr(n, (int*)arrays);
+            public static void GenVertexArraysOES(int n, int* arrays) => GLPointers._GenVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool IsVertexArrayOES(VertexArrayHandle array) => GLPointers._IsVertexArrayOES_fnptr((int)array) != 0;
+            public static bool IsVertexArrayOES(int array) => GLPointers._IsVertexArrayOES_fnptr(array) != 0;
             
         }
         public static unsafe partial class QCOM
@@ -1952,23 +1952,23 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_QCOM_extended_get]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetTexturesQCOM(TextureHandle* textures, int maxTextures, int* numTextures) => GLPointers._ExtGetTexturesQCOM_fnptr((int*)textures, maxTextures, numTextures);
+            public static void ExtGetTexturesQCOM(int* textures, int maxTextures, int* numTextures) => GLPointers._ExtGetTexturesQCOM_fnptr(textures, maxTextures, numTextures);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetBuffersQCOM(BufferHandle* buffers, int maxBuffers, int* numBuffers) => GLPointers._ExtGetBuffersQCOM_fnptr((int*)buffers, maxBuffers, numBuffers);
+            public static void ExtGetBuffersQCOM(int* buffers, int maxBuffers, int* numBuffers) => GLPointers._ExtGetBuffersQCOM_fnptr(buffers, maxBuffers, numBuffers);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetRenderbuffersQCOM(RenderbufferHandle* renderbuffers, int maxRenderbuffers, int* numRenderbuffers) => GLPointers._ExtGetRenderbuffersQCOM_fnptr((int*)renderbuffers, maxRenderbuffers, numRenderbuffers);
+            public static void ExtGetRenderbuffersQCOM(int* renderbuffers, int maxRenderbuffers, int* numRenderbuffers) => GLPointers._ExtGetRenderbuffersQCOM_fnptr(renderbuffers, maxRenderbuffers, numRenderbuffers);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetFramebuffersQCOM(FramebufferHandle* framebuffers, int maxFramebuffers, int* numFramebuffers) => GLPointers._ExtGetFramebuffersQCOM_fnptr((int*)framebuffers, maxFramebuffers, numFramebuffers);
+            public static void ExtGetFramebuffersQCOM(int* framebuffers, int maxFramebuffers, int* numFramebuffers) => GLPointers._ExtGetFramebuffersQCOM_fnptr(framebuffers, maxFramebuffers, numFramebuffers);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetTexLevelParameterivQCOM(TextureHandle texture, All face, int level, All pname, int* parameters) => GLPointers._ExtGetTexLevelParameterivQCOM_fnptr((int)texture, (uint)face, level, (uint)pname, parameters);
+            public static void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, int* parameters) => GLPointers._ExtGetTexLevelParameterivQCOM_fnptr(texture, (uint)face, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get]</b>  </summary>
             /// <remarks><see href="" /></remarks>
@@ -1984,19 +1984,19 @@ namespace OpenTK.Graphics.OpenGLES1
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetShadersQCOM(ShaderHandle* shaders, int maxShaders, int* numShaders) => GLPointers._ExtGetShadersQCOM_fnptr((int*)shaders, maxShaders, numShaders);
+            public static void ExtGetShadersQCOM(int* shaders, int maxShaders, int* numShaders) => GLPointers._ExtGetShadersQCOM_fnptr(shaders, maxShaders, numShaders);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetProgramsQCOM(ProgramHandle* programs, int maxPrograms, int* numPrograms) => GLPointers._ExtGetProgramsQCOM_fnptr((int*)programs, maxPrograms, numPrograms);
+            public static void ExtGetProgramsQCOM(int* programs, int maxPrograms, int* numPrograms) => GLPointers._ExtGetProgramsQCOM_fnptr(programs, maxPrograms, numPrograms);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static bool ExtIsProgramBinaryQCOM(ProgramHandle program) => GLPointers._ExtIsProgramBinaryQCOM_fnptr((int)program) != 0;
+            public static bool ExtIsProgramBinaryQCOM(int program) => GLPointers._ExtIsProgramBinaryQCOM_fnptr(program) != 0;
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2]</b>  </summary>
             /// <remarks><see href="" /></remarks>
-            public static void ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, byte* source, int* length) => GLPointers._ExtGetProgramBinarySourceQCOM_fnptr((int)program, (uint)shadertype, source, length);
+            public static void ExtGetProgramBinarySourceQCOM(int program, ShaderType shadertype, byte* source, int* length) => GLPointers._ExtGetProgramBinarySourceQCOM_fnptr(program, (uint)shadertype, source, length);
             
             /// <summary> <b>[requires: GL_QCOM_tiled_rendering]</b>  </summary>
             /// <remarks><see href="" /></remarks>

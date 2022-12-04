@@ -4,6 +4,11 @@ using OpenTK.Mathematics;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
 {
+#if !TYPESAFE_HANDLES
+    using ShaderHandle = System.Int32;
+    using ProgramHandle = System.Int32;
+#endif
+
     public static unsafe partial class GL
     {
         // FIXME: Remove this when it's fixed

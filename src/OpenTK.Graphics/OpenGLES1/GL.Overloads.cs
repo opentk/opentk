@@ -597,71 +597,71 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="DeleteBuffers"/>
-        public static unsafe void DeleteBuffer(in BufferHandle buffer)
+        public static unsafe void DeleteBuffer(in int buffer)
         {
             int n = 1;
-            fixed(BufferHandle* buffers_handle = &buffer)
+            fixed(int* buffers_handle = &buffer)
             {
                 DeleteBuffers(n, buffers_handle);
             }
         }
         /// <inheritdoc cref="DeleteBuffers"/>
-        public static unsafe void DeleteBuffers(ReadOnlySpan<BufferHandle> buffers)
+        public static unsafe void DeleteBuffers(ReadOnlySpan<int> buffers)
         {
             int n = (int)(buffers.Length);
-            fixed (BufferHandle* buffers_ptr = buffers)
+            fixed (int* buffers_ptr = buffers)
             {
                 DeleteBuffers(n, buffers_ptr);
             }
         }
         /// <inheritdoc cref="DeleteBuffers"/>
-        public static unsafe void DeleteBuffers(BufferHandle[] buffers)
+        public static unsafe void DeleteBuffers(int[] buffers)
         {
             int n = (int)(buffers.Length);
-            fixed (BufferHandle* buffers_ptr = buffers)
+            fixed (int* buffers_ptr = buffers)
             {
                 DeleteBuffers(n, buffers_ptr);
             }
         }
         /// <inheritdoc cref="DeleteBuffers"/>
-        public static unsafe void DeleteBuffers(int n, in BufferHandle buffers)
+        public static unsafe void DeleteBuffers(int n, in int buffers)
         {
-            fixed (BufferHandle* buffers_ptr = &buffers)
+            fixed (int* buffers_ptr = &buffers)
             {
                 DeleteBuffers(n, buffers_ptr);
             }
         }
         /// <inheritdoc cref="DeleteTextures"/>
-        public static unsafe void DeleteTexture(in TextureHandle texture)
+        public static unsafe void DeleteTexture(in int texture)
         {
             int n = 1;
-            fixed(TextureHandle* textures_handle = &texture)
+            fixed(int* textures_handle = &texture)
             {
                 DeleteTextures(n, textures_handle);
             }
         }
         /// <inheritdoc cref="DeleteTextures"/>
-        public static unsafe void DeleteTextures(ReadOnlySpan<TextureHandle> textures)
+        public static unsafe void DeleteTextures(ReadOnlySpan<int> textures)
         {
             int n = (int)(textures.Length);
-            fixed (TextureHandle* textures_ptr = textures)
+            fixed (int* textures_ptr = textures)
             {
                 DeleteTextures(n, textures_ptr);
             }
         }
         /// <inheritdoc cref="DeleteTextures"/>
-        public static unsafe void DeleteTextures(TextureHandle[] textures)
+        public static unsafe void DeleteTextures(int[] textures)
         {
             int n = (int)(textures.Length);
-            fixed (TextureHandle* textures_ptr = textures)
+            fixed (int* textures_ptr = textures)
             {
                 DeleteTextures(n, textures_ptr);
             }
         }
         /// <inheritdoc cref="DeleteTextures"/>
-        public static unsafe void DeleteTextures(int n, in TextureHandle textures)
+        public static unsafe void DeleteTextures(int n, in int textures)
         {
-            fixed (TextureHandle* textures_ptr = &textures)
+            fixed (int* textures_ptr = &textures)
             {
                 DeleteTextures(n, textures_ptr);
             }
@@ -769,9 +769,9 @@ namespace OpenTK.Graphics.OpenGLES1
             }
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe BufferHandle GenBuffer()
+        public static unsafe int GenBuffer()
         {
-            BufferHandle buffer;
+            int buffer;
             int n = 1;
             Unsafe.SkipInit(out buffer);
             // FIXME: This could be a problem for the overloads that take an out parameter
@@ -782,12 +782,12 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
+            int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
             return buffer;
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe void GenBuffer(out BufferHandle buffer)
+        public static unsafe void GenBuffer(out int buffer)
         {
             int n = 1;
             Unsafe.SkipInit(out buffer);
@@ -799,39 +799,39 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            BufferHandle* buffers_handle = (BufferHandle*)Unsafe.AsPointer(ref buffer);
+            int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe void GenBuffers(Span<BufferHandle> buffers)
+        public static unsafe void GenBuffers(Span<int> buffers)
         {
             int n = (int)(buffers.Length);
-            fixed (BufferHandle* buffers_ptr = buffers)
+            fixed (int* buffers_ptr = buffers)
             {
                 GenBuffers(n, buffers_ptr);
             }
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe void GenBuffers(BufferHandle[] buffers)
+        public static unsafe void GenBuffers(int[] buffers)
         {
             int n = (int)(buffers.Length);
-            fixed (BufferHandle* buffers_ptr = buffers)
+            fixed (int* buffers_ptr = buffers)
             {
                 GenBuffers(n, buffers_ptr);
             }
         }
         /// <inheritdoc cref="GenBuffers"/>
-        public static unsafe void GenBuffers(int n, ref BufferHandle buffers)
+        public static unsafe void GenBuffers(int n, ref int buffers)
         {
-            fixed (BufferHandle* buffers_ptr = &buffers)
+            fixed (int* buffers_ptr = &buffers)
             {
                 GenBuffers(n, buffers_ptr);
             }
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe TextureHandle GenTexture()
+        public static unsafe int GenTexture()
         {
-            TextureHandle texture;
+            int texture;
             int n = 1;
             Unsafe.SkipInit(out texture);
             // FIXME: This could be a problem for the overloads that take an out parameter
@@ -842,12 +842,12 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
+            int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
             return texture;
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe void GenTexture(out TextureHandle texture)
+        public static unsafe void GenTexture(out int texture)
         {
             int n = 1;
             Unsafe.SkipInit(out texture);
@@ -859,31 +859,31 @@ namespace OpenTK.Graphics.OpenGLES1
             // that will make it so this tries to fix a local variable which is not allowed in C# for some reason.
             // If you have problems with this we would really appreciate you opening an issue at https://github.com/opentk/opentk
             // - 2021-05-18
-            TextureHandle* textures_handle = (TextureHandle*)Unsafe.AsPointer(ref texture);
+            int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe void GenTextures(Span<TextureHandle> textures)
+        public static unsafe void GenTextures(Span<int> textures)
         {
             int n = (int)(textures.Length);
-            fixed (TextureHandle* textures_ptr = textures)
+            fixed (int* textures_ptr = textures)
             {
                 GenTextures(n, textures_ptr);
             }
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe void GenTextures(TextureHandle[] textures)
+        public static unsafe void GenTextures(int[] textures)
         {
             int n = (int)(textures.Length);
-            fixed (TextureHandle* textures_ptr = textures)
+            fixed (int* textures_ptr = textures)
             {
                 GenTextures(n, textures_ptr);
             }
         }
         /// <inheritdoc cref="GenTextures"/>
-        public static unsafe void GenTextures(int n, ref TextureHandle textures)
+        public static unsafe void GenTextures(int n, ref int textures)
         {
-            fixed (TextureHandle* textures_ptr = &textures)
+            fixed (int* textures_ptr = &textures)
             {
                 GenTextures(n, textures_ptr);
             }
@@ -1693,7 +1693,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetnUniformfvEXT"/>
-            public static unsafe void GetnUniformfvEXT(ProgramHandle program, int location, Span<float> parameters)
+            public static unsafe void GetnUniformfvEXT(int program, int location, Span<float> parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
                 fixed (float* parameters_ptr = parameters)
@@ -1702,7 +1702,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetnUniformfvEXT"/>
-            public static unsafe void GetnUniformfvEXT(ProgramHandle program, int location, float[] parameters)
+            public static unsafe void GetnUniformfvEXT(int program, int location, float[] parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
                 fixed (float* parameters_ptr = parameters)
@@ -1711,7 +1711,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetnUniformfvEXT"/>
-            public static unsafe void GetnUniformfvEXT(ProgramHandle program, int location, int bufSize, ref float parameters)
+            public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, ref float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
                 {
@@ -1719,7 +1719,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetnUniformivEXT"/>
-            public static unsafe void GetnUniformivEXT(ProgramHandle program, int location, Span<int> parameters)
+            public static unsafe void GetnUniformivEXT(int program, int location, Span<int> parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
                 fixed (int* parameters_ptr = parameters)
@@ -1728,7 +1728,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetnUniformivEXT"/>
-            public static unsafe void GetnUniformivEXT(ProgramHandle program, int location, int[] parameters)
+            public static unsafe void GetnUniformivEXT(int program, int location, int[] parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
                 fixed (int* parameters_ptr = parameters)
@@ -1737,7 +1737,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="GetnUniformivEXT"/>
-            public static unsafe void GetnUniformivEXT(ProgramHandle program, int location, int bufSize, ref int parameters)
+            public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -3936,9 +3936,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="PrioritizeTexturesxOES"/>
-            public static unsafe void PrioritizeTexturesxOES(int n, ReadOnlySpan<TextureHandle> textures, ReadOnlySpan<int> priorities)
+            public static unsafe void PrioritizeTexturesxOES(int n, ReadOnlySpan<int> textures, ReadOnlySpan<int> priorities)
             {
-                fixed (TextureHandle* textures_ptr = textures)
+                fixed (int* textures_ptr = textures)
                 {
                     fixed (int* priorities_ptr = priorities)
                     {
@@ -3947,9 +3947,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="PrioritizeTexturesxOES"/>
-            public static unsafe void PrioritizeTexturesxOES(int n, TextureHandle[] textures, int[] priorities)
+            public static unsafe void PrioritizeTexturesxOES(int n, int[] textures, int[] priorities)
             {
-                fixed (TextureHandle* textures_ptr = textures)
+                fixed (int* textures_ptr = textures)
                 {
                     fixed (int* priorities_ptr = priorities)
                     {
@@ -3958,9 +3958,9 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="PrioritizeTexturesxOES"/>
-            public static unsafe void PrioritizeTexturesxOES(int n, in TextureHandle textures, in int priorities)
+            public static unsafe void PrioritizeTexturesxOES(int n, in int textures, in int priorities)
             {
-                fixed (TextureHandle* textures_ptr = &textures)
+                fixed (int* textures_ptr = &textures)
                 fixed (int* priorities_ptr = &priorities)
                 {
                     PrioritizeTexturesxOES(n, textures_ptr, priorities_ptr);
@@ -4262,53 +4262,53 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffersOES"/>
-            public static unsafe void DeleteRenderbuffersOES(ReadOnlySpan<RenderbufferHandle> renderbuffers)
+            public static unsafe void DeleteRenderbuffersOES(ReadOnlySpan<int> renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
-                fixed (RenderbufferHandle* renderbuffers_ptr = renderbuffers)
+                fixed (int* renderbuffers_ptr = renderbuffers)
                 {
                     DeleteRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffersOES"/>
-            public static unsafe void DeleteRenderbuffersOES(RenderbufferHandle[] renderbuffers)
+            public static unsafe void DeleteRenderbuffersOES(int[] renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
-                fixed (RenderbufferHandle* renderbuffers_ptr = renderbuffers)
+                fixed (int* renderbuffers_ptr = renderbuffers)
                 {
                     DeleteRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
             /// <inheritdoc cref="DeleteRenderbuffersOES"/>
-            public static unsafe void DeleteRenderbuffersOES(int n, in RenderbufferHandle renderbuffers)
+            public static unsafe void DeleteRenderbuffersOES(int n, in int renderbuffers)
             {
-                fixed (RenderbufferHandle* renderbuffers_ptr = &renderbuffers)
+                fixed (int* renderbuffers_ptr = &renderbuffers)
                 {
                     DeleteRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
             /// <inheritdoc cref="GenRenderbuffersOES"/>
-            public static unsafe void GenRenderbuffersOES(Span<RenderbufferHandle> renderbuffers)
+            public static unsafe void GenRenderbuffersOES(Span<int> renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
-                fixed (RenderbufferHandle* renderbuffers_ptr = renderbuffers)
+                fixed (int* renderbuffers_ptr = renderbuffers)
                 {
                     GenRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
             /// <inheritdoc cref="GenRenderbuffersOES"/>
-            public static unsafe void GenRenderbuffersOES(RenderbufferHandle[] renderbuffers)
+            public static unsafe void GenRenderbuffersOES(int[] renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
-                fixed (RenderbufferHandle* renderbuffers_ptr = renderbuffers)
+                fixed (int* renderbuffers_ptr = renderbuffers)
                 {
                     GenRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
             /// <inheritdoc cref="GenRenderbuffersOES"/>
-            public static unsafe void GenRenderbuffersOES(int n, ref RenderbufferHandle renderbuffers)
+            public static unsafe void GenRenderbuffersOES(int n, ref int renderbuffers)
             {
-                fixed (RenderbufferHandle* renderbuffers_ptr = &renderbuffers)
+                fixed (int* renderbuffers_ptr = &renderbuffers)
                 {
                     GenRenderbuffersOES(n, renderbuffers_ptr);
                 }
@@ -4338,53 +4338,53 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffersOES"/>
-            public static unsafe void DeleteFramebuffersOES(ReadOnlySpan<FramebufferHandle> framebuffers)
+            public static unsafe void DeleteFramebuffersOES(ReadOnlySpan<int> framebuffers)
             {
                 int n = (int)(framebuffers.Length);
-                fixed (FramebufferHandle* framebuffers_ptr = framebuffers)
+                fixed (int* framebuffers_ptr = framebuffers)
                 {
                     DeleteFramebuffersOES(n, framebuffers_ptr);
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffersOES"/>
-            public static unsafe void DeleteFramebuffersOES(FramebufferHandle[] framebuffers)
+            public static unsafe void DeleteFramebuffersOES(int[] framebuffers)
             {
                 int n = (int)(framebuffers.Length);
-                fixed (FramebufferHandle* framebuffers_ptr = framebuffers)
+                fixed (int* framebuffers_ptr = framebuffers)
                 {
                     DeleteFramebuffersOES(n, framebuffers_ptr);
                 }
             }
             /// <inheritdoc cref="DeleteFramebuffersOES"/>
-            public static unsafe void DeleteFramebuffersOES(int n, in FramebufferHandle framebuffers)
+            public static unsafe void DeleteFramebuffersOES(int n, in int framebuffers)
             {
-                fixed (FramebufferHandle* framebuffers_ptr = &framebuffers)
+                fixed (int* framebuffers_ptr = &framebuffers)
                 {
                     DeleteFramebuffersOES(n, framebuffers_ptr);
                 }
             }
             /// <inheritdoc cref="GenFramebuffersOES"/>
-            public static unsafe void GenFramebuffersOES(Span<FramebufferHandle> framebuffers)
+            public static unsafe void GenFramebuffersOES(Span<int> framebuffers)
             {
                 int n = (int)(framebuffers.Length);
-                fixed (FramebufferHandle* framebuffers_ptr = framebuffers)
+                fixed (int* framebuffers_ptr = framebuffers)
                 {
                     GenFramebuffersOES(n, framebuffers_ptr);
                 }
             }
             /// <inheritdoc cref="GenFramebuffersOES"/>
-            public static unsafe void GenFramebuffersOES(FramebufferHandle[] framebuffers)
+            public static unsafe void GenFramebuffersOES(int[] framebuffers)
             {
                 int n = (int)(framebuffers.Length);
-                fixed (FramebufferHandle* framebuffers_ptr = framebuffers)
+                fixed (int* framebuffers_ptr = framebuffers)
                 {
                     GenFramebuffersOES(n, framebuffers_ptr);
                 }
             }
             /// <inheritdoc cref="GenFramebuffersOES"/>
-            public static unsafe void GenFramebuffersOES(int n, ref FramebufferHandle framebuffers)
+            public static unsafe void GenFramebuffersOES(int n, ref int framebuffers)
             {
-                fixed (FramebufferHandle* framebuffers_ptr = &framebuffers)
+                fixed (int* framebuffers_ptr = &framebuffers)
                 {
                     GenFramebuffersOES(n, framebuffers_ptr);
                 }
@@ -4694,53 +4694,53 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="DeleteVertexArraysOES"/>
-            public static unsafe void DeleteVertexArraysOES(ReadOnlySpan<VertexArrayHandle> arrays)
+            public static unsafe void DeleteVertexArraysOES(ReadOnlySpan<int> arrays)
             {
                 int n = (int)(arrays.Length);
-                fixed (VertexArrayHandle* arrays_ptr = arrays)
+                fixed (int* arrays_ptr = arrays)
                 {
                     DeleteVertexArraysOES(n, arrays_ptr);
                 }
             }
             /// <inheritdoc cref="DeleteVertexArraysOES"/>
-            public static unsafe void DeleteVertexArraysOES(VertexArrayHandle[] arrays)
+            public static unsafe void DeleteVertexArraysOES(int[] arrays)
             {
                 int n = (int)(arrays.Length);
-                fixed (VertexArrayHandle* arrays_ptr = arrays)
+                fixed (int* arrays_ptr = arrays)
                 {
                     DeleteVertexArraysOES(n, arrays_ptr);
                 }
             }
             /// <inheritdoc cref="DeleteVertexArraysOES"/>
-            public static unsafe void DeleteVertexArraysOES(int n, in VertexArrayHandle arrays)
+            public static unsafe void DeleteVertexArraysOES(int n, in int arrays)
             {
-                fixed (VertexArrayHandle* arrays_ptr = &arrays)
+                fixed (int* arrays_ptr = &arrays)
                 {
                     DeleteVertexArraysOES(n, arrays_ptr);
                 }
             }
             /// <inheritdoc cref="GenVertexArraysOES"/>
-            public static unsafe void GenVertexArraysOES(Span<VertexArrayHandle> arrays)
+            public static unsafe void GenVertexArraysOES(Span<int> arrays)
             {
                 int n = (int)(arrays.Length);
-                fixed (VertexArrayHandle* arrays_ptr = arrays)
+                fixed (int* arrays_ptr = arrays)
                 {
                     GenVertexArraysOES(n, arrays_ptr);
                 }
             }
             /// <inheritdoc cref="GenVertexArraysOES"/>
-            public static unsafe void GenVertexArraysOES(VertexArrayHandle[] arrays)
+            public static unsafe void GenVertexArraysOES(int[] arrays)
             {
                 int n = (int)(arrays.Length);
-                fixed (VertexArrayHandle* arrays_ptr = arrays)
+                fixed (int* arrays_ptr = arrays)
                 {
                     GenVertexArraysOES(n, arrays_ptr);
                 }
             }
             /// <inheritdoc cref="GenVertexArraysOES"/>
-            public static unsafe void GenVertexArraysOES(int n, ref VertexArrayHandle arrays)
+            public static unsafe void GenVertexArraysOES(int n, ref int arrays)
             {
-                fixed (VertexArrayHandle* arrays_ptr = &arrays)
+                fixed (int* arrays_ptr = &arrays)
                 {
                     GenVertexArraysOES(n, arrays_ptr);
                 }
@@ -4806,19 +4806,19 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetTexturesQCOM"/>
-            public static unsafe void ExtGetTexturesQCOM(ref TextureHandle textures, int maxTextures, ref int numTextures)
+            public static unsafe void ExtGetTexturesQCOM(ref int textures, int maxTextures, ref int numTextures)
             {
-                fixed (TextureHandle* textures_ptr = &textures)
+                fixed (int* textures_ptr = &textures)
                 fixed (int* numTextures_ptr = &numTextures)
                 {
                     ExtGetTexturesQCOM(textures_ptr, maxTextures, numTextures_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetBuffersQCOM"/>
-            public static unsafe void ExtGetBuffersQCOM(Span<BufferHandle> buffers, Span<int> numBuffers)
+            public static unsafe void ExtGetBuffersQCOM(Span<int> buffers, Span<int> numBuffers)
             {
                 int maxBuffers = (int)(buffers.Length);
-                fixed (BufferHandle* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     fixed (int* numBuffers_ptr = numBuffers)
                     {
@@ -4827,10 +4827,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetBuffersQCOM"/>
-            public static unsafe void ExtGetBuffersQCOM(BufferHandle[] buffers, int[] numBuffers)
+            public static unsafe void ExtGetBuffersQCOM(int[] buffers, int[] numBuffers)
             {
                 int maxBuffers = (int)(buffers.Length);
-                fixed (BufferHandle* buffers_ptr = buffers)
+                fixed (int* buffers_ptr = buffers)
                 {
                     fixed (int* numBuffers_ptr = numBuffers)
                     {
@@ -4839,19 +4839,19 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetBuffersQCOM"/>
-            public static unsafe void ExtGetBuffersQCOM(ref BufferHandle buffers, int maxBuffers, ref int numBuffers)
+            public static unsafe void ExtGetBuffersQCOM(ref int buffers, int maxBuffers, ref int numBuffers)
             {
-                fixed (BufferHandle* buffers_ptr = &buffers)
+                fixed (int* buffers_ptr = &buffers)
                 fixed (int* numBuffers_ptr = &numBuffers)
                 {
                     ExtGetBuffersQCOM(buffers_ptr, maxBuffers, numBuffers_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetRenderbuffersQCOM"/>
-            public static unsafe void ExtGetRenderbuffersQCOM(Span<RenderbufferHandle> renderbuffers, Span<int> numRenderbuffers)
+            public static unsafe void ExtGetRenderbuffersQCOM(Span<int> renderbuffers, Span<int> numRenderbuffers)
             {
                 int maxRenderbuffers = (int)(renderbuffers.Length);
-                fixed (RenderbufferHandle* renderbuffers_ptr = renderbuffers)
+                fixed (int* renderbuffers_ptr = renderbuffers)
                 {
                     fixed (int* numRenderbuffers_ptr = numRenderbuffers)
                     {
@@ -4860,10 +4860,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetRenderbuffersQCOM"/>
-            public static unsafe void ExtGetRenderbuffersQCOM(RenderbufferHandle[] renderbuffers, int[] numRenderbuffers)
+            public static unsafe void ExtGetRenderbuffersQCOM(int[] renderbuffers, int[] numRenderbuffers)
             {
                 int maxRenderbuffers = (int)(renderbuffers.Length);
-                fixed (RenderbufferHandle* renderbuffers_ptr = renderbuffers)
+                fixed (int* renderbuffers_ptr = renderbuffers)
                 {
                     fixed (int* numRenderbuffers_ptr = numRenderbuffers)
                     {
@@ -4872,19 +4872,19 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetRenderbuffersQCOM"/>
-            public static unsafe void ExtGetRenderbuffersQCOM(ref RenderbufferHandle renderbuffers, int maxRenderbuffers, ref int numRenderbuffers)
+            public static unsafe void ExtGetRenderbuffersQCOM(ref int renderbuffers, int maxRenderbuffers, ref int numRenderbuffers)
             {
-                fixed (RenderbufferHandle* renderbuffers_ptr = &renderbuffers)
+                fixed (int* renderbuffers_ptr = &renderbuffers)
                 fixed (int* numRenderbuffers_ptr = &numRenderbuffers)
                 {
                     ExtGetRenderbuffersQCOM(renderbuffers_ptr, maxRenderbuffers, numRenderbuffers_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetFramebuffersQCOM"/>
-            public static unsafe void ExtGetFramebuffersQCOM(Span<FramebufferHandle> framebuffers, Span<int> numFramebuffers)
+            public static unsafe void ExtGetFramebuffersQCOM(Span<int> framebuffers, Span<int> numFramebuffers)
             {
                 int maxFramebuffers = (int)(framebuffers.Length);
-                fixed (FramebufferHandle* framebuffers_ptr = framebuffers)
+                fixed (int* framebuffers_ptr = framebuffers)
                 {
                     fixed (int* numFramebuffers_ptr = numFramebuffers)
                     {
@@ -4893,10 +4893,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetFramebuffersQCOM"/>
-            public static unsafe void ExtGetFramebuffersQCOM(FramebufferHandle[] framebuffers, int[] numFramebuffers)
+            public static unsafe void ExtGetFramebuffersQCOM(int[] framebuffers, int[] numFramebuffers)
             {
                 int maxFramebuffers = (int)(framebuffers.Length);
-                fixed (FramebufferHandle* framebuffers_ptr = framebuffers)
+                fixed (int* framebuffers_ptr = framebuffers)
                 {
                     fixed (int* numFramebuffers_ptr = numFramebuffers)
                     {
@@ -4905,16 +4905,16 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetFramebuffersQCOM"/>
-            public static unsafe void ExtGetFramebuffersQCOM(ref FramebufferHandle framebuffers, int maxFramebuffers, ref int numFramebuffers)
+            public static unsafe void ExtGetFramebuffersQCOM(ref int framebuffers, int maxFramebuffers, ref int numFramebuffers)
             {
-                fixed (FramebufferHandle* framebuffers_ptr = &framebuffers)
+                fixed (int* framebuffers_ptr = &framebuffers)
                 fixed (int* numFramebuffers_ptr = &numFramebuffers)
                 {
                     ExtGetFramebuffersQCOM(framebuffers_ptr, maxFramebuffers, numFramebuffers_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetTexLevelParameterivQCOM"/>
-            public static unsafe void ExtGetTexLevelParameterivQCOM(TextureHandle texture, All face, int level, All pname, ref int parameters)
+            public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
                 {
@@ -4937,10 +4937,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetShadersQCOM"/>
-            public static unsafe void ExtGetShadersQCOM(Span<ShaderHandle> shaders, Span<int> numShaders)
+            public static unsafe void ExtGetShadersQCOM(Span<int> shaders, Span<int> numShaders)
             {
                 int maxShaders = (int)(shaders.Length);
-                fixed (ShaderHandle* shaders_ptr = shaders)
+                fixed (int* shaders_ptr = shaders)
                 {
                     fixed (int* numShaders_ptr = numShaders)
                     {
@@ -4949,10 +4949,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetShadersQCOM"/>
-            public static unsafe void ExtGetShadersQCOM(ShaderHandle[] shaders, int[] numShaders)
+            public static unsafe void ExtGetShadersQCOM(int[] shaders, int[] numShaders)
             {
                 int maxShaders = (int)(shaders.Length);
-                fixed (ShaderHandle* shaders_ptr = shaders)
+                fixed (int* shaders_ptr = shaders)
                 {
                     fixed (int* numShaders_ptr = numShaders)
                     {
@@ -4961,19 +4961,19 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetShadersQCOM"/>
-            public static unsafe void ExtGetShadersQCOM(ref ShaderHandle shaders, int maxShaders, ref int numShaders)
+            public static unsafe void ExtGetShadersQCOM(ref int shaders, int maxShaders, ref int numShaders)
             {
-                fixed (ShaderHandle* shaders_ptr = &shaders)
+                fixed (int* shaders_ptr = &shaders)
                 fixed (int* numShaders_ptr = &numShaders)
                 {
                     ExtGetShadersQCOM(shaders_ptr, maxShaders, numShaders_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetProgramsQCOM"/>
-            public static unsafe void ExtGetProgramsQCOM(Span<ProgramHandle> programs, Span<int> numPrograms)
+            public static unsafe void ExtGetProgramsQCOM(Span<int> programs, Span<int> numPrograms)
             {
                 int maxPrograms = (int)(programs.Length);
-                fixed (ProgramHandle* programs_ptr = programs)
+                fixed (int* programs_ptr = programs)
                 {
                     fixed (int* numPrograms_ptr = numPrograms)
                     {
@@ -4982,10 +4982,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetProgramsQCOM"/>
-            public static unsafe void ExtGetProgramsQCOM(ProgramHandle[] programs, int[] numPrograms)
+            public static unsafe void ExtGetProgramsQCOM(int[] programs, int[] numPrograms)
             {
                 int maxPrograms = (int)(programs.Length);
-                fixed (ProgramHandle* programs_ptr = programs)
+                fixed (int* programs_ptr = programs)
                 {
                     fixed (int* numPrograms_ptr = numPrograms)
                     {
@@ -4994,16 +4994,16 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
             }
             /// <inheritdoc cref="ExtGetProgramsQCOM"/>
-            public static unsafe void ExtGetProgramsQCOM(ref ProgramHandle programs, int maxPrograms, ref int numPrograms)
+            public static unsafe void ExtGetProgramsQCOM(ref int programs, int maxPrograms, ref int numPrograms)
             {
-                fixed (ProgramHandle* programs_ptr = &programs)
+                fixed (int* programs_ptr = &programs)
                 fixed (int* numPrograms_ptr = &numPrograms)
                 {
                     ExtGetProgramsQCOM(programs_ptr, maxPrograms, numPrograms_ptr);
                 }
             }
             /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM"/>
-            public static unsafe string ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, ref int length)
+            public static unsafe string ExtGetProgramBinarySourceQCOM(int program, ShaderType shadertype, ref int length)
             {
                 string source;
                 fixed (int* length_ptr = &length)
@@ -5016,7 +5016,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 return source;
             }
             /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM"/>
-            public static unsafe void ExtGetProgramBinarySourceQCOM(ProgramHandle program, ShaderType shadertype, out string source, ref int length)
+            public static unsafe void ExtGetProgramBinarySourceQCOM(int program, ShaderType shadertype, out string source, ref int length)
             {
                 fixed (int* length_ptr = &length)
                 {

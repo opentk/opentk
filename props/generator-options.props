@@ -1,0 +1,5 @@
+﻿<Project>
+  <PropertyGroup>
+    <!--<DefineConstants>TYPESAFE_HANDLES</DefineConstants>--> <!-- Correspons to Options.UseTypesafeGLHandles -->
+  </PropertyGroup>
+</Project>

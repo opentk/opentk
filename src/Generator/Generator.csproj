@@ -9,4 +9,9 @@
     <StartupObject>Generator.Program</StartupObject>
   </PropertyGroup>
 
+  <Import Project="../../props/generator-options.props" />
+
+  <ItemGroup>
+    <None Include="..\..\props\generator-options.props" Link="generator-options.props" />
+  </ItemGroup>
 </Project>

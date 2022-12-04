@@ -4,6 +4,11 @@ using OpenTK.Mathematics;
 
 namespace OpenTK.Graphics.OpenGL
 {
+#if !TYPESAFE_HANDLES
+    using ShaderHandle = System.Int32;
+    using ProgramHandle = System.Int32;
+#endif
+
     // FIXME: Remove this when it's fixed
     // This is here because there in the gl.xml
     // one of the parameters for "glSampleMaskIndexedNV"

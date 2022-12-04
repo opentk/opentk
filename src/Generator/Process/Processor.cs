@@ -496,76 +496,86 @@ namespace Generator.Process
                 case GLPointerType pt:
                     return new CSPointer(MakeCSType(pt.BaseType, handle, group), pt.Constant);
 
-                case GLBaseType bt when handle != null:
-                    return new CSStruct(handle.Value.ToString(), bt.Constant, new CSPrimitive("int", bt.Constant));
-
-                case GLBaseType bt when handle == null:
-                    // For now we only expect int and uint to be able to be turned into enums.
-                    // - 2022-08-09
-                    // FIXME: We might want to make sure that the underlying type for the enum group is the same as the parameter group.
-                    //   Right now we blindly substituting the type for the enum.
-                    if (group != null && (bt.Type == PrimitiveType.Int || bt.Type == PrimitiveType.Uint))
+                case GLBaseType bt:
                     {
-                        Console.WriteLine($"Making {bt} into group {group}");
-                        CSPrimitive baseType = bt.Type switch
+                        if (Options.UseTypesafeGLHandles && handle != null)
                         {
+                            return new CSStruct(handle.Value.ToString(), bt.Constant, new CSPrimitive("int", bt.Constant));
+                        }
+
+                        // To make OpenTK 5 more like OpenTK 4 we want handles to be int instead of uint
+                        if (handle != null)
+                        {
+                            return new CSPrimitive("int", bt.Constant);
+                        }
+
+                        // For now we only expect int and uint to be able to be turned into enums.
+                        // - 2022-08-09
+                        // FIXME: We might want to make sure that the underlying type for the enum group is the same as the parameter group.
+                        //   Right now we blindly substituting the type for the enum.
+                        if (group != null && (bt.Type == PrimitiveType.Int || bt.Type == PrimitiveType.Uint))
+                        {
+                            Console.WriteLine($"Making {bt} into group {group}");
+                            CSPrimitive baseType = bt.Type switch
+                            {
+                                PrimitiveType.Int => new CSPrimitive("int", bt.Constant),
+                                PrimitiveType.Uint => new CSPrimitive("uint", bt.Constant),
+                                _ => throw new Exception("This should not happen!"),
+                            };
+
+                            return new CSEnum(group, baseType, bt.Constant);
+                        }
+                        return bt.Type switch
+                        {
+                            // C# primitive types
+                            PrimitiveType.Void => new CSVoid(bt.Constant),
+                            PrimitiveType.Byte => new CSPrimitive("byte", bt.Constant),
+                            PrimitiveType.Sbyte => new CSPrimitive("sbyte", bt.Constant),
+                            PrimitiveType.Short => new CSPrimitive("short", bt.Constant),
+                            PrimitiveType.Ushort => new CSPrimitive("ushort", bt.Constant),
                             PrimitiveType.Int => new CSPrimitive("int", bt.Constant),
                             PrimitiveType.Uint => new CSPrimitive("uint", bt.Constant),
-                            _ => throw new Exception("This should not happen!"),
+                            PrimitiveType.Long => new CSPrimitive("long", bt.Constant),
+                            PrimitiveType.Ulong => new CSPrimitive("ulong", bt.Constant),
+                            // This might need an include, but the spec doesn't use this type
+                            // so we don't really need to do anything...
+                            PrimitiveType.Half => new CSStruct("Half", bt.Constant, new CSPrimitive("ushort", bt.Constant)),
+                            PrimitiveType.Float => new CSPrimitive("float", bt.Constant),
+                            PrimitiveType.Double => new CSPrimitive("double", bt.Constant),
+
+                            // C interop types
+                            PrimitiveType.Bool8 => new CSBool8(bt.Constant),
+                            PrimitiveType.Char8 => new CSChar8(bt.Constant),
+
+                            // Enum
+                            PrimitiveType.Enum => new CSEnum(group ?? "All", new CSPrimitive("uint", bt.Constant), bt.Constant),
+
+                            // Pointers
+                            PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),
+                            PrimitiveType.Nint => new CSPrimitive("nint", bt.Constant),
+                            PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
+
+                            // FIXME: Output the GLHandleARB again...
+                            PrimitiveType.GLHandleARB => new CSStruct("GLHandleARB", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+
+                            PrimitiveType.GLSync => new CSStruct("GLSync", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+
+                            // OpenCL structs
+                            PrimitiveType.CLContext => new CSStruct("CLContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                            PrimitiveType.CLEvent => new CSStruct("CLEvent", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+
+                            // Function pointer types
+                            PrimitiveType.GLDebugProc => new CSFunctionPointer("GLDebugProc", bt.Constant),
+                            PrimitiveType.GLDebugProcARB => new CSFunctionPointer("GLDebugProcARB", bt.Constant),
+                            PrimitiveType.GLDebugProcKHR => new CSFunctionPointer("GLDebugProcKHR", bt.Constant),
+                            PrimitiveType.GLDebugProcAMD => new CSFunctionPointer("GLDebugProcAMD", bt.Constant),
+                            PrimitiveType.GLDebugProcNV => new CSFunctionPointer("GLDebugProcNV", bt.Constant),
+                            PrimitiveType.GLVulkanProcNV => new CSFunctionPointer("GLVulkanProcNV", bt.Constant),
+
+                            PrimitiveType.Invalid => throw new Exception(),
+                            _ => throw new Exception(),
                         };
-
-                        return new CSEnum(group, baseType, bt.Constant);
                     }
-                    return bt.Type switch
-                    {
-                        // C# primitive types
-                        PrimitiveType.Void => new CSVoid(bt.Constant),
-                        PrimitiveType.Byte => new CSPrimitive("byte", bt.Constant),
-                        PrimitiveType.Sbyte => new CSPrimitive("sbyte", bt.Constant),
-                        PrimitiveType.Short => new CSPrimitive("short", bt.Constant),
-                        PrimitiveType.Ushort => new CSPrimitive("ushort", bt.Constant),
-                        PrimitiveType.Int => new CSPrimitive("int", bt.Constant),
-                        PrimitiveType.Uint => new CSPrimitive("uint", bt.Constant),
-                        PrimitiveType.Long => new CSPrimitive("long", bt.Constant),
-                        PrimitiveType.Ulong => new CSPrimitive("ulong", bt.Constant),
-                        // This might need an include, but the spec doesn't use this type
-                        // so we don't really need to do anything...
-                        PrimitiveType.Half => new CSStruct("Half", bt.Constant, new CSPrimitive("ushort", bt.Constant)),
-                        PrimitiveType.Float => new CSPrimitive("float", bt.Constant),
-                        PrimitiveType.Double => new CSPrimitive("double", bt.Constant),
-
-                        // C interop types
-                        PrimitiveType.Bool8 => new CSBool8(bt.Constant),
-                        PrimitiveType.Char8 => new CSChar8(bt.Constant),
-
-                        // Enum
-                        PrimitiveType.Enum => new CSEnum(group ?? "All", new CSPrimitive("uint", bt.Constant), bt.Constant),
-
-                        // Pointers
-                        PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),
-                        PrimitiveType.Nint => new CSPrimitive("nint", bt.Constant),
-                        PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
-
-                        // FIXME: Output the GLHandleARB again...
-                        PrimitiveType.GLHandleARB => new CSStruct("GLHandleARB", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
-
-                        PrimitiveType.GLSync => new CSStruct("GLSync", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
-
-                        // OpenCL structs
-                        PrimitiveType.CLContext => new CSStruct("CLContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
-                        PrimitiveType.CLEvent => new CSStruct("CLEvent", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
-
-                        // Function pointer types
-                        PrimitiveType.GLDebugProc => new CSFunctionPointer("GLDebugProc", bt.Constant),
-                        PrimitiveType.GLDebugProcARB => new CSFunctionPointer("GLDebugProcARB", bt.Constant),
-                        PrimitiveType.GLDebugProcKHR => new CSFunctionPointer("GLDebugProcKHR", bt.Constant),
-                        PrimitiveType.GLDebugProcAMD => new CSFunctionPointer("GLDebugProcAMD", bt.Constant),
-                        PrimitiveType.GLDebugProcNV => new CSFunctionPointer("GLDebugProcNV", bt.Constant),
-                        PrimitiveType.GLVulkanProcNV => new CSFunctionPointer("GLVulkanProcNV", bt.Constant),
-
-                        PrimitiveType.Invalid => throw new Exception(),
-                        _ => throw new Exception(),
-                    };
                 default:
                     throw new Exception();
             }
