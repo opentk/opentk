@@ -4,11 +4,6 @@ using OpenTK.Mathematics;
 
 namespace OpenTK.Graphics.OpenGLES3
 {
-#if !TYPESAFE_HANDLES
-    using ShaderHandle = System.Int32;
-    using ProgramHandle = System.Int32;
-#endif
-
     // FIXME: Remove this when it's fixed
     // This is here because there in the gl.xml
     // one of the parameters for "glSampleMaskIndexedNV"
@@ -28,7 +23,7 @@ namespace OpenTK.Graphics.OpenGLES3
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
         }
 
-        public static void ShaderSource(ShaderHandle shader, string shaderText)
+        public static void ShaderSource(int shader, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
             var length = shaderText.Length;
@@ -36,21 +31,21 @@ namespace OpenTK.Graphics.OpenGLES3
             Marshal.FreeCoTaskMem(shaderTextPtr);
         }
 
-        public static void GetShaderInfoLog(ShaderHandle shaderHandle, out string info)
+        public static void GetShaderInfoLog(int shader, out string info)
         {
             int length = default;
-            GL.GetShaderi(shaderHandle, ShaderParameterName.InfoLogLength, ref length);
+            GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);
             if (length == 0)
             {
                 info = string.Empty;
             }
             else
             {
-                GL.GetShaderInfoLog(shaderHandle, length, ref length, out info);
+                GL.GetShaderInfoLog(shader, length, ref length, out info);
             }
         }
 
-        public static void GetProgramInfoLog(ProgramHandle program, out string info)
+        public static void GetProgramInfoLog(int program, out string info)
         {
             int length = default;
             GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);

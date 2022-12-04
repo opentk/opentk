@@ -15,5 +15,4 @@
 
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
-  <Import Project="..\..\props\generator-options.props" />
 </Project>
