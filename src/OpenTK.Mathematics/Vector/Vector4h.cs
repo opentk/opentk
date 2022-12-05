@@ -1349,15 +1349,19 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format
-            (
-                "({0}{4} {1}{4} {2}{4} {3})",
-                X.ToString(),
-                Y.ToString(),
-                Z.ToString(),
-                W.ToString(),
-                MathHelper.ListSeparator
-            );
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
         }
 
         /// <inheritdoc />
@@ -1369,7 +1373,7 @@ namespace OpenTK.Mathematics
                 Y.ToString(format, formatProvider),
                 Z.ToString(format, formatProvider),
                 W.ToString(format, formatProvider),
-                MathHelper.ListSeparator);
+                MathHelper.GetListSeparator(formatProvider));
         }
 
         /// <inheritdoc/>

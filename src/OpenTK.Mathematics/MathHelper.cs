@@ -1321,8 +1321,6 @@ namespace OpenTK.Mathematics
             return angle;
         }
 
-        internal static string ListSeparator => CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         internal static string GetListSeparator(IFormatProvider formatProvider)
         {
             if (formatProvider is CultureInfo cultureInfo)
@@ -1335,7 +1333,7 @@ namespace OpenTK.Mathematics
                 return textInfo.ListSeparator;
             }
 
-            return ListSeparator;
+            return CultureInfo.CurrentCulture.TextInfo.ListSeparator;
         }
     }
 }

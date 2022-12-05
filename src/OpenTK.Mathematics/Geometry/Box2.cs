@@ -20,7 +20,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     [Serializable]
-    public struct Box2 : IEquatable<Box2>
+    public struct Box2 : IEquatable<Box2>, IFormattable
     {
         private Vector2 _min;
 
@@ -326,7 +326,25 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Min} - {Max}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }
     }
 }

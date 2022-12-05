@@ -36,7 +36,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Color4 : IEquatable<Color4>
+    public struct Color4 : IEquatable<Color4>, IFormattable
     {
         /// <summary>
         /// The red component of this Color4 structure.
@@ -195,8 +195,31 @@ namespace OpenTK.Mathematics
         /// <returns>A System.String that describes this Color4 structure.</returns>
         public override string ToString()
         {
-            var ls = MathHelper.ListSeparator;
-            return $"{{(R{ls} G{ls} B{ls} A) = ({R}{ls} {G}{ls} {B}{ls} {A})}}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            var ls = MathHelper.GetListSeparator(formatProvider);
+            var r = R.ToString(format, formatProvider);
+            var g = G.ToString(format, formatProvider);
+            var b = B.ToString(format, formatProvider);
+            var a = A.ToString(format, formatProvider);
+
+            return $"{{(R{ls} G{ls} B{ls} A) = ({r}{ls} {g}{ls} {b}{ls} {a})}}";
         }
 
         /// <summary>
