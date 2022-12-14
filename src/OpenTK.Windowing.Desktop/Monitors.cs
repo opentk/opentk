@@ -53,7 +53,7 @@ namespace OpenTK.Windowing.Desktop
         /// </remarks>
         public static float GetPlatformDefaultDpi()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            if (OperatingSystem.IsMacOS())
             {
                 return 72f;
             }
