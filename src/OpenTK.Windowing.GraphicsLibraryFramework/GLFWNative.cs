@@ -39,17 +39,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             }
 
             Func<string, string, string> libNameFormatter;
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
             {
                 libNameFormatter = (libName, ver) =>
                     libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            else if (OperatingSystem.IsMacOS())
             {
                 libNameFormatter = (libName, ver) =>
                     libName + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver) + ".dylib";
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            else if (OperatingSystem.IsWindows())
             {
                 libNameFormatter = (libName, ver) =>
                     libName + (string.IsNullOrEmpty(ver) ? string.Empty : ver) + ".dll";
