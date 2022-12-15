@@ -20,11 +20,59 @@ namespace OpenTK.Platform.Native.Windows
         // "CanUploadToCloudClipboard"
         // on win32 to handle cloud clipboards.
 
+        /// <inheritdoc/>
         public string Name => "Win32 Clipboard component";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Clipboard;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
+
+        /// <summary>
+        /// If this property is not null when setting the clipboard <c>CanIncludeInClipboardHistory</c> will be added to the clipboard format
+        /// to either disable clipboard history or explicitly request the clipboard to be included in the histroy.
+        ///
+        /// See documentation: <see href="https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats#cloud-clipboard-and-clipboard-history-formats"/>
+        /// </summary>
+        public bool? CanIncludeInClipboardHistory { get; set; }
+
+        /// <summary>
+        /// If this property is not null when setting the clipboard <c>CanUploadToCloudClipboard</c> will be added to the clipboard format
+        /// to either disable the value set in the clipboard from syncing to the users devices, or request that it be syncronized with the users other devices.
+        ///
+        /// See documentation: <see href="https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats#cloud-clipboard-and-clipboard-history-formats"/>
+        /// </summary>
+        public bool? CanUploadToCloudClipboard { get; set; }
+
+        private void SetClipboardOptions()
+        {
+            if (CanIncludeInClipboardHistory is bool canIncludeInClipboardHistory)
+            {
+                IntPtr data = Win32.SetClipboardData(CF_CanIncludeInClipboardHistory, new IntPtr(canIncludeInClipboardHistory ? 1 : 0));
+                if (data == IntPtr.Zero)
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    if (error != 0)
+                    {
+                        throw new Win32Exception(error);
+                    }
+                }
+            }
+
+            if (CanUploadToCloudClipboard is bool canUploadToCloudClipboard)
+            {
+                IntPtr data = Win32.SetClipboardData(CF_CanUploadToCloudClipboard, new IntPtr(canUploadToCloudClipboard ? 1 : 0));
+                if (data == IntPtr.Zero)
+                {
+                    int error = Marshal.GetLastWin32Error();
+                    if (error != 0)
+                    {
+                        throw new Win32Exception(error);
+                    }
+                }
+            }
+        }
 
         public void Initialize(PalComponents which)
         {
@@ -39,10 +87,17 @@ namespace OpenTK.Platform.Native.Windows
             {
                 throw new Win32Exception();
             }
+
+            // FIXME: Should we check for errors here?
+            CF_CanIncludeInClipboardHistory = Win32.RegisterClipboardFormat("CanIncludeInClipboardHistory");
+            CF_CanUploadToCloudClipboard = Win32.RegisterClipboardFormat("CanUploadToCloudClipboard");
         }
 
         // (0xC095): Rich Text Format
         private static CF CF_HTML;
+
+        private static CF CF_CanIncludeInClipboardHistory;
+        private static CF CF_CanUploadToCloudClipboard;
 
         public IReadOnlyList<ClipboardFormat> SupportedFormats => _SupportedFormats;
 
@@ -201,8 +256,12 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr handle = Win32.SetClipboardData(CF.UnicodeText, hmem);
             if (handle == IntPtr.Zero)
             {
-                throw new Win32Exception();
+                int error = Marshal.GetLastWin32Error();
+                Win32.CloseClipboard();
+                throw new Win32Exception(error);
             }
+
+            SetClipboardOptions();
 
             Win32.CloseClipboard();
         }
@@ -317,8 +376,12 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr handle = Win32.SetClipboardData(CF.Wave, hmem);
             if (handle == IntPtr.Zero)
             {
-                throw new Win32Exception();
+                int error = Marshal.GetLastWin32Error();
+                Win32.CloseClipboard();
+                throw new Win32Exception(error);
             }
+
+            SetClipboardOptions();
 
             Win32.CloseClipboard();
         }
@@ -410,6 +473,8 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.CloseClipboard();
                 throw new Win32Exception(error);
             }
+
+            SetClipboardOptions();
 
             success = Win32.CloseClipboard();
             if (success == false)
