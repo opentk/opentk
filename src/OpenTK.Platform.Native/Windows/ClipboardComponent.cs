@@ -14,12 +14,6 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class ClipboardComponent : IClipboardComponent
     {
-        // FIXME: Some way to specify the
-        // "ExcludeClipboardContentFromMonitorProcessing",
-        // "CanIncludeInClipboardHistory", or
-        // "CanUploadToCloudClipboard"
-        // on win32 to handle cloud clipboards.
-
         /// <inheritdoc/>
         public string Name => "Win32 Clipboard component";
 
@@ -45,6 +39,7 @@ namespace OpenTK.Platform.Native.Windows
         /// </summary>
         public bool? CanUploadToCloudClipboard { get; set; }
 
+        // FIXME: Do we need a way to specify "ExcludeClipboardContentFromMonitorProcessing"?
         private void SetClipboardOptions()
         {
             if (CanIncludeInClipboardHistory is bool canIncludeInClipboardHistory)
