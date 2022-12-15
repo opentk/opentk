@@ -499,7 +499,6 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (lastError == 0)
                 {
-                    // FIXME: Don't get the logger from WindowComponent...
                     Logger?.LogDebug($"Could not get CF_UNICODETEXT data from clipboard.");
                     return null;
                 }
@@ -559,7 +558,6 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (lastError == 0)
                 {
-                    // FIXME: Don't get the logger from WindowComponent...
                     Logger?.LogDebug($"Could not get CF_WAVE data from clipboard.");
                     return null;
                 }
@@ -641,7 +639,6 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (lastError == 0)
                 {
-                    // FIXME: Don't get the logger from WindowComponent...
                     Logger?.LogDebug($"Could not get CF_BITMAP data from clipboard.");
                     return null;
                 }
@@ -755,7 +752,6 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (lastError == 0)
                 {
-                    // FIXME: Don't get the logger from WindowComponent...
                     Logger?.LogDebug($"Could not get CF_HTML data from clipboard.");
                     return null;
                 }
@@ -821,7 +817,6 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (lastError == 0)
                 {
-                    // FIXME: Don't get the logger from WindowComponent...
                     Logger?.LogDebug($"Could not get CF_HDROP data from clipboard.");
                     return null;
                 }
