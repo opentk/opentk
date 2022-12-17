@@ -1818,18 +1818,18 @@ namespace OpenTK.Platform.Native.Windows
         /// <summary>
         /// Messages are not removed from the queue after processing by PeekMessage.
         /// </summary>
-        NOREMOVE = 0,
+        NoRemove = 0,
 
         /// <summary>
         /// Messages are removed from the queue after processing by PeekMessage.
         /// </summary>
-        REMOVE = 1,
+        Remove = 1,
 
         /// <summary>
         /// Prevents the system from releasing any thread that is waiting for the caller to go idle (see WaitForInputIdle).
         /// Combine this value with either PM_NOREMOVE or PM_REMOVE.
         /// </summary>
-        NOYIELD = 2,
+        NoYield = 2,
     }
 
     internal enum SystemMetric : int

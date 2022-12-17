@@ -46,6 +46,13 @@ namespace OpenTK.Core.Platform
         void DestroyContext(OpenGLContextHandle handle);
 
         /// <summary>
+        /// Gets a <see cref="IBindingsContext"/> from an <see cref="OpenGLContextHandle"/>.
+        /// </summary>
+        /// <param name="handle">The handle to get a bindings context for.</param>
+        /// <returns>The created bindings context.</returns>
+        IBindingsContext GetBindingsContext(OpenGLContextHandle handle);
+
+        /// <summary>
         /// Get the procedure address for an OpenGL command.
         /// </summary>
         /// <param name="handle">Handle to an OpenGL context.</param>

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>
@@ -39,11 +41,17 @@ namespace OpenTK.Core.Platform
         IReadOnlyList<WindowMode> SupportedModes { get; }
 
         /// <summary>
+        /// Processes platform events and sends them to the <see cref="EventQueue"/>.
+        /// </summary>
+        /// <param name="waitForEvents">Specifies if this function should wait for events or return immediately if there are no events.</param>
+        void ProcessEvents(bool waitForEvents = false);
+
+        /// <summary>
         /// Create a window object.
         /// </summary>
         /// <param name="hints">Graphics API hints to be passed to the operating system.</param>
         /// <returns>Handle to the new window object.</returns>
-        WindowHandle Create(GraphicsApiHints hints = null);
+        WindowHandle Create(GraphicsApiHints hints);
 
         /// <summary>
         /// Destroy a window object.
@@ -51,6 +59,13 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a window object.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void Destroy(WindowHandle handle);
+
+        /// <summary>
+        /// Checks if <see cref="Destroy(WindowHandle)"/> has been called on this handle.
+        /// </summary>
+        /// <param name="handle">The window handle to check if it's destroyed or not.</param>
+        /// <returns>If <see cref="Destroy(WindowHandle)"/> was called with the window handle.</returns>
+        public bool IsWindowDestroyed(WindowHandle handle);
 
         /// <summary>
         /// Get the title of a window.
@@ -267,12 +282,12 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a window.</param>
         /// <param name="cursor">Handle to a cursor object, or null for hidden cursor.</param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="handle"/> or <paramref name="cursor"/> is null.
+        ///     <paramref name="handle"/> is null.
         /// </exception>
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.
         /// </exception>
-        void SetCursor(WindowHandle handle, CursorHandle cursor);
+        void SetCursor(WindowHandle handle, CursorHandle? cursor);
 
         /// <summary>
         /// Gives the window input focus.

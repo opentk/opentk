@@ -309,6 +309,12 @@ namespace OpenTK.Core.Platform
         IReadOnlyList<WindowMode> IWindowComponent.SupportedModes => _windowComponent!.SupportedModes;
 
         /// <inheritdoc/>
+        void IWindowComponent.ProcessEvents(bool waitForEvents)
+        {
+            _windowComponent!.ProcessEvents(waitForEvents);
+        }
+
+        /// <inheritdoc/>
         WindowHandle IWindowComponent.Create(GraphicsApiHints hints)
         {
             return _windowComponent!.Create(hints);
@@ -318,6 +324,12 @@ namespace OpenTK.Core.Platform
         void IWindowComponent.Destroy(WindowHandle handle)
         {
             _windowComponent!.Destroy(handle);
+        }
+
+        /// <inheritdoc/>
+        bool IWindowComponent.IsWindowDestroyed(WindowHandle handle)
+        {
+            return _windowComponent!.IsWindowDestroyed(handle);
         }
 
         /// <inheritdoc/>
@@ -459,7 +471,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IWindowComponent.SetCursor(WindowHandle handle, CursorHandle cursor)
+        void IWindowComponent.SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             _windowComponent!.SetCursor(handle, cursor);
         }
@@ -887,6 +899,12 @@ namespace OpenTK.Core.Platform
         void IOpenGLComponent.DestroyContext(OpenGLContextHandle handle)
         {
             _openGLComponent!.DestroyContext(handle);
+        }
+
+        /// <inheritdoc/>
+        IBindingsContext IOpenGLComponent.GetBindingsContext(OpenGLContextHandle handle)
+        {
+            return _openGLComponent!.GetBindingsContext(handle);
         }
 
         /// <inheritdoc/>

@@ -21,6 +21,8 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr HWnd { get; private set; }
 
+        public bool Destroyed { get; set; } = false;
+
         /// <summary> The current cursor for this window. </summary>
         public HCursor? HCursor { get; set; }
 

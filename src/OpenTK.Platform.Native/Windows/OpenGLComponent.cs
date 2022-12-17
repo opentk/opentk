@@ -640,6 +640,11 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
+        {
+            return new Pal2BindingsContext(this, handle);
+        }
+
         public unsafe IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             HGLRC hglrc = handle.As<HGLRC>(this);

@@ -97,7 +97,7 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // Eat all messages so that the WM_CREATE messages get processed etc.
-            while (Win32.PeekMessage(out Win32.MSG lpMsg, HelperHWnd, 0, 0, PM.REMOVE) != 0)
+            while (Win32.PeekMessage(out Win32.MSG lpMsg, HelperHWnd, 0, 0, PM.Remove) != 0)
             {
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);
@@ -128,30 +128,6 @@ namespace OpenTK.Platform.Native.Windows
 
         // FIXME: HACK!!!!!!
         private static bool quit = false;
-
-        public void Loop(WindowHandle handle, Func<bool> callback)
-        {
-            HWND hwnd = handle.As<HWND>(this);
-
-            while (true)
-            {
-                while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.REMOVE) != 0)
-                {
-                    Win32.TranslateMessage(in lpMsg);
-                    Win32.DispatchMessage(in lpMsg);
-                }
-
-                if (quit == true)
-                {
-                    break;
-                }
-
-                if (callback() == false)
-                {
-                    break;
-                }
-            }
-        }
 
         private IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
@@ -550,15 +526,6 @@ namespace OpenTK.Platform.Native.Windows
 
                         return IntPtr.Zero;
                     }
-                case WM.DESTROY:
-                    {
-                        if (HWndDict.Count == 0)
-                        {
-                            Win32.PostQuitMessage(0);
-                            quit = true;
-                        }
-                        return IntPtr.Zero;
-                    }
                 case WM.DEVICECHANGE:
                     {
                         Console.WriteLine($"{uMsg} {(DBT)wParam}");
@@ -643,6 +610,15 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        public void ProcessEvents(bool waitForEvents = false)
+        {
+            while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove) != 0)
+            {
+                Win32.TranslateMessage(in lpMsg);
+                Win32.DispatchMessage(in lpMsg);
+            }
+        }
+
         public WindowHandle Create(GraphicsApiHints hints)
         {
             IntPtr hWnd = Win32.CreateWindowEx(
@@ -684,11 +660,20 @@ namespace OpenTK.Platform.Native.Windows
 
             bool success = Win32.DestroyWindow(hwnd.HWnd);
 
+            hwnd.Destroyed = true;
+
             // FIXME: Do we add back the hwnd to HWndDict?
             if (success == false)
             {
                 throw new Win32Exception("DestroyWindow failed!");
             }
+        }
+
+        public bool IsWindowDestroyed(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            return hwnd.Destroyed;
         }
 
         /// <inheritdoc/>
@@ -1188,7 +1173,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void SetCursor(WindowHandle handle, CursorHandle cursor)
+        public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             HWND hwnd = handle.As<HWND>(this);
             HCursor? hcursor = cursor?.As<HCursor>(this);

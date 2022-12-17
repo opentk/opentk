@@ -8,6 +8,7 @@ using OpenTK.Mathematics;
 using System.Text;
 using System.Diagnostics;
 using OpenTK.Core.Utility;
+using OpenTK;
 
 namespace LocalTestProject
 {
@@ -171,9 +172,7 @@ namespace LocalTestProject
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             glComp.SetCurrentContext(WindowContext);
-
-            Win32BindingsContext w32bc = new Win32BindingsContext(glComp, WindowContext);
-            GLLoader.LoadBindings(w32bc);
+            GLLoader.LoadBindings(glComp.GetBindingsContext(WindowContext));
 
             CursorHandle = cursorComp.Create();
             cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
@@ -237,9 +236,24 @@ namespace LocalTestProject
                 cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);
                 Console.WriteLine($"Width: {curW}, Height: {curH}");
             }
-            Init();
 
-            windowComp.Loop(WindowHandle, Render);
+            Init();
+            while (true)
+            {
+                windowComp.ProcessEvents();
+
+                // If both of our windows are closed, we exit the application.
+                if (windowComp.IsWindowDestroyed(WindowHandle) &&
+                    windowComp.IsWindowDestroyed(WindowHandle2))
+                {
+                    break;
+                }
+
+                if (Render() == false)
+                {
+                    break;
+                }
+            }
         }
 
         public static void SetWindowSettings(WindowHandle handle, string title, int width, int height)
@@ -275,13 +289,11 @@ namespace LocalTestProject
 
                 MousePos = (mouseMoveArgs.DeltaX, mouseMoveArgs.DeltaY);
 
-                if (WindowHandle.UserData is not false)
+                if (windowComp.IsWindowDestroyed(WindowHandle) == false)
                 {
                     windowComp.ScreenToClient(WindowHandle, MousePos.X, MousePos.Y, out int clientX, out int clientY);
                     windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
                 }
-
-                return;
             }
             else if (type == PlatformEventType.MouseDown)
             {
@@ -297,32 +309,18 @@ namespace LocalTestProject
 
                     keyboardComp.EndIme(WindowHandle);
                 }
-
-                return;
             }
             else if (type == PlatformEventType.MouseUp)
             {
                 MouseButtonUpEventArgs mouseButtonUpArgs = (MouseButtonUpEventArgs)args;
 
                 Console.WriteLine($"Released Mouse Button: {mouseButtonUpArgs.Button}");
-
-                return;
             }
             else if (type == PlatformEventType.Close)
             {
                 CloseEventArgs closeArgs = (CloseEventArgs)args;
 
-                closeArgs.Window.UserData = false;
-
                 windowComp.Destroy(closeArgs.Window);
-
-                if (closeArgs.Window == WindowHandle && WindowHandle2.UserData is not false)
-                {
-                    WindowHandle2.UserData = false;
-                    windowComp.Destroy(WindowHandle2);
-                }
-
-                return;
             }
             else if (type == PlatformEventType.Focus)
             {
@@ -346,8 +344,6 @@ namespace LocalTestProject
                 Console.WriteLine($"Scancodes: {string.Join(", ", vks)}");
                 
                 vks.Clear();
-
-                return;
             }
             else if (type == PlatformEventType.MouseEnter)
             {
@@ -565,6 +561,7 @@ namespace LocalTestProject
                 Console.WriteLine($"Window '{windowComp.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
             }
         }
+
         static BufferHandle buffer;
 
         static VertexArrayHandle vao;
@@ -827,7 +824,7 @@ void main()
                 frames = 0;
             }
 
-            if (WindowHandle.UserData is not false)
+            if (windowComp.IsWindowDestroyed(WindowHandle) == false)
             {
                 glComp.SetCurrentContext(WindowContext);
 
@@ -866,7 +863,7 @@ void main()
                 windowComp.SwapBuffers(WindowHandle);
             }
 
-            if (WindowHandle2.UserData is not false)
+            if (windowComp.IsWindowDestroyed(WindowHandle2) == false)
             {
                 glComp.SetCurrentContext(Window2Context);
 

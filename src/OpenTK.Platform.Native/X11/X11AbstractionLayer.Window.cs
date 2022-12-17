@@ -110,6 +110,11 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        public void ProcessEvents(bool waitForEvents = false)
+        {
+            throw new NotImplementedException();
+        }
+
         public WindowHandle Create(GraphicsApiHints hints)
         {
             XWindow window;
@@ -217,6 +222,15 @@ namespace OpenTK.Platform.Native.X11
             {
                 XFreeColormap(xhandle.Display, xhandle.ColorMap.Value);
             }
+
+            xhandle.Destroyed = true;
+        }
+
+        public bool IsWindowDestroyed(WindowHandle handle)
+        {
+            var xhandle = handle.As<XWindowHandle>(this);
+
+            return xhandle.Destroyed;
         }
 
         public string GetTitle(WindowHandle handle)

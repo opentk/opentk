@@ -75,6 +75,11 @@ namespace OpenTK.Platform.Native.X11
             glXDestroyContext(xhandle.Display, xhandle.Context);
         }
 
+        public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
+        {
+            return new Pal2BindingsContext(this, handle);
+        }
+
         public IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             var xhandle = handle.As<XOpenGLContextHandle>(this);
