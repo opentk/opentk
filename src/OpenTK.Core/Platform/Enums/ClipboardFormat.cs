@@ -22,14 +22,12 @@ namespace OpenTK.Core.Platform
         Text = 1,
 
         /// <summary>
-        /// Audio data.
-        /// FIXME: Figure out a format to use here!
+        /// Audio data. See <see cref="OpenTK.Core.Platform.AudioData"/>.
         /// </summary>
         Audio = 2,
 
         /// <summary>
-        /// A bitmap.
-        /// FIXME: Figure out a format to use here!
+        /// A bitmap. See <see cref="OpenTK.Core.Platform.Bitmap"/>
         /// </summary>
         Bitmap = 3,
 

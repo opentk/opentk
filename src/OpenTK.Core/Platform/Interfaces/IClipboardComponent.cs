@@ -43,7 +43,6 @@ namespace OpenTK.Core.Platform
         /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.Audio"/> format.
         /// </summary>
         /// <returns>The audio data currently in the clipboard.</returns>
-        // FIXME: Figure out the return type!
         AudioData? GetClipboardAudio();
 
         /// <summary>
@@ -51,7 +50,6 @@ namespace OpenTK.Core.Platform
         /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.Bitmap"/> format.
         /// </summary>
         /// <returns>The bitmap currently in the clipboard.</returns>
-        // FIXME: Figure out the return type!
         Bitmap? GetClipboardBitmap();
 
         /// <summary>

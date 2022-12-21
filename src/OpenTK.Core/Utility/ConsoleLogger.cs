@@ -27,7 +27,6 @@ namespace OpenTK.Core.Utility
             {
                 LogLevel.Debug => Console.Out,
                 LogLevel.Info => Console.Out,
-                // FIXME: Should warnings go to stderr?
                 LogLevel.Warning => Console.Out,
                 LogLevel.Error => Console.Error,
                 _ => Console.Out,
