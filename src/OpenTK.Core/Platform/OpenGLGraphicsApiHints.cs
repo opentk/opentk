@@ -15,7 +15,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// OpenGL version to create.
         /// </summary>
-        public Version Version { get; set; } = new Version(4, 6); // FIXME: fix default for macOS compat
+        public Version Version { get; set; } = new Version(4, 1);
 
         /// <summary>
         /// Number of bits for red color channel.
@@ -64,7 +64,7 @@ namespace OpenTK.Core.Platform
 
         public OpenGLProfile Profile { get; set; } = OpenGLProfile.None;
 
-        public bool ForwardCompatibleFlag { get; set; } = false; // FIXME: fix default for macOS compat
+        public bool ForwardCompatibleFlag { get; set; } = true;
 
         public bool DebugFlag { get; set; } = false;
 
