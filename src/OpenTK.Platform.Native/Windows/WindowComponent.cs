@@ -1269,12 +1269,5 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception();
             }
         }
-
-        /// <inheritdoc/>
-        public IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
-        {
-            HWND hwnd = handle.As<HWND>(this);
-            return null;
-        }
     }
 }

@@ -328,13 +328,5 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to the window.</param>
         void SwapBuffers(WindowHandle handle);
-
-        /// <summary>
-        /// Get the event queue object for a window.
-        /// </summary>
-        /// <param name="handle">Handle to a window.</param>
-        /// <returns>Event queue for the window.</returns>
-        [Obsolete("Event Queue instances are no longer a part of the PAL API.")]
-        IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle);
     }
 }

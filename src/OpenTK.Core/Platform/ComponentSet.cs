@@ -506,12 +506,6 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        IEventQueue<PlatformEventType, WindowEventArgs> IWindowComponent.GetEventQueue(WindowHandle handle)
-        {
-            return _windowComponent!.GetEventQueue(handle);
-        }
-
-        /// <inheritdoc/>
         IconHandle IIconComponent.Create()
         {
             return _iconComponent!.Create();
@@ -545,12 +539,6 @@ namespace OpenTK.Core.Platform
         void ISurfaceComponent.GetClientSize(SurfaceHandle handle, out int width, out int height)
         {
             _surfaceComponent!.GetClientSize(handle, out width, out height);
-        }
-
-        /// <inheritdoc/>
-        IEventQueue<PlatformEventType, WindowEventArgs> ISurfaceComponent.GetEventQueue(SurfaceHandle handle)
-        {
-            return _surfaceComponent!.GetEventQueue(handle);
         }
 
         /// <inheritdoc/>

@@ -45,12 +45,5 @@ namespace OpenTK.Core.Platform
         /// <param name="width">Width of the surface.</param>
         /// <param name="height">Height of the surface.</param>
         void GetClientSize(SurfaceHandle handle, out int width, out int height);
-
-        /// <summary>
-        /// Get the event queue for the surface.
-        /// </summary>
-        /// <param name="handle">Handle to a surface.</param>
-        /// <returns>The surface event queue.</returns>
-        IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(SurfaceHandle handle);
     }
 }

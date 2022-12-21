@@ -496,10 +496,5 @@ namespace OpenTK.Platform.Native.X11
 
             glXSwapBuffers(xwindow.Display, xwindow.Window);
         }
-
-        public IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
