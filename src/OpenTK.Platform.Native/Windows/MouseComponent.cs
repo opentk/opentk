@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,9 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MiceInput;
+
+        /// <inheritdoc/>
+        public ILogger? Logger { get; set; }
 
         /// <inheritdoc/>
         public void Initialize(PalComponents which)

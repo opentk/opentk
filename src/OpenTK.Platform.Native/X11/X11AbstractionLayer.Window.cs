@@ -110,6 +110,11 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        public void ProcessEvents(bool waitForEvents = false)
+        {
+            throw new NotImplementedException();
+        }
+
         public WindowHandle Create(GraphicsApiHints hints)
         {
             XWindow window;
@@ -217,6 +222,15 @@ namespace OpenTK.Platform.Native.X11
             {
                 XFreeColormap(xhandle.Display, xhandle.ColorMap.Value);
             }
+
+            xhandle.Destroyed = true;
+        }
+
+        public bool IsWindowDestroyed(WindowHandle handle)
+        {
+            var xhandle = handle.As<XWindowHandle>(this);
+
+            return xhandle.Destroyed;
         }
 
         public string GetTitle(WindowHandle handle)
@@ -395,6 +409,26 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
+        public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetMinClientSize(WindowHandle handle, int? width, int? height)
+        {
+            throw new NotImplementedException();
+        }
+
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
             throw new NotImplementedException();
@@ -420,7 +454,27 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
+        void IWindowComponent.SetAlwaysOnTop(WindowHandle handle, bool floating)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IWindowComponent.IsAlwaysOnTop(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
         public void SetCursor(WindowHandle handle, CursorHandle cursor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void FocusWindow(WindowHandle handle)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RequestAttention(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
@@ -434,6 +488,13 @@ namespace OpenTK.Platform.Native.X11
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
             throw new NotImplementedException();
+        }
+
+        public void SwapBuffers(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            glXSwapBuffers(xwindow.Display, xwindow.Window);
         }
 
         public IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle)

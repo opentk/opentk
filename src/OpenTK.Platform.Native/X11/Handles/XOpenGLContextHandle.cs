@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Native.X11
             XDisplayPtr display,
             GLXContext context,
             XDrawable drawable,
-            XOpenGLContextHandle sharedContext = null)
+            XOpenGLContextHandle? sharedContext = null)
         {
             Display = display;
             Context = context;

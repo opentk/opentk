@@ -15,8 +15,8 @@ namespace OpenTK.Platform.Native.Windows
         internal const int LoWordMask = 0x0000_FFFF;
         internal const int HiWordMask = unchecked((int)0xFFFF_0000);
 
-        internal static int GET_X_LPARAM(IntPtr lParam) => ((short)lParam & LoWordMask);
-        internal static int GET_Y_LPARAM(IntPtr lParam) => (((int)lParam >> 16) & LoWordMask);
+        internal static int GET_X_LPARAM(IntPtr lParam) => (short)(lParam.ToInt64() & LoWordMask);
+        internal static int GET_Y_LPARAM(IntPtr lParam) => (short)((lParam.ToInt64() >> 16) & LoWordMask);
 
         // FIXME: Potentially change HTCLIENT into an enum later.
 
@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr GetModuleHandle(string? lpModuleName);
+        internal static extern IntPtr /* HMODULE */ GetModuleHandle(string? lpModuleName);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPTStr)] string lpLibFileName);
@@ -183,6 +183,15 @@ namespace OpenTK.Platform.Native.Windows
             int cy,
             SetWindowPosFlags uFlags);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool MoveWindow(
+            IntPtr /* HWND */ hWnd,
+            int X,
+            int Y,
+            int nWidth,
+            int nHeight,
+            bool bRepaint);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
@@ -201,8 +210,37 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool SetCursorPos(int X, int Y);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* HWND */ SetCapture(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll")]
+        internal static extern bool FlashWindow(IntPtr /* HWND */ hWnd, bool bInvert);
+
+        [DllImport("user32.dll")]
+        internal static extern bool FlashWindowEx(in FLASHWINFO pfwi);
+
+        public struct FLASHWINFO {
+            public uint cbSize;
+            public IntPtr /* HWND */ hwnd;
+            public FLASHW dwFlags;
+            public uint uCount;
+            public uint dwTimeout;
+        }
+    
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AdjustWindowRect(ref RECT lpRect, WindowStyles dwStyle, bool bMenu);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool AdjustWindowRectEx(ref RECT lpRect, WindowStyles dwStyle, bool bMenu, WindowStylesEx dwExStyle);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool AdjustWindowRectExForDpi(ref RECT lpRect, WindowStyles dwStyle, bool bMenu, WindowStylesEx dwExStyle, uint dpi);
 
         /// <summary>
         /// Sets the specified window's show state.
@@ -227,6 +265,9 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool IsWindowVisible(IntPtr hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -240,6 +281,18 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int FillRect(IntPtr hDC, in RECT lprc, IntPtr hbr);
+
+        [DllImport("shell32.dll")]
+        internal static extern void DragAcceptFiles(IntPtr /* HWND */ hWnd, bool fAccept);
+
+        [DllImport("shell32.dll")]
+        internal static extern bool DragQueryPoint(IntPtr /* HDROP */ hDrop, out POINT ppt);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        internal static extern uint DragQueryFile(IntPtr /* HDROP */ hDrop, uint iFile, [Out]StringBuilder? lpszFile, uint cch);
+
+        [DllImport("shell32.dll")]
+        internal static extern void DragFinish(IntPtr /* HDROP */ hDrop);
 
         internal struct RECT
         {
@@ -345,6 +398,12 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Use LoadImage instead.
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, IDC lpCursorName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HICON */ LoadIcon(IntPtr /* HINSTANCE */ hInstance, string lpIconName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HICON */ LoadIcon(IntPtr /* HINSTANCE */ hInstance, IDI lpIconName);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadImage(
@@ -542,12 +601,12 @@ namespace OpenTK.Platform.Native.Windows
             public uint bV5GreenMask;
             public uint bV5BlueMask;
             public uint bV5AlphaMask;
-            public uint bV5CSType;
+            public CSType bV5CSType;
             public CIEXYZTRIPLE bV5Endpoints;
             public uint bV5GammaRed;
             public uint bV5GammaGreen;
             public uint bV5GammaBlue;
-            public uint bV5Intent;
+            public GamutMappingIntent bV5Intent;
             public uint bV5ProfileData;
             public uint bV5ProfileSize;
             public uint bV5Reserved;
@@ -666,7 +725,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        internal static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, [In, Out] ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
+        internal static extern bool EnumDisplayDevices(string? lpDevice, uint iDevNum, [In, Out] ref DISPLAY_DEVICE lpDisplayDevice, uint dwFlags);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct DISPLAY_DEVICE
@@ -701,6 +760,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool SetProcessDpiAwarenessContext(IntPtr /* DpiAwarenessContext */ value);
+
+        [DllImport("user32.dll")]
+        internal static extern IntPtr /* HMONITOR */ MonitorFromWindow(IntPtr /* HWND */ hwnd, MonitorDefaultTo dwFlags);
 
         [DllImport("imm32.dll", SetLastError = false)]
         internal static extern IntPtr /* HIMC */ ImmGetContext(IntPtr /* HWND */ hwnd);
@@ -781,5 +843,92 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool OpenClipboard(IntPtr /* HWND */ hWndNewOwner);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool CloseClipboard();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool EmptyClipboard();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HANDLE */ SetClipboardData(CF uFormat, IntPtr /* HANDLE */ hMem);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HANDLE */ GetClipboardData(CF uFormat);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern CF EnumClipboardFormats(CF format);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool IsClipboardFormatAvailable(CF fromat);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern CF RegisterClipboardFormat(string lpszFormat);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int GetClipboardFormatName(CF format, [Out] StringBuilder lpszFormatName, int cchMaxCount);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HGLOBAL */ GlobalAlloc(GMEM uFlags, ulong dwBytes);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HGLOBAL */ GlobalFree(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern IntPtr /* LPVOID */ GlobalLock(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool GlobalUnlock(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern ulong GlobalSize(IntPtr /* HGLOBAL */ hMem);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, void* pvParam, SPIF fWinIni);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, out uint pvParam, SPIF fWinIni);
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        internal static extern IntPtr SHGetFileInfo(string pszPath, FileAttribute dwFileAttributes, [In, Out] SHFILEINFO psfi, uint cbFileInfo, SHGFI uFlags);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        internal struct SHFILEINFO
+        {
+            IntPtr /* HICON */ hIcon;
+            int iIcon;
+            uint dwAttributes;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260 /* MAX_PATH */)]
+            string szDisplayName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+            string szTypeName;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct MINMAXINFO
+        {
+            public POINT ptReserved;
+            public POINT ptMaxSize;
+            public POINT ptMaxPosition;
+            public POINT ptMinTrackSize;
+            public POINT ptMaxTrackSize;
+        }
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmGetWindowAttribute(
+            IntPtr /* HWND */ hwnd,
+            DWMWindowAttribute dwAttribute,
+            out IntPtr pvAttribute,
+            uint cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        internal static extern int /* HRESULT */ DwmGetWindowAttribute(
+            IntPtr /* HWND */ hwnd,
+            DWMWindowAttribute dwAttribute,
+            out RECT pvAttribute,
+            uint cbAttribute);
     }
 }

@@ -23,6 +23,10 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using OpenTK.Core.Utility;
+
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>
@@ -39,6 +43,11 @@ namespace OpenTK.Core.Platform
         /// Specifies which PAL components this object provides.
         /// </summary>
         PalComponents Provides { get; }
+
+        /// <summary>
+        /// Provides a logger for this component.
+        /// </summary>
+        ILogger? Logger { get; set; }
 
         /// <summary>
         /// Initialize the driver.

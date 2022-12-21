@@ -20,21 +20,13 @@
     <OutputType>Library</OutputType>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
-    <LangVersion>9.0</LangVersion>
-  </PropertyGroup>
-
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />
   <ItemGroup>
-    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
+    <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Platform\Implementations\Windows" />
+    <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 </Project>

@@ -53,14 +53,20 @@ namespace OpenTK.Platform.Native.X11
                 });
             }
 
+            XOpenGLContextHandle? sharedContext = null;
+            if (hints.SharedContext is XOpenGLContextHandle contextHandle)
+            {
+                sharedContext = contextHandle;
+            }
+
             GLXContext context = s_glXCreateContextAttribARB(
                 window.Display,
                 window.FBConfig!.Value,
-                s_sharedContext?.Context ?? new GLXContext(IntPtr.Zero),
+                sharedContext?.Context ?? new GLXContext(IntPtr.Zero),
                 true,
                 ref CollectionsMarshal.AsSpan(attribs)[0]);
 
-            return new XOpenGLContextHandle(window.Display, context, window.Window, s_sharedContext);
+            return new XOpenGLContextHandle(window.Display, context, window.Window, sharedContext);
         }
 
         public void DestroyContext(OpenGLContextHandle handle)
@@ -69,11 +75,9 @@ namespace OpenTK.Platform.Native.X11
             glXDestroyContext(xhandle.Display, xhandle.Context);
         }
 
-        public OpenGLContextHandle GetCurrentContext()
+        public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
-            GLXContext context = glXGetCurrentContext();
-
-            return context.Value != IntPtr.Zero ? s_handles[context] : null;
+            return new Pal2BindingsContext(this, handle);
         }
 
         public IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
@@ -83,29 +87,33 @@ namespace OpenTK.Platform.Native.X11
             return s_glXGetProcAddress(procedureName);
         }
 
-        public OpenGLContextHandle GetSharedContext()
+        public OpenGLContextHandle GetCurrentContext()
         {
-            return s_sharedContext;
+            GLXContext context = glXGetCurrentContext();
+
+            return context.Value != IntPtr.Zero ? s_handles[context] : null;
         }
 
-        public OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle)
+        public bool SetCurrentContext(OpenGLContextHandle? handle)
+        {
+            var xhandle = handle?.As<XOpenGLContextHandle>(this);
+            return glXMakeCurrent(xhandle.Display, xhandle.Drawable, xhandle.Context);
+        }
+
+        public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
             return handle.As<XOpenGLContextHandle>(this).SharedContext;
         }
 
-        public bool SetCurrentContext(OpenGLContextHandle handle)
+        public void SetSwapInterval(int interval)
         {
-            var xhandle = handle.As<XOpenGLContextHandle>(this);
-            return glXMakeCurrent(xhandle.Display, xhandle.Drawable, xhandle.Context);
+            throw new NotImplementedException();
         }
 
-        public void SetSharedContext(OpenGLContextHandle handle)
+        public int GetSwapInterval()
         {
-            s_sharedContext = handle.As<XOpenGLContextHandle>(this);
+            throw new NotImplementedException();
         }
-
-        [ThreadStatic]
-        private static XOpenGLContextHandle? s_sharedContext;
 
         private static ConcurrentDictionary<GLXContext, XOpenGLContextHandle> s_handles =
             new ConcurrentDictionary<GLXContext, XOpenGLContextHandle>();

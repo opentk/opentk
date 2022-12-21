@@ -21,6 +21,8 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr HWnd { get; private set; }
 
+        public bool Destroyed { get; set; } = false;
+
         /// <summary> The current cursor for this window. </summary>
         public HCursor? HCursor { get; set; }
 
@@ -31,16 +33,14 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Initialize this property properly!
         public WindowState WindowState { get; set; }
 
-        // FIXME: Is this a good place for this?
-        public SimpleEventQueue<PlatformEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<PlatformEventType, WindowEventArgs>();
+        public int? MaxWidth { get; set; }
+        public int? MaxHeight { get; set; }
+        public int? MinWidth { get; set; }
+        public int? MinHeight { get; set; }
 
-        // FIXME: This is kind of a hack so that we can get access to the window component in the WndProc...
-        public WindowComponent WindowComponent { get; private set; }
-
-        public HWND(IntPtr hWnd, WindowComponent windowComponent, GraphicsApiHints hints)
+        public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {
             HWnd = hWnd;
-            WindowComponent = windowComponent;
             GraphicsApiHints = hints;
         }
     }
@@ -52,13 +52,16 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: How do we want to handle this??
         public IntPtr HDC { get; private set; }
 
+        public HGLRC? SharedContext { get; private set; }
+
         // FIXME: Is this needed?
         public OpenGLComponent OpenGLComponent { get; private set; }
 
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, OpenGLComponent openglComponent)
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext, OpenGLComponent openglComponent)
         {
             HGlrc = hGlrc;
             HDC = hdc;
+            SharedContext = sharedContext;
             OpenGLComponent = openglComponent;
         }
     }
@@ -110,6 +113,8 @@ namespace OpenTK.Platform.Native.Windows
         public IntPtr Monitor { get; set; }
 
         public string Name { get; set; }
+
+        public string AdapterName { get; set; }
 
         public string PublicName { get; set; }
 

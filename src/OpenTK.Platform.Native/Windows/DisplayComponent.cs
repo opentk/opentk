@@ -1,4 +1,6 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +19,22 @@ namespace OpenTK.Platform.Native.Windows
 
         public PalComponents Provides => PalComponents.Display;
 
+        public ILogger? Logger { get; set; }
+
         private static List<HMonitor> _displays = new List<HMonitor>();
+
+        internal static HMonitor? FindMonitor(IntPtr hMonitor)
+        {
+            foreach (var display in _displays)
+            {
+                if (display.Monitor == hMonitor)
+                {
+                    return display;
+                }
+            }
+
+            return null;
+        }
 
         private static IntPtr FindMonitorHandle(string adapterName)
         {
@@ -132,6 +149,7 @@ namespace OpenTK.Platform.Native.Windows
                         {
                             Monitor = hMonitor,
                             Name = monitor.DeviceName,
+                            AdapterName = adapter.DeviceName,
                             PublicName = monitor.DeviceString,
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
                             Position = lpDevMode.dmPosition,
@@ -166,23 +184,25 @@ namespace OpenTK.Platform.Native.Windows
             // Console.WriteLine();
             // Console.WriteLine();
 
-            foreach (var connected in newDisplays)
-            {
-                // FIXME: Add event!
-                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
-            }
-
-            foreach (var removed in removedDisplays)
-            {
-                // FIXME: Add event!
-                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
-            }
+            // FIXME: Maybe we should just send all of the data at once to the user.
 
             foreach (var removed in removedDisplays)
             {
                 _displays.Remove(removed);
+
+                // FIXME: Add event!
+                // EventQueue.Raise(removed, PlatformEventType.MonitorRemoved, null);
+                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
-            _displays.AddRange(newDisplays);
+
+            foreach (var connected in newDisplays)
+            {
+                _displays.Add(connected);
+
+                // FIXME: Add event!
+                // EventQueue.Raise(connected, PlatformEventType.MonitorConnected, null)
+                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+            }
 
             HMonitor? primary = null;
             foreach (var display in _displays)
@@ -264,8 +284,6 @@ namespace OpenTK.Platform.Native.Windows
 
         public bool CanGetVirtualPosition => true;
 
-        public bool CanGetDisplaySize => throw new NotImplementedException();
-
         public int GetDisplayCount()
         {
             int count = Win32.GetSystemMetrics(SystemMetric.CMonitors);
@@ -276,6 +294,9 @@ namespace OpenTK.Platform.Native.Windows
 
             return count;
         }
+
+        // FIXME: Indices for monitors is ill defined.
+        // Need to look more into documentation for the monitor API.
 
         // FIXME: You probably shouldn't "create" a monitor handle.
         public DisplayHandle Create(int index)
@@ -307,11 +328,18 @@ namespace OpenTK.Platform.Native.Windows
             HMonitor hmonitor = handle.As<HMonitor>(this);
         }
 
+        public bool IsPrimary(DisplayHandle handle)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            return hmonitor.IsPrimary;
+        }
+
         public string GetName(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            return hmonitor.Name;
+            return hmonitor.PublicName;
         }
 
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
@@ -336,19 +364,52 @@ namespace OpenTK.Platform.Native.Windows
 
         public int GetSupportedVideoModeCount(DisplayHandle handle)
         {
-            throw new NotImplementedException();
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            // FIXME: Calling this function with 0 rebuilds the cache, which means that between
+            // a call to GetSupportedVideoModeCount and GetSupportedVideoModes the cache could have changed.
+            // This is not great... would be good if we could combine the calls into one.
+            int modeIndex = 0;
+            Win32.DEVMODE lpDevMode = default;
+            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
+            {
+            }
+
+            return modeIndex - 1;
         }
 
         public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
         {
-            throw new NotImplementedException();
-        }
+            HMonitor hmonitor = handle.As<HMonitor>(this);
 
-        public void GetDisplaySize(DisplayHandle handle, out float width, out float height)
-        {
+            // FIXME: Should the scale really be part of the video mode?
+            // Is it something that can be set independently of video mode?
+            GetDisplayScale(handle, out float scaleX, out float scaleY);
 
+            int modeIndex = 0;
+            Win32.DEVMODE lpDevMode = default;
+            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
+            {
+                // FIXME: What do we do with duplicated video modes?
+                // For now we keep them, but there is no possibility of
+                // differentiating them.
+                // Should we decide or should we pass platform specific info to the user?
 
-            throw new NotImplementedException();
+                const DM RequiredFields = DM.PelsWidth | DM.PelsHeight | DM.DisplayFrequency;
+
+                if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
+                    throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
+
+                // FIXME: Scale and DPI
+                modes[modeIndex - 1] = new VideoMode(
+                    (int)lpDevMode.dmPelsWidth,
+                    (int)lpDevMode.dmPelsHeight,
+                    lpDevMode.dmDisplayFrequency,
+                    scaleX,
+                    96);
+            }
         }
 
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
@@ -357,6 +418,30 @@ namespace OpenTK.Platform.Native.Windows
 
             x = hmonitor.Position.X;
             y = hmonitor.Position.Y;
+        }
+
+        public void GetResolution(DisplayHandle handle, out int width, out int height)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            width = hmonitor.Resolution.ResolutionX;
+            height = hmonitor.Resolution.ResolutionY;
+        }
+
+        public void GetWorkArea(DisplayHandle handle, out Box2i area)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            Win32.RECT workArea = hmonitor.WorkArea;
+
+            area = new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
+        }
+
+        public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
+        {
+            HMonitor hmonitor = handle.As<HMonitor>(this);
+
+            refreshRate = hmonitor.RefreshRate;
         }
 
         public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)

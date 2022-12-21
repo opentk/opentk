@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -300,6 +302,281 @@ namespace OpenTK.Platform.Native.Windows
         VerticalRedraw = 0x1
     }
 
+    internal enum DWMWindowAttribute : uint
+    {
+        /// <summary>
+        /// Use with DwmGetWindowAttribute.
+        /// Discovers whether non-client rendering is enabled.
+        /// The retrieved value is of type BOOL.
+        /// TRUE if non-client rendering is enabled; otherwise, FALSE.
+        /// </summary>
+        NCRenderingEnabled = 1,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Sets the non-client rendering policy.
+        /// The pvAttribute parameter points to a value from the DWMNCRENDERINGPOLICY enumeration.
+        /// </summary>
+        NCRenderingPolicy,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Enables or forcibly disables DWM transitions.
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to disable transitions, or FALSE to enable transitions.
+        /// </summary>
+        TransitionsForceDisabled,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Enables content rendered in the non-client area to be visible on the frame drawn by DWM.
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to enable content rendered in the non-client area to be visible on the frame; otherwise, FALSE.
+        /// </summary>
+        AllowNCPaint,
+
+        /// <summary>
+        /// Use with DwmGetWindowAttribute.
+        /// Retrieves the bounds of the caption button area in the window-relative space.
+        /// The retrieved value is of type RECT.
+        /// If the window is minimized or otherwise not visible to the user,
+        /// then the value of the RECT retrieved is undefined.
+        /// You should check whether the retrieved RECT contains a boundary that you can work with,
+        /// and if it doesn't then you can conclude that the window is minimized or otherwise not visible.
+        /// </summary>
+        CaptionButtonBounds,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Specifies whether non-client content is right-to-left (RTL) mirrored.
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE if the non-client content is right-to-left (RTL) mirrored; otherwise, FALSE.
+        /// </summary>
+        NonClientRTLLayout,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Forces the window to display an iconic thumbnail or peek representation (a static bitmap),
+        /// even if a live or snapshot representation of the window is available.
+        /// This value is normally set during a window's creation, and not changed throughout the window's lifetime.
+        /// Some scenarios, however, might require the value to change over time.
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to require a iconic thumbnail or peek representation; otherwise, FALSE.
+        /// </summary>
+        ForceIconicRepresentation,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Sets how Flip3D treats the window.
+        /// The pvAttribute parameter points to a value from the DWMFLIP3DWINDOWPOLICY enumeration.
+        /// </summary>
+        Flip3DPolicy,
+
+        /// <summary>
+        /// Use with DwmGetWindowAttribute.
+        /// Retrieves the extended frame bounds rectangle in screen space.
+        /// The retrieved value is of type RECT.
+        /// </summary>
+        ExtendedFrameBounds,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// The window will provide a bitmap for use by DWM as an iconic thumbnail or peek representation (a static bitmap) for the window.
+        /// DWMWA_HAS_ICONIC_BITMAP can be specified with DWMWA_FORCE_ICONIC_REPRESENTATION.
+        /// DWMWA_HAS_ICONIC_BITMAP normally is set during a window's creation and not changed throughout the window's lifetime.
+        /// Some scenarios, however, might require the value to change over time.
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to inform DWM that the window will provide an iconic thumbnail or peek representation; otherwise, FALSE.
+        ///
+        /// Windows Vista and earlier: This value is not supported.
+        /// </summary>
+        HasIconicBitmap,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Do not show peek preview for the window.
+        /// The peek view shows a full-sized preview of the window when the mouse hovers over the window's thumbnail in the taskbar.
+        /// If this attribute is set,
+        /// hovering the mouse pointer over the window's thumbnail dismisses peek (in case another window in the group has a peek preview showing).
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to prevent peek functionality, or FALSE to allow it.
+        ///
+        /// Windows Vista and earlier: This value is not supported.
+        /// </summary>
+        DisallowPeek,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Prevents a window from fading to a glass sheet when peek is invoked.
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to prevent the window from fading during another window's peek, or FALSE for normal behavior.
+        /// 
+        /// Windows Vista and earlier: This value is not supported.
+        /// </summary>
+        ExcludedFromPeek,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Cloaks the window such that it is not visible to the user.
+        /// The window is still composed by DWM.
+        ///
+        /// Using with DirectComposition:
+        /// Use the DWMWA_CLOAK flag to cloak the layered child window when animating a representation
+        /// of the window's content via a DirectComposition visual that has been associated with the layered child window.
+        /// For more details on this usage case, see How to animate the bitmap of a layered child window.
+        ///
+        /// Windows 7 and earlier: This value is not supported.
+        /// </summary>
+        Cloak,
+
+        /// <summary>
+        /// Use with DwmGetWindowAttribute.
+        /// If the window is cloaked, provides one of the following values explaining why.
+        ///
+        /// DWM_CLOAKED_APP (value 0x0000001). The window was cloaked by its owner application.
+        ///
+        /// DWM_CLOAKED_SHELL (value 0x0000002). The window was cloaked by the Shell.
+        /// 
+        /// DWM_CLOAKED_INHERITED (value 0x0000004). The cloak value was inherited from its owner window.
+        /// 
+        /// Windows 7 and earlier: This value is not supported.
+        /// </summary>
+        Cloaked,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Freeze the window's thumbnail image with its current visuals.
+        /// Do no further live updates on the thumbnail image to match the window's contents.
+        ///
+        /// Windows 7 and earlier: This value is not supported.
+        /// </summary>
+        FreezeRepresentation,
+
+        /// <summary>
+        /// Updates the window only when desktop composition runs for other reasons.
+        /// </summary>
+        /// <remarks>Found this documentation here: <see href="https://github.com/microsoft/WindowsAppSDK/issues/41#issuecomment-892637002"/></remarks>
+        PassiveUpdateMode,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Enables a non-UWP window to use host backdrop brushes.
+        /// If this flag is set, then a Win32 app that calls Windows::UI::Composition APIs
+        /// can build transparency effects using the host backdrop brush (see Compositor.CreateHostBackdropBrush).
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to enable host backdrop brushes for the window, or FALSE to disable it.
+        /// 
+        /// This value is supported starting with Windows 11 Build 22000.
+        /// </summary>
+        UseHostBackdropBrush,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Allows the window frame for this window to be drawn in dark mode colors when the dark mode system setting is enabled.
+        /// For compatibility reasons, all windows default to light mode regardless of the system setting.
+        /// The pvAttribute parameter points to a value of type BOOL.
+        /// TRUE to honor dark mode for the window, FALSE to always use light mode.
+        /// 
+        /// This value is supported starting with Windows 11 Build 22000.
+        /// </summary>
+        UseImmersiveDarkMode = 20,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Specifies the rounded corner preference for a window.
+        /// The pvAttribute parameter points to a value of type DWM_WINDOW_CORNER_PREFERENCE.
+        /// 
+        /// This value is supported starting with Windows 11 Build 22000.
+        /// </summary>
+        WindowCornerPreference = 33,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Specifies the color of the window border.
+        /// The pvAttribute parameter points to a value of type COLORREF.
+        /// The app is responsible for changing the border color according to state changes, such as a change in window activation.
+        ///
+        /// This value is supported starting with Windows 11 Build 22000.
+        /// </summary>
+        BorderColor,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Specifies the color of the caption.
+        /// The pvAttribute parameter points to a value of type COLORREF.
+        /// 
+        /// This value is supported starting with Windows 11 Build 22000.
+        /// </summary>
+        CaptionColor,
+
+        /// <summary>
+        /// Use with DwmSetWindowAttribute.
+        /// Specifies the color of the caption text.
+        /// The pvAttribute parameter points to a value of type COLORREF.
+        ///
+        /// This value is supported starting with Windows 11 Build 22000.
+        /// </summary>
+        TextColor,
+
+        /// <summary>
+        /// Use with DwmGetWindowAttribute.
+        /// Retrieves the width of the outer border that the DWM would draw around this window.
+        /// The value can vary depending on the DPI of the window.
+        /// The pvAttribute parameter points to a value of type UINT.
+        /// 
+        /// This value is supported starting with Windows 11 Build 22000.
+        /// </summary>
+        VisibleFrameBorderThickness,
+
+        /// <summary>
+        /// IMPORTANT. This value is available in pre-release versions of the Windows Insider Preview.
+        /// 
+        /// Use with DwmGetWindowAttribute or DwmSetWindowAttribute.
+        /// Retrieves or specifies the system-drawn backdrop material of a window,
+        /// including behind the non-client area.
+        /// The pvAttribute parameter points to a value of type DWM_SYSTEMBACKDROP_TYPE.
+        /// 
+        /// This value is supported starting with Windows 11 Build 22621.
+        /// </summary>
+        SystemBackdropType,
+
+        /// <summary>
+        /// The maximum recognized DWMWINDOWATTRIBUTE value, used for validation purposes.
+        /// </summary>
+        Last,
+    };
+
+    internal enum GMEM : uint
+    {
+        /// <summary>
+        /// Allocates fixed memory. The return value is a pointer.
+        /// </summary>
+        Fixed = 0x0000,
+
+        /// <summary>
+        /// Allocates movable memory. Memory blocks are never moved in physical memory, but they can be moved within the default heap.
+        /// The return value is a handle to the memory object. To translate the handle into a pointer, use the GlobalLock function.
+        ///
+        /// This value cannot be combined with GMEM_FIXED.
+        /// </summary>
+        Moveable = 0x0002,
+
+        /// <summary>
+        /// Initializes memory contents to zero.
+        /// </summary>
+        ZeroInit = 0x0040,
+
+        /// <summary>
+        /// Combines GMEM_MOVEABLE and GMEM_ZEROINIT.
+        /// </summary>
+        GHND = 0x0042,
+
+        /// <summary>
+        /// Combines GMEM_FIXED and GMEM_ZEROINIT.
+        /// </summary>
+        GPTR = 0x0040
+    }
+
     internal enum CFS : uint
     {
         /// <summary>
@@ -307,7 +584,7 @@ namespace OpenTK.Platform.Native.Windows
         /// The IME window can display the composition window
         /// outside the client area, such as in a floating window.
         /// </summary>
-        CFS_DEFAULT = 0,
+        Default = 0,
 
         /// <summary>
         /// Display the upper left corner of the composition window
@@ -316,7 +593,7 @@ namespace OpenTK.Platform.Native.Windows
         /// of the window containing the composition window
         /// and are not subject to adjustment by the IME.
         /// </summary>
-        CFS_FORCE_POSITION = 32,
+        ForcePosition = 32,
 
         /// <summary>
         /// Display the upper left corner of the composition window
@@ -325,14 +602,175 @@ namespace OpenTK.Platform.Native.Windows
         /// of the window containing the composition window
         /// and are subject to adjustment by the IME.
         /// </summary>
-        CFS_POINT = 2,
+        Point = 2,
 
         /// <summary>
         /// Display the composition window at the position specified by rcArea.
         /// The coordinates are relative to the upper left
         /// of the window containing the composition window.
         /// </summary>
-        CFS_RECT = 1,
+        Rect = 1,
+    }
+
+    internal enum CF
+    {
+        /// <summary>
+        /// A handle to a bitmap (HBITMAP).
+        /// </summary>
+        Bitmap = 2,
+
+        /// <summary>
+        /// A memory object containing a <see cref="Win32.BITMAPINFO"/> structure followed by the bitmap bits.
+        /// </summary>
+        DIB = 8,
+
+        /// <summary>
+        /// A memory object containing a <see cref="Win32.BITMAPV5HEADER"/> structure followed by the bitmap color space information and the bitmap bits.
+        /// </summary>
+        DIBV5 = 17,
+
+        /// <summary>
+        /// Software Arts' Data Interchange Format.
+        /// </summary>
+        DIF = 5,
+
+        /// <summary>
+        /// Bitmap display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in bitmap format in lieu of the privately formatted data.
+        /// </summary>
+        DSPBitmap = 0x0082,
+
+        /// <summary>
+        /// Enhanced metafile display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in enhanced metafile format in lieu of the privately formatted data.
+        /// </summary>
+        DSPEnhancedMetafile = 0x008E,
+
+        /// <summary>
+        /// Metafile-picture display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in metafile-picture format in lieu of the privately formatted data.
+        /// </summary>
+        DSPMetafilePicture = 0x0083,
+
+        /// <summary>
+        /// Text display format associated with a private format.
+        /// The hMem parameter must be a handle to data that can be displayed in text format in lieu of the privately formatted data.
+        /// </summary>
+        DSPText = 0x0081,
+
+        /// <summary>
+        /// A handle to an enhanced metafile (HENHMETAFILE).
+        /// </summary>
+        EnhancedMetafile = 14,
+
+        /// <summary>
+        /// Start of a range of integer values for application-defined GDI object clipboard formats.The end of the range is <see cref="GDIObjectLast"/>.
+        /// Handles associated with clipboard formats in this range are not automatically deleted using the GlobalFree function when the clipboard is emptied.
+        /// Also, when using values in this range, the hMem parameter is not a handle to a GDI object, but is a handle allocated by the GlobalAlloc function with the GMEM_MOVEABLE flag.
+        /// </summary>
+        GDIObjectFirst = 0x0300,
+
+        /// <summary>
+        /// See <see cref="GDIObjectFirst"/>
+        /// </summary>
+        GDIObjectLast = 0x03FF,
+
+        /// <summary>
+        /// A handle to type HDROP that identifies a list of files.
+        /// An application can retrieve information about the files by passing the handle to the DragQueryFile function.
+        /// </summary>
+        HDrop = 15,
+
+        /// <summary>
+        /// The data is a handle (HGLOBAL) to the locale identifier (LCID) associated with text in the clipboard.
+        /// When you close the clipboard, if it contains <see cref="Text"/> data but no <see cref="Locale"/> data, the system automatically sets the <see cref="Locale"/> format to the current input language.
+        /// You can use the <see cref="Locale"/> format to associate a different locale with the clipboard text.
+        /// An application that pastes text from the clipboard can retrieve this format to determine which character set was used to generate the text.
+        /// Note that the clipboard does not support plain text in multiple character sets.To achieve this, use a formatted text data type such as RTF instead.
+        /// The system uses the code page associated with <see cref="Locale"/> to implicitly convert from <see cref="Text"/> to <see cref="UnicodeText"/>.
+        /// Therefore, the correct code page table is used for the conversion.
+        /// </summary>
+        Locale = 16,
+
+        /// <summary>
+        /// Handle to a metafile picture format as defined by the METAFILEPICT structure.When passing a <see cref="MetafilePicture"/> handle by means of DDE,
+        /// the application responsible for deleting hMem should also free the metafile referred to by the <see cref="MetafilePicture"/> handle.
+        /// </summary>
+        MetafilePicture = 3,
+
+        /// <summary>
+        /// Text format containing characters in the OEM character set.
+        /// Each line ends with a carriage return/linefeed (CR-LF) combination.
+        /// A null character signals the end of the data.
+        /// </summary>
+        OEMText = 7,
+
+        /// <summary>
+        /// Owner-display format.
+        /// The clipboard owner must display and update the clipboard viewer window, and receive the WM_ASKCBFORMATNAME, WM_HSCROLLCLIPBOARD, WM_PAINTCLIPBOARD, WM_SIZECLIPBOARD, and WM_VSCROLLCLIPBOARD messages.
+        /// The hMem parameter must be NULL.
+        /// </summary>
+        OwnerDisplay = 0x0080,
+
+        /// <summary>
+        /// Handle to a color palette. Whenever an application places data in the clipboard that depends on or assumes a color palette, it should place the palette on the clipboard as well.
+        /// If the clipboard contains data in the <see cref="Palette"/> (logical color palette) format, the application should use the SelectPalette and RealizePalette functions to realize (compare) any other data in the clipboard against that logical palette.
+        /// When displaying clipboard data, the clipboard always uses as its current palette any object on the clipboard that is in the <see cref="Palette"/> format.
+        /// </summary>
+        Palette = 9,
+
+        /// <summary>
+        /// Data for the pen extensions to the Microsoft Windows for Pen Computing.
+        /// </summary>
+        PenData = 10,
+
+        /// <summary>
+        /// Start of a range of integer values for private clipboard formats.
+        /// The range ends with <see cref="PrivateLast"/>.
+        /// Handles associated with private clipboard formats are not freed automatically;
+        /// the clipboard owner must free such handles, typically in response to the WM_DESTROYCLIPBOARD message.
+        /// </summary>
+        PrivateFirst = 0x0200,
+
+        /// <summary>
+        /// See <see cref="PrivateFirst"/>.
+        /// </summary>
+        PrivateLast = 0x02FF,
+
+        /// <summary>
+        /// Represents audio data more complex than can be represented in a <see cref="Wave"/> standard wave format.
+        /// </summary>
+        RIFF = 11,
+
+        /// <summary>
+        /// Microsoft Symbolic Link (SYLK) format.
+        /// </summary>
+        SYLK = 4,
+
+        /// <summary>
+        /// Text format.
+        /// Each line ends with a carriage return/linefeed (CR-LF) combination.
+        /// A null character signals the end of the data.
+        /// Use this format for ANSI text.
+        /// </summary>
+        Text = 1,
+
+        /// <summary>
+        /// Tagged-image file format.
+        /// </summary>
+        TIFF = 6,
+
+        /// <summary>
+        /// Unicode text format.
+        /// Each line ends with a carriage return/linefeed (CR-LF) combination.
+        /// A null character signals the end of the data.
+        /// </summary>
+        UnicodeText = 13,
+
+        /// <summary>
+        /// Represents audio data in one of the standard wave formats, such as 11 kHz or 22 kHz PCM.
+        /// </summary>
+        Wave = 12,
     }
 
     internal enum ShowWindowCommands
@@ -517,6 +955,67 @@ namespace OpenTK.Platform.Native.Windows
         /// This flag must be specified if the coordinates are set in the ptMinPosition member.
         /// </summary>
         SetMinPosition = 0x0001,
+    }
+
+    internal enum GCLP : int
+    {
+        /// <summary>
+        /// Retrieves an ATOM value that uniquely identifies the window class. This is the same atom that the RegisterClassEx function returns.
+        /// </summary>
+        Atom = -32,
+
+        /// <summary>
+        /// Retrieves the size, in bytes, of the extra memory associated with the class.
+        /// </summary>
+        CBCLSExtra = -20,
+
+        /// <summary>
+        /// Retrieves the size, in bytes, of the extra window memory associated with each window in the class. For information on how to access this memory, see GetWindowLongPtr.
+        /// </summary>
+        CBWNDExtra = -18,
+
+        /// <summary>
+        /// Retrieves a handle to the background brush associated with the class.
+        /// </summary>
+        HBRBackground = -10,
+
+        /// <summary>
+        /// Retrieves a handle to the cursor associated with the class.
+        /// </summary>
+        HCursor = -12,
+
+        /// <summary>
+        /// Retrieves a handle to the icon associated with the class.
+        /// </summary>
+        HIcon = -14,
+
+        /// <summary>
+        /// Retrieves a handle to the small icon associated with the class.
+        /// </summary>
+        HIconSM = -34,
+
+        /// <summary>
+        /// Retrieves a handle to the module that registered the class.
+        /// </summary>
+        HModule = -16,
+
+        /// <summary>
+        /// Retrieves the pointer to the menu name string.
+        /// The string identifies the menu resource associated with the class.
+        /// </summary>
+        MenumName = -8,
+
+        /// <summary>
+        /// Retrieves the window-class style bits.
+        /// </summary>
+        Style = -26,
+
+        /// <summary>
+        /// Retrieves the address of the window procedure,
+        /// or a handle representing the address of the window procedure.
+        /// You must use the CallWindowProc function to call the window procedure.
+        /// </summary>
+        WNDProc = -24,
     }
 
     // FIXME: There are additional values for when the hWnd is a dialog box.
@@ -917,6 +1416,61 @@ namespace OpenTK.Platform.Native.Windows
         Wait = 32514,
     }
 
+    internal enum IDI : int
+    {
+        /// <summary>
+        /// Default application icon.
+        /// </summary>
+        Application = 32512,
+
+        /// <summary>
+        /// Asterisk icon. Same as <see cref="Information"/>.
+        /// </summary>
+        Asterisk = 32516,
+
+        /// <summary>
+        /// Hand-shaped icon.
+        /// </summary>
+        Error = 32513,
+
+        /// <summary>
+        /// Exclamation point icon. Same as <see cref="Warning"/>.
+        /// </summary>
+        Exclamation = 32515,
+
+        /// <summary>
+        /// Hand-shaped icon. Same as <see cref="Error"/>.
+        /// </summary>
+        Hand = 32513,
+
+        /// <summary>
+        /// Asterisk icon.
+        /// </summary>
+        Information = 32516,
+
+        /// <summary>
+        /// Question mark icon.
+        /// </summary>
+        Question = 32514,
+
+        /// <summary>
+        /// Security Shield icon.
+        /// </summary>
+        Shield = 32518,
+
+        /// <summary>
+        /// Exclamation point icon.
+        /// </summary>
+        Warning = 32515,
+
+        /// <summary>
+        /// Default application icon.
+        ///
+        /// Windows 2000:  Windows logo icon.
+        /// </summary>
+        WinLogo = 32517,
+    }
+
     internal enum OCR
     {
         /// <summary>
@@ -1049,7 +1603,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <summary>
         /// An uncompressed format.
         /// </summary>
-        RGB,
+        RGB = 0x0000,
 
         /// <summary>
         /// A run-length encoded (RLE) format for bitmaps with 8 bpp.
@@ -1057,7 +1611,7 @@ namespace OpenTK.Platform.Native.Windows
         /// a count byte followed by a byte containing a color index.
         /// For more information, see Bitmap Compression.
         /// </summary>
-        RLE8,
+        RLE8 = 0x0001,
 
         /// <summary>
         /// An RLE format for bitmaps with 4 bpp.
@@ -1065,7 +1619,7 @@ namespace OpenTK.Platform.Native.Windows
         /// a count byte followed by two word-length color indexes.
         /// For more information, see Bitmap Compression.
         /// </summary>
-        RLE4,
+        RLE4 = 0x0002,
 
         /// <summary>
         /// Specifies that the bitmap is not compressed and that
@@ -1074,17 +1628,87 @@ namespace OpenTK.Platform.Native.Windows
         /// respectively, of each pixel.
         /// This is valid when used with 16- and 32-bpp bitmaps.
         /// </summary>
-        Bitfields,
+        Bitfields = 0x0003,
 
         /// <summary>
         /// Indicates that the image is a JPEG image.
         /// </summary>
-        JPEG,
+        JPEG = 0x0004,
 
         /// <summary>
         /// Indicates that the image is a PNG image.
         /// </summary>
-        PNG,
+        PNG = 0x0005,
+    }
+
+    /// <summary>
+    /// Color Space enum. Contains LCS constants as well as PROFILE_EMBEDDED and PROFILE_LINKED.
+    /// </summary>
+    internal enum CSType : uint
+    {
+        /// <summary>
+        /// This value implies that end points and gammas are given in the appropriate fields. Bogus values cause trouble.
+        /// </summary>
+        CalibratedRGB = 0x00000000,
+
+        /// <summary>
+        /// This value implies that the bitmap is in sRGB color space (gammas and endpoints ignored).
+        /// </summary>
+        sRGB = 0x73524742,
+
+        /// <summary>
+        /// This value implies that the bitmap is in Windows default color space.
+        /// </summary>
+        WindowsColorSpace = 0x57696E20,
+
+        /// <summary>
+        /// This value implies that bV5ProfileData points to the file name of the profile to use (gammas and endpoints are ignored).
+        /// </summary>
+        Linked = 0x4C494E4B,
+
+        /// <summary>
+        /// This value implies that bV5ProfileData points to a memory buffer that contains the profile to use (gammas and endpoints are ignored).
+        /// </summary>
+        Embedded = 0x4D424544,
+
+    }
+
+    /// <summary>
+    /// <see href="https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-wmf/9fec0834-607d-427d-abd5-ab240fb0db38"/>
+    /// </summary>
+    internal enum GamutMappingIntent : uint
+    {
+        /// <summary>
+        /// <para>Intent: Match</para>
+        /// <para>ICC Name: Absolute Colorimetric</para>
+        /// Maintains the white point.
+        /// Matches the colors to their nearest color in the destination gamut.
+        /// </summary>
+        AbsColorimetric = 0x00000008,
+
+        /// <summary>
+        /// <para>Intent: Graphic</para>
+        /// <para>ICC Name: Saturation</para>
+        /// Maintains saturation.
+        /// Used for business charts and other situations in which undithered colors are required.
+        /// </summary>
+        Business = 0x00000001,
+
+        /// <summary>
+        /// <para>Intent: Proof</para>
+        /// <para>ICC Name: Relative Colorimetric</para>
+        /// Maintains colorimetric match.
+        /// Used for graphic designs and named colors.
+        /// </summary>
+        Graphics = 0x00000002,
+
+        /// <summary>
+        /// <para>Intent: Picture</para>
+        /// <para>ICC Name: Perceptual</para>
+        /// Maintains contrast.
+        /// Used for photographs and natural images.
+        /// </summary>
+        Images = 0x00000004,
     }
 
     [Flags]
@@ -1194,18 +1818,18 @@ namespace OpenTK.Platform.Native.Windows
         /// <summary>
         /// Messages are not removed from the queue after processing by PeekMessage.
         /// </summary>
-        NOREMOVE = 0,
+        NoRemove = 0,
 
         /// <summary>
         /// Messages are removed from the queue after processing by PeekMessage.
         /// </summary>
-        REMOVE = 1,
+        Remove = 1,
 
         /// <summary>
         /// Prevents the system from releasing any thread that is waiting for the caller to go idle (see WaitForInputIdle).
         /// Combine this value with either PM_NOREMOVE or PM_REMOVE.
         /// </summary>
-        NOYIELD = 2,
+        NoYield = 2,
     }
 
     internal enum SystemMetric : int
@@ -1747,12 +2371,342 @@ namespace OpenTK.Platform.Native.Windows
         YVirtualScreen = 77,
     }
 
+    internal enum SPI : uint
+    {
+        // There are more possible values than are defined here.
+        // See: https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-systemparametersinfoa#parameters
+
+        /// <summary>
+        /// Retrieves the number of characters to scroll when the horizontal mouse wheel is moved.
+        /// The pvParam parameter must point to a UINT variable that receives the number of lines.
+        /// The default value is 3.
+        /// </summary>
+        GetWheelScrollChars = 0x006C,
+
+        /// <summary>
+        /// Retrieves the number of lines to scroll when the vertical mouse wheel is moved.
+        /// The pvParam parameter must point to a UINT variable that receives the number of lines.
+        /// The default value is 3.
+        /// </summary>
+        GetWheelScrollLines = 0x0068,
+    }
+
+    [Flags]
+    internal enum SPIF : uint
+    {
+        None = 0,
+
+        /// <summary>
+        /// Writes the new system-wide parameter setting to the user profile.
+        /// </summary>
+        UpdateINIFile = 0x01,
+
+        /// <summary>
+        /// Broadcasts the <see cref="WM.SETTINGCHANGE"/> message after updating the user profile.
+        /// </summary>
+        SendChange = 0x02,
+
+        /// <summary>
+        /// Same as <see cref="SendChange"/>.
+        /// </summary>
+        SendWinINIChange = 0x02
+    }
+
+    [Flags]
+    internal enum SHGFI : uint
+    {
+        /// <summary>
+        /// Version 5.0.
+        /// Apply the appropriate overlays to the file's icon.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        AddOverlays = 0x000000020,
+
+        /// <summary>
+        /// Modify SHGFI_ATTRIBUTES to indicate that the dwAttributes member of the SHFILEINFO structure at psfi contains the specific attributes that are desired.
+        /// These attributes are passed to IShellFolder::GetAttributesOf.
+        /// If this flag is not specified, 0xFFFFFFFF is passed to IShellFolder::GetAttributesOf, requesting all attributes.
+        /// This flag cannot be specified with the SHGFI_ICON flag.
+        /// </summary>
+        AttrSpecified = 0x000020000,
+
+        /// <summary>
+        /// Retrieve the item attributes.
+        /// The attributes are copied to the dwAttributes member of the structure specified in the psfi parameter.
+        /// These are the same attributes that are obtained from IShellFolder::GetAttributesOf.
+        /// </summary>
+        Attributes = 0x000000800,
+
+        /// <summary>
+        /// Retrieve the display name for the file, which is the name as it appears in Windows Explorer.
+        /// The name is copied to the szDisplayName member of the structure specified in psfi.
+        /// The returned display name uses the long file name, if there is one, rather than the 8.3 form of the file name.
+        /// Note that the display name can be affected by settings such as whether extensions are shown.
+        /// </summary>
+        DisplayName = 0x000000200,
+
+        /// <summary>
+        /// Retrieve the type of the executable file if pszPath identifies an executable file.
+        /// The information is packed into the return value.
+        /// This flag cannot be specified with any other flags.
+        /// </summary>
+        ExeType = 0x000002000,
+
+        /// <summary>
+        /// Retrieve the handle to the icon that represents the file and the index of the icon within the system image list.
+        /// The handle is copied to the hIcon member of the structure specified by psfi, and the index is copied to the iIcon member.
+        /// </summary>
+        Icon = 0x000000100,
+
+        /// <summary>
+        /// Retrieve the name of the file that contains the icon representing the file specified by pszPath, as returned by the IExtractIcon::GetIconLocation method of the file's icon handler.
+        /// Also retrieve the icon index within that file.
+        /// The name of the file containing the icon is copied to the szDisplayName member of the structure specified by psfi.
+        /// The icon's index is copied to that structure's iIcon member.
+        /// </summary>
+        IconLocation = 0x000001000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve the file's large icon.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        LargeIcon = 0x000000000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to add the link overlay to the file's icon.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        LinkOverlay = 0x000008000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve the file's open icon.
+        /// Also used to modify SHGFI_SYSICONINDEX, causing the function to return the handle to the system image list that contains the file's small open icon.
+        /// A container object displays an open icon to indicate that the container is open.
+        /// The SHGFI_ICON and/or SHGFI_SYSICONINDEX flag must also be set.
+        /// </summary>
+        OpenIcon = 0x000000002,
+
+        /// <summary>
+        /// Version 5.0.
+        /// Return the index of the overlay icon.
+        /// The value of the overlay index is returned in the upper eight bits of the iIcon member of the structure specified by psfi.
+        /// This flag requires that the SHGFI_ICON be set as well.
+        /// </summary>
+        OverlayIndex = 0x000000040,
+
+        /// <summary>
+        /// Indicate that pszPath is the address of an ITEMIDLIST structure rather than a path name.
+        /// </summary>
+        PIDL = 0x000000008,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to blend the file's icon with the system highlight color.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        Selected = 0x000010000,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve a Shell-sized icon.
+        /// If this flag is not specified the function sizes the icon according to the system metric values.
+        /// The SHGFI_ICON flag must also be set.
+        /// </summary>
+        ShellIconSize = 0x000000004,
+
+        /// <summary>
+        /// Modify SHGFI_ICON, causing the function to retrieve the file's small icon.
+        /// Also used to modify SHGFI_SYSICONINDEX, causing the function to return the handle to the system image list that contains small icon images.
+        /// The SHGFI_ICON and/or SHGFI_SYSICONINDEX flag must also be set.
+        /// </summary>
+        SmallIcon = 0x000000001,
+
+        /// <summary>
+        /// Retrieve the index of a system image list icon.
+        /// If successful, the index is copied to the iIcon member of psfi.
+        /// The return value is a handle to the system image list.
+        /// Only those images whose indices are successfully copied to iIcon are valid.
+        /// Attempting to access other images in the system image list will result in undefined behavior.
+        /// </summary>
+        SysIconIndex = 0x000004000,
+
+        /// <summary>
+        /// Retrieve the string that describes the file's type.
+        /// The string is copied to the szTypeName member of the structure specified in psfi.
+        /// </summary>
+        TypeName = 0x000000400,
+
+        /// <summary>
+        /// Indicates that the function should not attempt to access the file specified by pszPath.
+        /// Rather, it should act as if the file specified by pszPath exists with the file attributes passed in dwFileAttributes.
+        /// This flag cannot be combined with the SHGFI_ATTRIBUTES, SHGFI_EXETYPE, or SHGFI_PIDL flags.
+        /// </summary>
+        UseFileAttributes = 0x000000010,
+    }
+
+    [Flags]
+    internal enum FileAttribute : uint
+    {
+        /// <summary>
+        /// A file or directory that is an archive file or directory.
+        /// Applications typically use this attribute to mark files for backup or removal .
+        /// </summary>
+        Archive= 0x20,
+
+        /// <summary>
+        /// A file or directory that is compressed.
+        /// For a file, all of the data in the file is compressed.
+        /// For a directory, compression is the default for newly created files and subdirectories.
+        /// </summary>
+        Compressed = 0x800,
+
+        /// <summary>
+        /// This value is reserved for system use.
+        /// </summary>
+        Device = 0x40,
+
+        /// <summary>
+        /// The handle that identifies a directory.
+        /// </summary>
+        Directory = 0x10,
+
+        /// <summary>
+        /// A file or directory that is encrypted.
+        /// For a file, all data streams in the file are encrypted.
+        /// For a directory, encryption is the default for newly created files and subdirectories.
+        /// </summary>
+        Encrypted = 0x4000,
+
+        /// <summary>
+        /// The file or directory is hidden.
+        /// It is not included in an ordinary directory listing.
+        /// </summary>
+        Hidden = 0x2,
+
+        /// <summary>
+        /// The directory or user data stream is configured with integrity (only supported on ReFS volumes).
+        /// It is not included in an ordinary directory listing.
+        /// The integrity setting persists with the file if it's renamed.
+        /// If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.
+        /// Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003 and Windows XP: This flag is not supported until Windows Server 2012.
+        /// </summary>
+        IntegrityStream = 0x8000,
+
+        /// <summary>
+        /// A file that does not have other attributes set.
+        /// This attribute is valid only when used alone.
+        /// </summary>
+        Normal = 0x80,
+
+        /// <summary>
+        /// The file or directory is not to be indexed by the content indexing service.
+        /// </summary>
+        NotContextIndexed = 0x2000,
+
+        /// <summary>
+        /// The user data stream not to be read by the background data integrity scanner (AKA scrubber).
+        /// When set on a directory it only provides inheritance.
+        /// This flag is only supported on Storage Spaces and ReFS volumes.
+        /// It is not included in an ordinary directory listing.
+        /// Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003 and Windows XP: This flag is not supported until Windows 8 and Windows Server 2012.
+        /// </summary>
+        NoScrubData = 0x20000,
+
+        /// <summary>
+        /// The data of a file is not available immediately.
+        /// This attribute indicates that the file data is physically moved to offline storage.
+        /// This attribute is used by Remote Storage, which is the hierarchical storage management software.
+        /// Applications should not arbitrarily change this attribute.
+        /// </summary>
+        Offline = 0x1000,
+
+        /// <summary>
+        /// A file that is read-only.
+        /// Applications can read the file, but cannot write to it or delete it.
+        /// This attribute is not honored on directories.
+        /// For more information, see You cannot view or change the Read-only or the System attributes of folders in Windows Server 2003, in Windows XP, in Windows Vista or in Windows 7.
+        /// </summary>
+        Readonly = 0x1,
+
+        /// <summary>
+        /// When this attribute is set, it means that the file or directory is not fully present locally.
+        /// For a file that means that not all of its data is on local storage (e.g. it may be sparse with some data still in remote storage).
+        /// For a directory it means that some of the directory contents are being virtualized from another location.
+        /// Reading the file / enumerating the directory will be more expensive than normal, e.g. it will cause at least some of the file/directory content to be fetched from a remote store.
+        /// Only kernel-mode callers can set this bit.
+        /// </summary>
+        RecallOnDataAccess = 0x400000,
+
+        /// <summary>
+        /// This attribute only appears in directory enumeration classes (FILE_DIRECTORY_INFORMATION, FILE_BOTH_DIR_INFORMATION, etc.).
+        /// When this attribute is set, it means that the file or directory has no physical representation on the local system; the item is virtual.
+        /// Opening the item will be more expensive than normal, e.g. it will cause at least some of it to be fetched from a remote store.
+        /// </summary>
+        RecallOnOpen = 0x40000,
+
+        /// <summary>
+        /// A file or directory that has an associated reparse point, or a file that is a symbolic link.
+        /// </summary>
+        ReparsePoint = 0x400,
+
+        /// <summary>
+        /// A file that is a sparse file.
+        /// </summary>
+        SparseFile = 0x200,
+
+        /// <summary>
+        /// A file or directory that the operating system uses a part of, or uses exclusively.
+        /// </summary>
+        System = 0x4,
+
+        /// <summary>
+        /// A file that is being used for temporary storage.
+        /// File systems avoid writing data back to mass storage if sufficient cache memory is available, because typically, an application deletes a temporary file after the handle is closed.
+        /// In that scenario, the system can entirely avoid writing the data.
+        /// Otherwise, the data is written after the handle is closed.
+        /// </summary>
+        Temporary = 0x100,
+
+        /// <summary>
+        /// This value is reserved for system use.
+        /// </summary>
+        Virtual = 0x10000,
+
+        /// <summary>
+        /// This attribute indicates user intent that the file or directory should be kept fully present locally even when not being actively accessed.
+        /// This attribute is for use with hierarchical storage management software.
+        /// </summary>
+        Pinned = 0x80000,
+
+        /// <summary>
+        /// This attribute indicates that the file or directory should not be kept fully present locally except when being actively accessed.
+        /// This attribute is for use with hierarchical storage management software.
+        /// </summary>
+        Unpinned = 0x100000,
+    }
+
     internal enum MonitorDpiType : int
     {
         EffectiveDpi = 0,
         AngularDpi = 1,
         RawDpi = 2,
         Default = EffectiveDpi,
+    }
+
+    internal enum MonitorDefaultTo : uint
+    {
+        /// <summary>
+        /// Returns NULL.
+        /// </summary>
+        Null = 0,
+
+        /// <summary>
+        /// Returns a handle to the primary display monitor.
+        /// </summary>
+        Primary = 1,
+
+        /// <summary>
+        /// Returns a handle to the display monitor that is nearest to the window.
+        /// </summary>
+        Nearest = 2,
     }
 
     internal enum ProcessDPIAwareness : int
@@ -2410,6 +3364,40 @@ namespace OpenTK.Platform.Native.Windows
         /// depending on whether you use the Unicode or ANSI functions.
         /// </summary>
         SZ = 1,
+    }
+
+    [Flags]
+    internal enum FLASHW : uint
+    {
+        /// <summary>
+        /// Flash both the window caption and taskbar button. This is equivalent to setting the <see cref="Caption"/> | <see cref="Tray"/> flags.
+        /// </summary>
+        All = 0x00000003,
+
+        /// <summary>
+        /// Flash the window caption.
+        /// </summary>
+        Caption = 0x00000001,
+
+        /// <summary>
+        /// Stop flashing. The system restores the window to its original state.
+        /// </summary>
+        Stop = 0,
+
+        /// <summary>
+        /// Flash continuously, until the FLASHW_STOP flag is set.
+        /// </summary>
+        Timer = 0x00000004,
+
+        /// <summary>
+        /// Flash continuously until the window comes to the foreground.
+        /// </summary>
+        TimerNoFG = 0x0000000C,
+
+        /// <summary>
+        /// Flash the taskbar button.
+        /// </summary>
+        Tray = 0x00000002,
     }
 
     /// <summary>

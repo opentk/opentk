@@ -1,4 +1,5 @@
 using System;
+using OpenTK.Mathematics;
 
 namespace OpenTK.Core.Platform
 {
@@ -16,11 +17,6 @@ namespace OpenTK.Core.Platform
         /// True if the driver can get the virtual position of the display.
         /// </summary>
         bool CanGetVirtualPosition { get; }
-
-        /// <summary>
-        /// True if the driver can get the physical size of the display.
-        /// </summary>
-        bool CanGetDisplaySize { get; }
 
         /// <summary>
         /// Get the number of available displays.
@@ -48,6 +44,13 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a display.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void Destroy(DisplayHandle handle);
+
+        /// <summary>
+        /// Checks if a display is the primary display or not.
+        /// </summary>
+        /// <param name="handle">The display to check whether or not is the primary display.</param>
+        /// <returns>If this display is the primary display.</returns>
+        bool IsPrimary(DisplayHandle handle);
 
         /// <summary>
         /// Get the friendly name of a display.
@@ -92,16 +95,6 @@ namespace OpenTK.Core.Platform
         void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes);
 
         /// <summary>
-        /// Get the physical size of the display.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <param name="width">Width of the display in millimeters.</param>
-        /// <param name="height">Height of the display in millimeters.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver cannot get display physical size. See <see cref="CanGetDisplaySize"/>.</exception>
-        void GetDisplaySize(DisplayHandle handle, out float width, out float height);
-
-        /// <summary>
         /// Get the position of the display in the virtual desktop.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
@@ -110,6 +103,30 @@ namespace OpenTK.Core.Platform
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         /// <exception cref="PalNotImplementedException">Driver cannot get display virtual position. See <see cref="CanGetVirtualPosition"/>.</exception>
         void GetVirtualPosition(DisplayHandle handle, out int x, out int y);
+
+        /// <summary>
+        /// Get the resolution of the specified display.
+        /// </summary>
+        /// <param name="handle">Handle to a display.</param>
+        /// <param name="width">The horizontal resolution of the display.</param>
+        /// <param name="height">The vertical resolution of the display.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        void GetResolution(DisplayHandle handle, out int width, out int height);
+
+        /// <summary>
+        /// Get the work area of this display.
+        /// The work area is the area of the display that is not covered by task bars or menu bars.
+        /// </summary>
+        /// <param name="handle">Handle to a display.</param>
+        /// <param name="area">The work area of the display.</param>
+        void GetWorkArea(DisplayHandle handle, out Box2i area);
+
+        /// <summary>
+        /// Get the refresh rate if the specified display.
+        /// </summary>
+        /// <param name="handle">Handle to a display.</param>
+        /// <param name="refreshRate">The refresh rate of the display.</param>
+        void GetRefreshRate(DisplayHandle handle, out float refreshRate);
 
         /// <summary>
         /// Get the scale of the display.
