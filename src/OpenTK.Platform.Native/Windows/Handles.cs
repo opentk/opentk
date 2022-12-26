@@ -132,26 +132,5 @@ namespace OpenTK.Platform.Native.Windows
 
         public int DpiY { get; set; }
     }
-
-    internal class Win32EventQueue : IEventQueue<PlatformEventType, WindowEventArgs>
-    {
-        public event QueueEventHandler<PlatformEventType, WindowEventArgs> EventRaised;
-
-        public void ProcessEvents()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void IgnoreEvents()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DefaultEventHandler(object sender, PlatformEventType type, WindowEventArgs arguments)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 #pragma warning restore SA1649 // File name should match first type name
 }

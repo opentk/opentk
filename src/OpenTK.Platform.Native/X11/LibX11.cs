@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
@@ -9,6 +10,17 @@ namespace OpenTK.Platform.Native.X11
     public static class LibX11
     {
         private const string X11 = "X11";
+
+        static LibX11()
+        {
+            DllResolver.InitLoader();
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public unsafe delegate int XErrorHandler(XDisplayPtr display, XErrorEvent* error_event);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XSetErrorHandler(XErrorHandler handler);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string? name);
@@ -47,6 +59,18 @@ namespace OpenTK.Platform.Native.X11
             ref XVisual visual,
             XWindowAttributeValueMask valueMask,
             ref XSetWindowAttributes attributes);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XConfigureWindow(XDisplayPtr display, XWindow w, XWindowChangesMask value_mask, ref XWindowChanges values);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XMoveWindow(XDisplayPtr display, XWindow w, int x, int y);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XResizeWindow(XDisplayPtr display, XWindow w, int width, int height);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XSetWMNormalHints(XDisplayPtr display, XWindow w, ref XSizeHints hints);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, XEventMask events);
@@ -102,6 +126,9 @@ namespace OpenTK.Platform.Native.X11
             XWindow window,
             ref XVisual visual,
             int alloc);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XColorMap XDefaultColormap(XDisplayPtr display, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XFreeColormap(XDisplayPtr display, XColorMap colormap);

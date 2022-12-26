@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
@@ -6,6 +7,11 @@ namespace OpenTK.Platform.Native.X11
     public static class GLX
     {
         private const string glx = "GL";
+
+        static GLX()
+        {
+            DllResolver.InitLoader();
+        }
 
         public const int GLX_USE_GL = 1;
         public const int GLX_BUFFER_SIZE = 2;

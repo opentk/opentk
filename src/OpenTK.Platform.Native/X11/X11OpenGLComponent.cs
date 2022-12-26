@@ -4,12 +4,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.X11.GLX;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public partial class X11AbstractionLayer : IOpenGLComponent
+    public partial class X11OpenGLComponent : IOpenGLComponent
     {
+        public string Name => "X11OpenGLComponent";
+
+        public PalComponents Provides => PalComponents.OpenGL;
+
+        public ILogger? Logger { get; set; }
+
+        public void Initialize(PalComponents which)
+        {
+            InitializeGL();
+        }
+
         public bool CanShareContexts => false;
         public bool CanCreateFromWindow => true;
         public bool CanCreateFromSurface => false;
@@ -125,12 +137,12 @@ namespace OpenTK.Platform.Native.X11
 
         private void InitializeGL()
         {
-            if (!glXQueryExtension(Display, out int errorBase, out int eventBase))
+            if (!glXQueryExtension(X11.Display, out int errorBase, out int eventBase))
             {
                 throw new PalException(this, "This display does not support GLX. Cannot create OpenGL contexts.");
             }
 
-            glXQueryVersion(Display, out int major, out int minor);
+            glXQueryVersion(X11.Display, out int major, out int minor);
             GLXVersion = new Version(major, minor);
 
             if (GLXVersion < new Version(1, 3))
@@ -139,30 +151,30 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, "GLX Versions less than 1.3 are not supported.");
             }
 
-            string extensions = Marshal.PtrToStringUTF8(glXQueryExtensionsString(Display, DefaultScreen));
+            string extensions = Marshal.PtrToStringUTF8(glXQueryExtensionsString(X11.Display, X11.DefaultScreen));
             foreach (string extension in extensions.Split(' '))
             {
                 GLXExtensions.Add(extension);
             }
 
             Version? version;
-            GLXServerVendor = Marshal.PtrToStringUTF8(glXQueryServerString(Display, DefaultScreen, GLX_VENDOR));
+            GLXServerVendor = Marshal.PtrToStringUTF8(glXQueryServerString(X11.Display, X11.DefaultScreen, GLX_VENDOR));
             Version.TryParse(
-                Marshal.PtrToStringUTF8(glXQueryServerString(Display, DefaultScreen, GLX_VERSION)),
+                Marshal.PtrToStringUTF8(glXQueryServerString(X11.Display, X11.DefaultScreen, GLX_VERSION)),
                 out version);
             GLXServerVersion = version;
             string serverExtensions =
-                Marshal.PtrToStringUTF8(glXQueryServerString(Display, DefaultScreen, GLX_EXTENSIONS));
+                Marshal.PtrToStringUTF8(glXQueryServerString(X11.Display, X11.DefaultScreen, GLX_EXTENSIONS));
             foreach (string extension in serverExtensions.Split(' '))
             {
                 GLXServerExtensions.Add(extension);
             }
 
-            GLXClientVendor = Marshal.PtrToStringUTF8(glXGetClientString(Display, GLX_VENDOR));
-            Version.TryParse(Marshal.PtrToStringUTF8(glXGetClientString(Display, GLX_VERSION)), out version);
+            GLXClientVendor = Marshal.PtrToStringUTF8(glXGetClientString(X11.Display, GLX_VENDOR));
+            Version.TryParse(Marshal.PtrToStringUTF8(glXGetClientString(X11.Display, GLX_VERSION)), out version);
             GLXClientVersion = version;
 
-            string clientExtensions = Marshal.PtrToStringUTF8(glXGetClientString(Display, GLX_EXTENSIONS));
+            string clientExtensions = Marshal.PtrToStringUTF8(glXGetClientString(X11.Display, GLX_EXTENSIONS));
             foreach (string extension in clientExtensions.Split(' '))
             {
                 GLXClientExtensions.Add(extension);

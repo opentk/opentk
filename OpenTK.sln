@@ -83,6 +83,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTK.Platform.Native", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocalTestProject", "tests\LocalTestProject\LocalTestProject.csproj", "{54F244EC-343E-4857-A7C2-8C1A703DB4A8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenTK.Platform.Tests", "tests\OpenTK.Platform.Tests\OpenTK.Platform.Tests.csproj", "{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,10 @@ Global
 		{54F244EC-343E-4857-A7C2-8C1A703DB4A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54F244EC-343E-4857-A7C2-8C1A703DB4A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54F244EC-343E-4857-A7C2-8C1A703DB4A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,6 +188,7 @@ Global
 		{A31363E2-783D-4F6A-B447-130E7A344442} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{4736086B-634E-459B-BCC4-88BCCDD4B218} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{54F244EC-343E-4857-A7C2-8C1A703DB4A8} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
+		{3AD0B150-4134-4EDE-AAC0-D218E3B8B320} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}

@@ -22,8 +22,18 @@ namespace X11TestProject
         // MAIN THREAD:
         public static void MultiThreadMain()
         {
-            X11AbstractionLayer layer = new X11AbstractionLayer();
-            layer.Initialize(PalComponents.Window | PalComponents.OpenGL);
+            X11WindowComponent windowComp = new X11WindowComponent();
+            X11OpenGLComponent glComp = new X11OpenGLComponent();
+            X11DisplayComponent dispComp = new X11DisplayComponent();
+            windowComp.Initialize(PalComponents.Window);
+            glComp.Initialize(PalComponents.OpenGL);
+            dispComp.Initialize(PalComponents.Display);
+
+            ComponentSet layer = new ComponentSet();
+
+            layer[PalComponents.Window] = windowComp;
+            layer[PalComponents.OpenGL] = glComp;
+            layer[PalComponents.Display] = dispComp;
 
             A = new WindowThread(layer, 0);
             B = new WindowThread(layer, MathF.PI);
@@ -32,9 +42,9 @@ namespace X11TestProject
             B.Start();
             for (;;)
             {
-                while (XEventsQueued(layer.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
+                while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
                 {
-                    XNextEvent(layer.Display, out XEvent ea);
+                    XNextEvent(X11.Display, out XEvent ea);
                     EventQueue.Raise(null, (PlatformEventType)ea.Type, EventArgs.Empty);
                 }
 
@@ -54,7 +64,7 @@ namespace X11TestProject
 
     public class WindowThread
     {
-        private readonly IPalComponent _layer;
+        private readonly ComponentSet _layer;
         private IWindowComponent WindowComponent => (IWindowComponent)_layer;
         private IOpenGLComponent OpenGLComponent => (IOpenGLComponent)_layer;
 
@@ -63,7 +73,7 @@ namespace X11TestProject
 
         public Thread? Thread { get; private set; }
 
-        public WindowThread(IPalComponent layer, float phase)
+        public WindowThread(ComponentSet layer, float phase)
         {
             _layer = layer;
             _phase = phase;
@@ -96,18 +106,17 @@ namespace X11TestProject
             {
                 window = WindowComponent.Create(new OpenGLGraphicsApiHints());
                 context = OpenGLComponent.CreateFromWindow(window);
-                X11AbstractionLayer layer = (X11AbstractionLayer)_layer;
                 XWindowHandle wnd = (XWindowHandle)window;
 
-                XSelectInput(layer.Display, wnd.Window, XEventMask.All);
-                XMapRaised(layer.Display, wnd.Window);
+                XSelectInput(X11.Display, wnd.Window, XEventMask.All);
+                XMapRaised(X11.Display, wnd.Window);
             });
 
             MultiThreadExample.XTasks.Enqueue(invokeX11Actions);
             await invokeX11Actions;
 
             OpenGLComponent.SetCurrentContext(context);
-            GLLoader.LoadBindings(new Program.TestBindingsContext(_layer, context));
+            GLLoader.LoadBindings(OpenGLComponent.GetBindingsContext(context!));
 
             _watch.Start();
             for (;;)
@@ -120,7 +129,7 @@ namespace X11TestProject
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
                 await MultiThreadExample.Invoke(
-                    new Task(() => glXSwapBuffers((_layer as X11AbstractionLayer).Display, (window as XWindowHandle).Window))
+                    new Task(() => glXSwapBuffers(X11.Display, (window as XWindowHandle).Window))
                     );
             }
         }

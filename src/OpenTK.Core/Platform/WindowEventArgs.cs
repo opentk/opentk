@@ -11,6 +11,8 @@ namespace OpenTK.Core.Platform
     {
     }
 
+    // FIXME: Add WindowDisplayChangedEvent??
+
     public class FocusEventArgs : WindowEventArgs
     {
         public bool GotFocus { get; private set; }

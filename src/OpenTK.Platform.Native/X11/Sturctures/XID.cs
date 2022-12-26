@@ -100,6 +100,8 @@ namespace OpenTK.Platform.Native.X11
 
         public static readonly XPixMap None = new XPixMap(0);
 
+        public static readonly XPixMap ParentRelative = new XPixMap(1);
+
         public XPixMap(ulong id)
         {
             Id = id;

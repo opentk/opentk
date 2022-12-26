@@ -5,13 +5,63 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public partial class X11AbstractionLayer : IWindowComponent
+    public class X11WindowComponent : IWindowComponent
     {
+        public string Name => nameof(X11WindowComponent);
+
+        public PalComponents Provides => PalComponents.Window;
+
+        public ILogger? Logger { get; set; }
+
+        private unsafe int XErrorHandler(XDisplayPtr display, XErrorEvent* error_event)
+        {
+            Console.WriteLine($"{error_event->type} error! S: {error_event->serial} Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}");
+
+            return error_event->error_code;
+        }
+
+        public void Initialize(PalComponents which)
+        {
+            if ((which & ~Provides) != 0)
+            {
+                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
+            }
+
+            // Later on we can replace this with a hint.
+            string? displayName = null;
+            X11.Display = XOpenDisplay(displayName);
+
+            if (X11.Display.Value == IntPtr.Zero)
+            {
+                throw new PalException(this, (displayName is null) ? "Could not open default X display." : $"Could not open X display {displayName}.");
+            }
+
+            unsafe
+            {
+                XSetErrorHandler(XErrorHandler);
+            }
+
+            X11.DefaultScreen = XDefaultScreen(X11.Display);
+            X11.DefaultRootWindow = XDefaultRootWindow(X11.Display);
+
+            X11.Atoms = new XAtomDictionary(X11.Display);
+
+            Debug.Write($"Known Atoms ({X11.Atoms.Count}) ", "PAL2.0/Linux/X11");
+            foreach (var (key, value) in X11.Atoms)
+            {
+                Debug.WriteIf(!value.IsNone, key + " ");
+            }
+            Debug.WriteLine("");
+
+            InitializeWindow();
+        }
+
         public bool CanSetIcon => false;
         public bool CanGetDisplay => false;
         public bool CanSetCursor => false;
@@ -41,29 +91,29 @@ namespace OpenTK.Platform.Native.X11
             // name of the Window Manager.
 
             XWindow wm_window;
-            XAtom _net_supported = _atoms![KnownAtoms._NET_SUPPORTED];
-            XAtom _net_supporting_wm_check = _atoms![KnownAtoms._NET_SUPPORTING_WM_CHECK];
-            XAtom _net_wm_name = _atoms![KnownAtoms._NET_WM_NAME];
-            XAtom atom = _atoms![KnownAtoms.ATOM];
-            XAtom utf8_string = _atoms![KnownAtoms.UTF8_STRING];
-            XAtom window = _atoms![KnownAtoms.WINDOW];
+            XAtom _net_supported = X11.Atoms![KnownAtoms._NET_SUPPORTED];
+            XAtom _net_supporting_wm_check = X11.Atoms[KnownAtoms._NET_SUPPORTING_WM_CHECK];
+            XAtom _net_wm_name = X11.Atoms[KnownAtoms._NET_WM_NAME];
+            XAtom atom = X11.Atoms[KnownAtoms.ATOM];
+            XAtom utf8_string = X11.Atoms[KnownAtoms.UTF8_STRING];
+            XAtom window = X11.Atoms[KnownAtoms.WINDOW];
             IntPtr array;
             long count;
 
-            XGetWindowProperty(Display, DefaultRootWindow, _net_supporting_wm_check, 0, 8, false, window, out _, out _, out count, out _, out array);
+            XGetWindowProperty(X11.Display, X11.DefaultRootWindow, _net_supporting_wm_check, 0, 8, false, window, out _, out _, out count, out _, out array);
 
             if (count > 0)
             {
                 wm_window = Marshal.PtrToStructure<XWindow>(array);
                 XFree(array);
 
-                XGetWindowProperty(Display, wm_window, _net_supporting_wm_check, 0, 8, false, window, out _, out _, out count, out _, out array);
+                XGetWindowProperty(X11.Display, wm_window, _net_supporting_wm_check, 0, 8, false, window, out _, out _, out count, out _, out array);
                 if (count > 0 && wm_window.Id == Marshal.PtrToStructure<XWindow>(array).Id)
                 {
                     IsWindowManagerFreedesktop = true;
                     XFree(array);
                     XGetWindowProperty(
-                        Display,
+                        X11.Display,
                         wm_window,
                         _net_wm_name,
                         0,
@@ -100,7 +150,7 @@ namespace OpenTK.Platform.Native.X11
                 // Find which window styles and modes are supported.
                 HashSet<XAtom> supportedAtoms = new HashSet<XAtom>();
 
-                XGetWindowProperty(Display, DefaultRootWindow, _net_supported, 0, long.MaxValue, false, atom, out _, out _, out count, out _, out array);
+                XGetWindowProperty(X11.Display, X11.DefaultRootWindow, _net_supported, 0, long.MaxValue, false, atom, out _, out _, out count, out _, out array);
                 for (int i = 0; i < count; i++)
                 {
                     supportedAtoms.Add(Marshal.PtrToStructure<XAtom>(array + Unsafe.SizeOf<XAtom>()*i));
@@ -112,7 +162,16 @@ namespace OpenTK.Platform.Native.X11
 
         public void ProcessEvents(bool waitForEvents = false)
         {
-            throw new NotImplementedException();
+            // FIXME: waitForEvents!
+
+            //throw new NotImplementedException();
+            XEvent ea = new XEvent();
+            while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
+            {
+                XNextEvent(X11.Display, out ea);
+                Console.WriteLine(ea.Type);
+                Debug.Print(ea.Type.ToString());
+            }
         }
 
         public WindowHandle Create(GraphicsApiHints hints)
@@ -121,7 +180,7 @@ namespace OpenTK.Platform.Native.X11
             GLXFBConfig? chosenConfig = null;
             XColorMap? map = null;
 
-            if (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES)
+            if (false && (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES))
             {
                 // Ignoring ES for now.
                 OpenGLGraphicsApiHints glhints = (hints as OpenGLGraphicsApiHints)!;
@@ -163,7 +222,7 @@ namespace OpenTK.Platform.Native.X11
                 int items = visualAttribs.Length;
                 unsafe
                 {
-                    GLXFBConfig *configs = glXChooseFBConfig(Display, DefaultScreen, ref visualAttribs[0], ref items);
+                    GLXFBConfig *configs = glXChooseFBConfig(X11.Display, X11.DefaultScreen, ref visualAttribs[0], ref items);
                     chosenConfig = *configs;
                     XFree((IntPtr)configs);
                 }
@@ -171,20 +230,20 @@ namespace OpenTK.Platform.Native.X11
                 XSetWindowAttributes windowAttributes = new XSetWindowAttributes();
                 unsafe
                 {
-                    XVisualInfo* vi = glXGetVisualFromFBConfig(Display, chosenConfig.Value);
-                    map = XCreateColormap(Display, XDefaultRootWindow(Display), ref *vi->VisualPtr, 0);
+                    XVisualInfo* vi = glXGetVisualFromFBConfig(X11.Display, chosenConfig.Value);
+                    map = XCreateColormap(X11.Display, XDefaultRootWindow(X11.Display), ref *vi->VisualPtr, 0);
 
                     windowAttributes.ColorMap = map.Value;
                     windowAttributes.BackgroundPixmap = XPixMap.None;
                     windowAttributes.BorderPixel = 0;
-                    windowAttributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify;
+                    windowAttributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify | XEventMask.Exposure | XEventMask.VisibilityChanged;
 
                     window = XCreateWindow(
-                        Display,
-                        XDefaultRootWindow(Display),
+                        X11.Display,
+                        XDefaultRootWindow(X11.Display),
                         0,
                         0,
-                        800,
+                        800, // FIXME: Initial size should be 0, or the win32 backend should have it's defaults modified.
                         600,
                         0,
                         vi->Depth,
@@ -198,11 +257,22 @@ namespace OpenTK.Platform.Native.X11
             }
             else
             {
-                throw new PalException(this, "Cannot create a X11 window without a graphics API.");
+                XSetWindowAttributes attributes = default;
+                attributes.BorderPixel = XBlackPixel(X11.Display, X11.DefaultScreen);
+                attributes.BackgroundPixel = XWhitePixel(X11.Display, X11.DefaultScreen);
+                attributes.OverrideRedirect = 1;
+                attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
+                attributes.EventMask = XEventMask.Exposure;
+
+                window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 0, 0, 600, 800, 0, 0, 1, ref Unsafe.NullRef<XVisual>(),
+                    XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
+                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, ref attributes);
+
+                //throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
 
             XSetStandardProperties(
-                Display,
+                X11.Display,
                 window,
                 "OpenTK Window [Native:X11]",
                 "ICO_OPENTK",
@@ -211,7 +281,16 @@ namespace OpenTK.Platform.Native.X11
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
 
-            return new XWindowHandle(Display, window, hints, chosenConfig, map);
+            // FIXME: Find a place for this:
+            XSelectInput(
+                    X11.Display, window,
+                    XEventMask.StructureNotify |
+                    XEventMask.SubstructureNotify |
+                    XEventMask.VisibilityChanged |
+                    XEventMask.Exposure
+                    );
+            
+            return new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
         }
 
         public void Destroy(WindowHandle handle)
@@ -243,11 +322,11 @@ namespace OpenTK.Platform.Native.X11
             int status = XGetWindowProperty(
                     window.Display,
                     window.Window,
-                    _atoms![KnownAtoms._NET_WM_NAME],
+                    X11.Atoms![KnownAtoms._NET_WM_NAME],
                     0,
                     long.MaxValue,
                     false,
-                    _atoms![KnownAtoms.UTF8_STRING],
+                    X11.Atoms![KnownAtoms.UTF8_STRING],
                     out XAtom returnedType,
                     out _,
                     out long count,
@@ -280,8 +359,8 @@ namespace OpenTK.Platform.Native.X11
                     XChangeProperty(
                         window.Display,
                         window.Window,
-                        _atoms![KnownAtoms._NET_WM_NAME],
-                        _atoms![KnownAtoms.UTF8_STRING],
+                        X11.Atoms![KnownAtoms._NET_WM_NAME],
+                        X11.Atoms![KnownAtoms.UTF8_STRING],
                         8,
                         XPropertyMode.Replace,
                         (IntPtr)titlePtr,
@@ -301,22 +380,17 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        private void GetWindowExtents(
-            WindowHandle handle,
-            out int left,
-            out int right,
-            out int top,
-            out int bottom)
+        private void GetWindowExtents(WindowHandle handle, out int left, out int right, out int top, out int bottom)
         {
             var window = handle.As<XWindowHandle>(this);
             XGetWindowProperty(
                 window.Display,
                 window.Window,
-                _atoms![KnownAtoms._NET_FRAME_EXTENTS],
+                X11.Atoms![KnownAtoms._NET_FRAME_EXTENTS],
                 0,
                 long.MaxValue,
                 false,
-                _atoms![KnownAtoms.CARDINAL],
+                X11.Atoms![KnownAtoms.CARDINAL],
                 out _,
                 out _,
                 out long count,
@@ -356,7 +430,9 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetPosition(WindowHandle handle, int x, int y)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XMoveWindow(X11.Display, xwindow.Window, x, y);
         }
 
         public void GetSize(WindowHandle handle, out int width, out int height)
@@ -373,7 +449,9 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetSize(WindowHandle handle, int width, int height)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XResizeWindow(X11.Display, xwindow.Window, width, height);
         }
 
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
@@ -383,7 +461,7 @@ namespace OpenTK.Platform.Native.X11
             XTranslateCoordinates(
                 window.Display,
                 window.Window,
-                DefaultRootWindow,
+                X11.DefaultRootWindow,
                 attributes.X,
                 attributes.Y,
                 out x,
@@ -416,7 +494,19 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XSizeHints hints = default;
+            // We default these to max values so that leaving one as null
+            // effectively means not having a max.
+            hints.MaxWidth = width ?? int.MaxValue;
+            hints.MinHeight = height ?? int.MaxValue;
+
+            // If we have either a max width or max height, we specify it.
+            if (width != null || height != null)
+                hints.Flags = XSizeHintFlags.MaxSize;
+
+            XSetWMNormalHints(X11.Display, xwindow.Window, ref hints);
         }
 
         public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
@@ -426,7 +516,17 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetMinClientSize(WindowHandle handle, int? width, int? height)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XSizeHints hints = default;
+            hints.MinWidth = width ?? 0;
+            hints.MinHeight = height ?? 0;
+
+            // If we have either a min width or min height, we specify it.
+            if (width != null || height != null)
+                hints.Flags = XSizeHintFlags.MinSize;
+
+            XSetWMNormalHints(X11.Display, xwindow.Window, ref hints);
         }
 
         public DisplayHandle GetDisplay(WindowHandle handle)
@@ -441,7 +541,23 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            switch (mode)
+            {
+                case WindowMode.Normal:
+                    // FIXME! Not Raised, XMapWindow instead!
+                    XClearWindow(X11.Display, xwindow.Window);
+                    XMapRaised(X11.Display, xwindow.Window);
+                    break;
+                case WindowMode.Hidden:
+                case WindowMode.Minimized:
+                case WindowMode.Maximized:
+                case WindowMode.WindowedFullscreen:
+                case WindowMode.ExclusiveFullscreen:
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public WindowStyle GetBorderStyle(WindowHandle handle)
@@ -464,7 +580,7 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        public void SetCursor(WindowHandle handle, CursorHandle cursor)
+        public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             throw new NotImplementedException();
         }
