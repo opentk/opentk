@@ -28,10 +28,12 @@ namespace OpenTK.Platform.Tests
             glComp.Initialize(PalComponents.OpenGL);
 
             WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
-            //OpenGLContextHandle context = glComp.CreateFromWindow(window);
-            //glComp.SetCurrentContext(context);
+            OpenGLContextHandle context = glComp.CreateFromWindow(window);
+            glComp.SetCurrentContext(context);
 
-            windowComp.SetSize(window, 800, 600);
+            windowComp.SetSize(window, 400, 400);
+            windowComp.SetPosition(window, 100, 100);
+            windowComp.SetMinClientSize(window, 300, 300);
             windowComp.SetMode(window, WindowMode.Normal);
 
             while (windowComp.IsWindowDestroyed(window) == false)

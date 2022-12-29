@@ -180,7 +180,7 @@ namespace OpenTK.Platform.Native.X11
             GLXFBConfig? chosenConfig = null;
             XColorMap? map = null;
 
-            if (false && (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES))
+            if (hints.Api == GraphicsApi.OpenGL || hints.Api == GraphicsApi.OpenGLES)
             {
                 // Ignoring ES for now.
                 OpenGLGraphicsApiHints glhints = (hints as OpenGLGraphicsApiHints)!;
@@ -268,7 +268,7 @@ namespace OpenTK.Platform.Native.X11
                     XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
                     XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, ref attributes);
 
-                //throw new PalException(this, "Cannot create a X11 window without a graphics API.");
+                throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
 
             XSetStandardProperties(
@@ -518,13 +518,17 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XSizeHints hints = default;
+            XGetWMNormalHints(X11.Display, xwindow.Window, out XSizeHints hints, out _);
+
             hints.MinWidth = width ?? 0;
             hints.MinHeight = height ?? 0;
 
             // If we have either a min width or min height, we specify it.
+            // And if both are null we remove the flag.
             if (width != null || height != null)
-                hints.Flags = XSizeHintFlags.MinSize;
+                hints.Flags |= XSizeHintFlags.MinSize;
+            else
+                hints.Flags &= ~XSizeHintFlags.MinSize;
 
             XSetWMNormalHints(X11.Display, xwindow.Window, ref hints);
         }

@@ -73,6 +73,9 @@ namespace OpenTK.Platform.Native.X11
         public static extern void XSetWMNormalHints(XDisplayPtr display, XWindow w, ref XSizeHints hints);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, out XSizeHints hints_return, out int supplied_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, XEventMask events);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
