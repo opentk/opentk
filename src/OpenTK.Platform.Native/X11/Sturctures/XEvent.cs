@@ -15,6 +15,9 @@ namespace OpenTK.Platform.Native.X11
         [FieldOffset(0)]
         public XAnyEvent Any;
 
+        [FieldOffset(0)]
+        public XConfigureRequestEvent ConfigureRequest;
+
         #region XRandR
 
         [FieldOffset(0)]
@@ -51,5 +54,21 @@ namespace OpenTK.Platform.Native.X11
         public int SendEvent;
         public XDisplayPtr Display;
         public XWindow Window;
+    }
+
+    public struct XConfigureRequestEvent
+    {
+        public int Type;       /* ConfigureRequest */
+        public ulong Serial;   /* # of last request processed by server */
+        public bool SendEvent;    /* true if this came from a SendEvent request */
+        public XDisplayPtr Display;   /* Display the event was read from */
+        public XWindow Parent;
+        public XWindow Window;
+        public int X, Y;
+        public int Width, Height;
+        public int BorderWidth;
+        public XWindow Above;
+        public int Detail;     /* Above, Below, TopIf, BottomIf, Opposite */
+        public ulong ValueMask;
     }
 }

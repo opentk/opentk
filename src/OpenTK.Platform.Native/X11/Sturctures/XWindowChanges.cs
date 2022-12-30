@@ -8,10 +8,10 @@ namespace OpenTK.Platform.Native.X11
 {
     public struct XWindowChanges
     {
-        public int x, y;
-        public int width, height;
-        public int border_width;
-        public XWindow sibling;
-        public int stack_mode;
+        public int X, Y;
+        public int Width, Height;
+        public int BorderWidth;
+        public XWindow Sibling;
+        public int StackMode; // FIXME: Enum
     }
 }

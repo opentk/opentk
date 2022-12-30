@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using static OpenTK.Platform.Native.X11.GLX;
@@ -25,7 +26,14 @@ namespace OpenTK.Platform.Native.X11
         {
             Console.WriteLine($"{error_event->type} error! S: {error_event->serial} Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}");
 
-            return error_event->error_code;
+            StringBuilder errorMessage = new StringBuilder(1024);
+            XGetErrorText(X11.Display, (int)error_event->error_code, errorMessage, errorMessage.Capacity);
+
+            byte* data = (byte*)error_event;
+
+            Console.WriteLine($"Error: {errorMessage}");
+
+            return (int)error_event->error_code;
         }
 
         public void Initialize(PalComponents which)
@@ -174,6 +182,23 @@ namespace OpenTK.Platform.Native.X11
                 XNextEvent(X11.Display, out ea);
                 Console.WriteLine(ea.Type);
                 Debug.Print(ea.Type.ToString());
+
+                if (ea.Type == XEventType.ConfigureRequest)
+                {
+                    ref XConfigureRequestEvent configureRequest = ref ea.ConfigureRequest;
+
+                    XWindowChanges changes;
+                    changes.X = configureRequest.X;
+                    changes.Y = configureRequest.Y;
+                    changes.Width = configureRequest.Width;
+                    changes.Height = configureRequest.Height;
+                    changes.BorderWidth = configureRequest.BorderWidth;
+                    changes.Sibling = configureRequest.Above;
+                    changes.StackMode = configureRequest.Detail;
+
+                    XConfigureWindow(X11.Display, configureRequest.Window, (XWindowChangesMask)configureRequest.ValueMask, ref changes);
+                    Console.WriteLine("Configure window!");
+                }
             }
         }
 

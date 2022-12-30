@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -21,6 +22,9 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XSetErrorHandler(XErrorHandler handler);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XGetErrorText(XDisplayPtr display, int code, [Out, MarshalAs(UnmanagedType.LPUTF8Str)] StringBuilder buffer_return, int length);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string? name);
