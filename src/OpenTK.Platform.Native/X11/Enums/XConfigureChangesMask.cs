@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.X11
 {
+    [Flags]
     public enum XWindowChangesMask
     {
         CWX = (1<<0),

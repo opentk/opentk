@@ -60,7 +60,7 @@ namespace OpenTK.Platform.Native.X11
     {
         public int Type;       /* ConfigureRequest */
         public ulong Serial;   /* # of last request processed by server */
-        public bool SendEvent;    /* true if this came from a SendEvent request */
+        public byte SendEvent;    /* true if this came from a SendEvent request */
         public XDisplayPtr Display;   /* Display the event was read from */
         public XWindow Parent;
         public XWindow Window;
