@@ -949,7 +949,7 @@ namespace OpenTK.Platform.Native.Windows
 
             // Call MoveWindow to trigger a recalculation of the window size.
             // MoveWindow causes WM_WINDOWPOSCHANGING to be sent which causes
-            // WM_GETMINMAXINFO to be sent.
+            // WM_GETMINMAXINFO to be sent, which handles min/max client size.
             Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT rect);
             Win32.MoveWindow(hwnd.HWnd, rect.left, rect.top, rect.Width, rect.Height, true);
         }
@@ -973,7 +973,7 @@ namespace OpenTK.Platform.Native.Windows
 
             // Call MoveWindow to trigger a recalculation of the window size.
             // MoveWindow causes WM_WINDOWPOSCHANGING to be sent which causes
-            // WM_GETMINMAXINFO to be sent.
+            // WM_GETMINMAXINFO to be sent, which handles min/max client size.
             Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT rect);
             Win32.MoveWindow(hwnd.HWnd, rect.left, rect.top, rect.Width, rect.Height, true);
         }
