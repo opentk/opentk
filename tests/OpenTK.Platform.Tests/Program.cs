@@ -1,5 +1,9 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
+using System.Diagnostics;
 
 namespace OpenTK.Platform.Tests
 {
@@ -30,15 +34,34 @@ namespace OpenTK.Platform.Tests
             WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
             OpenGLContextHandle context = glComp.CreateFromWindow(window);
             glComp.SetCurrentContext(context);
+            GLLoader.LoadBindings(glComp.GetBindingsContext(context));
 
-            windowComp.SetSize(window, 400, 400);
             windowComp.SetPosition(window, 100, 100);
+            windowComp.SetSize(window, 400, 400);
             windowComp.SetMinClientSize(window, 300, 300);
+            windowComp.SetMaxClientSize(window, 500, 500);
             windowComp.SetMode(window, WindowMode.Normal);
+
+            {
+                windowComp.GetMinClientSize(window, out int? minWidth, out int? minHeight);
+                Console.WriteLine($"Window min size: ({minWidth}, {minHeight})");
+            }
+
+            var watch = Stopwatch.StartNew();
 
             while (windowComp.IsWindowDestroyed(window) == false)
             {
                 windowComp.ProcessEvents();
+
+                if (watch.ElapsedMilliseconds > 1000)
+                {
+                    windowComp.FocusWindow(window);
+
+                    watch.Restart();
+                }
+
+                GL.ClearColor(Color4.Coral);
+                GL.Clear(ClearBufferMask.ColorBufferBit);
 
                 windowComp.SwapBuffers(window);
             }

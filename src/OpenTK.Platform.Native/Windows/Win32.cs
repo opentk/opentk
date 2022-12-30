@@ -217,6 +217,12 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool ReleaseCapture();
 
         [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool BringWindowToTop(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll")]
+        internal static extern bool SetForegroundWindow(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll")]

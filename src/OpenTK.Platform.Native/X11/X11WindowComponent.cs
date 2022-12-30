@@ -19,6 +19,8 @@ namespace OpenTK.Platform.Native.X11
 
         public ILogger? Logger { get; set; }
 
+        private unsafe XErrorHandler ErrorHandler;
+
         private unsafe int XErrorHandler(XDisplayPtr display, XErrorEvent* error_event)
         {
             Console.WriteLine($"{error_event->type} error! S: {error_event->serial} Error code: {error_event->error_code}, Request code: {error_event->request_code}, Minor code: {error_event->minor_code}");
@@ -44,7 +46,8 @@ namespace OpenTK.Platform.Native.X11
 
             unsafe
             {
-                XSetErrorHandler(XErrorHandler);
+                ErrorHandler = XErrorHandler;
+                XSetErrorHandler(ErrorHandler);
             }
 
             X11.DefaultScreen = XDefaultScreen(X11.Display);
@@ -260,7 +263,7 @@ namespace OpenTK.Platform.Native.X11
                 XSetWindowAttributes attributes = default;
                 attributes.BorderPixel = XBlackPixel(X11.Display, X11.DefaultScreen);
                 attributes.BackgroundPixel = XWhitePixel(X11.Display, X11.DefaultScreen);
-                attributes.OverrideRedirect = 1;
+                attributes.OverrideRedirect = 0;
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
                 attributes.EventMask = XEventMask.Exposure;
 
@@ -487,50 +490,102 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
+        public unsafe void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XSizeHints hints = default;
+            XSizeHints* hints = XAllocSizeHints();
+
+            XSizeHintFlags supplied;
+            XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
+            if ((hints->Flags & XSizeHintFlags.MaxSize) == XSizeHintFlags.MaxSize)
+            {
+                // FIXME: We have no good way of setting one of these to null if they where set to null.
+                width = hints->MaxWidth;
+                height = hints->MaxHeight;
+            }
+            else
+            {
+                width = null;
+                height = null;
+            }
+
+            XFree(hints);
+        }
+
+        public unsafe void SetMaxClientSize(WindowHandle handle, int? width, int? height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XSizeHints* hints = XAllocSizeHints();
+
+            XSizeHintFlags supplied;
+            XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
             // We default these to max values so that leaving one as null
             // effectively means not having a max.
-            hints.MaxWidth = width ?? int.MaxValue;
-            hints.MinHeight = height ?? int.MaxValue;
+            hints->MaxWidth = width ?? int.MaxValue;
+            hints->MaxHeight = height ?? int.MaxValue;
 
             // If we have either a max width or max height, we specify it.
+            // And if both are null we remove the flag.
             if (width != null || height != null)
-                hints.Flags = XSizeHintFlags.MaxSize;
+                hints->Flags |= XSizeHintFlags.MaxSize;
+            else
+                hints->Flags &= ~XSizeHintFlags.MaxSize;
 
-            XSetWMNormalHints(X11.Display, xwindow.Window, ref hints);
+            XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+
+            XFree(hints);
         }
 
-        public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetMinClientSize(WindowHandle handle, int? width, int? height)
+        public unsafe void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XGetWMNormalHints(X11.Display, xwindow.Window, out XSizeHints hints, out _);
+            XSizeHints* hints = XAllocSizeHints();
 
-            hints.MinWidth = width ?? 0;
-            hints.MinHeight = height ?? 0;
+            XSizeHintFlags supplied;
+            XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
+            if ((hints->Flags & XSizeHintFlags.MinSize) == XSizeHintFlags.MinSize)
+            {
+                // FIXME: We have no good way of setting one of these to null if they where set to null.
+                width = hints->MinWidth;
+                height = hints->MinHeight;
+            }
+            else
+            {
+                width = null;
+                height = null;
+            }
+
+            XFree(hints);
+        }
+
+        public unsafe void SetMinClientSize(WindowHandle handle, int? width, int? height)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XSizeHints* hints = XAllocSizeHints();
+
+            XSizeHintFlags supplied;
+            XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
+            hints->MinWidth = width ?? 0;
+            hints->MinHeight = height ?? 0;
 
             // If we have either a min width or min height, we specify it.
             // And if both are null we remove the flag.
             if (width != null || height != null)
-                hints.Flags |= XSizeHintFlags.MinSize;
+                hints->Flags |= XSizeHintFlags.MinSize;
             else
-                hints.Flags &= ~XSizeHintFlags.MinSize;
+                hints->Flags &= ~XSizeHintFlags.MinSize;
 
-            XSetWMNormalHints(X11.Display, xwindow.Window, ref hints);
+            XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+
+            XFree(hints);
         }
 
         public DisplayHandle GetDisplay(WindowHandle handle)
@@ -574,12 +629,12 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        void IWindowComponent.SetAlwaysOnTop(WindowHandle handle, bool floating)
+        public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             throw new NotImplementedException();
         }
 
-        bool IWindowComponent.IsAlwaysOnTop(WindowHandle handle)
+        public bool IsAlwaysOnTop(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
@@ -591,7 +646,10 @@ namespace OpenTK.Platform.Native.X11
 
         public void FocusWindow(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XRaiseWindow(X11.Display, xwindow.Window);
+            XSetInputFocus(X11.Display, xwindow.Window, RevertTo.RevertToPointerRoot, XTime.CurrentTime);
         }
 
         public void RequestAttention(WindowHandle handle)

@@ -1189,6 +1189,15 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            bool success;
+            success = Win32.BringWindowToTop(hwnd.HWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            Win32.SetForegroundWindow(hwnd.HWnd);
+
             // If SetFocus returns NULL and last error is Success we don't throw an exception.
             // https://stackoverflow.com/questions/24073695/winapi-can-setfocus-return-null-without-an-error-because-thats-what-im-see
             IntPtr prev = Win32.SetFocus(hwnd.HWnd);

@@ -70,10 +70,13 @@ namespace OpenTK.Platform.Native.X11
         public static extern void XResizeWindow(XDisplayPtr display, XWindow w, int width, int height);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void XSetWMNormalHints(XDisplayPtr display, XWindow w, ref XSizeHints hints);
+        public static unsafe extern void XSetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, out XSizeHints hints_return, out int supplied_return);
+        public static unsafe extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints_return, XSizeHintFlags* supplied_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XSizeHints* XAllocSizeHints();
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, XEventMask events);
@@ -122,6 +125,9 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XFree(IntPtr pointer);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern int XFree(void* pointer);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XColorMap XCreateColormap(
@@ -212,5 +218,14 @@ namespace OpenTK.Platform.Native.X11
             IntPtr data,
             int elements
         );
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XSetInputFocus(XDisplayPtr display, XWindow focus, RevertTo revert_to, XTime time);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XRaiseWindow(XDisplayPtr display, XWindow w);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XFlush(XDisplayPtr display);
     }
 }

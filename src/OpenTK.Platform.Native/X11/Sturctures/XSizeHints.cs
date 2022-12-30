@@ -1,5 +1,8 @@
+using System.Runtime.InteropServices;
+
 namespace OpenTK.Platform.Native.X11
 {
+    [StructLayout(LayoutKind.Sequential, Pack = 0)]
     public struct XSizeHints
     {
         public XSizeHintFlags Flags;
