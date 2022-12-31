@@ -18,6 +18,9 @@ namespace OpenTK.Platform.Native.X11
         [FieldOffset(0)]
         public XConfigureRequestEvent ConfigureRequest;
 
+        [FieldOffset(0)]
+        public XClientMessageEvent ClientMessage;
+
         #region XRandR
 
         [FieldOffset(0)]
@@ -70,5 +73,20 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Above;
         public int Detail;     /* Above, Below, TopIf, BottomIf, Opposite */
         public ulong ValueMask;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe struct XClientMessageEvent
+    {
+        [FieldOffset(0) ] public int Type;           /* ClientMessage */
+        [FieldOffset(8) ] public ulong Serial;       /* # of last request processed by server */
+        [FieldOffset(16)] public byte SendEvent;        /* true if this came from a SendEvent request */
+        [FieldOffset(24)] public XDisplayPtr Display;       /* Display the event was read from */
+        [FieldOffset(32)] public XWindow Window;
+        [FieldOffset(40)] public XAtom MessageType;
+        [FieldOffset(48)] public int Format;
+        [FieldOffset(56)] public fixed byte b[20];
+        [FieldOffset(56)] public fixed short s[10];
+        [FieldOffset(56)] public fixed long l[5];
     }
 }

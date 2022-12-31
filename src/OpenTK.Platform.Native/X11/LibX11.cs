@@ -231,5 +231,8 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern void XFlush(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int /* Status */ XSetWMProtocols(XDisplayPtr display, XWindow w, [In] XAtom[] protocols, int count);
     }
 }

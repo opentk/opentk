@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using OpenTK.Platform.Native.Windows;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
 
@@ -35,6 +36,8 @@ namespace OpenTK.Platform.Native.X11
 
             return (int)error_event->error_code;
         }
+
+        internal static readonly Dictionary<XWindow, XWindowHandle> XWindowDict = new Dictionary<XWindow, XWindowHandle>();
 
         public void Initialize(PalComponents which)
         {
@@ -175,12 +178,10 @@ namespace OpenTK.Platform.Native.X11
         {
             // FIXME: waitForEvents!
 
-            //throw new NotImplementedException();
             XEvent ea = new XEvent();
             while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
             {
                 XNextEvent(X11.Display, out ea);
-                Console.WriteLine(ea.Type);
                 Debug.Print(ea.Type.ToString());
 
                 if (ea.Type == XEventType.ConfigureRequest)
@@ -196,8 +197,24 @@ namespace OpenTK.Platform.Native.X11
                     changes.Sibling = configureRequest.Above;
                     changes.StackMode = configureRequest.Detail;
 
-                    XConfigureWindow(X11.Display, configureRequest.Window, (XWindowChangesMask)configureRequest.ValueMask, ref changes);
+                    //XConfigureWindow(X11.Display, configureRequest.Window, (XWindowChangesMask)configureRequest.ValueMask, ref changes);
                     Console.WriteLine("Configure window!");
+                }
+                else if (ea.Type == XEventType.ClientMessage)
+                {
+                    XClientMessageEvent clientMessage = ea.ClientMessage;
+
+                    unsafe
+                    {
+                        if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
+                        {
+                            Console.WriteLine("Delete window!");
+
+                            XWindowHandle xwindow = XWindowDict[clientMessage.Window];
+
+                            EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
+                        }
+                    }
                 }
             }
         }
@@ -309,6 +326,9 @@ namespace OpenTK.Platform.Native.X11
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
 
+            // Register to deletion events
+            XSetWMProtocols(X11.Display, window, new XAtom[] { X11.Atoms[KnownAtoms.WM_DELETE_WINDOW] }, 1);
+
             // FIXME: Find a place for this:
             XSelectInput(
                     X11.Display, window,
@@ -317,14 +337,22 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.VisibilityChanged |
                     XEventMask.Exposure
                     );
-            
-            return new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
+
+            XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
+
+            XWindowDict.Add(handle.Window, handle);
+
+            return handle;
         }
 
         public void Destroy(WindowHandle handle)
         {
             var xhandle = handle.As<XWindowHandle>(this);
+
+            XWindowDict.Remove(xhandle.Window);
+
             XDestroyWindow(xhandle.Display, xhandle.Window);
+
             if (xhandle.ColorMap.HasValue)
             {
                 XFreeColormap(xhandle.Display, xhandle.ColorMap.Value);

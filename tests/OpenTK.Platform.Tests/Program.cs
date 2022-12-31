@@ -9,18 +9,19 @@ namespace OpenTK.Platform.Tests
 {
     internal class SimpleWindow
     {
+        static IWindowComponent windowComp;
+        static IOpenGLComponent glComp;
+
         static void Main(string[] args)
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
-            IWindowComponent windowComp;
             if (OperatingSystem.IsWindows())
                 windowComp = new Native.Windows.WindowComponent();
             else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
                 windowComp = new Native.X11.X11WindowComponent();
             else throw new Exception("OS not supported yet!");
 
-            IOpenGLComponent glComp;
             if (OperatingSystem.IsWindows())
                 glComp = new Native.Windows.OpenGLComponent();
             else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
@@ -70,6 +71,11 @@ namespace OpenTK.Platform.Tests
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             Console.WriteLine(type);
+
+            if (args is CloseEventArgs close)
+            {
+                windowComp.Destroy(close.Window);
+            }
         }
     }
 }

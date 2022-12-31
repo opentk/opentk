@@ -1,3 +1,5 @@
+using System;
+
 namespace OpenTK.Platform.Native.X11
 {
     public enum KnownAtoms
@@ -7,6 +9,13 @@ namespace OpenTK.Platform.Native.X11
         CARDINAL,
         UTF8_STRING,
         WINDOW,
+        #endregion
+
+        #region ICCCM
+        WM_TAKE_FOCUS,
+        [Obsolete]
+        WM_SAVE_YOURSELF,
+        WM_DELETE_WINDOW,
         #endregion
 
         #region Freedesktop Atoms
