@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
@@ -28,6 +29,10 @@ namespace OpenTK.Platform.Tests
                 glComp = new Native.X11.X11OpenGLComponent();
             else throw new Exception("OS not supported yet!");
 
+            var logger = new ConsoleLogger();
+            windowComp.Logger = logger;
+            glComp.Logger = logger;
+
             windowComp.Initialize(PalComponents.Window);
 
             glComp.Initialize(PalComponents.OpenGL);
@@ -42,6 +47,9 @@ namespace OpenTK.Platform.Tests
             windowComp.SetMinClientSize(window, 300, 300);
             windowComp.SetMaxClientSize(window, 500, 500);
             windowComp.SetMode(window, WindowMode.Normal);
+            windowComp.SetAlwaysOnTop(window, true);
+
+            windowComp.IsAlwaysOnTop(window);
 
             {
                 windowComp.GetMinClientSize(window, out int? minWidth, out int? minHeight);

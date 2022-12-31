@@ -684,12 +684,81 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE] == XAtom.None)
+            {
+                // FIXME: Add a feature bool to IWindowComponent?
+                Logger?.LogWarning("Can't make window always on top. The window manager doesn't support _NET_WM_STATE_ABOVE.");
+                return;
+            }
+
+            XEvent e = new XEvent();
+
+            ref XClientMessageEvent client = ref e.ClientMessage;
+
+            // See https://refspecs.linuxfoundation.org/LSB_3.1.0/LSB-Desktop-generic/LSB-Desktop-generic/libx11-ddefs.html
+            const int ClientMessage = 33;
+
+            /* remove/unset property */
+            const long _NET_WM_STATE_REMOVE = 0;
+            /* add/set property */
+            const long _NET_WM_STATE_ADD = 1;
+            /* toggle property  */
+            const long _NET_WM_STATE_TOGGLE = 2;
+
+            client.Type = ClientMessage;
+            client.Serial = 0;
+            client.SendEvent = 1;
+            client.Display = X11.Display;
+            client.Window = xwindow.Window;
+            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.Format = 32;
+            unsafe
+            {
+                client.l[0] = floating ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
+                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE].Id;
+                client.l[2] = 0;
+                client.l[3] = 0;
+                client.l[4] = 0;
+            }
+
+            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
         }
 
         public bool IsAlwaysOnTop(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't check if window is always on top. The window manager doesn't support _NET_WM_STATE_ABOVE.");
+                return false;
+            }
+
+            const long AnyPropertyType = 0;
+
+            // FIXME: This implementation is incomplete as I can't test it o wsl.
+            // - Noggin_bops 2022-12-31
+            int failed = XGetWindowProperty(
+                X11.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms._NET_WM_STATE],
+                0,
+                ~0,
+                false,
+                new XAtom(AnyPropertyType),
+                out XAtom actualType,
+                out int actualFormat,
+                out long numberOfItems,
+                out long remainingBytes,
+                out IntPtr contents);
+
+            string type = XGetAtomName(X11.Display, actualType);
+
+            Console.WriteLine($"type: {type}");
+
+            return false;
         }
 
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)

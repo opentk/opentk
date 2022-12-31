@@ -193,7 +193,8 @@ namespace OpenTK.Platform.Native.X11
             ref XAtom atoms);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr XGetAtomName(XDisplayPtr display, XAtom atom);
+        [return: MarshalAs(UnmanagedType.LPUTF8Str)]
+        public static extern string XGetAtomName(XDisplayPtr display, XAtom atom);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XGetWindowProperty(
