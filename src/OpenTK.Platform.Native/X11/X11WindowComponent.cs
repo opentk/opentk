@@ -753,7 +753,10 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            XCursorHandle? xcursor = cursor?.As<XCursorHandle>(this);
+
+            XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? XCursor.None);
         }
 
         public void FocusWindow(WindowHandle handle)

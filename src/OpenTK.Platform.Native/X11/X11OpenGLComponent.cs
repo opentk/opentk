@@ -110,7 +110,7 @@ namespace OpenTK.Platform.Native.X11
         public Version? GLXServerVersion { get; private set; }
         public Version? GLXClientVersion { get; private set; }
 
-        private static ConcurrentDictionary<GLXContext, XOpenGLContextHandle> s_handles = new ConcurrentDictionary<GLXContext, XOpenGLContextHandle>();
+        private static Dictionary<GLXContext, XOpenGLContextHandle> s_handles = new Dictionary<GLXContext, XOpenGLContextHandle>();
 
         private delegate IntPtr glXGetProcAddressProc(string procName);
 
@@ -124,8 +124,12 @@ namespace OpenTK.Platform.Native.X11
 
         public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
-            var window = handle.As<XWindowHandle>(this);
-            OpenGLGraphicsApiHints hints = window.GraphicsApiHints as OpenGLGraphicsApiHints;
+            XWindowHandle window = handle.As<XWindowHandle>(this);
+            OpenGLGraphicsApiHints? hints = window.GraphicsApiHints as OpenGLGraphicsApiHints;
+            if (hints == null)
+            {
+                throw new PalException(this, $"Invalid graphics api hints. Got settings of type: {window.GraphicsApiHints?.GetType().ToString() ?? "null"}");
+            }
 
             List<int> attribs = new List<int>()
             {
@@ -147,11 +151,7 @@ namespace OpenTK.Platform.Native.X11
                 });
             }
 
-            XOpenGLContextHandle? sharedContext = null;
-            if (hints.SharedContext is XOpenGLContextHandle contextHandle)
-            {
-                sharedContext = contextHandle;
-            }
+            XOpenGLContextHandle? sharedContext = hints.SharedContext as XOpenGLContextHandle;
 
             GLXContext context = s_glXCreateContextAttribARB(
                 window.Display,
@@ -160,7 +160,11 @@ namespace OpenTK.Platform.Native.X11
                 true,
                 ref CollectionsMarshal.AsSpan(attribs)[0]);
 
-            return new XOpenGLContextHandle(window.Display, context, window.Window, sharedContext);
+            XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, window.Window, sharedContext);
+
+            s_handles[contextHandle.Context] = contextHandle;
+
+            return contextHandle;
         }
 
         public void DestroyContext(OpenGLContextHandle handle)

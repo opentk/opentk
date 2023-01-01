@@ -12,6 +12,7 @@ namespace OpenTK.Platform.Tests
     {
         static IWindowComponent windowComp;
         static IOpenGLComponent glComp;
+        static ICursorComponent cursorComp;
 
         static void Main()
         {
@@ -29,6 +30,12 @@ namespace OpenTK.Platform.Tests
                 glComp = new Native.X11.X11OpenGLComponent();
             else throw new Exception("OS not supported yet!");
 
+            if (OperatingSystem.IsWindows())
+                cursorComp = new Native.Windows.CursorComponent();
+            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+                cursorComp = new Native.X11.X11CursorComponent();
+            else throw new Exception("OS not supported yet!");
+
             var logger = new ConsoleLogger();
             windowComp.Logger = logger;
             glComp.Logger = logger;
@@ -36,6 +43,8 @@ namespace OpenTK.Platform.Tests
             windowComp.Initialize(PalComponents.Window);
 
             glComp.Initialize(PalComponents.OpenGL);
+
+            cursorComp.Initialize(PalComponents.MouseCursor);
 
             WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
             OpenGLContextHandle context = glComp.CreateFromWindow(window);
@@ -61,6 +70,9 @@ namespace OpenTK.Platform.Tests
 
             var watch = Stopwatch.StartNew();
 
+            SystemCursorType cursor = SystemCursorType.Default;
+            CursorHandle cursorHandle = cursorComp.Create();
+
             while (windowComp.IsWindowDestroyed(window) == false)
             {
                 windowComp.ProcessEvents();
@@ -71,6 +83,13 @@ namespace OpenTK.Platform.Tests
                     windowComp.RequestAttention(window);
 
                     watch.Restart();
+
+                    cursorComp.Load(cursorHandle, cursor);
+                    windowComp.SetCursor(window, cursorHandle);
+
+                    cursor++;
+                    if (cursor > SystemCursorType.ArrowUp)
+                        cursor = SystemCursorType.Default;
                 }
                 
                 GL.ClearColor(Color4.Coral);

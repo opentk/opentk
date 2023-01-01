@@ -235,5 +235,14 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int /* Status */ XSetWMProtocols(XDisplayPtr display, XWindow w, [In] XAtom[] protocols, int count);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XCursor XCreateFontCursor(XDisplayPtr display, XCursorShape shape);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XDefineCursor(XDisplayPtr display, XWindow w, XCursor cursor);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XUndefineCursor(XDisplayPtr display, XWindow w);
     }
 }
