@@ -244,5 +244,32 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern void XUndefineCursor(XDisplayPtr display, XWindow w);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XFreeCursor(XDisplayPtr display, XCursor cursor);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte XQueryPointer(
+            XDisplayPtr display,
+            XWindow w,
+            out XWindow root_return,
+            out XWindow child_return,
+            out int root_x_return,
+            out int root_y_return,
+            out int win_x_return,
+            out int win_y_return,
+            out uint mask_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XWarpPointer(
+            XDisplayPtr display,
+            XWindow src_w,
+            XWindow dest_w,
+            int src_x,
+            int src_y,
+            uint src_width,
+            uint src_height,
+            int dest_x,
+            int dest_y);
     }
 }

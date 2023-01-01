@@ -13,6 +13,7 @@ namespace OpenTK.Platform.Tests
         static IWindowComponent windowComp;
         static IOpenGLComponent glComp;
         static ICursorComponent cursorComp;
+        static IMouseComponent mouseComp;
 
         static void Main()
         {
@@ -34,6 +35,12 @@ namespace OpenTK.Platform.Tests
                 cursorComp = new Native.Windows.CursorComponent();
             else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
                 cursorComp = new Native.X11.X11CursorComponent();
+            else throw new Exception("OS not supported yet!");
+
+            if (OperatingSystem.IsWindows())
+                mouseComp = new Native.Windows.MouseComponent();
+            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+                mouseComp = new Native.X11.X11MouseComponent();
             else throw new Exception("OS not supported yet!");
 
             var logger = new ConsoleLogger();
@@ -68,19 +75,24 @@ namespace OpenTK.Platform.Tests
                 Console.WriteLine($"Window min size: ({minWidth}, {minHeight})");
             }
 
-            var watch = Stopwatch.StartNew();
+            Stopwatch watch = Stopwatch.StartNew();
 
             SystemCursorType cursor = SystemCursorType.Default;
             CursorHandle cursorHandle = cursorComp.Create();
+
+            windowComp.SetCursor(window, cursorHandle);
 
             while (windowComp.IsWindowDestroyed(window) == false)
             {
                 windowComp.ProcessEvents();
 
-                if (watch.ElapsedMilliseconds > 1000)
+                if (windowComp.IsWindowDestroyed(window))
+                    break;
+
+                if (watch.ElapsedMilliseconds > 3000)
                 {
                     //windowComp.FocusWindow(window);
-                    windowComp.RequestAttention(window);
+                    //windowComp.RequestAttention(window);
 
                     watch.Restart();
 
@@ -91,6 +103,9 @@ namespace OpenTK.Platform.Tests
                     if (cursor > SystemCursorType.ArrowUp)
                         cursor = SystemCursorType.Default;
                 }
+
+                mouseComp.GetPosition(null, out int x, out int y);
+                windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
                 
                 GL.ClearColor(Color4.Coral);
                 GL.Clear(ClearBufferMask.ColorBufferBit);

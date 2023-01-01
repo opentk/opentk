@@ -44,7 +44,11 @@ namespace OpenTK.Platform.Native.X11
 
         public void Destroy(CursorHandle handle)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            XFreeCursor(X11.Display, xcursor.Cursor);
+
+            xcursor.Cursor = XCursor.None;
         }
 
         public void GetSize(CursorHandle handle, out int width, out int height)

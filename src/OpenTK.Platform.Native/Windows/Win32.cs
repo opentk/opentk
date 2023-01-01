@@ -161,6 +161,9 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /* LRESULT */ SendMessage(IntPtr /* HWND */ hWnd, WM Msg, UIntPtr /* WPARAM */ wParam, IntPtr /* LPARAM */ lParam);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool PostMessage(IntPtr /* HWND */ hWnd, WM Msg, UIntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll")]
         internal static extern void PostQuitMessage(int nExitCode);
 
@@ -209,6 +212,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool SetCursorPos(int X, int Y);
+
+        [DllImport("user32.dll")]
+        internal static extern int ShowCursor(bool bShow);
 
         [DllImport("user32.dll")]
         internal static extern IntPtr /* HWND */ SetCapture(IntPtr /* HWND */ hWnd);
