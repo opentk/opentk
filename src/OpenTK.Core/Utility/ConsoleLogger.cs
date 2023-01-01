@@ -36,7 +36,7 @@ namespace OpenTK.Core.Utility
 
             // Example format:
             // [Warning] Method ConsoleLogger.cs:123 <Message>
-            writer.Write($"[{level}] {member} {Path.GetDirectoryName(fileName)}:{line} ");
+            writer.Write($"[{level}] {member} {Path.GetFileName(fileName)}:{line} ");
             writer.WriteLine(str);
         }
     }

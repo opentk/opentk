@@ -18,24 +18,7 @@ namespace OpenTK.Platform.Native.X11
         public void Initialize(PalComponents which)
         {
             // FIXME
-            //throw new NotImplementedException();
-            InitializeDisplay();
-        }
 
-        // TODO: Write Xinerama fallback.
-
-        public bool CanSetVideoMode { get; } = false;
-        public bool CanGetVirtualPosition { get; } = false;
-        public bool CanGetDisplaySize { get; } = false;
-
-        public DisplayExtensionType DisplayExtension { get; private set; } = DisplayExtensionType.None;
-
-        public Version DisplayExtensionVersion { get; private set; }
-
-        public unsafe XRRScreenConfiguration* XrrScreenConfiguration = null;
-
-        private void InitializeDisplay()
-        {
             // In X11, we have a priority list of extensions and methods we can use.
             // 1. Use the X Rotate and Reflect extension.
             // 2. Fallback to Xinerama extension.
@@ -65,6 +48,18 @@ namespace OpenTK.Platform.Native.X11
                 $"{DisplayExtension} version {DisplayExtensionVersion}",
                 "PAL2.0/Linux/X11/Display");
         }
+
+        // TODO: Write Xinerama fallback.
+
+        public bool CanSetVideoMode { get; } = false;
+        public bool CanGetVirtualPosition { get; } = false;
+        public bool CanGetDisplaySize { get; } = false;
+
+        public DisplayExtensionType DisplayExtension { get; private set; } = DisplayExtensionType.None;
+
+        public Version DisplayExtensionVersion { get; private set; }
+
+        public unsafe XRRScreenConfiguration* XrrScreenConfiguration = null;
 
         public int GetDisplayCount()
         {

@@ -3,7 +3,7 @@ using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native;
+using System;
 using System.Diagnostics;
 
 namespace OpenTK.Platform.Tests
@@ -13,7 +13,7 @@ namespace OpenTK.Platform.Tests
         static IWindowComponent windowComp;
         static IOpenGLComponent glComp;
 
-        static void Main(string[] args)
+        static void Main()
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
@@ -42,6 +42,9 @@ namespace OpenTK.Platform.Tests
             glComp.SetCurrentContext(context);
             GLLoader.LoadBindings(glComp.GetBindingsContext(context));
 
+            glComp.SetSwapInterval(1);
+            int swap = glComp.GetSwapInterval();
+
             windowComp.SetPosition(window, 100, 100);
             windowComp.SetSize(window, 400, 400);
             windowComp.SetMinClientSize(window, 300, 300);
@@ -64,11 +67,12 @@ namespace OpenTK.Platform.Tests
 
                 if (watch.ElapsedMilliseconds > 1000)
                 {
-                    windowComp.FocusWindow(window);
+                    //windowComp.FocusWindow(window);
+                    windowComp.RequestAttention(window);
 
                     watch.Restart();
                 }
-
+                
                 GL.ClearColor(Color4.Coral);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 

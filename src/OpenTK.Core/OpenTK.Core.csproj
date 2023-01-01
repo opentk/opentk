@@ -3,6 +3,8 @@
     <TargetFrameworks>net5.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenTK.Core</RootNamespace>
+    <Description>Core shared functionality for the OpenTK library.</Description>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,18 +17,12 @@
     </AssemblyAttribute>
   </ItemGroup>
 
-  <PropertyGroup>
-    <Description>Core shared functionality for the OpenTK library.</Description>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
-
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />
+  
   <ItemGroup>
     <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 </Project>

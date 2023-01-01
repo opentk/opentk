@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -66,35 +67,8 @@ namespace OpenTK.Platform.Native.X11
 
             X11.Atoms = new XAtomDictionary(X11.Display);
 
-            Debug.Write($"Known Atoms ({X11.Atoms.Count}) ", "PAL2.0/Linux/X11");
-            foreach (var (key, value) in X11.Atoms)
-            {
-                Debug.WriteIf(!value.IsNone, key + " ");
-            }
-            Debug.WriteLine("");
+            Logger?.LogInfo($"Known Atoms ({X11.Atoms.Count}) {string.Join(" ", X11.Atoms.Where(kvp => kvp.Value.IsNone == false).Select(kvp => kvp.Key))}");
 
-            InitializeWindow();
-        }
-
-        public bool CanSetIcon => false;
-        public bool CanGetDisplay => false;
-        public bool CanSetCursor => false;
-
-        private static List<WindowStyle> s_emptyStyleList = new List<WindowStyle>();
-        private static List<WindowMode> s_emptyModeList = new List<WindowMode>();
-
-        public IReadOnlyList<PlatformEventType> SupportedEvents { get => throw new NotImplementedException(); }
-        public IReadOnlyList<WindowStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
-        public IReadOnlyList<WindowMode> SupportedModes { get; private set; } = s_emptyModeList;
-
-        /// <summary>
-        /// When true, indicates the current window manager is Freedesktop compliant.
-        /// </summary>
-        public bool IsWindowManagerFreedesktop { get; private set; } = false;
-        public string? FreedesktopWindowManagerName { get; private set; } = null;
-
-        private void InitializeWindow()
-        {
             // Check if the window manager is freedesktop compliant.
             // https://specifications.freedesktop.org/wm-spec/wm-spec-1.4.html
             // The Window Manager MUST set this property on the root window to be
@@ -157,22 +131,41 @@ namespace OpenTK.Platform.Native.X11
                 XFree(array);
             }
 
-            Debug.WriteLineIf(IsWindowManagerFreedesktop, $"Found Freedesktop Compliant Window Manager {FreedesktopWindowManagerName}.", "PAL/Linux/X11/Window");
-
             if (IsWindowManagerFreedesktop)
             {
+                Logger?.LogInfo($"Found Freedesktop Compliant Window Manager {FreedesktopWindowManagerName}.");
+
                 // Find which window styles and modes are supported.
                 HashSet<XAtom> supportedAtoms = new HashSet<XAtom>();
 
                 XGetWindowProperty(X11.Display, X11.DefaultRootWindow, _net_supported, 0, long.MaxValue, false, atom, out _, out _, out count, out _, out array);
                 for (int i = 0; i < count; i++)
                 {
-                    supportedAtoms.Add(Marshal.PtrToStructure<XAtom>(array + Unsafe.SizeOf<XAtom>()*i));
+                    supportedAtoms.Add(Marshal.PtrToStructure<XAtom>(array + Unsafe.SizeOf<XAtom>() * i));
                 }
 
                 // TODO: Figure how to extract win32 like window types and modes from the supported atoms list.
+
+                XFree(array);
             }
         }
+
+        public bool CanSetIcon => false;
+        public bool CanGetDisplay => false;
+        public bool CanSetCursor => false;
+
+        private static List<WindowStyle> s_emptyStyleList = new List<WindowStyle>();
+        private static List<WindowMode> s_emptyModeList = new List<WindowMode>();
+
+        public IReadOnlyList<PlatformEventType> SupportedEvents { get => throw new NotImplementedException(); }
+        public IReadOnlyList<WindowStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
+        public IReadOnlyList<WindowMode> SupportedModes { get; private set; } = s_emptyModeList;
+
+        /// <summary>
+        /// When true, indicates the current window manager is Freedesktop compliant.
+        /// </summary>
+        public bool IsWindowManagerFreedesktop { get; private set; } = false;
+        public string? FreedesktopWindowManagerName { get; private set; } = null;
 
         public void ProcessEvents(bool waitForEvents = false)
         {
@@ -697,9 +690,6 @@ namespace OpenTK.Platform.Native.X11
 
             ref XClientMessageEvent client = ref e.ClientMessage;
 
-            // See https://refspecs.linuxfoundation.org/LSB_3.1.0/LSB-Desktop-generic/LSB-Desktop-generic/libx11-ddefs.html
-            const int ClientMessage = 33;
-
             /* remove/unset property */
             const long _NET_WM_STATE_REMOVE = 0;
             /* add/set property */
@@ -707,7 +697,7 @@ namespace OpenTK.Platform.Native.X11
             /* toggle property  */
             const long _NET_WM_STATE_TOGGLE = 2;
 
-            client.Type = ClientMessage;
+            client.Type = XEventType.ClientMessage;
             client.Serial = 0;
             client.SendEvent = 1;
             client.Display = X11.Display;
@@ -776,7 +766,43 @@ namespace OpenTK.Platform.Native.X11
 
         public void RequestAttention(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE_DEMANDS_ATTENTION] == XAtom.None)
+            {
+                // FIXME: Add a feature bool to IWindowComponent?
+                Logger?.LogWarning("Can't request attention to the window. The window manager doesn't support _NET_WM_STATE_DEMANDS_ATTENTION.");
+                return;
+            }
+
+            XEvent e = new XEvent();
+
+            ref XClientMessageEvent client = ref e.ClientMessage;
+
+            /* remove/unset property */
+            const long _NET_WM_STATE_REMOVE = 0;
+            /* add/set property */
+            const long _NET_WM_STATE_ADD = 1;
+            /* toggle property  */
+            const long _NET_WM_STATE_TOGGLE = 2;
+
+            client.Type = XEventType.ClientMessage;
+            client.Serial = 0;
+            client.SendEvent = 1;
+            client.Display = X11.Display;
+            client.Window = xwindow.Window;
+            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.Format = 32;
+            unsafe
+            {
+                client.l[0] = _NET_WM_STATE_ADD;
+                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_DEMANDS_ATTENTION].Id;
+                client.l[2] = 0;
+                client.l[3] = 0;
+                client.l[4] = 0;
+            }
+
+            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
         }
 
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)

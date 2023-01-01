@@ -61,7 +61,7 @@ namespace OpenTK.Platform.Native.X11
 
     public struct XConfigureRequestEvent
     {
-        public int Type;       /* ConfigureRequest */
+        public XEventType Type;       /* ConfigureRequest */
         public ulong Serial;   /* # of last request processed by server */
         public byte SendEvent;    /* true if this came from a SendEvent request */
         public XDisplayPtr Display;   /* Display the event was read from */
@@ -78,7 +78,7 @@ namespace OpenTK.Platform.Native.X11
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct XClientMessageEvent
     {
-        [FieldOffset(0) ] public int Type;           /* ClientMessage */
+        [FieldOffset(0) ] public XEventType Type;           /* ClientMessage */
         [FieldOffset(8) ] public ulong Serial;       /* # of last request processed by server */
         [FieldOffset(16)] public byte SendEvent;        /* true if this came from a SendEvent request */
         [FieldOffset(24)] public XDisplayPtr Display;       /* Display the event was read from */

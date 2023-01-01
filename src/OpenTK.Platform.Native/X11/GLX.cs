@@ -103,17 +103,29 @@ namespace OpenTK.Platform.Native.X11
         // FIXME: These functions will crash if they are made to LPStr functions.
         // I don't know why, but the runtime will free a string in ".rodata". :facepalm:
 
-        // [return: MarshalAs(UnmanagedType.LPStr)]
-        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr glXQueryExtensionsString(XDisplayPtr display, int screen);
+        public static string glXQueryExtensionsString(XDisplayPtr display, int screen)
+        {
+            return Marshal.PtrToStringUTF8(glXQueryExtensionsString(display, screen))!;
 
-        // [return: MarshalAs(UnmanagedType.LPStr)]
-        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr glXQueryServerString(XDisplayPtr display, int screen, int name);
+            [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+            static extern IntPtr glXQueryExtensionsString(XDisplayPtr display, int screen);
+        }
 
-        //[return: MarshalAs(UnmanagedType.LPStr)]
-        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr glXGetClientString(XDisplayPtr display, int name);
+        public static string glXQueryServerString(XDisplayPtr display, int screen, int name)
+        {
+            return Marshal.PtrToStringUTF8(glXQueryServerString(display, screen, name))!;
+
+            [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+            static extern IntPtr glXQueryServerString(XDisplayPtr display, int screen, int name);
+        }
+
+        public static string glXGetClientString(XDisplayPtr display, int name)
+        {
+            return Marshal.PtrToStringUTF8(glXGetClientString(display, name))!;
+
+            [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+            static extern IntPtr glXGetClientString(XDisplayPtr display, int name);
+        }
 
         #endregion
 
@@ -210,6 +222,9 @@ namespace OpenTK.Platform.Native.X11
         //     int attribute,
         //     ref uint value);
 
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        public static extern unsafe int glXQueryDrawable(XDisplayPtr dpy, XDrawable draw, int attribute, out uint value);
+
         #endregion
 
         #region GLX 1.4+
@@ -248,6 +263,33 @@ namespace OpenTK.Platform.Native.X11
             GLXContext shareContext,
             bool direct,
             ref int attribList);
+
+        #endregion
+
+        #region EXT_swap_control
+
+        public const int GLX_SWAP_INTERVAL_EXT = 0x20F1;
+        public const int GLX_MAX_SWAP_INTERVAL_EXT = 0x20F2;
+
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void glXSwapIntervalEXT(XDisplayPtr dpy, XDrawable drawable, int interval);
+
+        #endregion
+
+        #region MESA_swap_control
+
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int glXSwapIntervalMESA(uint interval);
+
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int glXGetSwapIntervalMESA();
+
+        #endregion
+
+        #region SGI_swap_control
+
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int glXSwapIntervalSGI(int interval);
 
         #endregion
     }
