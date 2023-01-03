@@ -82,7 +82,7 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, "GLX_ARB_create_context is required (for the time being).");
             }
 
-            Debug.WriteLine(
+            Logger?.LogInfo(
                 $"GLX Version {major}.{minor}\n" +
                 $"  Extensions ({GLXExtensions.Count}) {extensions}\n" +
                  "  Client:\n" +
@@ -92,8 +92,7 @@ namespace OpenTK.Platform.Native.X11
                  "  Server:\n" +
                 $"    Versions: {GLXServerVersion?.ToString() ?? "???"}\n" +
                 $"    Vendor: {GLXServerVendor}\n" +
-                $"    Extensions: ({GLXServerExtensions.Count}) {serverExtensions}",
-                "PAL-2.0/Linux/X11/OpenGL"
+                $"    Extensions: ({GLXServerExtensions.Count}) {serverExtensions}"
             );
         }
 
