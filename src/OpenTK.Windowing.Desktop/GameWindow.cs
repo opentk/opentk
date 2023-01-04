@@ -203,6 +203,9 @@ namespace OpenTK.Windowing.Desktop
 
         #endregion
 
+        // Counter for how many updates in Run() where slow.
+        private int _slowUpdates = 0;
+
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
         /// </summary>
@@ -231,6 +234,9 @@ namespace OpenTK.Windowing.Desktop
 
             Utils.SleepTimings runSleepTimings = new Utils.SleepTimings(2);
 
+            // Bias used when comparing elapsed time.
+            const double BIAS = 0 / 1000.0;
+
             _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
             {
@@ -249,13 +255,40 @@ namespace OpenTK.Windowing.Desktop
 
                     OnUpdateFrame(new FrameEventArgs(elapsed));
                     OnRenderFrame(new FrameEventArgs(elapsed));
+
+                    const int MaxSlowUpdates = 80;
+                    const int SlowUpdatesThreshold = 45;
+
+                    double time = _watchUpdate.Elapsed.TotalSeconds;
+                    if (updatePeriod - BIAS < time)
+                    {
+                        _slowUpdates++;
+                        if (_slowUpdates > MaxSlowUpdates)
+                        {
+                            _slowUpdates = MaxSlowUpdates;
+                        }
+                    }
+                    else
+                    {
+                        _slowUpdates--;
+                        if (_slowUpdates < 0)
+                        {
+                            _slowUpdates = 0;
+                        }
+                    }
+                    
+                    IsRunningSlowly = _slowUpdates > SlowUpdatesThreshold;
+
+                    if (VSync == VSyncMode.Adaptive)
+                    {
+                        GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
+                    }
                 }
 
                 // The time we have left to the next update.
                 double timeToNextUpdate = updatePeriod - _watchUpdate.Elapsed.TotalSeconds;
 
-                const double bias = 0 / 1000.0;
-                if (timeToNextUpdate - bias > 0)
+                if (timeToNextUpdate - BIAS > 0)
                 {
                     runSleepTimings.PreciseSleep(timeToNextUpdate);
                 }

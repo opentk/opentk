@@ -7,6 +7,8 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
+
 namespace OpenTK.Windowing.Common
 {
     /// <summary>
@@ -28,6 +30,10 @@ namespace OpenTK.Windowing.Common
         /// VSync enabled, unless framerate falls below one half of target framerate.
         /// If no target framerate is specified, this behaves exactly like <see cref="VSyncMode.On" />.
         /// </summary>
-        Adaptive
+        /// <remarks>
+        /// This value only works properly when used with <see cref="GameWindow"/>,
+        /// if you are using <see cref="NativeWindow"/> you will have to handle this yourself.
+        /// </remarks>
+        Adaptive,
     }
 }
