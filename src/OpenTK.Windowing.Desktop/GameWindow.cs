@@ -199,6 +199,9 @@ namespace OpenTK.Windowing.Desktop
         [DllImport("winmm")]
         private static extern uint timeBeginPeriod(uint uPeriod);
 
+        [DllImport("winmm")]
+        private static extern uint timeEndPeriod(uint uPeriod);
+
         #endregion
 
         /// <summary>
@@ -216,9 +219,6 @@ namespace OpenTK.Windowing.Desktop
             OnResize(new ResizeEventArgs(Size));
 
             Debug.Print("Entering main loop.");
-
-            // FIXME: Some way for users to make the context not current when calling Run()?
-            // Context?.MakeNoneCurrent();
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
