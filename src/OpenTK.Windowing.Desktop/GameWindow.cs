@@ -209,6 +209,16 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public virtual unsafe void Run()
         {
+            // We do this before OnLoad so that users have some way to affect these settings in OnLoad if they need to.
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                SetThreadAffinityMask(GetCurrentThread(), new IntPtr(1));
+
+                // Make Thread.Sleep more accurate.
+                // FIXME: We probably only care about this if we are not event driven.
+                timeBeginPeriod(1);
+            }
+
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context?.MakeCurrent();
 
@@ -219,15 +229,6 @@ namespace OpenTK.Windowing.Desktop
             OnResize(new ResizeEventArgs(Size));
 
             Debug.Print("Entering main loop.");
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                SetThreadAffinityMask(GetCurrentThread(), new IntPtr(1));
-
-                // Make Thread.Sleep more accurate.
-                // FIXME: We probably only care about this if we are not event driven.
-                timeBeginPeriod(1);
-            }
 
             Utils.SleepTimings runSleepTimings = new Utils.SleepTimings(2);
 
