@@ -32,7 +32,6 @@ namespace OpenTK.Windowing.Desktop
         // When getting out of full screen mode, the location and size will be set to these value in all states other then minimized.
         private Vector2i _cachedWindowClientSize;
         private Vector2i _cachedWindowLocation;
-        private WindowState _unminimizedWindowState;
 
         // Used for delta calculation in the mouse position changed event.
         private Vector2 _lastReportedMousePos;
@@ -330,7 +329,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value indicating whether the window is visible.
         /// </summary>
-        public bool IsVisible
+        public unsafe bool IsVisible
         {
             get => _isVisible;
             set
@@ -339,9 +338,13 @@ namespace OpenTK.Windowing.Desktop
                 {
                     _isVisible = value;
 
-                    unsafe
+                    if (_isVisible)
                     {
-                        UpdateWindowForStateAndVisibility();
+                        GLFW.ShowWindow(WindowPtr);
+                    }
+                    else
+                    {
+                        GLFW.HideWindow(WindowPtr);
                     }
                 }
             }
@@ -369,34 +372,37 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                if (_windowState != value)
+                if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
-                    if (value != WindowState.Minimized)
-                    {
-                        _unminimizedWindowState = value;
-                    }
+                    // We are going from fullscreen to something else.
+                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
+                }
 
-                    var shouldCacheSizeAndLocation = _windowState != WindowState.Fullscreen && // Not fullscreen
-                        _windowState != WindowState.Minimized && // Not minimized
-                        (value == WindowState.Fullscreen || value == WindowState.Minimized); // Intention on going full screen or minimized
+                switch (value)
+                {
+                    case WindowState.Normal:
+                        GLFW.RestoreWindow(WindowPtr);
+                        break;
 
-                    if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen && _isVisible)
-                    {
-                        // Get out of fullscreen mode.
-                        GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
-                    }
+                    case WindowState.Minimized:
+                        GLFW.IconifyWindow(WindowPtr);
+                        break;
 
-                    if (shouldCacheSizeAndLocation)
-                    {
-                        // Only cache the size and location if the window is not in full screen mode
+                    case WindowState.Maximized:
+                        GLFW.MaximizeWindow(WindowPtr);
+                        break;
+
+                    case WindowState.Fullscreen:
+                        // Cache the window size so we can reset to it when we go out of fullscreen.
                         _cachedWindowClientSize = ClientSize;
                         _cachedWindowLocation = Location;
-                    }
-
-                    _windowState = value;
-
-                    UpdateWindowForStateAndVisibility();
+                        var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+                        var modePtr = GLFW.GetVideoMode(monitor);
+                        GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
+                        break;
                 }
+
+                _windowState = value;
             }
         }
 
@@ -877,7 +883,13 @@ namespace OpenTK.Windowing.Desktop
                 Focus();
             }
 
-            WindowState = settings.WindowState;
+            // Setting WindowState to e.g. Normal while the
+            // window is hidden will show the window
+            // So if we don't set WindowState when StartVisible is false.
+            if (settings.StartVisible)
+            {
+                WindowState = settings.WindowState;
+            }
 
             IsEventDriven = settings.IsEventDriven;
 
@@ -965,67 +977,6 @@ namespace OpenTK.Windowing.Desktop
             GLFW.GetFramebufferSize(WindowPtr, out width, out height);
 
             ClientSize = new Vector2i(width, height);
-        }
-
-        /// <summary>
-        /// Not all OSes observe the same behavior about managing window state, and
-        /// GLFW doesn't abstract away the underlying OS behavior consistently enough.
-        /// So this method simultaneously updates both window state and visibility to
-        /// match our internal state, so that what the user sees always matches what
-        /// the programmer intended.
-        /// </summary>
-        private unsafe void UpdateWindowForStateAndVisibility()
-        {
-            // OS hacks are bad.  But we have no choice here, because MS Windows is just plain weird.
-            bool isMsWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
-
-            // If it's not supposed to be visible, simply hide it, and don't bother
-            // telling the OS what its intended window state is.  We will fix the intended
-            // window state when the window becomes visible.
-            if (!_isVisible)
-            {
-                GLFW.HideWindow(WindowPtr);
-                return;
-            }
-
-            // Show it.  On Windows, this can also alter the window state, so we have to be
-            // careful not to affect the window state if we only intended to unhide it.
-            if (!isMsWindows)
-            {
-                GLFW.ShowWindow(WindowPtr);
-            }
-
-            // On all OSes, update its window state to match what we expect.  This is slightly
-            // headachey on MS Windows, since it's hard to get consistent results out of it.
-            switch (_windowState)
-            {
-                case WindowState.Normal:
-                    GLFW.RestoreWindow(WindowPtr);
-                    break;
-
-                case WindowState.Minimized:
-                    GLFW.IconifyWindow(WindowPtr);
-                    break;
-
-                case WindowState.Maximized:
-                    if (isMsWindows)
-                    {
-                        GLFW.RestoreWindow(WindowPtr);  // MS Windows can't convert a minimized window directly to maximized.
-                    }
-                    GLFW.MaximizeWindow(WindowPtr);
-                    break;
-
-                case WindowState.Fullscreen:
-                    if (isMsWindows)
-                    {
-                        GLFW.ShowWindow(WindowPtr);     // MS Windows can't convert a hidden window directly to fullscreen.
-                        GLFW.RestoreWindow(WindowPtr);  // Or a non-normal window.
-                    }
-                    var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                    var modePtr = GLFW.GetVideoMode(monitor);
-                    GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
-                    break;
-            }
         }
 
         /// <summary>
@@ -1978,10 +1929,6 @@ namespace OpenTK.Windowing.Desktop
         protected virtual void OnMaximized(MaximizedEventArgs e)
         {
             _windowState = e.IsMaximized ? WindowState.Maximized : GetWindowStateFromGLFW();
-            if (_windowState != WindowState.Minimized)
-            {
-                _unminimizedWindowState = _windowState;
-            }
 
             Maximized?.Invoke(e);
         }
