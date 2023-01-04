@@ -1,17 +1,30 @@
-image: Visual Studio 2019
+image:
+  - Visual Studio 2022
+# FIXME: At some point we want to test our builds on Ubuntu?
+#  - Ubuntu
 
 version: 4.0.0.{build}
+
+clone_depth: 1 # we only care about the commit we are building
+
+nuget:
+  project_feed: true
+
+deploy:
+  - provider: NuGet
+    symbol_server: https://ci.appveyor.com/nuget/opentk-ewqv6ys6uxum/api/v2/package
+    api_key:
+      secure: Rh0peS8dmnflnHfB5kTlsqsR1rmibtpZ2oeaWFH90iQ=
+    artifact: bin/nuget/*.nupkg
+
+artifacts:
+  - path: bin/nuget/*.nupkg
+    name: OpenTK Nuget Packages
 
 init:
   - git config --global core.autocrlf input
 
-install:
-  # Install OpenGL
-  - "powershell ./install-opengl.ps1"
 configuration: Release
 
 build_script:
-  - build.cmd -t RunCITests
-
-on_finish:
-  - "powershell ./install-opengl.ps1 uninstall"
+  - ps: ./build.ps1 -t RunCITests

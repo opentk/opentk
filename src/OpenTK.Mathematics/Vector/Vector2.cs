@@ -1055,8 +1055,6 @@ namespace OpenTK.Mathematics
             return new Vector2i((int)vec.X, (int)vec.Y);
         }
 
-        private static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
-
         /// <inheritdoc/>
         public override string ToString()
         {

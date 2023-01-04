@@ -272,7 +272,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v2.0]
-        /// Specify the value of a <see cref="OpenTK.Graphics.Color4"/> uniform variable for the current program object.
+        /// Specify the value of a <see cref="OpenTK.Mathematics.Color4"/> uniform variable for the current program object.
         /// In shader code, this is represented as a <see cref="Vector4"/>.
         /// </summary>
         /// <param name="location">
@@ -934,7 +934,7 @@ namespace OpenTK.Graphics.OpenGL4
 
         /// <summary>
         /// [requires: v4.1 or ARB_separate_shader_objects|VERSION_4_1]
-        /// Specify the value of a <see cref="OpenTK.Graphics.Color4"/> uniform variable for the specified program object.
+        /// Specify the value of a <see cref="OpenTK.Mathematics.Color4"/> uniform variable for the specified program object.
         /// In shader code, this is represented as a <see cref="Vector4"/>.
         /// </summary>
         /// <param name="program">
