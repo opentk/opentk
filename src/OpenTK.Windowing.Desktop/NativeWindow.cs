@@ -883,7 +883,13 @@ namespace OpenTK.Windowing.Desktop
                 Focus();
             }
 
-            WindowState = settings.WindowState;
+            // Setting WindowState to e.g. Normal while the
+            // window is hidden will show the window
+            // So if we don't set WindowState when StartVisible is false.
+            if (settings.StartVisible)
+            {
+                WindowState = settings.WindowState;
+            }
 
             IsEventDriven = settings.IsEventDriven;
 

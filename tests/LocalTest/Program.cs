@@ -28,7 +28,7 @@ namespace LocalTest
                 Profile = ContextProfile.Core,
                 Size = (800, 600),
                 StartFocused = true,
-                StartVisible = true,
+                StartVisible = false,
                 Title = "Local OpenTK Test",
                 WindowBorder = WindowBorder.Resizable,
                 WindowState = WindowState.Normal,

@@ -137,6 +137,7 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         ///     Gets or sets the initial value for <see cref="NativeWindow.WindowState"/> on the new window.
+        ///     This setting is ignored if <c><see cref="StartVisible"/> = false</c>.
         /// </summary>
         public WindowState WindowState { get; set; } = WindowState.Normal;
 
