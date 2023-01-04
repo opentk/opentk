@@ -17,36 +17,36 @@ namespace OpenTK.Compute.OpenCL
 
         public string GetLibraryName()
         {
-	        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-	        {
-		        if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
-		        {
-			        return Android;
-		        }
-		        else
-		        {
-			        return Linux;
-		        }
-	        }
-	        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-	        {
-		        return Windows;
-	        }
-	        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-	        {
-		        if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
-		        {
-			        return IOS;
-		        }
-		        else
-		        {
-			        return MacOS;
-		        }
-	        }
-	        else
-	        {
-		        throw new NotSupportedException($"The library name couldn't be resolved for the given platform ('{RuntimeInformation.OSDescription}').");
-	        }
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
+                {
+                    return Android;
+                }
+                else
+                {
+                    return Linux;
+                }
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return Windows;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
+                {
+                    return IOS;
+                }
+                else
+                {
+                    return MacOS;
+                }
+            }
+            else
+            {
+                throw new NotSupportedException($"The library name couldn't be resolved for the given platform ('{RuntimeInformation.OSDescription}').");
+            }
         }
     }
 }
