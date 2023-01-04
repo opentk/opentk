@@ -1,12 +1,10 @@
-﻿using OpenTK.Core;
-using OpenTK.Graphics.OpenGL4;
+﻿using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Diagnostics;
-using System.Threading;
 
 namespace LocalTest
 {
@@ -16,7 +14,8 @@ namespace LocalTest
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
-                UpdateFrequency = 100,
+                //UpdateFrequency = 10,
+                //RenderFrequency = 10,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -49,9 +48,7 @@ namespace LocalTest
         {
             base.OnLoad();
 
-            VSync = VSyncMode.Off;
 
-            watch.Start();
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -64,25 +61,11 @@ namespace LocalTest
             SwapBuffers();
         }
 
-        Stopwatch watch = new Stopwatch();
-        int frames;
-        double time = 0;
-
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
 
-            frames++;
-            time += args.Time;
 
-            if (watch.Elapsed.TotalSeconds >= 1.0)
-            {
-                Console.WriteLine($"fps {frames}, avg frame time: {(time / frames) * 1000:0.000}");
-                frames = 0;
-                time = 0;
-
-                watch.Restart();
-            }
         }
     }
 }
