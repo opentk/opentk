@@ -10,6 +10,61 @@ namespace OpenTK.Platform.Native.Windows
 {
     // FIXME: Make enum names consistent between all enums.
 
+    internal enum ACLineStatus : byte
+    {
+        Offline = 0,
+        Online = 1,
+        Unknown = 255,
+    }
+
+    [Flags]
+    internal enum BatteryFlags : byte
+    {
+        /// <summary>
+        /// High—the battery capacity is at more than 66 percent.
+        /// </summary>
+        High = 1,
+
+        /// <summary>
+        /// Low—the battery capacity is at less than 33 percent.
+        /// </summary>
+        Low = 2,
+
+        /// <summary>
+        /// Critical—the battery capacity is at less than five percent.
+        /// </summary>
+        Critical = 4,
+
+        /// <summary>
+        /// Charging
+        /// </summary>
+        Charging = 8,
+
+        /// <summary>
+        /// No system battery
+        /// </summary>
+        NoSystemBattery = 128,
+
+        /// <summary>
+        /// Unknown status—unable to read the battery flag information.
+        /// </summary>
+        Unknown = 255,
+    }
+
+    [Flags]
+    internal enum SystemStatusFlags : byte
+    {
+        /// <summary>
+        /// Battery saver is off.
+        /// </summary>
+        Normal = 0,
+
+        /// <summary>
+        /// Battery saver on. Save energy where possible.
+        /// </summary>
+        BatterySaver = 1,
+    }
+
     /// <summary>
     /// Window Styles.
     /// The following styles can be specified wherever a window style is required. After the control has been created, these styles cannot be modified, except as noted.
@@ -771,6 +826,42 @@ namespace OpenTK.Platform.Native.Windows
         /// Represents audio data in one of the standard wave formats, such as 11 kHz or 22 kHz PCM.
         /// </summary>
         Wave = 12,
+    }
+
+    [Flags]
+    internal enum ExecutionState : ulong
+    {
+        /// <summary>
+        /// Enables away mode.
+        /// This value must be specified with <see cref="Continuous"/>.
+        /// Away mode should be used only by media-recording and media-distribution applications
+        /// that must perform critical background processing on desktop computers while the computer appears to be sleeping.
+        /// See Remarks.
+        /// </summary>
+        AwayModeRequired = 0x00000040,
+
+        /// <summary>
+        /// Informs the system that the state being set should remain in effect until
+        /// the next call that uses <see cref="Continuous"/> and one of the other state flags is cleared.
+        /// </summary>
+        Continuous = 0x80000000,
+
+        /// <summary>
+        /// Forces the display to be on by resetting the display idle timer.
+        /// </summary>
+        DisplayRequired = 0x00000002,
+
+        /// <summary>
+        /// Forces the system to be in the working state by resetting the system idle timer.
+        /// </summary>
+        SystemRequired = 0x00000001,
+
+        /// <summary>
+        /// This value is not supported.
+        /// If <see cref="UserPresent"/> is combined with other esFlags values,
+        /// the call will fail and none of the specified states will be set.
+        /// </summary>
+        UserPresent = 0x00000004,
     }
 
     internal enum ShowWindowCommands

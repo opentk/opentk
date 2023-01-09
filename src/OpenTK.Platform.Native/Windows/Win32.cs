@@ -942,5 +942,21 @@ namespace OpenTK.Platform.Native.Windows
             DWMWindowAttribute dwAttribute,
             out RECT pvAttribute,
             uint cbAttribute);
+
+        [DllImport("kernel32.dll")]
+        internal static extern ExecutionState SetThreadExecutionState(ExecutionState esFlags);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool GetSystemPowerStatus(out SystemPowerStatus lpSystemPowerStatus);
+
+        internal struct SystemPowerStatus
+        {
+            public ACLineStatus ACLineStatus;
+            public BatteryFlags BatteryFlag;
+            public byte BatteryLifePercent;
+            public SystemStatusFlags SystemStatusFlag;
+            public int BatteryLifeTime;
+            public int BatteryFullLifeTime;
+        }
     }
 }

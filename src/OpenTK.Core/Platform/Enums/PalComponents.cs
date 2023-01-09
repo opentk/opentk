@@ -87,5 +87,10 @@ namespace OpenTK.Core.Platform
         /// Abstraction layer provides the clipboard component.
         /// </summary>
         Clipboard = 1 << 10,
+
+        /// <summary>
+        /// Abstraction layer provides the shell component.
+        /// </summary>
+        Shell = 1 << 11,
     }
 }

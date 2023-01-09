@@ -9,6 +9,10 @@ using System.Text;
 using System.Diagnostics;
 using OpenTK.Core.Utility;
 using OpenTK;
+using OpenTK.Core.Platform.Interfaces;
+using System;
+using System.Collections.Generic;
+using OpenTK.Core.Platform.Enums;
 
 namespace LocalTestProject
 {
@@ -33,6 +37,8 @@ namespace LocalTestProject
         static IKeyboardComponent keyboardComp = new KeyboardComponent();
 
         static IClipboardComponent clipComp = new ClipboardComponent();
+
+        static IShellComponent shellComp = new ShellComponent();
 
         static CursorHandle CursorHandle;
         static CursorHandle ImageCursorHandle;
@@ -66,6 +72,8 @@ namespace LocalTestProject
             cursorComp.Initialize(PalComponents.MouseCursor);
 
             clipComp.Initialize(PalComponents.Clipboard);
+
+            shellComp.Initialize(PalComponents.Shell);
 
             Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout()}");
 
@@ -540,6 +548,23 @@ namespace LocalTestProject
                 {
                     windowComp.GetClientSize(WindowHandle, out int width, out int height);
                     Console.WriteLine($"Window 1 client size: ({width}, {height})");
+                }
+                else if (keyDown.VirtualKey == 'Q')
+                {
+                    BatteryStatus status = shellComp.GetBatteryInfo(out BatteryInfo info);
+                    switch (status)
+                    {
+                        default:
+                        case BatteryStatus.Unknown:
+                            Console.WriteLine("Cannot get battery information.");
+                            break;
+                        case BatteryStatus.NoSystemBattery:
+                            Console.WriteLine("This computer has not battery.");
+                            break;
+                        case BatteryStatus.HasSystemBattery:
+                            Console.WriteLine(info);
+                            break;
+                    }
                 }
             }
             else if (type == PlatformEventType.WindowMove)
