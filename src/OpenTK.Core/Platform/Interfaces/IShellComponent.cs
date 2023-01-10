@@ -16,6 +16,7 @@ namespace OpenTK.Core.Platform.Interfaces
         /// Sets whether or not a screensaver is allowed to draw on top of the window.
         /// For games with long cutscenes it would be appropriate to set this to <c>false</c>,
         /// while tools that act like normal applications should set this to <c>true</c>.
+        /// By default this setting is untouched.
         /// </summary>
         /// <param name="allow">Whether to allow screensavers to appear while the application is running.</param>
         void AllowScreenSaver(bool allow);

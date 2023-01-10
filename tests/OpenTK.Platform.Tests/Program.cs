@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -14,6 +15,7 @@ namespace OpenTK.Platform.Tests
         static IOpenGLComponent glComp;
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
+        static IShellComponent shellComp;
 
         static void Main()
         {
@@ -43,6 +45,12 @@ namespace OpenTK.Platform.Tests
                 mouseComp = new Native.X11.X11MouseComponent();
             else throw new Exception("OS not supported yet!");
 
+            if (OperatingSystem.IsWindows())
+                shellComp = new Native.Windows.ShellComponent();
+            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
+                shellComp = new Native.X11.X11ShellComponent();
+            else throw new Exception("OS not supported yet!");
+
             var logger = new ConsoleLogger();
             windowComp.Logger = logger;
             glComp.Logger = logger;
@@ -52,6 +60,13 @@ namespace OpenTK.Platform.Tests
             glComp.Initialize(PalComponents.OpenGL);
 
             cursorComp.Initialize(PalComponents.MouseCursor);
+
+            shellComp.Initialize(PalComponents.Shell);
+
+            if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
+            {
+                Console.WriteLine(info);
+            }
 
             WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
             OpenGLContextHandle context = glComp.CreateFromWindow(window);
