@@ -83,7 +83,7 @@ namespace OpenTK.Platform.Tests
             windowComp.SetMode(window, WindowMode.Normal);
             windowComp.SetAlwaysOnTop(window, true);
 
-            windowComp.IsAlwaysOnTop(window);
+            Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(window)}");
 
             {
                 windowComp.GetMinClientSize(window, out int? minWidth, out int? minHeight);
@@ -95,6 +95,26 @@ namespace OpenTK.Platform.Tests
             SystemCursorType cursor = SystemCursorType.Default;
             CursorHandle cursorHandle = cursorComp.Create();
 
+            windowComp.SetCursor(window, cursorHandle);
+
+            cursorHandle = cursorComp.Create();
+            byte[] image = new byte[16 * 16 * 3];
+            byte[] mask = new byte[16 * 16 * 1];
+            for (int ccx = 0; ccx < 16; ccx++)
+            {
+                for (int ccy = 0; ccy < 16; ccy++)
+                {
+                    int index = (ccy * 16 + ccx) * 3;
+
+                    image[index + 0] = (byte)(ccx * 16);
+                    image[index + 1] = (byte)(ccx * 16);
+                    image[index + 2] = (byte)(ccx * 16);
+
+                    mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
+                }
+            }
+            //cursorComp.SetHotspot(cursorHandle, 8, 8);
+            cursorComp.Load(cursorHandle, 16, 16, image, mask);
             windowComp.SetCursor(window, cursorHandle);
 
             while (windowComp.IsWindowDestroyed(window) == false)
@@ -111,8 +131,8 @@ namespace OpenTK.Platform.Tests
 
                     watch.Restart();
 
-                    cursorComp.Load(cursorHandle, cursor);
-                    windowComp.SetCursor(window, cursorHandle);
+                    //cursorComp.Load(cursorHandle, cursor);
+                    //windowComp.SetCursor(window, cursorHandle);
 
                     cursor++;
                     if (cursor > SystemCursorType.ArrowUp)

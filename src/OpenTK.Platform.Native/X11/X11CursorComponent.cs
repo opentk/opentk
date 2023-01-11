@@ -140,9 +140,38 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
+        public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            Destroy(xcursor);
+
+            byte[] mask = new byte[maskData.Length / 8];
+            for (int i = 0; i < maskData.Length; i++)
+            {
+                if (maskData[i] == 1)
+                {
+                    mask[i / 8] |= (byte)(0x1 << (i % 8));
+                }
+            }
+
+            XPixmap pixmap;
+            fixed (byte* maskPtr = mask)
+            {
+                pixmap = XCreateBitmapFromData(X11.Display, X11.DefaultRootWindow, maskPtr, width, height);
+            }
+
+            XColor color;
+            color.red = 255;
+            color.green = 128;
+            color.blue = 64;
+            color.flags = XColorFlags.DoRed | XColorFlags.DoGreen | XColorFlags.DoBlue;
+
+            XCursor cursor = XCreatePixmapCursor(X11.Display, pixmap, pixmap, &color, &color, 0, 0);
+
+            xcursor.Cursor = cursor;
+
+            XFreePixmap(X11.Display, pixmap);
         }
 
         public void Load(CursorHandle handle, string file)

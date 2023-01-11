@@ -272,7 +272,7 @@ namespace OpenTK.Platform.Native.X11
                     map = XCreateColormap(X11.Display, XDefaultRootWindow(X11.Display), ref *vi->VisualPtr, 0);
 
                     windowAttributes.ColorMap = map.Value;
-                    windowAttributes.BackgroundPixmap = XPixMap.None;
+                    windowAttributes.BackgroundPixmap = XPixmap.None;
                     windowAttributes.BorderPixel = 0;
                     windowAttributes.EventMask = XEventMask.StructureNotify | XEventMask.SubstructureNotify | XEventMask.Exposure | XEventMask.VisibilityChanged;
 
@@ -314,7 +314,7 @@ namespace OpenTK.Platform.Native.X11
                 window,
                 "OpenTK Window [Native:X11]",
                 "ICO_OPENTK",
-                XPixMap.None,
+                XPixmap.None,
                 null,
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
