@@ -85,7 +85,7 @@ namespace OpenTK.Platform.Native.X11
                     batteryTime = null;
 
                     string status = File.ReadAllText(Path.Combine(dir, "status"));
-                    charging = (status == "Charging");
+                    charging = (status == "Charging\n");
 
                     // FIXMe: For now we don't report power saver info on linux.
                     powerSaver = false;

@@ -203,7 +203,7 @@ namespace OpenTK.Platform.Native.X11
             XAtom property,
             long offset,
             long length,
-            bool delete,
+            [MarshalAs(UnmanagedType.I1)] bool delete,
             XAtom requestType,
             out XAtom actualType,
             out int actualFormat,
