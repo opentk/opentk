@@ -153,11 +153,15 @@ namespace OpenTK.Platform.Tests
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
-            //Console.WriteLine(type);
+            Console.WriteLine(type);
 
             if (args is CloseEventArgs close)
             {
                 windowComp.Destroy(close.Window);
+            }
+            else if (args is MouseButtonDownEventArgs buttonDown)
+            {
+                Console.WriteLine($"Mouse button: {buttonDown.Button}");
             }
         }
     }

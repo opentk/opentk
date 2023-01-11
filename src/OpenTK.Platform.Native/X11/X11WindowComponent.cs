@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using OpenTK.Mathematics;
 using OpenTK.Platform.Native.Windows;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
@@ -209,6 +211,61 @@ namespace OpenTK.Platform.Native.X11
                         }
                     }
                 }
+                else if (ea.Type == XEventType.ButtonPress)
+                {
+                    XButtonEvent buttonPressed = ea.ButtonPressed;
+
+                    // We do a hit test here to see if we should do something.
+                    XWindowHandle xwindow = XWindowDict[buttonPressed.window];
+
+                    // Buttons 4 to 7 are used for scroll, for now we skip them.
+                    if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (buttonPressed.button == 1)
+                        {
+                            if (xwindow.HitTest != null)
+                            {
+                                HitType type = xwindow.HitTest(xwindow, new Vector2(buttonPressed.x, buttonPressed.y));
+                                if (type != HitType.Default)
+                                {
+                                    // FIXME: Handle the hit type!
+                                    Logger?.LogWarning("Hit testing is not supported in x11 yet.");
+                                    continue;
+                                }
+                            }
+                        }
+
+                        MouseButton button;
+                        switch (buttonPressed.button)
+                        {
+                            case 1: // Left
+                                button = MouseButton.Button1;
+                                break;
+                            case 2: // Middle
+                                button = MouseButton.Button3;
+                                break;
+                            case 3: // Right
+                                button = MouseButton.Button2;
+                                break;
+                            case 8: // X1
+                                button = MouseButton.Button4;
+                                break;
+                            case 9: // X2
+                                button = MouseButton.Button5;
+                                break;
+
+                            default:
+                                // Skip this event.
+                                continue;
+                        }
+
+                        EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(button));
+                    }
+                }
             }
         }
 
@@ -328,7 +385,8 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.StructureNotify |
                     XEventMask.SubstructureNotify |
                     XEventMask.VisibilityChanged |
-                    XEventMask.Exposure
+                    XEventMask.Exposure |
+                    XEventMask.ButtonPress
                     );
 
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);

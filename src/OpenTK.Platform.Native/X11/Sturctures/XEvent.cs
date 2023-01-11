@@ -21,6 +21,12 @@ namespace OpenTK.Platform.Native.X11
         [FieldOffset(0)]
         public XClientMessageEvent ClientMessage;
 
+        [FieldOffset(0)]
+        public XButtonEvent ButtonPressed;
+
+        [FieldOffset(0)]
+        public XButtonEvent ButtonReleased;
+
         #region XRandR
 
         [FieldOffset(0)]
@@ -88,5 +94,22 @@ namespace OpenTK.Platform.Native.X11
         [FieldOffset(56)] public fixed byte b[20];
         [FieldOffset(56)] public fixed short s[10];
         [FieldOffset(56)] public fixed long l[5];
+    }
+
+    public struct XButtonEvent {
+
+        public XEventType type;       /* ButtonPress or ButtonRelease */
+        public ulong serial;   /* # of last request processed by server */
+        public byte send_event;    /* true if this came from a SendEvent request */
+        public XDisplayPtr display;   /* Display the event was read from */
+        public XWindow window;      /* ``event'' window it is reported relative to */
+        public XWindow root;        /* root window that the event occurred on */
+        public XWindow subwindow;   /* child window */
+        public XTime time;      /* milliseconds */
+        public int x, y;       /* pointer x, y coordinates in event window */
+        public int x_root, y_root; /* coordinates relative to root */
+        public uint state; /* key or button mask */
+        public uint button;    /* detail */
+        public byte same_screen;	/* same screen flag */
     }
 }
