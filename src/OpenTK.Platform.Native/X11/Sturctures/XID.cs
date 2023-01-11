@@ -141,7 +141,7 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct XCursor
+    public struct XCursor : IEquatable<XCursor>
     {
         public ulong Id { get; }
 
@@ -150,6 +150,31 @@ namespace OpenTK.Platform.Native.X11
         public XCursor(ulong id)
         {
             Id = id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is XCursor cursor && Equals(cursor);
+        }
+
+        public bool Equals(XCursor other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public static bool operator ==(XCursor left, XCursor right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(XCursor left, XCursor right)
+        {
+            return !(left == right);
         }
     }
 

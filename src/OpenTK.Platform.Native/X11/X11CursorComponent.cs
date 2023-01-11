@@ -46,7 +46,11 @@ namespace OpenTK.Platform.Native.X11
         {
             XCursorHandle xcursor = handle.As<XCursorHandle>(this);
 
-            XFreeCursor(X11.Display, xcursor.Cursor);
+            // FIXME: Don't destroy system cursors?
+            if (xcursor.Cursor != XCursor.None)
+            {
+                XFreeCursor(X11.Display, xcursor.Cursor);
+            }
 
             xcursor.Cursor = XCursor.None;
         }
