@@ -60,10 +60,10 @@ namespace OpenTK.Platform.Native.X11
         // TODO: Replace XPixMap for GLXPixMap in these functions, as they are different XIDs.
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        public static extern XPixMap glXCreateGLXPixmap(XDisplayPtr display, ref XVisualInfo visualInfo, XPixMap pixMap);
+        public static extern XPixmap glXCreateGLXPixmap(XDisplayPtr display, ref XVisualInfo visualInfo, XPixmap pixMap);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void glXDestroyGLXPixmap(XDisplayPtr display, XPixMap pixMap);
+        public static extern void glXDestroyGLXPixmap(XDisplayPtr display, XPixmap pixMap);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         public static extern bool glXQueryExtension(XDisplayPtr display, out int errorBase, out int eventBase);

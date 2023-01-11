@@ -94,7 +94,7 @@ namespace OpenTK.Platform.Native.X11
             XWindow window,
             [MarshalAs(UnmanagedType.LPStr)]string windowName,
             [MarshalAs(UnmanagedType.LPStr)]string iconName,
-            XPixMap iconPixmap,
+            XPixmap iconPixmap,
             [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[]? argv,
             int argc,
             ref XSizeHints hints);
@@ -203,7 +203,7 @@ namespace OpenTK.Platform.Native.X11
             XAtom property,
             long offset,
             long length,
-            bool delete,
+            [MarshalAs(UnmanagedType.I1)] bool delete,
             XAtom requestType,
             out XAtom actualType,
             out int actualFormat,
@@ -271,5 +271,55 @@ namespace OpenTK.Platform.Native.X11
             uint src_height,
             int dest_x,
             int dest_y);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XPixmap XCreatePixmap(XDisplayPtr display, XDrawable d, int width, int height, int depth);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XFreePixmap(XDisplayPtr display, XPixmap pixmap);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XPixmap XCreateBitmapFromData(XDisplayPtr display, XDrawable d, byte* data, int width, int height);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XCursor XCreatePixmapCursor(XDisplayPtr display, XPixmap source, XPixmap mask, XColorPtr foreground_color, XColorPtr background_color, int x, int y);
+
+        #region Xcursor
+
+        public unsafe struct XcursorImage
+        {
+            /// <summary>
+            /// /∗ nominal size for matching*/
+            /// </summary>
+            public uint /* XcursorDim */ size;
+            /// <summary>
+            /// /∗ actual width */
+            /// </summary>
+            public uint /* XcursorDim */ width;
+            /// <summary>
+            /// /∗ actual height */
+            /// </summary>
+            public uint /* XcursorDim */ height;
+            /// <summary>
+            /// /∗ hot spot x(must be inside image) */
+            /// </summary>
+            public uint /* XcursorDim */ xhot;
+            /// <summary>
+            /// /∗ hot spot y(must be inside image) */
+            /// </summary>
+            public uint /* XcursorDim */ yhot;
+            /// <summary>
+            /// /∗ pointer to pixels*/
+            /// </summary>
+            public uint* /* XcursorPixel* */ pixels;
+        }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XcursorImage* XcursorImageCreate(int width, int height);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern void XcursorImageDestroy(XcursorImage* image);
+
+        #endregion
     }
 }

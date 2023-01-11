@@ -2,9 +2,9 @@ namespace OpenTK.Platform.Native.X11
 {
     public struct XSetWindowAttributes
     {
-        public XPixMap BackgroundPixmap;
+        public XPixmap BackgroundPixmap;
         public ulong BackgroundPixel;
-        public XPixMap BorderPixmap;
+        public XPixmap BorderPixmap;
         public ulong BorderPixel;
         public int BitGravity;
         public int WindowGravity;
