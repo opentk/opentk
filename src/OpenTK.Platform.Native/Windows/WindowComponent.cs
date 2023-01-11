@@ -411,6 +411,54 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.NCHITTEST:
+                    {
+                        int x = Win32.GET_X_LPARAM(lParam);
+                        int y = Win32.GET_Y_LPARAM(lParam);
+
+                        HWND h = HWndDict[hWnd];
+
+                        ScreenToClient(h, x, y, out int clientX, out int clientY);
+
+                        if (h.HitTest != null)
+                        {
+                            HitType type = h.HitTest(h, new Vector2(clientX, clientY));
+
+                            switch (type)
+                            {
+                                case HitType.Default:
+                                    IntPtr ret = Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                                    Console.WriteLine($"Hit: {(HT)(int)ret}");
+                                    return ret;
+                                case HitType.Normal:
+                                    return (IntPtr)HT.Client;
+                                case HitType.Draggable:
+                                    return (IntPtr)HT.Caption;
+                                case HitType.ResizeTopLeft:
+                                    return (IntPtr)HT.TopLeft;
+                                case HitType.ResizeTop:
+                                    return (IntPtr)HT.Top;
+                                case HitType.ResizeTopRight:
+                                    return (IntPtr)HT.TopRight;
+                                case HitType.ResizeRight:
+                                    return (IntPtr)HT.Right;
+                                case HitType.ResizeBottomRight:
+                                    return (IntPtr)HT.BottomRight;
+                                case HitType.ResizeBottom:
+                                    return (IntPtr)HT.Bottom;
+                                case HitType.ResizeBottomLeft:
+                                    return (IntPtr)HT.BottomLeft;
+                                case HitType.ResizeLeft:
+                                    return (IntPtr)HT.Left;
+                                default:
+                                    throw new InvalidEnumArgumentException("hit test return", (int)type, typeof(HitType));
+                            }
+                        }
+                        else
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
+                    }
                 case WM.SIZE:
                     {
                         SIZE size = (SIZE)wParam.ToUInt32();
@@ -1173,6 +1221,14 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void SetHitTestCallback(WindowHandle handle, HitTest? test)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            hwnd.HitTest = test;
+        }
+
+        /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -1269,6 +1325,8 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            // We don't release this DC because we have CS_OWNDC set.
+            // - Noggin_bops 2023-01-11
             IntPtr hDC = Win32.GetDC(hwnd.HWnd);
 
             bool success = Win32.SwapBuffers(hDC);

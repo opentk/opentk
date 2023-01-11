@@ -474,6 +474,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        public void SetHitTestCallback(WindowHandle handle, HitTest? test)
+        {
+            _windowComponent!.SetHitTestCallback(handle, test);
+        }
+
+        /// <inheritdoc/>
         void IWindowComponent.SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             _windowComponent!.SetCursor(handle, cursor);

@@ -1,10 +1,23 @@
 using System;
 using System.Collections.Generic;
+using OpenTK.Mathematics;
 
 #nullable enable
 
 namespace OpenTK.Core.Platform
 {
+    /// <summary>
+    /// A delegate for hit testing.
+    ///
+    /// Hit testing is not always done in respone to the user clicking the mouse.
+    /// The operating system can do hit testing for any reason and doesn't need to be in respose to some user action.
+    /// It is recommended to keep this code efficient as it will be called often.
+    /// </summary>
+    /// <param name="handle">A handle to the window that hit testing is being done on.</param>
+    /// <param name="position">The position of where the hit test is being done, not always the position of the mouse. In client relative coordinates.</param>
+    /// <returns>The result of the hit test.</returns>
+    public delegate HitType HitTest(WindowHandle handle, Vector2 position);
+
     /// <summary>
     /// Interface for abstraction layer drivers which implement the window component.
     /// </summary>
@@ -275,6 +288,18 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">A handle to the window to get whether or not is always on top.</param>
         /// <returns>Whether the window is always on top or not.</returns>
         public bool IsAlwaysOnTop(WindowHandle handle);
+
+        /// <summary>
+        /// Sets a delegate that is used for hit testing.
+        /// Hit testing allows the user to specify if a click should start a drag or resize operation on the window.
+        ///
+        /// Hit testing is not always done in respone to the user clicking the mouse.
+        /// The operating system can do hit testing for any reason and doesn't need to be in respose to some user action.
+        /// It is recommended to keep this code efficient as it will be called often.
+        /// </summary>
+        /// <param name="handle">The window for which this hit test delegate should be used for.</param>
+        /// <param name="test">The hit test delegate.</param>
+        public void SetHitTestCallback(WindowHandle handle, HitTest? test);
 
         /// <summary>
         /// Set the cursor object for a window.

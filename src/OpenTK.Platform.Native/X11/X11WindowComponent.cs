@@ -751,6 +751,14 @@ namespace OpenTK.Platform.Native.X11
             return false;
         }
 
+        /// <inheritdoc/>
+        public void SetHitTestCallback(WindowHandle handle, HitTest? test)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            xwindow.HitTest = test;
+        }
+
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);

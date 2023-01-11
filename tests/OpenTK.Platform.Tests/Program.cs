@@ -85,6 +85,8 @@ namespace OpenTK.Platform.Tests
 
             windowComp.IsAlwaysOnTop(window);
 
+            windowComp.SetHitTestCallback(window, (w, p) => HitType.Default);
+
             {
                 windowComp.GetMinClientSize(window, out int? minWidth, out int? minHeight);
                 Console.WriteLine($"Window min size: ({minWidth}, {minHeight})");
@@ -131,7 +133,7 @@ namespace OpenTK.Platform.Tests
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
-            Console.WriteLine(type);
+            //Console.WriteLine(type);
 
             if (args is CloseEventArgs close)
             {

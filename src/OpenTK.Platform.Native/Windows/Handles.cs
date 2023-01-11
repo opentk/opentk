@@ -21,6 +21,8 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr HWnd { get; private set; }
 
+        public HitTest? HitTest { get; set; }
+
         public bool Destroyed { get; set; } = false;
 
         /// <summary> The current cursor for this window. </summary>
@@ -49,20 +51,17 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr HGlrc { get; private set; }
 
-        // FIXME: How do we want to handle this??
+        // Because we are using CS_OWNDC we can keep a reference to this DC.
+        // - Noggin_bops 2023-01-11
         public IntPtr HDC { get; private set; }
 
         public HGLRC? SharedContext { get; private set; }
 
-        // FIXME: Is this needed?
-        public OpenGLComponent OpenGLComponent { get; private set; }
-
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext, OpenGLComponent openglComponent)
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext)
         {
             HGlrc = hGlrc;
             HDC = hdc;
             SharedContext = sharedContext;
-            OpenGLComponent = openglComponent;
         }
     }
 
