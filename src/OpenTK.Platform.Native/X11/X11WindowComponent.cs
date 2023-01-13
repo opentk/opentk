@@ -432,7 +432,9 @@ namespace OpenTK.Platform.Native.X11
 
                             break;
                         }
-                    case XEventType.UnmapNotify:
+                    // FIXME: Is this code needed? It seems like it's not doing anything
+                    // - Noggin_bops 2023-01-13
+                    /*case XEventType.UnmapNotify:
                         unsafe {
                             // If this is followed by a ReparentNotify with the same window and serial
                             // this is part of a reparent operation.
@@ -466,26 +468,78 @@ namespace OpenTK.Platform.Native.X11
                                     @event.Reparent.window == unmap.window &&
                                     @event.Reparent.serial == unmap.serial;
                             }
-                        }
+                        }*/
                     case XEventType.PropertyNotify:
                         {
                             XPropertyEvent property = ea.Property;
 
+                            /*if (property.atom == X11.Atoms[KnownAtoms.WM_NAME] || 
+                                property.atom == X11.Atoms[KnownAtoms._NET_WM_NAME])
+                            {
+                                continue;
+                            }
+
+                            Console.WriteLine("ATOM: " + XGetAtomName(X11.Display, property.atom));
+                            */
+
                             if (property.atom == X11.Atoms[KnownAtoms.WM_STATE])
                             {
-                                Console.WriteLine("WM_STATE");
+                                XWindowHandle xwindow = XWindowDict[property.window];
+
+                                int result = XGetWindowProperty(
+                                    X11.Display,
+                                    property.window,
+                                    X11.Atoms[KnownAtoms.WM_STATE],
+                                    0, ~0, false,
+                                    new XAtom(0),
+                                    out XAtom actualType,
+                                    out int actualFormat,
+                                    out long numberOfItems,
+                                    out long remainingBytes,
+                                    out IntPtr contents);
+
+                                if (result == 0)
+                                {
+                                    unsafe
+                                    {
+                                        int state = *(int*)contents;
+                                        // FIXME: Names for constants 1 and 3.
+                                        if (state == 1)
+                                        {
+                                            EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
+                                        }
+                                        else if (state == 3)
+                                        {
+                                            // When minimizing we remove maximized flags from WM so that we properly detect them when
+                                            // going back.
+                                            xwindow.WMState &= ~(WMState.MaximizedHorz | WMState.MaximizedVert);
+                                            EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Minimized));
+                                        }
+                                    }
+                                }
+
+                                if (contents != IntPtr.Zero)
+                                {
+                                    XFree(contents);
+                                }
                             }
                             else if (property.atom == X11.Atoms[KnownAtoms._NET_WM_STATE])
                             {
-                                XWindowHandle xwindow = XWindowDict[ea.Unmap.window];
+                                XWindowHandle xwindow = XWindowDict[property.window];
 
                                 WMState state = GetNETWMState(property.window);
                                 WMState changed = xwindow.WMState ^ state;
+
+                                Console.WriteLine($"State: {state}, Changed: {changed}, Before: {xwindow.WMState}");
+
+                                xwindow.WMState = state;
 
                                 if (changed.HasFlag(WMState.Hidden))
                                 {
                                     if (state.HasFlag(WMState.Hidden))
                                     {
+                                        // FIXME: We want to check if this is actually just us being minimized.
+                                        // In that case we don't want to set the mode to hidden.
                                         EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Hidden));
                                     }
                                     else
@@ -494,6 +548,7 @@ namespace OpenTK.Platform.Native.X11
                                     }
                                 }
 
+                                // FIXME: If we are hidden we shouldn't get to these events?
                                 if (changed.HasFlag(WMState.MaximizedHorz) || changed.HasFlag(WMState.MaximizedVert))
                                 {
                                     if (state.HasFlag(WMState.MaximizedHorz) && state.HasFlag(WMState.MaximizedVert))
@@ -989,6 +1044,10 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
+            // FIXME: This will not work if this is set before the window is mapped (I think).
+            // Is there some way to fix this?
+            // - Noggin_bops 2023-01-13
+
             if (X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE] == XAtom.None)
             {
                 // FIXME: Add a feature bool to IWindowComponent?
@@ -1030,16 +1089,17 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
+            // FIXME: This does not work if it's called directly 
+            // after setting the window to always on top.
+            // MapWindow, SetALwaysOnTop, IsAlwaysOnTop doesn't work at least.
+            // - Noggin_bops 2023-01-13
+
             if (X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE] == XAtom.None)
             {
                 Logger?.LogWarning("Can't check if window is always on top. The window manager doesn't support _NET_WM_STATE_ABOVE.");
                 return false;
             }
 
-            const long AnyPropertyType = 0;
-
-            // FIXME: This implementation is incomplete as I can't test it o wsl.
-            // - Noggin_bops 2022-12-31
             int failed = XGetWindowProperty(
                 X11.Display,
                 xwindow.Window,
@@ -1047,18 +1107,26 @@ namespace OpenTK.Platform.Native.X11
                 0,
                 ~0,
                 false,
-                new XAtom(AnyPropertyType),
+                X11.Atoms[KnownAtoms.ATOM],
                 out XAtom actualType,
                 out int actualFormat,
                 out long numberOfItems,
                 out long remainingBytes,
                 out IntPtr contents);
 
-            string type = XGetAtomName(X11.Display, actualType);
+            bool above = false;
+            unsafe {
+                XAtom* atoms = (XAtom*)contents;
+                for (int i = 0; i < numberOfItems; i++)
+                {
+                    if (atoms[i] == X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE])
+                    {
+                        above = true;
+                    }
+                }
+            }
 
-            Console.WriteLine($"type: {type}");
-
-            return false;
+            return above;
         }
 
         /// <inheritdoc/>

@@ -17,6 +17,8 @@ namespace OpenTK.Platform.Native.X11
         WM_SAVE_YOURSELF,
         WM_DELETE_WINDOW,
         WM_STATE,
+        WM_CHANGE_STATE,
+        WM_NAME,
         #endregion
 
         #region Freedesktop Atoms
