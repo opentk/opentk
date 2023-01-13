@@ -291,5 +291,8 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool XCheckIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int /* Status */ XIconifyWindow(XDisplayPtr display, XWindow w, int screen_number);
     }
 }

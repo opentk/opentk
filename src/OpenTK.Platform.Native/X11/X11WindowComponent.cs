@@ -1006,6 +1006,7 @@ namespace OpenTK.Platform.Native.X11
 
         public WindowMode GetMode(WindowHandle handle)
         {
+            // FIXME: Read WM_STATE for iconified, read _NET_WM_STATE for the rest.
             throw new NotImplementedException();
         }
 
@@ -1016,15 +1017,118 @@ namespace OpenTK.Platform.Native.X11
             switch (mode)
             {
                 case WindowMode.Normal:
-                    // FIXME! Not Raised, XMapWindow instead!
-                    XClearWindow(X11.Display, xwindow.Window);
-                    XMapRaised(X11.Display, xwindow.Window);
-                    break;
+                    {
+                        // FIXME! Not Raised, XMapWindow instead!
+                        XClearWindow(X11.Display, xwindow.Window);
+                        XMapRaised(X11.Display, xwindow.Window);
+                        break;
+                    }
                 case WindowMode.Hidden:
+                    {
+                        // FIXME: XUnmapWindow();
+
+                        break;
+                    }
                 case WindowMode.Minimized:
+                    {
+                        // FIXME: Default screen?
+                        int result = XIconifyWindow(X11.Display, xwindow.Window, X11.DefaultScreen);
+                        if (result == 0)
+                        {
+                            Logger?.LogWarning("XIconifyWindow window failed. Can't minimize window.");
+                        }
+                        break;
+                    }
                 case WindowMode.Maximized:
-                case WindowMode.WindowedFullscreen:
+                    {
+                        // FIXME: Log warning if _NET_WM_STATE is not supported.
+
+                        XEvent e = new XEvent();
+
+                        ref XClientMessageEvent client = ref e.ClientMessage;
+
+                        /* remove/unset property */
+                        const long _NET_WM_STATE_REMOVE = 0;
+                        /* add/set property */
+                        const long _NET_WM_STATE_ADD = 1;
+                        /* toggle property  */
+                        const long _NET_WM_STATE_TOGGLE = 2;
+
+                        client.Type = XEventType.ClientMessage;
+                        client.Serial = 0;
+                        client.SendEvent = 1;
+                        client.Display = X11.Display;
+                        client.Window = xwindow.Window;
+                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                        client.Format = 32;
+                        unsafe
+                        {
+                            client.l[0] = _NET_WM_STATE_ADD;
+                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
+                            client.l[2] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
+                            client.l[3] = 0;
+                            client.l[4] = 0;
+                        }
+
+                        int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+                        break;
+                    }
                 case WindowMode.ExclusiveFullscreen:
+                    {
+                        XEvent e = new XEvent();
+
+                        ref XClientMessageEvent client = ref e.ClientMessage;
+
+                        /* remove/unset property */
+                        const long _NET_WM_STATE_REMOVE = 0;
+                        /* add/set property */
+                        const long _NET_WM_STATE_ADD = 1;
+                        /* toggle property  */
+                        const long _NET_WM_STATE_TOGGLE = 2;
+                        
+                        // FIXME: Remove extents or whatever is causing the window to not become "proper" fullscreen.
+                        // FIXME: Make sure that we don't trigger a "maximized" window mode change.
+
+                        client.Type = XEventType.ClientMessage;
+                        client.Serial = 0;
+                        client.SendEvent = 1;
+                        client.Display = X11.Display;
+                        client.Window = xwindow.Window;
+                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                        client.Format = 32;
+                        unsafe
+                        {
+                            client.l[0] = _NET_WM_STATE_ADD;
+                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
+                            client.l[2] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
+                            client.l[3] = 0;
+                            client.l[4] = 0;
+                        }
+
+                        int status2 = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+                        client.Type = XEventType.ClientMessage;
+                        client.Serial = 0;
+                        client.SendEvent = 1;
+                        client.Display = X11.Display;
+                        client.Window = xwindow.Window;
+                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                        client.Format = 32;
+                        unsafe
+                        {
+                            client.l[0] = _NET_WM_STATE_ADD;
+                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                            client.l[2] = 0;
+                            client.l[3] = 0;
+                            client.l[4] = 0;
+                        }
+
+                        int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+                        break;
+                    }
+                case WindowMode.WindowedFullscreen:
                 default:
                     throw new NotImplementedException();
             }
@@ -1038,6 +1142,22 @@ namespace OpenTK.Platform.Native.X11
         public void SetBorderStyle(WindowHandle handle, WindowStyle style)
         {
             throw new NotImplementedException();
+
+            switch (style)
+            {
+                case WindowStyle.Borderless:
+                {
+                    
+                    break;
+                }
+                case WindowStyle.FixedBorder:
+                    // Set the max and min height to the same.
+                    // FIXME: Figure out if you can still resize the window programatically.
+                    // FIXME: Should GetMaxClientSize return the last set value or 
+                    // the value that it will have after this.
+                    break;
+                default:
+            }
         }
 
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
@@ -1196,13 +1316,25 @@ namespace OpenTK.Platform.Native.X11
 
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: This will not work if the coordinates are on another screen.
+            // FIXME: Get the root window that the window is in?
+            XTranslateCoordinates(X11.Display, X11.DefaultRootWindow, xwindow.Window, x, y, out clientX, out clientY, out _);
+
+            // FIXME: Extents?
         }
 
         /// <inheritdoc/>
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: This will not work if the coordinates are on another screen.
+            // FIXME: Get the root window that the window is in?
+            XTranslateCoordinates(X11.Display, xwindow.Window, X11.DefaultRootWindow, clientX, clientY, out x, out y, out _);
+
+            // FIXME: Extents?
         }
 
         public void SwapBuffers(WindowHandle handle)
