@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -10,7 +11,6 @@ using System.Text;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native.Windows;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
 
@@ -169,6 +169,69 @@ namespace OpenTK.Platform.Native.X11
         public bool IsWindowManagerFreedesktop { get; private set; } = false;
         public string? FreedesktopWindowManagerName { get; private set; } = null;
 
+        internal WMState GetNETWMState(XWindow window)
+        {
+            WMState state = default;
+
+            int result = XGetWindowProperty(
+                                    X11.Display,
+                                    window,
+                                    X11.Atoms[KnownAtoms._NET_WM_STATE],
+                                    0, 1024,
+                                    false,
+                                    X11.Atoms[KnownAtoms.ATOM],
+                                    out XAtom actualType,
+                                    out int actualFormat,
+                                    out long numberOfItems,
+                                    out long remainingBytes,
+                                    out IntPtr contents);
+
+            if (result == 0)
+            {
+                unsafe
+                {
+                    XAtom* atoms = (XAtom*)contents;
+
+                    // The order of these need to correspond to the order in WMState
+                    Span<KnownAtoms> stateAtoms = stackalloc KnownAtoms[]
+                    {
+                        KnownAtoms._NET_WM_STATE_MODAL,
+                        KnownAtoms._NET_WM_STATE_STICKY,
+                        KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT,
+                        KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ,
+                        KnownAtoms._NET_WM_STATE_SHADED,
+                        KnownAtoms._NET_WM_STATE_SKIP_TASKBAR,
+                        KnownAtoms._NET_WM_STATE_SKIP_PAGER,
+                        KnownAtoms._NET_WM_STATE_HIDDEN,
+                        KnownAtoms._NET_WM_STATE_FULLSCREEN,
+                        KnownAtoms._NET_WM_STATE_ABOVE,
+                        KnownAtoms._NET_WM_STATE_BELOW,
+                        KnownAtoms._NET_WM_STATE_DEMANDS_ATTENTION,
+                        KnownAtoms._NET_WM_STATE_FOCUSED,
+                    };
+
+                    for (int i = 0; i < numberOfItems; i++)
+                    {
+                        XAtom atom = atoms[i];
+                        for (int j = 0; j < stateAtoms.Length; j++)
+                        {
+                            if (atom == X11.Atoms[stateAtoms[j]])
+                            {
+                                state |= (WMState)(1 << j);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (contents != IntPtr.Zero)
+            {
+                XFree(contents);
+            }
+
+            return state;
+        }
+
         public void ProcessEvents(bool waitForEvents = false)
         {
             // FIXME: waitForEvents!
@@ -177,94 +240,277 @@ namespace OpenTK.Platform.Native.X11
             while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
             {
                 XNextEvent(X11.Display, out ea);
-                Debug.Print(ea.Type.ToString());
+                //Debug.Print(ea.Type.ToString());
 
-                if (ea.Type == XEventType.ConfigureRequest)
+                switch (ea.Type)
                 {
-                    ref XConfigureRequestEvent configureRequest = ref ea.ConfigureRequest;
-
-                    XWindowChanges changes;
-                    changes.X = configureRequest.X;
-                    changes.Y = configureRequest.Y;
-                    changes.Width = configureRequest.Width;
-                    changes.Height = configureRequest.Height;
-                    changes.BorderWidth = configureRequest.BorderWidth;
-                    changes.Sibling = configureRequest.Above;
-                    changes.StackMode = configureRequest.Detail;
-
-                    //XConfigureWindow(X11.Display, configureRequest.Window, (XWindowChangesMask)configureRequest.ValueMask, ref changes);
-                    Console.WriteLine("Configure window!");
-                }
-                else if (ea.Type == XEventType.ClientMessage)
-                {
-                    XClientMessageEvent clientMessage = ea.ClientMessage;
-
-                    unsafe
-                    {
-                        if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
+                    case XEventType.ClientMessage:
                         {
-                            Console.WriteLine("Delete window!");
+                            XClientMessageEvent clientMessage = ea.ClientMessage;
 
-                            XWindowHandle xwindow = XWindowDict[clientMessage.Window];
-
-                            EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
-                        }
-                    }
-                }
-                else if (ea.Type == XEventType.ButtonPress)
-                {
-                    XButtonEvent buttonPressed = ea.ButtonPressed;
-
-                    // We do a hit test here to see if we should do something.
-                    XWindowHandle xwindow = XWindowDict[buttonPressed.window];
-
-                    // Buttons 4 to 7 are used for scroll, for now we skip them.
-                    if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        if (buttonPressed.button == 1)
-                        {
-                            if (xwindow.HitTest != null)
+                            unsafe
                             {
-                                HitType type = xwindow.HitTest(xwindow, new Vector2(buttonPressed.x, buttonPressed.y));
-                                if (type != HitType.Default)
+                                if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
                                 {
-                                    // FIXME: Handle the hit type!
-                                    Logger?.LogWarning("Hit testing is not supported in x11 yet.");
-                                    continue;
+                                    XWindowHandle xwindow = XWindowDict[clientMessage.Window];
+
+                                    EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
                                 }
                             }
-                        }
 
-                        MouseButton button;
-                        switch (buttonPressed.button)
+                            break;
+                        }
+                    case XEventType.ButtonPress:
                         {
-                            case 1: // Left
-                                button = MouseButton.Button1;
-                                break;
-                            case 2: // Middle
-                                button = MouseButton.Button3;
-                                break;
-                            case 3: // Right
-                                button = MouseButton.Button2;
-                                break;
-                            case 8: // X1
-                                button = MouseButton.Button4;
-                                break;
-                            case 9: // X2
-                                button = MouseButton.Button5;
-                                break;
+                            XButtonEvent buttonPressed = ea.ButtonPressed;
 
-                            default:
-                                // Skip this event.
-                                continue;
+                            XWindowHandle xwindow = XWindowDict[buttonPressed.window];
+
+                            // Buttons 4 to 7 are used for scroll.
+                            if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
+                            {
+                                int xdelta = 0;
+                                int ydelta = 0;
+                                switch (buttonPressed.button)
+                                {
+                                    case 4: ydelta = 1; break; // up
+                                    case 5: ydelta = -1; break; // down
+                                    case 6: xdelta = -1; break; // left
+                                    case 7: xdelta = 1; break; // right
+                                    default: throw new Exception("This should never happen.");
+                                }
+
+                                // FIXME: Scrolling distance? Are there scrolling settings on linux/x11?
+                                EventQueue.Raise(xwindow, PlatformEventType.Scroll, new ScrollEventArgs((xdelta, ydelta), (xdelta, ydelta)));
+                            }
+                            else
+                            {
+                                if (buttonPressed.button == 1 && xwindow.HitTest != null)
+                                {
+                                    // We do a hit test here to see if we should do something.
+                                    HitType type = xwindow.HitTest(xwindow, new Vector2(buttonPressed.x, buttonPressed.y));
+                                    if (type != HitType.Default)
+                                    {
+                                        // FIXME: Handle the hit type!
+                                        Logger?.LogWarning("Hit testing is not supported in x11 yet.");
+                                        continue;
+                                    }
+                                }
+
+                                MouseButton button;
+                                switch (buttonPressed.button)
+                                {
+                                    case 1: button = MouseButton.Button1; break; // Left
+                                    case 2: button = MouseButton.Button3; break; // Middle
+                                    case 3: button = MouseButton.Button2; break; // Right 
+                                    case 8: button = MouseButton.Button4; break; // X1 
+                                    case 9: button = MouseButton.Button5; break; // X2
+                                    default: continue; // Skip this event.
+                                }
+
+                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(button));
+                            }
+
+                            break;
                         }
+                    case XEventType.ButtonRelease:
+                        {
+                            XButtonEvent buttonPressed = ea.ButtonPressed;
 
-                        EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(button));
-                    }
+                            XWindowHandle xwindow = XWindowDict[buttonPressed.window];
+
+                            // Ignore release for scroll buttons.
+                            if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
+                            {
+                                break;
+                            }
+
+                            MouseButton button;
+                            switch (buttonPressed.button)
+                            {
+                                case 1: button = MouseButton.Button1; break; // Left
+                                case 2: button = MouseButton.Button3; break; // Middle
+                                case 3: button = MouseButton.Button2; break; // Right 
+                                case 8: button = MouseButton.Button4; break; // X1 
+                                case 9: button = MouseButton.Button5; break; // X2
+                                default: continue; // Skip this event.
+                            }
+
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(button));
+
+                            break;
+                        }
+                    case XEventType.MotionNotify:
+                        {
+                            XMotionEvent motion = ea.Motion;
+
+                            XWindowHandle xwindow = XWindowDict[motion.window];
+
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(motion.x, motion.y)));
+
+                            break;
+                        }
+                    case XEventType.EnterNotify:
+                        {
+                            XCrossingEvent enter = ea.Enter;
+
+                            XWindowHandle xwindow = XWindowDict[enter.window];
+
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
+
+                            break;
+                        }
+                    case XEventType.LeaveNotify:
+                        {
+                            XCrossingEvent leave = ea.Leave;
+
+                            XWindowHandle xwindow = XWindowDict[leave.window];
+
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(false));
+
+                            break;
+                        }
+                    case XEventType.FocusIn:
+                        {
+                            XFocusChangeEvent focusIn = ea.FocusIn;
+
+                            // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
+                            // I copied what SDL did:
+                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // The documentation for these values is very obtuse:
+                            // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
+                            // - Noggin_bops 2023-01-12
+
+                            if (focusIn.mode == FocusChangeMode.NotifyGrab ||
+                                focusIn.mode == FocusChangeMode.NotifyUngrab)
+                            {
+                                Logger?.LogDebug($"FocusIn mode={focusIn.mode}. Ignoring.");
+                                break;
+                            }
+
+                            if (focusIn.detail == FocusChangeDetail.NotifyInferior ||
+                                focusIn.detail == FocusChangeDetail.NotifyPointer)
+                            {
+                                Logger?.LogDebug($"FocusIn detail={focusIn.detail}. Ignoring.");
+                                break;
+                            }
+
+                            XWindowHandle xwindow = XWindowDict[focusIn.window];
+
+                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(true));
+
+                            break;
+                        }
+                    case XEventType.FocusOut:
+                        {
+                            XFocusChangeEvent focusOut = ea.FocusOut;
+
+                            // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
+                            // I copied what SDL did:
+                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // The documentation for these values is very obtuse:
+                            // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
+                            // - Noggin_bops 2023-01-12
+
+                            if (focusOut.mode == FocusChangeMode.NotifyGrab ||
+                                focusOut.mode == FocusChangeMode.NotifyUngrab)
+                            {
+                                Logger?.LogDebug($"FocusOut mode={focusOut.mode}. Ignoring.");
+                                break;
+                            }
+
+                            if (focusOut.detail == FocusChangeDetail.NotifyInferior ||
+                                focusOut.detail == FocusChangeDetail.NotifyPointer)
+                            {
+                                Logger?.LogDebug($"FocusOut detail={focusOut.detail}. Ignoring.");
+                                break;
+                            }
+
+                            XWindowHandle xwindow = XWindowDict[focusOut.window];
+
+                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(false));
+
+                            break;
+                        }
+                    case XEventType.UnmapNotify:
+                        unsafe {
+                            // If this is followed by a ReparentNotify with the same window and serial
+                            // this is part of a reparent operation.
+                            if (XCheckIfEvent(X11.Display, out _, IsReparentNotify, new IntPtr(&ea)))
+                            {
+                                XCheckIfEvent(X11.Display, out _, IsMapNotify, new IntPtr(&ea));
+                            }
+                            else
+                            {
+                                XWindowHandle xwindow = XWindowDict[ea.Unmap.window];
+
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Minimized));
+                            }
+
+                            break;
+
+                            static bool IsReparentNotify(XDisplayPtr display, ref XEvent @event, IntPtr arg)
+                            {
+                                ref XUnmapEvent unmap = ref Unsafe.AsRef<XUnmapEvent>((void*)arg);
+
+                                return @event.Type == XEventType.ReparentNotify &&
+                                    @event.Reparent.window == unmap.window &&
+                                    @event.Reparent.serial == unmap.serial;
+                            }
+
+                            static bool IsMapNotify(XDisplayPtr display, ref XEvent @event, IntPtr arg)
+                            {
+                                ref XUnmapEvent unmap = ref Unsafe.AsRef<XUnmapEvent>((void*)arg);
+
+                                return @event.Type == XEventType.MapNotify &&
+                                    @event.Reparent.window == unmap.window &&
+                                    @event.Reparent.serial == unmap.serial;
+                            }
+                        }
+                    case XEventType.PropertyNotify:
+                        {
+                            XPropertyEvent property = ea.Property;
+
+                            if (property.atom == X11.Atoms[KnownAtoms.WM_STATE])
+                            {
+                                Console.WriteLine("WM_STATE");
+                            }
+                            else if (property.atom == X11.Atoms[KnownAtoms._NET_WM_STATE])
+                            {
+                                XWindowHandle xwindow = XWindowDict[ea.Unmap.window];
+
+                                WMState state = GetNETWMState(property.window);
+                                WMState changed = xwindow.WMState ^ state;
+
+                                if (changed.HasFlag(WMState.Hidden))
+                                {
+                                    if (state.HasFlag(WMState.Hidden))
+                                    {
+                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Hidden));
+                                    }
+                                    else
+                                    {
+                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
+                                    }
+                                }
+
+                                if (changed.HasFlag(WMState.MaximizedHorz) || changed.HasFlag(WMState.MaximizedVert))
+                                {
+                                    if (state.HasFlag(WMState.MaximizedHorz) && state.HasFlag(WMState.MaximizedVert))
+                                    {
+                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Maximized));
+                                    }
+                                    else
+                                    {
+                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.Normal));
+                                    }
+                                }
+                            }
+
+                            break;
+                        }
+                    default:
+                        break;
                 }
             }
         }
@@ -386,7 +632,13 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.SubstructureNotify |
                     XEventMask.VisibilityChanged |
                     XEventMask.Exposure |
-                    XEventMask.ButtonPress
+                    XEventMask.ButtonPress |
+                    XEventMask.EnterWindow |
+                    XEventMask.LeaveWindow |
+                    XEventMask.KeyPress |
+                    XEventMask.KeyRelease |
+                    XEventMask.FocusChange |
+                    XEventMask.PropertyChange
                     );
 
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);

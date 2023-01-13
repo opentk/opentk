@@ -12,7 +12,8 @@ namespace OpenTK.Core.Platform
         /// Do what would be done if no hit test delegate was set.
         /// </summary>
         Default,
-
+        // FIXME:
+        // Add PassThrough to allow events to pass through to other OpenTK windows?
         Normal,
         Draggable,
         ResizeTopLeft,

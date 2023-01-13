@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace OpenTK.Platform.Native.X11
 {
     public enum XEventType : int
@@ -36,5 +38,30 @@ namespace OpenTK.Platform.Native.X11
         MappingNotify = 34,
         GenericEvent = 35,
         LastEvent = 36
+    }
+
+    public enum FocusChangeMode : int
+    {
+        NotifyNormal = 0,
+        NotifyGrab = 1,
+        NotifyUngrab = 2,
+    }
+
+    public enum FocusChangeDetail : int
+    {
+        NotifyAncestor = 0,
+        NotifyVirtual = 1,
+        NotifyInferior = 2, 
+        NotifyNonlinear = 3,
+        NotifyNonlinearVirtual = 4,
+        NotifyPointer = 5,
+        NotifyPointerRoot = 6,
+        NotifyDetailNone = 7,
+    }
+
+    public enum PropertyState : int
+    {
+        PropertyNewValue = 0,
+        PropertyDelete = 1,
     }
 }

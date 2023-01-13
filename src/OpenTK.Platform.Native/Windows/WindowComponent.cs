@@ -262,7 +262,7 @@ namespace OpenTK.Platform.Native.Windows
                             EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(x, y));
+                        EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(x, y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }

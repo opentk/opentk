@@ -284,42 +284,12 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XCursor XCreatePixmapCursor(XDisplayPtr display, XPixmap source, XPixmap mask, XColorPtr foreground_color, XColorPtr background_color, int x, int y);
 
-        #region Xcursor
-
-        public unsafe struct XcursorImage
-        {
-            /// <summary>
-            /// /∗ nominal size for matching*/
-            /// </summary>
-            public uint /* XcursorDim */ size;
-            /// <summary>
-            /// /∗ actual width */
-            /// </summary>
-            public uint /* XcursorDim */ width;
-            /// <summary>
-            /// /∗ actual height */
-            /// </summary>
-            public uint /* XcursorDim */ height;
-            /// <summary>
-            /// /∗ hot spot x(must be inside image) */
-            /// </summary>
-            public uint /* XcursorDim */ xhot;
-            /// <summary>
-            /// /∗ hot spot y(must be inside image) */
-            /// </summary>
-            public uint /* XcursorDim */ yhot;
-            /// <summary>
-            /// /∗ pointer to pixels*/
-            /// </summary>
-            public uint* /* XcursorPixel* */ pixels;
-        }
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public unsafe delegate bool XPredicate(XDisplayPtr display, ref XEvent @event, IntPtr arg);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static unsafe extern XcursorImage* XcursorImageCreate(int width, int height);
-
-        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static unsafe extern void XcursorImageDestroy(XcursorImage* image);
-
-        #endregion
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool XCheckIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
     }
 }

@@ -16,6 +16,8 @@ namespace OpenTK.Platform.Native.X11
 
         public XColorMap? ColorMap { get; }
 
+        internal WMState WMState { get; set; }
+
         public XWindowHandle(
             XDisplayPtr display,
             XWindow window,

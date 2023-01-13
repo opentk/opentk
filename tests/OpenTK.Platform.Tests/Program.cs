@@ -4,6 +4,7 @@ using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.X11;
 using System;
 using System.Diagnostics;
 
@@ -85,8 +86,6 @@ namespace OpenTK.Platform.Tests
 
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(window)}");
 
-            windowComp.SetHitTestCallback(window, (w, p) => HitType.Default);
-
             {
                 windowComp.GetMinClientSize(window, out int? minWidth, out int? minHeight);
                 Console.WriteLine($"Window min size: ({minWidth}, {minHeight})");
@@ -153,7 +152,7 @@ namespace OpenTK.Platform.Tests
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
-            Console.WriteLine(type);
+            //Console.WriteLine(type);
 
             if (args is CloseEventArgs close)
             {
@@ -162,6 +161,29 @@ namespace OpenTK.Platform.Tests
             else if (args is MouseButtonDownEventArgs buttonDown)
             {
                 Console.WriteLine($"Mouse button: {buttonDown.Button}");
+            }
+            else if (args is ScrollEventArgs scroll)
+            {
+                Console.WriteLine($"Scroll: {scroll.Delta}, Distance: {scroll.Distance}");
+            }
+            else if (args is MouseMoveEventArgs move)
+            {
+                windowComp.SetTitle((WindowHandle)handle, $"Mouse: {move.Position}");
+            }
+            else if (args is FocusEventArgs focus)
+            {
+                if (focus.GotFocus)
+                {
+                    Console.WriteLine("Got focus!");
+                }
+                else
+                {
+                    Console.WriteLine("Lost focus!");
+                }
+            }
+            else if (args is WindowModeChangeEventArgs windowModeChange)
+            {
+                Console.WriteLine($"Window mode: {windowModeChange.NewMode}");
             }
         }
     }
