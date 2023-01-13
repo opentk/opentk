@@ -688,6 +688,7 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.VisibilityChanged |
                     XEventMask.Exposure |
                     XEventMask.ButtonPress |
+                    XEventMask.PointerMotion |
                     XEventMask.EnterWindow |
                     XEventMask.LeaveWindow |
                     XEventMask.KeyPress |
@@ -782,6 +783,9 @@ namespace OpenTK.Platform.Native.X11
                         );
                 }
             }
+
+            // FIXME: Seems like on some machines we need to call XFlush to get the changes to be made.
+            XFlush(X11.Display);
         }
 
         public IconHandle GetIcon(WindowHandle handle)
