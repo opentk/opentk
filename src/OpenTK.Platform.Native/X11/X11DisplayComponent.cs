@@ -42,11 +42,9 @@ namespace OpenTK.Platform.Native.X11
                 DisplayExtension = DisplayExtensionType.None;
             }
 
-            Debug.WriteLine($"Using display extension: {DisplayExtension}.", "PAL2.0/Linux/X11/Display");
-            Debug.WriteLineIf(
-                DisplayExtension != DisplayExtensionType.None,
-                $"{DisplayExtension} version {DisplayExtensionVersion}",
-                "PAL2.0/Linux/X11/Display");
+            Logger?.LogInfo($"Using display extension: {DisplayExtension}.");
+            if (DisplayExtension != DisplayExtensionType.None)
+                Logger?.LogInfo($"{DisplayExtension} version {DisplayExtensionVersion}");
         }
 
         // TODO: Write Xinerama fallback.
