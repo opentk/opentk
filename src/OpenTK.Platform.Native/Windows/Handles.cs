@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,9 @@ namespace OpenTK.Platform.Native.Windows
         public int? MaxHeight { get; set; }
         public int? MinWidth { get; set; }
         public int? MinHeight { get; set; }
+
+        public Vector2i LastMousePosition { get; set; }
+        public Vector2 VirtualMousePosition { get; set; }
 
         public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {

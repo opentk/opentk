@@ -1277,11 +1277,11 @@ namespace OpenTK.Platform.Native.X11
             XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? XCursor.None);
         }
 
-        public void CaptureCursor(WindowHandle handle, bool capture)
+        public void CaptureCursor(WindowHandle handle, bool captureCursor)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            if (capture)
+            if (captureCursor)
             {
                 GrabResult result = XGrabPointer(X11.Display, xwindow.Window,
                     true, // FIXME: What does this mean?
@@ -1300,6 +1300,13 @@ namespace OpenTK.Platform.Native.X11
             {
                 XUngrabPointer(X11.Display, XTime.CurrentTime);
             }
+        }
+
+        public void GrabCursor(WindowHandle handle, bool grabCursor)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            throw new NotImplementedException();
         }
 
         public void FocusWindow(WindowHandle handle)

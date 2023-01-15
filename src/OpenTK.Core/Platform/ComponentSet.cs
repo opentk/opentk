@@ -489,9 +489,15 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IWindowComponent.CaptureCursor(WindowHandle handle, bool capture)
+        void IWindowComponent.CaptureCursor(WindowHandle handle, bool captureCursor)
         {
-            _windowComponent!.CaptureCursor(handle, capture);
+            _windowComponent!.CaptureCursor(handle, captureCursor);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.GrabCursor(WindowHandle handle, bool grabCursor)
+        {
+            _windowComponent!.GrabCursor(handle, grabCursor);
         }
 
         /// <inheritdoc/>

@@ -118,6 +118,7 @@ namespace OpenTK.Platform.Tests
             }
             //cursorComp.SetHotspot(cursorHandle, 8, 8);
             cursorComp.Load(cursorHandle, 16, 16, image, mask);
+            cursorComp.SetHotspot(cursorHandle, 7, 7);
             windowComp.SetCursor(window, cursorHandle);
 
             while (windowComp.IsWindowDestroyed(window) == false)
@@ -143,7 +144,7 @@ namespace OpenTK.Platform.Tests
                 }
 
                 mouseComp.GetPosition(null, out int x, out int y);
-                windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
+                //windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
                 
                 GL.ClearColor(Color4.Coral);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
@@ -153,6 +154,8 @@ namespace OpenTK.Platform.Tests
         }
 
         static bool captured = false;
+
+        static Vector2 lastPos;
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
@@ -169,7 +172,8 @@ namespace OpenTK.Platform.Tests
                 if (buttonDown.Button == MouseButton.Button3)
                 {
                     captured = !captured;
-                    windowComp.CaptureCursor((WindowHandle)handle, captured);
+                    //windowComp.CaptureCursor((WindowHandle)handle, captured);
+                    windowComp.GrabCursor((WindowHandle)handle, captured);
                 }
             }
             else if (args is ScrollEventArgs scroll)
@@ -179,6 +183,10 @@ namespace OpenTK.Platform.Tests
             else if (args is MouseMoveEventArgs move)
             {
                 windowComp.SetTitle((WindowHandle)handle, $"Mouse: {move.Position}");
+
+                Console.WriteLine($"Delta: {move.Position - lastPos}");
+
+                lastPos = move.Position;
             }
             else if (args is FocusEventArgs focus)
             {

@@ -4,11 +4,9 @@ using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 #nullable enable
 
@@ -35,6 +33,10 @@ namespace OpenTK.Platform.Native.Windows
         private Win32.WNDPROC? WindowProc;
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
+
+        // FIXME: Should we be able to clip and grab at the same time??
+        internal static HWND? CursorClippedWindow;
+        internal static HWND? CursorGrabbedWindow;
 
         static WindowComponent()
         {
@@ -258,14 +260,38 @@ namespace OpenTK.Platform.Native.Windows
                             tme.cbSize = (uint)Marshal.SizeOf<Win32.TRACKMOUSEEVENT>();
                             tme.dwFlags = TME.Leave;
                             tme.hwndTrack = hWnd;
-                            Win32.TrackMouseEvent(ref tme);
-
-                            h.TrackingMouse = true;
-
+                            if (Win32.TrackMouseEvent(ref tme))
+                            {
+                                h.TrackingMouse = true;
+                            }
+                            else
+                            {
+                                throw new Win32Exception();
+                            }
+                            
                             EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(x, y)));
+                        if (CursorGrabbedWindow == h)
+                        {
+                            // When recentering the cursor we set LastMousePosition equal to the new position.
+                            // This will cause the delta calculation to return zero, which is how we
+                            // ignore the WM_MOUSEMOVE event sent when recentering.
+                            // - Noggin_bops 2023-01-16
+                            Vector2 delta = (x, y) - h.LastMousePosition;
+
+                            if (delta != (0, 0))
+                            {
+                                h.VirtualMousePosition += delta;
+                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h.VirtualMousePosition));
+                            }
+                        }
+                        else
+                        {
+                            EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(x, y)));
+                        }
+
+                        h.LastMousePosition = (x, y);
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -661,6 +687,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents = false)
         {
             while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove) != 0)
@@ -668,8 +695,27 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);
             }
+
+            if (CursorGrabbedWindow != null)
+            {
+                GetClientSize(CursorGrabbedWindow, out int width, out int height);
+                if (CursorGrabbedWindow.LastMousePosition != (width / 2, height / 2))
+                {
+                    Win32.POINT p = new Win32.POINT(width / 2, height / 2);
+                    Win32.ClientToScreen(CursorGrabbedWindow.HWnd, ref p);
+
+                    bool success = Win32.SetCursorPos(p.X, p.Y);
+                    if (success == false)
+                    {
+                        throw new Win32Exception();
+                    }
+
+                    CursorGrabbedWindow.LastMousePosition = (width / 2, height / 2);
+                }
+            }
         }
 
+        /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
             IntPtr hWnd = Win32.CreateWindowEx(
@@ -707,6 +753,16 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            if (CursorClippedWindow == hwnd)
+            {
+                CaptureCursor(hwnd, false);
+            }
+
+            if (CursorGrabbedWindow == hwnd)
+            {
+                GrabCursor(hwnd, false);
+            }
+
             HWndDict.Remove(hwnd.HWnd);
 
             bool success = Win32.DestroyWindow(hwnd.HWnd);
@@ -720,6 +776,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool IsWindowDestroyed(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -1256,6 +1313,8 @@ namespace OpenTK.Platform.Native.Windows
             bool success;
             if (capture)
             {
+                CursorClippedWindow = hwnd;
+
                 success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
                 if (success == false)
                 {
@@ -1271,7 +1330,7 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception();
                 }
             }
-            else
+            else if (hwnd == CursorClippedWindow)
             {
                 success = Win32.ClipCursor(ref Unsafe.NullRef<Win32.RECT>());
                 if (success == false)
@@ -1279,6 +1338,50 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception();
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        public void GrabCursor(WindowHandle handle, bool grabCursor)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            if (grabCursor)
+            {
+                CursorGrabbedWindow = hwnd;
+
+                // To avoid having the mouse position jump to the virtual mouse position
+                // we instead set the virtual position of the mouse to the last known position.
+                // - Noggin_bops 2023-01-16
+                CursorGrabbedWindow.VirtualMousePosition = CursorGrabbedWindow.LastMousePosition;
+
+                bool success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                ClientToScreen(handle, lpRect.left, lpRect.top, out lpRect.left, out lpRect.top);
+                ClientToScreen(handle, lpRect.right, lpRect.bottom, out lpRect.right, out lpRect.bottom);
+
+                success = Win32.ClipCursor(ref lpRect);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+            }
+            else if (CursorGrabbedWindow == hwnd)
+            {
+                CursorGrabbedWindow = null;
+
+                bool success = Win32.ClipCursor(ref Unsafe.NullRef<Win32.RECT>());
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+            }
+
+            // FIXME: Make cursor invisible
         }
 
         /// <inheritdoc/>
