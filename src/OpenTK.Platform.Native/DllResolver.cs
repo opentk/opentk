@@ -22,7 +22,7 @@ namespace OpenTK.Platform.Native
 
         public static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
         {
-            if (OperatingSystem.IsLinux() && LinuxLibraryList.TryGetValue(libraryName, out IReadOnlyCollection<string>? names))
+            if (OperatingSystem.IsLinux() && LinuxLibraryList.TryGetValue(libraryName, out string[]? names))
             {
                 foreach(string name in names)
                 {
@@ -38,8 +38,8 @@ namespace OpenTK.Platform.Native
         /// A dictionary of a priority list of library search names for the
         /// Linux family of operating systems.
         /// </summary>
-        private static readonly IReadOnlyDictionary<string, IReadOnlyCollection<string>> LinuxLibraryList =
-        new Dictionary<string, IReadOnlyCollection<string>>
+        private static readonly Dictionary<string, string[]> LinuxLibraryList =
+        new Dictionary<string, string[]>
         {
             ["GL"] = new string[]
             {
