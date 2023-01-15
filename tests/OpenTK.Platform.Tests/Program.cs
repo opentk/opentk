@@ -18,6 +18,8 @@ namespace OpenTK.Platform.Tests
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
 
+        static CursorHandle cursorHandle;
+
         static void Main()
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
@@ -94,7 +96,7 @@ namespace OpenTK.Platform.Tests
             Stopwatch watch = Stopwatch.StartNew();
 
             SystemCursorType cursor = SystemCursorType.Default;
-            CursorHandle cursorHandle = cursorComp.Create();
+            cursorHandle = cursorComp.Create();
 
             windowComp.SetCursor(window, cursorHandle);
 
@@ -150,6 +152,8 @@ namespace OpenTK.Platform.Tests
             }
         }
 
+        static bool captured = false;
+
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             //Console.WriteLine(type);
@@ -161,6 +165,12 @@ namespace OpenTK.Platform.Tests
             else if (args is MouseButtonDownEventArgs buttonDown)
             {
                 Console.WriteLine($"Mouse button: {buttonDown.Button}");
+
+                if (buttonDown.Button == MouseButton.Button3)
+                {
+                    captured = !captured;
+                    windowComp.CaptureCursor((WindowHandle)handle, captured);
+                }
             }
             else if (args is ScrollEventArgs scroll)
             {

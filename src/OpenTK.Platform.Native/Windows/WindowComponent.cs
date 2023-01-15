@@ -118,6 +118,9 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public bool CanSetCursor => true;
 
+        /// <inheritdoc/>
+        public bool CanCaptureCursor => true;
+
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         /// <inheritdoc/>
@@ -1238,6 +1241,44 @@ namespace OpenTK.Platform.Native.Windows
 
             // A hCursor = null means a hidden cursor, as we want.
             Win32.SetCursor(hcursor?.Cursor ?? IntPtr.Zero);
+        }
+
+        /// <inheritdoc/>
+        public void CaptureCursor(WindowHandle handle, bool capture)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            // FIXME: The cursor clip is a global thing so it will
+            // quite often get removed, stuff like changing focus etc
+            // We want to handle this so that we recapture the mouse when
+            // we get focus again.
+
+            bool success;
+            if (capture)
+            {
+                success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+
+                ClientToScreen(handle, lpRect.left, lpRect.top, out lpRect.left, out lpRect.top);
+                ClientToScreen(handle, lpRect.right, lpRect.bottom, out lpRect.right, out lpRect.bottom);
+
+                success = Win32.ClipCursor(ref lpRect);
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+            }
+            else
+            {
+                success = Win32.ClipCursor(ref Unsafe.NullRef<Win32.RECT>());
+                if (success == false)
+                {
+                    throw new Win32Exception();
+                }
+            }
         }
 
         /// <inheritdoc/>

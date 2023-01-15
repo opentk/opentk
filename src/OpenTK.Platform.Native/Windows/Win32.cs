@@ -958,5 +958,11 @@ namespace OpenTK.Platform.Native.Windows
             public int BatteryLifeTime;
             public int BatteryFullLifeTime;
         }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetClipCursor(out RECT lpRect);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool ClipCursor(ref RECT lpRect);
     }
 }

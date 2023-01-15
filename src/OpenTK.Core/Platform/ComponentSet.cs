@@ -303,6 +303,9 @@ namespace OpenTK.Core.Platform
         bool IWindowComponent.CanSetCursor => _windowComponent!.CanSetCursor;
 
         /// <inheritdoc/>
+        bool IWindowComponent.CanCaptureCursor => _windowComponent!.CanCaptureCursor;
+
+        /// <inheritdoc/>
         IReadOnlyList<PlatformEventType> IWindowComponent.SupportedEvents => _windowComponent!.SupportedEvents;
 
         /// <inheritdoc/>
@@ -483,6 +486,12 @@ namespace OpenTK.Core.Platform
         void IWindowComponent.SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             _windowComponent!.SetCursor(handle, cursor);
+        }
+
+        /// <inheritdoc/>
+        void IWindowComponent.CaptureCursor(WindowHandle handle, bool capture)
+        {
+            _windowComponent!.CaptureCursor(handle, capture);
         }
 
         /// <inheritdoc/>

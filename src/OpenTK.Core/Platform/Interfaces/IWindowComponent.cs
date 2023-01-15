@@ -39,6 +39,11 @@ namespace OpenTK.Core.Platform
         bool CanSetCursor { get; }
 
         /// <summary>
+        /// True when the driver supports capturing the cursor in a window.
+        /// </summary>
+        bool CanCaptureCursor { get; }
+
+        /// <summary>
         /// Read-only list of event types the driver supports.
         /// </summary>
         IReadOnlyList<PlatformEventType> SupportedEvents { get; }
@@ -313,6 +318,13 @@ namespace OpenTK.Core.Platform
         ///     Driver does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.
         /// </exception>
         void SetCursor(WindowHandle handle, CursorHandle? cursor);
+
+        /// <summary>
+        /// Sets whether the cursor should be confined to the window or not.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="capture">Whether the cursor should be confined to the window or not.</param>
+        void CaptureCursor(WindowHandle handle, bool capture);
 
         /// <summary>
         /// Gives the window input focus.

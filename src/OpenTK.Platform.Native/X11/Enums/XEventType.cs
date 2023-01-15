@@ -65,4 +65,19 @@ namespace OpenTK.Platform.Native.X11
         PropertyNewValue = 0,
         PropertyDelete = 1,
     }
+
+    public enum GrabMode : int
+    {
+        GrabModeSync = 0,
+        GrabModeAsync = 1,
+    }
+
+    public enum GrabResult : int
+    {
+        GrabSuccess = 0,
+        AlreadyGrabbed = 1,
+        GrabInvalidTime = 2,
+        GrabNotViewable = 3,
+        GrabFrozen = 4,
+    }
 }

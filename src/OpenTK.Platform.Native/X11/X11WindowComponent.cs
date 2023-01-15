@@ -154,14 +154,23 @@ namespace OpenTK.Platform.Native.X11
 
         public bool CanSetIcon => false;
         public bool CanGetDisplay => false;
-        public bool CanSetCursor => false;
+        public bool CanSetCursor => true;
+        public bool CanCaptureCursor => true;
 
         private static List<WindowStyle> s_emptyStyleList = new List<WindowStyle>();
-        private static List<WindowMode> s_emptyModeList = new List<WindowMode>();
+
+        private static readonly WindowMode[] _SupportedModes = new[]
+        {
+            WindowMode.Hidden,
+            WindowMode.Normal,
+            WindowMode.Minimized,
+            WindowMode.Maximized,
+            WindowMode.ExclusiveFullscreen,
+        };
 
         public IReadOnlyList<PlatformEventType> SupportedEvents { get => throw new NotImplementedException(); }
         public IReadOnlyList<WindowStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
-        public IReadOnlyList<WindowMode> SupportedModes { get; private set; } = s_emptyModeList;
+        public IReadOnlyList<WindowMode> SupportedModes { get; private set; } = _SupportedModes;
 
         /// <summary>
         /// When true, indicates the current window manager is Freedesktop compliant.
@@ -1253,7 +1262,6 @@ namespace OpenTK.Platform.Native.X11
             return above;
         }
 
-        /// <inheritdoc/>
         public void SetHitTestCallback(WindowHandle handle, HitTest? test)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
@@ -1267,6 +1275,31 @@ namespace OpenTK.Platform.Native.X11
             XCursorHandle? xcursor = cursor?.As<XCursorHandle>(this);
 
             XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? XCursor.None);
+        }
+
+        public void CaptureCursor(WindowHandle handle, bool capture)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (capture)
+            {
+                GrabResult result = XGrabPointer(X11.Display, xwindow.Window,
+                    true, // FIXME: What does this mean?
+                    XEventMask.ButtonPress | XEventMask.ButtonRelease | XEventMask.PointerMotion,
+                    GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
+                    xwindow.Window,
+                    XCursor.None,
+                    XTime.CurrentTime);
+
+                if (result != GrabResult.GrabSuccess)
+                {
+                    Logger?.LogWarning($"Could not capture cursor. Reason: {result}");
+                }
+            }
+            else
+            {
+                XUngrabPointer(X11.Display, XTime.CurrentTime);
+            }
         }
 
         public void FocusWindow(WindowHandle handle)
@@ -1329,7 +1362,6 @@ namespace OpenTK.Platform.Native.X11
             // FIXME: Extents?
         }
 
-        /// <inheritdoc/>
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);

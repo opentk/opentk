@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.Tracing;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -294,5 +295,20 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int /* Status */ XIconifyWindow(XDisplayPtr display, XWindow w, int screen_number);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern GrabResult XGrabPointer(
+            XDisplayPtr display,
+            XWindow grab_window,
+            [MarshalAs(UnmanagedType.I1)] bool owner_events,
+            XEventMask event_mask,
+            GrabMode pointer_mode,
+            GrabMode keyboard_mode,
+            XWindow confine_to,
+            XCursor cursor,
+            XTime time);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XUngrabPointer(XDisplayPtr display, XTime time);
     }
 }
