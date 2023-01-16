@@ -28,5 +28,7 @@ namespace OpenTK.Core.Platform.Interfaces
         /// this is only filled with values when <see cref="BatteryStatus.HasSystemBattery"/> is returned.</param>
         /// <returns>Whether the computer has a battery or not, or if this function failed.</returns>
         BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo);
+
+        // FIXME: Add API for detecting light/dark/high contrast themes.
     }
 }

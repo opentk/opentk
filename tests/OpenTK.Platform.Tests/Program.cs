@@ -71,6 +71,8 @@ namespace OpenTK.Platform.Tests
                 Console.WriteLine(info);
             }
 
+            
+
             WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
             OpenGLContextHandle context = glComp.CreateFromWindow(window);
             glComp.SetCurrentContext(context);
