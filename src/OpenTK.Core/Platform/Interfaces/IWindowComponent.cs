@@ -1,10 +1,23 @@
 using System;
 using System.Collections.Generic;
+using OpenTK.Mathematics;
 
 #nullable enable
 
 namespace OpenTK.Core.Platform
 {
+    /// <summary>
+    /// A delegate for hit testing.
+    ///
+    /// Hit testing is not always done in respone to the user clicking the mouse.
+    /// The operating system can do hit testing for any reason and doesn't need to be in respose to some user action.
+    /// It is recommended to keep this code efficient as it will be called often.
+    /// </summary>
+    /// <param name="handle">A handle to the window that hit testing is being done on.</param>
+    /// <param name="position">The position of where the hit test is being done, not always the position of the mouse. In client relative coordinates.</param>
+    /// <returns>The result of the hit test.</returns>
+    public delegate HitType HitTest(WindowHandle handle, Vector2 position);
+
     /// <summary>
     /// Interface for abstraction layer drivers which implement the window component.
     /// </summary>
@@ -24,6 +37,11 @@ namespace OpenTK.Core.Platform
         /// True when the driver supports setting the cursor of the window.
         /// </summary>
         bool CanSetCursor { get; }
+
+        /// <summary>
+        /// True when the driver supports capturing the cursor in a window.
+        /// </summary>
+        bool CanCaptureCursor { get; }
 
         /// <summary>
         /// Read-only list of event types the driver supports.
@@ -277,6 +295,18 @@ namespace OpenTK.Core.Platform
         public bool IsAlwaysOnTop(WindowHandle handle);
 
         /// <summary>
+        /// Sets a delegate that is used for hit testing.
+        /// Hit testing allows the user to specify if a click should start a drag or resize operation on the window.
+        ///
+        /// Hit testing is not always done in respone to the user clicking the mouse.
+        /// The operating system can do hit testing for any reason and doesn't need to be in respose to some user action.
+        /// It is recommended to keep this code efficient as it will be called often.
+        /// </summary>
+        /// <param name="handle">The window for which this hit test delegate should be used for.</param>
+        /// <param name="test">The hit test delegate.</param>
+        public void SetHitTestCallback(WindowHandle handle, HitTest? test);
+
+        /// <summary>
         /// Set the cursor object for a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
@@ -288,6 +318,14 @@ namespace OpenTK.Core.Platform
         ///     Driver does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.
         /// </exception>
         void SetCursor(WindowHandle handle, CursorHandle? cursor);
+
+        /// <summary>
+        /// Sets the cursor capture mode of the window.
+        /// A cursor can be confined to the bounds of the window, or locked to the center of the window.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="mode">The cursor capture mode.</param>
+        void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
 
         /// <summary>
         /// Gives the window input focus.

@@ -667,6 +667,8 @@ namespace OpenTK.Platform.Native.Windows
 
             GetImage(hDC, hbitmap, image);
 
+            Win32.ReleaseDC(IntPtr.Zero, hDC);
+
             // Convert from Bgra to Rgba.
             for (int i = 0; i < image.Length; i += 4)
             {

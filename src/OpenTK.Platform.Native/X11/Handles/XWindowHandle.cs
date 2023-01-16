@@ -10,9 +10,13 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
 
+        public HitTest? HitTest { get; set; }
+
         public bool Destroyed { get; set; } = false;
 
         public XColorMap? ColorMap { get; }
+
+        internal WMState WMState { get; set; }
 
         public XWindowHandle(
             XDisplayPtr display,

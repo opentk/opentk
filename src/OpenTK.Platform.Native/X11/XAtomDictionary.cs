@@ -9,7 +9,6 @@ namespace OpenTK.Platform.Native.X11
 {
     public class XAtomDictionary : IReadOnlyDictionary<string, XAtom>
     {
-        private readonly XDisplayPtr _display;
         private readonly XAtom[] _knownAtoms = new XAtom[(int)KnownAtoms.KNOWN_ATOMS_MAX];
         private readonly Dictionary<string, XAtom> _namedAtoms = new Dictionary<string, XAtom>();
 
@@ -17,11 +16,10 @@ namespace OpenTK.Platform.Native.X11
         {
             get
             {
-                XAtom atom = XAtom.None;
-                if (!_namedAtoms.TryGetValue(key, out atom))
+                if (_namedAtoms.TryGetValue(key, out XAtom atom) == false)
                 {
-                    atom = XInternAtom(_display, key, true);
-                    if (!atom.IsNone)
+                    atom = XInternAtom(X11.Display, key, true);
+                    if (atom.IsNone == false)
                     {
                         _namedAtoms.Add(key, atom);
                     }
@@ -51,7 +49,7 @@ namespace OpenTK.Platform.Native.X11
 
         public XAtom CreateAtom(string name)
         {
-            XAtom atom = XInternAtom(_display, name, false);
+            XAtom atom = XInternAtom(X11.Display, name, false);
             _namedAtoms.Add(name, atom);
             return atom;
         }
@@ -61,7 +59,7 @@ namespace OpenTK.Platform.Native.X11
             if (_namedAtoms.ContainsKey(key))
                 return true;
 
-            XAtom atom = XInternAtom(_display, key, true);
+            XAtom atom = XInternAtom(X11.Display, key, true);
 
             if (atom.IsNone)
                 return false;
@@ -80,7 +78,7 @@ namespace OpenTK.Platform.Native.X11
             if (_namedAtoms.TryGetValue(key, out value))
                 return true;
 
-            XAtom atom = XInternAtom(_display, key, true);
+            XAtom atom = XInternAtom(X11.Display, key, true);
 
             if (atom.IsNone)
                 return false;

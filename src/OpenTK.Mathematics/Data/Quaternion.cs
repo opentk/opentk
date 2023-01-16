@@ -215,13 +215,13 @@ namespace OpenTK.Mathematics
 
             if (singularityTest > SINGULARITY_THRESHOLD * unit)
             {
-                eulerAngles.Z = (float)(2 * Math.Atan2(q.X, q.W));
+                eulerAngles.Z = 2 * MathF.Atan2(q.X, q.W);
                 eulerAngles.Y = MathHelper.PiOver2;
                 eulerAngles.X = 0;
             }
             else if (singularityTest < -SINGULARITY_THRESHOLD * unit)
             {
-                eulerAngles.Z = (float)(-2 * Math.Atan2(q.X, q.W));
+                eulerAngles.Z = -2 * MathF.Atan2(q.X, q.W);
                 eulerAngles.Y = -MathHelper.PiOver2;
                 eulerAngles.X = 0;
             }

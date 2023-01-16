@@ -10,6 +10,61 @@ namespace OpenTK.Platform.Native.Windows
 {
     // FIXME: Make enum names consistent between all enums.
 
+    internal enum ACLineStatus : byte
+    {
+        Offline = 0,
+        Online = 1,
+        Unknown = 255,
+    }
+
+    [Flags]
+    internal enum BatteryFlags : byte
+    {
+        /// <summary>
+        /// High—the battery capacity is at more than 66 percent.
+        /// </summary>
+        High = 1,
+
+        /// <summary>
+        /// Low—the battery capacity is at less than 33 percent.
+        /// </summary>
+        Low = 2,
+
+        /// <summary>
+        /// Critical—the battery capacity is at less than five percent.
+        /// </summary>
+        Critical = 4,
+
+        /// <summary>
+        /// Charging
+        /// </summary>
+        Charging = 8,
+
+        /// <summary>
+        /// No system battery
+        /// </summary>
+        NoSystemBattery = 128,
+
+        /// <summary>
+        /// Unknown status—unable to read the battery flag information.
+        /// </summary>
+        Unknown = 255,
+    }
+
+    [Flags]
+    internal enum SystemStatusFlags : byte
+    {
+        /// <summary>
+        /// Battery saver is off.
+        /// </summary>
+        Normal = 0,
+
+        /// <summary>
+        /// Battery saver on. Save energy where possible.
+        /// </summary>
+        BatterySaver = 1,
+    }
+
     /// <summary>
     /// Window Styles.
     /// The following styles can be specified wherever a window style is required. After the control has been created, these styles cannot be modified, except as noted.
@@ -773,6 +828,42 @@ namespace OpenTK.Platform.Native.Windows
         Wave = 12,
     }
 
+    [Flags]
+    internal enum ExecutionState : ulong
+    {
+        /// <summary>
+        /// Enables away mode.
+        /// This value must be specified with <see cref="Continuous"/>.
+        /// Away mode should be used only by media-recording and media-distribution applications
+        /// that must perform critical background processing on desktop computers while the computer appears to be sleeping.
+        /// See Remarks.
+        /// </summary>
+        AwayModeRequired = 0x00000040,
+
+        /// <summary>
+        /// Informs the system that the state being set should remain in effect until
+        /// the next call that uses <see cref="Continuous"/> and one of the other state flags is cleared.
+        /// </summary>
+        Continuous = 0x80000000,
+
+        /// <summary>
+        /// Forces the display to be on by resetting the display idle timer.
+        /// </summary>
+        DisplayRequired = 0x00000002,
+
+        /// <summary>
+        /// Forces the system to be in the working state by resetting the system idle timer.
+        /// </summary>
+        SystemRequired = 0x00000001,
+
+        /// <summary>
+        /// This value is not supported.
+        /// If <see cref="UserPresent"/> is combined with other esFlags values,
+        /// the call will fail and none of the specified states will be set.
+        /// </summary>
+        UserPresent = 0x00000004,
+    }
+
     internal enum ShowWindowCommands
     {
         /// <summary>
@@ -955,6 +1046,139 @@ namespace OpenTK.Platform.Native.Windows
         /// This flag must be specified if the coordinates are set in the ptMinPosition member.
         /// </summary>
         SetMinPosition = 0x0001,
+    }
+
+    internal enum HT
+    {
+        /// <summary>
+        /// In the border of a window that does not have a sizing border.
+        /// </summary>
+        Border = 18,
+
+        /// <summary>
+        /// In the lower-horizontal border of a resizable window (the user can click the mouse to resize the window vertically).
+        /// </summary>
+        Bottom = 15,
+
+        /// <summary>
+        /// In the lower-left corner of a border of a resizable window (the user can click the mouse to resize the window diagonally).
+        /// </summary>
+        BottomLeft = 16,
+
+        /// <summary>
+        /// In the lower-right corner of a border of a resizable window (the user can click the mouse to resize the window diagonally).
+        /// </summary>
+        BottomRight = 17,
+
+        /// <summary>
+        /// In a title bar.
+        /// </summary>
+        Caption = 2,
+
+        /// <summary>
+        /// In a client area.
+        /// </summary>
+        Client = 1,
+
+        /// <summary>
+        /// In a Close button.
+        /// </summary>
+        Close = 20,
+
+        /// <summary>
+        /// On the screen background or on a dividing line between windows (same as HTNOWHERE, except that the DefWindowProc function produces a system beep to indicate an error).
+        /// </summary>
+        Error = -2,
+
+        /// <summary>
+        /// In a size box (same as HTSIZE).
+        /// </summary>
+        GrowBox = 4,
+
+        /// <summary>
+        /// In a Help button.
+        /// </summary>
+        Help = 21,
+
+        /// <summary>
+        /// In a horizontal scroll bar.
+        /// </summary>
+        HScroll = 6,
+
+        /// <summary>
+        /// In the left border of a resizable window (the user can click the mouse to resize the window horizontally).
+        /// </summary>
+        Left = 10,
+
+        /// <summary>
+        /// In a menu.
+        /// </summary>
+        Menu = 5,
+
+        /// <summary>
+        /// In a Maximize button.
+        /// </summary>
+        MaxButton = 9,
+
+        /// <summary>
+        /// In a Minimize button.
+        /// </summary>
+        MinButton = 8,
+
+        /// <summary>
+        /// On the screen background or on a dividing line between windows.
+        /// </summary>
+        NoWhere = 0,
+
+        /// <summary>
+        /// In a Minimize button.
+        /// </summary>
+        Reduce = 8,
+
+        /// <summary>
+        /// In the right border of a resizable window (the user can click the mouse to resize the window horizontally).
+        /// </summary>
+        Right = 11,
+
+        /// <summary>
+        /// In a size box (same as HTGROWBOX).
+        /// </summary>
+        Size = 4,
+
+        /// <summary>
+        /// In a window menu or in a Close button in a child window.
+        /// </summary>
+        SysMenu = 3,
+
+        /// <summary>
+        /// In the upper-horizontal border of a window.
+        /// </summary>
+        Top = 12,
+
+        /// <summary>
+        /// In the upper-left corner of a window border.
+        /// </summary>
+        TopLeft = 13,
+
+        /// <summary>
+        /// In the upper-right corner of a window border.
+        /// </summary>
+        TopRight = 14,
+
+        /// <summary>
+        /// In a window currently covered by another window in the same thread (the message will be sent to underlying windows in the same thread until one of them returns a code that is not HTTRANSPARENT).
+        /// </summary>
+        Transparent = -1,
+
+        /// <summary>
+        /// In the vertical scroll bar.
+        /// </summary>
+        VScroll = 7,
+
+        /// <summary>
+        /// In a Maximize button.
+        /// </summary>
+        Zoom = 9,
     }
 
     internal enum GCLP : int

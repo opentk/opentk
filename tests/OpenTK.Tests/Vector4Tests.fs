@@ -663,6 +663,19 @@ module Vector4 =
 
             let vRes = Vector4.Lerp(&a, &b, q)
             Assert.Equal(vExp, vRes)
+        
+        [<Property>]
+        let ``Component-wise linear interpolation works like regular linear interpolation`` (a : Vector4, b : Vector4, q : Vector4) =
+            let blend = q
+            
+            let expectedX = Vector4.Lerp(a, b, blend.X).X
+            let expectedY = Vector4.Lerp(a, b, blend.Y).Y
+            let expectedZ = Vector4.Lerp(a, b, blend.Z).Z
+            let expectedW = Vector4.Lerp(a, b, blend.W).W
+            let expected = Vector4(expectedX, expectedY, expectedZ, expectedW)
+            
+            Assert.Equal(expected, Vector4.Lerp(a, b, q))
+            Assert.Equal(expected, Vector4.Lerp(&a, &b, q))
 
         [<Property>]
         let ``Barycentric interpolation follows the barycentric formula`` (a : Vector4, b : Vector4, c : Vector4, u, v) =

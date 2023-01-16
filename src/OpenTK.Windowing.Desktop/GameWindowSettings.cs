@@ -7,6 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
+using System;
 using OpenTK.Windowing.Common;
 
 namespace OpenTK.Windowing.Desktop
@@ -24,6 +25,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets or sets a value indicating whether the game window should use a separate thread for render events.
         /// </summary>
+        [Obsolete("There is not one size fits all multithreading solution, especially for OpenGL. This option will be removed in future versions, and you will have to implement what you need instead.")]
         public bool IsMultiThreaded { get; set; } = false;
 
         /// <summary>

@@ -1,13 +1,52 @@
 using System;
 using System.Diagnostics;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public partial class X11AbstractionLayer : IDisplayComponent
+    public class X11DisplayComponent : IDisplayComponent
     {
+        public string Name => "X11DisplayComponent";
+
+        public PalComponents Provides => PalComponents.Display;
+
+        public ILogger? Logger { get ; set; }
+
+        public void Initialize(PalComponents which)
+        {
+            // FIXME
+
+            // In X11, we have a priority list of extensions and methods we can use.
+            // 1. Use the X Rotate and Reflect extension.
+            // 2. Fallback to Xinerama extension.
+            // 3. Fallback to the size of the root window.
+
+            int eventBase = default, errorBase = default;
+            if (XRRQueryExtension(X11.Display, ref eventBase, ref errorBase) != 0)
+            {
+                DisplayExtension = DisplayExtensionType.XRandR;
+
+                XRRQueryVersion(X11.Display, out int major, out int minor);
+                DisplayExtensionVersion = new Version(major, minor);
+
+                unsafe
+                {
+                    XrrScreenConfiguration = XRRGetScreenInfo(X11.Display, X11.DefaultRootWindow);
+                }
+            }
+            else
+            {
+                DisplayExtension = DisplayExtensionType.None;
+            }
+
+            Logger?.LogInfo($"Using display extension: {DisplayExtension}.");
+            if (DisplayExtension != DisplayExtensionType.None)
+                Logger?.LogInfo($"{DisplayExtension} version {DisplayExtensionVersion}");
+        }
+
         // TODO: Write Xinerama fallback.
 
         public bool CanSetVideoMode { get; } = false;
@@ -19,38 +58,6 @@ namespace OpenTK.Platform.Native.X11
         public Version DisplayExtensionVersion { get; private set; }
 
         public unsafe XRRScreenConfiguration* XrrScreenConfiguration = null;
-
-        private void InitializeDisplay()
-        {
-            // In X11, we have a priority list of extensions and methods we can use.
-            // 1. Use the X Rotate and Reflect extension.
-            // 2. Fallback to Xinerama extension.
-            // 3. Fallback to the size of the root window.
-
-            int eventBase = default, errorBase = default;
-            if (XRRQueryExtension(Display, ref eventBase, ref errorBase) != 0)
-            {
-                DisplayExtension = DisplayExtensionType.XRandR;
-
-                XRRQueryVersion(Display, out int major, out int minor);
-                DisplayExtensionVersion = new Version(major, minor);
-
-                unsafe
-                {
-                    XrrScreenConfiguration = XRRGetScreenInfo(Display, DefaultRootWindow);
-                }
-            }
-            else
-            {
-                DisplayExtension = DisplayExtensionType.None;
-            }
-
-            Debug.WriteLine($"Using display extension: {DisplayExtension}.", "PAL2.0/Linux/X11/Display");
-            Debug.WriteLineIf(
-                DisplayExtension != DisplayExtensionType.None,
-                $"{DisplayExtension} version {DisplayExtensionVersion}",
-                "PAL2.0/Linux/X11/Display");
-        }
 
         public int GetDisplayCount()
         {
@@ -71,7 +78,7 @@ namespace OpenTK.Platform.Native.X11
             case DisplayExtensionType.XRandR:
                 unsafe
                 {
-                    XRRScreenResources* resources = XRRGetScreenResources(Display, DefaultRootWindow);
+                    XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
 
                     if (resources is null)
                     {

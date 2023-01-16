@@ -11,6 +11,8 @@ namespace OpenTK.Core.Platform
     {
     }
 
+    // FIXME: Add WindowDisplayChangedEvent??
+
     public class FocusEventArgs : WindowEventArgs
     {
         public bool GotFocus { get; private set; }
@@ -132,6 +134,8 @@ namespace OpenTK.Core.Platform
     {
         public bool Entered { get; set; }
 
+        // FIXME: Include the position where this happened?
+
         public MouseEnterEventArgs(bool entered)
         {
             Entered = entered;
@@ -140,14 +144,11 @@ namespace OpenTK.Core.Platform
 
     public class MouseMoveEventArgs : WindowEventArgs
     {
-        public int DeltaX { get; private set; }
+        public Vector2 Position { get; private set; }
 
-        public int DeltaY { get; private set; }
-
-        public MouseMoveEventArgs(int deltaX, int deltaY)
+        public MouseMoveEventArgs(Vector2 position)
         {
-            DeltaX = deltaX;
-            DeltaY = deltaY;
+            Position = position;
         }
     }
 

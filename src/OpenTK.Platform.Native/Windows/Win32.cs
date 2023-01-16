@@ -161,6 +161,9 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /* LRESULT */ SendMessage(IntPtr /* HWND */ hWnd, WM Msg, UIntPtr /* WPARAM */ wParam, IntPtr /* LPARAM */ lParam);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool PostMessage(IntPtr /* HWND */ hWnd, WM Msg, UIntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll")]
         internal static extern void PostQuitMessage(int nExitCode);
 
@@ -211,10 +214,19 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern bool SetCursorPos(int X, int Y);
 
         [DllImport("user32.dll")]
+        internal static extern int ShowCursor(bool bShow);
+
+        [DllImport("user32.dll")]
         internal static extern IntPtr /* HWND */ SetCapture(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool BringWindowToTop(IntPtr /* HWND */ hWnd);
+
+        [DllImport("user32.dll")]
+        internal static extern bool SetForegroundWindow(IntPtr /* HWND */ hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HWND */ SetFocus(IntPtr /* HWND */ hWnd);
@@ -930,5 +942,27 @@ namespace OpenTK.Platform.Native.Windows
             DWMWindowAttribute dwAttribute,
             out RECT pvAttribute,
             uint cbAttribute);
+
+        [DllImport("kernel32.dll")]
+        internal static extern ExecutionState SetThreadExecutionState(ExecutionState esFlags);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool GetSystemPowerStatus(out SystemPowerStatus lpSystemPowerStatus);
+
+        internal struct SystemPowerStatus
+        {
+            public ACLineStatus ACLineStatus;
+            public BatteryFlags BatteryFlag;
+            public byte BatteryLifePercent;
+            public SystemStatusFlags SystemStatusFlag;
+            public int BatteryLifeTime;
+            public int BatteryFullLifeTime;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetClipCursor(out RECT lpRect);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool ClipCursor(ref RECT lpRect);
     }
 }

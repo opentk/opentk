@@ -15,6 +15,11 @@ namespace OpenTK.Platform.Native.X11
         // 1970-01-01T00:00:00.000Z.    - mixed
 
         /// <summary>
+        /// Represents the current server time.
+        /// </summary>
+        public static readonly XTime CurrentTime = new XTime(0);
+
+        /// <summary>
         /// Time value.
         /// </summary>
         /// <remarks>Likely milliseconds since UNIX epoch.</remarks>

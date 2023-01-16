@@ -1002,7 +1002,7 @@ namespace OpenTK.Mathematics
         /// <returns>The string representation of the matrix.</returns>
         public override string ToString()
         {
-            return $"{Row0}\n{Row1}\n{Row2}";
+            return $"{Row0}\n{Row1}\n{Row2}\n{Row3}";
         }
 
         /// <summary>

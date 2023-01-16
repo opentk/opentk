@@ -77,6 +77,38 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
+    [Flags]
+    public enum XColorFlags : byte
+    {
+        DoRed	= (1<<0),
+        DoGreen	= (1<<1),
+        DoBlue	= (1<<2),
+    }
+
+    public struct XColor {
+        public ulong pixel;             /* pixel value */
+        public ushort red, green, blue; /* rgb values */
+        public XColorFlags flags;              /* DoRed, DoGreen, DoBlue */
+        public byte pad;
+    }
+
+    public unsafe struct XColorPtr
+    {
+        public XColor* Color { get; }
+
+        public XColorPtr(IntPtr ptr)
+        {
+            Color = (XColor*)ptr;
+        }
+
+        public XColorPtr(XColor* color)
+        {
+            Color = color;
+        }
+
+        public static unsafe implicit operator XColorPtr(XColor* color) => new XColorPtr(color);
+    }
+
     /// <summary>
     /// Generic XID type.
     /// </summary>
@@ -94,20 +126,22 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct XPixMap
+    public struct XPixmap
     {
         public ulong Id { get; }
 
-        public static readonly XPixMap None = new XPixMap(0);
+        public static readonly XPixmap None = new XPixmap(0);
 
-        public XPixMap(ulong id)
+        public static readonly XPixmap ParentRelative = new XPixmap(1);
+
+        public XPixmap(ulong id)
         {
             Id = id;
         }
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct XCursor
+    public struct XCursor : IEquatable<XCursor>
     {
         public ulong Id { get; }
 
@@ -116,6 +150,31 @@ namespace OpenTK.Platform.Native.X11
         public XCursor(ulong id)
         {
             Id = id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is XCursor cursor && Equals(cursor);
+        }
+
+        public bool Equals(XCursor other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public static bool operator ==(XCursor left, XCursor right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(XCursor left, XCursor right)
+        {
+            return !(left == right);
         }
     }
 

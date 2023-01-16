@@ -59,13 +59,14 @@ namespace Generator.Parsing
                 string? paramName = element.Element("name")?.Value;
                 PType? ptype = ParsePType(element);
 
+                string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
+
                 if (paramName == null) throw new Exception("Missing parameter name!");
 
                 string? length = element.Attribute("len")?.Value;
                 Expression? paramLength = length == null ? null : ParseExpression(length);
 
-                //isGLhandleArb |= ptype.Name == PlatformSpecificGlHandleArbFlag;
-                parameterList.Add(new GLParameter(ptype, paramName, paramLength));
+                parameterList.Add(new GLParameter(ptype, kind, paramName, paramLength));
             }
 
             PType? returnType = ParsePType(proto);

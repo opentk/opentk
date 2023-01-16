@@ -55,6 +55,8 @@ namespace OpenTK.Platform.Native.Windows
                 dwDamageMask = 0,
             };
 
+            // We don't release this DC because we have CS_OWNDC set.
+            // - Noggin_bops 2023-01-11
             IntPtr hDC = Win32.GetDC(WindowComponent.HelperHWnd);
 
             if (hDC == IntPtr.Zero)
@@ -211,6 +213,7 @@ namespace OpenTK.Platform.Native.Windows
                 throw new PalException(this, $"Can't create an OpenGL context from a window that was not created with {nameof(OpenGLGraphicsApiHints)}.");
             }
 
+            // FIXME: Make this a parameter to this function instead?
             HGLRC? hshareContext = null;
             if (settings.SharedContext != null)
             {
@@ -226,6 +229,9 @@ namespace OpenTK.Platform.Native.Windows
 
             bool success;
 
+            // This DC is kept for the lifetime of the object.
+            // We have CS_OWNDC set so keeping the reference isn't an issue.
+            // - Noggin_bops 2023-01-11
             IntPtr hDC = Win32.GetDC(hwnd.HWnd);
             if (hDC == IntPtr.Zero)
             {
@@ -619,7 +625,7 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception("wglMakeCurrent failed to make helper context current");
             }
 
-            HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext, this);
+            HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext);
             HGLRCDict.Add(hGLRC, hglrc);
 
             return hglrc;

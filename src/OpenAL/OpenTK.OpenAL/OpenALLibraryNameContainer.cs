@@ -42,33 +42,32 @@ namespace OpenTK.Audio.OpenAL
         /// </summary>
         public string IOS => MacOS;
 
+        /// <summary>
+        /// Gets the library name for the target platform.
+        /// </summary>
+        /// <returns>Library name.</returns>
         public string GetLibraryName()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (OperatingSystem.IsLinux() ||
+                OperatingSystem.IsFreeBSD())
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
-                {
-                    return Android;
-                }
-                else
-                {
-                    return Linux;
-                }
+                return Linux;
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            else if (OperatingSystem.IsWindows())
             {
                 return Windows;
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            else if (OperatingSystem.IsMacOS())
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
-                {
-                    return IOS;
-                }
-                else
-                {
-                    return MacOS;
-                }
+                return MacOS;
+            }
+            else if (OperatingSystem.IsAndroid())
+            {
+                return Android;
+            }
+            else if (OperatingSystem.IsIOS())
+            {
+                return IOS;
             }
             else
             {

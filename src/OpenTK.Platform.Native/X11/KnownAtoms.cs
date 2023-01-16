@@ -1,3 +1,5 @@
+using System;
+
 namespace OpenTK.Platform.Native.X11
 {
     public enum KnownAtoms
@@ -7,6 +9,16 @@ namespace OpenTK.Platform.Native.X11
         CARDINAL,
         UTF8_STRING,
         WINDOW,
+        #endregion
+
+        #region ICCCM
+        WM_TAKE_FOCUS,
+        [Obsolete]
+        WM_SAVE_YOURSELF,
+        WM_DELETE_WINDOW,
+        WM_STATE,
+        WM_CHANGE_STATE,
+        WM_NAME,
         #endregion
 
         #region Freedesktop Atoms
@@ -61,6 +73,7 @@ namespace OpenTK.Platform.Native.X11
         _NET_WM_STATE_ABOVE,
         _NET_WM_STATE_BELOW,
         _NET_WM_STATE_DEMANDS_ATTENTION,
+        _NET_WM_STATE_FOCUSED,
         _NET_WM_ALLOWED_ACTIONS,
         _NET_WM_ACTION_MOVE,
         _NET_WM_ACTION_RESIZE,

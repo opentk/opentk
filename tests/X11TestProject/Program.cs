@@ -17,15 +17,20 @@ namespace X11TestProject
     {
         public static void Main()
         {
-            X11AbstractionLayer layer = new X11AbstractionLayer();
-            layer.Initialize(PalComponents.Window | PalComponents.OpenGL | PalComponents.Display);
-            IWindowComponent windowComponent = layer;
-            XWindowHandle window = (XWindowHandle)layer.Create(new OpenGLGraphicsApiHints());
-            XOpenGLContextHandle context = (XOpenGLContextHandle)layer.CreateFromWindow(window);
-            layer.SetCurrentContext(context);
+            X11WindowComponent windowComp = new X11WindowComponent();
+            X11OpenGLComponent glComp = new X11OpenGLComponent();
+            X11DisplayComponent dispComp = new X11DisplayComponent();
+
+            windowComp.Initialize(PalComponents.Window);
+            glComp.Initialize(PalComponents.OpenGL);
+            dispComp.Initialize(PalComponents.Display);
+
+            XWindowHandle window = (XWindowHandle)windowComp.Create(new OpenGLGraphicsApiHints());
+            XOpenGLContextHandle context = (XOpenGLContextHandle)glComp.CreateFromWindow(window);
+            glComp.SetCurrentContext(context);
 
             XSelectInput(
-                layer.Display, window.Window,
+                    X11.Display, window.Window,
                     XEventMask.StructureNotify |
                     XEventMask.SubstructureNotify |
                     XEventMask.VisibilityChanged
@@ -36,57 +41,38 @@ namespace X11TestProject
             // XSetForeground(layer.Display, gc, XBlackPixel(layer.Display, XDefaultScreen(layer.Display)));
             //
             // XClearWindow(layer.Display, window.Window);
-            XMapRaised(layer.Display, window.Window);
+            XMapRaised(X11.Display, window.Window);
 
-            GLLoader.LoadBindings(new TestBindingsContext(layer, context));
+            GLLoader.LoadBindings(glComp.GetBindingsContext(context));
 
             // DisplayHandle handle = layer.CreatePrimary();
-            XAtomDictionary dict = new XAtomDictionary(layer.Display);
+            XAtomDictionary dict = new XAtomDictionary(X11.Display);
 
             XEvent ea = new XEvent();
             int frames = 0;
             for (;;)
             {
-                while (XEventsQueued(layer.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
+                while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
                 {
-                    XNextEvent(layer.Display, out ea);
+                    XNextEvent(X11.Display, out ea);
                     // Console.WriteLine(ea.Type);
                 }
 
-                layer.GetClientSize(window, out int width, out int height);
+                windowComp.GetClientSize(window, out int width, out int height);
 
                 GL.Viewport(0, 0, width, height);
                 GL.ClearColor(1, 0, 1, 1);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                GLX.glXSwapBuffers(window.Display, window.Window);
+                windowComp.SwapBuffers(window);
 
-                layer.GetSize(window, out int w, out int h);
-                layer.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
+                windowComp.GetSize(window, out int w, out int h);
+                windowComp.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
                 // layer.GetClientPosition(window, out int x, out int y);
                 // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
             }
 
-            layer.Destroy(window);
-        }
-
-        public class TestBindingsContext : IBindingsContext
-        {
-            private IPalComponent pal;
-            private OpenGLContextHandle context;
-
-            public TestBindingsContext(IPalComponent pal, OpenGLContextHandle context)
-            {
-                this.pal = pal;
-                this.context = context;
-            }
-
-            public IntPtr GetProcAddress(string procName)
-            {
-                IntPtr retval = (pal as IOpenGLComponent).GetProcedureAddress(context, procName);
-                Debug.WriteLine("GetProcAddr {0} = {1}", procName, retval);
-                return retval;
-            }
+            windowComp.Destroy(window);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public enum GraphicsApi
     {
+        None,
         OpenGL,
         OpenGLES,
         Vulkan

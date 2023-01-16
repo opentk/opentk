@@ -1,5 +1,8 @@
 using System;
+using System.Diagnostics.Tracing;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -9,6 +12,20 @@ namespace OpenTK.Platform.Native.X11
     public static class LibX11
     {
         private const string X11 = "X11";
+
+        static LibX11()
+        {
+            DllResolver.InitLoader();
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public unsafe delegate int XErrorHandler(XDisplayPtr display, XErrorEvent* error_event);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XSetErrorHandler(XErrorHandler handler);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XGetErrorText(XDisplayPtr display, int code, [Out, MarshalAs(UnmanagedType.LPUTF8Str)] StringBuilder buffer_return, int length);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XDisplayPtr XOpenDisplay([MarshalAs(UnmanagedType.LPStr)]string? name);
@@ -49,6 +66,24 @@ namespace OpenTK.Platform.Native.X11
             ref XSetWindowAttributes attributes);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XConfigureWindow(XDisplayPtr display, XWindow w, XWindowChangesMask value_mask, ref XWindowChanges values);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XMoveWindow(XDisplayPtr display, XWindow w, int x, int y);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XResizeWindow(XDisplayPtr display, XWindow w, int width, int height);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern void XSetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints_return, XSizeHintFlags* supplied_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XSizeHints* XAllocSizeHints();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XSelectInput(XDisplayPtr display, XWindow xWindow, XEventMask events);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -60,7 +95,7 @@ namespace OpenTK.Platform.Native.X11
             XWindow window,
             [MarshalAs(UnmanagedType.LPStr)]string windowName,
             [MarshalAs(UnmanagedType.LPStr)]string iconName,
-            XPixMap iconPixmap,
+            XPixmap iconPixmap,
             [MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[]? argv,
             int argc,
             ref XSizeHints hints);
@@ -97,11 +132,17 @@ namespace OpenTK.Platform.Native.X11
         public static extern int XFree(IntPtr pointer);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern int XFree(void* pointer);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XColorMap XCreateColormap(
             XDisplayPtr display,
             XWindow window,
             ref XVisual visual,
             int alloc);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XColorMap XDefaultColormap(XDisplayPtr display, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XFreeColormap(XDisplayPtr display, XColorMap colormap);
@@ -153,7 +194,8 @@ namespace OpenTK.Platform.Native.X11
             ref XAtom atoms);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr XGetAtomName(XDisplayPtr display, XAtom atom);
+        [return: MarshalAs(UnmanagedType.LPUTF8Str)]
+        public static extern string XGetAtomName(XDisplayPtr display, XAtom atom);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XGetWindowProperty(
@@ -162,7 +204,7 @@ namespace OpenTK.Platform.Native.X11
             XAtom property,
             long offset,
             long length,
-            bool delete,
+            [MarshalAs(UnmanagedType.I1)] bool delete,
             XAtom requestType,
             out XAtom actualType,
             out int actualFormat,
@@ -182,5 +224,91 @@ namespace OpenTK.Platform.Native.X11
             IntPtr data,
             int elements
         );
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XSetInputFocus(XDisplayPtr display, XWindow focus, RevertTo revert_to, XTime time);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XRaiseWindow(XDisplayPtr display, XWindow w);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XFlush(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int /* Status */ XSetWMProtocols(XDisplayPtr display, XWindow w, [In] XAtom[] protocols, int count);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XCursor XCreateFontCursor(XDisplayPtr display, XCursorShape shape);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XDefineCursor(XDisplayPtr display, XWindow w, XCursor cursor);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XUndefineCursor(XDisplayPtr display, XWindow w);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XFreeCursor(XDisplayPtr display, XCursor cursor);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern byte XQueryPointer(
+            XDisplayPtr display,
+            XWindow w,
+            out XWindow root_return,
+            out XWindow child_return,
+            out int root_x_return,
+            out int root_y_return,
+            out int win_x_return,
+            out int win_y_return,
+            out uint mask_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XWarpPointer(
+            XDisplayPtr display,
+            XWindow src_w,
+            XWindow dest_w,
+            int src_x,
+            int src_y,
+            uint src_width,
+            uint src_height,
+            int dest_x,
+            int dest_y);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XPixmap XCreatePixmap(XDisplayPtr display, XDrawable d, int width, int height, int depth);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XFreePixmap(XDisplayPtr display, XPixmap pixmap);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XPixmap XCreateBitmapFromData(XDisplayPtr display, XDrawable d, byte* data, int width, int height);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XCursor XCreatePixmapCursor(XDisplayPtr display, XPixmap source, XPixmap mask, XColorPtr foreground_color, XColorPtr background_color, int x, int y);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public unsafe delegate bool XPredicate(XDisplayPtr display, ref XEvent @event, IntPtr arg);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool XCheckIfEvent(XDisplayPtr display, out XEvent event_return, XPredicate predicate, IntPtr arg);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int /* Status */ XIconifyWindow(XDisplayPtr display, XWindow w, int screen_number);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern GrabResult XGrabPointer(
+            XDisplayPtr display,
+            XWindow grab_window,
+            [MarshalAs(UnmanagedType.I1)] bool owner_events,
+            XEventMask event_mask,
+            GrabMode pointer_mode,
+            GrabMode keyboard_mode,
+            XWindow confine_to,
+            XCursor cursor,
+            XTime time);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XUngrabPointer(XDisplayPtr display, XTime time);
     }
 }

@@ -23,7 +23,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
         }
 
-        public static void ShaderSource(ShaderHandle shader, string str)
+        public static void ShaderSource(int shader, string str)
         {
             IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
             int length = str.Length;
@@ -31,7 +31,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Marshal.FreeCoTaskMem(str_iptr);
         }
 
-        public static void GetShaderInfoLog(ShaderHandle shader, out string info)
+        public static void GetShaderInfoLog(int shader, out string info)
         {
             int length = default;
             GL.GetShaderi(shader, ShaderParameterName.InfoLogLength, ref length);
@@ -45,7 +45,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
 
-        public static void GetProgramInfoLog(ProgramHandle program, out string info)
+        public static void GetProgramInfoLog(int program, out string info)
         {
             int length = default;
             GL.GetProgrami(program, ProgramPropertyARB.InfoLogLength, ref length);

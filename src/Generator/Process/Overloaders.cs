@@ -25,7 +25,7 @@ namespace Generator.Process
 
             new StringReturnOverloader(),
 
-            new BoolOverloader(),
+            new ColorTypeOverloader(),
             new MathTypeOverloader(),
             new FunctionPtrToDelegateOverloader(),
             new PointerToOffsetOverloader(),
@@ -150,55 +150,109 @@ namespace Generator.Process
         }
     }
 
-    public class BoolOverloader : IOverloader
+    public class ColorTypeOverloader : IOverloader
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
+            NameTable nameTable = overload.NameTable.New();
+
             Parameter[] parameters = overload.InputParameters.ToArray();
-            NameTable nameTable = overload.NameTable;
-            List<(Parameter byteParam, Parameter boolParam)> overloadedParameters = new List<(Parameter, Parameter)>();
+            List<Parameter> colorParameters = new List<Parameter>();
+            List<Parameter> pointerParameters = new List<Parameter>();
+            bool isOverloaded = false;
             for (int i = 0; i < parameters.Length; i++)
             {
                 Parameter parameter = parameters[i];
-                if (parameter.Type is not CSBool8 bool8)
+
+                if (parameter.Type is CSPointer pointer && parameter.Kinds.Contains("Color"))
                 {
-                    continue;
+                    // We only support float colors!
+                    if (pointer.BaseType is not CSPrimitive primitive || primitive.TypeName != "float")
+                    {
+                        continue;
+                    }
+
+                    if (parameter.Length == null)
+                    {
+                        continue;
+                    }
+
+                    if (parameter.Length is Constant constant)
+                    {
+                        int colorSize = constant.Value;
+                        if (colorSize > 4 || colorSize < 3)
+                            throw new Exception($"The kind=Color parameter {parameter.Name} in {overload.NativeFunction.EntryPoint} was marked with a size that was not 3 or 4. length: {colorSize}");
+
+                        string colorSpace = colorSize == 4 ? "Rgba" : "Rgb";
+
+                        nameTable.Rename(parameter, $"{parameter.Name}_ptr");
+
+                        // FIXME: ref vs in depending on Constant memeber
+                        Parameter colorParameter = parameter with { Type = new CSRef(CSRef.Type.In, new CSPrimitive($"Color{colorSize}<{colorSpace}>", pointer.Constant)), Length = null };
+
+                        pointerParameters.Add(parameter);
+                        colorParameters.Add(colorParameter);
+                        parameters[i] = colorParameter;
+
+                        isOverloaded = true;
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
-
-                nameTable.Rename(parameter, parameter.Name + "_byte");
-                parameters[i] = parameter with { Type = new CSPrimitive("bool", bool8.Constant) };
-                overloadedParameters.Add((parameter, parameters[i]));
             }
 
-            if (overloadedParameters.Count == 0)
+            if (isOverloaded)
             {
-                newOverloads = null;
-                return false;
+                // FIXME: We want to remove the v postfix, but vendor names are still in the overload names...
+                // We probably want to remove the extension name from the overload name.
+                //string overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
+
+                newOverloads = new List<Overload>()
+                {
+                    overload with
+                    {
+                        OverloadName = overload.OverloadName,
+                        InputParameters = parameters,
+                        MarshalLayerToNested = new ColorLayer(colorParameters, pointerParameters),
+                        NameTable = nameTable,
+                        NestedOverload = overload,
+                    }
+                };
+                return true;
             }
 
-            newOverloads = new List<Overload>()
-            {
-                overload with {
-                    NestedOverload = overload,
-                    MarshalLayerToNested = new BoolLayer(overloadedParameters),
-                    InputParameters = parameters,
-                    NameTable = nameTable }
-            };
-            return true;
+            newOverloads = null;
+            return false;
         }
 
-        private record BoolLayer(List<(Parameter byteParam, Parameter boolParam)> OverloadedParameters) : IOverloadLayer
+        public record ColorLayer(List<Parameter> colorParamters, List<Parameter> pointerParameters) : IOverloadLayer
         {
+            CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                foreach (var (byteParam, boolParam) in OverloadedParameters)
+                for (int i = 0; i < colorParamters.Count; i++)
                 {
-                    writer.WriteLine($"byte {nameTable[byteParam]} = (byte)({nameTable[boolParam]} ? 1 : 0);");
+                    Parameter colorParamter = colorParamters[i];
+                    BaseCSType colorType = ((CSRef)colorParamter.Type).ReferencedType;
+
+                    writer.WriteLine($"fixed ({colorType.ToCSString()}* tmp_{nameTable[colorParamter]} = &{nameTable[colorParamter]})");
+                }
+                _csScope = writer.CsScope();
+
+                for (int i = 0; i < colorParamters.Count; i++)
+                {
+                    Parameter colorParamter = colorParamters[i];
+                    Parameter pointerParameter = pointerParameters[i];
+
+                    writer.WriteLine($"{pointerParameter.Type.ToCSString()} {nameTable[pointerParameter]} = ({pointerParameter.Type.ToCSString()})tmp_{nameTable[colorParamter]};");
                 }
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
+                _csScope.Dispose();
                 return returnName;
             }
         }
@@ -215,7 +269,7 @@ namespace Generator.Process
         // Regex to match names of matrix methods.
         private static readonly Regex MatrixNameMatch = new Regex("(Matrix([1-4])(?:x([1-4]))?[fd])v$", RegexOptions.Compiled);
         // This is used to make sure we don't overload types that arent supported.
-        private readonly HashSet<string> _existingTypes = new HashSet<string>()
+        private static readonly HashSet<string> _existingTypes = new HashSet<string>()
         {
             // Vectors.
             "Vector2",
@@ -252,6 +306,27 @@ namespace Generator.Process
             "Matrix4x2",
             "Matrix4x3",
             "Matrix4",
+
+            // System.Numerics Vectors.
+            "System.Numerics.Vector2",
+            "System.Numerics.Vector3",
+            "System.Numerics.Vector4",
+
+            // System.Numerics Matrices.
+            "System.Numerics.Matrix3x2",
+            "System.Numerics.Matrix4x4",
+        };
+        private static readonly HashSet<string> _systemNumericsTypes = new HashSet<string>()
+        {
+            // Vectors.
+            "Vector2",
+            "Vector3",
+            "Vector4",
+
+            // Matrices.
+            // float matrices.
+            "Matrix3x2",
+            "Matrix4",
         };
 
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
@@ -262,7 +337,6 @@ namespace Generator.Process
 
             // The vector size is used to check that we overload the right parameter later on.
             int vectorSize;
-            string typePostfix;
             string typeName;
             if (matrixMatch.Success)
             {
@@ -270,14 +344,20 @@ namespace Generator.Process
                 // Remove the postfix 'f' if it is there
                 if (typeName[^1] == 'f') typeName = typeName[0..^1];
                 int columns = int.Parse(matrixMatch.Groups[2].Value);
-                int rows = matrixMatch.Groups[3].Success ?
-                    int.Parse(matrixMatch.Groups[3].Value) : columns;
+                int rows = matrixMatch.Groups[3].Success ? int.Parse(matrixMatch.Groups[3].Value) : columns;
                 vectorSize = columns * rows;
+
+                // We don't case about ax1 or 1xa matrices
+                if (columns == 1 || rows == 1)
+                {
+                    newOverloads = null;
+                    return false;
+                }
             }
             else if (vectorMatch.Success)
             {
                 vectorSize = int.Parse(vectorMatch.Groups[1].Value);
-                typePostfix = vectorMatch.Groups[2].Value;
+                string typePostfix = vectorMatch.Groups[2].Value;
                 if (typePostfix == "f") typePostfix = "";
                 typeName = $"Vector{vectorSize}{typePostfix}";
             }
@@ -287,130 +367,163 @@ namespace Generator.Process
                 return false;
             }
 
-            NameTable nameTable = overload.NameTable.New();
-            Parameter[] singleParameters = overload.InputParameters.ToArray();
-            Parameter[] spanParameters = overload.InputParameters.ToArray();
-            Parameter[] arrayParameters = overload.InputParameters.ToArray();
-            Parameter? lengthParameter = null;
-            Parameter? ptrParam = null;
-            Parameter? vectorParam = null;
-            for (var i = 0; i < singleParameters.Length; i++)
+            // Remove the 'v' from the overloaded name.
+            string overloadName = NameMangler.RemoveEnd(overload.OverloadName, "v");
+
+            bool created = false;
+            List<Overload> overloads = new List<Overload>();
+
+            created |= CreateOverloads(overload, overloadName, typeName, vectorSize, overloads);
+            if (_systemNumericsTypes.Contains(typeName))
             {
-                Parameter parameter = singleParameters[i];
-                if (parameter.Length == null) continue;
-                if (parameter.Type is CSPointer ptr && ptr.BaseType is CSPrimitive baseType)
-                {
-                    if (!_existingTypes.Contains(typeName))
-                    {
-                        // Some vector methods arent actually vectors.
-                        // So we just overload them like their normal types.
-                        // An example of this is glUniform1f
-                        typeName = baseType.TypeName;
-                    }
-
-                    Constant constant;
-                    if (parameter.Length is Constant cnst)
-                    {
-                        constant = cnst;
-                    }
-                    else if (parameter.Length is BinaryOperation binary)
-                    {
-                        // We need to figure out which operator side is the length of the vector type.
-                        // and which side is the parameter reference.
-                        // The side with the parameter reference, references the length parameter of an array.
-                        ParameterReference reference;
-                        if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
-                        {
-                            reference = leftRef;
-                            constant = rightConst;
-                        }
-                        else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
-                        {
-                            reference = rightRef;
-                            constant = leftConst;
-                        }
-                        else continue;
-
-                        lengthParameter = singleParameters.First(p => p.Name == reference.ParameterName);
-                    }
-                    else continue;
-
-                    if (constant.Value == vectorSize)
-                    {
-                        CSStruct vector = new CSStruct(typeName, baseType.Constant, null);
-                        singleParameters[i] = parameter with
-                        {
-                            Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, vector),
-                            Length = null
-                        };
-                        spanParameters[i] = parameter with
-                        {
-                            Type = new CSSpan(vector, baseType.Constant),
-                            Length = null
-                        };
-                        arrayParameters[i] = parameter with
-                        {
-                            Type = new CSArray(vector),
-                            Length = null
-                        };
-                        nameTable.Rename(parameter, parameter.Name + "_ptr");
-                        ptrParam = parameter;
-                        vectorParam = singleParameters[i];
-                        // For now we only overload one MathType parameter as the spec only contains one old
-                        // extension (GL_SUN_vertex) with methods that have multiple vectors per method.
-                        // 29-05-2021 FrederikJA
-                        break;
-                    }
-                }
+                if (typeName == "Matrix4") typeName = "Matrix4x4";
+                created |= CreateOverloads(overload, overloadName, $"System.Numerics.{typeName}", vectorSize, overloads);
             }
-
-            // Check if any overloads were generated.
-            if (lengthParameter == null || ptrParam == null || vectorParam == null)
+            
+            if (overloads.Count > 0)
+            {
+                newOverloads = overloads;
+                return true;
+            }
+            else
             {
                 newOverloads = null;
                 return false;
             }
 
-            // Remove the 'v' from the overloaded name.
-            string overloadName = overload.OverloadName.Remove(vectorMatch.Index + vectorMatch.Length - 1, 1);
-            newOverloads = new List<Overload>()
+            static bool CreateOverloads(Overload overload, string overloadName, string typeName, int vectorSize, List<Overload> overloads)
             {
-                overload with
+                NameTable nameTable = overload.NameTable.New();
+                Parameter[] singleParameters = overload.InputParameters.ToArray();
+                Parameter[] spanParameters = overload.InputParameters.ToArray();
+                Parameter[] arrayParameters = overload.InputParameters.ToArray();
+                Parameter? lengthParameter = null;
+                Parameter? ptrParam = null;
+                Parameter? vectorParam = null;
+                for (var i = 0; i < singleParameters.Length; i++)
+                {
+                    Parameter parameter = singleParameters[i];
+                    if (parameter.Length == null) continue;
+                    if (parameter.Type is CSPointer ptr && ptr.BaseType is CSPrimitive baseType)
+                    {
+                        if (!_existingTypes.Contains(typeName))
+                        {
+                            // Some vector methods arent actually vectors.
+                            // So we just overload them like their normal types.
+                            // An example of this is glUniform1f
+                            typeName = baseType.TypeName;
+                        }
+
+                        Constant constant;
+                        if (parameter.Length is Constant cnst)
+                        {
+                            constant = cnst;
+                        }
+                        else if (parameter.Length is BinaryOperation binary)
+                        {
+                            // We need to figure out which operator side is the length of the vector type.
+                            // and which side is the parameter reference.
+                            // The side with the parameter reference, references the length parameter of an array.
+                            ParameterReference reference;
+                            if (binary.Left is ParameterReference leftRef && binary.Right is Constant rightConst)
+                            {
+                                reference = leftRef;
+                                constant = rightConst;
+                            }
+                            else if (binary.Right is ParameterReference rightRef && binary.Left is Constant leftConst)
+                            {
+                                reference = rightRef;
+                                constant = leftConst;
+                            }
+                            else
+                            {
+                                throw new Exception($"We expected this BinaryOpereation expression to have a constant and a parameter reference, instead we got this: {binary} on function: {overload.NativeFunction.EntryPoint}");
+                            }
+
+                            lengthParameter = singleParameters.First(p => p.Name == reference.ParameterName);
+                        }
+                        else
+                        {
+                            continue;
+                            throw new Exception($"We could not figure out the parameter length on function {overload.NativeFunction.EntryPoint}, we got: {parameter.Length}");
+                        }
+
+                        if (constant.Value == vectorSize)
+                        {
+                            CSStruct vector = new CSStruct(typeName, baseType.Constant, null);
+                            singleParameters[i] = parameter with
+                            {
+                                Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, vector),
+                                Length = null
+                            };
+                            spanParameters[i] = parameter with
+                            {
+                                Type = new CSSpan(vector, baseType.Constant),
+                                Length = null
+                            };
+                            arrayParameters[i] = parameter with
+                            {
+                                Type = new CSArray(vector),
+                                Length = null
+                            };
+                            nameTable.Rename(parameter, parameter.Name + "_ptr");
+                            ptrParam = parameter;
+                            vectorParam = singleParameters[i];
+                            // For now we only overload one MathType parameter as the spec only contains one old
+                            // extension (GL_SUN_vertex) with methods that have multiple vectors per method.
+                            // 29-05-2021 FrederikJA
+                            break;
+                        }
+                    }
+                }
+
+                // Check if any overloads were generated.
+                if (ptrParam == null || vectorParam == null)
+                {
+                    return false;
+                }
+
+                overloads.Add(overload with
                 {
                     OverloadName = overloadName,
-                    InputParameters = singleParameters.Where(p => p != lengthParameter).ToArray(),
+                    InputParameters = singleParameters,
                     NameTable = nameTable,
                     NestedOverload = overload,
-                    MarshalLayerToNested = new SingleVectorLayer(lengthParameter, ptrParam, vectorParam)
-                },
-                overload with
+                    MarshalLayerToNested = new SingleVectorLayer(ptrParam, vectorParam)
+                });
+
+                // If the length parameter isn't null it implies that you can pass more than one value
+                // so we add a Span<T> and array overload.
+                if (lengthParameter != null)
                 {
-                    OverloadName = overloadName,
-                    InputParameters = spanParameters,
-                    NameTable = nameTable,
-                    NestedOverload = overload,
-                    MarshalLayerToNested = new SpanArrayVectorLayer(lengthParameter, ptrParam, vectorParam)
-                },
-                overload with
-                {
-                    OverloadName = overloadName,
-                    InputParameters = arrayParameters,
-                    NameTable = nameTable,
-                    NestedOverload = overload,
-                    MarshalLayerToNested = new SpanArrayVectorLayer(lengthParameter, ptrParam, vectorParam)
-                },
-            };
-            return true;
+                    overloads.Add(overload with
+                    {
+                        OverloadName = overloadName,
+                        InputParameters = spanParameters,
+                        NameTable = nameTable,
+                        NestedOverload = overload,
+                        MarshalLayerToNested = new SpanArrayVectorLayer(ptrParam, vectorParam)
+                    });
+                    overloads.Add(overload with
+                    {
+                        OverloadName = overloadName,
+                        InputParameters = arrayParameters,
+                        NameTable = nameTable,
+                        NestedOverload = overload,
+                        MarshalLayerToNested = new SpanArrayVectorLayer(ptrParam, vectorParam)
+                    });
+                }
+
+                return true;
+            }
         }
 
-        public record SingleVectorLayer(
-            Parameter CountParameters, Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
+        public record SingleVectorLayer(Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
         {
             private CsScope _csScope;
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
                 BaseCSType vectorType = ((CSRef)VectorParam.Type).ReferencedType;
-                writer.WriteLine($"{CountParameters.Type.ToCSString()} {nameTable[CountParameters]} = 1;");
                 writer.WriteLine($"fixed ({vectorType.ToCSString()}* tmp_vecPtr = &{nameTable[VectorParam]})");
                 _csScope = writer.CsScope();
                 writer.WriteLine($"{PtrParam.Type.ToCSString()} {nameTable[PtrParam]} = ({PtrParam.Type.ToCSString()})tmp_vecPtr;");
@@ -423,8 +536,7 @@ namespace Generator.Process
             }
         }
 
-        public record SpanArrayVectorLayer(
-            Parameter CountParameter, Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
+        public record SpanArrayVectorLayer(Parameter PtrParam, Parameter VectorParam) : IOverloadLayer
         {
             private CsScope _csScope;
 
@@ -672,6 +784,35 @@ namespace Generator.Process
 
     public class GenCreateAndDeleteOverloader : IOverloader
     {
+        public static readonly string[] Prefixes = new string[] { "Gen", "Create", "Delete" };
+
+        // Atm only Queries/Query needs this renaming
+        // - 2022-06-27
+        public static Dictionary<string, string> pluralNameToSingularName = new Dictionary<string, string>()
+        {
+            { "Queries", "Query" },
+            { "TransformFeedbacks", "TransformFeedback" },
+            { "VertexArrays", "VertexArray" },
+            { "Textures", "Texture" },
+            { "Samplers", "Sampler" },
+            { "Renderbuffers", "Renderbuffer" },
+            { "ProgramPipelines", "ProgramPipeline" },
+            { "Framebuffers", "Framebuffer" },
+            { "Buffers", "Buffer" },
+        };
+
+        public static Dictionary<string, string> parameterNamesToChange = new Dictionary<string, string>()
+        {
+            { "ids", "id" },
+            { "arrays", "array" },
+            { "textures", "texture" },
+            { "samplers", "sampler" },
+            { "renderbuffers", "renderbuffer" },
+            { "pipelines", "pipeline" },
+            { "framebuffers", "framebuffer" },
+            { "buffers", "buffer" },
+        };
+
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             var nativeName = overload.NativeFunction.FunctionName;
@@ -697,7 +838,31 @@ namespace Generator.Process
                 return false;
             }
 
-            var newName = nativeName[..^1];
+            string? namePrefix = null;
+            string? nameWithoutPrefix = null;
+            foreach (var prefix in Prefixes)
+            {
+                if (nativeName.StartsWith(prefix))
+                {
+                    namePrefix = prefix;
+                    nameWithoutPrefix = nativeName[prefix.Length..];
+                }
+            }
+
+            if (nameWithoutPrefix == null || namePrefix == null)
+                throw new Exception($"Function name '{nativeName}' doesn't start with Gen/Create/Delete and cannot be overloaded by this overloader.");
+
+            string newName;
+            if (pluralNameToSingularName.TryGetValue(nameWithoutPrefix, out string? newPostfix))
+            {
+                newName = $"{namePrefix}{newPostfix}";
+            }
+            else
+            {
+                // If the name didn't have a custom singular name, we just remove the trailing 's'
+                newName = nativeName;
+                Logger.Warning($"Function '{nativeName}' ({nameWithoutPrefix}) {nameWithoutPrefix[..^1]} needs a depluralized name.");
+            }
 
             int lengthParameterIndex = -1;
             Parameter[] parameters = new Parameter[overload.InputParameters.Length - 1];
@@ -713,9 +878,16 @@ namespace Generator.Process
                     parameters[lengthParameterIndex != -1 ? i + 1 : i] = parameter;
                 }
             }
-
+            
             if (lengthParameterIndex == -1)
                 throw new Exception($"Couldnt find len {handleLength.ParameterName} on method {nativeName}");
+
+            string? newPointerParameterName;
+            if (parameterNamesToChange.TryGetValue(pointerParameter.Name, out newPointerParameterName) == false)
+            {
+                newPointerParameterName = pointerParameter.Name;
+                Logger.Warning($"Parameter '{pointerParameter.Name}' needs a depluralized name!");
+            }
 
             var nameTable = overload.NameTable.New();
             nameTable.Rename(pointerParameter, $"{pointerParameter.Name}_handle");
@@ -723,6 +895,10 @@ namespace Generator.Process
             CSRef.Type refType = nativeName.StartsWith("Delete") ? CSRef.Type.In : CSRef.Type.Out;
             parameters[^1] = pointerParameter with
             {
+                // Remove ending 's' in parameter name.
+                // This works for Queries/Query because the parameter names in these functions is "ids
+                // - 2022-06-27
+                Name = newPointerParameterName,
                 Type = new CSRef(refType, pointerParameterType.BaseType),
                 Length = null
             };
@@ -1157,6 +1333,10 @@ namespace Generator.Process
                             constant |= btVoid.Constant;
                             break;
                         case CSPrimitive bt:
+                            baseType = pt.BaseType;
+                            constant |= bt.Constant;
+                            break;
+                        case CSEnum bt:
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;

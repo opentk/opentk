@@ -4,11 +4,9 @@ using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 #nullable enable
 
@@ -35,6 +33,9 @@ namespace OpenTK.Platform.Native.Windows
         private Win32.WNDPROC? WindowProc;
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
+
+        // This is the window we are currently capturing the cursor in. 
+        internal static HWND? CursorCapturingWindow;
 
         static WindowComponent()
         {
@@ -118,6 +119,9 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public bool CanSetCursor => true;
 
+        /// <inheritdoc/>
+        public bool CanCaptureCursor => true;
+
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         /// <inheritdoc/>
@@ -125,9 +129,6 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => _SupportedModes;
-
-        // FIXME: HACK!!!!!!
-        private static bool quit = false;
 
         private IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
@@ -214,6 +215,16 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETFOCUS:
                     {
                         HWND h = HWndDict[hWnd];
+
+                        // Because windows removes our capture when we loose focus,
+                        // we need to re-capture the mouse when we get focus again.
+                        // - Noggin_bops 2023-01-16
+                        if ((h.CaptureMode == CursorCaptureMode.Confined ||
+                            h.CaptureMode == CursorCaptureMode.Locked))
+                        {
+                            RecaptureCursor(h, h.CaptureMode);
+                        }
+
                         EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(true));
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -222,6 +233,14 @@ namespace OpenTK.Platform.Native.Windows
                         // This message can be sent after WM_CLOSE which means that the specificed window might not exist any more.
                         if (HWndDict.TryGetValue(hWnd, out HWND? h))
                         {
+                            if (h.CaptureMode == CursorCaptureMode.Confined ||
+                                h.CaptureMode == CursorCaptureMode.Locked)
+                            {
+                                // Release the mouse when we lose focus, without changing h.CaptureMode
+                                // so that we recapture the mouse when get get focus back.
+                                RecaptureCursor(h, CursorCaptureMode.Normal);
+                            }
+
                             EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(false));
                         }
 
@@ -255,14 +274,38 @@ namespace OpenTK.Platform.Native.Windows
                             tme.cbSize = (uint)Marshal.SizeOf<Win32.TRACKMOUSEEVENT>();
                             tme.dwFlags = TME.Leave;
                             tme.hwndTrack = hWnd;
-                            Win32.TrackMouseEvent(ref tme);
-
-                            h.TrackingMouse = true;
-
+                            if (Win32.TrackMouseEvent(ref tme))
+                            {
+                                h.TrackingMouse = true;
+                            }
+                            else
+                            {
+                                throw new Win32Exception();
+                            }
+                            
                             EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(x, y));
+                        if (CursorCapturingWindow == h && h.CaptureMode == CursorCaptureMode.Locked)
+                        {
+                            // When recentering the cursor we set LastMousePosition equal to the new position.
+                            // This will cause the delta calculation to return zero, which is how we
+                            // ignore the WM_MOUSEMOVE event sent when recentering.
+                            // - Noggin_bops 2023-01-16
+                            Vector2 delta = (x, y) - h.LastMousePosition;
+
+                            if (delta != (0, 0))
+                            {
+                                h.VirtualMousePosition += delta;
+                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h.VirtualMousePosition));
+                            }
+                        }
+                        else
+                        {
+                            EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(x, y)));
+                        }
+
+                        h.LastMousePosition = (x, y);
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -410,6 +453,54 @@ namespace OpenTK.Platform.Native.Windows
                         EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.NCHITTEST:
+                    {
+                        int x = Win32.GET_X_LPARAM(lParam);
+                        int y = Win32.GET_Y_LPARAM(lParam);
+
+                        HWND h = HWndDict[hWnd];
+
+                        ScreenToClient(h, x, y, out int clientX, out int clientY);
+
+                        if (h.HitTest != null)
+                        {
+                            HitType type = h.HitTest(h, new Vector2(clientX, clientY));
+
+                            switch (type)
+                            {
+                                case HitType.Default:
+                                    IntPtr ret = Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                                    Console.WriteLine($"Hit: {(HT)(int)ret}");
+                                    return ret;
+                                case HitType.Normal:
+                                    return (IntPtr)HT.Client;
+                                case HitType.Draggable:
+                                    return (IntPtr)HT.Caption;
+                                case HitType.ResizeTopLeft:
+                                    return (IntPtr)HT.TopLeft;
+                                case HitType.ResizeTop:
+                                    return (IntPtr)HT.Top;
+                                case HitType.ResizeTopRight:
+                                    return (IntPtr)HT.TopRight;
+                                case HitType.ResizeRight:
+                                    return (IntPtr)HT.Right;
+                                case HitType.ResizeBottomRight:
+                                    return (IntPtr)HT.BottomRight;
+                                case HitType.ResizeBottom:
+                                    return (IntPtr)HT.Bottom;
+                                case HitType.ResizeBottomLeft:
+                                    return (IntPtr)HT.BottomLeft;
+                                case HitType.ResizeLeft:
+                                    return (IntPtr)HT.Left;
+                                default:
+                                    throw new InvalidEnumArgumentException("hit test return", (int)type, typeof(HitType));
+                            }
+                        }
+                        else
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
                     }
                 case WM.SIZE:
                     {
@@ -610,6 +701,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents = false)
         {
             while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove) != 0)
@@ -617,8 +709,29 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);
             }
+
+            if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
+            {
+                GetClientSize(CursorCapturingWindow, out int width, out int height);
+                if (CursorCapturingWindow.LastMousePosition != (width / 2, height / 2))
+                {
+                    Win32.POINT p = new Win32.POINT(width / 2, height / 2);
+                    Win32.ClientToScreen(CursorCapturingWindow.HWnd, ref p);
+
+                    bool success = Win32.SetCursorPos(p.X, p.Y);
+                    if (success == false)
+                    {
+                        throw new Win32Exception();
+                    }
+
+                    // Set the last mouse position to the position we are moving to
+                    // to avoid generating a mouse move event.
+                    CursorCapturingWindow.LastMousePosition = (width / 2, height / 2);
+                }
+            }
         }
 
+        /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
             IntPtr hWnd = Win32.CreateWindowEx(
@@ -656,6 +769,11 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            if (CursorCapturingWindow == hwnd)
+            {
+                SetCursorCaptureMode(hwnd, CursorCaptureMode.Normal);
+            }
+
             HWndDict.Remove(hwnd.HWnd);
 
             bool success = Win32.DestroyWindow(hwnd.HWnd);
@@ -669,6 +787,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool IsWindowDestroyed(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -949,7 +1068,7 @@ namespace OpenTK.Platform.Native.Windows
 
             // Call MoveWindow to trigger a recalculation of the window size.
             // MoveWindow causes WM_WINDOWPOSCHANGING to be sent which causes
-            // WM_GETMINMAXINFO to be sent.
+            // WM_GETMINMAXINFO to be sent, which handles min/max client size.
             Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT rect);
             Win32.MoveWindow(hwnd.HWnd, rect.left, rect.top, rect.Width, rect.Height, true);
         }
@@ -973,7 +1092,7 @@ namespace OpenTK.Platform.Native.Windows
 
             // Call MoveWindow to trigger a recalculation of the window size.
             // MoveWindow causes WM_WINDOWPOSCHANGING to be sent which causes
-            // WM_GETMINMAXINFO to be sent.
+            // WM_GETMINMAXINFO to be sent, which handles min/max client size.
             Win32.GetWindowRect(hwnd.HWnd, out Win32.RECT rect);
             Win32.MoveWindow(hwnd.HWnd, rect.left, rect.top, rect.Width, rect.Height, true);
         }
@@ -1173,6 +1292,14 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void SetHitTestCallback(WindowHandle handle, HitTest? test)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            hwnd.HitTest = test;
+        }
+
+        /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -1185,9 +1312,83 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            hwnd.CaptureMode = mode;
+
+            RecaptureCursor(hwnd, hwnd.CaptureMode);
+        }
+
+        // FIXME: Better name?
+        /// <summary>
+        /// Used to set and unset cursor capture without changing HWND.CaptureMode.
+        /// </summary>
+        internal void RecaptureCursor(HWND hwnd, CursorCaptureMode mode)
+        {
+            switch (mode)
+            {
+                case CursorCaptureMode.Normal:
+                    {
+                        if (CursorCapturingWindow == hwnd)
+                        {
+                            CursorCapturingWindow = null;
+
+                            Win32.ClipCursor(ref Unsafe.NullRef<Win32.RECT>());
+                        }
+                        break;
+                    }
+                case CursorCaptureMode.Locked:
+                    {
+                        CursorCapturingWindow = hwnd;
+
+                        hwnd.VirtualMousePosition = hwnd.LastMousePosition;
+
+                        // When locking the cursor we also confine to the window
+                        // so that large mouse deltas can't escape the window.
+                        goto case CursorCaptureMode.Confined;
+                    }
+                case CursorCaptureMode.Confined:
+                    {
+                        CursorCapturingWindow = hwnd;
+
+                        bool success;
+                        success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
+
+                        ClientToScreen(hwnd, lpRect.left, lpRect.top, out lpRect.left, out lpRect.top);
+                        ClientToScreen(hwnd, lpRect.right, lpRect.bottom, out lpRect.right, out lpRect.bottom);
+
+                        success = Win32.ClipCursor(ref lpRect);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
+
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(CursorCaptureMode));
+            }
+        }
+
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
+
+            bool success;
+            success = Win32.BringWindowToTop(hwnd.HWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+
+            Win32.SetForegroundWindow(hwnd.HWnd);
 
             // If SetFocus returns NULL and last error is Success we don't throw an exception.
             // https://stackoverflow.com/questions/24073695/winapi-can-setfocus-return-null-without-an-error-because-thats-what-im-see
@@ -1260,6 +1461,8 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            // We don't release this DC because we have CS_OWNDC set.
+            // - Noggin_bops 2023-01-11
             IntPtr hDC = Win32.GetDC(hwnd.HWnd);
 
             bool success = Win32.SwapBuffers(hDC);

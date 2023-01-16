@@ -8,5 +8,4 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <StartupObject>Generator.Program</StartupObject>
   </PropertyGroup>
-
 </Project>

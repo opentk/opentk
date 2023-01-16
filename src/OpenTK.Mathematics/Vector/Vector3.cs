@@ -216,7 +216,7 @@ namespace OpenTK.Mathematics
         public static readonly Vector3 UnitZ = new Vector3(0, 0, 1);
 
         /// <summary>
-        /// Defines a zero-length Vector3.
+        /// Defines an instance with all components set to 0.
         /// </summary>
         public static readonly Vector3 Zero = new Vector3(0, 0, 0);
 
@@ -688,11 +688,11 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <returns>a when blend=0, b when blend=1, and a linear combination otherwise.</returns>
         [Pure]
         public static Vector3 Lerp(Vector3 a, Vector3 b, float blend)
@@ -704,17 +704,47 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Returns a new Vector that is the linear blend of the 2 given Vectors.
+        /// Returns a new vector that is the linear blend of the 2 given vectors.
         /// </summary>
         /// <param name="a">First input vector.</param>
         /// <param name="b">Second input vector.</param>
-        /// <param name="blend">The blend factor. a when blend=0, b when blend=1.</param>
+        /// <param name="blend">The blend factor.</param>
         /// <param name="result">a when blend=0, b when blend=1, and a linear combination otherwise.</param>
         public static void Lerp(in Vector3 a, in Vector3 b, float blend, out Vector3 result)
         {
             result.X = (blend * (b.X - a.X)) + a.X;
             result.Y = (blend * (b.Y - a.Y)) + a.Y;
             result.Z = (blend * (b.Z - a.Z)) + a.Z;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <returns>a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</returns>
+        [Pure]
+        public static Vector3 Lerp(Vector3 a, Vector3 b, Vector3 blend)
+        {
+            a.X = (blend.X * (b.X - a.X)) + a.X;
+            a.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
+            a.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
+            return a;
+        }
+
+        /// <summary>
+        /// Returns a new vector that is the component-wise linear blend of the 2 given vectors.
+        /// </summary>
+        /// <param name="a">First input vector.</param>
+        /// <param name="b">Second input vector.</param>
+        /// <param name="blend">The blend factor.</param>
+        /// <param name="result">a when blend=0, b when blend=1, and a component-wise linear combination otherwise.</param>
+        public static void Lerp(in Vector3 a, in Vector3 b, Vector3 blend, out Vector3 result)
+        {
+            result.X = (blend.X * (b.X - a.X)) + a.X;
+            result.Y = (blend.Y * (b.Y - a.Y)) + a.Y;
+            result.Z = (blend.Z * (b.Z - a.Z)) + a.Z;
         }
 
         /// <summary>
@@ -1478,6 +1508,21 @@ namespace OpenTK.Mathematics
             vec.X /= scale;
             vec.Y /= scale;
             vec.Z /= scale;
+            return vec;
+        }
+
+        /// <summary>
+        /// Component-wise division between the specified instance by a scale vector.
+        /// </summary>
+        /// <param name="vec">Left operand.</param>
+        /// <param name="scale">Right operand.</param>
+        /// <returns>Result of the division.</returns>
+        [Pure]
+        public static Vector3 operator /(Vector3 vec, Vector3 scale)
+        {
+            vec.X /= scale.X;
+            vec.Y /= scale.Y;
+            vec.Z /= scale.Z;
             return vec;
         }
 
