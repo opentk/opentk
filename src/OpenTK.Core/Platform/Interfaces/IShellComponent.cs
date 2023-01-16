@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenTK.Core.Platform.Interfaces
+namespace OpenTK.Core.Platform
 {
     /// <summary>
     /// Interface for interacting with operating system features.

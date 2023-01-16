@@ -24,46 +24,22 @@ namespace OpenTK.Platform.Tests
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
-            if (OperatingSystem.IsWindows())
-                windowComp = new Native.Windows.WindowComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                windowComp = new Native.X11.X11WindowComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                glComp = new Native.Windows.OpenGLComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                glComp = new Native.X11.X11OpenGLComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                cursorComp = new Native.Windows.CursorComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                cursorComp = new Native.X11.X11CursorComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                mouseComp = new Native.Windows.MouseComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                mouseComp = new Native.X11.X11MouseComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                shellComp = new Native.Windows.ShellComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                shellComp = new Native.X11.X11ShellComponent();
-            else throw new Exception("OS not supported yet!");
+            windowComp = Native.PlatformComponents.CreateWindowComponent();
+            glComp = Native.PlatformComponents.CreateOpenGLComponent();
+            cursorComp = Native.PlatformComponents.CreateCursorComponent();
+            mouseComp = Native.PlatformComponents.CreateMouseComponent();
+            shellComp = Native.PlatformComponents.CreateShellComponent();
 
             var logger = new ConsoleLogger();
             windowComp.Logger = logger;
             glComp.Logger = logger;
+            cursorComp.Logger = logger;
+            mouseComp.Logger = logger;
+            shellComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
-
             glComp.Initialize(PalComponents.OpenGL);
-
             cursorComp.Initialize(PalComponents.MouseCursor);
-
             shellComp.Initialize(PalComponents.Shell);
 
             if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
