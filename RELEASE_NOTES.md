@@ -1,3 +1,12 @@
+## 5.0-pre.8
+
+* Merged 5.0 with 4.7.5, this means that all changes made between 4.6.5 to 4.7.5 are also in this release.
+* Functions with `bool` parameters and return values are now correctly bound.
+* Enum groups now document a few functions where they are used.
+* The singular overload of `GenQuries` is now correctly named `GenQuery`.
+* Deduplicated internal function pointers to reduce the final binary size.
+* Fixes a few functions like `glTexImage3D` that took an `int` parameter when it should have taken an enum instead.
+
 ## 5.0-pre.7
 
 * Add documentation to all native and overloaded functions (and links to their refpage) (@frederikja163, @NogginBops)
@@ -46,14 +55,203 @@
 
 **Note**: The generated functions currently do not have xml documentation attached to them, this will be available in the final release.
 
-## 4.5.0
-API: Introduced `GameWindow.UpdateTime` to match `GameWindow.RenderTime`. (@NogginBops)
-API: Added GLFW functions for getting platform dependent opengl context pointers. (@NogginBops)
+## 4.7.5
 
-FIX: `GameWindow.RenderTime` now gets updated correctly. (@NogginBops)
-FIX: Actually assign `APIVersion` property in `NativeWindow`. (@BroMandarin)
-FIX: The `MouseWheelEventArgs` in `OnMouseWheel` now correctly returns a delta instead of an accumulated offset. (@GeorchW)
-FIX: Some overloads for `AL.DeleteSources` where calling `alDeleteBuffers` instead of `alDeleteSources`. (@NogginBops)
+* BREAKING: Removed the `ALTest` class from the OpenAL namespace. This was an internal test class that was accidentally included in the package. (@NogginBops)
+
+* API: Deprecated `Box.Contains` function in favor of `Box.ContainsInclusive` and `Box.ContainsExclusive` to explicitly state if the box boundary should be considered contained. (@NogginBops, @Oribow)
+
+* API: Exposed EGL bindings to match the WGL bindings. (@NogginBops)
+
+* API: `Box2`, `Box2d`, `Box2i`, `Box3`, `Box3d`, and `Box3i` now support XML serialization. (@NogginBops)
+
+* API: Added `ProgramBinaryLength` to the `GetProgramParameterName` enum. (@NogginBops)
+
+* FIX: `MathHelper.ClampAngle` and `MathHelper.ClampRadians` now return correct results. (@FlashX64)
+
+* FIX: `MathHelper.NormalizeRadians` now return correct results. (@FlashX64)
+
+* FIX: OpenAL now correctly loads on FreeBSD. (@Partmedia)
+
+* Clarify in the readme that running on Windows requires "Visual C++ Redistributable 2015" (@NogginBops)
+
+* Update to GLFW 3.3.8 (@NogginBops)
+
+## 4.7.4
+
+* FIX: Updated `OpenTK.redist.glfw` nuget reference to the latest version (`3.3.7.27`), the previous `3.3.7.25` had issues on linux.
+
+## 4.7.3
+
+* API: Added overloads for `Vector2i`, `Vector3i`, and `Vector4i` to `GL.Uniform` and `GL.ProgramUniform` family of functions. (@NogginBops)
+
+* API: Added overloads for non-symmetric matrices to `GL.Uniform` family of functions to the `OpenTK.Graphics.OpenGL4` namespace. (@NogginBops)
+
+* API: Added `IsButtonPressed` and `IsButtonReleased` to `JoystickState`, to match `KeyboardState` and `MouseState`. (@g7ChoGXh)
+
+* API: Added `GL_KHR_shader_subgroup` to the bindings. (@BoyBaykiller)
+
+* FIX: Fixed race condition in `RethrowCallbackExceptionsIfNeeded` where some uncaught exceptions in callbacks could be lost. (@NogginBops, @seanofw)
+
+* FIX: Fixed issue where `NativeWindow.OnClosing` and `NativeWindow.Closing` wheren't called when calling `NativeWindow.Close()`. (@NogginBops)
+
+* FIX: Made `CL.EnqueueReadBuffer<T>()` use the correct `sizeof(T)` instead of `sizeof(float)`. This caused issues where the wrong number of bytes where sent, possibly leading to an access violation. (@NogginBops, @Ed-Silver)
+
+## 4.7.2
+
+* BREAKING: Fixed issue where the `QuaternionD(double, double, double)` ctor produced the wrong quaternion. It now produces the same quaternion as `Quaterion(float, float, float)`. (@NogginBops)
+
+* BREAKING: Fixed `QuaterionD.ToEulerAngles` to now produce the correct result. It now matches the result from `Quaterion.ToEulerAngles`. (@NogginBops)
+
+* API: Deprecated `NativeWindow.CursorVisible` and `NativeWindow.CursorGrabbed` in favor of a unified `NativeWindow.CursorState` that disallows invalid combinations. (@NogginBops)
+
+* API: Added `NativeWindowSettings.SrgbCapable` to be able to create a default framebuffer with sRGB capabilities. (@NogginBops)
+
+* API: Added glfw native access funtions added in glfw 3.1. (@NogginBops)
+
+* API: Added `MinimumSize` and `MaximumSize` properties to `NativeWindow` and `NativeWindowSettings`. (@toasty1307)
+
+* API: Added `NativeWindow.ProcessWindowEvents` static function for processing events manually. Prefer this function (with `NativeWindow.ProcessInputEvents`) in a multi-window setup. (@NogginBops)
+
+* API: Exposed `NativeWindow.ProcessInputEvents()` so multi-window setups can update input state of all windows before handling events (using `NativeWindow.ProcessWindowEvents`). (@NogginBops)
+
+* API: Added a proper "main thread" check for glfw. To turn this off, `GLFWProvider.CheckForMainThread` can be set to false. (@NogginBops)
+
+* API: Added all missing enums to `SizedInternalFormat`. (@NogginBops)
+
+* API: Added `TextureCubeMapArray` to `TextureTarget3d`. (@NogginBops)
+
+* API: Added `ParameterBuffer` to `BufferTarget`. (@NogginBops)
+
+* API: Added overloads to `MultiDrawElementsIndirectCount` that takes the proper `DrawElementsType` enum as an argument. (@NogginBops)
+
+* API: Added overloads to `VertexAttribIFormat` and `VertexAttribLFormat` that take `VertexAttribIntegerType` and `VertexAttributeDoubleType` respectively. (@BoyBaykiller)
+
+* API: Added bindings for `NV_mesh_shader`, `NV_shading_rate`, `NV_primitive_shading_rate`, `NV_representative_fragment_test` and `NV_scissor_exclusive` extensions. (@BoyBaykiller)
+
+* API: Enums should now be documented with their minimum version or extension requirements. These are not guaranteed to be 100% accurate but should mostly correct. (@NogginBops)
+
+* API: Added `RawMouseMotionAttribute` enum, to be able to control raw mouse motion from GLFW.
+
+* Fix issue where limiting framerate would cause issues with input functions like `JoystickState.WasButtonPressed` whould have an incorrect value (@NogginBops).
+
+* Updated GLFW to 3.3.7. This should fix an issue where UTF-16 code points where sent to OnTextInput causing it to crash. (@NogginBops, @g7ChoGXh)
+
+* If the update loop gets too far behind it no longer tries to make up for lost time. This was typically caused by resizing the window, and or closing the lid of a laptop. (@daerogami)
+
+* OpenTK no longer put an upper limit on the `System.Runtime.CompilerServices.Unsafe` package. (@NogginBops)
+
+* Fixed so `NativeWindowSettings.DepthBits` and `NativeWindowSettings.StencilBits` actually affect the resulting backbuffer format. (@NogginBops)
+
+* Fixed an issue in `Box3i.Contains(Vector3i)` where one of the comparisons where wrong, causing incorrect results. (@BlakkM9)
+
+* Fixed an issue where `Vector3i.ComponentMin` returned one of the input arguments instead of the proper result. (@Oribow)
+
+* Fixed OpenAL `Buffer(int, BufferLoopPoint, ReadOnlySpan<int>)` overload to no longer crash. (@NogginBops)
+
+## 4.7.1
+
+* BREAKING: Simplifications to the `Monitors` api, hopefully it's easier to work with now. Old functions are marked `[Obsolete]` with directions for equivalent operations with the new API. (@NogginBops)
+
+* BREAKING: Changed `Span<T>` to `ReadOnlySpan<T>` in OpenAL bindings where appropriate. (@NogginBops)
+
+* API: Add more information to `MonitorInfo` such as human-readable names and supported video modes. (@NogginBops, @utkumaden)
+* API: Added component-wise division operators for vector types (@NogginBops, @wildniklin)
+* API: Added missing `One` and `Zero` static readonly fields to `Vector3i` (@NogginBops, @wildniklin)
+
+* API: Implemented `AL_SOFT_loop_points` OpenAL extension. (@NogginBops)
+
+* Passing `ContextAPI.NoAPI` in `NativeWindowSettings.ContextAPI` will not create an OpenGL context. This allows you to use `NativeWindow` to create a vulkan context, see #1334. (@arakis, @NogginBops)
+
+* Added warning to documentation that `ClientSize` will not be guaranteed to have updated values in the `OnMaximized` and `OnMinimized` callbacks. (@NogginBops, @wo80)
+
+* Updated to GLFW 3.3.5. (@NogginBops)
+
+* FIX: Fix invalid IL generation for some edge case GL ES functions, AOT compiling OpenTK now works correctly!! (@NogginBops, thanks @jkotas for helping me understand the issue)
+
+* FIX: Fix `Box3` documentation referencing 2D concepts. (@CaiB)
+
+* FIX: Fixed `MathHelper.MapRange` so that it no longer always throws division by zero exceptions. (@jdmisek)
+
+* FIX: Fixed `OnUnload` so that it's acutally called in all cases when closing the window. (@NogginBops, @adfcf)
+
+* FIX: Wrap all callbacks in exception handlers that will then rethrow these exceptions at the end of `NativeWindow.ProcessEvents()` so that exceptions don't unwind into native calls which is a problem on non-windows platforms. (@NogginBops, @PJB3005)
+
+* FIX: Fix `NativeWindow.IsExiting` and `NativeWindow.Exists` so that they actually contain correct values. (@NogginBops)
+
+* FIX: Fix `Box2d.Translate` and `Box2i.Translate`, this fix also fixes setting the `Box2d.Center` and `Box2i.Center` properties. (@NogginBops, @yts233)
+
+* FIX: Made JoystickCallback still work when multiple windows are used. (@TheBlubb14)
+
+* FIX: The MonitorCallback no longer gets garbage collected and crashes the program when called. (@NogginBops)
+
+* Deprecated the `Closed` event and then `OnClosed` virtual method, they where never called and now we explicitly say so. (@NogginBops)
+
+* Deprecated `NativeWindowSettings.IsFullscreen`, use `NativeWindowSettings.WindowState` instead. (@NogginBops)
+
+* Deprecated `NativeWindowSettings.IsMultiThreaded`, Render/Update split isn't a great idea then multithreading and users can easily spin up an "update" thread themselves. (@NogginBops)
+
+## 4.7.0
+
+This released was built using a broken build script.
+4.7.1 is released with a fixed build script and the change log for 4.7.1 is identical to this version except the fix to the build script.
+
+## 4.6.7
+
+* FIX: Fixed closing window causing AccessViolations on windows and other crashes on other platforms. (@NogginBops)
+
+## 4.6.6
+
+* FIX: Fixed arithmetic overflow issue in `Box2i.Center` and `Box3i.Center` introduced when making them return correct values.
+
+## 4.6.5
+
+* API: Added settings in `NativeWindowSettings` for controlling backbuffer parameters such as `DepthBits` and `StencilBits`. (@deccer)
+
+* API: Added `SwapInterval` to `IGraphicsContext` and moved `VSync` property from `GameWindow` to `NativeWindow` to allow for more control over vsync. (@softwareantics)
+
+* Updated GLFW to 3.3.4. (@NogginBops)
+
+
+* FIX: Fixed `Box2i.Center` and `Box3i.Center` returning wrong values. (@NogginBops, thanks @g7ChoGXh for the bug report)
+* FIX: Implemented proper disposing of `NativeWindow`. (@NogginBops, thanks @xiejiang2014 for the bug report)
+* FIX: Fixed calling conventions on glfw callbacks in 32-bit builds. (@NogginBops)
+
+## 4.6.4
+
+* FIX: Made it so that the singular check in `Matrix4.Invert` is the same between platforms.
+In particular this fixes an issue where the singular check was too aggressive in the SSE3 path. (@NogginBops)
+* FIX: Made checking for OpenAL extensions not crash if the extension wasn't present. (@NogginBops)
+* FIX: Fix to the rewriter to not generate invalid IL on some GLES functions. (@NogginBops)
+
+* Updated CONTRIBUTING.md to not contain broken links. (@asears)
+
+## 4.6.3
+
+* FIX: Fixed an issue where `Matrix4.Invert` threw an exception if the matrix determinant was negative. (@NogginBops, thanks for reporting @ghidosoft)
+
+## 4.6.2
+
+* FIX: The package should now be built corretly and work on .net core 3.1 and up. (@PJB)
+
+## 4.6.1
+
+* FIX: Made `OpenTK.Mathematics` work on .net standard 2.1 and .net core 3.1 which broke with 4.6.0. (@PJB)
+
+## 4.6.0
+
+* API: Added `cl_khr_gl_sharing` extension for OpenCL which allows OpenCL x OpenGL interop. (@NepNet)
+
+* FIX: Removed allocations from `Matrix4.Invert` and `Matrix3.Invert` and made them about 90% faster. (@NogginBops)
+
+## 4.5.0
+* API: Introduced `GameWindow.UpdateTime` to match `GameWindow.RenderTime`. (@NogginBops)
+* API: Added GLFW functions for getting platform dependent opengl context pointers. (@NogginBops)
+
+* FIX: `GameWindow.RenderTime` now gets updated correctly. (@NogginBops)
+* FIX: Actually assign `APIVersion` property in `NativeWindow`. (@BroMandarin)
+* FIX: The `MouseWheelEventArgs` in `OnMouseWheel` now correctly returns a delta instead of an accumulated offset. (@GeorchW)
+* FIX: Some overloads for `AL.DeleteSources` where calling `alDeleteBuffers` instead of `alDeleteSources`. (@NogginBops)
 
 ## 4.4.0
 * API: Added properties ButtonCount, AxisCount, and HatCount to JoystickState (@Ferpsalerp)

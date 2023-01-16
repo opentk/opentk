@@ -16,6 +16,8 @@ using OpenTK.Core.Native;
 using OpenTK.Mathematics;
 using OpenTK.OpenAL;
 
+#pragma warning disable SA1515 // Single-line comment should be preceded by blank line
+
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
@@ -412,9 +414,9 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>This function deletes one or more sources.</summary>
         /// <param name="sources">An array of source names identifying the sources to be deleted.</param>
-        public static void DeleteSources(Span<int> sources)
+        public static void DeleteSources(ReadOnlySpan<int> sources)
         {
-            DeleteSources(sources.Length, ref sources[0]);
+            DeleteSources(sources.Length, ref MemoryMarshal.GetReference(sources));
         }
 
         /// <summary>This function deletes one source only.</summary>
@@ -588,9 +590,9 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>This function plays a set of sources. The playing sources will have their state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
         /// <param name="sources">The sources to be played.</param>
-        public static void SourcePlay(Span<int> sources)
+        public static void SourcePlay(ReadOnlySpan<int> sources)
         {
-            SourcePlay(sources.Length, ref sources[0]);
+            SourcePlay(sources.Length, ref MemoryMarshal.GetReference(sources));
         }
 
         /// <summary>This function stops a set of sources. The stopped sources will have their state changed to ALSourceState.Stopped.</summary>
@@ -616,9 +618,9 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>This function stops a set of sources. The stopped sources will have their state changed to ALSourceState.Stopped.</summary>
         /// <param name="sources">The sources to be stopped.</param>
-        public static void SourceStop(Span<int> sources)
+        public static void SourceStop(ReadOnlySpan<int> sources)
         {
-            SourceStop(sources.Length, ref sources[0]);
+            SourceStop(sources.Length, ref MemoryMarshal.GetReference(sources));
         }
 
         /// <summary>This function stops a set of sources and sets all their states to ALSourceState.Initial.</summary>
@@ -644,9 +646,9 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>This function stops a set of sources and sets all their states to ALSourceState.Initial.</summary>
         /// <param name="sources">The sources to be rewound.</param>
-        public static void SourceRewind(Span<int> sources)
+        public static void SourceRewind(ReadOnlySpan<int> sources)
         {
-            SourceRewind(sources.Length, ref sources[0]);
+            SourceRewind(sources.Length, ref MemoryMarshal.GetReference(sources));
         }
 
         /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
@@ -669,6 +671,13 @@ namespace OpenTK.Audio.OpenAL
         [DllImport(Lib, EntryPoint = "alSourcePausev", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void SourcePause(int ns, int[] sids);
         // AL_API void AL_APIENTRY alSourcePausev( ALsizei ns, const ALuint *sids );
+
+        /// <summary>This function pauses a set of sources. The paused sources will have their state changed to ALSourceState.Paused.</summary>
+        /// <param name="sources">The sources to be paused.</param>
+        public static void SourcePause(ReadOnlySpan<int> sources)
+        {
+            SourcePause(sources.Length, ref MemoryMarshal.GetReference(sources));
+        }
 
         /// <summary>This function plays, replays or resumes a source. The playing source will have it's state changed to ALSourceState.Playing. When called on a source which is already playing, the source will restart at the beginning. When the attached buffer(s) are done playing, the source will progress to the ALSourceState.Stopped state.</summary>
         /// <param name="sid">The name of the source to be played.</param>
@@ -721,9 +730,9 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
         /// <param name="sid">The name of the source to queue buffers onto.</param>
         /// <param name="buffers">A pointer to an array of buffer names to be queued.</param>
-        public static void SourceQueueBuffers(int sid, Span<int> buffers)
+        public static void SourceQueueBuffers(int sid, ReadOnlySpan<int> buffers)
         {
-            SourceQueueBuffers(sid, buffers.Length, ref buffers[0]);
+            SourceQueueBuffers(sid, buffers.Length, ref MemoryMarshal.GetReference(buffers));
         }
 
         /// <summary>This function queues a set of buffers on a source. All buffers attached to a source will be played in sequence, and the number of processed buffers can be detected using AL.GetSource with parameter ALGetSourcei.BuffersProcessed. When first created, a source will be of type ALSourceType.Undetermined. A successful AL.SourceQueueBuffers call will change the source type to ALSourceType.Streaming.</summary>
@@ -901,9 +910,9 @@ namespace OpenTK.Audio.OpenAL
 
         /// <summary>This function deletes a span of buffers, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
         /// <param name="buffers">Span of buffer names to delete.</param>
-        public static void DeleteBuffers(Span<int> buffers)
+        public static void DeleteBuffers(ReadOnlySpan<int> buffers)
         {
-            DeleteBuffers(buffers.Length, ref buffers[0]);
+            DeleteBuffers(buffers.Length, ref MemoryMarshal.GetReference(buffers));
         }
 
         /// <summary>This function deletes one buffer only, freeing the resources used by the buffer. Buffers which are attached to a source can not be deleted. See AL.Source (ALSourcei) and AL.SourceUnqueueBuffers for information on how to detach a buffer from a source.</summary>
@@ -966,7 +975,6 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
         /// <param name="buffer">The audio buffer.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
-        /// FIXME: Should "size" be changed to "elements"?
         public static unsafe void BufferData<TBuffer>(int bid, ALFormat format, TBuffer[] buffer, int freq)
             where TBuffer : unmanaged
         {
@@ -982,7 +990,7 @@ namespace OpenTK.Audio.OpenAL
         /// <param name="format">Format type from among the following: ALFormat.Mono8, ALFormat.Mono16, ALFormat.Stereo8, ALFormat.Stereo16.</param>
         /// <param name="buffer">Span representing the audio buffer.</param>
         /// <param name="freq">The frequency of the audio buffer.</param>
-        public static unsafe void BufferData<TBuffer>(int bid, ALFormat format, Span<TBuffer> buffer, int freq)
+        public static unsafe void BufferData<TBuffer>(int bid, ALFormat format, ReadOnlySpan<TBuffer> buffer, int freq)
             where TBuffer : unmanaged
         {
             fixed (TBuffer* b = buffer)

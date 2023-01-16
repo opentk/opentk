@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text.Json;
 using System.Linq;
+using System.Reflection;
 
 namespace Generator
 {
@@ -36,7 +37,7 @@ namespace Generator
 
     public static class Reader
     {
-        private static readonly string TempDirectory = Path.Combine("..", "..", "..", "SpecificationFiles");
+        private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
         public static FileStream ReadSpecFromGithub()
         {
@@ -51,7 +52,7 @@ namespace Generator
             }
             else
             {
-                Logger.Info($"Didn't find cache file for gl.xml, downloading from {url}.");
+                Logger.Info($"Didn't find cache file for gl.xml, downloading from {url}. (looked for gl.xml in this directory: {Path.GetFullPath(filePath)})");
                 if (!Directory.Exists(TempDirectory))
                 {
                     Directory.CreateDirectory(TempDirectory);

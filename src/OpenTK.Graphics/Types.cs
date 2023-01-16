@@ -73,6 +73,7 @@ namespace OpenTK.Graphics
         }
 
         public static explicit operator CLContext(IntPtr val) => new CLContext(val);
+        public static explicit operator IntPtr(CLContext val) => val.Value;
     }
 
     public struct CLEvent
@@ -85,6 +86,7 @@ namespace OpenTK.Graphics
         }
 
         public static explicit operator CLEvent(IntPtr val) => new CLEvent(val);
+        public static explicit operator IntPtr(CLEvent val) => val.Value;
     }
 
     public struct GLSync
@@ -97,6 +99,7 @@ namespace OpenTK.Graphics
         }
 
         public static explicit operator GLSync(IntPtr val) => new GLSync(val);
+        public static explicit operator IntPtr(GLSync val) => val.Value;
     }
 
     [StructLayout(LayoutKind.Explicit)]

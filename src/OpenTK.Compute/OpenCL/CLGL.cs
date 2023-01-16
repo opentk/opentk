@@ -78,7 +78,7 @@ namespace OpenTK.Compute.OpenCL
 		public static extern CLBuffer CreateFromGLTexture(
 			[In] CLContext context,
 			[In] MemoryFlags flags,
-			//TODO FIX`
+			//TODO FIX
 			[In] int target,
 			[In] int mipLevel,
 			[In] int texture,

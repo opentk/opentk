@@ -7,7 +7,7 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    public record OutputData(List<GLOutputApi> Apis);
+    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
 
 
     public record GLOutputApi(
@@ -50,6 +50,8 @@ namespace Generator.Writing
 
     public record Parameter(
         BaseCSType Type,
+        // FIXME: Should we expose this exactly like it's exposed in gl.xml?
+        string[] Kinds,
         string Name,
         Expression? Length);
 
@@ -64,7 +66,7 @@ namespace Generator.Writing
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
-        List<NativeFunction>? FunctionsUsingEnumGroup);
+        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup);
 
 
     public interface IOverloadLayer
@@ -99,6 +101,14 @@ namespace Generator.Writing
         }
     }
 
+    public record CSEnum(string TypeName, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return TypeName;
+        }
+    }
+
     public record CSStruct(string TypeName, bool Constant, CSPrimitive? UnderlyingType) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
@@ -111,7 +121,7 @@ namespace Generator.Writing
     {
         public override string ToCSString()
         {
-            return "byte";
+            return "bool";
         }
     }
 

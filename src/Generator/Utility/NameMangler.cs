@@ -12,6 +12,14 @@ namespace Generator.Utility
             return str[start.Length..];
         }
 
+        public static string RemoveEnd(string str, string end)
+        {
+            if (!str.EndsWith(end))
+                throw new System.Exception($"'{str}' dosen't end with '{end}'");
+
+            return str[0..^end.Length];
+        }
+
         public static string MangleFunctionName(string name)
         {
             // Remove the "gl" prefix.
