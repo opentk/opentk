@@ -357,7 +357,22 @@ namespace OpenTK.Platform.Native.X11
 
                             XWindowHandle xwindow = XWindowDict[motion.window];
 
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(motion.x, motion.y)));
+                            if (CursorCapturingWindow == xwindow && xwindow.CaptureMode == CursorCaptureMode.Locked)
+                            {
+                                Vector2 delta = (motion.x, motion.y) - xwindow.LastMousePosition;
+
+                                if (delta != (0, 0))
+                                {
+                                    xwindow.VirtualCursorPosition += delta;
+                                    EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(xwindow.VirtualCursorPosition));
+                                }
+                            }
+                            else
+                            {
+                                EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(motion.x, motion.y)));
+                            }
+
+                            xwindow.LastMousePosition = (motion.x, motion.y);
 
                             break;
                         }
@@ -577,6 +592,19 @@ namespace OpenTK.Platform.Native.X11
                         }
                     default:
                         break;
+                }
+            }
+
+            if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
+            {
+                GetClientSize(CursorCapturingWindow, out int width, out int height);
+                if (CursorCapturingWindow.LastMousePosition != (width / 2, height / 2))
+                {
+                    XWarpPointer(X11.Display, XWindow.None, CursorCapturingWindow.Window, 0, 0, 0, 0, width / 2, height / 2);
+
+                    // Set the last mouse position to the position we are moving to
+                    // to avoid generating a mouse move event.
+                    CursorCapturingWindow.LastMousePosition = (width / 2, height / 2);
                 }
             }
         }
@@ -1279,36 +1307,11 @@ namespace OpenTK.Platform.Native.X11
             XDefineCursor(X11.Display, xwindow.Window, xcursor?.Cursor ?? XCursor.None);
         }
 
-        public void CaptureCursor(WindowHandle handle, bool captureCursor)
+        public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            if (captureCursor)
-            {
-                GrabResult result = XGrabPointer(X11.Display, xwindow.Window,
-                    true, // FIXME: What does this mean?
-                    XEventMask.ButtonPress | XEventMask.ButtonRelease | XEventMask.PointerMotion,
-                    GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
-                    xwindow.Window,
-                    XCursor.None,
-                    XTime.CurrentTime);
-
-                if (result != GrabResult.GrabSuccess)
-                {
-                    Logger?.LogWarning($"Could not capture cursor. Reason: {result}");
-                }
-            }
-            else
-            {
-                XUngrabPointer(X11.Display, XTime.CurrentTime);
-            }
-        }
-
-        public void GrabCursor(WindowHandle handle, bool grabCursor)
-        {
-            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
-
-            throw new NotImplementedException();
+            return xwindow.CaptureMode;
         }
 
         public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
@@ -1330,6 +1333,8 @@ namespace OpenTK.Platform.Native.X11
                     }
                 case CursorCaptureMode.Confined:
                     {
+                        CursorCapturingWindow = xwindow;
+
                         GrabResult result = XGrabPointer(X11.Display, xwindow.Window,
                             true, // FIXME: What does this mean?
                             XEventMask.ButtonPress | XEventMask.ButtonRelease | XEventMask.PointerMotion,
@@ -1347,6 +1352,8 @@ namespace OpenTK.Platform.Native.X11
                     }
                 case CursorCaptureMode.Locked:
                     {
+                        CursorCapturingWindow = xwindow;
+
                         break;
                     }
                 default:

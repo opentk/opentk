@@ -43,7 +43,7 @@ namespace OpenTK.Platform.Native.Windows
 
         public CursorCaptureMode CaptureMode { get; set; } = CursorCaptureMode.Normal;
         public Vector2i LastMousePosition { get; set; }
-        public Vector2 VirtualMousePosition { get; set; }
+        public Vector2 VirtualCursorPosition { get; set; }
 
         public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {

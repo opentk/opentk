@@ -118,7 +118,7 @@ namespace OpenTK.Platform.Tests
             }
             //cursorComp.SetHotspot(cursorHandle, 8, 8);
             cursorComp.Load(cursorHandle, 16, 16, image, mask);
-            cursorComp.SetHotspot(cursorHandle, 7, 7);
+            //cursorComp.SetHotspot(cursorHandle, 7, 7);
             windowComp.SetCursor(window, cursorHandle);
 
             while (windowComp.IsWindowDestroyed(window) == false)

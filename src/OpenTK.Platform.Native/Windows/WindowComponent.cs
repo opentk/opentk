@@ -296,8 +296,8 @@ namespace OpenTK.Platform.Native.Windows
 
                             if (delta != (0, 0))
                             {
-                                h.VirtualMousePosition += delta;
-                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h.VirtualMousePosition));
+                                h.VirtualCursorPosition += delta;
+                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h.VirtualCursorPosition));
                             }
                         }
                         else
@@ -1312,6 +1312,14 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
+        public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
+        {
+            HWND hwnd = handle.As<HWND>(this);
+
+            return hwnd.CaptureMode;
+        }
+
+        /// <inheritdoc/>
         public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -1343,7 +1351,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         CursorCapturingWindow = hwnd;
 
-                        hwnd.VirtualMousePosition = hwnd.LastMousePosition;
+                        hwnd.VirtualCursorPosition = hwnd.LastMousePosition;
 
                         // When locking the cursor we also confine to the window
                         // so that large mouse deltas can't escape the window.

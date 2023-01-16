@@ -489,6 +489,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        CursorCaptureMode IWindowComponent.GetCursorCaptureMode(WindowHandle handle)
+        {
+            return _windowComponent!.GetCursorCaptureMode(handle);
+        }
+
+        /// <inheritdoc/>
         void IWindowComponent.SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
             _windowComponent!.SetCursorCaptureMode(handle, mode);
