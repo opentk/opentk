@@ -282,8 +282,6 @@ namespace LocalTestProject
             windowComp.SetBorderStyle(handle, WindowStyle.ResizableBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
-
-            windowComp.SetCursorCaptureMode(handle, CursorCaptureMode.Confined);
         }
 
         static List<ulong> vks = new List<ulong>();
