@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 

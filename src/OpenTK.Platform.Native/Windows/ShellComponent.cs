@@ -1,6 +1,5 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Core.Platform.Enums;
-using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
