@@ -42,6 +42,8 @@ namespace OpenTK.Platform.Native.X11
 
         internal static readonly Dictionary<XWindow, XWindowHandle> XWindowDict = new Dictionary<XWindow, XWindowHandle>();
 
+        internal static XWindowHandle? CursorCapturingWindow;
+
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -1307,6 +1309,49 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             throw new NotImplementedException();
+        }
+
+        public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            switch (mode)
+            {
+                case CursorCaptureMode.Normal:
+                    {
+                        if (CursorCapturingWindow == xwindow)
+                        {
+                            CursorCapturingWindow = null;
+
+                            XUngrabPointer(X11.Display, XTime.CurrentTime);
+                        }
+
+                        break;
+                    }
+                case CursorCaptureMode.Confined:
+                    {
+                        GrabResult result = XGrabPointer(X11.Display, xwindow.Window,
+                            true, // FIXME: What does this mean?
+                            XEventMask.ButtonPress | XEventMask.ButtonRelease | XEventMask.PointerMotion,
+                            GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
+                            xwindow.Window,
+                            XCursor.None,
+                            XTime.CurrentTime);
+
+                        if (result != GrabResult.GrabSuccess)
+                        {
+                            Logger?.LogWarning($"Could not capture cursor. Reason: {result}");
+                        }
+
+                        break;
+                    }
+                case CursorCaptureMode.Locked:
+                    {
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(CursorCaptureMode));
+            }
         }
 
         public void FocusWindow(WindowHandle handle)

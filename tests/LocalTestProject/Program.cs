@@ -282,11 +282,13 @@ namespace LocalTestProject
             windowComp.SetBorderStyle(handle, WindowStyle.ResizableBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
+
+            windowComp.SetCursorCaptureMode(handle, CursorCaptureMode.Confined);
         }
 
         static List<ulong> vks = new List<ulong>();
 
-        static Vector2i MousePos = (0, 0);
+        static Vector2 MousePos = (0, 0);
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             if (type == PlatformEventType.MouseMove)
@@ -295,11 +297,11 @@ namespace LocalTestProject
 
                 //Console.WriteLine($"Delta X: {mouseMoveArgs.DeltaX}, DeltaY: {mouseMoveArgs.DeltaY}");
 
-                MousePos = (mouseMoveArgs.DeltaX, mouseMoveArgs.DeltaY);
+                MousePos = (mouseMoveArgs.Position.X, mouseMoveArgs.Position.Y);
 
                 if (windowComp.IsWindowDestroyed(WindowHandle) == false)
                 {
-                    windowComp.ScreenToClient(WindowHandle, MousePos.X, MousePos.Y, out int clientX, out int clientY);
+                    windowComp.ScreenToClient(WindowHandle, (int)MousePos.X, (int)MousePos.Y, out int clientX, out int clientY);
                     windowComp.SetTitle(WindowHandle, $"({clientX},{clientY})");
                 }
             }
@@ -313,7 +315,7 @@ namespace LocalTestProject
                 {
                     keyboardComp.BeginIme(WindowHandle);
 
-                    keyboardComp.SetImeRectangle(WindowHandle, MousePos.X, MousePos.Y, 0, 0);
+                    keyboardComp.SetImeRectangle(WindowHandle, (int)MousePos.X, (int)MousePos.Y, 0, 0);
 
                     keyboardComp.EndIme(WindowHandle);
                 }
@@ -495,7 +497,7 @@ namespace LocalTestProject
                                 GL.ActiveTexture(TextureUnit.Texture0);
                                 GL.BindTexture(TextureTarget.Texture2d, tex);
 
-                                GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
+                                GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, bitmap.Data);
 
                                 GL.GenerateMipmap(TextureTarget.Texture2d);
 
@@ -505,9 +507,9 @@ namespace LocalTestProject
                                 GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
                                 GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
 
-                                GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
+                                GL.BindTexture(TextureTarget.Texture2d, 0);
 
-                                if (clipboard_tex != TextureHandle.Zero)
+                                if (clipboard_tex != 0)
                                 {
                                     GL.DeleteTexture(clipboard_tex);
                                 }
@@ -587,13 +589,13 @@ namespace LocalTestProject
             }
         }
 
-        static BufferHandle buffer;
+        static int buffer;
 
-        static VertexArrayHandle vao;
-        static VertexArrayHandle vao2;
+        static int vao;
+        static int vao2;
 
-        static ProgramHandle program;
-        static ProgramHandle program2;
+        static int program;
+        static int program2;
 
         const string vertexShaderSource =
     @"#version 330 core
@@ -625,7 +627,7 @@ void main()
     FragColor = texture(tex, oUV);
 }";
 
-        public static TextureHandle GetCursorImage(CursorHandle handle)
+        public static int GetCursorImage(CursorHandle handle)
         {
             cursorComp.GetSize(handle, out int width, out int height);
             byte[] data = new byte[width * height * 4];
@@ -639,12 +641,12 @@ void main()
                 data[index + 3] = 255;
             }
 
-            TextureHandle tex = GL.GenTexture();
+            int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2d, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
             GL.GenerateMipmap(TextureTarget.Texture2d);
 
@@ -653,12 +655,12 @@ void main()
 
             GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
+            GL.BindTexture(TextureTarget.Texture2d, 0);
 
             return tex;
         }
 
-        public static TextureHandle GetIconImage(IconHandle handle)
+        public static int GetIconImage(IconHandle handle)
         {
             int size = iconComp.GetBitmapSize(handle);
             byte[] data = new byte[size];
@@ -668,12 +670,12 @@ void main()
 
             iconComp.GetDimensions(handle, out int width, out int height);
 
-            TextureHandle tex = GL.GenTexture();
+            int tex = GL.GenTexture();
 
             GL.ActiveTexture(TextureUnit.Texture0);
             GL.BindTexture(TextureTarget.Texture2d, tex);
 
-            GL.TexImage2D(TextureTarget.Texture2d, 0, (int)InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
+            GL.TexImage2D(TextureTarget.Texture2d, 0, InternalFormat.Rgba8, width, height, 0, PixelFormat.Rgba, PixelType.UnsignedByte, data);
 
             GL.GenerateMipmap(TextureTarget.Texture2d);
 
@@ -682,15 +684,15 @@ void main()
 
             GL.TexParameteri(TextureTarget.Texture2d, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.BindTexture(TextureTarget.Texture2d, TextureHandle.Zero);
+            GL.BindTexture(TextureTarget.Texture2d, 0);
 
             return tex;
         }
 
-        static TextureHandle cursor_tex;
-        static TextureHandle icon_tex;
+        static int cursor_tex;
+        static int icon_tex;
 
-        static TextureHandle clipboard_tex;
+        static int clipboard_tex;
 
         public static void Init()
         {
@@ -748,7 +750,7 @@ void main()
             GL.Disable(EnableCap.FramebufferSrgb);
         }
 
-        public static BufferHandle CreateBuffer(float[] vertices)
+        public static int CreateBuffer(float[] vertices)
         {
             var buffer = GL.GenBuffer();
 
@@ -758,7 +760,7 @@ void main()
             return buffer;
         }
 
-        public static VertexArrayHandle CreateVAO(BufferHandle buffer)
+        public static int CreateVAO(int buffer)
         {
             var vao = GL.GenVertexArray();
 
@@ -779,7 +781,7 @@ void main()
             return vao;
         }
 
-        public static ProgramHandle CreateShader(string name, string vertexSource, string fragmentSource)
+        public static int CreateShader(string name, string vertexSource, string fragmentSource)
         {
             var vert = GL.CreateShader(ShaderType.VertexShader);
             var frag = GL.CreateShader(ShaderType.FragmentShader);
@@ -872,8 +874,8 @@ void main()
 
                 GL.ActiveTexture(TextureUnit.Texture0);
 
-                TextureHandle tex = cursor_tex;
-                if (clipboard_tex != TextureHandle.Zero) tex = clipboard_tex;
+                int tex = cursor_tex;
+                if (clipboard_tex != 0) tex = clipboard_tex;
 
                 GL.BindTexture(TextureTarget.Texture2d, tex);
 

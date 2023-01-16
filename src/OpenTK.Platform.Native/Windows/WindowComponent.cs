@@ -34,9 +34,8 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static readonly Dictionary<IntPtr, HWND> HWndDict = new Dictionary<IntPtr, HWND>();
 
-        // FIXME: Should we be able to clip and grab at the same time??
-        internal static HWND? CursorClippedWindow;
-        internal static HWND? CursorGrabbedWindow;
+        // This is the window we are currently capturing the cursor in. 
+        internal static HWND? CursorCapturingWindow;
 
         static WindowComponent()
         {
@@ -131,9 +130,6 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => _SupportedModes;
 
-        // FIXME: HACK!!!!!!
-        private static bool quit = false;
-
         private IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
             //Console.WriteLine("WinProc " + message + " " + hWnd);
@@ -219,6 +215,16 @@ namespace OpenTK.Platform.Native.Windows
                 case WM.SETFOCUS:
                     {
                         HWND h = HWndDict[hWnd];
+
+                        // Because windows removes our capture when we loose focus,
+                        // we need to re-capture the mouse when we get focus again.
+                        // - Noggin_bops 2023-01-16
+                        if ((h.CaptureMode == CursorCaptureMode.Confined ||
+                            h.CaptureMode == CursorCaptureMode.Locked))
+                        {
+                            RecaptureCursor(h, h.CaptureMode);
+                        }
+
                         EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(true));
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -227,6 +233,14 @@ namespace OpenTK.Platform.Native.Windows
                         // This message can be sent after WM_CLOSE which means that the specificed window might not exist any more.
                         if (HWndDict.TryGetValue(hWnd, out HWND? h))
                         {
+                            if (h.CaptureMode == CursorCaptureMode.Confined ||
+                                h.CaptureMode == CursorCaptureMode.Locked)
+                            {
+                                // Release the mouse when we lose focus, without changing h.CaptureMode
+                                // so that we recapture the mouse when get get focus back.
+                                RecaptureCursor(h, CursorCaptureMode.Normal);
+                            }
+
                             EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(false));
                         }
 
@@ -272,7 +286,7 @@ namespace OpenTK.Platform.Native.Windows
                             EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
                         }
 
-                        if (CursorGrabbedWindow == h)
+                        if (CursorCapturingWindow == h && h.CaptureMode == CursorCaptureMode.Locked)
                         {
                             // When recentering the cursor we set LastMousePosition equal to the new position.
                             // This will cause the delta calculation to return zero, which is how we
@@ -696,13 +710,13 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.DispatchMessage(in lpMsg);
             }
 
-            if (CursorGrabbedWindow != null)
+            if (CursorCapturingWindow != null && CursorCapturingWindow.CaptureMode == CursorCaptureMode.Locked)
             {
-                GetClientSize(CursorGrabbedWindow, out int width, out int height);
-                if (CursorGrabbedWindow.LastMousePosition != (width / 2, height / 2))
+                GetClientSize(CursorCapturingWindow, out int width, out int height);
+                if (CursorCapturingWindow.LastMousePosition != (width / 2, height / 2))
                 {
                     Win32.POINT p = new Win32.POINT(width / 2, height / 2);
-                    Win32.ClientToScreen(CursorGrabbedWindow.HWnd, ref p);
+                    Win32.ClientToScreen(CursorCapturingWindow.HWnd, ref p);
 
                     bool success = Win32.SetCursorPos(p.X, p.Y);
                     if (success == false)
@@ -710,7 +724,9 @@ namespace OpenTK.Platform.Native.Windows
                         throw new Win32Exception();
                     }
 
-                    CursorGrabbedWindow.LastMousePosition = (width / 2, height / 2);
+                    // Set the last mouse position to the position we are moving to
+                    // to avoid generating a mouse move event.
+                    CursorCapturingWindow.LastMousePosition = (width / 2, height / 2);
                 }
             }
         }
@@ -753,14 +769,9 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            if (CursorClippedWindow == hwnd)
+            if (CursorCapturingWindow == hwnd)
             {
-                CaptureCursor(hwnd, false);
-            }
-
-            if (CursorGrabbedWindow == hwnd)
-            {
-                GrabCursor(hwnd, false);
+                SetCursorCaptureMode(hwnd, CursorCaptureMode.Normal);
             }
 
             HWndDict.Remove(hwnd.HWnd);
@@ -1301,87 +1312,68 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void CaptureCursor(WindowHandle handle, bool capture)
+        public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            // FIXME: The cursor clip is a global thing so it will
-            // quite often get removed, stuff like changing focus etc
-            // We want to handle this so that we recapture the mouse when
-            // we get focus again.
+            hwnd.CaptureMode = mode;
 
-            bool success;
-            if (capture)
-            {
-                CursorClippedWindow = hwnd;
-
-                success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
-
-                ClientToScreen(handle, lpRect.left, lpRect.top, out lpRect.left, out lpRect.top);
-                ClientToScreen(handle, lpRect.right, lpRect.bottom, out lpRect.right, out lpRect.bottom);
-
-                success = Win32.ClipCursor(ref lpRect);
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
-            }
-            else if (hwnd == CursorClippedWindow)
-            {
-                success = Win32.ClipCursor(ref Unsafe.NullRef<Win32.RECT>());
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
-            }
+            RecaptureCursor(hwnd, hwnd.CaptureMode);
         }
 
-        /// <inheritdoc/>
-        public void GrabCursor(WindowHandle handle, bool grabCursor)
+        // FIXME: Better name?
+        /// <summary>
+        /// Used to set and unset cursor capture without changing HWND.CaptureMode.
+        /// </summary>
+        internal void RecaptureCursor(HWND hwnd, CursorCaptureMode mode)
         {
-            HWND hwnd = handle.As<HWND>(this);
-
-            if (grabCursor)
+            switch (mode)
             {
-                CursorGrabbedWindow = hwnd;
+                case CursorCaptureMode.Normal:
+                    {
+                        if (CursorCapturingWindow == hwnd)
+                        {
+                            CursorCapturingWindow = null;
 
-                // To avoid having the mouse position jump to the virtual mouse position
-                // we instead set the virtual position of the mouse to the last known position.
-                // - Noggin_bops 2023-01-16
-                CursorGrabbedWindow.VirtualMousePosition = CursorGrabbedWindow.LastMousePosition;
+                            Win32.ClipCursor(ref Unsafe.NullRef<Win32.RECT>());
+                        }
+                        break;
+                    }
+                case CursorCaptureMode.Locked:
+                    {
+                        CursorCapturingWindow = hwnd;
 
-                bool success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
+                        hwnd.VirtualMousePosition = hwnd.LastMousePosition;
 
-                ClientToScreen(handle, lpRect.left, lpRect.top, out lpRect.left, out lpRect.top);
-                ClientToScreen(handle, lpRect.right, lpRect.bottom, out lpRect.right, out lpRect.bottom);
+                        // When locking the cursor we also confine to the window
+                        // so that large mouse deltas can't escape the window.
+                        goto case CursorCaptureMode.Confined;
+                    }
+                case CursorCaptureMode.Confined:
+                    {
+                        CursorCapturingWindow = hwnd;
 
-                success = Win32.ClipCursor(ref lpRect);
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
+                        bool success;
+                        success = Win32.GetClientRect(hwnd.HWnd, out Win32.RECT lpRect);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
 
+                        ClientToScreen(hwnd, lpRect.left, lpRect.top, out lpRect.left, out lpRect.top);
+                        ClientToScreen(hwnd, lpRect.right, lpRect.bottom, out lpRect.right, out lpRect.bottom);
+
+                        success = Win32.ClipCursor(ref lpRect);
+                        if (success == false)
+                        {
+                            throw new Win32Exception();
+                        }
+
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(CursorCaptureMode));
             }
-            else if (CursorGrabbedWindow == hwnd)
-            {
-                CursorGrabbedWindow = null;
-
-                bool success = Win32.ClipCursor(ref Unsafe.NullRef<Win32.RECT>());
-                if (success == false)
-                {
-                    throw new Win32Exception();
-                }
-            }
-
-            // FIXME: Make cursor invisible
         }
 
         /// <inheritdoc/>

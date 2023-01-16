@@ -41,6 +41,7 @@ namespace OpenTK.Platform.Native.Windows
         public int? MinWidth { get; set; }
         public int? MinHeight { get; set; }
 
+        public CursorCaptureMode CaptureMode { get; set; } = CursorCaptureMode.Normal;
         public Vector2i LastMousePosition { get; set; }
         public Vector2 VirtualMousePosition { get; set; }
 

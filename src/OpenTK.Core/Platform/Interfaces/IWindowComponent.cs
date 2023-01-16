@@ -319,23 +319,13 @@ namespace OpenTK.Core.Platform
         /// </exception>
         void SetCursor(WindowHandle handle, CursorHandle? cursor);
 
-        // FIXME: Combine CaptureCursor and GrabCursor into one function as they shouldn't be enabled at the same time.
-
         /// <summary>
-        /// Sets whether the cursor should be confined to the window or not.
+        /// Sets the cursor capture mode of the window.
+        /// A cursor can be confined to the bounds of the window, or locked to the center of the window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
-        /// <param name="captureCursor">Whether the cursor should be confined to the window or not.</param>
-        void CaptureCursor(WindowHandle handle, bool captureCursor);
-
-        /// <summary>
-        /// Sets whether the cursor should be grabbed or not.
-        /// A grabbed cursor is not visible and the position of the cursor is unbounded.
-        /// This is useful when implementing camera control is e.g. an FPS.
-        /// </summary>
-        /// <param name="handle">Handle to a window.</param>
-        /// <param name="grabCursor">Whether the cursor should be confined to the window or not.</param>
-        void GrabCursor(WindowHandle handle, bool grabCursor);
+        /// <param name="mode">The cursor capture mode.</param>
+        void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
 
         /// <summary>
         /// Gives the window input focus.

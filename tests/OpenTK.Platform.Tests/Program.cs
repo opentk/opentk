@@ -153,7 +153,7 @@ namespace OpenTK.Platform.Tests
             }
         }
 
-        static bool captured = false;
+        static CursorCaptureMode captureMode = CursorCaptureMode.Normal;
 
         static Vector2 lastPos;
 
@@ -171,9 +171,10 @@ namespace OpenTK.Platform.Tests
 
                 if (buttonDown.Button == MouseButton.Button3)
                 {
-                    captured = !captured;
+                    captureMode++;
+                    captureMode = (CursorCaptureMode)((int)captureMode % 3);
                     //windowComp.CaptureCursor((WindowHandle)handle, captured);
-                    windowComp.GrabCursor((WindowHandle)handle, captured);
+                    windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
                 }
             }
             else if (args is ScrollEventArgs scroll)
