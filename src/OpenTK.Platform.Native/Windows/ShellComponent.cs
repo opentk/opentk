@@ -64,5 +64,26 @@ namespace OpenTK.Platform.Native.Windows
             info.BatteryTime = systemPowerStatus.BatteryLifeTime != -1 ? systemPowerStatus.BatteryLifeTime : null;
             return BatteryStatus.HasSystemBattery;
         }
+
+        /// <inheritdoc/>
+        public AppTheme GetPreferredTheme()
+        {
+            // Seems like this is non-standard on windows 10, but windows 11 has API for this.
+            // There is a registry key, but that seems not that nice, though maybe as a fallback.
+            //
+            // This seems to say something about this:
+            // https://learn.microsoft.com/en-us/windows/apps/desktop/modernize/apply-windows-themes
+            // 
+            // For windows 11 we want a platform specific setting for DWMWA_USE_IMMERSIVE_DARK_MODE.
+
+            throw new NotImplementedException();
+        }
+
+        public void SetImmersiveDarkMode(bool useImmersiveDarkMode)
+        {
+            // FIXME:
+            // DwmSetWindowAttribute(hWnd, DWMWA_USE_IMMERSIVE_DARK_MODE, &value, sizeof(value));
+            throw new NotImplementedException();
+        }
     }
 }

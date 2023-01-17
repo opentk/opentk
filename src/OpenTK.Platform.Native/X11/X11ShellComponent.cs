@@ -111,5 +111,15 @@ namespace OpenTK.Platform.Native.X11
                 return BatteryStatus.HasSystemBattery;
             }
         }
+
+        // FIXME: Maybe add a platform specific API for getting a theme name.
+        public AppTheme GetPreferredTheme()
+        {
+            // Seems like we might be able to use xsettings to get some kind of data about preferred theme.
+            // https://wiki.archlinux.org/title/Dark_mode_switching
+            // https://specifications.freedesktop.org/xsettings-spec/xsettings-latest.html
+
+            throw new NotImplementedException();
+        }
     }
 }

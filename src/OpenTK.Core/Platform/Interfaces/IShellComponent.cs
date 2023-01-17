@@ -29,6 +29,12 @@ namespace OpenTK.Core.Platform
         /// <returns>Whether the computer has a battery or not, or if this function failed.</returns>
         BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo);
 
-        // FIXME: Add API for detecting light/dark/high contrast themes.
+        /// <summary>
+        /// Gets the user preference for application theme.
+        /// </summary>
+        /// <returns>The user set preferred theme.</returns>
+        // FIXME: Should we report a theme name?
+        // or another function for that?
+        AppTheme GetPreferredTheme();
     }
 }
