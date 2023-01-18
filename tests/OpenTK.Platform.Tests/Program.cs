@@ -16,6 +16,7 @@ namespace OpenTK.Platform.Tests
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
+        static IKeyboardComponent keyboardComp;
 
         static WindowHandle Window;
 
@@ -38,6 +39,7 @@ namespace OpenTK.Platform.Tests
             cursorComp = Native.PlatformComponents.CreateCursorComponent();
             mouseComp = Native.PlatformComponents.CreateMouseComponent();
             shellComp = Native.PlatformComponents.CreateShellComponent();
+            keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
             windowComp.Logger = logger;
@@ -162,6 +164,13 @@ namespace OpenTK.Platform.Tests
                     captureMode = (CursorCaptureMode)((int)captureMode % 3);
                     //windowComp.CaptureCursor((WindowHandle)handle, captured);
                     windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
+                }
+                else if (buttonDown.Button == MouseButton.Button1)
+                {
+                    mouseComp.GetPosition(null, out int x, out int y);
+
+                    keyboardComp.BeginIme(Window);
+                    keyboardComp.SetImeRectangle(Window, x, y, 0, 0);
                 }
             }
             else if (args is ScrollEventArgs scroll)

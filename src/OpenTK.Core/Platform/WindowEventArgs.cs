@@ -130,6 +130,25 @@ namespace OpenTK.Core.Platform
         }
     }
 
+    public class TextEditingEventArgs : WindowEventArgs
+    {
+        /// <summary>
+        /// The candidate string.
+        /// </summary>
+        public string Candidate { get; private set; }
+
+        /// <summary>
+        /// The caret position within the candidate string.
+        /// </summary>
+        public int Cursor { get; private set; }
+
+        public TextEditingEventArgs(string candidate, int cursor)
+        {
+            Candidate = candidate;
+            Cursor = cursor;
+        }
+    }
+
     public class MouseEnterEventArgs : WindowEventArgs
     {
         public bool Entered { get; set; }

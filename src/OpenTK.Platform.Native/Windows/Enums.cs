@@ -1292,6 +1292,87 @@ namespace OpenTK.Platform.Native.Windows
         WNDProc = -24,
     }
 
+    [Flags]
+    internal enum GCS : uint
+    {
+        /// <summary>
+        /// Retrieve or update the attribute of the composition string.
+        /// </summary>
+        CompAttr = 16,
+
+        /// <summary>
+        /// Retrieve or update clause information of the composition string.
+        /// </summary>
+        CompClause = 32,
+
+        /// <summary>
+        /// Retrieve or update the attributes of the reading string of the current composition.
+        /// </summary>
+        CompReadAttr = 2,
+
+        /// <summary>
+        /// Retrieve or update the clause information of the reading string of the composition string.
+        /// </summary>
+        CompReadClause = 4,
+
+        /// <summary>
+        /// Retrieve or update the reading string of the current composition.
+        /// </summary>
+        CompReadStr = 1,
+
+        /// <summary>
+        /// Retrieve or update the current composition string.
+        /// </summary>
+        CompStr = 8,
+
+        /// <summary>
+        /// Retrieve or update the cursor position in composition string.
+        /// </summary>
+        CursorPos = 128,
+
+        /// <summary>
+        /// Retrieve or update the starting position of any changes in composition string.
+        /// </summary>
+        DeltaStart = 256,
+
+        /// <summary>
+        /// Retrieve or update clause information of the result string.
+        /// </summary>
+        ResultClause = 4096,
+
+        /// <summary>
+        /// Retrieve or update clause information of the reading string.
+        /// </summary>
+        ResultReadClause = 1024,
+
+        /// <summary>
+        /// Retrieve or update the reading string.
+        /// </summary>
+        ResultReadStr = 512,
+
+        /// <summary>
+        /// Retrieve or update the string of the composition result.
+        /// </summary>
+        ResultStr = 2048,
+
+        // #### Part of CS, used in WM_IME_COMPOSITON ####
+
+        /// <summary>
+        /// Insert the wParam composition character at the current insertion point.
+        /// An application should display the composition character if it processes this message.
+        /// </summary>
+        InsertChar = 0x2000,
+
+        /// <summary>
+        /// Do not move the caret position as a result of processing the message.
+        /// For example, if an IME specifies a combination of CS_INSERTCHAR and CS_NOMOVECARET,
+        /// the application should insert the specified character at the current caret position
+        /// but should not move the caret to the next position.
+        /// A subsequent WM_IME_COMPOSITION message with GCS_RESULTSTR will replace this character.
+        /// </summary>
+        NoMoveCaret = 0x4000,
+    }
+
     // FIXME: There are additional values for when the hWnd is a dialog box.
     // See DWL values:
     // https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getwindowlongw

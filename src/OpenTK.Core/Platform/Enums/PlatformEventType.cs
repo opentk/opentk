@@ -38,6 +38,7 @@ namespace OpenTK.Core.Platform
         KeyUp,
 
         TextInput,
+        TextEditing,
 
         FileDrop,
 

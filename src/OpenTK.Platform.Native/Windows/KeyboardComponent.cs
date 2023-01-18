@@ -151,6 +151,8 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        // FIXME: API for getting the candidate list.
+
         public void EndIme(WindowHandle window)
         {
             if (_imeActive == false)

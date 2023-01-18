@@ -45,6 +45,10 @@ namespace OpenTK.Platform.Native.Windows
         public Vector2i LastMousePosition { get; set; }
         public Vector2 VirtualCursorPosition { get; set; }
 
+        // FIXME: Remove these as they are likely not needed.
+        public string IMEComposition { get; set; }
+        public int IMECursor { get; set; }
+
         public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {
             HWnd = hWnd;

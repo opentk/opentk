@@ -792,6 +792,33 @@ namespace OpenTK.Platform.Native.Windows
             public RECT rcArea;
         }
 
+        [DllImport("imm32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static extern long ImmGetCompositionString(
+                  IntPtr /* HIMC */ context /* unnamedParam1 */,
+                  GCS @string /* unnamedParam2 */,
+                  [Out] StringBuilder? lpBuf,
+                  uint dwBufLen);
+
+        
+        internal static unsafe long ImmGetCompositionString(
+                  IntPtr /* HIMC */ context /* unnamedParam1 */,
+                  GCS @string /* unnamedParam2 */,
+                  Span<byte> lpBuf,
+                  uint dwBufLen)
+        {
+            fixed (byte* buf = lpBuf)
+            {
+                return ImmGetCompositionString(context, @string, buf, dwBufLen);
+            }
+
+            [DllImport("imm32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+            static extern long ImmGetCompositionString(
+                  IntPtr /* HIMC */ context /* unnamedParam1 */,
+                  GCS @string /* unnamedParam2 */,
+                  byte* lpBuf,
+                  uint dwBufLen);
+        }
+
         [DllImport("user32.dll", SetLastError = false)]
         internal static extern IntPtr /* HKL */ GetKeyboardLayout(uint idThread);
 

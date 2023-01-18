@@ -705,6 +705,84 @@ namespace OpenTK.Platform.Native.Windows
                         
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.IME_COMPOSITION:
+                    {
+                        const long IMM_ERROR_NODATA = -1;
+                        const long IMM_ERROR_GENERAL = -2;
+
+                        HWND h = HWndDict[hWnd];
+
+                        GCS gcs = (GCS)lParam;
+
+                        IntPtr hmic = Win32.ImmGetContext(hWnd);
+
+                        if (gcs.HasFlag(GCS.CompStr))
+                        {
+                            long length = Win32.ImmGetCompositionString(hmic, GCS.CompStr, (Span<byte>)null, 0);
+                            if (length == IMM_ERROR_NODATA || length == IMM_ERROR_GENERAL)
+                            {
+                                throw new Win32Exception("IME error");
+                            }
+                            else
+                            {
+                                byte[] bytes = new byte[length];
+
+                                long written = Win32.ImmGetCompositionString(hmic, GCS.CompStr, bytes, (uint)bytes.Length);
+                                if (written == IMM_ERROR_NODATA || written == IMM_ERROR_GENERAL)
+                                {
+                                    throw new Win32Exception("IME error");
+                                }
+
+                                string composition = Encoding.Unicode.GetString(bytes, 0, (int)written);
+
+                                // FIXME: Do we really need to store these?
+                                h.IMEComposition = composition;
+
+                                h.IMECursor = (int)Win32.ImmGetCompositionString(hmic, GCS.CursorPos, (Span<byte>)null, 0);
+                                if (h.IMECursor == IMM_ERROR_NODATA || h.IMECursor == IMM_ERROR_GENERAL)
+                                {
+                                    throw new Win32Exception("IME error");
+                                }
+
+                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(composition, h.IMECursor));
+                            }
+                        }
+
+                        if (gcs.HasFlag(GCS.ResultStr))
+                        {
+                            long length = Win32.ImmGetCompositionString(hmic, GCS.ResultStr, (Span<byte>)null, 0);
+                            if (length == IMM_ERROR_NODATA || length == IMM_ERROR_GENERAL)
+                            {
+                                throw new Win32Exception("IME error");
+                            }
+                            else
+                            {
+                                byte[] bytes = new byte[length];
+
+                                long written = Win32.ImmGetCompositionString(hmic, GCS.ResultStr, bytes, (uint)bytes.Length);
+                                if (written == IMM_ERROR_NODATA || written == IMM_ERROR_GENERAL)
+                                {
+                                    throw new Win32Exception("IME error");
+                                }
+
+                                string composition = Encoding.Unicode.GetString(bytes, 0, (int)written);
+
+                                h.IMEComposition = composition;
+
+                                h.IMECursor = (int)Win32.ImmGetCompositionString(hmic, GCS.CursorPos, (Span<byte>)null, 0);
+                                if (h.IMECursor == IMM_ERROR_NODATA || h.IMECursor == IMM_ERROR_GENERAL)
+                                {
+                                    throw new Win32Exception("IME error");
+                                }
+
+                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextInputEventArgs(composition));
+                            }
+                        }
+
+                        Win32.ImmReleaseContext(hWnd, hmic);
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 default:
                     {
                         //Console.WriteLine(uMsg);
