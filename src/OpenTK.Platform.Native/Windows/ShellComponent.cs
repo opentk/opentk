@@ -181,5 +181,7 @@ namespace OpenTK.Platform.Native.Windows
                 Logger?.LogWarning($"Failed to set caption color. DwmSetWindowAttribute(DWMWA_CAPTION_COLOR) failed with HRESULT: 0x{result:X}");
             }
         }
+
+        // FIXME: Add API for telling windows to not shut down because of unsaved work.
     }
 }

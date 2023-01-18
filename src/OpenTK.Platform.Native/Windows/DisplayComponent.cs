@@ -25,7 +25,7 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static HMonitor? FindMonitor(IntPtr hMonitor)
         {
-            foreach (var display in _displays)
+            foreach (HMonitor display in _displays)
             {
                 if (display.Monitor == hMonitor)
                 {
@@ -131,7 +131,7 @@ namespace OpenTK.Platform.Native.Windows
                     // Console.WriteLine($"  Monitor State Flags: {monitor.StateFlags}");
 
                     HMonitor? info = null;
-                    foreach (var display in _displays)
+                    foreach (HMonitor display in _displays)
                     {
                         if (monitor.DeviceName == display.Name)
                         {
@@ -186,26 +186,26 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: Maybe we should just send all of the data at once to the user.
 
-            foreach (var removed in removedDisplays)
+            foreach (HMonitor removed in removedDisplays)
             {
                 _displays.Remove(removed);
 
                 // FIXME: Add event!
-                // EventQueue.Raise(removed, PlatformEventType.MonitorRemoved, null);
+                EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
                 Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
 
-            foreach (var connected in newDisplays)
+            foreach (HMonitor connected in newDisplays)
             {
                 _displays.Add(connected);
 
                 // FIXME: Add event!
-                // EventQueue.Raise(connected, PlatformEventType.MonitorConnected, null)
+                EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
                 Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
             }
 
             HMonitor? primary = null;
-            foreach (var display in _displays)
+            foreach (HMonitor display in _displays)
             {
                 if (display.IsPrimary)
                 {

@@ -218,6 +218,17 @@ namespace OpenTK.Platform.Tests
                         break;
                 }
             }
+            else if (args is PowerStateChangeEventArgs powerStateChange)
+            {
+                if (powerStateChange.GoingToSleep)
+                {
+                    Console.WriteLine("Entering sleep!");
+                }
+                else
+                {
+                    Console.WriteLine("Awoken from sleep!");
+                }
+            }
         }
     }
 }

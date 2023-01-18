@@ -43,5 +43,9 @@ namespace OpenTK.Core.Platform
         FileDrop,
 
         ThemeChange,
+
+        DisplayConnectionChanged,
+
+        PowerStateChange,
     }
 }

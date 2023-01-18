@@ -783,6 +783,31 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.POWERBROADCAST:
+                    {
+                        PBT power = (PBT)wParam;
+
+                        HWND h = HWndDict[hWnd];
+
+                        Console.WriteLine("WM_POWERBROADCAST");
+
+                        if (power == PBT.APMSuspend)
+                        {
+                            EventQueue.Raise(h, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
+                        }
+                        else if (power == PBT.APMResumeAutomatic)
+                        {
+                            EventQueue.Raise(h, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
+                        }
+
+                        return (IntPtr)1;
+                    }
+                case WM.POWER:
+                    {
+                        Console.WriteLine("WN_POWER");
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 default:
                     {
                         //Console.WriteLine(uMsg);

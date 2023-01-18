@@ -249,4 +249,35 @@ namespace OpenTK.Core.Platform
             NewTheme = newTheme;
         }
     }
+
+    public class DisplayConnectionChangedEventArgs : WindowEventArgs
+    {
+        public DisplayHandle Display { get; private set; }
+
+        /// <summary>
+        /// Whether the monitor was connected or disconnected.
+        /// </summary>
+        public bool Disconnected { get; private set; }
+
+        // FIXME: Maybe add more data about the display...?
+
+        public DisplayConnectionChangedEventArgs(DisplayHandle display, bool disconnected)
+        {
+            Display = display;
+            Disconnected = disconnected;
+        }
+    }
+
+    public class PowerStateChangeEventArgs : WindowEventArgs
+    {
+        /// <summary>
+        /// If the computer is entering sleep or if it's being woken from sleep.
+        /// </summary>
+        public bool GoingToSleep { get; private set; }
+
+        public PowerStateChangeEventArgs(bool goingToSleep)
+        {
+            GoingToSleep = goingToSleep;
+        }
+    }
 }

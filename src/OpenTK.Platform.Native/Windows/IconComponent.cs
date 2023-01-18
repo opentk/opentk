@@ -118,7 +118,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             HIcon hicon = handle.As<HIcon>(this);
 
-            // FIXME: If this cursor is one of the standard cursors
+            // FIXME: If this icon is one of the standard icons
             // we want to call CopyIcon so that we can call GetIconInfo properly!
             IntPtr cursor_copy = Win32.CopyIcon(hicon.Icon);
             {

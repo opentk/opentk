@@ -63,10 +63,11 @@ namespace OpenTK.Platform.Native.Windows
         {
             // FIXME: Check the handle!
 
+            // FIXME: When hibernating (or going out of hibernate) this function fails with 0x5 Access denied.
             bool success = Win32.GetCursorPos(out Win32.POINT lpPoint);
             if (success == false)
             {
-                throw new Win32Exception("GetCursorPos failed.");
+                //throw new Win32Exception();
             }
 
             x = lpPoint.X;
