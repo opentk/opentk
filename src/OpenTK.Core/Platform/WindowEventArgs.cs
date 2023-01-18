@@ -220,4 +220,14 @@ namespace OpenTK.Core.Platform
             DroppedInWindow = droppedInWindow;
         }
     }
+
+    public class ThemeChangeEventArgs : WindowEventArgs
+    {
+        public ThemeInfo NewTheme { get; private set; }
+
+        public ThemeChangeEventArgs(ThemeInfo newTheme)
+        {
+            NewTheme = newTheme;
+        }
+    }
 }

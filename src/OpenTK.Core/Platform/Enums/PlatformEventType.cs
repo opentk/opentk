@@ -40,5 +40,7 @@ namespace OpenTK.Core.Platform
         TextInput,
 
         FileDrop,
+
+        ThemeChange,
     }
 }

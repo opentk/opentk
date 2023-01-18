@@ -693,6 +693,18 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.SETTINGCHANGE:
+                    {
+                        ShellComponent.CheckPreferredThemeChange();
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.THEMECHANGED:
+                    {
+                        ShellComponent.CheckPreferredThemeChange();
+                        
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 default:
                     {
                         //Console.WriteLine(uMsg);

@@ -969,5 +969,10 @@ namespace OpenTK.Core.Platform
         {
             return _shellComponent!.GetBatteryInfo(out batteryInfo);
         }
+
+        ThemeInfo IShellComponent.GetPreferredTheme()
+        {
+            return _shellComponent!.GetPreferredTheme();
+        }
     }
 }

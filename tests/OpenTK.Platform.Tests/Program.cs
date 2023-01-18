@@ -17,7 +17,17 @@ namespace OpenTK.Platform.Tests
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
 
+        static WindowHandle Window;
+
         static CursorHandle cursorHandle;
+
+        static readonly Color4<Rgba> LightModeColor = Color4.Whitesmoke;
+        static readonly Color4<Rgba> DarkModeColor = new Color4<Rgba>(37/255.0f, 37 / 255.0f, 38 / 255.0f, 1);
+
+        static readonly Color4<Rgba> ContrastLightModeColor = new Color4<Rgba>(237 / 255.0f, 81 / 255.0f, 81 / 255.0f, 1);
+        static readonly Color4<Rgba> ContrastDarkModeColor = new Color4<Rgba>(148 / 255.0f, 10 / 255.0f, 10 / 255.0f, 1);
+
+        static Color4<Rgba> BackgroundColor = LightModeColor;
 
         static void Main()
         {
@@ -46,27 +56,27 @@ namespace OpenTK.Platform.Tests
                 Console.WriteLine(info);
             }
 
-            
-
-            WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
-            OpenGLContextHandle context = glComp.CreateFromWindow(window);
+            Window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
+            OpenGLContextHandle context = glComp.CreateFromWindow(Window);
             glComp.SetCurrentContext(context);
             GLLoader.LoadBindings(glComp.GetBindingsContext(context));
 
             glComp.SetSwapInterval(1);
             int swap = glComp.GetSwapInterval();
 
-            windowComp.SetPosition(window, 100, 100);
-            windowComp.SetSize(window, 400, 400);
-            windowComp.SetMinClientSize(window, 300, 300);
-            windowComp.SetMaxClientSize(window, 500, 500);
-            windowComp.SetMode(window, WindowMode.Normal);
-            windowComp.SetAlwaysOnTop(window, true);
+            windowComp.SetPosition(Window, 100, 100);
+            windowComp.SetSize(Window, 400, 400);
+            windowComp.SetMinClientSize(Window, 300, 300);
+            windowComp.SetMaxClientSize(Window, 500, 500);
+            windowComp.SetMode(Window, WindowMode.Normal);
+            //windowComp.SetAlwaysOnTop(window, true);
 
-            Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(window)}");
+            Console.WriteLine($"Preferred theme: {shellComp.GetPreferredTheme()}");
+
+            Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
 
             {
-                windowComp.GetMinClientSize(window, out int? minWidth, out int? minHeight);
+                windowComp.GetMinClientSize(Window, out int? minWidth, out int? minHeight);
                 Console.WriteLine($"Window min size: ({minWidth}, {minHeight})");
             }
 
@@ -75,7 +85,7 @@ namespace OpenTK.Platform.Tests
             SystemCursorType cursor = SystemCursorType.Default;
             cursorHandle = cursorComp.Create();
 
-            windowComp.SetCursor(window, cursorHandle);
+            windowComp.SetCursor(Window, cursorHandle);
 
             cursorHandle = cursorComp.Create();
             byte[] image = new byte[16 * 16 * 3];
@@ -96,13 +106,13 @@ namespace OpenTK.Platform.Tests
             //cursorComp.SetHotspot(cursorHandle, 8, 8);
             cursorComp.Load(cursorHandle, 16, 16, image, mask);
             //cursorComp.SetHotspot(cursorHandle, 7, 7);
-            windowComp.SetCursor(window, cursorHandle);
+            windowComp.SetCursor(Window, cursorHandle);
 
-            while (windowComp.IsWindowDestroyed(window) == false)
+            while (windowComp.IsWindowDestroyed(Window) == false)
             {
                 windowComp.ProcessEvents();
 
-                if (windowComp.IsWindowDestroyed(window))
+                if (windowComp.IsWindowDestroyed(Window))
                     break;
 
                 if (watch.ElapsedMilliseconds > 3000)
@@ -123,10 +133,10 @@ namespace OpenTK.Platform.Tests
                 mouseComp.GetPosition(null, out int x, out int y);
                 //windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
                 
-                GL.ClearColor(Color4.Coral);
+                GL.ClearColor(BackgroundColor);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                windowComp.SwapBuffers(window);
+                windowComp.SwapBuffers(Window);
             }
         }
 
@@ -162,7 +172,7 @@ namespace OpenTK.Platform.Tests
             {
                 windowComp.SetTitle((WindowHandle)handle, $"Mouse: {move.Position}");
 
-                Console.WriteLine($"Delta: {move.Position - lastPos}");
+                //Console.WriteLine($"Delta: {move.Position - lastPos}");
 
                 lastPos = move.Position;
             }
@@ -180,6 +190,24 @@ namespace OpenTK.Platform.Tests
             else if (args is WindowModeChangeEventArgs windowModeChange)
             {
                 Console.WriteLine($"Window mode: {windowModeChange.NewMode}");
+            }
+            else if (args is ThemeChangeEventArgs themeChange)
+            {
+                ThemeInfo newTheme = themeChange.NewTheme;
+                switch (newTheme.Theme)
+                {
+                    case AppTheme.Light:
+                        BackgroundColor = newTheme.HighContrast ? ContrastLightModeColor : LightModeColor;
+                        (shellComp as Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, false);
+                        break;
+                    case AppTheme.Dark:
+                        BackgroundColor = newTheme.HighContrast ? ContrastDarkModeColor : DarkModeColor;
+                        (shellComp as Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, true);
+                        break;
+                    case AppTheme.NoPreference:
+                    default:
+                        break;
+                }
             }
         }
     }

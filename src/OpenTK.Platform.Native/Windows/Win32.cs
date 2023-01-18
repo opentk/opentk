@@ -904,6 +904,16 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, out uint pvParam, SPIF fWinIni);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool SystemParametersInfo(SPI uiAction, uint uiParam, ref HIGHCONTRAST pvParam, SPIF fWinIni);
+
+        internal struct HIGHCONTRAST
+        {
+            public uint cbSize;
+            public HCF dwFlags;
+            public IntPtr /* LPSTR/LPWSTR */ lpszDefaultScheme;
+        }
+
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
         internal static extern IntPtr SHGetFileInfo(string pszPath, FileAttribute dwFileAttributes, [In, Out] SHFILEINFO psfi, uint cbFileInfo, SHGFI uFlags);
 
@@ -941,6 +951,20 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr /* HWND */ hwnd,
             DWMWindowAttribute dwAttribute,
             out RECT pvAttribute,
+            uint cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        internal static unsafe extern int /* HRESULT */ DwmSetWindowAttribute(
+            IntPtr /* HWND */ hwnd,
+            DWMWindowAttribute dwAttribute,
+            ref uint pvAttribute,
+            uint cbAttribute);
+
+        [DllImport("dwmapi.dll")]
+        internal static unsafe extern int /* HRESULT */ DwmSetWindowAttribute(
+            IntPtr /* HWND */ hwnd,
+            DWMWindowAttribute dwAttribute,
+            void* pvAttribute,
             uint cbAttribute);
 
         [DllImport("kernel32.dll")]

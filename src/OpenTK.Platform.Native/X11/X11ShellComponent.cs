@@ -113,7 +113,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         // FIXME: Maybe add a platform specific API for getting a theme name.
-        public AppTheme GetPreferredTheme()
+        public ThemeInfo GetPreferredTheme()
         {
             // Seems like we might be able to use xsettings to get some kind of data about preferred theme.
             // https://wiki.archlinux.org/title/Dark_mode_switching

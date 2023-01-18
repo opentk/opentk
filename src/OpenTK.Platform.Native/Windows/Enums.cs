@@ -365,7 +365,7 @@ namespace OpenTK.Platform.Native.Windows
         /// The retrieved value is of type BOOL.
         /// TRUE if non-client rendering is enabled; otherwise, FALSE.
         /// </summary>
-        NCRenderingEnabled = 1,
+        NCRenderingEnabled = 0,
 
         /// <summary>
         /// Use with DwmSetWindowAttribute.
@@ -1179,6 +1179,56 @@ namespace OpenTK.Platform.Native.Windows
         /// In a Maximize button.
         /// </summary>
         Zoom = 9,
+    }
+
+    [Flags]
+    internal enum HCF : uint
+    {
+        /// <summary>
+        /// The high contrast feature is on.
+        /// </summary>
+        HighContrastOn = 0x00000001,
+
+        /// <summary>
+        /// The high contrast feature is available.
+        /// </summary>
+        Available = 0x00000002,
+
+        /// <summary>
+        /// The user can turn the high contrast feature on and off by simultaneously pressing the left ALT, left SHIFT, and PRINT SCREEN keys.
+        /// </summary>
+        HotKeyActive = 0x00000004,
+
+        /// <summary>
+        /// A confirmation dialog appears when the high contrast feature is activated by using the hot key.
+        /// </summary>
+        ConfirmHotKey = 0x00000008,
+
+        /// <summary>
+        /// A siren is played when the user turns the high contrast feature on or off by using the hot key.
+        /// </summary>
+        HotKeySound = 0x00000010,
+
+        /// <summary>
+        /// A visual indicator is displayed when the high contrast feature is on.This value is not currently used and is ignored.
+        /// </summary>
+        Indicator = 0x00000020,
+
+        /// <summary>
+        /// The hot key associated with the high contrast feature can be enabled. An application can retrieve this value, but cannot set it.
+        /// </summary>
+        HotKeyAvailable = 0x00000040,
+
+        /// <summary>
+        /// Passing HIGHCONTRASTSTRUCTURE in calls to SystemParametersInfoW can cause theme change effects even if the theme isn't being changed.
+        /// For example, the WM_THEMECHANGED message is sent to Windows even if the only change is to HCF_HOTKEYSOUND.
+        ///
+        /// To prevent this, include the HCF_OPTION_NOTHEMECHANGE flag in the call to SystemParametersInfo.
+        ///
+        /// Note
+        /// The HCF_OPTION_NOTHEMECHANGE flag should not be used when toggling the high contrast mode (HCF_HIGHCONTRASTON).
+        /// </summary>
+        OptionNoThemeChange = 0x00001000,
     }
 
     internal enum GCLP : int
@@ -2613,6 +2663,14 @@ namespace OpenTK.Platform.Native.Windows
         /// The default value is 3.
         /// </summary>
         GetWheelScrollLines = 0x0068,
+
+        /// <summary>
+        /// Retrieves information about the HighContrast accessibility feature.
+        /// The pvParam parameter must point to a HIGHCONTRAST structure that receives the information.
+        /// Set the cbSize member of this structure and the uiParam parameter to sizeof(HIGHCONTRAST).
+        /// </summary>
+        GetHighContrast = 0x0042
+
     }
 
     [Flags]

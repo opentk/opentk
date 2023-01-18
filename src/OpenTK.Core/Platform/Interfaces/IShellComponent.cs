@@ -35,6 +35,6 @@ namespace OpenTK.Core.Platform
         /// <returns>The user set preferred theme.</returns>
         // FIXME: Should we report a theme name?
         // or another function for that?
-        AppTheme GetPreferredTheme();
+        ThemeInfo GetPreferredTheme();
     }
 }
