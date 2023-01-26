@@ -20,7 +20,7 @@ namespace Generator.Writing
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
-        string RefPagesLink,
+        string? RefPagesLink,
         List<string> AddedIn,
         List<string>? RemovedIn
         );
@@ -265,6 +265,6 @@ namespace Generator.Writing
         GL,
         GLCompat,
         GLES1,
-        GLES3
+        GLES2
     }
 }

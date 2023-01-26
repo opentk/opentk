@@ -1,7 +1,7 @@
 // This file is auto generated, do not edit.
 using System;
 
-namespace OpenTK.Graphics.OpenGLES3
+namespace OpenTK.Graphics.OpenGLES2
 {
 #pragma warning disable CA1069 // Enums values should not be duplicated
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

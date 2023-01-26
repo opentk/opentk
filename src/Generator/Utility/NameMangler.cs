@@ -1,9 +1,55 @@
+using System.Collections.Generic;
 using System.Text;
 
 namespace Generator.Utility
 {
     public static class NameMangler
     {
+        private static readonly List<string> VendorNames = new List<string>
+        {
+            // This list is taken from here: https://github.com/KhronosGroup/OpenGL-Registry/tree/main/extensions
+            // - Noggin_bops 2023-01-25
+            "3DFX",
+            "3DL",
+            "AMD",
+            "ANDROID",
+            "ANGLE",
+            "APPLE",
+            "ARB",
+            "ARM",
+            "ATI",
+            "DMP",
+            "EXT",
+            "FJ",
+            "GREMEDY",
+            "HP",
+            "I3D",
+            "IBM",
+            "IGLOO",
+            "IMG",
+            "INGR",
+            "INTEL",
+            "KHR",
+            "MESA",
+            "MESAX",
+            "NV",
+            "NVX",
+            "OES",
+            "OML",
+            "OVR",
+            "PGI",
+            "QCOM",
+            "REND",
+            "S3",
+            "SGI",
+            "SGIS",
+            "SGIX",
+            "SUN",
+            "SUNX",
+            "VIV",
+            "WIN",
+        };
+
         public static string RemoveStart(string str, string start)
         {
             if (!str.StartsWith(start))
@@ -18,6 +64,23 @@ namespace Generator.Utility
                 throw new System.Exception($"'{str}' dosen't end with '{end}'");
 
             return str[0..^end.Length];
+        }
+
+        public static string RemoveVendorPostfix(string str)
+        {
+            foreach (var vendor in VendorNames)
+            {
+                // This check only works if no vendors are has and ending substring the same as some other vendor
+                // e.g. the potential vendor "XWIN" would together with "WIN" break this algorithm.
+                // This doesn't happen atm.
+                // - Noggin_bops 2023-01-25
+                if (str.EndsWith(vendor))
+                {
+                    return RemoveEnd(str, vendor);
+                }
+            }
+
+            return str;
         }
 
         public static string MangleFunctionName(string name)
@@ -86,12 +149,14 @@ namespace Generator.Utility
         public static string MangleCommandPurpose(string purpose)
         {
             purpose = TrimAndRemoveChars(purpose, NewlineAndTabCharacters);
+            purpose = XmlEscapeCharacters(purpose);
             return CapitalizeFirst(purpose) + ".";
         }
 
         public static string MangleParameterDescription(string description)
         {
             description = TrimAndRemoveChars(description, NewlineAndTabCharacters);
+            description = XmlEscapeCharacters(description);
             return RemoveRepeatedSpaces(description);
         }
 
@@ -142,6 +207,27 @@ namespace Generator.Utility
                 }
             }
             return builder.ToString();
+        }
+
+        /// <summary>
+        /// Escapes all "'<>& characters.
+        /// This function will not detect already escaped strings.
+        /// </summary>
+        public static string XmlEscapeCharacters(string str)
+        {
+            StringBuilder sb = new StringBuilder(str);
+
+            // We don't want to replace all of the & we are going to add
+            // so replace that first
+            // - Noggin_bops 2023-01-26
+            sb.Replace("&", "&amp;");
+
+            sb.Replace("\"", "&quot;");
+            sb.Replace("'", "&apos;");
+            sb.Replace("<", "&lt;");
+            sb.Replace(">", "&gt;");
+
+            return sb.ToString();
         }
     }
 }

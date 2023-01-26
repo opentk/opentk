@@ -104,13 +104,13 @@ namespace Generator.Process
                             allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
                             allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
                             allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
-                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES2, @enum.Name, data);
                             break;
                         case GLAPI.GLES1:
                             allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
                             break;
                         case GLAPI.GLES2:
-                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES3, @enum.Name, data);
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES2, @enum.Name, data);
                             break;
                         case GLAPI.GL:
                             allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
@@ -139,22 +139,23 @@ namespace Generator.Process
 
             List<RequireEntryInfo> glRequires = GetRequireEntries(features, extensions, GLAPI.GL);
             List<RequireEntryInfo> gles1Requires = GetRequireEntries(features, extensions, GLAPI.GLES1);
-            List<RequireEntryInfo> gles3Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
+            List<RequireEntryInfo> gles2Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
             List<RemoveEntryInfo> glRemoves = GetRemoveEntries(features, GLAPI.GL);
-            // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later. // 2021-03-04
-            List<RemoveEntryInfo> gles3Removes = GetRemoveEntries(features, GLAPI.GLES2);
+            // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later.
+            // - Noggin_bops 2023-01-26
+            List<RemoveEntryInfo> gles2Removes = GetRemoveEntries(features, GLAPI.GLES2);
 
             ProcessedGLInformation info = new ProcessedGLInformation(allFunctions, allEnumsPerAPI, allEnumGroups.ToList());
 
             GLOutputApi gl = GetOutputApiFromRequireTags(OutputApi.GL, glRequires, glRemoves, info);
             GLOutputApi glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntryInfo>(), info);
             GLOutputApi gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntryInfo>(), info);
-            GLOutputApi gles3 = GetOutputApiFromRequireTags(OutputApi.GLES3, gles3Requires, gles3Removes, info);
+            GLOutputApi gles2 = GetOutputApiFromRequireTags(OutputApi.GLES2, gles2Requires, gles2Removes, info);
 
             return new OutputData(allFunctions.Select(kvp => kvp.Value.NativeFunction).ToList(),
                 new List<GLOutputApi>()
                 {
-                    gl, glCompat, gles1, gles3
+                    gl, glCompat, gles1, gles2
                 });
         }
 
@@ -352,6 +353,20 @@ namespace Generator.Process
                         if (vendor == "")
                         {
                             Logger.Warning($"{function.NativeFunction.EntryPoint} doesn't have any documentation for {api}");
+
+                            if (functionsAddedIn.TryGetValue(function.NativeFunction, out List<string>? addedIn) == false)
+                            {
+                                throw new Exception($"{function.NativeFunction.EntryPoint} has no \"added in\" data.");
+                            }
+
+                            documentation[function.NativeFunction] = new FunctionDocumentation(
+                                function.NativeFunction.EntryPoint,
+                                "",
+                                Array.Empty<ParameterDocumentation>(),
+                                // TODO: Is it possible to get the function spec file and link to it here?
+                                null,
+                                addedIn,
+                                null);
                         }
                         else
                         {
@@ -365,10 +380,9 @@ namespace Generator.Process
                                 "",
                                 Array.Empty<ParameterDocumentation>(),
                                 // TODO: Is it possible to get the extension spec file and link to it here?
-                                "",
+                                null,
                                 addedIn,
-                                null
-                                );
+                                null);
                             // Extensions don't have documentation (yet?)
                         }
                     }
@@ -428,12 +442,13 @@ namespace Generator.Process
                 }
 
                 // If there is a list, sort it by name
-                if (functionsUsingEnumGroup != null) functionsUsingEnumGroup.Sort((f1, f2) => {
-                    // We want to prioritize "core" functions before extensions.
-                    if (f1.Vendor == "" && f2.Vendor != "") return -1;
-                    if (f1.Vendor != "" && f2.Vendor == "") return 1;
+                if (functionsUsingEnumGroup != null)
+                    functionsUsingEnumGroup.Sort((f1, f2) => {
+                        // We want to prioritize "core" functions before extensions.
+                        if (f1.Vendor == "" && f2.Vendor != "") return -1;
+                        if (f1.Vendor != "" && f2.Vendor == "") return 1;
 
-                    return f1.Function.FunctionName.CompareTo(f2.Function.FunctionName);
+                        return f1.Function.FunctionName.CompareTo(f2.Function.FunctionName);
                     });
 
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));

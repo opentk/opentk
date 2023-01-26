@@ -10,7 +10,7 @@ namespace OpenTK.Graphics.OpenGLES1
 #pragma warning disable CS0419 // Ambiguous reference in cref attribute
     public static unsafe partial class GL
     {
-        /// <inheritdoc cref="ClipPlanef"/>
+        /// <inheritdoc cref="ClipPlanef(ClipPlaneName, float*)"/>
         public static unsafe void ClipPlanef(ClipPlaneName p, ReadOnlySpan<float> eqn)
         {
             fixed (float* eqn_ptr = eqn)
@@ -18,7 +18,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanef(p, eqn_ptr);
             }
         }
-        /// <inheritdoc cref="ClipPlanef"/>
+        /// <inheritdoc cref="ClipPlanef(ClipPlaneName, float*)"/>
         public static unsafe void ClipPlanef(ClipPlaneName p, float[] eqn)
         {
             fixed (float* eqn_ptr = eqn)
@@ -26,7 +26,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanef(p, eqn_ptr);
             }
         }
-        /// <inheritdoc cref="ClipPlanef"/>
+        /// <inheritdoc cref="ClipPlanef(ClipPlaneName, float*)"/>
         public static unsafe void ClipPlanef(ClipPlaneName p, in float eqn)
         {
             fixed (float* eqn_ptr = &eqn)
@@ -34,7 +34,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanef(p, eqn_ptr);
             }
         }
-        /// <inheritdoc cref="Fogfv"/>
+        /// <inheritdoc cref="Fogfv(FogParameter, float*)"/>
         public static unsafe void Fogf(FogParameter pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -42,7 +42,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Fogfv"/>
+        /// <inheritdoc cref="Fogfv(FogParameter, float*)"/>
         public static unsafe void Fogf(FogParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -50,7 +50,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Fogfv"/>
+        /// <inheritdoc cref="Fogfv(FogParameter, float*)"/>
         public static unsafe void Fogf(FogParameter pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -58,7 +58,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetClipPlanef"/>
+        /// <inheritdoc cref="GetClipPlanef(ClipPlaneName, float*)"/>
         public static unsafe void GetClipPlanef(ClipPlaneName plane, Span<float> equation)
         {
             fixed (float* equation_ptr = equation)
@@ -66,7 +66,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanef(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="GetClipPlanef"/>
+        /// <inheritdoc cref="GetClipPlanef(ClipPlaneName, float*)"/>
         public static unsafe void GetClipPlanef(ClipPlaneName plane, float[] equation)
         {
             fixed (float* equation_ptr = equation)
@@ -74,7 +74,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanef(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="GetClipPlanef"/>
+        /// <inheritdoc cref="GetClipPlanef(ClipPlaneName, float*)"/>
         public static unsafe void GetClipPlanef(ClipPlaneName plane, ref float equation)
         {
             fixed (float* equation_ptr = &equation)
@@ -82,7 +82,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanef(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="GetFloatv"/>
+        /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
         public static unsafe void GetFloat(GetPName pname, Span<float> data)
         {
             fixed (float* data_ptr = data)
@@ -90,7 +90,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFloatv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetFloatv"/>
+        /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
         public static unsafe void GetFloat(GetPName pname, float[] data)
         {
             fixed (float* data_ptr = data)
@@ -98,7 +98,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFloatv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetFloatv"/>
+        /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
         public static unsafe void GetFloat(GetPName pname, ref float data)
         {
             fixed (float* data_ptr = &data)
@@ -106,7 +106,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFloatv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetLightfv"/>
+        /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
         public static unsafe void GetLightf(LightName light, LightParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -114,7 +114,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightfv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetLightfv"/>
+        /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
         public static unsafe void GetLightf(LightName light, LightParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -122,7 +122,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightfv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetLightfv"/>
+        /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
         public static unsafe void GetLightf(LightName light, LightParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -130,7 +130,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightfv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetMaterialfv"/>
+        /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -138,7 +138,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialfv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetMaterialfv"/>
+        /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -146,7 +146,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialfv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetMaterialfv"/>
+        /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -154,7 +154,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialfv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnvfv"/>
+        /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
         public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -162,7 +162,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnvfv"/>
+        /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
         public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -170,7 +170,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnvfv"/>
+        /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
         public static unsafe void GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -178,7 +178,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameterfv"/>
+        /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, Span<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -186,7 +186,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameterfv"/>
+        /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -194,7 +194,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameterfv"/>
+        /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, ref float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -202,7 +202,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="LightModelfv"/>
+        /// <inheritdoc cref="LightModelfv(LightModelParameter, float*)"/>
         public static unsafe void LightModelf(LightModelParameter pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -210,7 +210,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LightModelfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="LightModelfv"/>
+        /// <inheritdoc cref="LightModelfv(LightModelParameter, float*)"/>
         public static unsafe void LightModelf(LightModelParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -218,7 +218,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LightModelfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="LightModelfv"/>
+        /// <inheritdoc cref="LightModelfv(LightModelParameter, float*)"/>
         public static unsafe void LightModelf(LightModelParameter pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -226,7 +226,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LightModelfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Lightfv"/>
+        /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
         public static unsafe void Lightf(LightName light, LightParameter pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -234,7 +234,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightfv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Lightfv"/>
+        /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
         public static unsafe void Lightf(LightName light, LightParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -242,7 +242,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightfv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Lightfv"/>
+        /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
         public static unsafe void Lightf(LightName light, LightParameter pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -250,7 +250,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightfv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="LoadMatrixf"/>
+        /// <inheritdoc cref="LoadMatrixf(float*)"/>
         public static unsafe void LoadMatrixf(ReadOnlySpan<float> m)
         {
             fixed (float* m_ptr = m)
@@ -258,7 +258,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixf(m_ptr);
             }
         }
-        /// <inheritdoc cref="LoadMatrixf"/>
+        /// <inheritdoc cref="LoadMatrixf(float*)"/>
         public static unsafe void LoadMatrixf(float[] m)
         {
             fixed (float* m_ptr = m)
@@ -266,7 +266,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixf(m_ptr);
             }
         }
-        /// <inheritdoc cref="LoadMatrixf"/>
+        /// <inheritdoc cref="LoadMatrixf(float*)"/>
         public static unsafe void LoadMatrixf(in float m)
         {
             fixed (float* m_ptr = &m)
@@ -274,7 +274,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixf(m_ptr);
             }
         }
-        /// <inheritdoc cref="Materialfv"/>
+        /// <inheritdoc cref="Materialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -282,7 +282,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialfv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Materialfv"/>
+        /// <inheritdoc cref="Materialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -290,7 +290,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialfv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Materialfv"/>
+        /// <inheritdoc cref="Materialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe void Materialf(TriangleFace face, MaterialParameter pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -298,7 +298,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialfv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="MultMatrixf"/>
+        /// <inheritdoc cref="MultMatrixf(float*)"/>
         public static unsafe void MultMatrixf(ReadOnlySpan<float> m)
         {
             fixed (float* m_ptr = m)
@@ -306,7 +306,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixf(m_ptr);
             }
         }
-        /// <inheritdoc cref="MultMatrixf"/>
+        /// <inheritdoc cref="MultMatrixf(float*)"/>
         public static unsafe void MultMatrixf(float[] m)
         {
             fixed (float* m_ptr = m)
@@ -314,7 +314,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixf(m_ptr);
             }
         }
-        /// <inheritdoc cref="MultMatrixf"/>
+        /// <inheritdoc cref="MultMatrixf(float*)"/>
         public static unsafe void MultMatrixf(in float m)
         {
             fixed (float* m_ptr = &m)
@@ -322,7 +322,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixf(m_ptr);
             }
         }
-        /// <inheritdoc cref="PointParameterfv"/>
+        /// <inheritdoc cref="PointParameterfv(PointParameterNameARB, float*)"/>
         public static unsafe void PointParameterf(PointParameterNameARB pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -330,7 +330,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 PointParameterfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="PointParameterfv"/>
+        /// <inheritdoc cref="PointParameterfv(PointParameterNameARB, float*)"/>
         public static unsafe void PointParameterf(PointParameterNameARB pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -338,7 +338,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 PointParameterfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="PointParameterfv"/>
+        /// <inheritdoc cref="PointParameterfv(PointParameterNameARB, float*)"/>
         public static unsafe void PointParameterf(PointParameterNameARB pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -346,7 +346,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 PointParameterfv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnvfv"/>
+        /// <inheritdoc cref="TexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
         public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -354,7 +354,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnvfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnvfv"/>
+        /// <inheritdoc cref="TexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
         public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -362,7 +362,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnvfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnvfv"/>
+        /// <inheritdoc cref="TexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
         public static unsafe void TexEnvf(TextureEnvTarget target, TextureEnvParameter pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -370,7 +370,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnvfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameterfv"/>
+        /// <inheritdoc cref="TexParameterfv(TextureTarget, TextureParameterName, float*)"/>
         public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, ReadOnlySpan<float> parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -378,7 +378,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameterfv"/>
+        /// <inheritdoc cref="TexParameterfv(TextureTarget, TextureParameterName, float*)"/>
         public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, float[] parameters)
         {
             fixed (float* parameters_ptr = parameters)
@@ -386,7 +386,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameterfv"/>
+        /// <inheritdoc cref="TexParameterfv(TextureTarget, TextureParameterName, float*)"/>
         public static unsafe void TexParameterf(TextureTarget target, TextureParameterName pname, in float parameters)
         {
             fixed (float* parameters_ptr = &parameters)
@@ -394,13 +394,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterfv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="BufferData"/>
+        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
         public static unsafe void BufferData(BufferTargetARB target, nint size, IntPtr data, BufferUsageARB usage)
         {
             void* data_vptr = (void*)data;
             BufferData(target, size, data_vptr, usage);
         }
-        /// <inheritdoc cref="BufferData"/>
+        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
         public static unsafe void BufferData<T1>(BufferTargetARB target, ReadOnlySpan<T1> data, BufferUsageARB usage)
             where T1 : unmanaged
         {
@@ -410,7 +410,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData"/>
+        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
         public static unsafe void BufferData<T1>(BufferTargetARB target, T1[] data, BufferUsageARB usage)
             where T1 : unmanaged
         {
@@ -420,7 +420,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferData"/>
+        /// <inheritdoc cref="BufferData(BufferTargetARB, nint, void*, BufferUsageARB)"/>
         public static unsafe void BufferData<T1>(BufferTargetARB target, nint size, in T1 data, BufferUsageARB usage)
             where T1 : unmanaged
         {
@@ -429,13 +429,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferData(target, size, data_ptr, usage);
             }
         }
-        /// <inheritdoc cref="BufferSubData"/>
+        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
         public static unsafe void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, IntPtr data)
         {
             void* data_vptr = (void*)data;
             BufferSubData(target, offset, size, data_vptr);
         }
-        /// <inheritdoc cref="BufferSubData"/>
+        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
         public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
@@ -445,7 +445,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
-        /// <inheritdoc cref="BufferSubData"/>
+        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
         public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, T1[] data)
             where T1 : unmanaged
         {
@@ -455,7 +455,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
-        /// <inheritdoc cref="BufferSubData"/>
+        /// <inheritdoc cref="BufferSubData(BufferTargetARB, IntPtr, nint, void*)"/>
         public static unsafe void BufferSubData<T1>(BufferTargetARB target, IntPtr offset, nint size, in T1 data)
             where T1 : unmanaged
         {
@@ -464,7 +464,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 BufferSubData(target, offset, size, data_ptr);
             }
         }
-        /// <inheritdoc cref="ClipPlanex"/>
+        /// <inheritdoc cref="ClipPlanex(ClipPlaneName, int*)"/>
         public static unsafe void ClipPlanex(ClipPlaneName plane, ReadOnlySpan<int> equation)
         {
             fixed (int* equation_ptr = equation)
@@ -472,7 +472,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanex(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="ClipPlanex"/>
+        /// <inheritdoc cref="ClipPlanex(ClipPlaneName, int*)"/>
         public static unsafe void ClipPlanex(ClipPlaneName plane, int[] equation)
         {
             fixed (int* equation_ptr = equation)
@@ -480,7 +480,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanex(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="ClipPlanex"/>
+        /// <inheritdoc cref="ClipPlanex(ClipPlaneName, int*)"/>
         public static unsafe void ClipPlanex(ClipPlaneName plane, in int equation)
         {
             fixed (int* equation_ptr = &equation)
@@ -488,18 +488,18 @@ namespace OpenTK.Graphics.OpenGLES1
                 ClipPlanex(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="Color4ub"/>
+        /// <inheritdoc cref="Color4ub(byte, byte, byte, byte)"/>
         public static unsafe void Color4(byte red, byte green, byte blue, byte alpha)
         {
             Color4ub(red, green, blue, alpha);
         }
-        /// <inheritdoc cref="ColorPointer"/>
+        /// <inheritdoc cref="ColorPointer(int, ColorPointerType, int, void*)"/>
         public static unsafe void ColorPointer(int size, ColorPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             ColorPointer(size, type, stride, pointer_vptr);
         }
-        /// <inheritdoc cref="ColorPointer"/>
+        /// <inheritdoc cref="ColorPointer(int, ColorPointerType, int, void*)"/>
         public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -508,7 +508,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ColorPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="ColorPointer"/>
+        /// <inheritdoc cref="ColorPointer(int, ColorPointerType, int, void*)"/>
         public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -517,7 +517,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ColorPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="ColorPointer"/>
+        /// <inheritdoc cref="ColorPointer(int, ColorPointerType, int, void*)"/>
         public static unsafe void ColorPointer<T1>(int size, ColorPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -526,13 +526,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 ColorPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="CompressedTexImage2D"/>
+        /// <inheritdoc cref="CompressedTexImage2D(TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
         public static unsafe void CompressedTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_vptr);
         }
-        /// <inheritdoc cref="CompressedTexImage2D"/>
+        /// <inheritdoc cref="CompressedTexImage2D(TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
         public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
@@ -542,7 +542,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_ptr);
             }
         }
-        /// <inheritdoc cref="CompressedTexImage2D"/>
+        /// <inheritdoc cref="CompressedTexImage2D(TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
         public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, T1[] data)
             where T1 : unmanaged
         {
@@ -552,7 +552,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_ptr);
             }
         }
-        /// <inheritdoc cref="CompressedTexImage2D"/>
+        /// <inheritdoc cref="CompressedTexImage2D(TextureTarget, int, InternalFormat, int, int, int, int, void*)"/>
         public static unsafe void CompressedTexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, in T1 data)
             where T1 : unmanaged
         {
@@ -561,13 +561,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data_ptr);
             }
         }
-        /// <inheritdoc cref="CompressedTexSubImage2D"/>
+        /// <inheritdoc cref="CompressedTexSubImage2D(TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
         public static unsafe void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, IntPtr data)
         {
             void* data_vptr = (void*)data;
             CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_vptr);
         }
-        /// <inheritdoc cref="CompressedTexSubImage2D"/>
+        /// <inheritdoc cref="CompressedTexSubImage2D(TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
         public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, ReadOnlySpan<T1> data)
             where T1 : unmanaged
         {
@@ -577,7 +577,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        /// <inheritdoc cref="CompressedTexSubImage2D"/>
+        /// <inheritdoc cref="CompressedTexSubImage2D(TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
         public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, T1[] data)
             where T1 : unmanaged
         {
@@ -587,7 +587,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        /// <inheritdoc cref="CompressedTexSubImage2D"/>
+        /// <inheritdoc cref="CompressedTexSubImage2D(TextureTarget, int, int, int, int, int, InternalFormat, int, void*)"/>
         public static unsafe void CompressedTexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, in T1 data)
             where T1 : unmanaged
         {
@@ -596,7 +596,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 CompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data_ptr);
             }
         }
-        /// <inheritdoc cref="DeleteBuffers"/>
+        /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
         public static unsafe void DeleteBuffer(in int buffer)
         {
             int n = 1;
@@ -605,7 +605,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_handle);
             }
         }
-        /// <inheritdoc cref="DeleteBuffers"/>
+        /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
         public static unsafe void DeleteBuffers(ReadOnlySpan<int> buffers)
         {
             int n = (int)(buffers.Length);
@@ -614,7 +614,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="DeleteBuffers"/>
+        /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
         public static unsafe void DeleteBuffers(int[] buffers)
         {
             int n = (int)(buffers.Length);
@@ -623,7 +623,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="DeleteBuffers"/>
+        /// <inheritdoc cref="DeleteBuffers(int, int*)"/>
         public static unsafe void DeleteBuffers(int n, in int buffers)
         {
             fixed (int* buffers_ptr = &buffers)
@@ -631,7 +631,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteBuffers(n, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="DeleteTextures"/>
+        /// <inheritdoc cref="DeleteTextures(int, int*)"/>
         public static unsafe void DeleteTexture(in int texture)
         {
             int n = 1;
@@ -640,7 +640,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_handle);
             }
         }
-        /// <inheritdoc cref="DeleteTextures"/>
+        /// <inheritdoc cref="DeleteTextures(int, int*)"/>
         public static unsafe void DeleteTextures(ReadOnlySpan<int> textures)
         {
             int n = (int)(textures.Length);
@@ -649,7 +649,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_ptr);
             }
         }
-        /// <inheritdoc cref="DeleteTextures"/>
+        /// <inheritdoc cref="DeleteTextures(int, int*)"/>
         public static unsafe void DeleteTextures(int[] textures)
         {
             int n = (int)(textures.Length);
@@ -658,7 +658,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_ptr);
             }
         }
-        /// <inheritdoc cref="DeleteTextures"/>
+        /// <inheritdoc cref="DeleteTextures(int, int*)"/>
         public static unsafe void DeleteTextures(int n, in int textures)
         {
             fixed (int* textures_ptr = &textures)
@@ -666,13 +666,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 DeleteTextures(n, textures_ptr);
             }
         }
-        /// <inheritdoc cref="DrawElements"/>
+        /// <inheritdoc cref="DrawElements(PrimitiveType, int, DrawElementsType, void*)"/>
         public static unsafe void DrawElements(PrimitiveType mode, int count, DrawElementsType type, nint offset)
         {
             void* indices = (void*)offset;
             DrawElements(mode, count, type, indices);
         }
-        /// <inheritdoc cref="Fogxv"/>
+        /// <inheritdoc cref="Fogxv(FogPName, int*)"/>
         public static unsafe void Fogx(FogPName pname, ReadOnlySpan<int> param)
         {
             fixed (int* param_ptr = param)
@@ -680,7 +680,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogxv(pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="Fogxv"/>
+        /// <inheritdoc cref="Fogxv(FogPName, int*)"/>
         public static unsafe void Fogx(FogPName pname, int[] param)
         {
             fixed (int* param_ptr = param)
@@ -688,7 +688,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogxv(pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="Fogxv"/>
+        /// <inheritdoc cref="Fogxv(FogPName, int*)"/>
         public static unsafe void Fogx(FogPName pname, in int param)
         {
             fixed (int* param_ptr = &param)
@@ -696,7 +696,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Fogxv(pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="GetBooleanv"/>
+        /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
         public static unsafe void GetBoolean(GetPName pname, Span<bool> data)
         {
             fixed (bool* data_ptr = data)
@@ -704,7 +704,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBooleanv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetBooleanv"/>
+        /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
         public static unsafe void GetBoolean(GetPName pname, bool[] data)
         {
             fixed (bool* data_ptr = data)
@@ -712,7 +712,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBooleanv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetBooleanv"/>
+        /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
         public static unsafe void GetBoolean(GetPName pname, ref bool data)
         {
             fixed (bool* data_ptr = &data)
@@ -720,7 +720,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBooleanv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetBufferParameteriv"/>
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -728,7 +728,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetBufferParameteriv"/>
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -736,7 +736,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetBufferParameteriv"/>
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -744,7 +744,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetClipPlanex"/>
+        /// <inheritdoc cref="GetClipPlanex(ClipPlaneName, int*)"/>
         public static unsafe void GetClipPlanex(ClipPlaneName plane, Span<int> equation)
         {
             fixed (int* equation_ptr = equation)
@@ -752,7 +752,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanex(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="GetClipPlanex"/>
+        /// <inheritdoc cref="GetClipPlanex(ClipPlaneName, int*)"/>
         public static unsafe void GetClipPlanex(ClipPlaneName plane, int[] equation)
         {
             fixed (int* equation_ptr = equation)
@@ -760,7 +760,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanex(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="GetClipPlanex"/>
+        /// <inheritdoc cref="GetClipPlanex(ClipPlaneName, int*)"/>
         public static unsafe void GetClipPlanex(ClipPlaneName plane, ref int equation)
         {
             fixed (int* equation_ptr = &equation)
@@ -768,7 +768,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanex(plane, equation_ptr);
             }
         }
-        /// <inheritdoc cref="GenBuffers"/>
+        /// <inheritdoc cref="GenBuffers(int, int*)"/>
         public static unsafe int GenBuffer()
         {
             int buffer;
@@ -786,7 +786,7 @@ namespace OpenTK.Graphics.OpenGLES1
             GenBuffers(n, buffers_handle);
             return buffer;
         }
-        /// <inheritdoc cref="GenBuffers"/>
+        /// <inheritdoc cref="GenBuffers(int, int*)"/>
         public static unsafe void GenBuffer(out int buffer)
         {
             int n = 1;
@@ -802,7 +802,7 @@ namespace OpenTK.Graphics.OpenGLES1
             int* buffers_handle = (int*)Unsafe.AsPointer(ref buffer);
             GenBuffers(n, buffers_handle);
         }
-        /// <inheritdoc cref="GenBuffers"/>
+        /// <inheritdoc cref="GenBuffers(int, int*)"/>
         public static unsafe void GenBuffers(Span<int> buffers)
         {
             int n = (int)(buffers.Length);
@@ -811,7 +811,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenBuffers(n, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="GenBuffers"/>
+        /// <inheritdoc cref="GenBuffers(int, int*)"/>
         public static unsafe void GenBuffers(int[] buffers)
         {
             int n = (int)(buffers.Length);
@@ -820,7 +820,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenBuffers(n, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="GenBuffers"/>
+        /// <inheritdoc cref="GenBuffers(int, int*)"/>
         public static unsafe void GenBuffers(int n, ref int buffers)
         {
             fixed (int* buffers_ptr = &buffers)
@@ -828,7 +828,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenBuffers(n, buffers_ptr);
             }
         }
-        /// <inheritdoc cref="GenTextures"/>
+        /// <inheritdoc cref="GenTextures(int, int*)"/>
         public static unsafe int GenTexture()
         {
             int texture;
@@ -846,7 +846,7 @@ namespace OpenTK.Graphics.OpenGLES1
             GenTextures(n, textures_handle);
             return texture;
         }
-        /// <inheritdoc cref="GenTextures"/>
+        /// <inheritdoc cref="GenTextures(int, int*)"/>
         public static unsafe void GenTexture(out int texture)
         {
             int n = 1;
@@ -862,7 +862,7 @@ namespace OpenTK.Graphics.OpenGLES1
             int* textures_handle = (int*)Unsafe.AsPointer(ref texture);
             GenTextures(n, textures_handle);
         }
-        /// <inheritdoc cref="GenTextures"/>
+        /// <inheritdoc cref="GenTextures(int, int*)"/>
         public static unsafe void GenTextures(Span<int> textures)
         {
             int n = (int)(textures.Length);
@@ -871,7 +871,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenTextures(n, textures_ptr);
             }
         }
-        /// <inheritdoc cref="GenTextures"/>
+        /// <inheritdoc cref="GenTextures(int, int*)"/>
         public static unsafe void GenTextures(int[] textures)
         {
             int n = (int)(textures.Length);
@@ -880,7 +880,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenTextures(n, textures_ptr);
             }
         }
-        /// <inheritdoc cref="GenTextures"/>
+        /// <inheritdoc cref="GenTextures(int, int*)"/>
         public static unsafe void GenTextures(int n, ref int textures)
         {
             fixed (int* textures_ptr = &textures)
@@ -888,15 +888,15 @@ namespace OpenTK.Graphics.OpenGLES1
                 GenTextures(n, textures_ptr);
             }
         }
-        /// <inheritdoc cref="GetFixedv"/>
-        public static unsafe void GetFixedv(GetPName pname, ref int parameters)
+        /// <inheritdoc cref="GetFixedv(GetPName, int*)"/>
+        public static unsafe void GetFixed(GetPName pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
             {
                 GetFixedv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetIntegerv"/>
+        /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
         public static unsafe void GetInteger(GetPName pname, Span<int> data)
         {
             fixed (int* data_ptr = data)
@@ -904,7 +904,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetIntegerv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetIntegerv"/>
+        /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
         public static unsafe void GetInteger(GetPName pname, int[] data)
         {
             fixed (int* data_ptr = data)
@@ -912,7 +912,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetIntegerv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetIntegerv"/>
+        /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
         public static unsafe void GetInteger(GetPName pname, ref int data)
         {
             fixed (int* data_ptr = &data)
@@ -920,7 +920,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetIntegerv(pname, data_ptr);
             }
         }
-        /// <inheritdoc cref="GetLightxv"/>
+        /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
         public static unsafe void GetLightx(LightName light, LightParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -928,7 +928,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightxv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetLightxv"/>
+        /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
         public static unsafe void GetLightx(LightName light, LightParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -936,7 +936,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightxv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetLightxv"/>
+        /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
         public static unsafe void GetLightx(LightName light, LightParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -944,7 +944,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightxv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetMaterialxv"/>
+        /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -952,7 +952,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialxv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetMaterialxv"/>
+        /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -960,7 +960,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialxv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetMaterialxv"/>
+        /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -968,12 +968,12 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialxv(face, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetPointerv"/>
+        /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
         public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
         {
             GetPointerv(pname, parameters);
         }
-        /// <inheritdoc cref="GetString"/>
+        /// <inheritdoc cref="GetString(StringName)"/>
         public static unsafe string? GetString(StringName name)
         {
             byte* returnValue;
@@ -982,7 +982,7 @@ namespace OpenTK.Graphics.OpenGLES1
             returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             return returnValue_str;
         }
-        /// <inheritdoc cref="GetTexEnviv"/>
+        /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -990,7 +990,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnviv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnviv"/>
+        /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -998,7 +998,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnviv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnviv"/>
+        /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1006,7 +1006,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnviv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnvxv"/>
+        /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1014,7 +1014,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnvxv"/>
+        /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1022,7 +1022,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexEnvxv"/>
+        /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1030,7 +1030,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameteriv"/>
+        /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1038,7 +1038,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameteriv"/>
+        /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1046,7 +1046,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameteriv"/>
+        /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1054,7 +1054,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameterxv"/>
+        /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1062,7 +1062,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameterxv"/>
+        /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1070,7 +1070,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="GetTexParameterxv"/>
+        /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, ref int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1078,7 +1078,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameterxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="LightModelxv"/>
+        /// <inheritdoc cref="LightModelxv(LightModelParameter, int*)"/>
         public static unsafe void LightModelx(LightModelParameter pname, ReadOnlySpan<int> param)
         {
             fixed (int* param_ptr = param)
@@ -1086,7 +1086,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LightModelxv(pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="LightModelxv"/>
+        /// <inheritdoc cref="LightModelxv(LightModelParameter, int*)"/>
         public static unsafe void LightModelx(LightModelParameter pname, int[] param)
         {
             fixed (int* param_ptr = param)
@@ -1094,7 +1094,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LightModelxv(pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="LightModelxv"/>
+        /// <inheritdoc cref="LightModelxv(LightModelParameter, int*)"/>
         public static unsafe void LightModelx(LightModelParameter pname, in int param)
         {
             fixed (int* param_ptr = &param)
@@ -1102,7 +1102,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LightModelxv(pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="Lightxv"/>
+        /// <inheritdoc cref="Lightxv(LightName, LightParameter, int*)"/>
         public static unsafe void Lightx(LightName light, LightParameter pname, ReadOnlySpan<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1110,7 +1110,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightxv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Lightxv"/>
+        /// <inheritdoc cref="Lightxv(LightName, LightParameter, int*)"/>
         public static unsafe void Lightx(LightName light, LightParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1118,7 +1118,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightxv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="Lightxv"/>
+        /// <inheritdoc cref="Lightxv(LightName, LightParameter, int*)"/>
         public static unsafe void Lightx(LightName light, LightParameter pname, in int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1126,7 +1126,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Lightxv(light, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="LoadMatrixx"/>
+        /// <inheritdoc cref="LoadMatrixx(int*)"/>
         public static unsafe void LoadMatrixx(ReadOnlySpan<int> m)
         {
             fixed (int* m_ptr = m)
@@ -1134,7 +1134,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixx(m_ptr);
             }
         }
-        /// <inheritdoc cref="LoadMatrixx"/>
+        /// <inheritdoc cref="LoadMatrixx(int*)"/>
         public static unsafe void LoadMatrixx(int[] m)
         {
             fixed (int* m_ptr = m)
@@ -1142,7 +1142,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixx(m_ptr);
             }
         }
-        /// <inheritdoc cref="LoadMatrixx"/>
+        /// <inheritdoc cref="LoadMatrixx(int*)"/>
         public static unsafe void LoadMatrixx(in int m)
         {
             fixed (int* m_ptr = &m)
@@ -1150,7 +1150,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 LoadMatrixx(m_ptr);
             }
         }
-        /// <inheritdoc cref="Materialxv"/>
+        /// <inheritdoc cref="Materialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe void Materialx(TriangleFace face, MaterialParameter pname, ReadOnlySpan<int> param)
         {
             fixed (int* param_ptr = param)
@@ -1158,7 +1158,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialxv(face, pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="Materialxv"/>
+        /// <inheritdoc cref="Materialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe void Materialx(TriangleFace face, MaterialParameter pname, int[] param)
         {
             fixed (int* param_ptr = param)
@@ -1166,7 +1166,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialxv(face, pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="Materialxv"/>
+        /// <inheritdoc cref="Materialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe void Materialx(TriangleFace face, MaterialParameter pname, in int param)
         {
             fixed (int* param_ptr = &param)
@@ -1174,7 +1174,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 Materialxv(face, pname, param_ptr);
             }
         }
-        /// <inheritdoc cref="MultMatrixx"/>
+        /// <inheritdoc cref="MultMatrixx(int*)"/>
         public static unsafe void MultMatrixx(ReadOnlySpan<int> m)
         {
             fixed (int* m_ptr = m)
@@ -1182,7 +1182,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixx(m_ptr);
             }
         }
-        /// <inheritdoc cref="MultMatrixx"/>
+        /// <inheritdoc cref="MultMatrixx(int*)"/>
         public static unsafe void MultMatrixx(int[] m)
         {
             fixed (int* m_ptr = m)
@@ -1190,7 +1190,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixx(m_ptr);
             }
         }
-        /// <inheritdoc cref="MultMatrixx"/>
+        /// <inheritdoc cref="MultMatrixx(int*)"/>
         public static unsafe void MultMatrixx(in int m)
         {
             fixed (int* m_ptr = &m)
@@ -1198,13 +1198,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 MultMatrixx(m_ptr);
             }
         }
-        /// <inheritdoc cref="NormalPointer"/>
+        /// <inheritdoc cref="NormalPointer(NormalPointerType, int, void*)"/>
         public static unsafe void NormalPointer(NormalPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             NormalPointer(type, stride, pointer_vptr);
         }
-        /// <inheritdoc cref="NormalPointer"/>
+        /// <inheritdoc cref="NormalPointer(NormalPointerType, int, void*)"/>
         public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -1213,7 +1213,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 NormalPointer(type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="NormalPointer"/>
+        /// <inheritdoc cref="NormalPointer(NormalPointerType, int, void*)"/>
         public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -1222,7 +1222,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 NormalPointer(type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="NormalPointer"/>
+        /// <inheritdoc cref="NormalPointer(NormalPointerType, int, void*)"/>
         public static unsafe void NormalPointer<T1>(NormalPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -1231,7 +1231,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 NormalPointer(type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="PointParameterxv"/>
+        /// <inheritdoc cref="PointParameterxv(PointParameterNameARB, int*)"/>
         public static unsafe void PointParameterx(PointParameterNameARB pname, ReadOnlySpan<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1239,7 +1239,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 PointParameterxv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="PointParameterxv"/>
+        /// <inheritdoc cref="PointParameterxv(PointParameterNameARB, int*)"/>
         public static unsafe void PointParameterx(PointParameterNameARB pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1247,7 +1247,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 PointParameterxv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="PointParameterxv"/>
+        /// <inheritdoc cref="PointParameterxv(PointParameterNameARB, int*)"/>
         public static unsafe void PointParameterx(PointParameterNameARB pname, in int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1255,13 +1255,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 PointParameterxv(pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="ReadPixels"/>
+        /// <inheritdoc cref="ReadPixels(int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void ReadPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             ReadPixels(x, y, width, height, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="ReadPixels"/>
+        /// <inheritdoc cref="ReadPixels(int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void ReadPixels<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, Span<T1> pixels)
             where T1 : unmanaged
         {
@@ -1270,7 +1270,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="ReadPixels"/>
+        /// <inheritdoc cref="ReadPixels(int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void ReadPixels<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
@@ -1279,7 +1279,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="ReadPixels"/>
+        /// <inheritdoc cref="ReadPixels(int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void ReadPixels<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, ref T1 pixels)
             where T1 : unmanaged
         {
@@ -1288,13 +1288,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 ReadPixels(x, y, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexCoordPointer"/>
+        /// <inheritdoc cref="TexCoordPointer(int, TexCoordPointerType, int, void*)"/>
         public static unsafe void TexCoordPointer(int size, TexCoordPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             TexCoordPointer(size, type, stride, pointer_vptr);
         }
-        /// <inheritdoc cref="TexCoordPointer"/>
+        /// <inheritdoc cref="TexCoordPointer(int, TexCoordPointerType, int, void*)"/>
         public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -1303,7 +1303,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexCoordPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="TexCoordPointer"/>
+        /// <inheritdoc cref="TexCoordPointer(int, TexCoordPointerType, int, void*)"/>
         public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -1312,7 +1312,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexCoordPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="TexCoordPointer"/>
+        /// <inheritdoc cref="TexCoordPointer(int, TexCoordPointerType, int, void*)"/>
         public static unsafe void TexCoordPointer<T1>(int size, TexCoordPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -1321,7 +1321,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexCoordPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnviv"/>
+        /// <inheritdoc cref="TexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1329,7 +1329,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnviv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnviv"/>
+        /// <inheritdoc cref="TexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1337,7 +1337,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnviv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnviv"/>
+        /// <inheritdoc cref="TexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void TexEnvi(TextureEnvTarget target, TextureEnvParameter pname, in int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1345,7 +1345,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnviv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnvxv"/>
+        /// <inheritdoc cref="TexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1353,7 +1353,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnvxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnvxv"/>
+        /// <inheritdoc cref="TexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1361,7 +1361,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnvxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexEnvxv"/>
+        /// <inheritdoc cref="TexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, in int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1369,13 +1369,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexEnvxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D"/>
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="TexImage2D"/>
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
@@ -1384,7 +1384,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D"/>
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
@@ -1393,7 +1393,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D"/>
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
@@ -1402,7 +1402,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameteriv"/>
+        /// <inheritdoc cref="TexParameteriv(TextureTarget, TextureParameterName, int*)"/>
         public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, ReadOnlySpan<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1410,7 +1410,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameteriv"/>
+        /// <inheritdoc cref="TexParameteriv(TextureTarget, TextureParameterName, int*)"/>
         public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1418,7 +1418,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameteriv"/>
+        /// <inheritdoc cref="TexParameteriv(TextureTarget, TextureParameterName, int*)"/>
         public static unsafe void TexParameteri(TextureTarget target, TextureParameterName pname, in int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1426,7 +1426,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameteriv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameterxv"/>
+        /// <inheritdoc cref="TexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, ReadOnlySpan<int> parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1434,7 +1434,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameterxv"/>
+        /// <inheritdoc cref="TexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, int[] parameters)
         {
             fixed (int* parameters_ptr = parameters)
@@ -1442,7 +1442,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexParameterxv"/>
+        /// <inheritdoc cref="TexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void TexParameterx(TextureTarget target, GetTextureParameter pname, in int parameters)
         {
             fixed (int* parameters_ptr = &parameters)
@@ -1450,13 +1450,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexParameterxv(target, pname, parameters_ptr);
             }
         }
-        /// <inheritdoc cref="TexSubImage2D"/>
+        /// <inheritdoc cref="TexSubImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="TexSubImage2D"/>
+        /// <inheritdoc cref="TexSubImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
@@ -1465,7 +1465,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexSubImage2D"/>
+        /// <inheritdoc cref="TexSubImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
@@ -1474,7 +1474,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexSubImage2D"/>
+        /// <inheritdoc cref="TexSubImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
         public static unsafe void TexSubImage2D<T1>(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
@@ -1483,13 +1483,13 @@ namespace OpenTK.Graphics.OpenGLES1
                 TexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="VertexPointer"/>
+        /// <inheritdoc cref="VertexPointer(int, VertexPointerType, int, void*)"/>
         public static unsafe void VertexPointer(int size, VertexPointerType type, int stride, IntPtr pointer)
         {
             void* pointer_vptr = (void*)pointer;
             VertexPointer(size, type, stride, pointer_vptr);
         }
-        /// <inheritdoc cref="VertexPointer"/>
+        /// <inheritdoc cref="VertexPointer(int, VertexPointerType, int, void*)"/>
         public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, ReadOnlySpan<T1> pointer)
             where T1 : unmanaged
         {
@@ -1498,7 +1498,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 VertexPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="VertexPointer"/>
+        /// <inheritdoc cref="VertexPointer(int, VertexPointerType, int, void*)"/>
         public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, T1[] pointer)
             where T1 : unmanaged
         {
@@ -1507,7 +1507,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 VertexPointer(size, type, stride, pointer_ptr);
             }
         }
-        /// <inheritdoc cref="VertexPointer"/>
+        /// <inheritdoc cref="VertexPointer(int, VertexPointerType, int, void*)"/>
         public static unsafe void VertexPointer<T1>(int size, VertexPointerType type, int stride, in T1 pointer)
             where T1 : unmanaged
         {
@@ -1518,7 +1518,7 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class APPLE
         {
-            /// <inheritdoc cref="GetInteger64vAPPLE"/>
+            /// <inheritdoc cref="GetInteger64vAPPLE(GetPName, long*)"/>
             public static unsafe void GetInteger64vAPPLE(GetPName pname, ref long parameters)
             {
                 fixed (long* parameters_ptr = &parameters)
@@ -1526,7 +1526,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetInteger64vAPPLE(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetSyncivAPPLE"/>
+            /// <inheritdoc cref="GetSyncivAPPLE(GLSync, SyncParameterName, int, int*, int*)"/>
             public static unsafe void GetSyncivAPPLE(GLSync sync, SyncParameterName pname, ref int length, Span<int> values)
             {
                 fixed (int* length_ptr = &length)
@@ -1538,7 +1538,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetSyncivAPPLE"/>
+            /// <inheritdoc cref="GetSyncivAPPLE(GLSync, SyncParameterName, int, int*, int*)"/>
             public static unsafe void GetSyncivAPPLE(GLSync sync, SyncParameterName pname, ref int length, int[] values)
             {
                 fixed (int* length_ptr = &length)
@@ -1550,7 +1550,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetSyncivAPPLE"/>
+            /// <inheritdoc cref="GetSyncivAPPLE(GLSync, SyncParameterName, int, int*, int*)"/>
             public static unsafe void GetSyncivAPPLE(GLSync sync, SyncParameterName pname, int count, ref int length, ref int values)
             {
                 fixed (int* length_ptr = &length)
@@ -1562,21 +1562,21 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class EXT
         {
-            /// <inheritdoc cref="InsertEventMarkerEXT"/>
+            /// <inheritdoc cref="InsertEventMarkerEXT(int, byte*)"/>
             public static unsafe void InsertEventMarkerEXT(int length, string marker)
             {
                 byte* marker_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(marker);
                 InsertEventMarkerEXT(length, marker_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)marker_ptr);
             }
-            /// <inheritdoc cref="PushGroupMarkerEXT"/>
+            /// <inheritdoc cref="PushGroupMarkerEXT(int, byte*)"/>
             public static unsafe void PushGroupMarkerEXT(int length, string marker)
             {
                 byte* marker_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(marker);
                 PushGroupMarkerEXT(length, marker_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)marker_ptr);
             }
-            /// <inheritdoc cref="DiscardFramebufferEXT"/>
+            /// <inheritdoc cref="DiscardFramebufferEXT(FramebufferTarget, int, InvalidateFramebufferAttachment*)"/>
             public static unsafe void DiscardFramebufferEXT(FramebufferTarget target, ReadOnlySpan<InvalidateFramebufferAttachment> attachments)
             {
                 int numAttachments = (int)(attachments.Length);
@@ -1585,7 +1585,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DiscardFramebufferEXT(target, numAttachments, attachments_ptr);
                 }
             }
-            /// <inheritdoc cref="DiscardFramebufferEXT"/>
+            /// <inheritdoc cref="DiscardFramebufferEXT(FramebufferTarget, int, InvalidateFramebufferAttachment*)"/>
             public static unsafe void DiscardFramebufferEXT(FramebufferTarget target, InvalidateFramebufferAttachment[] attachments)
             {
                 int numAttachments = (int)(attachments.Length);
@@ -1594,7 +1594,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DiscardFramebufferEXT(target, numAttachments, attachments_ptr);
                 }
             }
-            /// <inheritdoc cref="DiscardFramebufferEXT"/>
+            /// <inheritdoc cref="DiscardFramebufferEXT(FramebufferTarget, int, InvalidateFramebufferAttachment*)"/>
             public static unsafe void DiscardFramebufferEXT(FramebufferTarget target, int numAttachments, in InvalidateFramebufferAttachment attachments)
             {
                 fixed (InvalidateFramebufferAttachment* attachments_ptr = &attachments)
@@ -1602,7 +1602,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DiscardFramebufferEXT(target, numAttachments, attachments_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiDrawArraysEXT"/>
+            /// <inheritdoc cref="MultiDrawArraysEXT(PrimitiveType, int*, int*, int)"/>
             public static unsafe void MultiDrawArraysEXT(PrimitiveType mode, ReadOnlySpan<int> first, ReadOnlySpan<int> count, int primcount)
             {
                 fixed (int* first_ptr = first)
@@ -1613,7 +1613,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="MultiDrawArraysEXT"/>
+            /// <inheritdoc cref="MultiDrawArraysEXT(PrimitiveType, int*, int*, int)"/>
             public static unsafe void MultiDrawArraysEXT(PrimitiveType mode, int[] first, int[] count, int primcount)
             {
                 fixed (int* first_ptr = first)
@@ -1624,7 +1624,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="MultiDrawArraysEXT"/>
+            /// <inheritdoc cref="MultiDrawArraysEXT(PrimitiveType, int*, int*, int)"/>
             public static unsafe void MultiDrawArraysEXT(PrimitiveType mode, in int first, in int count, int primcount)
             {
                 fixed (int* first_ptr = &first)
@@ -1633,7 +1633,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiDrawArraysEXT(mode, first_ptr, count_ptr, primcount);
                 }
             }
-            /// <inheritdoc cref="MultiDrawElementsEXT"/>
+            /// <inheritdoc cref="MultiDrawElementsEXT(PrimitiveType, int*, DrawElementsType, void**, int)"/>
             public static unsafe void MultiDrawElementsEXT(PrimitiveType mode, ReadOnlySpan<int> count, DrawElementsType type, void** indices, int primcount)
             {
                 fixed (int* count_ptr = count)
@@ -1641,7 +1641,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiDrawElementsEXT(mode, count_ptr, type, indices, primcount);
                 }
             }
-            /// <inheritdoc cref="MultiDrawElementsEXT"/>
+            /// <inheritdoc cref="MultiDrawElementsEXT(PrimitiveType, int*, DrawElementsType, void**, int)"/>
             public static unsafe void MultiDrawElementsEXT(PrimitiveType mode, int[] count, DrawElementsType type, void** indices, int primcount)
             {
                 fixed (int* count_ptr = count)
@@ -1649,7 +1649,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiDrawElementsEXT(mode, count_ptr, type, indices, primcount);
                 }
             }
-            /// <inheritdoc cref="MultiDrawElementsEXT"/>
+            /// <inheritdoc cref="MultiDrawElementsEXT(PrimitiveType, int*, DrawElementsType, void**, int)"/>
             public static unsafe void MultiDrawElementsEXT(PrimitiveType mode, in int count, DrawElementsType type, void** indices, int primcount)
             {
                 fixed (int* count_ptr = &count)
@@ -1657,13 +1657,13 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiDrawElementsEXT(mode, count_ptr, type, indices, primcount);
                 }
             }
-            /// <inheritdoc cref="ReadnPixelsEXT"/>
+            /// <inheritdoc cref="ReadnPixelsEXT(int, int, int, int, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void ReadnPixelsEXT(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, IntPtr data)
             {
                 void* data_vptr = (void*)data;
                 ReadnPixelsEXT(x, y, width, height, format, type, bufSize, data_vptr);
             }
-            /// <inheritdoc cref="ReadnPixelsEXT"/>
+            /// <inheritdoc cref="ReadnPixelsEXT(int, int, int, int, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void ReadnPixelsEXT<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, Span<T1> data)
                 where T1 : unmanaged
             {
@@ -1673,7 +1673,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ReadnPixelsEXT(x, y, width, height, format, type, bufSize, data_ptr);
                 }
             }
-            /// <inheritdoc cref="ReadnPixelsEXT"/>
+            /// <inheritdoc cref="ReadnPixelsEXT(int, int, int, int, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void ReadnPixelsEXT<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, T1[] data)
                 where T1 : unmanaged
             {
@@ -1683,7 +1683,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ReadnPixelsEXT(x, y, width, height, format, type, bufSize, data_ptr);
                 }
             }
-            /// <inheritdoc cref="ReadnPixelsEXT"/>
+            /// <inheritdoc cref="ReadnPixelsEXT(int, int, int, int, PixelFormat, PixelType, int, void*)"/>
             public static unsafe void ReadnPixelsEXT<T1>(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, ref T1 data)
                 where T1 : unmanaged
             {
@@ -1692,7 +1692,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ReadnPixelsEXT(x, y, width, height, format, type, bufSize, data_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformfvEXT"/>
+            /// <inheritdoc cref="GetnUniformfvEXT(int, int, int, float*)"/>
             public static unsafe void GetnUniformfvEXT(int program, int location, Span<float> parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
@@ -1701,7 +1701,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetnUniformfvEXT(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformfvEXT"/>
+            /// <inheritdoc cref="GetnUniformfvEXT(int, int, int, float*)"/>
             public static unsafe void GetnUniformfvEXT(int program, int location, float[] parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
@@ -1710,7 +1710,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetnUniformfvEXT(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformfvEXT"/>
+            /// <inheritdoc cref="GetnUniformfvEXT(int, int, int, float*)"/>
             public static unsafe void GetnUniformfvEXT(int program, int location, int bufSize, ref float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
@@ -1718,7 +1718,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetnUniformfvEXT(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformivEXT"/>
+            /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
             public static unsafe void GetnUniformivEXT(int program, int location, Span<int> parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
@@ -1727,7 +1727,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetnUniformivEXT(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformivEXT"/>
+            /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
             public static unsafe void GetnUniformivEXT(int program, int location, int[] parameters)
             {
                 int bufSize = (int)(parameters.Length * 4);
@@ -1736,7 +1736,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetnUniformivEXT(program, location, bufSize, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetnUniformivEXT"/>
+            /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
             public static unsafe void GetnUniformivEXT(int program, int location, int bufSize, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -1747,7 +1747,7 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class IMG
         {
-            /// <inheritdoc cref="ClipPlanefIMG"/>
+            /// <inheritdoc cref="ClipPlanefIMG(ClipPlaneName, float*)"/>
             public static unsafe void ClipPlanefIMG(ClipPlaneName p, ReadOnlySpan<float> eqn)
             {
                 fixed (float* eqn_ptr = eqn)
@@ -1755,7 +1755,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanefIMG(p, eqn_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanefIMG"/>
+            /// <inheritdoc cref="ClipPlanefIMG(ClipPlaneName, float*)"/>
             public static unsafe void ClipPlanefIMG(ClipPlaneName p, float[] eqn)
             {
                 fixed (float* eqn_ptr = eqn)
@@ -1763,7 +1763,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanefIMG(p, eqn_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanefIMG"/>
+            /// <inheritdoc cref="ClipPlanefIMG(ClipPlaneName, float*)"/>
             public static unsafe void ClipPlanefIMG(ClipPlaneName p, in float eqn)
             {
                 fixed (float* eqn_ptr = &eqn)
@@ -1771,7 +1771,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanefIMG(p, eqn_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanexIMG"/>
+            /// <inheritdoc cref="ClipPlanexIMG(ClipPlaneName, int*)"/>
             public static unsafe void ClipPlanexIMG(ClipPlaneName p, ReadOnlySpan<int> eqn)
             {
                 fixed (int* eqn_ptr = eqn)
@@ -1779,7 +1779,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanexIMG(p, eqn_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanexIMG"/>
+            /// <inheritdoc cref="ClipPlanexIMG(ClipPlaneName, int*)"/>
             public static unsafe void ClipPlanexIMG(ClipPlaneName p, int[] eqn)
             {
                 fixed (int* eqn_ptr = eqn)
@@ -1787,7 +1787,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanexIMG(p, eqn_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanexIMG"/>
+            /// <inheritdoc cref="ClipPlanexIMG(ClipPlaneName, int*)"/>
             public static unsafe void ClipPlanexIMG(ClipPlaneName p, in int eqn)
             {
                 fixed (int* eqn_ptr = &eqn)
@@ -1798,7 +1798,7 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class KHR
         {
-            /// <inheritdoc cref="DebugMessageControl"/>
+            /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
             public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, ReadOnlySpan<uint> ids, bool enabled)
             {
                 int count = (int)(ids.Length);
@@ -1807,7 +1807,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
-            /// <inheritdoc cref="DebugMessageControl"/>
+            /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
             public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, uint[] ids, bool enabled)
             {
                 int count = (int)(ids.Length);
@@ -1816,7 +1816,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
-            /// <inheritdoc cref="DebugMessageControl"/>
+            /// <inheritdoc cref="DebugMessageControl(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
             public static unsafe void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, in uint ids, bool enabled)
             {
                 fixed (uint* ids_ptr = &ids)
@@ -1824,21 +1824,21 @@ namespace OpenTK.Graphics.OpenGLES1
                     DebugMessageControl(source, type, severity, count, ids_ptr, enabled);
                 }
             }
-            /// <inheritdoc cref="DebugMessageInsert"/>
+            /// <inheritdoc cref="DebugMessageInsert(DebugSource, DebugType, uint, DebugSeverity, int, byte*)"/>
             public static unsafe void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, string buf)
             {
                 byte* buf_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(buf);
                 DebugMessageInsert(source, type, id, severity, length, buf_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)buf_ptr);
             }
-            /// <inheritdoc cref="DebugMessageCallback"/>
+            /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
             public static unsafe void DebugMessageCallback(GLDebugProc callback, IntPtr userParam)
             {
                 void* userParam_vptr = (void*)userParam;
                 IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
                 DebugMessageCallback(callback_ptr, userParam_vptr);
             }
-            /// <inheritdoc cref="DebugMessageCallback"/>
+            /// <inheritdoc cref="DebugMessageCallback(IntPtr, void*)"/>
             public static unsafe void DebugMessageCallback<T1>(GLDebugProc callback, in T1 userParam)
                 where T1 : unmanaged
             {
@@ -1848,7 +1848,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DebugMessageCallback(callback_ptr, userParam_ptr);
                 }
             }
-            /// <inheritdoc cref="GetDebugMessageLog"/>
+            /// <inheritdoc cref="GetDebugMessageLog(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
             public static unsafe uint GetDebugMessageLog(uint count, int bufSize, Span<DebugSource> sources, Span<DebugType> types, Span<uint> ids, Span<DebugSeverity> severities, Span<int> lengths, out string messageLog)
             {
                 uint returnValue;
@@ -1873,7 +1873,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDebugMessageLog"/>
+            /// <inheritdoc cref="GetDebugMessageLog(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
             public static unsafe uint GetDebugMessageLog(uint count, int bufSize, DebugSource[] sources, DebugType[] types, uint[] ids, DebugSeverity[] severities, int[] lengths, out string messageLog)
             {
                 uint returnValue;
@@ -1898,7 +1898,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDebugMessageLog"/>
+            /// <inheritdoc cref="GetDebugMessageLog(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
             public static unsafe uint GetDebugMessageLog(uint count, int bufSize, ref DebugSource sources, ref DebugType types, ref uint ids, ref DebugSeverity severities, ref int lengths, out string messageLog)
             {
                 uint returnValue;
@@ -1915,21 +1915,21 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="PushDebugGroup"/>
+            /// <inheritdoc cref="PushDebugGroup(DebugSource, uint, int, byte*)"/>
             public static unsafe void PushDebugGroup(DebugSource source, uint id, int length, string message)
             {
                 byte* message_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(message);
                 PushDebugGroup(source, id, length, message_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)message_ptr);
             }
-            /// <inheritdoc cref="ObjectLabel"/>
+            /// <inheritdoc cref="ObjectLabel(ObjectIdentifier, uint, int, byte*)"/>
             public static unsafe void ObjectLabel(ObjectIdentifier identifier, uint name, int length, string label)
             {
                 byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
                 ObjectLabel(identifier, name, length, label_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)label_ptr);
             }
-            /// <inheritdoc cref="GetObjectLabel"/>
+            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
             public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, Span<int> length)
             {
                 string label;
@@ -1942,7 +1942,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectLabel"/>
+            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
             public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, Span<int> length, out string label)
             {
                 fixed (int* length_ptr = length)
@@ -1953,7 +1953,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectLabel"/>
+            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
             public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, int[] length)
             {
                 string label;
@@ -1966,7 +1966,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectLabel"/>
+            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
             public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, int[] length, out string label)
             {
                 fixed (int* length_ptr = length)
@@ -1977,7 +1977,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectLabel"/>
+            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
             public static unsafe string GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, ref int length)
             {
                 string label;
@@ -1990,7 +1990,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectLabel"/>
+            /// <inheritdoc cref="GetObjectLabel(ObjectIdentifier, uint, int, int*, byte*)"/>
             public static unsafe void GetObjectLabel(ObjectIdentifier identifier, uint name, int bufSize, ref int length, out string label)
             {
                 fixed (int* length_ptr = &length)
@@ -2001,7 +2001,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="ObjectPtrLabel"/>
+            /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
             public static unsafe void ObjectPtrLabel(IntPtr ptr, int length, string label)
             {
                 byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
@@ -2009,7 +2009,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ObjectPtrLabel(ptr_vptr, length, label_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)label_ptr);
             }
-            /// <inheritdoc cref="ObjectPtrLabel"/>
+            /// <inheritdoc cref="ObjectPtrLabel(void*, int, byte*)"/>
             public static unsafe void ObjectPtrLabel<T1>(in T1 ptr, int length, string label)
                 where T1 : unmanaged
             {
@@ -2020,7 +2020,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, Span<int> length)
             {
                 string label;
@@ -2034,7 +2034,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, Span<int> length, out string label)
             {
                 fixed (int* length_ptr = length)
@@ -2046,7 +2046,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, int[] length)
             {
                 string label;
@@ -2060,7 +2060,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, int[] length, out string label)
             {
                 fixed (int* length_ptr = length)
@@ -2072,7 +2072,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabel(IntPtr ptr, int bufSize, ref int length)
             {
                 string label;
@@ -2086,7 +2086,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabel(IntPtr ptr, int bufSize, ref int length, out string label)
             {
                 fixed (int* length_ptr = &length)
@@ -2098,7 +2098,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, Span<int> length)
                 where T1 : unmanaged
             {
@@ -2115,7 +2115,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, Span<int> length, out string label)
                 where T1 : unmanaged
             {
@@ -2130,7 +2130,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, int[] length)
                 where T1 : unmanaged
             {
@@ -2147,7 +2147,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, int[] length, out string label)
                 where T1 : unmanaged
             {
@@ -2162,7 +2162,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, ref int length)
                 where T1 : unmanaged
             {
@@ -2177,7 +2177,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabel"/>
+            /// <inheritdoc cref="GetObjectPtrLabel(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabel<T1>(in T1 ptr, int bufSize, ref int length, out string label)
                 where T1 : unmanaged
             {
@@ -2190,12 +2190,12 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPointerv"/>
+            /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
             public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
             {
                 GetPointerv(pname, parameters);
             }
-            /// <inheritdoc cref="DebugMessageControlKHR"/>
+            /// <inheritdoc cref="DebugMessageControlKHR(DebugSource, DebugType, DebugSeverity, int, uint*, bool)"/>
             public static unsafe void DebugMessageControlKHR(DebugSource source, DebugType type, DebugSeverity severity, int count, in uint ids, bool enabled)
             {
                 fixed (uint* ids_ptr = &ids)
@@ -2203,21 +2203,21 @@ namespace OpenTK.Graphics.OpenGLES1
                     DebugMessageControlKHR(source, type, severity, count, ids_ptr, enabled);
                 }
             }
-            /// <inheritdoc cref="DebugMessageInsertKHR"/>
+            /// <inheritdoc cref="DebugMessageInsertKHR(DebugSource, DebugType, uint, DebugSeverity, int, byte*)"/>
             public static unsafe void DebugMessageInsertKHR(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, string buf)
             {
                 byte* buf_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(buf);
                 DebugMessageInsertKHR(source, type, id, severity, length, buf_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)buf_ptr);
             }
-            /// <inheritdoc cref="DebugMessageCallbackKHR"/>
+            /// <inheritdoc cref="DebugMessageCallbackKHR(IntPtr, void*)"/>
             public static unsafe void DebugMessageCallbackKHR(GLDebugProcKHR callback, IntPtr userParam)
             {
                 void* userParam_vptr = (void*)userParam;
                 IntPtr callback_ptr = Marshal.GetFunctionPointerForDelegate(callback);
                 DebugMessageCallbackKHR(callback_ptr, userParam_vptr);
             }
-            /// <inheritdoc cref="DebugMessageCallbackKHR"/>
+            /// <inheritdoc cref="DebugMessageCallbackKHR(IntPtr, void*)"/>
             public static unsafe void DebugMessageCallbackKHR<T1>(GLDebugProcKHR callback, in T1 userParam)
                 where T1 : unmanaged
             {
@@ -2227,7 +2227,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DebugMessageCallbackKHR(callback_ptr, userParam_ptr);
                 }
             }
-            /// <inheritdoc cref="GetDebugMessageLogKHR"/>
+            /// <inheritdoc cref="GetDebugMessageLogKHR(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
             public static unsafe uint GetDebugMessageLogKHR(uint count, int bufSize, Span<DebugSource> sources, Span<DebugType> types, Span<uint> ids, Span<DebugSeverity> severities, Span<int> lengths, out string messageLog)
             {
                 uint returnValue;
@@ -2252,7 +2252,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDebugMessageLogKHR"/>
+            /// <inheritdoc cref="GetDebugMessageLogKHR(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
             public static unsafe uint GetDebugMessageLogKHR(uint count, int bufSize, DebugSource[] sources, DebugType[] types, uint[] ids, DebugSeverity[] severities, int[] lengths, out string messageLog)
             {
                 uint returnValue;
@@ -2277,7 +2277,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDebugMessageLogKHR"/>
+            /// <inheritdoc cref="GetDebugMessageLogKHR(uint, int, DebugSource*, DebugType*, uint*, DebugSeverity*, int*, byte*)"/>
             public static unsafe uint GetDebugMessageLogKHR(uint count, int bufSize, ref DebugSource sources, ref DebugType types, ref uint ids, ref DebugSeverity severities, ref int lengths, out string messageLog)
             {
                 uint returnValue;
@@ -2294,21 +2294,21 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="PushDebugGroupKHR"/>
+            /// <inheritdoc cref="PushDebugGroupKHR(DebugSource, uint, int, byte*)"/>
             public static unsafe void PushDebugGroupKHR(DebugSource source, uint id, int length, string message)
             {
                 byte* message_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(message);
                 PushDebugGroupKHR(source, id, length, message_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)message_ptr);
             }
-            /// <inheritdoc cref="ObjectLabelKHR"/>
+            /// <inheritdoc cref="ObjectLabelKHR(ObjectIdentifier, uint, int, byte*)"/>
             public static unsafe void ObjectLabelKHR(ObjectIdentifier identifier, uint name, int length, string label)
             {
                 byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
                 ObjectLabelKHR(identifier, name, length, label_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)label_ptr);
             }
-            /// <inheritdoc cref="GetObjectLabelKHR"/>
+            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
             public static unsafe string GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length)
             {
                 string label;
@@ -2321,7 +2321,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectLabelKHR"/>
+            /// <inheritdoc cref="GetObjectLabelKHR(All, uint, int, int*, byte*)"/>
             public static unsafe void GetObjectLabelKHR(All identifier, uint name, int bufSize, ref int length, out string label)
             {
                 fixed (int* length_ptr = &length)
@@ -2332,7 +2332,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="ObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="ObjectPtrLabelKHR(void*, int, byte*)"/>
             public static unsafe void ObjectPtrLabelKHR(IntPtr ptr, int length, string label)
             {
                 byte* label_ptr = (byte*)Marshal.StringToCoTaskMemUTF8(label);
@@ -2340,7 +2340,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 ObjectPtrLabelKHR(ptr_vptr, length, label_ptr);
                 Marshal.FreeCoTaskMem((IntPtr)label_ptr);
             }
-            /// <inheritdoc cref="ObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="ObjectPtrLabelKHR(void*, int, byte*)"/>
             public static unsafe void ObjectPtrLabelKHR<T1>(in T1 ptr, int length, string label)
                 where T1 : unmanaged
             {
@@ -2351,7 +2351,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, Span<int> length)
             {
                 string label;
@@ -2365,7 +2365,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, Span<int> length, out string label)
             {
                 fixed (int* length_ptr = length)
@@ -2377,7 +2377,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, int[] length)
             {
                 string label;
@@ -2391,7 +2391,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, int[] length, out string label)
             {
                 fixed (int* length_ptr = length)
@@ -2403,7 +2403,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, ref int length)
             {
                 string label;
@@ -2417,7 +2417,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabelKHR(IntPtr ptr, int bufSize, ref int length, out string label)
             {
                 fixed (int* length_ptr = &length)
@@ -2429,7 +2429,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)label_ptr);
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, Span<int> length)
                 where T1 : unmanaged
             {
@@ -2446,7 +2446,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, Span<int> length, out string label)
                 where T1 : unmanaged
             {
@@ -2461,7 +2461,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, int[] length)
                 where T1 : unmanaged
             {
@@ -2478,7 +2478,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, int[] length, out string label)
                 where T1 : unmanaged
             {
@@ -2493,7 +2493,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe string GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, ref int length)
                 where T1 : unmanaged
             {
@@ -2508,7 +2508,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return label;
             }
-            /// <inheritdoc cref="GetObjectPtrLabelKHR"/>
+            /// <inheritdoc cref="GetObjectPtrLabelKHR(void*, int, int*, byte*)"/>
             public static unsafe void GetObjectPtrLabelKHR<T1>(in T1 ptr, int bufSize, ref int length, out string label)
                 where T1 : unmanaged
             {
@@ -2524,7 +2524,7 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class NV
         {
-            /// <inheritdoc cref="DeleteFencesNV"/>
+            /// <inheritdoc cref="DeleteFencesNV(int, uint*)"/>
             public static unsafe void DeleteFencesNV(ReadOnlySpan<uint> fences)
             {
                 int n = (int)(fences.Length);
@@ -2533,7 +2533,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteFencesNV(n, fences_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteFencesNV"/>
+            /// <inheritdoc cref="DeleteFencesNV(int, uint*)"/>
             public static unsafe void DeleteFencesNV(uint[] fences)
             {
                 int n = (int)(fences.Length);
@@ -2542,7 +2542,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteFencesNV(n, fences_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteFencesNV"/>
+            /// <inheritdoc cref="DeleteFencesNV(int, uint*)"/>
             public static unsafe void DeleteFencesNV(int n, in uint fences)
             {
                 fixed (uint* fences_ptr = &fences)
@@ -2550,7 +2550,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteFencesNV(n, fences_ptr);
                 }
             }
-            /// <inheritdoc cref="GenFencesNV"/>
+            /// <inheritdoc cref="GenFencesNV(int, uint*)"/>
             public static unsafe void GenFencesNV(Span<uint> fences)
             {
                 int n = (int)(fences.Length);
@@ -2559,7 +2559,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenFencesNV(n, fences_ptr);
                 }
             }
-            /// <inheritdoc cref="GenFencesNV"/>
+            /// <inheritdoc cref="GenFencesNV(int, uint*)"/>
             public static unsafe void GenFencesNV(uint[] fences)
             {
                 int n = (int)(fences.Length);
@@ -2568,7 +2568,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenFencesNV(n, fences_ptr);
                 }
             }
-            /// <inheritdoc cref="GenFencesNV"/>
+            /// <inheritdoc cref="GenFencesNV(int, uint*)"/>
             public static unsafe void GenFencesNV(int n, ref uint fences)
             {
                 fixed (uint* fences_ptr = &fences)
@@ -2576,7 +2576,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenFencesNV(n, fences_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFenceivNV"/>
+            /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
             public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -2584,7 +2584,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFenceivNV(fence, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFenceivNV"/>
+            /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
             public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -2592,7 +2592,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFenceivNV(fence, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFenceivNV"/>
+            /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
             public static unsafe void GetFenceivNV(uint fence, FenceParameterNameNV pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -2603,13 +2603,13 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class OES
         {
-            /// <inheritdoc cref="EGLImageTargetTexture2DOES"/>
+            /// <inheritdoc cref="EGLImageTargetTexture2DOES(All, void*)"/>
             public static unsafe void EGLImageTargetTexture2DOES(All target, IntPtr image)
             {
                 void* image_vptr = (void*)image;
                 EGLImageTargetTexture2DOES(target, image_vptr);
             }
-            /// <inheritdoc cref="EGLImageTargetTexture2DOES"/>
+            /// <inheritdoc cref="EGLImageTargetTexture2DOES(All, void*)"/>
             public static unsafe void EGLImageTargetTexture2DOES<T1>(All target, ref T1 image)
                 where T1 : unmanaged
             {
@@ -2618,13 +2618,13 @@ namespace OpenTK.Graphics.OpenGLES1
                     EGLImageTargetTexture2DOES(target, image_ptr);
                 }
             }
-            /// <inheritdoc cref="EGLImageTargetRenderbufferStorageOES"/>
+            /// <inheritdoc cref="EGLImageTargetRenderbufferStorageOES(All, void*)"/>
             public static unsafe void EGLImageTargetRenderbufferStorageOES(All target, IntPtr image)
             {
                 void* image_vptr = (void*)image;
                 EGLImageTargetRenderbufferStorageOES(target, image_vptr);
             }
-            /// <inheritdoc cref="EGLImageTargetRenderbufferStorageOES"/>
+            /// <inheritdoc cref="EGLImageTargetRenderbufferStorageOES(All, void*)"/>
             public static unsafe void EGLImageTargetRenderbufferStorageOES<T1>(All target, ref T1 image)
                 where T1 : unmanaged
             {
@@ -2633,7 +2633,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     EGLImageTargetRenderbufferStorageOES(target, image_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord1bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord1bvOES(TextureUnit texture, ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2641,7 +2641,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord1bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord1bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord1bvOES(TextureUnit texture, sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2649,7 +2649,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord1bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord1bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord1bvOES(TextureUnit texture, in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2657,7 +2657,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord1bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord2bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2665,7 +2665,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord2bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord2bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2673,7 +2673,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord2bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord2bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord2bvOES(TextureUnit texture, in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2681,7 +2681,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord2bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord3bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2689,7 +2689,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord3bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord3bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2697,7 +2697,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord3bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord3bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord3bvOES(TextureUnit texture, in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2705,7 +2705,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord3bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord4bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2713,7 +2713,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord4bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord4bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2721,7 +2721,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord4bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4bvOES"/>
+            /// <inheritdoc cref="MultiTexCoord4bvOES(TextureUnit, sbyte*)"/>
             public static unsafe void MultiTexCoord4bvOES(TextureUnit texture, in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2729,7 +2729,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord4bvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1bvOES"/>
+            /// <inheritdoc cref="TexCoord1bvOES(sbyte*)"/>
             public static unsafe void TexCoord1bvOES(ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2737,7 +2737,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord1bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1bvOES"/>
+            /// <inheritdoc cref="TexCoord1bvOES(sbyte*)"/>
             public static unsafe void TexCoord1bvOES(sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2745,7 +2745,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord1bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1bvOES"/>
+            /// <inheritdoc cref="TexCoord1bvOES(sbyte*)"/>
             public static unsafe void TexCoord1bvOES(in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2753,7 +2753,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord1bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2bvOES"/>
+            /// <inheritdoc cref="TexCoord2bvOES(sbyte*)"/>
             public static unsafe void TexCoord2bvOES(ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2761,7 +2761,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord2bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2bvOES"/>
+            /// <inheritdoc cref="TexCoord2bvOES(sbyte*)"/>
             public static unsafe void TexCoord2bvOES(sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2769,7 +2769,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord2bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2bvOES"/>
+            /// <inheritdoc cref="TexCoord2bvOES(sbyte*)"/>
             public static unsafe void TexCoord2bvOES(in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2777,7 +2777,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord2bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3bvOES"/>
+            /// <inheritdoc cref="TexCoord3bvOES(sbyte*)"/>
             public static unsafe void TexCoord3bvOES(ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2785,7 +2785,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord3bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3bvOES"/>
+            /// <inheritdoc cref="TexCoord3bvOES(sbyte*)"/>
             public static unsafe void TexCoord3bvOES(sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2793,7 +2793,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord3bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3bvOES"/>
+            /// <inheritdoc cref="TexCoord3bvOES(sbyte*)"/>
             public static unsafe void TexCoord3bvOES(in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2801,7 +2801,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord3bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4bvOES"/>
+            /// <inheritdoc cref="TexCoord4bvOES(sbyte*)"/>
             public static unsafe void TexCoord4bvOES(ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2809,7 +2809,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord4bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4bvOES"/>
+            /// <inheritdoc cref="TexCoord4bvOES(sbyte*)"/>
             public static unsafe void TexCoord4bvOES(sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2817,7 +2817,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord4bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4bvOES"/>
+            /// <inheritdoc cref="TexCoord4bvOES(sbyte*)"/>
             public static unsafe void TexCoord4bvOES(in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2825,7 +2825,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord4bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2bvOES"/>
+            /// <inheritdoc cref="Vertex2bvOES(sbyte*)"/>
             public static unsafe void Vertex2bvOES(ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2833,7 +2833,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex2bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2bvOES"/>
+            /// <inheritdoc cref="Vertex2bvOES(sbyte*)"/>
             public static unsafe void Vertex2bvOES(sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2841,7 +2841,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex2bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2bvOES"/>
+            /// <inheritdoc cref="Vertex2bvOES(sbyte*)"/>
             public static unsafe void Vertex2bvOES(in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2849,7 +2849,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex2bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3bvOES"/>
+            /// <inheritdoc cref="Vertex3bvOES(sbyte*)"/>
             public static unsafe void Vertex3bvOES(ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2857,7 +2857,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex3bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3bvOES"/>
+            /// <inheritdoc cref="Vertex3bvOES(sbyte*)"/>
             public static unsafe void Vertex3bvOES(sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2865,7 +2865,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex3bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3bvOES"/>
+            /// <inheritdoc cref="Vertex3bvOES(sbyte*)"/>
             public static unsafe void Vertex3bvOES(in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2873,7 +2873,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex3bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4bvOES"/>
+            /// <inheritdoc cref="Vertex4bvOES(sbyte*)"/>
             public static unsafe void Vertex4bvOES(ReadOnlySpan<sbyte> coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2881,7 +2881,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex4bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4bvOES"/>
+            /// <inheritdoc cref="Vertex4bvOES(sbyte*)"/>
             public static unsafe void Vertex4bvOES(sbyte[] coords)
             {
                 fixed (sbyte* coords_ptr = coords)
@@ -2889,7 +2889,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex4bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4bvOES"/>
+            /// <inheritdoc cref="Vertex4bvOES(sbyte*)"/>
             public static unsafe void Vertex4bvOES(in sbyte coords)
             {
                 fixed (sbyte* coords_ptr = &coords)
@@ -2897,7 +2897,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex4bvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexsvOES"/>
+            /// <inheritdoc cref="DrawTexsvOES(short*)"/>
             public static unsafe void DrawTexsvOES(ReadOnlySpan<short> coords)
             {
                 fixed (short* coords_ptr = coords)
@@ -2905,7 +2905,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexsvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexsvOES"/>
+            /// <inheritdoc cref="DrawTexsvOES(short*)"/>
             public static unsafe void DrawTexsvOES(short[] coords)
             {
                 fixed (short* coords_ptr = coords)
@@ -2913,7 +2913,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexsvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexsvOES"/>
+            /// <inheritdoc cref="DrawTexsvOES(short*)"/>
             public static unsafe void DrawTexsvOES(in short coords)
             {
                 fixed (short* coords_ptr = &coords)
@@ -2921,7 +2921,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexsvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexivOES"/>
+            /// <inheritdoc cref="DrawTexivOES(int*)"/>
             public static unsafe void DrawTexivOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -2929,7 +2929,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexivOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexivOES"/>
+            /// <inheritdoc cref="DrawTexivOES(int*)"/>
             public static unsafe void DrawTexivOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -2937,7 +2937,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexivOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexivOES"/>
+            /// <inheritdoc cref="DrawTexivOES(int*)"/>
             public static unsafe void DrawTexivOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -2945,7 +2945,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexivOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexxvOES"/>
+            /// <inheritdoc cref="DrawTexxvOES(int*)"/>
             public static unsafe void DrawTexxvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -2953,7 +2953,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexxvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexxvOES"/>
+            /// <inheritdoc cref="DrawTexxvOES(int*)"/>
             public static unsafe void DrawTexxvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -2961,7 +2961,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexxvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexxvOES"/>
+            /// <inheritdoc cref="DrawTexxvOES(int*)"/>
             public static unsafe void DrawTexxvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -2969,7 +2969,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexxvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexfvOES"/>
+            /// <inheritdoc cref="DrawTexfvOES(float*)"/>
             public static unsafe void DrawTexfvOES(ReadOnlySpan<float> coords)
             {
                 fixed (float* coords_ptr = coords)
@@ -2977,7 +2977,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexfvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexfvOES"/>
+            /// <inheritdoc cref="DrawTexfvOES(float*)"/>
             public static unsafe void DrawTexfvOES(float[] coords)
             {
                 fixed (float* coords_ptr = coords)
@@ -2985,7 +2985,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexfvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DrawTexfvOES"/>
+            /// <inheritdoc cref="DrawTexfvOES(float*)"/>
             public static unsafe void DrawTexfvOES(in float coords)
             {
                 fixed (float* coords_ptr = &coords)
@@ -2993,7 +2993,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DrawTexfvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanexOES"/>
+            /// <inheritdoc cref="ClipPlanexOES(ClipPlaneName, int*)"/>
             public static unsafe void ClipPlanexOES(ClipPlaneName plane, ReadOnlySpan<int> equation)
             {
                 fixed (int* equation_ptr = equation)
@@ -3001,7 +3001,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanexOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanexOES"/>
+            /// <inheritdoc cref="ClipPlanexOES(ClipPlaneName, int*)"/>
             public static unsafe void ClipPlanexOES(ClipPlaneName plane, int[] equation)
             {
                 fixed (int* equation_ptr = equation)
@@ -3009,7 +3009,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanexOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanexOES"/>
+            /// <inheritdoc cref="ClipPlanexOES(ClipPlaneName, int*)"/>
             public static unsafe void ClipPlanexOES(ClipPlaneName plane, in int equation)
             {
                 fixed (int* equation_ptr = &equation)
@@ -3017,7 +3017,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanexOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="FogxvOES"/>
+            /// <inheritdoc cref="FogxvOES(FogPName, int*)"/>
             public static unsafe void FogxvOES(FogPName pname, ReadOnlySpan<int> param)
             {
                 fixed (int* param_ptr = param)
@@ -3025,7 +3025,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     FogxvOES(pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="FogxvOES"/>
+            /// <inheritdoc cref="FogxvOES(FogPName, int*)"/>
             public static unsafe void FogxvOES(FogPName pname, int[] param)
             {
                 fixed (int* param_ptr = param)
@@ -3033,7 +3033,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     FogxvOES(pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="FogxvOES"/>
+            /// <inheritdoc cref="FogxvOES(FogPName, int*)"/>
             public static unsafe void FogxvOES(FogPName pname, in int param)
             {
                 fixed (int* param_ptr = &param)
@@ -3041,7 +3041,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     FogxvOES(pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="GetClipPlanexOES"/>
+            /// <inheritdoc cref="GetClipPlanexOES(ClipPlaneName, int*)"/>
             public static unsafe void GetClipPlanexOES(ClipPlaneName plane, Span<int> equation)
             {
                 fixed (int* equation_ptr = equation)
@@ -3049,7 +3049,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanexOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="GetClipPlanexOES"/>
+            /// <inheritdoc cref="GetClipPlanexOES(ClipPlaneName, int*)"/>
             public static unsafe void GetClipPlanexOES(ClipPlaneName plane, int[] equation)
             {
                 fixed (int* equation_ptr = equation)
@@ -3057,7 +3057,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanexOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="GetClipPlanexOES"/>
+            /// <inheritdoc cref="GetClipPlanexOES(ClipPlaneName, int*)"/>
             public static unsafe void GetClipPlanexOES(ClipPlaneName plane, ref int equation)
             {
                 fixed (int* equation_ptr = &equation)
@@ -3065,7 +3065,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanexOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFixedvOES"/>
+            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
             public static unsafe void GetFixedvOES(GetPName pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3073,7 +3073,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFixedvOES(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFixedvOES"/>
+            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
             public static unsafe void GetFixedvOES(GetPName pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3081,7 +3081,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFixedvOES(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFixedvOES"/>
+            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
             public static unsafe void GetFixedvOES(GetPName pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3089,7 +3089,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFixedvOES(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexEnvxvOES"/>
+            /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3097,7 +3097,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexEnvxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexEnvxvOES"/>
+            /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3105,7 +3105,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexEnvxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexEnvxvOES"/>
+            /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3113,7 +3113,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexEnvxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexParameterxvOES"/>
+            /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3121,7 +3121,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexParameterxvOES"/>
+            /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3129,7 +3129,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexParameterxvOES"/>
+            /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3137,7 +3137,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="LightModelxvOES"/>
+            /// <inheritdoc cref="LightModelxvOES(LightModelParameter, int*)"/>
             public static unsafe void LightModelxvOES(LightModelParameter pname, ReadOnlySpan<int> param)
             {
                 fixed (int* param_ptr = param)
@@ -3145,7 +3145,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LightModelxvOES(pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="LightModelxvOES"/>
+            /// <inheritdoc cref="LightModelxvOES(LightModelParameter, int*)"/>
             public static unsafe void LightModelxvOES(LightModelParameter pname, int[] param)
             {
                 fixed (int* param_ptr = param)
@@ -3153,7 +3153,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LightModelxvOES(pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="LightModelxvOES"/>
+            /// <inheritdoc cref="LightModelxvOES(LightModelParameter, int*)"/>
             public static unsafe void LightModelxvOES(LightModelParameter pname, in int param)
             {
                 fixed (int* param_ptr = &param)
@@ -3161,7 +3161,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LightModelxvOES(pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="LightxvOES"/>
+            /// <inheritdoc cref="LightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void LightxvOES(LightName light, LightParameter pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3169,7 +3169,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LightxvOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="LightxvOES"/>
+            /// <inheritdoc cref="LightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void LightxvOES(LightName light, LightParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3177,7 +3177,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LightxvOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="LightxvOES"/>
+            /// <inheritdoc cref="LightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void LightxvOES(LightName light, LightParameter pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3185,7 +3185,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LightxvOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="LoadMatrixxOES"/>
+            /// <inheritdoc cref="LoadMatrixxOES(int*)"/>
             public static unsafe void LoadMatrixxOES(ReadOnlySpan<int> m)
             {
                 fixed (int* m_ptr = m)
@@ -3193,7 +3193,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LoadMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="LoadMatrixxOES"/>
+            /// <inheritdoc cref="LoadMatrixxOES(int*)"/>
             public static unsafe void LoadMatrixxOES(int[] m)
             {
                 fixed (int* m_ptr = m)
@@ -3201,7 +3201,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LoadMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="LoadMatrixxOES"/>
+            /// <inheritdoc cref="LoadMatrixxOES(int*)"/>
             public static unsafe void LoadMatrixxOES(in int m)
             {
                 fixed (int* m_ptr = &m)
@@ -3209,7 +3209,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LoadMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MaterialxvOES"/>
+            /// <inheritdoc cref="MaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, ReadOnlySpan<int> param)
             {
                 fixed (int* param_ptr = param)
@@ -3217,7 +3217,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MaterialxvOES(face, pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="MaterialxvOES"/>
+            /// <inheritdoc cref="MaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, int[] param)
             {
                 fixed (int* param_ptr = param)
@@ -3225,7 +3225,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MaterialxvOES(face, pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="MaterialxvOES"/>
+            /// <inheritdoc cref="MaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void MaterialxvOES(TriangleFace face, MaterialParameter pname, in int param)
             {
                 fixed (int* param_ptr = &param)
@@ -3233,7 +3233,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MaterialxvOES(face, pname, param_ptr);
                 }
             }
-            /// <inheritdoc cref="MultMatrixxOES"/>
+            /// <inheritdoc cref="MultMatrixxOES(int*)"/>
             public static unsafe void MultMatrixxOES(ReadOnlySpan<int> m)
             {
                 fixed (int* m_ptr = m)
@@ -3241,7 +3241,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MultMatrixxOES"/>
+            /// <inheritdoc cref="MultMatrixxOES(int*)"/>
             public static unsafe void MultMatrixxOES(int[] m)
             {
                 fixed (int* m_ptr = m)
@@ -3249,7 +3249,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MultMatrixxOES"/>
+            /// <inheritdoc cref="MultMatrixxOES(int*)"/>
             public static unsafe void MultMatrixxOES(in int m)
             {
                 fixed (int* m_ptr = &m)
@@ -3257,7 +3257,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="PointParameterxvOES"/>
+            /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
             public static unsafe void PointParameterxvOES(PointParameterNameARB pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3265,7 +3265,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointParameterxvOES(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="PointParameterxvOES"/>
+            /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
             public static unsafe void PointParameterxvOES(PointParameterNameARB pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3273,7 +3273,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointParameterxvOES(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="PointParameterxvOES"/>
+            /// <inheritdoc cref="PointParameterxvOES(PointParameterNameARB, int*)"/>
             public static unsafe void PointParameterxvOES(PointParameterNameARB pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3281,7 +3281,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointParameterxvOES(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexEnvxvOES"/>
+            /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3289,7 +3289,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexEnvxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexEnvxvOES"/>
+            /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3297,7 +3297,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexEnvxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexEnvxvOES"/>
+            /// <inheritdoc cref="TexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3305,7 +3305,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexEnvxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexParameterxvOES"/>
+            /// <inheritdoc cref="TexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3313,7 +3313,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexParameterxvOES"/>
+            /// <inheritdoc cref="TexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3321,7 +3321,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexParameterxvOES"/>
+            /// <inheritdoc cref="TexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3329,7 +3329,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetLightxvOES"/>
+            /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxvOES(LightName light, LightParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3337,7 +3337,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetLightxvOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetLightxvOES"/>
+            /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxvOES(LightName light, LightParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3345,7 +3345,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetLightxvOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetLightxvOES"/>
+            /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxvOES(LightName light, LightParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3353,7 +3353,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetLightxvOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetMaterialxvOES"/>
+            /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3361,7 +3361,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetMaterialxvOES(face, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetMaterialxvOES"/>
+            /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3369,7 +3369,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetMaterialxvOES(face, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetMaterialxvOES"/>
+            /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3377,7 +3377,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetMaterialxvOES(face, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="BitmapxOES"/>
+            /// <inheritdoc cref="BitmapxOES(int, int, int, int, int, int, byte*)"/>
             public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, ReadOnlySpan<byte> bitmap)
             {
                 fixed (byte* bitmap_ptr = bitmap)
@@ -3385,7 +3385,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     BitmapxOES(width, height, xorig, yorig, xmove, ymove, bitmap_ptr);
                 }
             }
-            /// <inheritdoc cref="BitmapxOES"/>
+            /// <inheritdoc cref="BitmapxOES(int, int, int, int, int, int, byte*)"/>
             public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, byte[] bitmap)
             {
                 fixed (byte* bitmap_ptr = bitmap)
@@ -3393,7 +3393,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     BitmapxOES(width, height, xorig, yorig, xmove, ymove, bitmap_ptr);
                 }
             }
-            /// <inheritdoc cref="BitmapxOES"/>
+            /// <inheritdoc cref="BitmapxOES(int, int, int, int, int, int, byte*)"/>
             public static unsafe void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, in byte bitmap)
             {
                 fixed (byte* bitmap_ptr = &bitmap)
@@ -3401,7 +3401,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     BitmapxOES(width, height, xorig, yorig, xmove, ymove, bitmap_ptr);
                 }
             }
-            /// <inheritdoc cref="Color3xvOES"/>
+            /// <inheritdoc cref="Color3xvOES(int*)"/>
             public static unsafe void Color3xvOES(ReadOnlySpan<int> components)
             {
                 fixed (int* components_ptr = components)
@@ -3409,7 +3409,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Color3xvOES(components_ptr);
                 }
             }
-            /// <inheritdoc cref="Color3xvOES"/>
+            /// <inheritdoc cref="Color3xvOES(int*)"/>
             public static unsafe void Color3xvOES(int[] components)
             {
                 fixed (int* components_ptr = components)
@@ -3417,7 +3417,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Color3xvOES(components_ptr);
                 }
             }
-            /// <inheritdoc cref="Color3xvOES"/>
+            /// <inheritdoc cref="Color3xvOES(int*)"/>
             public static unsafe void Color3xvOES(in int components)
             {
                 fixed (int* components_ptr = &components)
@@ -3425,7 +3425,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Color3xvOES(components_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4xvOES"/>
+            /// <inheritdoc cref="Color4xvOES(int*)"/>
             public static unsafe void Color4xvOES(ReadOnlySpan<int> components)
             {
                 fixed (int* components_ptr = components)
@@ -3433,7 +3433,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Color4xvOES(components_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4xvOES"/>
+            /// <inheritdoc cref="Color4xvOES(int*)"/>
             public static unsafe void Color4xvOES(int[] components)
             {
                 fixed (int* components_ptr = components)
@@ -3441,7 +3441,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Color4xvOES(components_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4xvOES"/>
+            /// <inheritdoc cref="Color4xvOES(int*)"/>
             public static unsafe void Color4xvOES(in int components)
             {
                 fixed (int* components_ptr = &components)
@@ -3449,7 +3449,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Color4xvOES(components_ptr);
                 }
             }
-            /// <inheritdoc cref="ConvolutionParameterxvOES"/>
+            /// <inheritdoc cref="ConvolutionParameterxvOES(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
             public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3457,7 +3457,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="ConvolutionParameterxvOES"/>
+            /// <inheritdoc cref="ConvolutionParameterxvOES(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
             public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3465,7 +3465,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="ConvolutionParameterxvOES"/>
+            /// <inheritdoc cref="ConvolutionParameterxvOES(ConvolutionTargetEXT, ConvolutionParameter, int*)"/>
             public static unsafe void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3473,7 +3473,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="EvalCoord1xvOES"/>
+            /// <inheritdoc cref="EvalCoord1xvOES(int*)"/>
             public static unsafe void EvalCoord1xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3481,7 +3481,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     EvalCoord1xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="EvalCoord1xvOES"/>
+            /// <inheritdoc cref="EvalCoord1xvOES(int*)"/>
             public static unsafe void EvalCoord1xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3489,7 +3489,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     EvalCoord1xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="EvalCoord1xvOES"/>
+            /// <inheritdoc cref="EvalCoord1xvOES(int*)"/>
             public static unsafe void EvalCoord1xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3497,7 +3497,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     EvalCoord1xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="EvalCoord2xvOES"/>
+            /// <inheritdoc cref="EvalCoord2xvOES(int*)"/>
             public static unsafe void EvalCoord2xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3505,7 +3505,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     EvalCoord2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="EvalCoord2xvOES"/>
+            /// <inheritdoc cref="EvalCoord2xvOES(int*)"/>
             public static unsafe void EvalCoord2xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3513,7 +3513,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     EvalCoord2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="EvalCoord2xvOES"/>
+            /// <inheritdoc cref="EvalCoord2xvOES(int*)"/>
             public static unsafe void EvalCoord2xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3521,7 +3521,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     EvalCoord2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="FeedbackBufferxOES"/>
+            /// <inheritdoc cref="FeedbackBufferxOES(int, All, int*)"/>
             public static unsafe void FeedbackBufferxOES(All type, ReadOnlySpan<int> buffer)
             {
                 int n = (int)(buffer.Length);
@@ -3530,7 +3530,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     FeedbackBufferxOES(n, type, buffer_ptr);
                 }
             }
-            /// <inheritdoc cref="FeedbackBufferxOES"/>
+            /// <inheritdoc cref="FeedbackBufferxOES(int, All, int*)"/>
             public static unsafe void FeedbackBufferxOES(All type, int[] buffer)
             {
                 int n = (int)(buffer.Length);
@@ -3539,7 +3539,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     FeedbackBufferxOES(n, type, buffer_ptr);
                 }
             }
-            /// <inheritdoc cref="FeedbackBufferxOES"/>
+            /// <inheritdoc cref="FeedbackBufferxOES(int, All, int*)"/>
             public static unsafe void FeedbackBufferxOES(int n, All type, in int buffer)
             {
                 fixed (int* buffer_ptr = &buffer)
@@ -3547,7 +3547,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     FeedbackBufferxOES(n, type, buffer_ptr);
                 }
             }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES"/>
+            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
             public static unsafe void GetConvolutionParameterxvOES(All target, All pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3555,7 +3555,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES"/>
+            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
             public static unsafe void GetConvolutionParameterxvOES(All target, All pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3563,7 +3563,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetConvolutionParameterxvOES"/>
+            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
             public static unsafe void GetConvolutionParameterxvOES(All target, All pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3571,7 +3571,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetHistogramParameterxvOES"/>
+            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
             public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3579,7 +3579,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetHistogramParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetHistogramParameterxvOES"/>
+            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
             public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3587,7 +3587,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetHistogramParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetHistogramParameterxvOES"/>
+            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
             public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3595,7 +3595,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetHistogramParameterxvOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetLightxOES"/>
+            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxOES(LightName light, LightParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3603,7 +3603,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetLightxOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetLightxOES"/>
+            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxOES(LightName light, LightParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3611,7 +3611,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetLightxOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetLightxOES"/>
+            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxOES(LightName light, LightParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3619,7 +3619,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetLightxOES(light, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetMapxvOES"/>
+            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
             public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, Span<int> v)
             {
                 fixed (int* v_ptr = v)
@@ -3627,7 +3627,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetMapxvOES(target, query, v_ptr);
                 }
             }
-            /// <inheritdoc cref="GetMapxvOES"/>
+            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
             public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, int[] v)
             {
                 fixed (int* v_ptr = v)
@@ -3635,7 +3635,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetMapxvOES(target, query, v_ptr);
                 }
             }
-            /// <inheritdoc cref="GetMapxvOES"/>
+            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
             public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, ref int v)
             {
                 fixed (int* v_ptr = &v)
@@ -3643,7 +3643,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetMapxvOES(target, query, v_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPixelMapxv"/>
+            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
             public static unsafe void GetPixelMapx(PixelMap map, Span<int> values)
             {
                 int size = (int)(values.Length);
@@ -3652,7 +3652,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetPixelMapxv(map, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPixelMapxv"/>
+            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
             public static unsafe void GetPixelMapx(PixelMap map, int[] values)
             {
                 int size = (int)(values.Length);
@@ -3661,7 +3661,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetPixelMapxv(map, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPixelMapxv"/>
+            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
             public static unsafe void GetPixelMapx(PixelMap map, int size, ref int values)
             {
                 fixed (int* values_ptr = &values)
@@ -3669,7 +3669,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetPixelMapxv(map, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenxvOES"/>
+            /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3677,7 +3677,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenxvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenxvOES"/>
+            /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3685,7 +3685,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenxvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenxvOES"/>
+            /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3693,7 +3693,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenxvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES"/>
+            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
             public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3701,7 +3701,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES"/>
+            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
             public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -3709,7 +3709,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexLevelParameterxvOES"/>
+            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
             public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -3717,7 +3717,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="IndexxvOES"/>
+            /// <inheritdoc cref="IndexxvOES(int*)"/>
             public static unsafe void IndexxvOES(ReadOnlySpan<int> component)
             {
                 fixed (int* component_ptr = component)
@@ -3725,7 +3725,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     IndexxvOES(component_ptr);
                 }
             }
-            /// <inheritdoc cref="IndexxvOES"/>
+            /// <inheritdoc cref="IndexxvOES(int*)"/>
             public static unsafe void IndexxvOES(int[] component)
             {
                 fixed (int* component_ptr = component)
@@ -3733,7 +3733,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     IndexxvOES(component_ptr);
                 }
             }
-            /// <inheritdoc cref="IndexxvOES"/>
+            /// <inheritdoc cref="IndexxvOES(int*)"/>
             public static unsafe void IndexxvOES(in int component)
             {
                 fixed (int* component_ptr = &component)
@@ -3741,7 +3741,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     IndexxvOES(component_ptr);
                 }
             }
-            /// <inheritdoc cref="LoadTransposeMatrixxOES"/>
+            /// <inheritdoc cref="LoadTransposeMatrixxOES(int*)"/>
             public static unsafe void LoadTransposeMatrixxOES(ReadOnlySpan<int> m)
             {
                 fixed (int* m_ptr = m)
@@ -3749,7 +3749,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LoadTransposeMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="LoadTransposeMatrixxOES"/>
+            /// <inheritdoc cref="LoadTransposeMatrixxOES(int*)"/>
             public static unsafe void LoadTransposeMatrixxOES(int[] m)
             {
                 fixed (int* m_ptr = m)
@@ -3757,7 +3757,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LoadTransposeMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="LoadTransposeMatrixxOES"/>
+            /// <inheritdoc cref="LoadTransposeMatrixxOES(int*)"/>
             public static unsafe void LoadTransposeMatrixxOES(in int m)
             {
                 fixed (int* m_ptr = &m)
@@ -3765,7 +3765,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     LoadTransposeMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MultTransposeMatrixxOES"/>
+            /// <inheritdoc cref="MultTransposeMatrixxOES(int*)"/>
             public static unsafe void MultTransposeMatrixxOES(ReadOnlySpan<int> m)
             {
                 fixed (int* m_ptr = m)
@@ -3773,7 +3773,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultTransposeMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MultTransposeMatrixxOES"/>
+            /// <inheritdoc cref="MultTransposeMatrixxOES(int*)"/>
             public static unsafe void MultTransposeMatrixxOES(int[] m)
             {
                 fixed (int* m_ptr = m)
@@ -3781,7 +3781,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultTransposeMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MultTransposeMatrixxOES"/>
+            /// <inheritdoc cref="MultTransposeMatrixxOES(int*)"/>
             public static unsafe void MultTransposeMatrixxOES(in int m)
             {
                 fixed (int* m_ptr = &m)
@@ -3789,7 +3789,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultTransposeMatrixxOES(m_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord1xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord1xvOES(TextureUnit texture, ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3797,7 +3797,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord1xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord1xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord1xvOES(TextureUnit texture, int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3805,7 +3805,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord1xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord1xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord1xvOES(TextureUnit texture, in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3813,7 +3813,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord1xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord2xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3821,7 +3821,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord2xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord2xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3829,7 +3829,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord2xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord2xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord2xvOES(TextureUnit texture, in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3837,7 +3837,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord2xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord3xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3845,7 +3845,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord3xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord3xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3853,7 +3853,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord3xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord3xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord3xvOES(TextureUnit texture, in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3861,7 +3861,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord3xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord4xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3869,7 +3869,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord4xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord4xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3877,7 +3877,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord4xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4xvOES"/>
+            /// <inheritdoc cref="MultiTexCoord4xvOES(TextureUnit, int*)"/>
             public static unsafe void MultiTexCoord4xvOES(TextureUnit texture, in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3885,7 +3885,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MultiTexCoord4xvOES(texture, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3xvOES"/>
+            /// <inheritdoc cref="Normal3xvOES(int*)"/>
             public static unsafe void Normal3xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3893,7 +3893,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Normal3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3xvOES"/>
+            /// <inheritdoc cref="Normal3xvOES(int*)"/>
             public static unsafe void Normal3xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3901,7 +3901,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Normal3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3xvOES"/>
+            /// <inheritdoc cref="Normal3xvOES(int*)"/>
             public static unsafe void Normal3xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3909,7 +3909,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Normal3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="PixelMapx"/>
+            /// <inheritdoc cref="PixelMapx(PixelMap, int, int*)"/>
             public static unsafe void PixelMapx(PixelMap map, ReadOnlySpan<int> values)
             {
                 int size = (int)(values.Length);
@@ -3918,7 +3918,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PixelMapx(map, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="PixelMapx"/>
+            /// <inheritdoc cref="PixelMapx(PixelMap, int, int*)"/>
             public static unsafe void PixelMapx(PixelMap map, int[] values)
             {
                 int size = (int)(values.Length);
@@ -3927,7 +3927,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PixelMapx(map, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="PixelMapx"/>
+            /// <inheritdoc cref="PixelMapx(PixelMap, int, int*)"/>
             public static unsafe void PixelMapx(PixelMap map, int size, in int values)
             {
                 fixed (int* values_ptr = &values)
@@ -3935,7 +3935,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PixelMapx(map, size, values_ptr);
                 }
             }
-            /// <inheritdoc cref="PrioritizeTexturesxOES"/>
+            /// <inheritdoc cref="PrioritizeTexturesxOES(int, int*, int*)"/>
             public static unsafe void PrioritizeTexturesxOES(int n, ReadOnlySpan<int> textures, ReadOnlySpan<int> priorities)
             {
                 fixed (int* textures_ptr = textures)
@@ -3946,7 +3946,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="PrioritizeTexturesxOES"/>
+            /// <inheritdoc cref="PrioritizeTexturesxOES(int, int*, int*)"/>
             public static unsafe void PrioritizeTexturesxOES(int n, int[] textures, int[] priorities)
             {
                 fixed (int* textures_ptr = textures)
@@ -3957,7 +3957,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="PrioritizeTexturesxOES"/>
+            /// <inheritdoc cref="PrioritizeTexturesxOES(int, int*, int*)"/>
             public static unsafe void PrioritizeTexturesxOES(int n, in int textures, in int priorities)
             {
                 fixed (int* textures_ptr = &textures)
@@ -3966,7 +3966,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PrioritizeTexturesxOES(n, textures_ptr, priorities_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos2xvOES"/>
+            /// <inheritdoc cref="RasterPos2xvOES(int*)"/>
             public static unsafe void RasterPos2xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3974,7 +3974,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos2xvOES"/>
+            /// <inheritdoc cref="RasterPos2xvOES(int*)"/>
             public static unsafe void RasterPos2xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3982,7 +3982,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos2xvOES"/>
+            /// <inheritdoc cref="RasterPos2xvOES(int*)"/>
             public static unsafe void RasterPos2xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -3990,7 +3990,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos3xvOES"/>
+            /// <inheritdoc cref="RasterPos3xvOES(int*)"/>
             public static unsafe void RasterPos3xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -3998,7 +3998,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos3xvOES"/>
+            /// <inheritdoc cref="RasterPos3xvOES(int*)"/>
             public static unsafe void RasterPos3xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4006,7 +4006,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos3xvOES"/>
+            /// <inheritdoc cref="RasterPos3xvOES(int*)"/>
             public static unsafe void RasterPos3xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4014,7 +4014,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos4xvOES"/>
+            /// <inheritdoc cref="RasterPos4xvOES(int*)"/>
             public static unsafe void RasterPos4xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4022,7 +4022,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos4xvOES"/>
+            /// <inheritdoc cref="RasterPos4xvOES(int*)"/>
             public static unsafe void RasterPos4xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4030,7 +4030,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RasterPos4xvOES"/>
+            /// <inheritdoc cref="RasterPos4xvOES(int*)"/>
             public static unsafe void RasterPos4xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4038,7 +4038,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RasterPos4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="RectxvOES"/>
+            /// <inheritdoc cref="RectxvOES(int*, int*)"/>
             public static unsafe void RectxvOES(ReadOnlySpan<int> v1, ReadOnlySpan<int> v2)
             {
                 fixed (int* v1_ptr = v1)
@@ -4049,7 +4049,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="RectxvOES"/>
+            /// <inheritdoc cref="RectxvOES(int*, int*)"/>
             public static unsafe void RectxvOES(int[] v1, int[] v2)
             {
                 fixed (int* v1_ptr = v1)
@@ -4060,7 +4060,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="RectxvOES"/>
+            /// <inheritdoc cref="RectxvOES(int*, int*)"/>
             public static unsafe void RectxvOES(in int v1, in int v2)
             {
                 fixed (int* v1_ptr = &v1)
@@ -4069,7 +4069,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     RectxvOES(v1_ptr, v2_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1xvOES"/>
+            /// <inheritdoc cref="TexCoord1xvOES(int*)"/>
             public static unsafe void TexCoord1xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4077,7 +4077,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord1xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1xvOES"/>
+            /// <inheritdoc cref="TexCoord1xvOES(int*)"/>
             public static unsafe void TexCoord1xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4085,7 +4085,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord1xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1xvOES"/>
+            /// <inheritdoc cref="TexCoord1xvOES(int*)"/>
             public static unsafe void TexCoord1xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4093,7 +4093,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord1xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2xvOES"/>
+            /// <inheritdoc cref="TexCoord2xvOES(int*)"/>
             public static unsafe void TexCoord2xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4101,7 +4101,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2xvOES"/>
+            /// <inheritdoc cref="TexCoord2xvOES(int*)"/>
             public static unsafe void TexCoord2xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4109,7 +4109,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2xvOES"/>
+            /// <inheritdoc cref="TexCoord2xvOES(int*)"/>
             public static unsafe void TexCoord2xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4117,7 +4117,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3xvOES"/>
+            /// <inheritdoc cref="TexCoord3xvOES(int*)"/>
             public static unsafe void TexCoord3xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4125,7 +4125,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3xvOES"/>
+            /// <inheritdoc cref="TexCoord3xvOES(int*)"/>
             public static unsafe void TexCoord3xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4133,7 +4133,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3xvOES"/>
+            /// <inheritdoc cref="TexCoord3xvOES(int*)"/>
             public static unsafe void TexCoord3xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4141,7 +4141,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4xvOES"/>
+            /// <inheritdoc cref="TexCoord4xvOES(int*)"/>
             public static unsafe void TexCoord4xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4149,7 +4149,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4xvOES"/>
+            /// <inheritdoc cref="TexCoord4xvOES(int*)"/>
             public static unsafe void TexCoord4xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4157,7 +4157,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4xvOES"/>
+            /// <inheritdoc cref="TexCoord4xvOES(int*)"/>
             public static unsafe void TexCoord4xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4165,7 +4165,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexCoord4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenxvOES"/>
+            /// <inheritdoc cref="TexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4173,7 +4173,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenxvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenxvOES"/>
+            /// <inheritdoc cref="TexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4181,7 +4181,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenxvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenxvOES"/>
+            /// <inheritdoc cref="TexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -4189,7 +4189,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenxvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2xvOES"/>
+            /// <inheritdoc cref="Vertex2xvOES(int*)"/>
             public static unsafe void Vertex2xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4197,7 +4197,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2xvOES"/>
+            /// <inheritdoc cref="Vertex2xvOES(int*)"/>
             public static unsafe void Vertex2xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4205,7 +4205,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2xvOES"/>
+            /// <inheritdoc cref="Vertex2xvOES(int*)"/>
             public static unsafe void Vertex2xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4213,7 +4213,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex2xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3xvOES"/>
+            /// <inheritdoc cref="Vertex3xvOES(int*)"/>
             public static unsafe void Vertex3xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4221,7 +4221,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3xvOES"/>
+            /// <inheritdoc cref="Vertex3xvOES(int*)"/>
             public static unsafe void Vertex3xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4229,7 +4229,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3xvOES"/>
+            /// <inheritdoc cref="Vertex3xvOES(int*)"/>
             public static unsafe void Vertex3xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4237,7 +4237,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex3xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4xvOES"/>
+            /// <inheritdoc cref="Vertex4xvOES(int*)"/>
             public static unsafe void Vertex4xvOES(ReadOnlySpan<int> coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4245,7 +4245,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4xvOES"/>
+            /// <inheritdoc cref="Vertex4xvOES(int*)"/>
             public static unsafe void Vertex4xvOES(int[] coords)
             {
                 fixed (int* coords_ptr = coords)
@@ -4253,7 +4253,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4xvOES"/>
+            /// <inheritdoc cref="Vertex4xvOES(int*)"/>
             public static unsafe void Vertex4xvOES(in int coords)
             {
                 fixed (int* coords_ptr = &coords)
@@ -4261,7 +4261,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Vertex4xvOES(coords_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteRenderbuffersOES"/>
+            /// <inheritdoc cref="DeleteRenderbuffersOES(int, int*)"/>
             public static unsafe void DeleteRenderbuffersOES(ReadOnlySpan<int> renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
@@ -4270,7 +4270,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteRenderbuffersOES"/>
+            /// <inheritdoc cref="DeleteRenderbuffersOES(int, int*)"/>
             public static unsafe void DeleteRenderbuffersOES(int[] renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
@@ -4279,7 +4279,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteRenderbuffersOES"/>
+            /// <inheritdoc cref="DeleteRenderbuffersOES(int, int*)"/>
             public static unsafe void DeleteRenderbuffersOES(int n, in int renderbuffers)
             {
                 fixed (int* renderbuffers_ptr = &renderbuffers)
@@ -4287,7 +4287,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GenRenderbuffersOES"/>
+            /// <inheritdoc cref="GenRenderbuffersOES(int, int*)"/>
             public static unsafe void GenRenderbuffersOES(Span<int> renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
@@ -4296,7 +4296,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GenRenderbuffersOES"/>
+            /// <inheritdoc cref="GenRenderbuffersOES(int, int*)"/>
             public static unsafe void GenRenderbuffersOES(int[] renderbuffers)
             {
                 int n = (int)(renderbuffers.Length);
@@ -4305,7 +4305,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GenRenderbuffersOES"/>
+            /// <inheritdoc cref="GenRenderbuffersOES(int, int*)"/>
             public static unsafe void GenRenderbuffersOES(int n, ref int renderbuffers)
             {
                 fixed (int* renderbuffers_ptr = &renderbuffers)
@@ -4313,7 +4313,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenRenderbuffersOES(n, renderbuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GetRenderbufferParameterivOES"/>
+            /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
             public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4321,7 +4321,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetRenderbufferParameterivOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetRenderbufferParameterivOES"/>
+            /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
             public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4329,7 +4329,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetRenderbufferParameterivOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetRenderbufferParameterivOES"/>
+            /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
             public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -4337,7 +4337,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetRenderbufferParameterivOES(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteFramebuffersOES"/>
+            /// <inheritdoc cref="DeleteFramebuffersOES(int, int*)"/>
             public static unsafe void DeleteFramebuffersOES(ReadOnlySpan<int> framebuffers)
             {
                 int n = (int)(framebuffers.Length);
@@ -4346,7 +4346,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteFramebuffersOES(n, framebuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteFramebuffersOES"/>
+            /// <inheritdoc cref="DeleteFramebuffersOES(int, int*)"/>
             public static unsafe void DeleteFramebuffersOES(int[] framebuffers)
             {
                 int n = (int)(framebuffers.Length);
@@ -4355,7 +4355,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteFramebuffersOES(n, framebuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteFramebuffersOES"/>
+            /// <inheritdoc cref="DeleteFramebuffersOES(int, int*)"/>
             public static unsafe void DeleteFramebuffersOES(int n, in int framebuffers)
             {
                 fixed (int* framebuffers_ptr = &framebuffers)
@@ -4363,7 +4363,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteFramebuffersOES(n, framebuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GenFramebuffersOES"/>
+            /// <inheritdoc cref="GenFramebuffersOES(int, int*)"/>
             public static unsafe void GenFramebuffersOES(Span<int> framebuffers)
             {
                 int n = (int)(framebuffers.Length);
@@ -4372,7 +4372,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenFramebuffersOES(n, framebuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GenFramebuffersOES"/>
+            /// <inheritdoc cref="GenFramebuffersOES(int, int*)"/>
             public static unsafe void GenFramebuffersOES(int[] framebuffers)
             {
                 int n = (int)(framebuffers.Length);
@@ -4381,7 +4381,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenFramebuffersOES(n, framebuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GenFramebuffersOES"/>
+            /// <inheritdoc cref="GenFramebuffersOES(int, int*)"/>
             public static unsafe void GenFramebuffersOES(int n, ref int framebuffers)
             {
                 fixed (int* framebuffers_ptr = &framebuffers)
@@ -4389,7 +4389,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenFramebuffersOES(n, framebuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES"/>
+            /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
             public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4397,7 +4397,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES"/>
+            /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
             public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4405,7 +4405,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES"/>
+            /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
             public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -4413,13 +4413,13 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="MatrixIndexPointerOES"/>
+            /// <inheritdoc cref="MatrixIndexPointerOES(int, MatrixIndexPointerTypeARB, int, void*)"/>
             public static unsafe void MatrixIndexPointerOES(int size, MatrixIndexPointerTypeARB type, int stride, IntPtr pointer)
             {
                 void* pointer_vptr = (void*)pointer;
                 MatrixIndexPointerOES(size, type, stride, pointer_vptr);
             }
-            /// <inheritdoc cref="MatrixIndexPointerOES"/>
+            /// <inheritdoc cref="MatrixIndexPointerOES(int, MatrixIndexPointerTypeARB, int, void*)"/>
             public static unsafe void MatrixIndexPointerOES<T1>(int size, MatrixIndexPointerTypeARB type, int stride, ReadOnlySpan<T1> pointer)
                 where T1 : unmanaged
             {
@@ -4428,7 +4428,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MatrixIndexPointerOES(size, type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="MatrixIndexPointerOES"/>
+            /// <inheritdoc cref="MatrixIndexPointerOES(int, MatrixIndexPointerTypeARB, int, void*)"/>
             public static unsafe void MatrixIndexPointerOES<T1>(int size, MatrixIndexPointerTypeARB type, int stride, T1[] pointer)
                 where T1 : unmanaged
             {
@@ -4437,7 +4437,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     MatrixIndexPointerOES(size, type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="MatrixIndexPointerOES"/>
+            /// <inheritdoc cref="MatrixIndexPointerOES(int, MatrixIndexPointerTypeARB, int, void*)"/>
             public static unsafe void MatrixIndexPointerOES<T1>(int size, MatrixIndexPointerTypeARB type, int stride, in T1 pointer)
                 where T1 : unmanaged
             {
@@ -4446,13 +4446,13 @@ namespace OpenTK.Graphics.OpenGLES1
                     MatrixIndexPointerOES(size, type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="WeightPointerOES"/>
+            /// <inheritdoc cref="WeightPointerOES(int, All, int, void*)"/>
             public static unsafe void WeightPointerOES(int size, All type, int stride, IntPtr pointer)
             {
                 void* pointer_vptr = (void*)pointer;
                 WeightPointerOES(size, type, stride, pointer_vptr);
             }
-            /// <inheritdoc cref="WeightPointerOES"/>
+            /// <inheritdoc cref="WeightPointerOES(int, All, int, void*)"/>
             public static unsafe void WeightPointerOES<T1>(int size, All type, int stride, ReadOnlySpan<T1> pointer)
                 where T1 : unmanaged
             {
@@ -4461,7 +4461,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     WeightPointerOES(size, type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="WeightPointerOES"/>
+            /// <inheritdoc cref="WeightPointerOES(int, All, int, void*)"/>
             public static unsafe void WeightPointerOES<T1>(int size, All type, int stride, T1[] pointer)
                 where T1 : unmanaged
             {
@@ -4470,7 +4470,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     WeightPointerOES(size, type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="WeightPointerOES"/>
+            /// <inheritdoc cref="WeightPointerOES(int, All, int, void*)"/>
             public static unsafe void WeightPointerOES<T1>(int size, All type, int stride, in T1 pointer)
                 where T1 : unmanaged
             {
@@ -4479,13 +4479,13 @@ namespace OpenTK.Graphics.OpenGLES1
                     WeightPointerOES(size, type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="PointSizePointerOES"/>
+            /// <inheritdoc cref="PointSizePointerOES(All, int, void*)"/>
             public static unsafe void PointSizePointerOES(All type, int stride, IntPtr pointer)
             {
                 void* pointer_vptr = (void*)pointer;
                 PointSizePointerOES(type, stride, pointer_vptr);
             }
-            /// <inheritdoc cref="PointSizePointerOES"/>
+            /// <inheritdoc cref="PointSizePointerOES(All, int, void*)"/>
             public static unsafe void PointSizePointerOES<T1>(All type, int stride, ReadOnlySpan<T1> pointer)
                 where T1 : unmanaged
             {
@@ -4494,7 +4494,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointSizePointerOES(type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="PointSizePointerOES"/>
+            /// <inheritdoc cref="PointSizePointerOES(All, int, void*)"/>
             public static unsafe void PointSizePointerOES<T1>(All type, int stride, T1[] pointer)
                 where T1 : unmanaged
             {
@@ -4503,7 +4503,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointSizePointerOES(type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="PointSizePointerOES"/>
+            /// <inheritdoc cref="PointSizePointerOES(All, int, void*)"/>
             public static unsafe void PointSizePointerOES<T1>(All type, int stride, in T1 pointer)
                 where T1 : unmanaged
             {
@@ -4512,10 +4512,10 @@ namespace OpenTK.Graphics.OpenGLES1
                     PointSizePointerOES(type, stride, pointer_ptr);
                 }
             }
-            /// <inheritdoc cref="QueryMatrixxOES"/>
-            public static unsafe All QueryMatrixxOES(Span<int> mantissa, Span<int> exponent)
+            /// <inheritdoc cref="QueryMatrixxOES(int*, int*)"/>
+            public static unsafe uint QueryMatrixxOES(Span<int> mantissa, Span<int> exponent)
             {
-                All returnValue;
+                uint returnValue;
                 fixed (int* mantissa_ptr = mantissa)
                 {
                     fixed (int* exponent_ptr = exponent)
@@ -4525,10 +4525,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryMatrixxOES"/>
-            public static unsafe All QueryMatrixxOES(int[] mantissa, int[] exponent)
+            /// <inheritdoc cref="QueryMatrixxOES(int*, int*)"/>
+            public static unsafe uint QueryMatrixxOES(int[] mantissa, int[] exponent)
             {
-                All returnValue;
+                uint returnValue;
                 fixed (int* mantissa_ptr = mantissa)
                 {
                     fixed (int* exponent_ptr = exponent)
@@ -4538,10 +4538,10 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryMatrixxOES"/>
-            public static unsafe All QueryMatrixxOES(ref int mantissa, ref int exponent)
+            /// <inheritdoc cref="QueryMatrixxOES(int*, int*)"/>
+            public static unsafe uint QueryMatrixxOES(ref int mantissa, ref int exponent)
             {
-                All returnValue;
+                uint returnValue;
                 fixed (int* mantissa_ptr = &mantissa)
                 fixed (int* exponent_ptr = &exponent)
                 {
@@ -4549,7 +4549,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="ClipPlanefOES"/>
+            /// <inheritdoc cref="ClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void ClipPlanefOES(ClipPlaneName plane, ReadOnlySpan<float> equation)
             {
                 fixed (float* equation_ptr = equation)
@@ -4557,7 +4557,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanefOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanefOES"/>
+            /// <inheritdoc cref="ClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void ClipPlanefOES(ClipPlaneName plane, float[] equation)
             {
                 fixed (float* equation_ptr = equation)
@@ -4565,7 +4565,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanefOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="ClipPlanefOES"/>
+            /// <inheritdoc cref="ClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void ClipPlanefOES(ClipPlaneName plane, in float equation)
             {
                 fixed (float* equation_ptr = &equation)
@@ -4573,7 +4573,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ClipPlanefOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="GetClipPlanefOES"/>
+            /// <inheritdoc cref="GetClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void GetClipPlanefOES(ClipPlaneName plane, Span<float> equation)
             {
                 fixed (float* equation_ptr = equation)
@@ -4581,7 +4581,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanefOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="GetClipPlanefOES"/>
+            /// <inheritdoc cref="GetClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void GetClipPlanefOES(ClipPlaneName plane, float[] equation)
             {
                 fixed (float* equation_ptr = equation)
@@ -4589,7 +4589,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanefOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="GetClipPlanefOES"/>
+            /// <inheritdoc cref="GetClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void GetClipPlanefOES(ClipPlaneName plane, ref float equation)
             {
                 fixed (float* equation_ptr = &equation)
@@ -4597,7 +4597,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanefOES(plane, equation_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenfvOES"/>
+            /// <inheritdoc cref="TexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<float> parameters)
             {
                 fixed (float* parameters_ptr = parameters)
@@ -4605,7 +4605,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenfvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenfvOES"/>
+            /// <inheritdoc cref="TexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float[] parameters)
             {
                 fixed (float* parameters_ptr = parameters)
@@ -4613,7 +4613,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenfvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenfvOES"/>
+            /// <inheritdoc cref="TexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, in float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
@@ -4621,7 +4621,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenfvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenivOES"/>
+            /// <inheritdoc cref="TexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, ReadOnlySpan<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4629,7 +4629,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenivOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenivOES"/>
+            /// <inheritdoc cref="TexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4637,7 +4637,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenivOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexGenivOES"/>
+            /// <inheritdoc cref="TexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, in int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -4645,7 +4645,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     TexGenivOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenfvOES"/>
+            /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, Span<float> parameters)
             {
                 fixed (float* parameters_ptr = parameters)
@@ -4653,7 +4653,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenfvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenfvOES"/>
+            /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float[] parameters)
             {
                 fixed (float* parameters_ptr = parameters)
@@ -4661,7 +4661,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenfvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenfvOES"/>
+            /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, ref float parameters)
             {
                 fixed (float* parameters_ptr = &parameters)
@@ -4669,7 +4669,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenfvOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenivOES"/>
+            /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4677,7 +4677,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenivOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenivOES"/>
+            /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, int[] parameters)
             {
                 fixed (int* parameters_ptr = parameters)
@@ -4685,7 +4685,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenivOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="GetTexGenivOES"/>
+            /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -4693,7 +4693,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenivOES(coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteVertexArraysOES"/>
+            /// <inheritdoc cref="DeleteVertexArraysOES(int, int*)"/>
             public static unsafe void DeleteVertexArraysOES(ReadOnlySpan<int> arrays)
             {
                 int n = (int)(arrays.Length);
@@ -4702,7 +4702,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteVertexArraysOES(n, arrays_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteVertexArraysOES"/>
+            /// <inheritdoc cref="DeleteVertexArraysOES(int, int*)"/>
             public static unsafe void DeleteVertexArraysOES(int[] arrays)
             {
                 int n = (int)(arrays.Length);
@@ -4711,7 +4711,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteVertexArraysOES(n, arrays_ptr);
                 }
             }
-            /// <inheritdoc cref="DeleteVertexArraysOES"/>
+            /// <inheritdoc cref="DeleteVertexArraysOES(int, int*)"/>
             public static unsafe void DeleteVertexArraysOES(int n, in int arrays)
             {
                 fixed (int* arrays_ptr = &arrays)
@@ -4719,7 +4719,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     DeleteVertexArraysOES(n, arrays_ptr);
                 }
             }
-            /// <inheritdoc cref="GenVertexArraysOES"/>
+            /// <inheritdoc cref="GenVertexArraysOES(int, int*)"/>
             public static unsafe void GenVertexArraysOES(Span<int> arrays)
             {
                 int n = (int)(arrays.Length);
@@ -4728,7 +4728,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenVertexArraysOES(n, arrays_ptr);
                 }
             }
-            /// <inheritdoc cref="GenVertexArraysOES"/>
+            /// <inheritdoc cref="GenVertexArraysOES(int, int*)"/>
             public static unsafe void GenVertexArraysOES(int[] arrays)
             {
                 int n = (int)(arrays.Length);
@@ -4737,7 +4737,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenVertexArraysOES(n, arrays_ptr);
                 }
             }
-            /// <inheritdoc cref="GenVertexArraysOES"/>
+            /// <inheritdoc cref="GenVertexArraysOES(int, int*)"/>
             public static unsafe void GenVertexArraysOES(int n, ref int arrays)
             {
                 fixed (int* arrays_ptr = &arrays)
@@ -4748,7 +4748,7 @@ namespace OpenTK.Graphics.OpenGLES1
         }
         public static unsafe partial class QCOM
         {
-            /// <inheritdoc cref="GetDriverControlsQCOM"/>
+            /// <inheritdoc cref="GetDriverControlsQCOM(int*, int, uint*)"/>
             public static unsafe void GetDriverControlsQCOM(ref int num, Span<uint> driverControls)
             {
                 fixed (int* num_ptr = &num)
@@ -4760,7 +4760,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetDriverControlsQCOM"/>
+            /// <inheritdoc cref="GetDriverControlsQCOM(int*, int, uint*)"/>
             public static unsafe void GetDriverControlsQCOM(ref int num, uint[] driverControls)
             {
                 fixed (int* num_ptr = &num)
@@ -4772,7 +4772,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="GetDriverControlsQCOM"/>
+            /// <inheritdoc cref="GetDriverControlsQCOM(int*, int, uint*)"/>
             public static unsafe void GetDriverControlsQCOM(ref int num, int size, ref uint driverControls)
             {
                 fixed (int* num_ptr = &num)
@@ -4781,7 +4781,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetDriverControlsQCOM(num_ptr, size, driverControls_ptr);
                 }
             }
-            /// <inheritdoc cref="GetDriverControlStringQCOM"/>
+            /// <inheritdoc cref="GetDriverControlStringQCOM(uint, int, int*, byte*)"/>
             public static unsafe string GetDriverControlStringQCOM(uint driverControl, int bufSize, ref int length)
             {
                 string driverControlString;
@@ -4794,7 +4794,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return driverControlString;
             }
-            /// <inheritdoc cref="GetDriverControlStringQCOM"/>
+            /// <inheritdoc cref="GetDriverControlStringQCOM(uint, int, int*, byte*)"/>
             public static unsafe void GetDriverControlStringQCOM(uint driverControl, int bufSize, ref int length, out string driverControlString)
             {
                 fixed (int* length_ptr = &length)
@@ -4805,7 +4805,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     Marshal.FreeCoTaskMem((IntPtr)driverControlString_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetTexturesQCOM"/>
+            /// <inheritdoc cref="ExtGetTexturesQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetTexturesQCOM(ref int textures, int maxTextures, ref int numTextures)
             {
                 fixed (int* textures_ptr = &textures)
@@ -4814,7 +4814,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetTexturesQCOM(textures_ptr, maxTextures, numTextures_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetBuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetBuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetBuffersQCOM(Span<int> buffers, Span<int> numBuffers)
             {
                 int maxBuffers = (int)(buffers.Length);
@@ -4826,7 +4826,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetBuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetBuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetBuffersQCOM(int[] buffers, int[] numBuffers)
             {
                 int maxBuffers = (int)(buffers.Length);
@@ -4838,7 +4838,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetBuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetBuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetBuffersQCOM(ref int buffers, int maxBuffers, ref int numBuffers)
             {
                 fixed (int* buffers_ptr = &buffers)
@@ -4847,7 +4847,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetBuffersQCOM(buffers_ptr, maxBuffers, numBuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetRenderbuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetRenderbuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetRenderbuffersQCOM(Span<int> renderbuffers, Span<int> numRenderbuffers)
             {
                 int maxRenderbuffers = (int)(renderbuffers.Length);
@@ -4859,7 +4859,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetRenderbuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetRenderbuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetRenderbuffersQCOM(int[] renderbuffers, int[] numRenderbuffers)
             {
                 int maxRenderbuffers = (int)(renderbuffers.Length);
@@ -4871,7 +4871,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetRenderbuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetRenderbuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetRenderbuffersQCOM(ref int renderbuffers, int maxRenderbuffers, ref int numRenderbuffers)
             {
                 fixed (int* renderbuffers_ptr = &renderbuffers)
@@ -4880,7 +4880,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetRenderbuffersQCOM(renderbuffers_ptr, maxRenderbuffers, numRenderbuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetFramebuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetFramebuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetFramebuffersQCOM(Span<int> framebuffers, Span<int> numFramebuffers)
             {
                 int maxFramebuffers = (int)(framebuffers.Length);
@@ -4892,7 +4892,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetFramebuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetFramebuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetFramebuffersQCOM(int[] framebuffers, int[] numFramebuffers)
             {
                 int maxFramebuffers = (int)(framebuffers.Length);
@@ -4904,7 +4904,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetFramebuffersQCOM"/>
+            /// <inheritdoc cref="ExtGetFramebuffersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetFramebuffersQCOM(ref int framebuffers, int maxFramebuffers, ref int numFramebuffers)
             {
                 fixed (int* framebuffers_ptr = &framebuffers)
@@ -4913,7 +4913,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetFramebuffersQCOM(framebuffers_ptr, maxFramebuffers, numFramebuffers_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetTexLevelParameterivQCOM"/>
+            /// <inheritdoc cref="ExtGetTexLevelParameterivQCOM(int, All, int, All, int*)"/>
             public static unsafe void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, ref int parameters)
             {
                 fixed (int* parameters_ptr = &parameters)
@@ -4921,13 +4921,13 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetTexLevelParameterivQCOM(texture, face, level, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetTexSubImageQCOM"/>
+            /// <inheritdoc cref="ExtGetTexSubImageQCOM(All, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
             public static unsafe void ExtGetTexSubImageQCOM(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, IntPtr texels)
             {
                 void* texels_vptr = (void*)texels;
                 ExtGetTexSubImageQCOM(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, texels_vptr);
             }
-            /// <inheritdoc cref="ExtGetTexSubImageQCOM"/>
+            /// <inheritdoc cref="ExtGetTexSubImageQCOM(All, int, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
             public static unsafe void ExtGetTexSubImageQCOM<T1>(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, ref T1 texels)
                 where T1 : unmanaged
             {
@@ -4936,7 +4936,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetTexSubImageQCOM(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, texels_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetShadersQCOM"/>
+            /// <inheritdoc cref="ExtGetShadersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetShadersQCOM(Span<int> shaders, Span<int> numShaders)
             {
                 int maxShaders = (int)(shaders.Length);
@@ -4948,7 +4948,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetShadersQCOM"/>
+            /// <inheritdoc cref="ExtGetShadersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetShadersQCOM(int[] shaders, int[] numShaders)
             {
                 int maxShaders = (int)(shaders.Length);
@@ -4960,7 +4960,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetShadersQCOM"/>
+            /// <inheritdoc cref="ExtGetShadersQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetShadersQCOM(ref int shaders, int maxShaders, ref int numShaders)
             {
                 fixed (int* shaders_ptr = &shaders)
@@ -4969,7 +4969,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetShadersQCOM(shaders_ptr, maxShaders, numShaders_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetProgramsQCOM"/>
+            /// <inheritdoc cref="ExtGetProgramsQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetProgramsQCOM(Span<int> programs, Span<int> numPrograms)
             {
                 int maxPrograms = (int)(programs.Length);
@@ -4981,7 +4981,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetProgramsQCOM"/>
+            /// <inheritdoc cref="ExtGetProgramsQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetProgramsQCOM(int[] programs, int[] numPrograms)
             {
                 int maxPrograms = (int)(programs.Length);
@@ -4993,7 +4993,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     }
                 }
             }
-            /// <inheritdoc cref="ExtGetProgramsQCOM"/>
+            /// <inheritdoc cref="ExtGetProgramsQCOM(int*, int, int*)"/>
             public static unsafe void ExtGetProgramsQCOM(ref int programs, int maxPrograms, ref int numPrograms)
             {
                 fixed (int* programs_ptr = &programs)
@@ -5002,7 +5002,7 @@ namespace OpenTK.Graphics.OpenGLES1
                     ExtGetProgramsQCOM(programs_ptr, maxPrograms, numPrograms_ptr);
                 }
             }
-            /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM"/>
+            /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM(int, ShaderType, byte*, int*)"/>
             public static unsafe string ExtGetProgramBinarySourceQCOM(int program, ShaderType shadertype, ref int length)
             {
                 string source;
@@ -5015,7 +5015,7 @@ namespace OpenTK.Graphics.OpenGLES1
                 }
                 return source;
             }
-            /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM"/>
+            /// <inheritdoc cref="ExtGetProgramBinarySourceQCOM(int, ShaderType, byte*, int*)"/>
             public static unsafe void ExtGetProgramBinarySourceQCOM(int program, ShaderType shadertype, out string source, ref int length)
             {
                 fixed (int* length_ptr = &length)

@@ -31,7 +31,7 @@ namespace OpenTK.Graphics
         public unsafe delegate void GLDebugProcNV();
     }
 
-    namespace OpenGLES3
+    namespace OpenGLES2
     {
         public unsafe delegate void GLDebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);
         public unsafe delegate void GLDebugProcARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, char* message, void* userParam);

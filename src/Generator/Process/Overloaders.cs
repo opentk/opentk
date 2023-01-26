@@ -56,10 +56,18 @@ namespace Generator.Process
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
             // See: https://github.com/opentk/opentk/blob/082c8d228d0def042b11424ac002776432f44f47/src/Generator.Bind/FuncProcessor.cs#L417
-
+            
             string name = overload.OverloadName;
             string trimmedName = name;
-            // FIXME: Remove extension name before we trim endings
+            // FIXME: Remove vendor name before we trim endings
+            //
+            // We actually need to remove vendor names in context of the other
+            // functions that will be in the same scope as this function
+            // There are a number of ARB functions that have two defintions
+            // for a function, one with the ARB postfix and one without.
+            // This causes problems when we remove the postfix as the two
+            // functions now conflict.
+            // - Noggin_bops 2023-01-26
             Match m = EndingsNotToTrim.Match(name);
             if (m.Index + m.Length != name.Length)
             {
@@ -67,23 +75,13 @@ namespace Generator.Process
 
                 if (m.Length > 0 && m.Index + m.Length == name.Length)
                 {
-                    // Only trim endings, not internal matches.
-                    if (m.Value[m.Length - 1] == 'v' && EndingsAddV.IsMatch(name) &&
-                        !name.StartsWith("Get") && !name.StartsWith("MatrixIndex"))
+                    if (!name.EndsWith("xedv"))
                     {
-                        // Only trim ending 'v' when there is a number
-                        trimmedName = name.Substring(0, m.Index) + "v";
+                        trimmedName = name.Substring(0, m.Index);
                     }
                     else
                     {
-                        if (!name.EndsWith("xedv"))
-                        {
-                            trimmedName = name.Substring(0, m.Index);
-                        }
-                        else
-                        {
-                            trimmedName = name.Substring(0, m.Index + 1);
-                        }
+                        trimmedName = name.Substring(0, m.Index);
                     }
                 }
             }
@@ -398,10 +396,7 @@ namespace Generator.Process
                         CSPrimitive { TypeName: "double" } => "d",
                         _ => null,
                     };
-                    if (typePostfix == null)
-                    {
-                        continue;
-                    }
+                    if (typePostfix == null) continue;
 
                     string? kind = param.Kinds.GetMatching(_vectorKinds);
                     if (kind == null) continue;

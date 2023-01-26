@@ -67,41 +67,41 @@ typedef unsigned int GLhandleARB;
     </types>
 
     <kinds>
-        <kind name="Color" desc="This parameter represents part of or a complete color." />
-        <kind name="Coord" desc="This parameter represents a coordinate." />
-        <kind name="WinCoord" desc="This parameter represents a window coordinate." />
-        <kind name="Clamped[0; 1]" desc="This parameter will get clamped to the 0 to 1 range." />
-        <kind name="Clamped[-1; 1]" desc="This parameter will get clamped to the -1 to 1 range." />
-        <kind name="StencilValue" desc="This parameter represents an unmasked stencil value." />
-        <kind name="StencilMask" desc="This parameter represents mask to apply to stencil values." />
-        <kind name="CompressedTextureARB" desc="This parameter contains compressed texture data." />
-        <kind name="BufferOffset" desc="This parameter represents an offset into a buffer." />
-        <kind name="BufferSize" desc="This parameter represents the size of a buffer." />
-        <kind name="String" desc="This parameter represents a string of characters. A GLubyte parameter should be treated as GLchar." />
-        <kind name="DrawBufferIndex" desc="This parameter represents an index to a draw buffer in the range 0 to the value of GL_MAX_COLOR_ATTACHMENTS" />
+        <kind name="Color" desc="This parameter represents part of or a complete color."/>
+        <kind name="Coord" desc="This parameter represents a coordinate."/>
+        <kind name="WinCoord" desc="This parameter represents a window coordinate."/>
+        <kind name="Clamped[0; 1]" desc="This parameter will get clamped to the 0 to 1 range."/>
+        <kind name="Clamped[-1; 1]" desc="This parameter will get clamped to the -1 to 1 range."/>
+        <kind name="StencilValue" desc="This parameter represents an unmasked stencil value."/>
+        <kind name="StencilMask" desc="This parameter represents mask to apply to stencil values."/>
+        <kind name="CompressedTextureARB" desc="This parameter contains compressed texture data."/>
+        <kind name="BufferOffset" desc="This parameter represents an offset into a buffer."/>
+        <kind name="BufferSize" desc="This parameter represents the size of a buffer."/>
+        <kind name="String" desc="This parameter represents a string of characters. A GLubyte parameter should be treated as GLchar."/>
+        <kind name="DrawBufferIndex" desc="This parameter represents an index to a draw buffer in the range 0 to the value of GL_MAX_COLOR_ATTACHMENTS"/>
         
-        <kind name="Matrix2x2" desc="This parameter represents a 2x2 matrix." />
-        <kind name="Matrix2x3" desc="This parameter represents a 2x3 matrix." />
-        <kind name="Matrix2x4" desc="This parameter represents a 2x4 matrix." />
+        <kind name="Matrix2x2" desc="This parameter represents a 2x2 matrix."/>
+        <kind name="Matrix2x3" desc="This parameter represents a 2x3 matrix."/>
+        <kind name="Matrix2x4" desc="This parameter represents a 2x4 matrix."/>
 
-        <kind name="Matrix3x2" desc="This parameter represents a 3x2 matrix." />
-        <kind name="Matrix3x3" desc="This parameter represents a 3x3 matrix." />
-        <kind name="Matrix3x4" desc="This parameter represents a 3x4 matrix." />
+        <kind name="Matrix3x2" desc="This parameter represents a 3x2 matrix."/>
+        <kind name="Matrix3x3" desc="This parameter represents a 3x3 matrix."/>
+        <kind name="Matrix3x4" desc="This parameter represents a 3x4 matrix."/>
 
-        <kind name="Matrix4x2" desc="This parameter represents a 4x2 matrix." />
-        <kind name="Matrix4x3" desc="This parameter represents a 4x3 matrix." />
-        <kind name="Matrix4x4" desc="This parameter represents a 4x4 matrix." />
+        <kind name="Matrix4x2" desc="This parameter represents a 4x2 matrix."/>
+        <kind name="Matrix4x3" desc="This parameter represents a 4x3 matrix."/>
+        <kind name="Matrix4x4" desc="This parameter represents a 4x4 matrix."/>
 
-        <kind name="Vector1" desc="This parameter represents a vector with 1 components" />
-        <kind name="Vector2" desc="This parameter represents a vector with 2 components" />
-        <kind name="Vector3" desc="This parameter represents a vector with 3 components" />
-        <kind name="Vector4" desc="This parameter represents a vector with 4 components" />
+        <kind name="Vector1" desc="This parameter represents a vector with 1 components"/>
+        <kind name="Vector2" desc="This parameter represents a vector with 2 components"/>
+        <kind name="Vector3" desc="This parameter represents a vector with 3 components"/>
+        <kind name="Vector4" desc="This parameter represents a vector with 4 components"/>
         
         <!-- Applicable to legacy OpenGL functions -->
-        <kind name="ColorIndexValue" desc="This parameter represents a color in the color index." />
-        <kind name="ColorIndexMask" desc="This parameter represents a color index mask. A color index value will be masked using this parameter." />
-        <kind name="SelectName" desc="This parameter represents a name on the name stack used in the GL_SELECT render mode." />
-        <kind name="FeedbackElement" desc="This parameter represents a marker to be placed in the feedback buffer." />
+        <kind name="ColorIndexValue" desc="This parameter represents a color in the color index."/>
+        <kind name="ColorIndexMask" desc="This parameter represents a color index mask. A color index value will be masked using this parameter."/>
+        <kind name="SelectName" desc="This parameter represents a name on the name stack used in the GL_SELECT render mode."/>
+        <kind name="FeedbackElement" desc="This parameter represents a marker to be placed in the feedback buffer."/>
     </kinds>
 
     <!-- SECTION: GL enumerant (token) definitions. -->
@@ -8330,10 +8330,10 @@ typedef unsigned int GLhandleARB;
         </command>
         <command>
             <proto>void <name>glClearColor</name></proto>
-            <param kind="Clamp01,Color"><ptype>GLfloat</ptype> <name>red</name></param>
-            <param kind="Clamp01,Color"><ptype>GLfloat</ptype> <name>green</name></param>
-            <param kind="Clamp01,Color"><ptype>GLfloat</ptype> <name>blue</name></param>
-            <param kind="Clamp01,Color"><ptype>GLfloat</ptype> <name>alpha</name></param>
+            <param kind="Color"><ptype>GLfloat</ptype> <name>red</name></param>
+            <param kind="Color"><ptype>GLfloat</ptype> <name>green</name></param>
+            <param kind="Color"><ptype>GLfloat</ptype> <name>blue</name></param>
+            <param kind="Color"><ptype>GLfloat</ptype> <name>alpha</name></param>
             <glx type="render" opcode="130"/>
         </command>
         <command>
@@ -22672,7 +22672,7 @@ typedef unsigned int GLhandleARB;
         <command>
             <proto>void <name>glSampleMaskIndexedNV</name></proto>
             <param><ptype>GLuint</ptype> <name>index</name></param>
-            <param group="SampleMaskNV"><ptype>GLbitfield</ptype> <name>mask</name></param>
+            <param><ptype>GLbitfield</ptype> <name>mask</name></param>
         </command>
         <command>
             <proto>void <name>glSampleMaskSGIS</name></proto>

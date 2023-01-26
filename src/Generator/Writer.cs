@@ -33,7 +33,7 @@ namespace Generator.Writing
                     OutputApi.GL => "OpenGL",
                     OutputApi.GLCompat => "OpenGL.Compatibility",
                     OutputApi.GLES1 => "OpenGLES1",
-                    OutputApi.GLES3 => "OpenGLES3",
+                    OutputApi.GLES2 => "OpenGLES2",
                     _ => throw new Exception($"This is not a valid output API ({api.Api})"),
                 };
                 string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
@@ -64,6 +64,7 @@ namespace Generator.Writing
             writer.WriteLine($"namespace {GraphicsNamespace}");
             using (writer.CsScope())
             {
+                writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenGL entry points.</summary>");
                 writer.WriteLine($"public static unsafe partial class GLPointers");
                 using (writer.CsScope())
                 {
@@ -81,29 +82,31 @@ namespace Generator.Writing
             // Write public function definition that calls delegate.
             // Write lazy loader function.
             GetNativeFunctionSignature(function, postfixName: false, swapTypesForUnderlyingType: true,
-                out string name,
+                out string _,
                 out StringBuilder paramNames,
                 out StringBuilder delegateTypes,
                 out StringBuilder signature,
                 out bool _,
                 out string returnType);
 
-            writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{name}_fnptr = &{name}_Lazy;");
+            string entryPoint = function.EntryPoint;
+
+            writer.WriteLine($"internal static delegate* unmanaged<{delegateTypes}> _{entryPoint}_fnptr = &{entryPoint}_Lazy;");
 
             writer.WriteLine($"[UnmanagedCallersOnly]");
-            writer.WriteLine($"private static {returnType} {name}_Lazy({signature})");
+            writer.WriteLine($"private static {returnType} {entryPoint}_Lazy({signature})");
             using (writer.CsScope())
             {
                 // Dotnet gurantees you can't get torn values when assigning functionpointers, assuming proper allignment which is default.
-                writer.WriteLine($"_{name}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
+                writer.WriteLine($"_{entryPoint}_fnptr = (delegate* unmanaged<{delegateTypes}>){LoaderBindingsContext}.GetProcAddress(\"{function.EntryPoint}\");");
 
                 if (function.ReturnType is not CSVoid)
                 {
-                    writer.WriteLine($"return _{name}_fnptr({paramNames});");
+                    writer.WriteLine($"return _{entryPoint}_fnptr({paramNames});");
                 }
                 else
                 {
-                    writer.WriteLine($"_{name}_fnptr({paramNames});");
+                    writer.WriteLine($"_{entryPoint}_fnptr({paramNames});");
                 }
             }
 
@@ -214,6 +217,7 @@ namespace Generator.Writing
                         CsScope? scope = null;
                         if (!string.IsNullOrWhiteSpace(vendor))
                         {
+                            writer.WriteLine($"/// <summary>{vendor} extensions.</summary>");
                             writer.WriteLine($"public static unsafe partial class {vendor}");
                             scope = writer.CsScope();
                         }
@@ -243,9 +247,11 @@ namespace Generator.Writing
                 out bool handleAbiDifferenceForTypesafeHandles,
                 out string returnType);
 
+            string entryPoint = function.EntryPoint;
+
             if (documentation != null)
             {
-                WriteDocumentation(writer, documentation);
+                WriteDocumentation(writer, documentation, function.EntryPoint);
             }
 
             if (handleAbiDifferenceForTypesafeHandles)
@@ -258,16 +264,16 @@ namespace Generator.Writing
                 if (function.ReturnType is CSBool8)
                 {
                     // HACK: We can't cast byte to bool, sigh...
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => GLPointers._{name}_fnptr({paramNames}) != 0;");
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => GLPointers._{entryPoint}_fnptr({paramNames}) != 0;");
                 }
                 else
                 {
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLPointers._{name}_fnptr({paramNames});");
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLPointers._{entryPoint}_fnptr({paramNames});");
                 }
             }
             else
             {
-                writer.WriteLine($"public static {returnType} {name}({signature}) => GLPointers._{function.FunctionName}_fnptr({paramNames});");
+                writer.WriteLine($"public static {returnType} {name}({signature}) => GLPointers._{entryPoint}_fnptr({paramNames});");
             }
 
             writer.WriteLine();
@@ -324,7 +330,9 @@ namespace Generator.Writing
 
         private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
         {
-            writer.WriteLine($"/// <inheritdoc cref=\"{overload.NativeFunction.FunctionName}\"/>");
+            string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.Type.ToCSString()));
+
+            writer.WriteLine($"/// <inheritdoc cref=\"{overload.NativeFunction.FunctionName}({parameterTypes})\"/>");
 
             string parameterString =
                 string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
@@ -394,15 +402,19 @@ namespace Generator.Writing
         }
 
 
-        private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation)
+        private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation, string entryPoint)
         {
-            writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> {documentation.Purpose} </summary>");
+            writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}] [{entryPoint}]</b> {documentation.Purpose} </summary>");
 
             foreach (ParameterDocumentation parameter in documentation.Parameters)
             {
                 writer.WriteLine($"/// <param name=\"{parameter.Name}\">{parameter.Description}</param>");
             }
-            writer.WriteLine($"/// <remarks><see href=\"{documentation.RefPagesLink}\" /></remarks>");
+
+            if (documentation.RefPagesLink != null)
+            {
+                writer.WriteLine($"/// <remarks><see href=\"{documentation.RefPagesLink}\" /></remarks>");
+            }
         }
 
         private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)
