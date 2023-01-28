@@ -276,12 +276,15 @@ namespace OpenTK.Windowing.Desktop
                             _slowUpdates = 0;
                         }
                     }
-                    
+
                     IsRunningSlowly = _slowUpdates > SlowUpdatesThreshold;
 
-                    if (VSync == VSyncMode.Adaptive)
+                    if (API != ContextAPI.NoAPI)
                     {
-                        GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
+                        if (VSync == VSyncMode.Adaptive)
+                        {
+                            GLFW.SwapInterval(IsRunningSlowly ? 0 : 1);
+                        }
                     }
                 }
 
