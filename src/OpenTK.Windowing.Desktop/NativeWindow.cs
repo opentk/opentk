@@ -847,7 +847,7 @@ namespace OpenTK.Windowing.Desktop
                 }
             }
 
-            // For Vulkan, we need to pass ContextAPI.NoAPI, otherweise we will get an exception.
+            // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
             // See https://github.com/glfw/glfw/blob/56a4cb0a3a2c7a44a2fd8ab3335adf915e19d30c/src/vulkan.c#L320
             //
             // But Calling MakeCurrent while using NoApi, we will get an exception from GLFW,
@@ -1246,7 +1246,7 @@ namespace OpenTK.Windowing.Desktop
             try
             {
                 // GLFW says this function can be called not only in response to functions like glfwPollEvents();
-                // There might be a function like glfwSetWindowSize what will trigger a sroll event to trigger inside that function.
+                // There might be a function like glfwSetWindowSize what will trigger a scroll event to trigger inside that function.
                 // We ignore this case for now and just accept that the scroll value will change after such a function call.
                 var offset = new Vector2((float)offsetX, (float)offsetY);
 
