@@ -476,7 +476,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// If no task bar exists then the work area is the monitor resolution in screen coordinates.
         /// </para>
         /// <para>
-        /// Any or all of the position and size arguments may be NULL.If an error occurs, all non-NULL position and size arguments will be set to zero.
+        /// Any or all of the position and size arguments may be NULL. If an error occurs, all non-NULL position and size arguments will be set to zero.
         /// </para>
         /// </summary>
         /// <param name="monitor">The monitor to query.</param>
@@ -514,7 +514,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// If no task bar exists then the work area is the monitor resolution in screen coordinates.
         /// </para>
         /// <para>
-        /// Any or all of the position and size arguments may be NULL.If an error occurs, all non-NULL position and size arguments will be set to zero.
+        /// Any or all of the position and size arguments may be NULL. If an error occurs, all non-NULL position and size arguments will be set to zero.
         /// </para>
         /// </summary>
         /// <param name="monitor">The monitor to query.</param>
