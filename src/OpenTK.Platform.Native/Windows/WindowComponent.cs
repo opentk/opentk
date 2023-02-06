@@ -8,10 +8,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-#nullable enable
-
 namespace OpenTK.Platform.Native.Windows
 {
+    /// <summary>
+    /// Win32 implementation of <see cref="IWindowComponent"/>.
+    /// </summary>
     public partial class WindowComponent : IWindowComponent
     {
         /// <summary>
@@ -82,7 +83,7 @@ namespace OpenTK.Platform.Native.Windows
                 0,
                 WindowComponent.CLASS_NAME,
                 "OpenTK Helper Window",
-                WindowStyles.WS_CLIPSIBLINGS | WindowStyles.WS_CLIPCHILDREN,
+                WindowStyles.ClipSiblings | WindowStyles.ClipChildren,
                 Win32.CW_USEDEFAULT,
                 Win32.CW_USEDEFAULT,
                 Win32.CW_USEDEFAULT,
@@ -122,6 +123,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public bool CanCaptureCursor => true;
 
+        /// <inheritdoc/>
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         /// <inheritdoc/>
@@ -144,7 +146,7 @@ namespace OpenTK.Platform.Native.Windows
                         bool wasDown = (l & (1 << 30)) != 0;
                         bool extended = (l & (1 << 24)) != 0;
 
-                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(vk, wasDown, extended));
+                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, vk, wasDown, extended));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -156,7 +158,7 @@ namespace OpenTK.Platform.Native.Windows
                         long l = lParam.ToInt64();
                         bool extended = (l & (1 << 24)) != 0;
 
-                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(vk, extended));
+                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, vk, extended));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -202,12 +204,12 @@ namespace OpenTK.Platform.Native.Windows
                                     }
                             }
 
-                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(str));
+                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, str));
                         }
                         else
                         {
                             // ANSI
-                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(new string((char)(wParam.ToUInt64()), 1)));
+                            EventQueue.Raise(h, PlatformEventType.TextInput, new TextInputEventArgs(h, new string((char)(wParam.ToUInt64()), 1)));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -225,7 +227,7 @@ namespace OpenTK.Platform.Native.Windows
                             RecaptureCursor(h, h.CaptureMode);
                         }
 
-                        EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(true));
+                        EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(h, true));
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.KILLFOCUS:
@@ -241,7 +243,7 @@ namespace OpenTK.Platform.Native.Windows
                                 RecaptureCursor(h, CursorCaptureMode.Normal);
                             }
 
-                            EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(false));
+                            EventQueue.Raise(h, PlatformEventType.Focus, new FocusEventArgs(h, false));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -283,7 +285,7 @@ namespace OpenTK.Platform.Native.Windows
                                 throw new Win32Exception();
                             }
                             
-                            EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
+                            EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, true));
                         }
 
                         if (CursorCapturingWindow == h && h.CaptureMode == CursorCaptureMode.Locked)
@@ -297,12 +299,12 @@ namespace OpenTK.Platform.Native.Windows
                             if (delta != (0, 0))
                             {
                                 h.VirtualCursorPosition += delta;
-                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h.VirtualCursorPosition));
+                                EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h, h.VirtualCursorPosition));
                             }
                         }
                         else
                         {
-                            EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(x, y)));
+                            EventQueue.Raise(h, PlatformEventType.MouseMove, new MouseMoveEventArgs(h, new Vector2(x, y)));
                         }
 
                         h.LastMousePosition = (x, y);
@@ -314,7 +316,7 @@ namespace OpenTK.Platform.Native.Windows
                         HWND h = HWndDict[hWnd];
                         h.TrackingMouse = false;
 
-                        EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(false));
+                        EventQueue.Raise(h, PlatformEventType.MouseEnter, new MouseEnterEventArgs(h, false));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -365,7 +367,7 @@ namespace OpenTK.Platform.Native.Windows
                         if (button != null)
                         {
                             HWND h = HWndDict[hWnd];
-                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(button.Value));
+                            EventQueue.Raise(h, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(h, button.Value));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -417,7 +419,7 @@ namespace OpenTK.Platform.Native.Windows
                         if (button != null)
                         {
                             HWND h = HWndDict[hWnd];
-                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(button.Value));
+                            EventQueue.Raise(h, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(h, button.Value));
                         }
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
@@ -434,7 +436,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(new Vector2(0, delta), new Vector2(0, delta * lines)));
+                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(0, delta), new Vector2(0, delta * lines)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -450,7 +452,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(new Vector2(delta, 0), new Vector2(delta * chars, 0)));
+                        EventQueue.Raise(h, PlatformEventType.Scroll, new ScrollEventArgs(h, new Vector2(delta, 0), new Vector2(delta * chars, 0)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -689,7 +691,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        EventQueue.Raise(h, PlatformEventType.FileDrop, new FileDropEventArgs(paths, new Vector2i(point.X, point.Y), inWindow));
+                        EventQueue.Raise(h, PlatformEventType.FileDrop, new FileDropEventArgs(h, paths, new Vector2i(point.X, point.Y), inWindow));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -744,7 +746,7 @@ namespace OpenTK.Platform.Native.Windows
                                     throw new Win32Exception("IME error");
                                 }
 
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(composition, h.IMECursor));
+                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, h.IMECursor));
                             }
                         }
 
@@ -775,7 +777,7 @@ namespace OpenTK.Platform.Native.Windows
                                     throw new Win32Exception("IME error");
                                 }
 
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextInputEventArgs(composition));
+                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextInputEventArgs(h, composition));
                             }
                         }
 
@@ -853,7 +855,7 @@ namespace OpenTK.Platform.Native.Windows
                 0,
                 CLASS_NAME,
                 "OpenTK Window",
-                WindowStyles.WS_OVERLAPPEDWINDOW,
+                WindowStyles.OverlappedWindow,
                 Win32.CW_USEDEFAULT,
                 Win32.CW_USEDEFAULT,
                 Win32.CW_USEDEFAULT,
@@ -1237,17 +1239,17 @@ namespace OpenTK.Platform.Native.Windows
             // and ToInt32 is going to throw in that case
             WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
-            if (style.HasFlag(WindowStyles.WS_VISIBLE) == false)
+            if (style.HasFlag(WindowStyles.Visible) == false)
             {
                 return WindowMode.Hidden;
             }
             else
             {
-                if (style.HasFlag(WindowStyles.WS_MINIMIZE))
+                if (style.HasFlag(WindowStyles.Minimize))
                 {
                     return WindowMode.Minimized;
                 }
-                else if (style.HasFlag(WindowStyles.WS_MAXIMIZE))
+                else if (style.HasFlag(WindowStyles.Maximize))
                 {
                     return WindowMode.Maximized;
                 }
@@ -1306,20 +1308,29 @@ namespace OpenTK.Platform.Native.Windows
             // and ToInt32 is going to throw in that case
             WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
+            // We need ToInt64 here as Style is a uint which means that 0x00000000_ffffffff could be returned,
+            // and ToInt32 is going to throw in that case
+            WindowStylesEx styleEx = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+
+            if (styleEx.HasFlag(WindowStylesEx.ToolWindow))
+            {
+                return WindowStyle.ToolBox;
+            }
+
             // FIXME: Better way of checking these!!
-            if (style.HasFlag(WindowStyles.WS_OVERLAPPEDWINDOW & ~WindowStyles.WS_THICKFRAME) &&
-                style.HasFlag(WindowStyles.WS_THICKFRAME) == false)
+            if (style.HasFlag(WindowStyles.OverlappedWindow & ~WindowStyles.ThickFrame) &&
+                style.HasFlag(WindowStyles.ThickFrame) == false)
             {
                 return WindowStyle.FixedBorder;
             }
-            else if (style.HasFlag(WindowStyles.WS_OVERLAPPEDWINDOW & ~(WindowStyles.WS_CAPTION | WindowStyles.WS_BORDER | WindowStyles.WS_THICKFRAME)) &&
-                     style.HasFlag(WindowStyles.WS_CAPTION) == false &&
-                     style.HasFlag(WindowStyles.WS_BORDER) == false &&
-                     style.HasFlag(WindowStyles.WS_THICKFRAME) == false)
+            else if (style.HasFlag(WindowStyles.OverlappedWindow & ~(WindowStyles.Caption | WindowStyles.Border | WindowStyles.ThickFrame)) &&
+                     style.HasFlag(WindowStyles.Caption) == false &&
+                     style.HasFlag(WindowStyles.Border) == false &&
+                     style.HasFlag(WindowStyles.ThickFrame) == false)
             {
                 return WindowStyle.Borderless;
             }
-            else if (style.HasFlag(WindowStyles.WS_OVERLAPPEDWINDOW))
+            else if (style.HasFlag(WindowStyles.OverlappedWindow))
             {
                 return WindowStyle.ResizableBorder;
             }
@@ -1334,6 +1345,7 @@ namespace OpenTK.Platform.Native.Windows
             WindowStyle.Borderless,
             WindowStyle.FixedBorder,
             WindowStyle.ResizableBorder,
+            WindowStyle.ToolBox,
         };
 
         /// <inheritdoc/>
@@ -1345,31 +1357,44 @@ namespace OpenTK.Platform.Native.Windows
             // and ToInt32 is going to throw in that case
             WindowStyles windowStyle = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
-            // FIXME: If we are going from borderless to the other styles we need to set these flags again
-            // This feels like it needs quite a lot of precision and is fragile, maybe there is another way?
-            // Having every window style have a specific flag combination?
+            // We need ToInt64 here as Style is a uint which means that 0x00000000_ffffffff could be returned,
+            // and ToInt32 is going to throw in that case
+            WindowStylesEx windowStyleEx = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
+
+            // Reset the window style, we are going to set the flags for the specific mode later.
+            windowStyle &= ~WindowStyles.OverlappedWindow;
+            windowStyleEx &= ~WindowStylesEx.ToolWindow;
+
             switch (style)
             {
                 case WindowStyle.Borderless:
                     // FIXME: Get rid of the wait cursor.
-                    windowStyle &= ~WindowStyles.WS_CAPTION;
-                    windowStyle &= ~WindowStyles.WS_BORDER;
-                    windowStyle &= ~WindowStyles.WS_THICKFRAME;
+                    windowStyle |= WindowStyles.OverlappedWindow;
+                    windowStyle &= ~WindowStyles.Caption;
+                    windowStyle &= ~WindowStyles.Border;
+                    windowStyle &= ~WindowStyles.ThickFrame;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
+                    Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
                 case WindowStyle.FixedBorder:
-                    windowStyle |= WindowStyles.WS_OVERLAPPEDWINDOW;
-                    windowStyle &= ~WindowStyles.WS_THICKFRAME;
+                    windowStyle |= WindowStyles.OverlappedWindow;
+                    windowStyle &= ~WindowStyles.ThickFrame;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
+                    Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
                 case WindowStyle.ResizableBorder:
-                    windowStyle |= WindowStyles.WS_OVERLAPPEDWINDOW;
+                    windowStyle |= WindowStyles.OverlappedWindow;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
+                    Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
                 case WindowStyle.ToolBox:
-                    throw new NotImplementedException();
-                default:
+                    windowStyle |= WindowStyles.OverlappedWindow;
+                    windowStyleEx |= WindowStylesEx.ToolWindow;
+                    Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
+                    Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(style), (int)style, style.GetType());
             }
 
             Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, 0, 0, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoSize | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.FrameChanged);
@@ -1403,7 +1428,7 @@ namespace OpenTK.Platform.Native.Windows
 
             Console.WriteLine($"StyleEx: {windowStyleEx}");
 
-            return (windowStyleEx & WindowStylesEx.WS_EX_TOPMOST) == WindowStylesEx.WS_EX_TOPMOST;
+            return (windowStyleEx & WindowStylesEx.TopMost) == WindowStylesEx.TopMost;
         }
 
         /// <inheritdoc/>

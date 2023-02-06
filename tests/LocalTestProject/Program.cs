@@ -9,7 +9,6 @@ using System.Text;
 using System.Diagnostics;
 using OpenTK.Core.Utility;
 using OpenTK;
-using OpenTK.Core.Platform.Interfaces;
 using System;
 using System.Collections.Generic;
 using OpenTK.Core.Platform.Enums;
@@ -565,6 +564,19 @@ namespace LocalTestProject
                             Console.WriteLine(info);
                             break;
                     }
+                }
+                else if (keyDown.VirtualKey == 'M')
+                {
+                    
+
+                    var style = windowComp.GetBorderStyle(WindowHandle);
+                    Console.WriteLine($"Before: {style}");
+                    style += 1;
+                    style = (WindowStyle)((int)style % 4);
+
+                    windowComp.SetBorderStyle(WindowHandle, style);
+
+                    Console.WriteLine($"After: {style}, Result: {windowComp.GetBorderStyle(WindowHandle)}");
                 }
             }
             else if (type == PlatformEventType.WindowMove)

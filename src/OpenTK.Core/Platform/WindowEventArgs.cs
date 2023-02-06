@@ -231,6 +231,7 @@ namespace OpenTK.Core.Platform
     }
 
     // FIXME: Do we only get these events when the cursor is inside the window??
+
     /// <summary>
     /// This event is triggered when the mouse moves.
     /// </summary>

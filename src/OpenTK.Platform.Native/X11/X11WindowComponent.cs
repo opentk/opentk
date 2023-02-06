@@ -292,7 +292,7 @@ namespace OpenTK.Platform.Native.X11
                                 }
 
                                 // FIXME: Scrolling distance? Are there scrolling settings on linux/x11?
-                                EventQueue.Raise(xwindow, PlatformEventType.Scroll, new ScrollEventArgs((xdelta, ydelta), (xdelta, ydelta)));
+                                EventQueue.Raise(xwindow, PlatformEventType.Scroll, new ScrollEventArgs(xwindow, (xdelta, ydelta), (xdelta, ydelta)));
                             }
                             else
                             {
@@ -319,7 +319,7 @@ namespace OpenTK.Platform.Native.X11
                                     default: continue; // Skip this event.
                                 }
 
-                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(button));
+                                EventQueue.Raise(xwindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(xwindow, button));
                             }
 
                             break;
@@ -347,7 +347,7 @@ namespace OpenTK.Platform.Native.X11
                                 default: continue; // Skip this event.
                             }
 
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(button));
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button));
 
                             break;
                         }
@@ -364,12 +364,12 @@ namespace OpenTK.Platform.Native.X11
                                 if (delta != (0, 0))
                                 {
                                     xwindow.VirtualCursorPosition += delta;
-                                    EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(xwindow.VirtualCursorPosition));
+                                    EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(xwindow, xwindow.VirtualCursorPosition));
                                 }
                             }
                             else
                             {
-                                EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(new Vector2(motion.x, motion.y)));
+                                EventQueue.Raise(xwindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(xwindow, new Vector2(motion.x, motion.y)));
                             }
 
                             xwindow.LastMousePosition = (motion.x, motion.y);
@@ -382,7 +382,7 @@ namespace OpenTK.Platform.Native.X11
 
                             XWindowHandle xwindow = XWindowDict[enter.window];
 
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(true));
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, true));
 
                             break;
                         }
@@ -392,7 +392,7 @@ namespace OpenTK.Platform.Native.X11
 
                             XWindowHandle xwindow = XWindowDict[leave.window];
 
-                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(false));
+                            EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, false));
 
                             break;
                         }
@@ -423,7 +423,7 @@ namespace OpenTK.Platform.Native.X11
 
                             XWindowHandle xwindow = XWindowDict[focusIn.window];
 
-                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(true));
+                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
 
                             break;
                         }
@@ -454,7 +454,7 @@ namespace OpenTK.Platform.Native.X11
 
                             XWindowHandle xwindow = XWindowDict[focusOut.window];
 
-                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(false));
+                            EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
 
                             break;
                         }
