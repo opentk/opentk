@@ -13,12 +13,16 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class CursorComponent : ICursorComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32CursorComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MouseCursor;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.MouseCursor)
@@ -27,19 +31,25 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool CanLoadFromFile => true;
 
+        /// <inheritdoc/>
         public bool CanLoadSystemCursor => true;
 
+        /// <inheritdoc/>
         public bool CanScaleCursor => false;
 
+        /// <inheritdoc/>
         public bool CanSupportAnimatedCursor => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public CursorHandle Create()
         {
             return new HCursor();
         }
 
+        /// <inheritdoc/>
         public void Destroy(CursorHandle handle)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -82,6 +92,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Uninitialized;
         }
 
+        /// <inheritdoc/>
         public unsafe void GetSize(CursorHandle handle, out int width, out int height)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -108,6 +119,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetHotspot(CursorHandle handle, out int x, out int y)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -127,6 +139,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public unsafe void GetImage(CursorHandle handle, Span<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -247,6 +260,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -255,6 +269,7 @@ namespace OpenTK.Platform.Native.Windows
             vertical = 1;
         }
 
+        /// <inheritdoc/>
         public void Load(CursorHandle handle, SystemCursorType systemCursor)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -322,6 +337,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -394,6 +410,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
+        /// <inheritdoc/>
         public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -478,6 +495,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
+        /// <inheritdoc/>
         public void Load(CursorHandle handle, string file)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -505,11 +523,13 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.FileIcon;
         }
 
+        /// <inheritdoc/>
         public void Load(CursorHandle handle, Stream stream)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetHotspot(CursorHandle handle, int x, int y)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -572,6 +592,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void SetScale(CursorHandle handle, float horizontal, float vertical)
         {
             HCursor hcursor = handle.As<HCursor>(this);

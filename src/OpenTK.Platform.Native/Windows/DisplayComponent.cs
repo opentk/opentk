@@ -15,10 +15,13 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class DisplayComponent : IDisplayComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32DisplayComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Display;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
         private static List<HMonitor> _displays = new List<HMonitor>();
@@ -232,6 +235,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Display)
@@ -280,10 +284,13 @@ namespace OpenTK.Platform.Native.Windows
             UpdateMonitors();
         }
 
+        /// <inheritdoc/>
         public bool CanSetVideoMode => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanGetVirtualPosition => true;
 
+        /// <inheritdoc/>
         public int GetDisplayCount()
         {
             int count = Win32.GetSystemMetrics(SystemMetric.CMonitors);
@@ -299,6 +306,7 @@ namespace OpenTK.Platform.Native.Windows
         // Need to look more into documentation for the monitor API.
 
         // FIXME: You probably shouldn't "create" a monitor handle.
+        /// <inheritdoc/>
         public DisplayHandle Create(int index)
         {
             if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"Monitor index cannot be negative. {index}");
@@ -307,6 +315,7 @@ namespace OpenTK.Platform.Native.Windows
             return _displays[index];
         }
 
+        /// <inheritdoc/>
         public DisplayHandle CreatePrimary()
         {
             for (int i = 0; i < _displays.Count; i++)
@@ -321,6 +330,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         // FIXME: You probably also don't Destroy a monitor
+        /// <inheritdoc/>
         public void Destroy(DisplayHandle handle)
         {
             // We basically don't need to do anything here.
@@ -328,6 +338,7 @@ namespace OpenTK.Platform.Native.Windows
             HMonitor hmonitor = handle.As<HMonitor>(this);
         }
 
+        /// <inheritdoc/>
         public bool IsPrimary(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -335,6 +346,7 @@ namespace OpenTK.Platform.Native.Windows
             return hmonitor.IsPrimary;
         }
 
+        /// <inheritdoc/>
         public string GetName(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -342,6 +354,7 @@ namespace OpenTK.Platform.Native.Windows
             return hmonitor.PublicName;
         }
 
+        /// <inheritdoc/>
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -357,11 +370,13 @@ namespace OpenTK.Platform.Native.Windows
                 96);
         }
 
+        /// <inheritdoc/>
         public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public int GetSupportedVideoModeCount(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -379,6 +394,7 @@ namespace OpenTK.Platform.Native.Windows
             return modeIndex - 1;
         }
 
+        /// <inheritdoc/>
         public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -412,6 +428,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -420,6 +437,7 @@ namespace OpenTK.Platform.Native.Windows
             y = hmonitor.Position.Y;
         }
 
+        /// <inheritdoc/>
         public void GetResolution(DisplayHandle handle, out int width, out int height)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -428,6 +446,7 @@ namespace OpenTK.Platform.Native.Windows
             height = hmonitor.Resolution.ResolutionY;
         }
 
+        /// <inheritdoc/>
         public void GetWorkArea(DisplayHandle handle, out Box2i area)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -437,6 +456,7 @@ namespace OpenTK.Platform.Native.Windows
             area = new Box2i(workArea.left, workArea.top, workArea.right, workArea.bottom);
         }
 
+        /// <inheritdoc/>
         public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
@@ -444,6 +464,7 @@ namespace OpenTK.Platform.Native.Windows
             refreshRate = hmonitor.RefreshRate;
         }
 
+        /// <inheritdoc/>
         public void GetDisplayScale(DisplayHandle handle, out float  scaleX, out float scaleY)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);

@@ -69,6 +69,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Clipboard)
@@ -94,6 +95,7 @@ namespace OpenTK.Platform.Native.Windows
         private static CF CF_CanIncludeInClipboardHistory;
         private static CF CF_CanUploadToCloudClipboard;
 
+        /// <inheritdoc/>
         public IReadOnlyList<ClipboardFormat> SupportedFormats => _SupportedFormats;
 
         private static readonly ClipboardFormat[] _SupportedFormats = new[]
@@ -105,6 +107,7 @@ namespace OpenTK.Platform.Native.Windows
             ClipboardFormat.Audio,
         };
 
+        /// <inheritdoc/>
         public ClipboardFormat GetClipboardFormat()
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
@@ -197,6 +200,7 @@ namespace OpenTK.Platform.Native.Windows
             return format;
         }
 
+        /// <inheritdoc/>
         public unsafe void SetClipboardText(string text)
         {
             ReadOnlySpan<char> textData = text.AsSpan();
@@ -284,6 +288,7 @@ namespace OpenTK.Platform.Native.Windows
                             // uint8_t bytes[]; // Remainder of wave file is bytes
         }
 
+        /// <inheritdoc/>
         public unsafe void SetClipboardAudio(AudioData data)
         {
             int bytes = sizeof(wav_header) + data.Audio.Length * sizeof(short);
@@ -381,6 +386,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.CloseClipboard();
         }
 
+        /// <inheritdoc/>
         public unsafe void SetClipboardBitmap(Bitmap bitmap)
         {
             // We don't need to consider alignment as 32bpp image data will always align to DWORDs
@@ -478,6 +484,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public unsafe string? GetClipboardText()
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
@@ -537,6 +544,7 @@ namespace OpenTK.Platform.Native.Windows
             return str;
         }
 
+        /// <inheritdoc/>
         public unsafe AudioData? GetClipboardAudio()
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
@@ -618,6 +626,7 @@ namespace OpenTK.Platform.Native.Windows
             return data;
         }
 
+        /// <inheritdoc/>
         public unsafe Bitmap? GetClipboardBitmap()
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
@@ -733,6 +742,7 @@ namespace OpenTK.Platform.Native.Windows
             return new Bitmap(width, height, image);
         }
 
+        /// <inheritdoc/>
         public unsafe string? GetClipboardHTML()
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
@@ -798,6 +808,7 @@ namespace OpenTK.Platform.Native.Windows
             return str;
         }
 
+        /// <inheritdoc/>
         public List<string>? GetClipboardFiles()
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);

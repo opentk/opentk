@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
-    /// <inheritdoc/>
     public class MouseComponent : IMouseComponent
     {
         /// <inheritdoc/>
@@ -31,32 +30,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool IsMultiMouse => false;
-
-        private const int MouseCount = 1;
-
-        /// <inheritdoc/>
-        public int GetMouseCount()
-        {
-            return MouseCount;
-        }
-
-        /// <inheritdoc/>
-        public MouseHandle Create(int index)
-        {
-            if (index < 0 || index >= MouseCount)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(index)} is out of bounds [0, {MouseCount}]");
-            }
-
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void Destroy(MouseHandle handle)
-        {
-            throw new NotImplementedException();
-        }
+        public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
         public void GetPosition(MouseHandle handle, out int x, out int y)

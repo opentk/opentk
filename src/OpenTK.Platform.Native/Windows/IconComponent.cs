@@ -12,12 +12,16 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class IconComponent : IIconComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32IconComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.WindowIcon;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.WindowIcon)
@@ -26,17 +30,22 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool CanLoadFile => true;
 
+        /// <inheritdoc/>
         public bool CanLoadSystemIcon => true;
 
+        /// <inheritdoc/>
         public bool HasMipmaps => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IconHandle Create()
         {
             return new HIcon();
         }
 
+        /// <inheritdoc/>
         public void Destroy(IconHandle handle)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -78,11 +87,13 @@ namespace OpenTK.Platform.Native.Windows
             hicon.ColorBitmap = default;
         }
 
+        /// <inheritdoc/>
         public void GenerateMipmaps(IconHandle handle)
         {
             throw new NotImplementedException("mipmaps");
         }
 
+        /// <inheritdoc/>
         public unsafe void GetDimensions(IconHandle handle, out int width, out int height)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -109,11 +120,13 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetDimensions(IconHandle handle, int level, out int width, out int height)
         {
             throw new NotImplementedException("mipmaps");
         }
 
+        /// <inheritdoc/>
         public unsafe void GetBitmap(IconHandle handle, Span<byte> data)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -237,11 +250,13 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetBitmap(IconHandle handle, int level, Span<byte> data)
         {
             throw new NotImplementedException("mipmaps");
         }
 
+        /// <inheritdoc/>
         public unsafe int GetBitmapSize(IconHandle handle)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -275,11 +290,13 @@ namespace OpenTK.Platform.Native.Windows
             return size;
         }
 
+        /// <inheritdoc/>
         public int GetBitmapSize(IconHandle handle, int level)
         {
             throw new NotImplementedException("mipmap");
         }
 
+        /// <inheritdoc/>
         public unsafe void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -352,11 +369,13 @@ namespace OpenTK.Platform.Native.Windows
             hicon.Mode = HIcon.IconMode.Icon;
         }
 
+        /// <inheritdoc/>
         public void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data, int level)
         {
             throw new NotImplementedException("mipmaps");
         }
 
+        /// <inheritdoc/>
         public void Load(IconHandle handle, string file)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -373,11 +392,13 @@ namespace OpenTK.Platform.Native.Windows
             hicon.Mode = HIcon.IconMode.FileIcon;
         }
 
+        /// <inheritdoc/>
         public void Load(IconHandle handle, Stream stream)
         {
             throw new NotImplementedException("load from stream");
         }
 
+        /// <inheritdoc/>
         public void Load(IconHandle handle, SystemIconType systemIcon)
         {
             HIcon hicon = handle.As<HIcon>(this);

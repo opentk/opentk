@@ -11,12 +11,16 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class KeyboardComponent : IKeyboardComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32KeyboardComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.KeyboardInput;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.KeyboardInput)
@@ -25,8 +29,10 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool SupportsLayouts => true;
 
+        /// <inheritdoc/>
         public bool SupportsIme => true;
 
         // FIXME: Better name!
@@ -76,6 +82,7 @@ namespace OpenTK.Platform.Native.Windows
             return layoutText;
         }
 
+        /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle = null)
         {
             StringBuilder builder = new StringBuilder();
@@ -86,6 +93,7 @@ namespace OpenTK.Platform.Native.Windows
             return LayoutNameFromKeyboardLayoutName(layoutName);
         }
 
+        /// <inheritdoc/>
         public string[] GetAvailableKeyboardLayouts()
         {
             int count = Win32.GetKeyboardLayoutList(0, Span<IntPtr>.Empty);
@@ -118,6 +126,7 @@ namespace OpenTK.Platform.Native.Windows
 
         bool _imeActive;
 
+        /// <inheritdoc/>
         public void BeginIme(WindowHandle window)
         {
             if (_imeActive)
@@ -129,6 +138,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         // FIXME: Make width and height optional.
+        /// <inheritdoc/>
         public void SetImeRectangle(WindowHandle window, int x, int y, int width, int height)
         {
             HWND hwnd = window.As<HWND>(this);
@@ -152,7 +162,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         // FIXME: API for getting the candidate list.
-
+        /// <inheritdoc/>
         public void EndIme(WindowHandle window)
         {
             if (_imeActive == false)
