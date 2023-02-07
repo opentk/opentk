@@ -733,25 +733,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        bool IMouseComponent.IsMultiMouse => _mouseComponent!.IsMultiMouse;
-
-        /// <inheritdoc/>
-        int IMouseComponent.GetMouseCount()
-        {
-            return _mouseComponent!.GetMouseCount();
-        }
-
-        /// <inheritdoc/>
-        MouseHandle IMouseComponent.Create(int index)
-        {
-            return _mouseComponent!.Create(index);
-        }
-
-        /// <inheritdoc/>
-        void IMouseComponent.Destroy(MouseHandle handle)
-        {
-            _mouseComponent!.Destroy(handle);
-        }
+        bool IMouseComponent.CanSetMousePosition => _mouseComponent!.CanSetMousePosition;
 
         /// <inheritdoc/>
         void IMouseComponent.GetPosition(MouseHandle handle, out int x, out int y)

@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -171,6 +173,65 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             _imeActive = false;
+        }
+
+        // Continue from "Keyboard UpArrow"
+        // https://learn.microsoft.com/en-au/windows/win32/inputdev/about-keyboard-input?redirectedfrom=MSDN#_win32_Keyboard_Input_Model
+        // - 2023-02-07 NogginBops
+
+        static readonly Scancode[] ScancodeLookup = new Scancode[256]
+        {
+            // 0x00 - 0x07
+            0, Scancode.Escape, Scancode.D1, Scancode.D2, Scancode.D3, Scancode.D4, Scancode.D5, Scancode.D6,
+            // 0x08 - 0x0F
+            Scancode.D7, Scancode.D8, Scancode.D9, Scancode.D0, Scancode.Dash, Scancode.Equals, Scancode.Backspace, Scancode.Tab,
+            // 0x10 - 0x17
+            Scancode.Q, Scancode.W, Scancode.E, Scancode.R, Scancode.T, Scancode.Y, Scancode.U, Scancode.I,
+            // 0x18 - 0x1F
+            Scancode.O, Scancode.P, Scancode.LeftBrace, Scancode.RightBrace, Scancode.Return, 0, Scancode.A, Scancode.S,
+            // 0x20 - 0x27
+            Scancode.D, Scancode.F, Scancode.G, Scancode.H, Scancode.J, Scancode.K, Scancode.L, Scancode.SemiColon,
+            // 0x28 - 0x2F
+            Scancode.LeftApostrophe, Scancode.GraveAccent, Scancode.Pipe, Scancode.NonUS, Scancode.Z, Scancode.X, Scancode.C, Scancode.V,
+            // 0x30 - 0x37
+            Scancode.B, Scancode.N, Scancode.M, Scancode.Comma, Scancode.Period, Scancode.QuestionMark, 0, 0,
+            // 0x38 - 0x3F
+            0, Scancode.Spacebar, Scancode.CapsLock, Scancode.F1, Scancode.F2, Scancode.F3, Scancode.F4, Scancode.F5,
+            // 0x40 - 0x47
+            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.Pause, Scancode.ScrollLock, Scancode.Home,
+            // 0x48 - 0x4F
+            Scancode.UpArrow, Scancode.PageUp, 0, Scancode.LeftAlt, 0, Scancode.RightArrow, 0, Scancode.End,
+            // 0x50 - 0x57
+            Scancode.DownArrow, Scancode.PageDown, Scancode.Insert, Scancode.Delete, 0, 0, 0, Scancode.F11,
+            // 0x58 - 0x5F
+            Scancode.F12, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+        };
+
+        internal static Scancode ToScancode(int winScancode, bool extended)
+        {
+            Scancode code = ScancodeLookup[winScancode];
+            Console.WriteLine($"Scancode {code}, Win: 0x{winScancode:X}");
+            return code;
         }
     }
 }

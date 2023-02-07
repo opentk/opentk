@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Core.Platform.Enums
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public enum Key
     {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Unknown = 0,
 
         Space = ' ',
@@ -115,5 +115,7 @@ namespace OpenTK.Core.Platform.Enums
         OEM3 = 192,
         Tilde = 192,
         Ö = 192,
+
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

@@ -143,8 +143,11 @@ namespace OpenTK.Platform.Native.Windows
 
                         ulong vk = wParam.ToUInt64();
                         long l = lParam.ToInt64();
+                        int scancode = (int)(l & 0x0000FF0000) >> 16;
                         bool wasDown = (l & (1 << 30)) != 0;
                         bool extended = (l & (1 << 24)) != 0;
+
+                        KeyboardComponent.ToScancode(scancode, extended);
 
                         EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, vk, wasDown, extended));
 
