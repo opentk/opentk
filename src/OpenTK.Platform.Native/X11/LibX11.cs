@@ -80,6 +80,28 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints_return, XSizeHintFlags* supplied_return);
 
+        public struct XWMHints
+        {
+            public XWMHintsMask flags;  /* marks which fields in this structure are defined */
+            public byte input;          /* does this application rely on the window manager to get keyboard input? */
+            public int initial_state;	/* see below */
+            public XPixmap icon_pixmap; /* pixmap to be used as icon */
+            public XWindow icon_window; /* window to be used as icon */
+            public int icon_x, icon_y;  /* initial position of icon */
+            public XPixmap icon_mask;   /* pixmap to be used as mask for icon_pixmap */
+            public XID window_group;    /* id of related window group */
+            /* this structure may be extended in the future */
+        }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XWMHints* XAllocWMHints();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XWMHints* XGetWMHints(XDisplayPtr display, XWindow w);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern void XSetWMHints(XDisplayPtr display, XWindow w, XWMHints* wmhints);
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern XSizeHints* XAllocSizeHints();
 
@@ -115,6 +137,15 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XMapRaised(XDisplayPtr display, XWindow window);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XMapWindow(XDisplayPtr display, XWindow window);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XUnmapWindow(XDisplayPtr display, XWindow window);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int /* Status */ XWithdrawWindow(XDisplayPtr display, XWindow w, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XFreeGC(XDisplayPtr display, XGC gc);

@@ -10,6 +10,8 @@ namespace OpenTK.Platform.Native.X11
     /// </summary>
     public static class X11
     {
+        public const int Success = 0;
+
         public static XDisplayPtr Display { get; set; }
 
         public static int DefaultScreen { get; set; }

@@ -21,7 +21,7 @@ namespace OpenTK.Platform.Native.X11
         public int SaveUnder;
         public XColorMap Colormap;
         public int MapInstalled;
-        public int MapState;
+        public MapState MapState;
         public XEventMask AllEventMasks;
         public XEventMask YourEventMasks;
         public XEventMask DoNotPropagateMask;
