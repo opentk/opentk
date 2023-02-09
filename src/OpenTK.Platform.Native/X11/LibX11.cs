@@ -341,5 +341,22 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern void XUngrabPointer(XDisplayPtr display, XTime time);
+
+        public static unsafe string[] XListExtensions(XDisplayPtr display, out int nextensions_return)
+        {
+            byte** ptr = XListExtensions(display, out nextensions_return);
+
+            string[] strings = new string[nextensions_return];
+            for (int i = 0; i < strings.Length; i++)
+            {
+                strings[i] = Marshal.PtrToStringUTF8((IntPtr)ptr[i]);
+            }
+            
+            return strings;
+
+            [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+            static unsafe extern byte** XListExtensions(XDisplayPtr display, out int nextensions_return);
+        }
+        
     }
 }

@@ -18,6 +18,8 @@ namespace OpenTK.Platform.Tests
         static IShellComponent shellComp;
         //static IKeyboardComponent keyboardComp;
 
+        static IDisplayComponent displayComp;
+
         static WindowHandle Window;
 
         static CursorHandle cursorHandle;
@@ -39,6 +41,7 @@ namespace OpenTK.Platform.Tests
             cursorComp = Native.PlatformComponents.CreateCursorComponent();
             mouseComp = Native.PlatformComponents.CreateMouseComponent();
             shellComp = Native.PlatformComponents.CreateShellComponent();
+            displayComp = Native.PlatformComponents.CreateDisplayComponent();
             //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
@@ -47,12 +50,14 @@ namespace OpenTK.Platform.Tests
             cursorComp.Logger = logger;
             mouseComp.Logger = logger;
             shellComp.Logger = logger;
+            displayComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
             cursorComp.Initialize(PalComponents.MouseCursor);
             mouseComp.Initialize(PalComponents.MiceInput);
             shellComp.Initialize(PalComponents.Shell);
+            displayComp.Initialize(PalComponents.Display);
 
             if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
             {

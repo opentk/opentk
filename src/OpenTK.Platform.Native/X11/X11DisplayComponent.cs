@@ -4,6 +4,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.XRandR;
+using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -17,6 +18,13 @@ namespace OpenTK.Platform.Native.X11
 
         public void Initialize(PalComponents which)
         {
+            string[] extensions = XListExtensions(X11.Display, out _);
+            Console.WriteLine($"Extensions:");
+            foreach (var ext in extensions)
+            {
+                Console.WriteLine(ext);
+            }
+
             // FIXME
 
             // In X11, we have a priority list of extensions and methods we can use.

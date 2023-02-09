@@ -7,7 +7,7 @@ namespace OpenTK.Platform.Native.X11
     /// </summary>
     public static class XRandR
     {
-        private const string xrandr = "libXrandr";
+        private const string xrandr = "Xrandr";
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XRRQueryExtension(XDisplayPtr display, ref int eventBase, ref int errorBase);
