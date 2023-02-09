@@ -156,6 +156,7 @@ namespace OpenTK.Platform.Tests
         static Vector2 lastPos;
 
         static bool fixedBorder = false;
+        static bool client = false;
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
@@ -203,12 +204,20 @@ namespace OpenTK.Platform.Tests
                     mouseComp.GetPosition(null, out int x, out int y);
 
                     //windowComp.SetMode(Window, WindowMode.Hidden);
+                    if (client)
+                    {
+                        windowComp.SetClientSize(Window, 400, 400);
+                    }
+                    else
+                    {
+                        windowComp.SetSize(Window, 400, 400);
+                    }
 
-                    windowComp.SetPosition(Window, 200, 200);
+                    windowComp.GetSize(Window, out int wx, out int wy);
+                    windowComp.GetClientSize(Window, out int cx, out int cy);
+                    System.Console.WriteLine($"Size: ({wx}, {wy}), Client size: ({cx}, {cy}), Set client size: {client}");
 
-                    windowComp.GetPosition(Window, out int wx, out int wy);
-                    windowComp.GetClientPosition(Window, out int cx, out int cy);
-                    System.Console.WriteLine($"Position: ({wx}, {wy}), Client position: ({cx}, {cy})");
+                    client = !client;
 
                     //keyboardComp.BeginIme(Window);
                     //keyboardComp.SetImeRectangle(Window, x, y, 0, 0);

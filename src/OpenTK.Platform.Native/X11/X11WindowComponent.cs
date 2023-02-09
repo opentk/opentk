@@ -930,7 +930,17 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XResizeWindow(X11.Display, xwindow.Window, width, height);
+            int innerWidth = width;
+            int innerHeight = height;
+
+            if (IsWindowManagerFreedesktop)
+            {
+                GetWindowExtents(xwindow, out int left, out int right, out int top, out int bottom);
+                innerWidth -= left + right;
+                innerHeight -= top + bottom;
+            }
+            
+            SetClientSize(xwindow, innerWidth, innerHeight);
         }
 
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
@@ -966,7 +976,11 @@ namespace OpenTK.Platform.Native.X11
 
         public void SetClientSize(WindowHandle handle, int width, int height)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            XResizeWindow(X11.Display, xwindow.Window, width, height);
+
+            XFlush(X11.Display);
         }
 
         public unsafe void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
@@ -1217,6 +1231,18 @@ namespace OpenTK.Platform.Native.X11
                         if (IsMapped(xwindow))
                         {
                             XMapWindow(X11.Display, xwindow.Window);
+                        }
+
+                        if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
+                        {
+                            Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE.");
+                            return;
+                        }
+
+                        if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
+                        {
+                            Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
+                            return;
                         }
 
                         XEvent e = new XEvent();
