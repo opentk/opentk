@@ -2,6 +2,7 @@ using System;
 using OpenTK.Core.Platform;
 using System.Diagnostics;
 using OpenTK.Core.Utility;
+using System.Collections.Generic;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -19,5 +20,12 @@ namespace OpenTK.Platform.Native.X11
         public static XWindow DefaultRootWindow { get; set; }
 
         public static XAtomDictionary Atoms { get; set; }
+
+        public static HashSet<string> Extensions { get; set; }
+
+
+        public static int XRandREventBase { get; set; }
+
+        public static int XRandRErrorBase { get; set; }
     }
 }

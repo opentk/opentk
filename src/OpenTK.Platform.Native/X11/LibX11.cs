@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace OpenTK.Platform.Native.X11
@@ -32,6 +33,9 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XDefaultScreen(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XScreenCount(XDisplayPtr dispay);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern ulong XBlackPixel(XDisplayPtr display, int screenNumber);
@@ -112,6 +116,9 @@ namespace OpenTK.Platform.Native.X11
         public static extern XWindow XDefaultRootWindow(XDisplayPtr display);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XWindow XRootWindow(XDisplayPtr display, int screen_number);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern void XSetStandardProperties(
             XDisplayPtr display,
             XWindow window,
@@ -161,9 +168,14 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XFree(IntPtr pointer);
-
+        
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern int XFree(void* pointer);
+
+        public static unsafe int XFree<T>(Span<T> span)
+        {
+            return XFree(Unsafe.AsPointer(ref MemoryMarshal.GetReference(span)));
+        }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XColorMap XCreateColormap(

@@ -84,6 +84,8 @@ namespace OpenTK.Platform.Tests
 
             //Console.WriteLine($"Preferred theme: {shellComp.GetPreferredTheme()}");
 
+            Console.WriteLine($"Number of screens: {displayComp.GetDisplayCount()}");
+
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
 
 

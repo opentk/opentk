@@ -69,6 +69,11 @@ namespace OpenTK.Platform.Native.X11
             X11.DefaultScreen = XDefaultScreen(X11.Display);
             X11.DefaultRootWindow = XDefaultRootWindow(X11.Display);
 
+            string[] extensions = XListExtensions(X11.Display, out _);
+            X11.Extensions = new HashSet<string>(extensions);
+
+            Logger?.LogInfo($"X11 Extensions: {string.Join(", ", extensions)}");
+
             X11.Atoms = new XAtomDictionary(X11.Display);
 
             Logger?.LogInfo($"Known Atoms ({X11.Atoms.Count}) {string.Join(" ", X11.Atoms.Where(kvp => kvp.Value.IsNone == false).Select(kvp => kvp.Key))}");

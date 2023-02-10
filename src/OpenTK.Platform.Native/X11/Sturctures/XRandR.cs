@@ -8,6 +8,7 @@ namespace OpenTK.Platform.Native.X11
     /// </summary>
     public struct XRRScreenConfiguration
     {
+        public IntPtr Handle;
     }
 
     public struct XRRScreenSize
@@ -38,7 +39,7 @@ namespace OpenTK.Platform.Native.X11
     /// XRandR Crtc handle.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct RRCrtc
+    public struct RRCrtc : IEquatable<RRCrtc>
     {
         public ulong Id { get; }
 
@@ -47,6 +48,31 @@ namespace OpenTK.Platform.Native.X11
         public RRCrtc(ulong id)
         {
             Id = id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RRMode mode && Id == mode.Id;
+        }
+
+        public bool Equals(RRCrtc other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public static bool operator ==(RRCrtc a, RRCrtc b)
+        {
+            return a.Id == b.Id;
+        }
+
+        public static bool operator !=(RRCrtc a, RRCrtc b)
+        {
+            return a.Id != b.Id;
         }
     }
 
