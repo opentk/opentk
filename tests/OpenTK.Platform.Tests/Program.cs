@@ -6,6 +6,7 @@ using OpenTK.Mathematics;
 using OpenTK.Platform.Native.X11;
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Tests
 {

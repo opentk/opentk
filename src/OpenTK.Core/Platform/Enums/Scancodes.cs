@@ -60,7 +60,11 @@ namespace OpenTK.Core.Platform.Enums
         Plus,
         KeypadEnter,
         Keypad1, Keypad2, Keypad3, Keypad4, Keypad5, Keypad6, Keypad7, Keypad8, Keypad9, Keypad0,
+        KeypadForwardSlash,
         KeypadPeriod,
+        KeypadStar,
+        KeypadDash,
+        KeypadPlus,
 
         NonUSSlashBar,
         Application,

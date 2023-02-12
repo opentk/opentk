@@ -375,6 +375,8 @@ namespace LocalTestProject
             {
                 KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
 
+                Console.WriteLine($"keyDown: 0x{keyDown.VirtualKey:X}");
+
                 if (keyDown.WasDown == false)
                     vks.Add(keyDown.VirtualKey);
 
@@ -578,6 +580,12 @@ namespace LocalTestProject
 
                     Console.WriteLine($"After: {style}, Result: {windowComp.GetBorderStyle(WindowHandle)}");
                 }
+            }
+            else if (type == PlatformEventType.KeyUp)
+            {
+                KeyUpEventArgs keyUp = (KeyUpEventArgs)args;
+
+                Console.WriteLine($"keyUp: 0x{keyUp.VirtualKey:X}");
             }
             else if (type == PlatformEventType.WindowMove)
             {

@@ -175,7 +175,7 @@ namespace OpenTK.Platform.Native.Windows
             _imeActive = false;
         }
 
-        // Continue from "Keyboard UpArrow"
+        // Continue from "Keypad Equals"
         // https://learn.microsoft.com/en-au/windows/win32/inputdev/about-keyboard-input?redirectedfrom=MSDN#_win32_Keyboard_Input_Model
         // - 2023-02-07 NogginBops
 
@@ -188,21 +188,21 @@ namespace OpenTK.Platform.Native.Windows
             // 0x10 - 0x17
             Scancode.Q, Scancode.W, Scancode.E, Scancode.R, Scancode.T, Scancode.Y, Scancode.U, Scancode.I,
             // 0x18 - 0x1F
-            Scancode.O, Scancode.P, Scancode.LeftBrace, Scancode.RightBrace, Scancode.Return, 0, Scancode.A, Scancode.S,
+            Scancode.O, Scancode.P, Scancode.LeftBrace, Scancode.RightBrace, Scancode.Return, Scancode.LeftControl, Scancode.A, Scancode.S,
             // 0x20 - 0x27
             Scancode.D, Scancode.F, Scancode.G, Scancode.H, Scancode.J, Scancode.K, Scancode.L, Scancode.SemiColon,
             // 0x28 - 0x2F
-            Scancode.LeftApostrophe, Scancode.GraveAccent, Scancode.Pipe, Scancode.NonUS, Scancode.Z, Scancode.X, Scancode.C, Scancode.V,
+            Scancode.LeftApostrophe, Scancode.GraveAccent, Scancode.LeftShift, Scancode.Pipe, Scancode.Z, Scancode.X, Scancode.C, Scancode.V,
             // 0x30 - 0x37
-            Scancode.B, Scancode.N, Scancode.M, Scancode.Comma, Scancode.Period, Scancode.QuestionMark, 0, 0,
+            Scancode.B, Scancode.N, Scancode.M, Scancode.Comma, Scancode.Period, Scancode.QuestionMark, Scancode.RightShift, Scancode.KeypadStar,
             // 0x38 - 0x3F
-            0, Scancode.Spacebar, Scancode.CapsLock, Scancode.F1, Scancode.F2, Scancode.F3, Scancode.F4, Scancode.F5,
+            Scancode.LeftAlt, Scancode.Spacebar, Scancode.CapsLock, Scancode.F1, Scancode.F2, Scancode.F3, Scancode.F4, Scancode.F5,
             // 0x40 - 0x47
-            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.Pause, Scancode.ScrollLock, Scancode.Home,
+            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.Pause, Scancode.ScrollLock, Scancode.Keypad7,
             // 0x48 - 0x4F
-            Scancode.UpArrow, Scancode.PageUp, 0, Scancode.LeftAlt, 0, Scancode.RightArrow, 0, Scancode.End,
+            Scancode.Keypad8, Scancode.Keypad9, Scancode.KeypadDash, Scancode.Keypad4, Scancode.Keypad5, Scancode.Keypad6, Scancode.KeypadPlus, Scancode.Keypad1,
             // 0x50 - 0x57
-            Scancode.DownArrow, Scancode.PageDown, Scancode.Insert, Scancode.Delete, 0, 0, 0, Scancode.F11,
+            Scancode.Keypad2, Scancode.Keypad3, Scancode.Keypad0, Scancode.KeypadPeriod, 0, 0, Scancode.NonUSSlashBar, Scancode.F11,
             // 0x58 - 0x5F
             Scancode.F12, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0,
@@ -227,10 +227,68 @@ namespace OpenTK.Platform.Native.Windows
             0, 0, 0, 0, 0, 0, 0, 0,
         };
 
+        static readonly Scancode[] ScancodeLookupExt = new Scancode[256]
+        {
+            // 0x00 - 0x07
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x08 - 0x0F
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x10 - 0x17
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x18 - 0x1F
+            0, 0, 0, 0, Scancode.KeypadEnter, Scancode.RightControl, 0, 0,
+            // 0x20 - 0x27
+            0, 0, Scancode.PlayPause, 0, 0, 0, 0, 0,
+            // 0x28 - 0x2F
+            0, 0, Scancode.RightShift, 0, 0, 0, 0, 0,
+            // 0x30 - 0x37
+            0, 0, 0, 0, 0, Scancode.KeypadForwardSlash, 0, Scancode.PrintScreen,
+            // 0x38 - 0x3F
+            Scancode.RightAlt, 0, 0, 0, 0, 0, 0, 0,
+            // 0x40 - 0x47
+            0, 0, 0, 0, 0, Scancode.NumLock, 0, 0,
+            // 0x48 - 0x4F
+            Scancode.UpArrow, Scancode.PageUp, 0, Scancode.LeftArrow, 0, Scancode.RightArrow, 0, Scancode.End,
+            // 0x50 - 0x57
+            Scancode.DownArrow, Scancode.PageDown, Scancode.Insert, Scancode.Delete, 0, 0, 0, 0,
+            // 0x58 - 0x5F
+            0, 0, 0, Scancode.LeftGUI, Scancode.RightGUI, Scancode.Application, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0,
+        };
+
         internal static Scancode ToScancode(int winScancode, bool extended)
         {
-            Scancode code = ScancodeLookup[winScancode];
-            Console.WriteLine($"Scancode {code}, Win: 0x{winScancode:X}");
+            // FIXME: Pipe and NonUS is the same scancode, do we do anything about it?
+
+            Scancode code;
+            if (extended)
+            {
+                code = ScancodeLookupExt[winScancode]; 
+            }
+            else
+            {
+                code = ScancodeLookup[winScancode];
+            }
+            Console.WriteLine($"Scancode {code}, Win: 0x{winScancode:X}, Extended: {extended}");
             return code;
         }
     }

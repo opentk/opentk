@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
@@ -153,13 +154,47 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.SYSKEYDOWN:
+                    {
+                        HWND h = HWndDict[hWnd];
+
+                        ulong vk = wParam.ToUInt64();
+                        long l = lParam.ToInt64();
+                        int scancode = (int)(l & 0x0000FF0000) >> 16;
+                        bool wasDown = (l & (1 << 30)) != 0;
+                        bool extended = (l & (1 << 24)) != 0;
+
+                        KeyboardComponent.ToScancode(scancode, extended);
+
+                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, vk, wasDown, extended));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 case WM.KEYUP:
                     {
                         HWND h = HWndDict[hWnd];
 
                         ulong vk = wParam.ToUInt64();
                         long l = lParam.ToInt64();
+                        int scancode = (int)(l & 0x0000FF0000) >> 16;
                         bool extended = (l & (1 << 24)) != 0;
+
+                        KeyboardComponent.ToScancode(scancode, extended);
+
+                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, vk, extended));
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.SYSKEYUP:
+                    {
+                        HWND h = HWndDict[hWnd];
+
+                        ulong vk = wParam.ToUInt64();
+                        long l = lParam.ToInt64();
+                        int scancode = (int)(l & 0x0000FF0000) >> 16;
+                        bool extended = (l & (1 << 24)) != 0;
+
+                        KeyboardComponent.ToScancode(scancode, extended);
 
                         EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, vk, extended));
 
