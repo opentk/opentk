@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace OpenTK.Platform.Native.X11
@@ -32,6 +33,9 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XDefaultScreen(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int XScreenCount(XDisplayPtr dispay);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern ulong XBlackPixel(XDisplayPtr display, int screenNumber);
@@ -80,6 +84,28 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints_return, XSizeHintFlags* supplied_return);
 
+        public struct XWMHints
+        {
+            public XWMHintsMask flags;  /* marks which fields in this structure are defined */
+            public byte input;          /* does this application rely on the window manager to get keyboard input? */
+            public int initial_state;	/* see below */
+            public XPixmap icon_pixmap; /* pixmap to be used as icon */
+            public XWindow icon_window; /* window to be used as icon */
+            public int icon_x, icon_y;  /* initial position of icon */
+            public XPixmap icon_mask;   /* pixmap to be used as mask for icon_pixmap */
+            public XID window_group;    /* id of related window group */
+            /* this structure may be extended in the future */
+        }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XWMHints* XAllocWMHints();
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern XWMHints* XGetWMHints(XDisplayPtr display, XWindow w);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static unsafe extern void XSetWMHints(XDisplayPtr display, XWindow w, XWMHints* wmhints);
+
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern XSizeHints* XAllocSizeHints();
 
@@ -88,6 +114,9 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XWindow XDefaultRootWindow(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern XWindow XRootWindow(XDisplayPtr display, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern void XSetStandardProperties(
@@ -117,6 +146,15 @@ namespace OpenTK.Platform.Native.X11
         public static extern int XMapRaised(XDisplayPtr display, XWindow window);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XMapWindow(XDisplayPtr display, XWindow window);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void XUnmapWindow(XDisplayPtr display, XWindow window);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int /* Status */ XWithdrawWindow(XDisplayPtr display, XWindow w, int screen_number);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XFreeGC(XDisplayPtr display, XGC gc);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -130,9 +168,14 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern int XFree(IntPtr pointer);
-
+        
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern int XFree(void* pointer);
+
+        public static unsafe int XFree<T>(Span<T> span)
+        {
+            return XFree(Unsafe.AsPointer(ref MemoryMarshal.GetReference(span)));
+        }
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern XColorMap XCreateColormap(
@@ -310,5 +353,22 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         public static extern void XUngrabPointer(XDisplayPtr display, XTime time);
+
+        public static unsafe string[] XListExtensions(XDisplayPtr display, out int nextensions_return)
+        {
+            byte** ptr = XListExtensions(display, out nextensions_return);
+
+            string[] strings = new string[nextensions_return];
+            for (int i = 0; i < strings.Length; i++)
+            {
+                strings[i] = Marshal.PtrToStringUTF8((IntPtr)ptr[i]);
+            }
+            
+            return strings;
+
+            [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+            static unsafe extern byte** XListExtensions(XDisplayPtr display, out int nextensions_return);
+        }
+        
     }
 }

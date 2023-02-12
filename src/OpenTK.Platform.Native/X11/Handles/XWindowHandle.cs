@@ -11,6 +11,15 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
 
+        /// <summary>This is the size the window had when we fixed the window size.</summary>
+        public Vector2i FixedSize { get; set; } = (-1, -1);
+
+        /// <summary>This is the last set min size of the window.</summary>
+        public (int? Width, int? Height) MinSize { get; set; } = (null, null);
+
+        /// <summary>This is the last max size of the the window.</summary>
+        public (int? Width, int? Height) MaxSize { get; set; } = (null, null);
+
         public HitTest? HitTest { get; set; }
 
         public bool Destroyed { get; set; } = false;

@@ -102,6 +102,8 @@ namespace OpenTK.Platform.Native.X11
         _NET_WM_FULL_PLACEMENT,
         #endregion
 
+        EDID,
+
         /// <summary>
         /// This is not a valid known atom name, however it is used for internal verification.
         /// </summary>

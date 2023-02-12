@@ -17,7 +17,9 @@ namespace OpenTK.Platform.Tests
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
-        static IKeyboardComponent keyboardComp;
+        //static IKeyboardComponent keyboardComp;
+
+        static IDisplayComponent displayComp;
 
         static WindowHandle Window;
 
@@ -40,7 +42,8 @@ namespace OpenTK.Platform.Tests
             cursorComp = Native.PlatformComponents.CreateCursorComponent();
             mouseComp = Native.PlatformComponents.CreateMouseComponent();
             shellComp = Native.PlatformComponents.CreateShellComponent();
-            keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
+            displayComp = Native.PlatformComponents.CreateDisplayComponent();
+            //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
             windowComp.Logger = logger;
@@ -48,11 +51,14 @@ namespace OpenTK.Platform.Tests
             cursorComp.Logger = logger;
             mouseComp.Logger = logger;
             shellComp.Logger = logger;
+            displayComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
             cursorComp.Initialize(PalComponents.MouseCursor);
+            mouseComp.Initialize(PalComponents.MiceInput);
             shellComp.Initialize(PalComponents.Shell);
+            displayComp.Initialize(PalComponents.Display);
 
             if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
             {
@@ -61,7 +67,10 @@ namespace OpenTK.Platform.Tests
 
             Window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
             OpenGLContextHandle context = glComp.CreateFromWindow(Window);
-            glComp.SetCurrentContext(context);
+            if (glComp.SetCurrentContext(context) == false)
+            {
+                Console.WriteLine("Could not set context!");
+            }
             GLLoader.LoadBindings(glComp.GetBindingsContext(context));
 
             glComp.SetSwapInterval(1);
@@ -74,9 +83,13 @@ namespace OpenTK.Platform.Tests
             windowComp.SetMode(Window, WindowMode.Normal);
             //windowComp.SetAlwaysOnTop(window, true);
 
-            Console.WriteLine($"Preferred theme: {shellComp.GetPreferredTheme()}");
+            //Console.WriteLine($"Preferred theme: {shellComp.GetPreferredTheme()}");
+
+            Console.WriteLine($"Number of screens: {displayComp.GetDisplayCount()}");
 
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
+
+
 
             {
                 windowComp.GetMinClientSize(Window, out int? minWidth, out int? minHeight);
@@ -121,7 +134,9 @@ namespace OpenTK.Platform.Tests
                 if (watch.ElapsedMilliseconds > 3000)
                 {
                     //windowComp.FocusWindow(window);
-                    //windowComp.RequestAttention(window);
+                    windowComp.RequestAttention(Window);
+
+                    windowComp.SetMode(Window, WindowMode.Normal);
 
                     watch.Restart();
 
@@ -132,8 +147,8 @@ namespace OpenTK.Platform.Tests
                     if (cursor > SystemCursorType.ArrowUp)
                         cursor = SystemCursorType.Default;
                 }
-
-                mouseComp.GetPosition(null, out int x, out int y);
+                
+                //mouseComp.GetPosition(null, out int x, out int y);
                 //windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
                 
                 GL.ClearColor(BackgroundColor);
@@ -144,8 +159,12 @@ namespace OpenTK.Platform.Tests
         }
 
         static CursorCaptureMode captureMode = CursorCaptureMode.Normal;
+        static WindowMode windowMode = WindowMode.Normal;
 
         static Vector2 lastPos;
+
+        static bool fixedBorder = false;
+        static bool client = false;
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
@@ -166,12 +185,50 @@ namespace OpenTK.Platform.Tests
                     //windowComp.CaptureCursor((WindowHandle)handle, captured);
                     windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
                 }
+                else if (buttonDown.Button == MouseButton.Button2)
+                {
+                    windowComp.GetMaxClientSize(Window, out int? bMaxWidth, out int? bMaxHeight);
+                    windowComp.GetMinClientSize(Window, out int? bMinWidth, out int? bMinHeight);
+
+                    if (fixedBorder)
+                    {
+                        windowComp.SetBorderStyle(Window, WindowStyle.ResizableBorder);
+                    }
+                    else
+                    {
+                        windowComp.SetBorderStyle(Window, WindowStyle.FixedBorder);
+                    }
+
+                    fixedBorder = !fixedBorder;
+
+                    windowComp.GetMaxClientSize(Window, out int? aMaxWidth, out int? aMaxHeight);
+                    windowComp.GetMinClientSize(Window, out int? aMinWidth, out int? aMinHeight);
+
+                    System.Console.WriteLine($"Before: Min: ({bMinWidth}, {bMinHeight}), Max: ({bMaxWidth}, {bMaxHeight})");
+                    System.Console.WriteLine($"After: Min: ({aMinWidth}, {aMinHeight}), Max: ({aMaxWidth}, {aMaxHeight})");
+                }
                 else if (buttonDown.Button == MouseButton.Button1)
                 {
                     mouseComp.GetPosition(null, out int x, out int y);
 
-                    keyboardComp.BeginIme(Window);
-                    keyboardComp.SetImeRectangle(Window, x, y, 0, 0);
+                    //windowComp.SetMode(Window, WindowMode.Hidden);
+                    if (client)
+                    {
+                        windowComp.SetClientSize(Window, 400, 400);
+                    }
+                    else
+                    {
+                        windowComp.SetSize(Window, 400, 400);
+                    }
+
+                    windowComp.GetSize(Window, out int wx, out int wy);
+                    windowComp.GetClientSize(Window, out int cx, out int cy);
+                    System.Console.WriteLine($"Size: ({wx}, {wy}), Client size: ({cx}, {cy}), Set client size: {client}");
+
+                    client = !client;
+
+                    //keyboardComp.BeginIme(Window);
+                    //keyboardComp.SetImeRectangle(Window, x, y, 0, 0);
                 }
             }
             else if (args is ScrollEventArgs scroll)
