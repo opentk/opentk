@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace OpenTK.Platform.Native.X11
+namespace OpenTK.Platform.Native.X11.XRandR
 {
     /// <summary>
     /// Opaque structure to the XRandR screen configuration structure.
@@ -11,7 +11,7 @@ namespace OpenTK.Platform.Native.X11
         public IntPtr Handle;
     }
 
-    public struct XRRScreenSize
+    internal struct XRRScreenSize
     {
         public int Width;
         public int Height;
@@ -23,7 +23,7 @@ namespace OpenTK.Platform.Native.X11
     /// XRandR Output handle.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct RROutput
+    internal struct RROutput
     {
         public ulong Id { get; }
 
@@ -39,7 +39,7 @@ namespace OpenTK.Platform.Native.X11
     /// XRandR Crtc handle.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct RRCrtc : IEquatable<RRCrtc>
+    internal struct RRCrtc : IEquatable<RRCrtc>
     {
         public ulong Id { get; }
 
@@ -80,7 +80,7 @@ namespace OpenTK.Platform.Native.X11
     /// XRandR mode handle.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct RRMode
+    internal struct RRMode
     {
         public ulong Id { get; }
 
@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Native.X11
     /// XRandR Output handle.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    public struct RRProvider
+    internal struct RRProvider
     {
         public ulong Id { get; }
 
@@ -108,7 +108,7 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
-    public struct XRRModeInfo
+    internal struct XRRModeInfo
     {
         public RRMode ModeId;
         public uint Width;
@@ -126,7 +126,7 @@ namespace OpenTK.Platform.Native.X11
         public XRRModeFlags ModeFlags;
     }
 
-    public unsafe struct XRRScreenResources
+    internal unsafe struct XRRScreenResources
     {
         public XTime Timestamp;
         public XTime ConfigurationTimestamp;

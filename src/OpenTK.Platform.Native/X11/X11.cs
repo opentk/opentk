@@ -9,8 +9,10 @@ namespace OpenTK.Platform.Native.X11
     /// <summary>
     /// Static X11 values.
     /// </summary>
-    public static class X11
+    internal static class X11
     {
+        // FIXME: Maybe merge this with LibX11?
+
         public const int Success = 0;
 
         public static XDisplayPtr Display { get; set; }

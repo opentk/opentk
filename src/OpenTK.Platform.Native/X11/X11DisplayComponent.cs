@@ -3,11 +3,12 @@ using System.Diagnostics;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
-using static OpenTK.Platform.Native.X11.XRandR;
+using static OpenTK.Platform.Native.X11.XRandR.XRandR;
 using static OpenTK.Platform.Native.X11.LibX11;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
 {

@@ -8,7 +8,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Graphics;
 using OpenTK.Platform.Native.X11;
 using static OpenTK.Platform.Native.X11.LibX11;
-using static OpenTK.Platform.Native.X11.XRandR;
+using static OpenTK.Platform.Native.X11.XRandR.XRandR;
 using OpenTK.Graphics.OpenGL;
 
 namespace X11TestProject

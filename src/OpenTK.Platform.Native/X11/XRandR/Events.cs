@@ -1,8 +1,8 @@
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.Native.X11
+namespace OpenTK.Platform.Native.X11.XRandR
 {
-    public struct XRRScreenChangeNotifyEvent
+    internal struct XRRScreenChangeNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -21,7 +21,7 @@ namespace OpenTK.Platform.Native.X11
         public int MHeight;
     }
 
-    public struct XRRNotifyEvent
+    internal struct XRRNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Native.X11
         public RRNotifySubType SubType;
     }
 
-    public struct XRROutputChangeNotifyEvent
+    internal struct XRROutputChangeNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -47,7 +47,7 @@ namespace OpenTK.Platform.Native.X11
         public ushort SubPixelOrder;
     }
 
-    public struct XRRCrtcChangedNotifyEvent
+    internal struct XRRCrtcChangedNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -65,7 +65,7 @@ namespace OpenTK.Platform.Native.X11
         public uint Height;
     }
 
-    public struct XRROutputPropertyNotifyEvent
+    internal struct XRROutputPropertyNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -79,7 +79,7 @@ namespace OpenTK.Platform.Native.X11
         public int State;
     }
 
-    public struct XRRProviderChangeNotifyEvent
+    internal struct XRRProviderChangeNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -92,7 +92,7 @@ namespace OpenTK.Platform.Native.X11
         public uint CurrentRole;
     }
 
-    public struct XRRProviderPropertyNotifyEvent
+    internal struct XRRProviderPropertyNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -106,7 +106,7 @@ namespace OpenTK.Platform.Native.X11
         public int State;
     }
 
-    public struct XRRResourceChangeNotifyEvent
+    internal struct XRRResourceChangeNotifyEvent
     {
         public XEventType Type;
         public ulong Serial;

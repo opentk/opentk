@@ -7,7 +7,7 @@ using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public class XAtomDictionary : IReadOnlyDictionary<string, XAtom>
+    internal class XAtomDictionary : IReadOnlyDictionary<string, XAtom>
     {
         private readonly XAtom[] _knownAtoms = new XAtom[(int)KnownAtoms.KNOWN_ATOMS_MAX];
         private readonly Dictionary<string, XAtom> _namedAtoms = new Dictionary<string, XAtom>();

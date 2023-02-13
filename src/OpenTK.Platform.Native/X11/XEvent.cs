@@ -1,14 +1,26 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
 {
+    internal struct XErrorEvent
+    {
+        public XEventType type;
+        public XDisplayPtr display;       /* Display the event was read from */
+        public XID resourceid;         /* resource id */
+        public ulong serial;       /* serial number of failed request */
+        public XError error_code;   /* error code of failed request */
+        public XRequestCode request_code; /* Major op-code of failed request */
+        public byte minor_code;   /* Minor op-code of failed request */
+    }
+
     // Note: The real size of the structure is 192 bytes, but including
     // some more bytes in order to prevent potential segfaults down
     // the line. May be removed later.
     [StructLayout(LayoutKind.Explicit, Size = 256)]
     [DebuggerDisplay("{Type} Display={Any.Display} Window={Any.Window}")]
-    public struct XEvent
+    internal struct XEvent
     {
         [FieldOffset(0)]
         public XEventType Type;
@@ -80,7 +92,7 @@ namespace OpenTK.Platform.Native.X11
         #endregion
     }
 
-    public struct XAnyEvent
+    internal struct XAnyEvent
     {
         public XEventType Type;
         public ulong Serial;
@@ -89,7 +101,7 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Window;
     }
 
-    public struct XConfigureRequestEvent
+    internal struct XConfigureRequestEvent
     {
         public XEventType Type;     /* ConfigureRequest */
         public ulong Serial;        /* # of last request processed by server */
@@ -106,7 +118,7 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe struct XClientMessageEvent
+    internal unsafe struct XClientMessageEvent
     {
         [FieldOffset(0) ] public XEventType Type;     /* ClientMessage */
         [FieldOffset(8) ] public ulong Serial;        /* # of last request processed by server */
@@ -120,7 +132,7 @@ namespace OpenTK.Platform.Native.X11
         [FieldOffset(56)] public fixed long l[5];
     }
 
-    public struct XButtonEvent
+    internal struct XButtonEvent
     {
 
         public XEventType type;     /* ButtonPress or ButtonRelease */
@@ -138,7 +150,7 @@ namespace OpenTK.Platform.Native.X11
         public byte same_screen;    /* same screen flag */
     }
 
-    public struct XMotionEvent
+    internal struct XMotionEvent
     {
         public XEventType type;     /* MotionNotify */
         public ulong serial;        /* # of last request processed by server */
@@ -155,7 +167,7 @@ namespace OpenTK.Platform.Native.X11
         public byte same_screen;    /* same screen flag */
     }
 
-    public struct XCrossingEvent
+    internal struct XCrossingEvent
     {
         public XEventType type;            /* EnterNotify or LeaveNotify */
         public ulong serial;        /* # of last request processed by server */
@@ -178,7 +190,7 @@ namespace OpenTK.Platform.Native.X11
         public uint state;	        /* key or button mask */
     }
 
-    public struct XFocusChangeEvent
+    internal struct XFocusChangeEvent
     {
         public XEventType type;      /* FocusIn or FocusOut */
         public ulong serial;         /* # of last request processed by server */
@@ -194,7 +206,7 @@ namespace OpenTK.Platform.Native.X11
         */
     }
 
-    public struct XUnmapEvent
+    internal struct XUnmapEvent
     {
         public XEventType type;     /* UnmapNotify */
         public ulong serial;        /* # of last request processed by server */
@@ -205,7 +217,7 @@ namespace OpenTK.Platform.Native.X11
         public byte from_configure;
     }
 
-    public struct XReparentEvent
+    internal struct XReparentEvent
     {
         public XEventType type;     /* ReparentNotify */
         public ulong serial;        /* # of last request processed by server */
@@ -218,7 +230,7 @@ namespace OpenTK.Platform.Native.X11
         public byte override_redirect;
     }
 
-    public struct XPropertyEvent
+    internal struct XPropertyEvent
     {
         public XEventType type;     /* PropertyNotify */
         public ulong serial;        /* # of last request processed by server */

@@ -1,11 +1,56 @@
-using System.Diagnostics;
-using OpenTK.Core.Platform;
+﻿using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.X11
 {
+    internal class XCursorHandle : CursorHandle
+    {
+        public XCursor Cursor { get; set; }
+
+        public XCursorHandle()
+        {
+        }
+    }
+
+    internal class XOpenGLContextHandle : OpenGLContextHandle
+    {
+        public XDisplayPtr Display { get; }
+        public GLXContext Context { get; }
+
+        public XDrawable Drawable { get; }
+
+        public XOpenGLContextHandle? SharedContext { get; }
+
+        /// <summary>
+        /// We use this value to keep track of the latest swap interval set through GLX_SGI_swap_control.
+        /// </summary>
+        public int SGISwapInterval { get; set; } = 0;
+
+        public XOpenGLContextHandle(
+            XDisplayPtr display,
+            GLXContext context,
+            XDrawable drawable,
+            XOpenGLContextHandle? sharedContext = null)
+        {
+            Display = display;
+            Context = context;
+            Drawable = drawable;
+            SharedContext = sharedContext;
+        }
+    }
+
+    internal class XRandRDisplayHandle : DisplayHandle
+    {
+    }
+
     [DebuggerDisplay("XWindowHandle: Display={Display.Value} Window={Window.Id}")]
-    public class XWindowHandle : WindowHandle
+    internal class XWindowHandle : WindowHandle
     {
         public XDisplayPtr Display { get; }
         public XWindow Window { get; }
