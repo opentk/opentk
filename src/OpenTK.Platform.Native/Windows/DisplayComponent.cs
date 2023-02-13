@@ -24,7 +24,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
-        private static List<HMonitor> _displays = new List<HMonitor>();
+        private static readonly List<HMonitor> _displays = new List<HMonitor>();
 
         internal static HMonitor? FindMonitor(IntPtr hMonitor)
         {
@@ -326,7 +326,7 @@ namespace OpenTK.Platform.Native.Windows
                 }
             }
 
-            return null;
+            throw new PalException(this, "Could not find primary monitor!");
         }
 
         // FIXME: You probably also don't Destroy a monitor

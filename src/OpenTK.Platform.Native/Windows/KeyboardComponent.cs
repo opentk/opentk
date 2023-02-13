@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
@@ -175,10 +174,8 @@ namespace OpenTK.Platform.Native.Windows
             _imeActive = false;
         }
 
-        // Continue from "Keypad Equals"
-        // https://learn.microsoft.com/en-au/windows/win32/inputdev/about-keyboard-input?redirectedfrom=MSDN#_win32_Keyboard_Input_Model
-        // - 2023-02-07 NogginBops
-
+        // The scancode lookups are derived from the following list of scan codes
+        // https://learn.microsoft.com/en-au/windows/win32/inputdev/about-keyboard-input?redirectedfrom=MSDN#scan-codes
         static readonly Scancode[] ScancodeLookup = new Scancode[256]
         {
             // 0x00 - 0x07
@@ -204,11 +201,15 @@ namespace OpenTK.Platform.Native.Windows
             // 0x50 - 0x57
             Scancode.Keypad2, Scancode.Keypad3, Scancode.Keypad0, Scancode.KeypadPeriod, 0, 0, Scancode.NonUSSlashBar, Scancode.F11,
             // 0x58 - 0x5F
-            Scancode.F12, 0, 0, 0, 0, 0, 0, 0,
+            Scancode.F12, Scancode.KeypadEquals, 0, 0, Scancode.International6, 0, 0, 0,
+            // 0x60 - 0x67
             0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x68 - 0x6F
             0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x70 - 0x77
+            Scancode.International2, Scancode.LANG2, Scancode.LANG1, Scancode.International1, 0, 0, Scancode.LANG5, Scancode.LANG4,
+            // 0x78 - 0x7F
+            Scancode.LANG3, Scancode.International4, 0, Scancode.International5, 0, Scancode.International3, Scancode.KeypadComma, 0,
             0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0,
@@ -227,6 +228,7 @@ namespace OpenTK.Platform.Native.Windows
             0, 0, 0, 0, 0, 0, 0, 0,
         };
 
+        // FIXME: Should we add stuff like "AC Search" and "AL Calculator" to the scancodes?
         static readonly Scancode[] ScancodeLookupExt = new Scancode[256]
         {
             // 0x00 - 0x07
@@ -252,10 +254,14 @@ namespace OpenTK.Platform.Native.Windows
             // 0x50 - 0x57
             Scancode.DownArrow, Scancode.PageDown, Scancode.Insert, Scancode.Delete, 0, 0, 0, 0,
             // 0x58 - 0x5F
-            0, 0, 0, Scancode.LeftGUI, Scancode.RightGUI, Scancode.Application, 0, 0,
+            0, 0, 0, Scancode.LeftGUI, Scancode.RightGUI, Scancode.Application, Scancode.SystemPowerDown, Scancode.SystemSleep,
+            // 0x60 - 0x67
+            0, 0, 0, Scancode.SystemWakeUp, 0, 0, 0, 0,
+            // 0x68 - 0x6F
             0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x70 - 0x77
             0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x78 - 0x7F
             0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0,
@@ -275,9 +281,98 @@ namespace OpenTK.Platform.Native.Windows
             0, 0, 0, 0, 0, 0, 0, 0,
         };
 
-        internal static Scancode ToScancode(int winScancode, bool extended)
+        // https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+        static readonly Key[] KeyLookup = new Key[256]
+        {
+            // 0x00 - 0x07
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x08 - 0x0F
+            Key.Backspace, Key.Tab, 0, 0, 0, Key.Return, 0, 0,
+            // 0x10 - 0x17
+            0, 0, 0, Key.PauseBreak, Key.CapsLock, 0, 0, 0,
+            // 0x18 - 0x1F
+            0, 0, 0, Key.Escape, 0, 0, 0, 0,
+            // 0x20 - 0x27
+            Key.Space, Key.PageUp, Key.PageDown, Key.End, Key.Home, Key.LeftArrow, Key.UpArrow, Key.RightArrow,
+            // 0x28 - 0x2F
+            Key.DownArrow, 0, 0, 0, Key.PrintScreen, Key.Insert, Key.Delete, Key.Help,
+            // 0x30 - 0x37
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x38 - 0x3F
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x40 - 0x47
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x48 - 0x4F
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x50 - 0x57
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x58 - 0x5F
+            0, 0, 0, Key.LeftGUI, Key.RightGUI, Key.Application, 0, Key.Sleep,
+            // 0x60 - 0x67
+            Key.Keypad0, Key.Keypad1, Key.Keypad2, Key.Keypad3, Key.Keypad4, Key.Keypad5, Key.Keypad6, Key.Keypad7,
+            // 0x68 - 0x6F
+            Key.Keypad8, Key.Keypad9, Key.KeypadMultiply, Key.KeypadAdd, Key.KeypadSeparator, Key.KeypadSubtract, Key.KeypadDecimal, Key.KeypadDivide,
+            // 0x70 - 0x77
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x78 - 0x7F
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x80 - 0x87
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x88 - 0x8F
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0x90 - 0x97
+            Key.NumLock, Key.ScrollLock, 0, 0, 0, 0, 0, 0,
+            // 0x98 - 0x9F
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0xA0 - 0xA7
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0xA8 - 0xAF
+            0, 0, 0, 0, 0, Key.Mute, Key.VolumeDown, Key.VolumeUp,
+            // 0xB0 - 0xB7
+            Key.NextTrack, Key.PreviousTrack, Key.Stop, Key.PlayPause, 0, 0, 0, 0,
+            // 0xB8 - 0xBF
+            0, 0, Key.OEM1, Key.Plus, Key.Comma, Key.Minus, Key.Period, Key.OEM2,
+            // 0xC0 - 0xC7
+            Key.OEM3, 0, 0, 0, 0, 0, 0, 0,
+            // 0xC8 - 0xCF
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0xD0 - 0xD7
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0xD8 - 0xDF
+            0, 0, 0, Key.OEM4, Key.OEM5, Key.OEM6, Key.OEM7, Key.OEM8,
+            // 0xE0 - 0xE7
+            0, 0, Key.OEM102, 0, 0, 0, 0, 0,
+            // 0xE8 - 0xEF
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0xF0 - 0xF7
+            0, 0, 0, 0, 0, 0, 0, 0,
+            // 0xF8 - 0xFF
+            0, 0, 0, 0, 0, 0, 0, 0,
+        };
+
+        internal static Scancode ToScancode(int winScancode, VK virtualKey, bool extended)
         {
             // FIXME: Pipe and NonUS is the same scancode, do we do anything about it?
+
+            // Some keys like the media keys don't get scancodes in their messages
+            // so we fix those here.
+            switch (virtualKey)
+            {
+                case VK.MediaPlayPause:
+                    return Scancode.PlayPause;
+                case VK.MediaNextTrack:
+                    return Scancode.ScanNextTrack;
+                case VK.MediaPrevTrack:
+                    return Scancode.ScanPreviousTrack;
+                case VK.MediaStop:
+                    return Scancode.Stop;
+                case VK.VolumeUp:
+                    return Scancode.VolumeIncrement;
+                case VK.VolumeDown:
+                    return Scancode.VolumeDecrement;
+                case VK.VolumeMute:
+                    return Scancode.Mute;
+            }
 
             Scancode code;
             if (extended)
@@ -288,8 +383,54 @@ namespace OpenTK.Platform.Native.Windows
             {
                 code = ScancodeLookup[winScancode];
             }
-            Console.WriteLine($"Scancode {code}, Win: 0x{winScancode:X}, Extended: {extended}");
+
             return code;
+        }
+
+        
+        internal static Key ToKey(int scancode, VK virtualKey, bool extended)
+        {
+            // FIXME: Should Keypad enter and enter be different keys?
+            // They are different scancodes.
+
+            // Letters map directly.
+            if (virtualKey >= VK.A && virtualKey <= VK.Z)
+            {
+                return (Key)virtualKey;
+            }
+
+            // Numbers map directly
+            if (virtualKey >= VK.N0 && virtualKey <= VK.N9)
+            {
+                return (Key)virtualKey;
+            }
+
+            // Map function keys
+            if (virtualKey >= VK.F1 && virtualKey <= VK.F24)
+            {
+                return (virtualKey - VK.F1) + Key.F1;
+            }
+
+            // We need to figure out which shift key is pressed.
+            if (virtualKey == VK.Shift)
+            {
+                const int RightShift = 0x36;
+                return scancode == RightShift ? Key.RightShift : Key.LeftShift;
+            }
+
+            if (virtualKey == VK.Control)
+            {
+                return extended ? Key.RightControl : Key.LeftControl;
+            }
+
+            if (virtualKey == VK.Menu)
+            {
+                return extended ? Key.RightAlt : Key.LeftAlt;
+            }
+
+            Key key = KeyLookup[(byte)virtualKey];
+
+            return key;
         }
     }
 }

@@ -27,5 +27,22 @@ namespace OpenTK.Platform.Native.X11
         public static int XRandREventBase { get; set; }
 
         public static int XRandRErrorBase { get; set; }
+
+
+        /// <summary>
+        /// remove/unset property
+        /// </summary>
+        public const long _NET_WM_STATE_REMOVE = 0;
+
+        /// <summary>
+        /// add/set property
+        /// </summary>
+        public const long _NET_WM_STATE_ADD = 1;
+
+        /// <summary>
+        /// toggle property
+        /// </summary>
+        public const long _NET_WM_STATE_TOGGLE = 2;
+
     }
 }

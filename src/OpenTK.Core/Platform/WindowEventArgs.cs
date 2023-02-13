@@ -138,19 +138,28 @@ namespace OpenTK.Core.Platform
     /// <remarks>Do not use this event to handle typing, use <see cref="TextInputEventArgs"/> instead.</remarks>
     public class KeyDownEventArgs : WindowEventArgs
     {
-        // FIXME: These properties are for testing with the Win32 backend.
+        /// <summary>
+        /// The virtual key that was pressed.
+        /// FIXME: Document difference between Key and Scancode.
+        /// </summary>
+        public Key Key { get; private set; }
 
-        public ulong VirtualKey { get; private set; }
+        /// <summary>
+        /// The scancode of the key pressed.
+        /// FIXME: Document difference between Key and Scancode.
+        /// </summary>
+        public Scancode Scancode { get; private set; }
 
-        public bool WasDown { get; private set; }
+        /// <summary>
+        /// Whether this event is caused by holding down this key or not.
+        /// </summary>
+        public bool IsRepeat { get; private set; }
 
-        public bool Extended { get; private set; }
-
-        public KeyDownEventArgs(WindowHandle window, ulong virtualKey, bool wasDown, bool extended) : base(window)
+        public KeyDownEventArgs(WindowHandle window, Key key, Scancode scancode, bool isRepeat) : base(window)
         {
-            VirtualKey = virtualKey;
-            WasDown = wasDown;
-            Extended = extended;
+            Key = key;
+            Scancode = scancode;
+            IsRepeat = isRepeat;
         }
     }
 
@@ -162,14 +171,22 @@ namespace OpenTK.Core.Platform
     {
         // FIXME: These properties are for testing with the Win32 backend.
 
-        public ulong VirtualKey { get; private set; }
+        /// <summary>
+        /// The virtual key that was pressed.
+        /// FIXME: Document difference between Key and Scancode.
+        /// </summary>
+        public Key Key { get; private set; }
 
-        public bool Extended { get; private set; }
+        /// <summary>
+        /// The scancode of the key pressed.
+        /// FIXME: Document difference between Key and Scancode.
+        /// </summary>
+        public Scancode Scancode { get; private set; }
 
-        public KeyUpEventArgs(WindowHandle window, ulong virtualKey, bool extended) : base(window)
+        public KeyUpEventArgs(WindowHandle window, Key key, Scancode scancode) : base(window)
         {
-            VirtualKey = virtualKey;
-            Extended = extended;
+            Key = key;
+            Scancode = scancode;
         }
     }
 
@@ -223,7 +240,6 @@ namespace OpenTK.Core.Platform
         public bool Entered { get; set; }
 
         // FIXME: Include the position where this happened?
-
         public MouseEnterEventArgs(WindowHandle window, bool entered) : base(window)
         {
             Entered = entered;
@@ -382,7 +398,6 @@ namespace OpenTK.Core.Platform
         public bool Disconnected { get; private set; }
 
         // FIXME: Maybe add more data about the display...?
-
         public DisplayConnectionChangedEventArgs(DisplayHandle display, bool disconnected)
         {
             Display = display;

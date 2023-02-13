@@ -88,6 +88,11 @@ namespace OpenTK.Core.Platform
                     names.Add(_windowComponent.Name);
                 }
 
+                if (_shellComponent is not null)
+                {
+                    names.Add(_shellComponent.Name);
+                }
+
                 return $"Component Set [{string.Join(", ", names)}]";
             }
         }
@@ -100,7 +105,8 @@ namespace OpenTK.Core.Platform
                                          (_mouseComponent is not null ? PalComponents.MouseCursor : 0) |
                                          (_openGLComponent is not null ? PalComponents.OpenGL : 0) |
                                          (_surfaceComponent is not null ? PalComponents.Surface : 0) |
-                                         (_windowComponent is not null ? PalComponents.Window : 0);
+                                         (_windowComponent is not null ? PalComponents.Window : 0) |
+                                         (_shellComponent is not null ? PalComponents.Shell : 0);
 
         private ILogger? _logger;
 
@@ -132,6 +138,8 @@ namespace OpenTK.Core.Platform
 
                 if (_windowComponent != null) _windowComponent.Logger = _logger;
 
+                if (_shellComponent != null) _shellComponent.Logger = _logger;
+
 #pragma warning restore SA1503 // Braces should not be omitted
             }
         }
@@ -158,6 +166,7 @@ namespace OpenTK.Core.Platform
                 PalComponents.WindowIcon => _iconComponent,
                 PalComponents.OpenGL => _openGLComponent,
                 PalComponents.Clipboard => _clipboardComponent,
+                PalComponents.Shell => _shellComponent,
                 _ => throw new ArgumentException("Components are a bitfield or out of range.", nameof(which))
             };
             set
@@ -203,6 +212,10 @@ namespace OpenTK.Core.Platform
                 {
                     _clipboardComponent = value as IClipboardComponent;
                 }
+                if ((which & PalComponents.Shell) != 0)
+                {
+                    _shellComponent = value as IShellComponent;
+                }
             }
         }
 
@@ -230,6 +243,7 @@ namespace OpenTK.Core.Platform
             _windowComponent?.Initialize(which & PalComponents.Window);
             _openGLComponent?.Initialize(which & PalComponents.OpenGL);
             _clipboardComponent?.Initialize(which & PalComponents.Clipboard);
+            _shellComponent?.Initialize(which & PalComponents.Shell);
 
             Initialized = true;
         }

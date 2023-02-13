@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
+#pragma warning disable CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
     internal static unsafe class Win32
     {
         internal const int LoWordMask = 0x0000_FFFF;
@@ -138,7 +139,7 @@ namespace OpenTK.Platform.Native.Windows
         public struct MSG
         {
             public IntPtr hwnd;
-            public uint message;
+            public WM message;
             public UIntPtr wParam;
             public IntPtr lParam;
             public int time;
@@ -150,7 +151,7 @@ namespace OpenTK.Platform.Native.Windows
         internal static extern int GetMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern int PeekMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax, PM wRemoveMsg);
+        internal static extern bool PeekMessage(out MSG lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax, PM wRemoveMsg);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern bool TranslateMessage(in MSG lpMsg);
@@ -166,6 +167,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll")]
         internal static extern void PostQuitMessage(int nExitCode);
+
+        [DllImport("user32.dll")]
+        internal static extern int GetMessageTime();
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int GetWindowTextLength(IntPtr hWnd);
@@ -947,13 +951,13 @@ namespace OpenTK.Platform.Native.Windows
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         internal struct SHFILEINFO
         {
-            IntPtr /* HICON */ hIcon;
-            int iIcon;
-            uint dwAttributes;
+            public IntPtr /* HICON */ hIcon;
+            public int iIcon;
+            public uint dwAttributes;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260 /* MAX_PATH */)]
-            string szDisplayName;
+            public string szDisplayName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-            string szTypeName;
+            public string szTypeName;
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -1016,4 +1020,6 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool ClipCursor(ref RECT lpRect);
     }
+
+#pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'
 }

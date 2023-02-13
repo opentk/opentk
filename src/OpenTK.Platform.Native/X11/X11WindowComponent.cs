@@ -94,10 +94,19 @@ namespace OpenTK.Platform.Native.X11
             XAtom atom = X11.Atoms[KnownAtoms.ATOM];
             XAtom utf8_string = X11.Atoms[KnownAtoms.UTF8_STRING];
             XAtom window = X11.Atoms[KnownAtoms.WINDOW];
-            IntPtr array;
-            long count;
 
-            XGetWindowProperty(X11.Display, X11.DefaultRootWindow, _net_supporting_wm_check, 0, 8, false, window, out _, out _, out count, out _, out array);
+            XGetWindowProperty(
+                X11.Display,
+                X11.DefaultRootWindow,
+                _net_supporting_wm_check,
+                0, 8,
+                false,
+                window,
+                out _,
+                out _,
+                out long count,
+                out _,
+                out IntPtr array);
 
             if (count > 0)
             {
@@ -789,8 +798,6 @@ namespace OpenTK.Platform.Native.X11
         public string GetTitle(WindowHandle handle)
         {
             var window = handle.As<XWindowHandle>(this);
-            string str;
-            IntPtr name;
 
             // Prefer to fetch the freedesktop name.
             int status = XGetWindowProperty(
@@ -803,9 +810,9 @@ namespace OpenTK.Platform.Native.X11
                     X11.Atoms![KnownAtoms.UTF8_STRING],
                     out XAtom returnedType,
                     out _,
-                    out long count,
                     out _,
-                    out name);
+                    out _,
+                    out IntPtr name);
 
             // If the property is empty or does not exist or an error,
             // fetch the classic name.
@@ -814,7 +821,7 @@ namespace OpenTK.Platform.Native.X11
                 XFetchName(window.Display, window.Window, out name);
             }
 
-            str = Marshal.PtrToStringUTF8(name) ?? string.Empty;
+            string str = Marshal.PtrToStringUTF8(name) ?? string.Empty;
             XFree(name);
             return str;
         }
@@ -1204,13 +1211,6 @@ namespace OpenTK.Platform.Native.X11
 
                         ref XClientMessageEvent client = ref e.ClientMessage;
 
-                        /* remove/unset property */
-                        const long _NET_WM_STATE_REMOVE = 0;
-                        /* add/set property */
-                        const long _NET_WM_STATE_ADD = 1;
-                        /* toggle property  */
-                        const long _NET_WM_STATE_TOGGLE = 2;
-
                         client.Type = XEventType.ClientMessage;
                         client.Serial = 0;
                         client.SendEvent = 1;
@@ -1220,7 +1220,7 @@ namespace OpenTK.Platform.Native.X11
                         client.Format = 32;
                         unsafe
                         {
-                            client.l[0] = _NET_WM_STATE_ADD;
+                            client.l[0] = X11._NET_WM_STATE_ADD;
                             client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
                             client.l[2] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
                             client.l[3] = 0;
@@ -1254,13 +1254,6 @@ namespace OpenTK.Platform.Native.X11
 
                         ref XClientMessageEvent client = ref e.ClientMessage;
 
-                        /* remove/unset property */
-                        const long _NET_WM_STATE_REMOVE = 0;
-                        /* add/set property */
-                        const long _NET_WM_STATE_ADD = 1;
-                        /* toggle property  */
-                        const long _NET_WM_STATE_TOGGLE = 2;
-                        
                         // FIXME: Remove extents or whatever is causing the window to not become "proper" fullscreen.
                         // FIXME: Make sure that we don't trigger a "maximized" window mode change.
 
@@ -1273,7 +1266,7 @@ namespace OpenTK.Platform.Native.X11
                         client.Format = 32;
                         unsafe
                         {
-                            client.l[0] = _NET_WM_STATE_ADD;
+                            client.l[0] = X11._NET_WM_STATE_ADD;
                             client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
                             client.l[2] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
                             client.l[3] = 0;
@@ -1291,7 +1284,7 @@ namespace OpenTK.Platform.Native.X11
                         client.Format = 32;
                         unsafe
                         {
-                            client.l[0] = _NET_WM_STATE_ADD;
+                            client.l[0] = X11._NET_WM_STATE_ADD;
                             client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
                             client.l[2] = 0;
                             client.l[3] = 0;
@@ -1413,13 +1406,6 @@ namespace OpenTK.Platform.Native.X11
 
             ref XClientMessageEvent client = ref e.ClientMessage;
 
-            /* remove/unset property */
-            const long _NET_WM_STATE_REMOVE = 0;
-            /* add/set property */
-            const long _NET_WM_STATE_ADD = 1;
-            /* toggle property  */
-            const long _NET_WM_STATE_TOGGLE = 2;
-
             client.Type = XEventType.ClientMessage;
             client.Serial = 0;
             client.SendEvent = 1;
@@ -1429,7 +1415,7 @@ namespace OpenTK.Platform.Native.X11
             client.Format = 32;
             unsafe
             {
-                client.l[0] = floating ? _NET_WM_STATE_ADD : _NET_WM_STATE_REMOVE;
+                client.l[0] = floating ? X11._NET_WM_STATE_ADD : X11._NET_WM_STATE_REMOVE;
                 client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_ABOVE].Id;
                 client.l[2] = 0;
                 client.l[3] = 0;
@@ -1600,13 +1586,6 @@ namespace OpenTK.Platform.Native.X11
 
             ref XClientMessageEvent client = ref e.ClientMessage;
 
-            /* remove/unset property */
-            const long _NET_WM_STATE_REMOVE = 0;
-            /* add/set property */
-            const long _NET_WM_STATE_ADD = 1;
-            /* toggle property  */
-            const long _NET_WM_STATE_TOGGLE = 2;
-
             client.Type = XEventType.ClientMessage;
             client.Serial = 0;
             client.SendEvent = 1;
@@ -1616,7 +1595,7 @@ namespace OpenTK.Platform.Native.X11
             client.Format = 32;
             unsafe
             {
-                client.l[0] = _NET_WM_STATE_ADD;
+                client.l[0] = X11._NET_WM_STATE_ADD;
                 client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_DEMANDS_ATTENTION].Id;
                 client.l[2] = 0;
                 client.l[3] = 0;

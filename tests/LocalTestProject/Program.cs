@@ -11,7 +11,6 @@ using OpenTK.Core.Utility;
 using OpenTK;
 using System;
 using System.Collections.Generic;
-using OpenTK.Core.Platform.Enums;
 
 namespace LocalTestProject
 {
@@ -283,7 +282,7 @@ namespace LocalTestProject
             Console.WriteLine($"Border: {border}");
         }
 
-        static List<ulong> vks = new List<ulong>();
+        static List<Scancode> vks = new List<Scancode>();
 
         static Vector2 MousePos = (0, 0);
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
@@ -375,20 +374,20 @@ namespace LocalTestProject
             {
                 KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
 
-                Console.WriteLine($"keyDown: 0x{keyDown.VirtualKey:X}");
+                Console.WriteLine($"keyDown: {keyDown.Key}");
 
-                if (keyDown.WasDown == false)
-                    vks.Add(keyDown.VirtualKey);
+                if (keyDown.IsRepeat == false)
+                    vks.Add(keyDown.Scancode);
 
-                if (keyDown.VirtualKey == 'C')
+                if (keyDown.Key == Key.C)
                 {
                     clipComp.SetClipboardText("Copy");
                 }
-                else if (keyDown.VirtualKey == 'V')
+                else if (keyDown.Key == Key.V)
                 {
                     clipComp.SetClipboardText("Paste");
                 }
-                else if (keyDown.VirtualKey == 'A')
+                else if (keyDown.Key == Key.A)
                 {
                     AudioData data = new AudioData();
                     data.SampleRate = 44100;
@@ -407,7 +406,7 @@ namespace LocalTestProject
 
                     ((ClipboardComponent)clipComp).SetClipboardAudio(data);
                 }
-                else if (keyDown.VirtualKey == 'B')
+                else if (keyDown.Key == Key.B)
                 {
                     const int W = 600;
                     const int H = 600;
@@ -466,7 +465,7 @@ namespace LocalTestProject
 
                     ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
                 }
-                else if (keyDown.VirtualKey == 'P')
+                else if (keyDown.Key == Key.P)
                 {
                     ClipboardFormat format = clipComp.GetClipboardFormat();
                     Console.WriteLine($"Clipboard format: {format}");
@@ -534,7 +533,7 @@ namespace LocalTestProject
                             break;
                     }
                 }
-                else if (keyDown.VirtualKey == 'D')
+                else if (keyDown.Key == Key.D)
                 {
                     DisplayHandle disp = windowComp.GetDisplay(WindowHandle);
                     bool isPrimary = dispComp.IsPrimary(disp);
@@ -545,12 +544,12 @@ namespace LocalTestProject
                     
                     Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
                 }
-                else if (keyDown.VirtualKey == 'S')
+                else if (keyDown.Key == Key.S)
                 {
                     windowComp.GetClientSize(WindowHandle, out int width, out int height);
                     Console.WriteLine($"Window 1 client size: ({width}, {height})");
                 }
-                else if (keyDown.VirtualKey == 'Q')
+                else if (keyDown.Key == Key.Q)
                 {
                     BatteryStatus status = shellComp.GetBatteryInfo(out BatteryInfo info);
                     switch (status)
@@ -567,7 +566,7 @@ namespace LocalTestProject
                             break;
                     }
                 }
-                else if (keyDown.VirtualKey == 'M')
+                else if (keyDown.Key == Key.M)
                 {
                     
 
@@ -585,7 +584,7 @@ namespace LocalTestProject
             {
                 KeyUpEventArgs keyUp = (KeyUpEventArgs)args;
 
-                Console.WriteLine($"keyUp: 0x{keyUp.VirtualKey:X}");
+                Console.WriteLine($"keyUp: {keyUp.Key}");
             }
             else if (type == PlatformEventType.WindowMove)
             {

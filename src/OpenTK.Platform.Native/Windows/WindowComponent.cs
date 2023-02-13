@@ -1,5 +1,4 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Platform.Enums;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using System;
@@ -100,7 +99,7 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // Eat all messages so that the WM_CREATE messages get processed etc.
-            while (Win32.PeekMessage(out Win32.MSG lpMsg, HelperHWnd, 0, 0, PM.Remove) != 0)
+            while (Win32.PeekMessage(out Win32.MSG lpMsg, HelperHWnd, 0, 0, PM.Remove))
             {
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);
@@ -139,64 +138,82 @@ namespace OpenTK.Platform.Native.Windows
             switch (uMsg)
             {
                 case WM.KEYDOWN:
-                    {
-                        HWND h = HWndDict[hWnd];
-
-                        ulong vk = wParam.ToUInt64();
-                        long l = lParam.ToInt64();
-                        int scancode = (int)(l & 0x0000FF0000) >> 16;
-                        bool wasDown = (l & (1 << 30)) != 0;
-                        bool extended = (l & (1 << 24)) != 0;
-
-                        KeyboardComponent.ToScancode(scancode, extended);
-
-                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, vk, wasDown, extended));
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                 case WM.SYSKEYDOWN:
                     {
                         HWND h = HWndDict[hWnd];
 
-                        ulong vk = wParam.ToUInt64();
+                        bool sysKey = uMsg == WM.SYSKEYUP;
+
+                        // FIXME: Is there ever a virtual key that doesn't fit in an int?
+                        VK vk = (VK)wParam.ToUInt64();
                         long l = lParam.ToInt64();
                         int scancode = (int)(l & 0x0000FF0000) >> 16;
                         bool wasDown = (l & (1 << 30)) != 0;
                         bool extended = (l & (1 << 24)) != 0;
 
-                        KeyboardComponent.ToScancode(scancode, extended);
+                        if (vk == VK.Control && extended == false)
+                        {
+                            // Pressing Alt-gr sends VK_CONTROL followed by VK_MENU
+                            int time = Win32.GetMessageTime();
 
-                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, vk, wasDown, extended));
+                            if (Win32.PeekMessage(out Win32.MSG msg, IntPtr.Zero, 0, 0, PM.NoRemove))
+                            {
+                                if (msg.message == WM.KEYDOWN || msg.message == WM.SYSKEYDOWN)
+                                {
+                                    bool isExtended = (msg.lParam.ToInt64() & (1 << 24)) != 0;
+                                    if ((VK)msg.wParam.ToUInt64() == VK.Menu && isExtended && msg.time == time)
+                                    {
+                                        // This message is the VK_CONTROL message triggered from pressing Alt-Gr
+                                        // So we should ignore this message and only handle the Alt-Gr message.
+                                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                                    }
+                                }
+                            }
+                        }
+
+                        Scancode code = KeyboardComponent.ToScancode(scancode, vk, extended);
+                        Key key = KeyboardComponent.ToKey(scancode, vk, extended);
+                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {vk}, Win: 0x{scancode:X}, Extended: {extended}");
+
+                        EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, wasDown));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.KEYUP:
-                    {
-                        HWND h = HWndDict[hWnd];
-
-                        ulong vk = wParam.ToUInt64();
-                        long l = lParam.ToInt64();
-                        int scancode = (int)(l & 0x0000FF0000) >> 16;
-                        bool extended = (l & (1 << 24)) != 0;
-
-                        KeyboardComponent.ToScancode(scancode, extended);
-
-                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, vk, extended));
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                    }
                 case WM.SYSKEYUP:
                     {
                         HWND h = HWndDict[hWnd];
 
+                        // FIXME: It seems there is a bug when both left and right GUI are
+                        // pressed in short succession where only one WM_KEYUP message gets sent.
+
+                        // FIXME: Holding down both shift keys results in only one WM_KEYUP message.
+
+                        bool sysKey = uMsg == WM.SYSKEYUP;
+
                         ulong vk = wParam.ToUInt64();
                         long l = lParam.ToInt64();
                         int scancode = (int)(l & 0x0000FF0000) >> 16;
                         bool extended = (l & (1 << 24)) != 0;
 
-                        KeyboardComponent.ToScancode(scancode, extended);
+                        // FIXME: Should we peek messages like in keydown?
+                        if (uMsg == WM.SYSKEYUP && (VK)vk == VK.Control)
+                        {
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
 
-                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, vk, extended));
+                        Scancode code = KeyboardComponent.ToScancode(scancode, (VK)vk, extended);
+                        Key key = KeyboardComponent.ToKey(scancode, (VK)vk, extended);
+                        Console.WriteLine($"{(sysKey ? "Sys " : "")}Key: {key}, Scancode: {code}, VK: {(VK)vk}, Win: 0x{scancode:X}, Extended: {extended}");
+
+                        // Print screen only generates a WM_KEYUP event, so we need to send the KeyDown event here.
+                        // - 2023-02-13 NogginBops
+                        if (code == Scancode.PrintScreen)
+                        {
+                            EventQueue.Raise(h, PlatformEventType.KeyDown, new KeyDownEventArgs(h, key, code, false));
+                        }
+                        
+                        EventQueue.Raise(h, PlatformEventType.KeyUp, new KeyUpEventArgs(h, key, code));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
@@ -859,7 +876,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents = false)
         {
-            while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove) != 0)
+            while (Win32.PeekMessage(out Win32.MSG lpMsg, IntPtr.Zero, 0, 0, PM.Remove))
             {
                 Win32.TranslateMessage(in lpMsg);
                 Win32.DispatchMessage(in lpMsg);

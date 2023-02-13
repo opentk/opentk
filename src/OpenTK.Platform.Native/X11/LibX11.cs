@@ -361,7 +361,7 @@ namespace OpenTK.Platform.Native.X11
             string[] strings = new string[nextensions_return];
             for (int i = 0; i < strings.Length; i++)
             {
-                strings[i] = Marshal.PtrToStringUTF8((IntPtr)ptr[i]);
+                strings[i] = Marshal.PtrToStringUTF8((IntPtr)ptr[i]) ?? throw new NullReferenceException("XListExtensions() returned null string.");
             }
             
             return strings;
