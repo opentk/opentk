@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Core.Platform
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1514 // Element documentation header should be preceded by blank line
     public enum Key
     {
@@ -388,8 +387,8 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <item>In the US keyboard layout this is the <c>;:</c> key.</item>
-        /// <item>In the nordic layout this is the <c>¨^~</c> key.</item>
+        /// <list><description>In the US keyboard layout this is the <c>;:</c> key.</description></list>
+        /// <list><description>In the nordic layout this is the <c>¨^~</c> key.</description></list>
         /// </list>
         /// </summary>
         OEM1,
@@ -402,8 +401,8 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <item>In the US keyboard layout this is the <c>/?</c> key.</item>
-        /// <item>In the nordic layout this is the <c>'*</c> key.</item>
+        /// <list><description>In the US keyboard layout this is the <c>/?</c> key.</description></list>
+        /// <list><description>In the nordic layout this is the <c>'*</c> key.</description></list>
         /// </list>
         /// </summary>
         OEM2,
@@ -416,8 +415,8 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <item>In the US keyboard layout this is the <c>`~</c> key.</item>
-        /// <item>In the nordic layout this is the <c>ÖØÆ</c> key.</item>
+        /// <list><description>In the US keyboard layout this is the <c>`~</c> key.</description></list>
+        /// <list><description>In the nordic layout this is the <c>ÖØÆ</c> key.</description></list>
         /// </list>
         /// </summary>
         OEM3,
@@ -430,8 +429,8 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <item>In the US keyboard layout this is the <c>[{</c> key.</item>
-        /// <item>In the nordic layout this is the <c>´`</c> key.</item>
+        /// <list><description>In the US keyboard layout this is the <c>[{</c> key.</description></list>
+        /// <list><description>In the nordic layout this is the <c>´`</c> key.</description></list>
         /// </list>
         /// </summary>
         OEM4,
@@ -444,8 +443,8 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <item>In the US keyboard layout this is the <c>\|</c> key.</item>
-        /// <item>In the nordic layout this is the <c>§½</c> key.</item>
+        /// <list><description>In the US keyboard layout this is the <c>\|</c> key.</description></list>
+        /// <list><description>In the nordic layout this is the <c>§½</c> key.</description></list>
         /// </list>
         /// </summary>
         OEM5,
@@ -458,8 +457,8 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <item>In the US keyboard layout this is the <c>]}</c> key.</item>
-        /// <item>In the nordic layout this is the <c>Å</c> key.</item>
+        /// <list><description>In the US keyboard layout this is the <c>]}</c> key.</description></list>
+        /// <list><description>In the nordic layout this is the <c>Å</c> key.</description></list>
         /// </list>
         /// </summary>
         OEM6,
@@ -472,8 +471,8 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <item>In the US keyboard layout this is the <c>'"</c> key.</item>
-        /// <item>In the nordic layout this is the <c>ÄÆØ</c> key.</item>
+        /// <list><description>In the US keyboard layout this is the <c>'"</c> key.</description></list>
+        /// <list><description>In the nordic layout this is the <c>ÄÆØ</c> key.</description></list>
         /// </list>
         /// </summary>
         OEM7,
@@ -533,5 +532,4 @@ namespace OpenTK.Core.Platform
         VolumeDown,
     }
 #pragma warning restore SA1514 // Element documentation header should be preceded by blank line
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
