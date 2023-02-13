@@ -955,7 +955,7 @@ namespace OpenTK.Platform.Native.Windows
             // FIXME: Do we add back the hwnd to HWndDict?
             if (success == false)
             {
-                throw new Win32Exception("DestroyWindow failed!");
+                throw new Win32Exception();
             }
         }
 

@@ -7,9 +7,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using OpenTK.Platform.Native.X11;
-using static OpenTK.Platform.Native.X11.LibX11;
-using static OpenTK.Platform.Native.X11.GLX;
+using OpenTK.Platform.Native;
 
 namespace X11TestProject
 {
@@ -22,9 +20,10 @@ namespace X11TestProject
         // MAIN THREAD:
         public static void MultiThreadMain()
         {
-            X11WindowComponent windowComp = new X11WindowComponent();
-            X11OpenGLComponent glComp = new X11OpenGLComponent();
-            X11DisplayComponent dispComp = new X11DisplayComponent();
+            IWindowComponent windowComp = PlatformComponents.CreateWindowComponent();
+            IOpenGLComponent glComp = PlatformComponents.CreateOpenGLComponent();
+            IDisplayComponent dispComp = PlatformComponents.CreateDisplayComponent();
+
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
             dispComp.Initialize(PalComponents.Display);
@@ -40,13 +39,18 @@ namespace X11TestProject
 
             A.Start();
             B.Start();
-            for (;;)
+
+            EventQueue.EventRaised += (handle, type, args) =>
             {
-                while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
+                if (args is CloseEventArgs close)
                 {
-                    XNextEvent(X11.Display, out XEvent ea);
-                    EventQueue.Raise(null, (PlatformEventType)ea.Type, EventArgs.Empty);
+                    windowComp.Destroy(close.Window);
                 }
+            };
+
+            while(!A.Done || !B.Done)
+            {
+                windowComp.ProcessEvents();
 
                 if (XTasks.TryDequeue(out Task? task))
                 {
@@ -65,13 +69,15 @@ namespace X11TestProject
     public class WindowThread
     {
         private readonly ComponentSet _layer;
-        private IWindowComponent WindowComponent => (IWindowComponent)_layer;
-        private IOpenGLComponent OpenGLComponent => (IOpenGLComponent)_layer;
+        private IWindowComponent WindowComponent => _layer;
+        private IOpenGLComponent OpenGLComponent => _layer;
 
         private readonly Stopwatch _watch = new Stopwatch();
         private readonly float _phase;
 
         public Thread? Thread { get; private set; }
+
+        public bool Done { get; private set; }
 
         public WindowThread(ComponentSet layer, float phase)
         {
@@ -106,10 +112,9 @@ namespace X11TestProject
             {
                 window = WindowComponent.Create(new OpenGLGraphicsApiHints());
                 context = OpenGLComponent.CreateFromWindow(window);
-                XWindowHandle wnd = (XWindowHandle)window;
 
-                XSelectInput(X11.Display, wnd.Window, XEventMask.All);
-                XMapRaised(X11.Display, wnd.Window);
+                WindowComponent.SetSize(window, 800, 600);
+                WindowComponent.SetMode(window, WindowMode.Normal);
             });
 
             MultiThreadExample.XTasks.Enqueue(invokeX11Actions);
@@ -119,19 +124,19 @@ namespace X11TestProject
             GLLoader.LoadBindings(OpenGLComponent.GetBindingsContext(context!));
 
             _watch.Start();
-            for (;;)
+            while (WindowComponent.IsWindowDestroyed(window) == false)
             {
-                queue.DispatchEvents();
-
                 OpenGLComponent.SetCurrentContext(context);
                 Color4<Rgba> color = GetColor();
                 GL.ClearColor(color);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
                 await MultiThreadExample.Invoke(
-                    new Task(() => glXSwapBuffers(X11.Display, (window as XWindowHandle).Window))
+                    new Task(() => { if (WindowComponent.IsWindowDestroyed(window) == false) WindowComponent.SwapBuffers(window); })
                     );
             }
+
+            Done = true;
         }
     }
 }
