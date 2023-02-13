@@ -39,42 +39,150 @@ namespace OpenTK.Core.Platform
         /// </summary>
         Space = ' ',
 
+        /// <summary>
+        /// The 0 key.
+        /// </summary>
         D0 = '0',
+        /// <summary>
+        /// The 1 key.
+        /// </summary>
         D1 = '1',
+        /// <summary>
+        /// The 2 key.
+        /// </summary>
         D2 = '2',
+        /// <summary>
+        /// The 3 key.
+        /// </summary>
         D3 = '3',
+        /// <summary>
+        /// The 4 key.
+        /// </summary>
         D4 = '4',
+        /// <summary>
+        /// The 5 key.
+        /// </summary>
         D5 = '5',
+        /// <summary>
+        /// The 6 key.
+        /// </summary>
         D6 = '6',
+        /// <summary>
+        /// The 7 key.
+        /// </summary>
         D7 = '7',
+        /// <summary>
+        /// The 8 key.
+        /// </summary>
         D8 = '8',
+        /// <summary>
+        /// The 9 key.
+        /// </summary>
         D9 = '9',
 
+        /// <summary>
+        /// The A key.
+        /// </summary>
         A = 'A',
+        /// <summary>
+        /// The B key.
+        /// </summary>
         B = 'B',
+        /// <summary>
+        /// The C key.
+        /// </summary>
         C = 'C',
+        /// <summary>
+        /// The D key.
+        /// </summary>
         D = 'D',
+        /// <summary>
+        /// The E key.
+        /// </summary>
         E = 'E',
+        /// <summary>
+        /// The F key.
+        /// </summary>
         F = 'F',
+        /// <summary>
+        /// The G key.
+        /// </summary>
         G = 'G',
+        /// <summary>
+        /// The H key.
+        /// </summary>
         H = 'H',
+        /// <summary>
+        /// The I key.
+        /// </summary>
         I = 'I',
+        /// <summary>
+        /// The J key.
+        /// </summary>
         J = 'J',
+        /// <summary>
+        /// The K key.
+        /// </summary>
         K = 'K',
+        /// <summary>
+        /// The L key.
+        /// </summary>
         L = 'L',
+        /// <summary>
+        /// The M key.
+        /// </summary>
         M = 'M',
+        /// <summary>
+        /// The N key.
+        /// </summary>
         N = 'N',
+        /// <summary>
+        /// The O key.
+        /// </summary>
         O = 'O',
+        /// <summary>
+        /// The P key.
+        /// </summary>
         P = 'P',
+        /// <summary>
+        /// The Q key.
+        /// </summary>
         Q = 'Q',
+        /// <summary>
+        /// The R key.
+        /// </summary>
         R = 'R',
+        /// <summary>
+        /// The S key.
+        /// </summary>
         S = 'S',
+        /// <summary>
+        /// The T key.
+        /// </summary>
         T = 'T',
+        /// <summary>
+        /// The U key.
+        /// </summary>
         U = 'U',
+        /// <summary>
+        /// The V key.
+        /// </summary>
         V = 'V',
+        /// <summary>
+        /// The W key.
+        /// </summary>
         W = 'W',
+        /// <summary>
+        /// The X key.
+        /// </summary>
         X = 'X',
+        /// <summary>
+        /// The Y key.
+        /// </summary>
         Y = 'Y',
+        /// <summary>
+        /// The Z key.
+        /// </summary>
         Z = 'Z',
 
         /// <summary>
@@ -249,10 +357,16 @@ namespace OpenTK.Core.Platform
         /// </summary>
         DownArrow,
 
-        // FIXME: Explain what this key is for...
+        /// <summary>
+        /// The application key.
+        /// This usually opens a context menu, in the same way that right click does.
+        /// </summary>
         Application,
 
         // FIXME: Is this windows only?
+        /// <summary>
+        /// The help key.
+        /// </summary>
         Help,
 
         /// <summary>
