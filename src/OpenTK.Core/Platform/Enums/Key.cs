@@ -387,106 +387,63 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <list><description>In the US keyboard layout this is the <c>;:</c> key.</description></list>
-        /// <list><description>In the nordic layout this is the <c>¨^~</c> key.</description></list>
+        /// <item><description>In the US keyboard layout this is the <c>;:</c> key.</description></item>
+        /// <item><description>In the nordic layout this is the <c>¨^~</c> key. </description></item>
         /// </list>
         /// </summary>
         OEM1,
         /// <summary>
-        /// <para>US layout <c>;:</c> key.</para>
-        /// <inheritdoc cref="OEM1"/>
-        /// See <see cref="OEM1"/>.
-        /// </summary>
-        //Semicolon = OEM1,
-        /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <list><description>In the US keyboard layout this is the <c>/?</c> key.</description></list>
-        /// <list><description>In the nordic layout this is the <c>'*</c> key.</description></list>
+        /// <item><description>In the US keyboard layout this is the <c>/?</c> key.</description></item>
+        /// <item><description>In the nordic layout this is the <c>'*</c> key.</description></item>
         /// </list>
         /// </summary>
         OEM2,
         /// <summary>
-        /// <para>US layout <c>/?</c> key.</para>
-        /// <inheritdoc cref="OEM2"/>
-        /// See <see cref="OEM2"/>.
-        /// </summary>
-        //Slash = OEM2,
-        /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <list><description>In the US keyboard layout this is the <c>`~</c> key.</description></list>
-        /// <list><description>In the nordic layout this is the <c>ÖØÆ</c> key.</description></list>
+        /// <item><description>In the US keyboard layout this is the <c>`~</c> key.</description></item>
+        /// <item><description>In the nordic layout this is the <c>ÖØÆ</c> key.</description></item>
         /// </list>
         /// </summary>
         OEM3,
         /// <summary>
-        /// <para>US layout <c>`~</c> key.</para>
-        /// <inheritdoc cref="OEM3"/>
-        /// See <see cref="OEM3"/>.
-        /// </summary>
-        //Backtick = OEM3,
-        /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <list><description>In the US keyboard layout this is the <c>[{</c> key.</description></list>
-        /// <list><description>In the nordic layout this is the <c>´`</c> key.</description></list>
+        /// <item><description>In the US keyboard layout this is the <c>[{</c> key.</description></item>
+        /// <item><description>In the nordic layout this is the <c>´`</c> key.</description></item>
         /// </list>
         /// </summary>
         OEM4,
         /// <summary>
-        /// <para>US layout <c>[{</c> key.</para>
-        /// <inheritdoc cref="OEM4"/>
-        /// See <see cref="OEM4"/>.
-        /// </summary>
-        //LeftBrace = OEM4,
-        /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <list><description>In the US keyboard layout this is the <c>\|</c> key.</description></list>
-        /// <list><description>In the nordic layout this is the <c>§½</c> key.</description></list>
+        /// <item><description>In the US keyboard layout this is the <c>\|</c> key.</description></item>
+        /// <item><description>In the nordic layout this is the <c>§½</c> key.</description></item>
         /// </list>
         /// </summary>
         OEM5,
         /// <summary>
-        /// <para>US layout <c>\|</c> key.</para>
-        /// <inheritdoc cref="OEM5"/>
-        /// See <see cref="OEM5"/>.
-        /// </summary>
-        //Backslash = OEM5,
-        /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <list><description>In the US keyboard layout this is the <c>]}</c> key.</description></list>
-        /// <list><description>In the nordic layout this is the <c>Å</c> key.</description></list>
+        /// <item><description>In the US keyboard layout this is the <c>]}</c> key.</description></item>
+        /// <item><description>In the nordic layout this is the <c>Å</c> key.</description></item>
         /// </list>
         /// </summary>
         OEM6,
         /// <summary>
-        /// <para>US layout <c>]}</c> key.</para>
-        /// <inheritdoc cref="OEM6"/>
-        /// See <see cref="OEM6"/>.
-        /// </summary>
-        //RightBrace = OEM6,
-        /// <summary>
         /// Used for various characters depending on keyboard layout.
         /// <list type="table">
-        /// <list><description>In the US keyboard layout this is the <c>'"</c> key.</description></list>
-        /// <list><description>In the nordic layout this is the <c>ÄÆØ</c> key.</description></list>
+        /// <item><description>In the US keyboard layout this is the <c>'"</c> key.</description></item>
+        /// <item><description>In the nordic layout this is the <c>ÄÆØ</c> key.</description></item>
         /// </list>
         /// </summary>
         OEM7,
         /// <summary>
-        /// <para>US layout <c>'"</c> key.</para>
-        /// <inheritdoc cref="OEM7"/>
-        /// See <see cref="OEM7"/>.
-        /// </summary>
-        //Quote = OEM7,
-        /// <summary>
         /// Used for various characters, depends on keyboard.
         /// </summary>
         OEM8,
-
         // FIXME: What do we do here?
         // OEM3 = 192,
         // Tilde = 192,
