@@ -17,7 +17,7 @@ namespace OpenTK.Platform.Tests
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
-        //static IKeyboardComponent keyboardComp;
+        static IKeyboardComponent keyboardComp;
 
         static IDisplayComponent displayComp;
 
@@ -43,15 +43,17 @@ namespace OpenTK.Platform.Tests
             mouseComp = Native.PlatformComponents.CreateMouseComponent();
             shellComp = Native.PlatformComponents.CreateShellComponent();
             displayComp = Native.PlatformComponents.CreateDisplayComponent();
-            //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
+            keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
+            logger.Filter = 0;
             windowComp.Logger = logger;
             glComp.Logger = logger;
             cursorComp.Logger = logger;
             mouseComp.Logger = logger;
             shellComp.Logger = logger;
             displayComp.Logger = logger;
+            keyboardComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
@@ -59,6 +61,23 @@ namespace OpenTK.Platform.Tests
             mouseComp.Initialize(PalComponents.MiceInput);
             shellComp.Initialize(PalComponents.Shell);
             displayComp.Initialize(PalComponents.Display);
+            keyboardComp.Initialize(PalComponents.KeyboardInput);
+
+            Console.WriteLine($"Scancode to Key:");
+            foreach (var scancode in Enum.GetValues<Scancode>())
+            {
+                Key key = keyboardComp.GetKeyFromScancode(scancode);
+
+                Console.WriteLine($"{scancode} -> {key}");
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Key to Scancode:");
+            foreach (var key in Enum.GetValues<Key>())
+            {
+                Scancode scancode = keyboardComp.GetScancodeFromKey(key);
+
+                Console.WriteLine($"{key} -> {scancode}");
+            }
 
             if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
             {

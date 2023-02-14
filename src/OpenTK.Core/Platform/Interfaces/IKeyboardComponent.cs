@@ -30,6 +30,30 @@ namespace OpenTK.Core.Platform
         string[] GetAvailableKeyboardLayouts();
 
         /// <summary>
+        /// Gets the <see cref="Scancode"/> associated with the specified <see cref="Key"/>.
+        /// The Key to Scancode mapping is not 1 to 1, multiple scancodes can produce the same key.
+        /// This function will return one of the scancodes that produce the key.
+        /// This function uses the current keyboard layout to determine the mapping.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <returns>
+        /// The <see cref="Scancode"/> that produces the <see cref="Key"/>
+        /// or <see cref="Scancode.Unknown"/> if no scancode produces the key.
+        /// </returns>
+        Scancode GetScancodeFromKey(Key key);
+
+        /// <summary>
+        /// Gets the <see cref="Key"/> associated with the specidied <see cref="Scancode"/>.
+        /// This function uses the current keyboard layout to determine the mapping.
+        /// </summary>
+        /// <param name="scancode">The scancode.</param>
+        /// <returns>
+        /// The <see cref="Key"/> associated with the <see cref="Scancode"/>
+        /// or <see cref="Key.Unknown"/> if the scancode can't be mapped to a key.
+        /// </returns>
+        Key GetKeyFromScancode(Scancode scancode);
+
+        /// <summary>
         /// Invoke input method editor.
         /// </summary>
         /// <param name="window">The window corresponding to this IME window.</param>

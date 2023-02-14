@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -21,12 +22,69 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        private Key[] Keymap;
+
         /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.KeyboardInput)
             {
                 throw new Exception("KeyboardComponent can only initialize the KeyboardInput component.");
+            }
+
+            // FIXME: Make this a function we can call to update the keymap!
+
+            Keymap = new Key[256];
+
+            // Loop through all scancodes and get their keys.
+            Scancode[] scancodes = Enum.GetValues<Scancode>();
+            for (int i = 0; i < scancodes.Length; i++)
+            {
+                if (scancodes[i] == Scancode.Unknown) continue;
+
+                // Find the windows VK_ that corresponds to this scancode
+                int index    = Array.IndexOf(ScancodeLookup, scancodes[i]);
+                int indexExt = Array.IndexOf(ScancodeLookupExt, scancodes[i]);
+
+                Key key;
+                if (index != -1)
+                {
+                    uint res = Win32.MapVirtualKey((uint)index, MAPVK.ScancodeToVirtualKeyEx);
+                    if (res == 0)
+                    {
+                        Logger?.LogDebug($"Scancode {scancodes[i]} (Win32 Scancode: 0x{index:X}) didn't have mapping!");
+                    }
+                    key = res == 0 ? Key.Unknown : ToKey(index, (VK)res, false);
+                }
+                else if (indexExt != -1)
+                {
+                    uint res = Win32.MapVirtualKey((uint)indexExt | 0xe000, MAPVK.ScancodeToVirtualKeyEx);
+                    if (res == 0)
+                    {
+                        Logger?.LogDebug($"Scancode {scancodes[i]} (Extended Win32 Scancode: 0x{indexExt:X}) didn't have ex mapping!");
+                    }
+                    key = res == 0 ? Key.Unknown : ToKey(index, (VK)res, true);
+                }
+                else
+                {
+                    // Media keys don't have scancodes, so we map them here.
+                    switch (scancodes[i])
+                    {
+                        case Scancode.PlayPause:         key = Key.PlayPause;     break;
+                        case Scancode.ScanNextTrack:     key = Key.NextTrack;     break;
+                        case Scancode.ScanPreviousTrack: key = Key.PreviousTrack; break;
+                        case Scancode.Stop:              key = Key.Stop;          break;
+                        case Scancode.VolumeIncrement:   key = Key.VolumeUp;      break;
+                        case Scancode.VolumeDecrement:   key = Key.VolumeDown;    break;
+                        case Scancode.Mute:              key = Key.Mute;          break;
+                        default:
+                            Logger?.LogDebug($"Scancode {scancodes[i]} is not mapped in the scancode lookup table!");
+                            key = Key.Unknown;
+                            break;
+                    }
+                }
+
+                Keymap[(int)scancodes[i]] = key;
             }
         }
 
@@ -125,7 +183,21 @@ namespace OpenTK.Platform.Native.Windows
             return result;
         }
 
-        bool _imeActive;
+        /// <inheritdoc/>
+        public Scancode GetScancodeFromKey(Key key)
+        {
+            int index = Array.IndexOf(Keymap, key);
+            return index == -1 ? Scancode.Unknown : (Scancode)index;
+        }
+
+        /// <inheritdoc/>
+        public Key GetKeyFromScancode(Scancode scancode)
+        {
+            return Keymap[(int)scancode];
+        }
+
+
+        private bool _imeActive;
 
         /// <inheritdoc/>
         public void BeginIme(WindowHandle window)
@@ -248,7 +320,7 @@ namespace OpenTK.Platform.Native.Windows
             // 0x38 - 0x3F
             Scancode.RightAlt, 0, 0, 0, 0, 0, 0, 0,
             // 0x40 - 0x47
-            0, 0, 0, 0, 0, Scancode.NumLock, 0, 0,
+            0, 0, 0, 0, 0, Scancode.NumLock, 0, Scancode.Home,
             // 0x48 - 0x4F
             Scancode.UpArrow, Scancode.PageUp, 0, Scancode.LeftArrow, 0, Scancode.RightArrow, 0, Scancode.End,
             // 0x50 - 0x57
@@ -387,7 +459,6 @@ namespace OpenTK.Platform.Native.Windows
             return code;
         }
 
-        
         internal static Key ToKey(int scancode, VK virtualKey, bool extended)
         {
             // FIXME: Should Keypad enter and enter be different keys?

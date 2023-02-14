@@ -829,6 +829,9 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern bool GetKeyboardLayoutName([Out] StringBuilder pwszKLID);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        internal static extern uint MapVirtualKey(uint uCode, MAPVK uMapType);
+
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int /* LSTATUS */ RegOpenKeyEx(
             IntPtr /* HKEY */ hKey,

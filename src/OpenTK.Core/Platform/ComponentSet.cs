@@ -864,6 +864,18 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        Scancode IKeyboardComponent.GetScancodeFromKey(Key key)
+        {
+            return _keyboardComponent!.GetScancodeFromKey(key);
+        }
+
+        /// <inheritdoc/>
+        Key IKeyboardComponent.GetKeyFromScancode(Scancode scancode)
+        {
+            return _keyboardComponent!.GetKeyFromScancode(scancode);
+        }
+
+        /// <inheritdoc/>
         void IKeyboardComponent.BeginIme(WindowHandle window)
         {
             _keyboardComponent!.BeginIme(window);

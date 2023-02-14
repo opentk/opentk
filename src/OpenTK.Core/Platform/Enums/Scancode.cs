@@ -10,8 +10,9 @@ namespace OpenTK.Core.Platform
     {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning disable SA1136 // Enum values should be on separate lines
+#pragma warning disable SA1514 // Element documentation header should be preceded by blank line
 
-        Unknown,
+        Unknown = 0,
 
         A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
 
@@ -25,12 +26,13 @@ namespace OpenTK.Core.Platform
         Tab,
         Spacebar,
         // FIXME: What is "dash and underscore"
-        Dash, // and underscore
+        /// <summary> Dash and Underscore. </summary>
+        Dash,
         Equals,
         LeftBrace,
         RightBrace,
-        Pipe, // and slash
-        NonUS,
+        /// <summary> Pipe and Slash, NonUS. </summary>
+        Pipe,
         SemiColon,
         LeftApostrophe,
         GraveAccent,
@@ -54,10 +56,6 @@ namespace OpenTK.Core.Platform
         DownArrow,
         UpArrow,
         NumLock,
-        ForwardSlash,
-        Star,
-        Dash2, // FIXME
-        Plus,
         KeypadEnter,
         Keypad1, Keypad2, Keypad3, Keypad4, Keypad5, Keypad6, Keypad7, Keypad8, Keypad9, Keypad0,
         KeypadForwardSlash,
@@ -102,6 +100,7 @@ namespace OpenTK.Core.Platform
         Stop, PlayPause, Mute,
         VolumeIncrement, VolumeDecrement,
 
+#pragma warning restore SA1514 // Element documentation header should be preceded by blank line
 #pragma warning restore SA1136 // Enum values should be on separate lines
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
