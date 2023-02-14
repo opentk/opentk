@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OpenTK.Core\OpenTK.Core.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Graphics\OpenTK.Graphics.csproj" />
+    <ProjectReference Include="..\..\src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Cute Light Green Normal Select.cur">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Wikipedia-Flags-UN-United-Nations-Flag.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

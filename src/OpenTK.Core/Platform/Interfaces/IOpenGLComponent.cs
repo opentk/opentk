@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+
+#nullable enable
 
 namespace OpenTK.Core.Platform
 {
@@ -43,6 +46,13 @@ namespace OpenTK.Core.Platform
         void DestroyContext(OpenGLContextHandle handle);
 
         /// <summary>
+        /// Gets a <see cref="IBindingsContext"/> from an <see cref="OpenGLContextHandle"/>.
+        /// </summary>
+        /// <param name="handle">The handle to get a bindings context for.</param>
+        /// <returns>The created bindings context.</returns>
+        IBindingsContext GetBindingsContext(OpenGLContextHandle handle);
+
+        /// <summary>
         /// Get the procedure address for an OpenGL command.
         /// </summary>
         /// <param name="handle">Handle to an OpenGL context.</param>
@@ -55,39 +65,34 @@ namespace OpenTK.Core.Platform
         /// Get the current OpenGL context for this thread.
         /// </summary>
         /// <returns>Handle to the current OpenGL context, null if none are current.</returns>
-        OpenGLContextHandle GetCurrentContext();
+        OpenGLContextHandle? GetCurrentContext();
 
         /// <summary>
         /// Set the current OpenGL context for this thread.
         /// </summary>
         /// <param name="handle">Handle to the OpenGL context to make current, or null to make none current.</param>
         /// <returns>True when the OpenGL context is successfully made current.</returns>
-        bool SetCurrentContext(OpenGLContextHandle handle);
-
-        /// <summary>
-        /// Get the context which newly created contexts will share display lists with.
-        /// </summary>
-        /// <returns>The OpenGL context handle, or null if unset.</returns>
-        /// <remarks>The return value of this method is thread static.</remarks>
-        OpenGLContextHandle GetSharedContext();
+        bool SetCurrentContext(OpenGLContextHandle? handle);
 
         /// <summary>
         /// Gets the context which the given context shares display lists with.
         /// </summary>
         /// <param name="handle">Handle to the OpenGL context.</param>
         /// <returns>Handle to the OpenGL context the given context shares display lists with.</returns>
-        OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle);
+        OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle);
 
         /// <summary>
-        /// Set a context to share display lists with newly created OpenGL contexts.
+        /// Sets the swap interval of the current OpenGL context.
         /// </summary>
-        /// <param name="handle">Handle to an OpenGL context or null.</param>
-        /// <remarks>
-        /// When set, contexts created from calls to <see cref="CreateFromWindow"/> and
-        /// <see cref="CreateFromSurface"/> will share display lists with the given context
-        /// until unset.
-        /// The shared OpenGL context value must be thread static within the driver.
-        /// </remarks>
-        void SetSharedContext(OpenGLContextHandle handle);
+        /// <param name="interval">The new swap interval.</param>
+        // FIXME: Better documentation.
+        void SetSwapInterval(int interval);
+
+        /// <summary>
+        /// Gets the swap interval of the current OpenGL context.
+        /// </summary>
+        /// <returns>The current swap interval.</returns>
+        // FIXME: Better documentation.
+        int GetSwapInterval();
     }
 }

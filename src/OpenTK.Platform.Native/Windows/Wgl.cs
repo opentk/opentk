@@ -125,6 +125,24 @@ namespace OpenTK.Platform.Native.Windows
                 return CreateContextAttribsARB_(hdc, hglrc, attribPtr);
             }
         }
+
+        internal static unsafe delegate* unmanaged<int, void> _SwapIntervalEXT__fnptr = &SwapIntervalEXT__Lazy;
+        public static unsafe void SwapIntervalEXT(int interval) => _SwapIntervalEXT__fnptr(interval);
+        [UnmanagedCallersOnly]
+        private static unsafe void SwapIntervalEXT__Lazy(int interval)
+        {
+            _SwapIntervalEXT__fnptr = (delegate* unmanaged<int, void>)GetProcAddress("wglSwapIntervalEXT");
+            _SwapIntervalEXT__fnptr(interval);
+        }
+
+        internal static unsafe delegate* unmanaged<int> _GetSwapIntervalEXT__fnptr = &GetSwapIntervalEXT__Lazy;
+        public static unsafe int GetSwapIntervalEXT() => _GetSwapIntervalEXT__fnptr();
+        [UnmanagedCallersOnly]
+        private static unsafe int GetSwapIntervalEXT__Lazy()
+        {
+            _GetSwapIntervalEXT__fnptr = (delegate* unmanaged<int>)GetProcAddress("wglGetSwapIntervalEXT");
+            return _GetSwapIntervalEXT__fnptr();
+        }
     }
 #pragma warning restore SA1401 // Fields should be private
 #pragma warning restore SA1516 // Elements should be separated by blank line

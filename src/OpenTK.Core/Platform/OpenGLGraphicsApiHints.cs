@@ -1,5 +1,7 @@
 using System;
 
+#nullable enable
+
 namespace OpenTK.Core.Platform
 {
     /// <summary>
@@ -13,7 +15,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// OpenGL version to create.
         /// </summary>
-        public Version Version { get; set; } = new Version(4, 6);
+        public Version Version { get; set; } = new Version(4, 1);
 
         /// <summary>
         /// Number of bits for red color channel.
@@ -62,7 +64,7 @@ namespace OpenTK.Core.Platform
 
         public OpenGLProfile Profile { get; set; } = OpenGLProfile.None;
 
-        public bool ForwardCompatibleFlag { get; set; } = false;
+        public bool ForwardCompatibleFlag { get; set; } = true;
 
         public bool DebugFlag { get; set; } = false;
 

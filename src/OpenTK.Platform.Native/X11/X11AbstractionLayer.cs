@@ -1,44 +1,21 @@
 using System;
-using System.Collections.Generic;
 using OpenTK.Core.Platform;
+using System.Diagnostics;
+using OpenTK.Core.Utility;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public partial class X11AbstractionLayer : IPalComponent
+    /// <summary>
+    /// Static X11 values.
+    /// </summary>
+    public static class X11
     {
-        public string Name => "X11";
-        public PalComponents Provides => PalComponents.OpenGL | PalComponents.Window;
+        public static XDisplayPtr Display { get; set; }
 
-        public XDisplayPtr Display { get; private set; }
+        public static int DefaultScreen { get; set; }
 
-        public int DefaultScreen { get; private set; }
+        public static XWindow DefaultRootWindow { get; set; }
 
-        public void Initialize(PalComponents which)
-        {
-            if ((which & ~Provides) != 0)
-            {
-                throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
-            }
-
-            // Later on we can replace this with a hint.
-            string? displayName = null;
-            Display = LibX11.XOpenDisplay(displayName);
-
-            if (Display.Value == IntPtr.Zero)
-            {
-                throw new PalException(
-                    this,
-                    (displayName is null) ? "Could not open default X display."
-                        : $"Could not open X display {displayName}."
-                );
-            }
-
-            DefaultScreen = LibX11.XDefaultScreen(Display);
-
-            if (which.HasFlag(PalComponents.OpenGL))
-            {
-                InitializeGL();
-            }
-        }
+        public static XAtomDictionary Atoms { get; set; }
     }
 }

@@ -1,8 +1,23 @@
 using System;
 using System.Collections.Generic;
+using OpenTK.Mathematics;
+
+#nullable enable
 
 namespace OpenTK.Core.Platform
 {
+    /// <summary>
+    /// A delegate for hit testing.
+    ///
+    /// Hit testing is not always done in respone to the user clicking the mouse.
+    /// The operating system can do hit testing for any reason and doesn't need to be in respose to some user action.
+    /// It is recommended to keep this code efficient as it will be called often.
+    /// </summary>
+    /// <param name="handle">A handle to the window that hit testing is being done on.</param>
+    /// <param name="position">The position of where the hit test is being done, not always the position of the mouse. In client relative coordinates.</param>
+    /// <returns>The result of the hit test.</returns>
+    public delegate HitType HitTest(WindowHandle handle, Vector2 position);
+
     /// <summary>
     /// Interface for abstraction layer drivers which implement the window component.
     /// </summary>
@@ -24,6 +39,11 @@ namespace OpenTK.Core.Platform
         bool CanSetCursor { get; }
 
         /// <summary>
+        /// True when the driver supports capturing the cursor in a window.
+        /// </summary>
+        bool CanCaptureCursor { get; }
+
+        /// <summary>
         /// Read-only list of event types the driver supports.
         /// </summary>
         IReadOnlyList<PlatformEventType> SupportedEvents { get; }
@@ -39,11 +59,17 @@ namespace OpenTK.Core.Platform
         IReadOnlyList<WindowMode> SupportedModes { get; }
 
         /// <summary>
+        /// Processes platform events and sends them to the <see cref="EventQueue"/>.
+        /// </summary>
+        /// <param name="waitForEvents">Specifies if this function should wait for events or return immediately if there are no events.</param>
+        void ProcessEvents(bool waitForEvents = false);
+
+        /// <summary>
         /// Create a window object.
         /// </summary>
         /// <param name="hints">Graphics API hints to be passed to the operating system.</param>
         /// <returns>Handle to the new window object.</returns>
-        WindowHandle Create(GraphicsApiHints hints = null);
+        WindowHandle Create(GraphicsApiHints hints);
 
         /// <summary>
         /// Destroy a window object.
@@ -51,6 +77,13 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a window object.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         void Destroy(WindowHandle handle);
+
+        /// <summary>
+        /// Checks if <see cref="Destroy(WindowHandle)"/> has been called on this handle.
+        /// </summary>
+        /// <param name="handle">The window handle to check if it's destroyed or not.</param>
+        /// <returns>If <see cref="Destroy(WindowHandle)"/> was called with the window handle.</returns>
+        public bool IsWindowDestroyed(WindowHandle handle);
 
         /// <summary>
         /// Get the title of a window.
@@ -165,6 +198,38 @@ namespace OpenTK.Core.Platform
         void SetClientSize(WindowHandle handle, int width, int height);
 
         /// <summary>
+        /// Gets the maximum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">The maximum width of the client area of the window, or null if no limit is set.</param>
+        /// <param name="height">The maximum height of the client area of the window, or null if no limit is set.</param>
+        void GetMaxClientSize(WindowHandle handle, out int? width, out int? height);
+
+        /// <summary>
+        /// Sets the maximum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">New maximum width of the client area of the window, or null to remove limit.</param>
+        /// <param name="height">New maximum height of the client area of the window, or null to remove limit.</param>
+        void SetMaxClientSize(WindowHandle handle, int? width, int? height);
+
+        /// <summary>
+        /// Gets the minimum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">The minimum width of the client area of the window, or null if no limit is set.</param>
+        /// <param name="height">The minimum height of the client area of the window, or null if no limit is set.</param>
+        void GetMinClientSize(WindowHandle handle, out int? width, out int? height);
+
+        /// <summary>
+        /// Sets the minimum size of the client area.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="width">New minimum width of the client area of the window, or null to remove limit.</param>
+        /// <param name="height">New minimum height of the client area of the window, or null to remove limit.</param>
+        void SetMinClientSize(WindowHandle handle, int? width, int? height);
+
+        /// <summary>
         /// Get the display handle a window is in.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
@@ -216,17 +281,63 @@ namespace OpenTK.Core.Platform
         void SetBorderStyle(WindowHandle handle, WindowStyle style);
 
         /// <summary>
+        /// Set if the window is an always on top window or not.
+        /// </summary>
+        /// <param name="handle">A handle to the window to make always on top.</param>
+        /// <param name="floating">Whether the window should be always on top or not.</param>
+        public void SetAlwaysOnTop(WindowHandle handle, bool floating);
+
+        /// <summary>
+        /// Gets if the current window is always on top or not.
+        /// </summary>
+        /// <param name="handle">A handle to the window to get whether or not is always on top.</param>
+        /// <returns>Whether the window is always on top or not.</returns>
+        public bool IsAlwaysOnTop(WindowHandle handle);
+
+        /// <summary>
+        /// Sets a delegate that is used for hit testing.
+        /// Hit testing allows the user to specify if a click should start a drag or resize operation on the window.
+        ///
+        /// Hit testing is not always done in respone to the user clicking the mouse.
+        /// The operating system can do hit testing for any reason and doesn't need to be in respose to some user action.
+        /// It is recommended to keep this code efficient as it will be called often.
+        /// </summary>
+        /// <param name="handle">The window for which this hit test delegate should be used for.</param>
+        /// <param name="test">The hit test delegate.</param>
+        public void SetHitTestCallback(WindowHandle handle, HitTest? test);
+
+        /// <summary>
         /// Set the cursor object for a window.
         /// </summary>
         /// <param name="handle">Handle to a window.</param>
         /// <param name="cursor">Handle to a cursor object, or null for hidden cursor.</param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="handle"/> or <paramref name="cursor"/> is null.
+        ///     <paramref name="handle"/> is null.
         /// </exception>
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support setting the window mouse cursor. See <see cref="CanSetCursor"/>.
         /// </exception>
-        void SetCursor(WindowHandle handle, CursorHandle cursor);
+        void SetCursor(WindowHandle handle, CursorHandle? cursor);
+
+        /// <summary>
+        /// Sets the cursor capture mode of the window.
+        /// A cursor can be confined to the bounds of the window, or locked to the center of the window.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <param name="mode">The cursor capture mode.</param>
+        void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode);
+
+        /// <summary>
+        /// Gives the window input focus.
+        /// </summary>
+        /// <param name="handle">Handle to the window to focus.</param>
+        void FocusWindow(WindowHandle handle);
+
+        /// <summary>
+        /// Requests that the user pay attention to the window.
+        /// </summary>
+        /// <param name="handle">A handle to the window that requests attention.</param>
+        void RequestAttention(WindowHandle handle);
 
         /// <summary>
         /// Converts screen coordinates to window relative coordinates.
@@ -251,11 +362,9 @@ namespace OpenTK.Core.Platform
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
 
         /// <summary>
-        /// Get the event queue object for a window.
+        /// Swaps the buffer of the specified window.
         /// </summary>
-        /// <param name="handle">Handle to a window.</param>
-        /// <returns>Event queue for the window.</returns>
-        [Obsolete("Event Queue instances are no longer a part of the PAL API.")]
-        IEventQueue<PlatformEventType, WindowEventArgs> GetEventQueue(WindowHandle handle);
+        /// <param name="handle">Handle to the window.</param>
+        void SwapBuffers(WindowHandle handle);
     }
 }

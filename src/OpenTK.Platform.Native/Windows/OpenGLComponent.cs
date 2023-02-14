@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,11 +11,11 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class OpenGLComponent : IOpenGLComponent
     {
-        public IntPtr HelperHWnd { get; private set; }
-
         public string Name => "Win32OpenGL";
 
         public PalComponents Provides => PalComponents.OpenGL;
+
+        public ILogger? Logger { get; set; }
 
         public void Initialize(PalComponents which)
         {
@@ -44,8 +45,8 @@ namespace OpenTK.Platform.Native.Windows
                 cAccumGreenBits = 0,
                 cAccumBlueBits = 0,
                 cAccumAlphaBits = 0,
-                cDepthBits = 24, // FIXME: Ability to configure!
-                cStencilBits = 8, // FIXME: Ability to configure!
+                cDepthBits = 0,
+                cStencilBits = 0,
                 cAuxBuffers = 0,
                 iLayerType = 0,
                 bReserved = 0,
@@ -54,6 +55,8 @@ namespace OpenTK.Platform.Native.Windows
                 dwDamageMask = 0,
             };
 
+            // We don't release this DC because we have CS_OWNDC set.
+            // - Noggin_bops 2023-01-11
             IntPtr hDC = Win32.GetDC(WindowComponent.HelperHWnd);
 
             if (hDC == IntPtr.Zero)
@@ -73,7 +76,11 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
-            Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+            int maxFormat = Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+            if (maxFormat == 0)
+            {
+                throw new Win32Exception();
+            }
             Console.WriteLine($"=== Chosen Format ===");
             Console.WriteLine($"Version: {chosenFormat.nVersion}");
             Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
@@ -117,9 +124,13 @@ namespace OpenTK.Platform.Native.Windows
 
                 Wgl._CreateContextAttribsARB__fnptr = (delegate* unmanaged<IntPtr, IntPtr, int*, IntPtr>)Wgl.GetProcAddress("wglCreateContextAttribsARB");
 
+                Wgl._SwapIntervalEXT__fnptr = (delegate* unmanaged<int, void>)Wgl.GetProcAddress("wglSwapIntervalEXT");
+
+                Wgl._GetSwapIntervalEXT__fnptr = (delegate* unmanaged<int>)Wgl.GetProcAddress("wglGetSwapIntervalEXT");
+
                 if (Wgl._GetExtensionsStringARB__fnptr != null)
                 {
-                    string[] wglExts = Wgl.GetExtensionsStringARB(hDC).Split(" ");
+                    string[] wglExts = Wgl.GetExtensionsStringARB(hDC)?.Split(" ") ?? Array.Empty<string>();
 
                     ARB_multisample = wglExts.Contains("WGL_ARB_multisample");
                     ARB_framebuffer_sRGB = wglExts.Contains("WGL_ARB_framebuffer_sRGB");
@@ -153,6 +164,8 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static readonly Dictionary<IntPtr, HGLRC> HGLRCDict = new Dictionary<IntPtr, HGLRC>();
 
+        #region Extension bools
+
         // FIXME: Which ones of these do we care about?
 
         internal static bool ARB_multisample { get; set; }
@@ -179,7 +192,9 @@ namespace OpenTK.Platform.Native.Windows
 
         internal static bool ARB_context_flush_control { get; set; }
 
-        public bool CanShareContexts => throw new NotImplementedException();
+        #endregion
+
+        public bool CanShareContexts => true;
 
         public bool CanCreateFromWindow => true;
 
@@ -190,7 +205,7 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
-        public OpenGLContextHandle CreateFromWindow(WindowHandle handle/*, ContextSettings settings*/)
+        public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
             if (hwnd.GraphicsApiHints is not OpenGLGraphicsApiHints settings)
@@ -198,6 +213,7 @@ namespace OpenTK.Platform.Native.Windows
                 throw new PalException(this, $"Can't create an OpenGL context from a window that was not created with {nameof(OpenGLGraphicsApiHints)}.");
             }
 
+            // FIXME: Make this a parameter to this function instead?
             HGLRC? hshareContext = null;
             if (settings.SharedContext != null)
             {
@@ -213,6 +229,9 @@ namespace OpenTK.Platform.Native.Windows
 
             bool success;
 
+            // This DC is kept for the lifetime of the object.
+            // We have CS_OWNDC set so keeping the reference isn't an issue.
+            // - Noggin_bops 2023-01-11
             IntPtr hDC = Win32.GetDC(hwnd.HWnd);
             if (hDC == IntPtr.Zero)
             {
@@ -357,33 +376,36 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception("GetPixelFormatAttribivARB failed");
                 }
 
-                if (FindAttribute(WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB) == 0 ||
-                    FindAttribute(WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB) == 0)
+                if (FindAttribute(WGLPixelFormatAttribute.DRAW_TO_WINDOW_ARB) == 0)
                 {
-                    // FIXME:
-                    Console.WriteLine("WARNING: OpenGL or DrawToWindow not supported!");
+                    Logger?.LogError("Drawing to window is not supported");
+                }
+
+                if (FindAttribute(WGLPixelFormatAttribute.SUPPORT_OPENGL_ARB) == 0)
+                {
+                    Logger?.LogError("OpneGL is not supported");
                 }
 
                 if ((WGLColorType)FindAttribute(WGLPixelFormatAttribute.PIXEL_TYPE_ARB) != WGLColorType.TYPE_RGBA_ARB)
                 {
-                    Console.WriteLine("WARNING: Pixel type is not RGBA");
+                    Logger?.LogError("OpneGL context pixel type is not RGBA");
                 }
 
                 if ((WGLAcceleration)FindAttribute(WGLPixelFormatAttribute.ACCELERATION_ARB) == WGLAcceleration.NO_ACCELERATION_ARB)
                 {
-                    Console.WriteLine("WARNING: No acceleration!");
+                    Logger?.LogWarning("OpenGL context doesn't have hardware acceleration");
                 }
 
                 if (FindAttribute(WGLPixelFormatAttribute.DOUBLE_BUFFER_ARB) != (settings.DoubleBuffer ? 1 : 0))
                 {
-                    Console.WriteLine("WARNING: No double buffering!");
+                    Logger?.LogWarning("OpenGL context has no double buffering");
                 }
 
                 if ((WGLSwapMethod)FindAttribute(WGLPixelFormatAttribute.SWAP_METHOD_ARB) == WGLSwapMethod.SWAP_UNDEFINED_ARB)
                 {
-                    Console.WriteLine("WARNING: Undefined swap method!");
+                    Logger?.LogWarning("OpenGL context has undefined swap method");
                 }
-                Console.WriteLine("Swap method:" + (WGLSwapMethod)values[4]);
+                Logger?.LogDebug($"Swap method: {(WGLSwapMethod)FindAttribute(WGLPixelFormatAttribute.SWAP_METHOD_ARB)}");
 
                 ContextValues choosenValues = default;
 
@@ -446,7 +468,7 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception("SetPixelFormat failed");
                 }
 
-                Console.WriteLine("Got pixel format from wgl_arb_pixel_format");
+                Logger?.LogDebug("Got pixel format from wgl_arb_pixel_format");
             }
             else
             {
@@ -494,7 +516,11 @@ namespace OpenTK.Platform.Native.Windows
                 }
 
                 Win32.PIXELFORMATDESCRIPTOR chosenFormat = default;
-                Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+                int maxFormat = Win32.DescribePixelFormat(hDC, pixelFormatIndex, nBytes, ref chosenFormat);
+                if (maxFormat == 0)
+                {
+                    throw new Win32Exception();
+                }
                 Console.WriteLine($"=== Chosen Format ===");
                 Console.WriteLine($"Version: {chosenFormat.nVersion}");
                 Console.WriteLine($"Flags: {chosenFormat.dwFlags} ({Convert.ToString((uint)chosenFormat.dwFlags, 2)})");
@@ -515,7 +541,7 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception("SetPixelFormat failed");
                 }
 
-                Console.WriteLine("Got pixel format from DescribePixelFormat");
+                Logger?.LogDebug("Got pixel format from DescribePixelFormat");
             }
 
             IntPtr hGLRC;
@@ -576,7 +602,7 @@ namespace OpenTK.Platform.Native.Windows
                         throw new Win32Exception("wglCreateContextAttribsARB failed");
                     }
 
-                    Console.WriteLine("Created context using wglCreateContextAttribsARB");
+                    Logger?.LogDebug("Created context using wglCreateContextAttribsARB");
                 }
                 else
                 {
@@ -588,7 +614,7 @@ namespace OpenTK.Platform.Native.Windows
                         throw new Win32Exception("wglCreateContext failed");
                     }
 
-                    Console.WriteLine("Created context using wglCreateContext");
+                    Logger?.LogDebug("Created context using wglCreateContext");
                 }
             }
 
@@ -599,7 +625,7 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception("wglMakeCurrent failed to make helper context current");
             }
 
-            HGLRC hglrc = new HGLRC(hGLRC, hDC, this);
+            HGLRC hglrc = new HGLRC(hGLRC, hDC, hshareContext);
             HGLRCDict.Add(hGLRC, hglrc);
 
             return hglrc;
@@ -620,12 +646,19 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
+        {
+            return new Pal2BindingsContext(this, handle);
+        }
+
         public unsafe IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
             return (IntPtr)Wgl.GetAnyProcAddress(procedureName);
         }
 
-        public OpenGLContextHandle GetCurrentContext()
+        public OpenGLContextHandle? GetCurrentContext()
         {
             IntPtr hGlrc = Wgl.GetCurrentContext();
             if (hGlrc == IntPtr.Zero)
@@ -638,9 +671,9 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public bool SetCurrentContext(OpenGLContextHandle handle)
+        public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
-            HGLRC hglrc = handle?.As<HGLRC>(this);
+            HGLRC? hglrc = handle?.As<HGLRC>(this);
 
             if (hglrc == null)
             {
@@ -665,19 +698,51 @@ namespace OpenTK.Platform.Native.Windows
             return true;
         }
 
-        public OpenGLContextHandle GetSharedContext()
+        public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
-            throw new NotImplementedException();
+            HGLRC hglrc = handle.As<HGLRC>(this);
+            return hglrc.SharedContext;
         }
 
-        public OpenGLContextHandle GetSharedContext(OpenGLContextHandle handle)
+        public void SetSwapInterval(int interval)
         {
-            throw new NotImplementedException();
+            // FIXME: Maybe implement DWM hack?
+            // https://github.com/glfw/glfw/issues/1072
+            // https://github.com/libsdl-org/SDL/issues/5797
+
+            // Relevant glfw source:
+            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L340
+            // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L315
+
+            // Source from love2d:
+            // https://github.com/love2d/love/blob/5175b0d1b599ea4c7b929f6b4282dd379fa116b8/src/modules/window/sdl/Window.cpp#L1024
+
+
+            if (EXT_swap_control)
+            {
+                Wgl.SwapIntervalEXT(interval);
+            }
+            else
+            {
+                Logger?.LogError("Cannot set swap interval. EXT_swap_control not available.");
+            }
         }
 
-        public void SetSharedContext(OpenGLContextHandle handle)
+        public int GetSwapInterval()
         {
-            throw new NotImplementedException();
+            if (EXT_swap_control)
+            {
+                return Wgl.GetSwapIntervalEXT();
+            }
+            else
+            {
+                Logger?.LogError("Cannot get swap interval. EXT_swap_control not available.");
+            }
+
+            // FIXME: We can't get the swap interval. For now we return 0,
+            // but we could change it to null if we change the return to int? or
+            // make it a Try* function.
+            return 0;
         }
     }
 }

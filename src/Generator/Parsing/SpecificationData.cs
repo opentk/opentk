@@ -66,6 +66,7 @@ namespace Generator.Parsing
 
     public record GLParameter(
         PType Type,
+        string[] Kinds,
         string Name,
         Expression? Length);
 

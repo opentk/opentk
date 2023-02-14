@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/tests/X11TestProject/bin/Debug/net6.0/X11TestProject.dll",
+            "program": "${workspaceFolder}/tests/OpenTK.Platform.Tests/bin/Debug/net6.0/OpenTK.Platform.Tests.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/tests/X11TestProject",
+            "cwd": "${workspaceFolder}/tests/OpenTK.Platform.Tests",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false

@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,10 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr HWnd { get; private set; }
 
+        public HitTest? HitTest { get; set; }
+
+        public bool Destroyed { get; set; } = false;
+
         /// <summary> The current cursor for this window. </summary>
         public HCursor? HCursor { get; set; }
 
@@ -31,16 +36,18 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Initialize this property properly!
         public WindowState WindowState { get; set; }
 
-        // FIXME: Is this a good place for this?
-        public SimpleEventQueue<PlatformEventType, WindowEventArgs> EventQueue { get; private set; } = new SimpleEventQueue<PlatformEventType, WindowEventArgs>();
+        public int? MaxWidth { get; set; }
+        public int? MaxHeight { get; set; }
+        public int? MinWidth { get; set; }
+        public int? MinHeight { get; set; }
 
-        // FIXME: This is kind of a hack so that we can get access to the window component in the WndProc...
-        public WindowComponent WindowComponent { get; private set; }
+        public CursorCaptureMode CaptureMode { get; set; } = CursorCaptureMode.Normal;
+        public Vector2i LastMousePosition { get; set; }
+        public Vector2 VirtualMousePosition { get; set; }
 
-        public HWND(IntPtr hWnd, WindowComponent windowComponent, GraphicsApiHints hints)
+        public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {
             HWnd = hWnd;
-            WindowComponent = windowComponent;
             GraphicsApiHints = hints;
         }
     }
@@ -49,17 +56,17 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr HGlrc { get; private set; }
 
-        // FIXME: How do we want to handle this??
+        // Because we are using CS_OWNDC we can keep a reference to this DC.
+        // - Noggin_bops 2023-01-11
         public IntPtr HDC { get; private set; }
 
-        // FIXME: Is this needed?
-        public OpenGLComponent OpenGLComponent { get; private set; }
+        public HGLRC? SharedContext { get; private set; }
 
-        public HGLRC(IntPtr hGlrc, IntPtr hdc, OpenGLComponent openglComponent)
+        public HGLRC(IntPtr hGlrc, IntPtr hdc, HGLRC? sharedContext)
         {
             HGlrc = hGlrc;
             HDC = hdc;
-            OpenGLComponent = openglComponent;
+            SharedContext = sharedContext;
         }
     }
 
@@ -111,6 +118,8 @@ namespace OpenTK.Platform.Native.Windows
 
         public string Name { get; set; }
 
+        public string AdapterName { get; set; }
+
         public string PublicName { get; set; }
 
         public bool IsPrimary { get; set; }
@@ -127,26 +136,5 @@ namespace OpenTK.Platform.Native.Windows
 
         public int DpiY { get; set; }
     }
-
-    internal class Win32EventQueue : IEventQueue<PlatformEventType, WindowEventArgs>
-    {
-        public event QueueEventHandler<PlatformEventType, WindowEventArgs> EventRaised;
-
-        public void ProcessEvents()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void IgnoreEvents()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DefaultEventHandler(object sender, PlatformEventType type, WindowEventArgs arguments)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 #pragma warning restore SA1649 // File name should match first type name
 }

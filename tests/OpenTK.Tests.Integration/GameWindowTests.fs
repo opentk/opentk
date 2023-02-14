@@ -173,7 +173,7 @@ module GameWindow =
             () |> ignore
 
         let defaultDpi () =
-            if RuntimeInformation.IsOSPlatform(OSPlatform.OSX) then
+            if OperatingSystem.IsMacOS() then
                 72.0f
             else
                 96.0f

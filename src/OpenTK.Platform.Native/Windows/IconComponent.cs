@@ -1,4 +1,5 @@
 ﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,8 @@ namespace OpenTK.Platform.Native.Windows
         public string Name => "Win32IconComponent";
 
         public PalComponents Provides => PalComponents.WindowIcon;
+
+        public ILogger? Logger { get; set; }
 
         public void Initialize(PalComponents which)
         {
@@ -77,7 +80,7 @@ namespace OpenTK.Platform.Native.Windows
 
         public void GenerateMipmaps(IconHandle handle)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("mipmaps");
         }
 
         public unsafe void GetDimensions(IconHandle handle, out int width, out int height)
@@ -87,6 +90,7 @@ namespace OpenTK.Platform.Native.Windows
             width = 0;
             height = 0;
 
+            // See https://stackoverflow.com/a/13295280
             if (Win32.GetIconInfo(hicon.Icon, out Win32.ICONINFO info))
             {
                 bool bwCursor = info.hbmColor == IntPtr.Zero;
@@ -107,7 +111,7 @@ namespace OpenTK.Platform.Native.Windows
 
         public void GetDimensions(IconHandle handle, int level, out int width, out int height)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("mipmaps");
         }
 
         public unsafe void GetBitmap(IconHandle handle, Span<byte> data)
@@ -137,6 +141,7 @@ namespace OpenTK.Platform.Native.Windows
                         throw new Exception("GetDIBits failed.");
                     }
 
+                    // FIXME: biSizeImage can be 0 if biCompression = RGB
                     if (image.Length < bmInfo.bmiHeader.biSizeImage)
                     {
                         throw new Exception("Image buffer not big enough!");
@@ -148,7 +153,7 @@ namespace OpenTK.Platform.Native.Windows
 
                     fixed (byte* ptr = image)
                     {
-                        success = Win32.GetDIBits(hDC, hbm, 0, (uint)bmInfo.bmiHeader.biHeight, (void*)ptr, ref bmInfo, DIB.RGBColors);
+                        success = Win32.GetDIBits(hDC, hbm, 0, (uint)Math.Abs(bmInfo.bmiHeader.biHeight), (void*)ptr, ref bmInfo, DIB.RGBColors);
                         if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                         {
                             throw new Exception("GetDIBits failed.");
@@ -157,6 +162,9 @@ namespace OpenTK.Platform.Native.Windows
 
                     if (bmInfo.bmiHeader.biHeight < 0)
                     {
+                        // FIXME: Overflow?
+                        bmInfo.bmiHeader.biHeight = -bmInfo.bmiHeader.biHeight;
+                        
                         // A negative height means we have a top-down bitmap.
                         // For consistency we need to flip this image vertically.
                         for (int y = 0; y < bmInfo.bmiHeader.biHeight / 2; y++)
@@ -219,29 +227,57 @@ namespace OpenTK.Platform.Native.Windows
             }
             else
             {
-                throw new Win32Exception("GetIconInfo failed.");
+                throw new Win32Exception();
             }
 
             bool successBool = Win32.DestroyIcon(cursor_copy);
             if (successBool == false)
             {
-                throw new Win32Exception("DestroyIcon failed.");
+                throw new Win32Exception();
             }
         }
 
         public void GetBitmap(IconHandle handle, int level, Span<byte> data)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("mipmaps");
         }
 
-        public int GetBitmapSize(IconHandle handle)
+        public unsafe int GetBitmapSize(IconHandle handle)
         {
-            throw new NotImplementedException();
+            HIcon hicon = handle.As<HIcon>(this);
+
+            int size;
+
+            // See https://stackoverflow.com/a/13295280
+            if (Win32.GetIconInfo(hicon.Icon, out Win32.ICONINFO info))
+            {
+                bool bwCursor = info.hbmColor == IntPtr.Zero;
+                if (Win32.GetObject(info.hbmMask, sizeof(Win32.BITMAP), out Win32.BITMAP bmpInfo) != 0)
+                {
+                    int width = bmpInfo.bmWidth;
+                    int height = bmpInfo.bmHeight / (bwCursor ? 2 : 1);
+
+                    size = width * height * 4;
+                }
+                else
+                {
+                    throw new PalException(this, $"GetObject failed. (hbm: {info.hbmMask})");
+                }
+
+                Win32.DeleteObject(info.hbmColor);
+                Win32.DeleteObject(info.hbmMask);
+            }
+            else
+            {
+                throw new Win32Exception();
+            }
+
+            return size;
         }
 
         public int GetBitmapSize(IconHandle handle, int level)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("mipmap");
         }
 
         public unsafe void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
@@ -318,7 +354,7 @@ namespace OpenTK.Platform.Native.Windows
 
         public void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data, int level)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("mipmaps");
         }
 
         public void Load(IconHandle handle, string file)
@@ -339,7 +375,7 @@ namespace OpenTK.Platform.Native.Windows
 
         public void Load(IconHandle handle, Stream stream)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("load from stream");
         }
 
         public void Load(IconHandle handle, SystemIconType systemIcon)

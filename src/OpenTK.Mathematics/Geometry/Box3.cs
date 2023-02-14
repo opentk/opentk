@@ -11,13 +11,15 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Xml.Serialization;
 
 namespace OpenTK.Mathematics
 {
     /// <summary>
-    /// Defines an axis-aligned 2d box (rectangle).
+    /// Defines an axis-aligned 3d box (rectangular prism).
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
+    [Serializable]
     public struct Box3 : IEquatable<Box3>
     {
         private Vector3 _min;
@@ -77,8 +79,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Initializes a new instance of the <see cref="Box3"/> struct.
         /// </summary>
-        /// <param name="min">The minimum point on the XY plane this box encloses.</param>
-        /// <param name="max">The maximum point on the XY plane this box encloses.</param>
+        /// <param name="min">The minimum point in 3D space this box encloses.</param>
+        /// <param name="max">The maximum point in 3D space this box encloses.</param>
         public Box3(Vector3 min, Vector3 max)
         {
             _min = Vector3.ComponentMin(min, max);
@@ -116,6 +118,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing half the size of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector3 HalfSize
         {
             get => CenteredSize / 2;
@@ -125,6 +128,7 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Gets or sets a vector describing the center of the box.
         /// </summary>
+        [XmlIgnore]
         public Vector3 Center
         {
             get => HalfSize + _min;
@@ -495,6 +499,7 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>Whether this box contains the point.</returns>
         [Pure]
+        [Obsolete("This function excludes borders even though it's documentation says otherwise. Use ContainsInclusive and ContainsExclusive for the desired behaviour.")]
         public bool Contains(Vector3 point)
         {
             return _min.X < point.X && point.X < _max.X &&
@@ -506,6 +511,32 @@ namespace OpenTK.Mathematics
         /// Returns whether the box contains the specified point (borders inclusive).
         /// </summary>
         /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsInclusive(Vector3 point)
+        {
+            return _min.X <= point.X && point.X <= _max.X &&
+                   _min.Y <= point.Y && point.Y <= _max.Y &&
+                   _min.Z <= point.Z && point.Z <= _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point (borders exclusive).
+        /// </summary>
+        /// <param name="point">The point to query.</param>
+        /// <returns>Whether this box contains the point.</returns>
+        [Pure]
+        public bool ContainsExclusive(Vector3 point)
+        {
+            return _min.X < point.X && point.X < _max.X &&
+                   _min.Y < point.Y && point.Y < _max.Y &&
+                   _min.Z < point.Z && point.Z < _max.Z;
+        }
+
+        /// <summary>
+        /// Returns whether the box contains the specified point.
+        /// </summary>
+        /// <param name="point">The point to query.</param>
         /// <param name="boundaryInclusive">
         /// Whether points on the box boundary should be recognised as contained as well.
         /// </param>
@@ -515,13 +546,12 @@ namespace OpenTK.Mathematics
         {
             if (boundaryInclusive)
             {
-                return _min.X <= point.X && point.X <= _max.X &&
-                       _min.Y <= point.Y && point.Y <= _max.Y &&
-                       _min.Z <= point.Z && point.Z <= _max.Z;
+                return ContainsInclusive(point);
             }
-            return _min.X < point.X && point.X < _max.X &&
-                   _min.Y < point.Y && point.Y < _max.Y &&
-                   _min.Z < point.Z && point.Z < _max.Z;
+            else
+            {
+                return ContainsExclusive(point);
+            }
         }
 
         /// <summary>

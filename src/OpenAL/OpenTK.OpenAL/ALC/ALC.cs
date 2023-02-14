@@ -18,6 +18,8 @@ using OpenTK.Core;
 using OpenTK.Core.Native;
 using OpenTK.OpenAL;
 
+#pragma warning disable SA1515 // Single-line comment should be preceded by blank line
+
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>Alc = Audio Library Context.</summary>

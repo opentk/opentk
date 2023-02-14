@@ -26,6 +26,19 @@ namespace OpenTK.Windowing.Desktop
         /// <inheritdoc />
         public bool IsCurrent => GLFW.GetCurrentContext() == _windowPtr;
 
+        private int _swapInterval;
+
+        /// <inheritdoc/>
+        public int SwapInterval
+        {
+            get => _swapInterval;
+            set
+            {
+                GLFW.SwapInterval(value);
+                _swapInterval = value;
+            }
+        }
+
         /// <inheritdoc />
         public void SwapBuffers()
         {

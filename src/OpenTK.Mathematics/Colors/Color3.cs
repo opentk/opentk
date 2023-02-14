@@ -359,34 +359,41 @@ namespace OpenTK
             float v = color.Z;
 
             float c = v * s;
+            var x = c * (1.0f - Math.Abs(((h * 6) % 2.0f) - 1.0f));
+
             byte hi = (byte)(h * 6);
-            float x = c * (1 - MathHelper.Abs((hi % 2) - 1));
 
             Color3<Rgb> rgb = new Color3<Rgb>(0, 0, 0);
-            switch (hi)
+            switch (hi % 6)
             {
-                case 1:
+                case 0:
                     rgb.X = c;
                     rgb.Y = x;
+                    rgb.Z = 0;
                     break;
-                case 2:
+                case 1:
                     rgb.X = x;
                     rgb.Y = c;
+                    rgb.Z = 0;
                     break;
-                case 3:
+                case 2:
+                    rgb.X = 0;
                     rgb.Y = c;
                     rgb.Z = x;
                     break;
-                case 4:
+                case 3:
+                    rgb.X = 0;
                     rgb.Y = x;
                     rgb.Z = c;
                     break;
-                case 5:
+                case 4:
                     rgb.X = x;
+                    rgb.Y = 0;
                     rgb.Z = c;
                     break;
-                case 6:
+                case 5:
                     rgb.X = c;
+                    rgb.Y = 0;
                     rgb.Z = x;
                     break;
             }
