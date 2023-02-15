@@ -156,7 +156,9 @@ namespace OpenTK.Platform.Native.Windows
                     int length = Win32.GetClipboardFormatName(cf, name, name.Capacity);
                     if (length == 0)
                     {
-                        throw new Win32Exception();
+                        int code = Marshal.GetLastWin32Error();
+                        Win32.CloseClipboard();
+                        throw new Win32Exception(code);
                     }
 
                     Console.WriteLine($"Format (0x{(uint)cf:X4}): {name}");
@@ -174,7 +176,9 @@ namespace OpenTK.Platform.Native.Windows
                     int length = Win32.GetClipboardFormatName(cf, name, name.Capacity);
                     if (length == 0)
                     {
-                        throw new Win32Exception();
+                        int code = Marshal.GetLastWin32Error();
+                        Win32.CloseClipboard();
+                        throw new Win32Exception(code);
                     }
 
                     Console.WriteLine($"Format (0x{(uint)cf:X4}): {name}");
