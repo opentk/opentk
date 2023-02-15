@@ -67,7 +67,7 @@ namespace OpenTK.Platform.Tests
             foreach (var scancode in Enum.GetValues<Scancode>())
             {
                 Key key = keyboardComp.GetKeyFromScancode(scancode);
-
+                //if (key != Key.Unknown) continue;
                 Console.WriteLine($"{scancode} -> {key}");
             }
             Console.WriteLine();
@@ -75,7 +75,7 @@ namespace OpenTK.Platform.Tests
             foreach (var key in Enum.GetValues<Key>())
             {
                 Scancode scancode = keyboardComp.GetScancodeFromKey(key);
-
+                //if (scancode != Scancode.Unknown) continue;
                 Console.WriteLine($"{key} -> {scancode}");
             }
 

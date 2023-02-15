@@ -63,7 +63,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         Logger?.LogDebug($"Scancode {scancodes[i]} (Extended Win32 Scancode: 0x{indexExt:X}) didn't have ex mapping!");
                     }
-                    key = res == 0 ? Key.Unknown : ToKey(index, (VK)res, true);
+                    key = res == 0 ? Key.Unknown : ToKey(indexExt, (VK)res, true);
                 }
                 else
                 {
@@ -267,7 +267,7 @@ namespace OpenTK.Platform.Native.Windows
             // 0x38 - 0x3F
             Scancode.LeftAlt, Scancode.Spacebar, Scancode.CapsLock, Scancode.F1, Scancode.F2, Scancode.F3, Scancode.F4, Scancode.F5,
             // 0x40 - 0x47
-            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.Pause, Scancode.ScrollLock, Scancode.Keypad7,
+            Scancode.F6, Scancode.F7, Scancode.F8, Scancode.F9, Scancode.F10, Scancode.NumLock, Scancode.ScrollLock, Scancode.Keypad7,
             // 0x48 - 0x4F
             Scancode.Keypad8, Scancode.Keypad9, Scancode.KeypadDash, Scancode.Keypad4, Scancode.Keypad5, Scancode.Keypad6, Scancode.KeypadPlus, Scancode.Keypad1,
             // 0x50 - 0x57
@@ -320,7 +320,7 @@ namespace OpenTK.Platform.Native.Windows
             // 0x38 - 0x3F
             Scancode.RightAlt, 0, 0, 0, 0, 0, 0, 0,
             // 0x40 - 0x47
-            0, 0, 0, 0, 0, Scancode.NumLock, 0, Scancode.Home,
+            0, 0, 0, 0, 0, Scancode.NumLock, Scancode.Pause, Scancode.Home,
             // 0x48 - 0x4F
             Scancode.UpArrow, Scancode.PageUp, 0, Scancode.LeftArrow, 0, Scancode.RightArrow, 0, Scancode.End,
             // 0x50 - 0x57
@@ -357,7 +357,7 @@ namespace OpenTK.Platform.Native.Windows
         static readonly Key[] KeyLookup = new Key[256]
         {
             // 0x00 - 0x07
-            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, Key.PauseBreak, 0, 0, 0, 0,
             // 0x08 - 0x0F
             Key.Backspace, Key.Tab, 0, 0, 0, Key.Return, 0, 0,
             // 0x10 - 0x17
@@ -397,7 +397,7 @@ namespace OpenTK.Platform.Native.Windows
             // 0x98 - 0x9F
             0, 0, 0, 0, 0, 0, 0, 0,
             // 0xA0 - 0xA7
-            0, 0, 0, 0, 0, 0, 0, 0,
+            Key.LeftShift, Key.RightShift, Key.LeftControl, Key.RightControl, Key.LeftAlt, Key.RightAlt, 0, 0,
             // 0xA8 - 0xAF
             0, 0, 0, 0, 0, Key.Mute, Key.VolumeDown, Key.VolumeUp,
             // 0xB0 - 0xB7
@@ -463,6 +463,50 @@ namespace OpenTK.Platform.Native.Windows
         {
             // FIXME: Should Keypad enter and enter be different keys?
             // They are different scancodes.
+
+            // FIXME: Make number scancodes always map to number keys. AZERTY.
+
+            // FIXME: SDL marks some keys as not remappable and will always correspond to the scancode
+            // https://github.com/libsdl-org/SDL/blob/4187c6c08c2f0a6c84ea274c95c10ac7fdc5147a/include/SDL3/SDL_keycode.h#L47
+            // This might be a good solution in the future.
+
+            // Because some keypad keys get converted into
+            // their functional keys like Keypad7 -> Home we
+            // manually convert all keypad scancodes to keypad keys.
+            // FIXME: We probably want to do the non remappable character stuff from SDL.
+            // This is mostly done for the keymap to work correctly
+            // - 2023-02-15 NogginBops
+            if (extended)
+            {
+                switch (scancode)
+                {
+                    case 0x1C: return Key.KeypadEnter;
+                    case 0x35: return Key.KeypadDivide;
+                    case 0x45: return Key.NumLock;
+                }
+            }
+            else
+            {
+                switch (scancode)
+                {
+                    case 0x37: return Key.KeypadMultiply;
+                    case 0x47: return Key.Keypad7;
+                    case 0x48: return Key.Keypad8;
+                    case 0x49: return Key.Keypad9;
+                    case 0x4A: return Key.KeypadSubtract;
+                    case 0x4B: return Key.Keypad4;
+                    case 0x4C: return Key.Keypad5;
+                    case 0x4D: return Key.Keypad6;
+                    case 0x4E: return Key.KeypadAdd;
+                    case 0x4F: return Key.Keypad1;
+                    case 0x50: return Key.Keypad2;
+                    case 0x51: return Key.Keypad3;
+                    case 0x52: return Key.Keypad0;
+                    case 0x53: return Key.KeypadDecimal;
+                    case 0x59: return Key.KeypadEqual;
+                    case 0x7E: return Key.KeypadSeparator;
+                }
+            }
 
             // Letters map directly.
             if (virtualKey >= VK.A && virtualKey <= VK.Z)
