@@ -147,7 +147,7 @@ namespace OpenTK.Windowing.Desktop
             ClientArea = new Box2i(x, y, x + videoMode->Width, y + videoMode->Height);
 
             GLFW.GetMonitorWorkarea(HandleAsPtr, out int workAreaX, out int workAreaY, out int workAreaWidth, out int workAreaHeight);
-            WorkArea = new Box2i(workAreaX, workAreaY, workAreaWidth, workAreaHeight);
+            WorkArea = new Box2i(workAreaX, workAreaY, workAreaX + workAreaWidth, workAreaY + workAreaHeight);
 
             GLFW.GetMonitorPhysicalSize(HandleAsPtr, out int width, out int height);
             PhysicalWidth = width;
