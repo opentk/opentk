@@ -1578,13 +1578,11 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Occurs when the window is minimized.
-        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MinimizedEventArgs> Minimized;
 
         /// <summary>
         /// Occurs when the window is maximized.
-        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MaximizedEventArgs> Maximized;
 
