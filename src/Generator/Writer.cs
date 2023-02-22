@@ -336,7 +336,10 @@ namespace Generator.Writing
         {
             string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.Type.ToCSString()));
 
-            writer.WriteLine($"/// <inheritdoc cref=\"{overload.NativeFunction.FunctionName}({parameterTypes})\"/>");
+            string nativeFunctionName = overload.NativeFunction.FunctionName;
+            if (removeVendorPostfix) nativeFunctionName = NameMangler.RemoveVendorPostfix(nativeFunctionName);
+
+            writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
 
             string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
             string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
