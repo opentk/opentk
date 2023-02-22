@@ -58,8 +58,6 @@ namespace LocalTest
             GL.ClearColor(Color4.Coral);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Console.WriteLine($"{1/args.Time:0.000}");
-
             SwapBuffers();
         }
 
