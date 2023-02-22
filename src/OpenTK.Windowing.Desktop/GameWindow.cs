@@ -203,17 +203,22 @@ namespace OpenTK.Windowing.Desktop
 
         #endregion
 
-        // Counter for how many updates in Run() where slow.
+        /// <summary>Counter for how many updates in Run() where slow.</summary>
         private int _slowUpdates = 0;
 
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
         /// </summary>
+        /// <remarks>
+        /// <para>On windows this function sets the thread affinity mask to avoid the thread from changing cores.</para>
+        /// <para>On windows this function sets the timer resolution to 1ms which improves frame timing but may increase battery consumption (this can be undone in <see cref="OnLoad"/>).</para>
+        /// </remarks>
         public virtual unsafe void Run()
         {
             // We do this before OnLoad so that users have some way to affect these settings in OnLoad if they need to.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
+                // Make this thread only run on one core, avoiding timing issues with context switching
                 SetThreadAffinityMask(GetCurrentThread(), new IntPtr(1));
 
                 // Make Thread.Sleep more accurate.
@@ -233,9 +238,6 @@ namespace OpenTK.Windowing.Desktop
             Debug.Print("Entering main loop.");
 
             Utils.SleepTimings runSleepTimings = new Utils.SleepTimings(2);
-
-            // Bias used when comparing elapsed time.
-            const double BIAS = 0 / 1000.0;
 
             _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
@@ -260,7 +262,7 @@ namespace OpenTK.Windowing.Desktop
                     const int SlowUpdatesThreshold = 45;
 
                     double time = _watchUpdate.Elapsed.TotalSeconds;
-                    if (updatePeriod - BIAS < time)
+                    if (updatePeriod < time)
                     {
                         _slowUpdates++;
                         if (_slowUpdates > MaxSlowUpdates)
@@ -291,7 +293,7 @@ namespace OpenTK.Windowing.Desktop
                 // The time we have left to the next update.
                 double timeToNextUpdate = updatePeriod - _watchUpdate.Elapsed.TotalSeconds;
 
-                if (timeToNextUpdate - BIAS > 0)
+                if (timeToNextUpdate > 0)
                 {
                     runSleepTimings.PreciseSleep(timeToNextUpdate);
                 }
@@ -344,7 +346,7 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run when the window is ready to update.
+        /// Run when the window is ready to update. This is called before <see cref="OnRenderFrame(FrameEventArgs)"/>.
         /// </summary>
         /// <param name="args">The event arguments for this frame.</param>
         protected virtual void OnUpdateFrame(FrameEventArgs args)
@@ -353,10 +355,9 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Run when the window is ready to update.
+        /// Run when the window is ready to render. This is called after <see cref="OnUpdateFrame(FrameEventArgs)"/>.
         /// </summary>
         /// <param name="args">The event arguments for this frame.</param>
-        [Obsolete("Use OnUpdateFrame instead. We no longer separate UpdateFrame and RenderFrame.")]
         protected virtual void OnRenderFrame(FrameEventArgs args)
         {
             RenderFrame?.Invoke(args);
