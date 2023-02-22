@@ -1328,7 +1328,7 @@ namespace OpenTK.Mathematics
                 return cultureInfo.TextInfo.ListSeparator;
             }
 
-            if (formatProvider.GetFormat(typeof(TextInfo)) is TextInfo textInfo)
+            if (formatProvider?.GetFormat(typeof(TextInfo)) is TextInfo textInfo)
             {
                 return textInfo.ListSeparator;
             }
