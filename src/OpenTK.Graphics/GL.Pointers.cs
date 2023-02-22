@@ -1264,6 +1264,22 @@ namespace OpenTK.Graphics
             _glBlitFramebufferEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
         }
         
+        internal static delegate* unmanaged<int, int, int, int, int, int, int, int, int, int, uint, uint, void> _glBlitFramebufferLayerEXT_fnptr = &glBlitFramebufferLayerEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void glBlitFramebufferLayerEXT_Lazy(int srcX0, int srcY0, int srcX1, int srcY1, int srcLayer, int dstX0, int dstY0, int dstX1, int dstY1, int dstLayer, uint mask, uint filter)
+        {
+            _glBlitFramebufferLayerEXT_fnptr = (delegate* unmanaged<int, int, int, int, int, int, int, int, int, int, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glBlitFramebufferLayerEXT");
+            _glBlitFramebufferLayerEXT_fnptr(srcX0, srcY0, srcX1, srcY1, srcLayer, dstX0, dstY0, dstX1, dstY1, dstLayer, mask, filter);
+        }
+        
+        internal static delegate* unmanaged<int, int, int, int, int, int, int, int, uint, uint, void> _glBlitFramebufferLayersEXT_fnptr = &glBlitFramebufferLayersEXT_Lazy;
+        [UnmanagedCallersOnly]
+        private static void glBlitFramebufferLayersEXT_Lazy(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)
+        {
+            _glBlitFramebufferLayersEXT_fnptr = (delegate* unmanaged<int, int, int, int, int, int, int, int, uint, uint, void>)GLLoader.BindingsContext.GetProcAddress("glBlitFramebufferLayersEXT");
+            _glBlitFramebufferLayersEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+        }
+        
         internal static delegate* unmanaged<int, int, int, int, int, int, int, int, uint, uint, void> _glBlitFramebufferNV_fnptr = &glBlitFramebufferNV_Lazy;
         [UnmanagedCallersOnly]
         private static void glBlitFramebufferNV_Lazy(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, uint filter)

@@ -2143,6 +2143,9 @@ namespace OpenTK.Graphics.OpenGLES2
         ViewportSwizzleYNv = 37721,
         ViewportSwizzleZNv = 37722,
         ViewportSwizzleWNv = 37723,
+        PackRowLengthNv = 3330,
+        PackSkipRowsNv = 3331,
+        PackSkipPixelsNv = 3332,
         SamplerExternalOes = 36198,
         Etc1Rgb8Oes = 36196,
         Palette4Rgb8Oes = 35728,
@@ -2957,6 +2960,7 @@ namespace OpenTK.Graphics.OpenGLES2
     public enum TextureEnvMode : uint
     {
         Blend = 3042,
+        Replace = 7681,
     }
     public enum LightEnvModeSGIX : uint
     {
@@ -3255,6 +3259,9 @@ namespace OpenTK.Graphics.OpenGLES2
         ShadingRateImagePerPrimitiveNv = 38321,
         ShadingRateImagePaletteCountNv = 38322,
         ReadBufferNv = 3074,
+        PackRowLengthNv = 3330,
+        PackSkipRowsNv = 3331,
+        PackSkipPixelsNv = 3332,
         AlphaTestQcom = 3008,
         AlphaTestFuncQcom = 3009,
         AlphaTestRefQcom = 3010,
@@ -3326,6 +3333,13 @@ namespace OpenTK.Graphics.OpenGLES2
         UnpackRowLengthExt = 3314,
         UnpackSkipRowsExt = 3315,
         UnpackSkipPixelsExt = 3316,
+        PackRowLengthNv = 3330,
+        PackSkipRowsNv = 3331,
+        PackSkipPixelsNv = 3332,
+    }
+    public enum TextureEnvParameter : uint
+    {
+        Src1AlphaExt = 34185,
     }
     ///<summary>Used in <see cref="GL.CopyImageSubData" /></summary>
     public enum CopyImageSubDataTarget : uint
@@ -4211,11 +4225,7 @@ namespace OpenTK.Graphics.OpenGLES2
         Version = 7938,
         Extensions = 7939,
     }
-    public enum TextureEnvParameter : uint
-    {
-        Src1AlphaExt = 34185,
-    }
-    ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.ANGLE.BlitFramebufferANGLE" />, <see cref="GL.NV.BlitFramebufferNV" /></summary>
+    ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.ANGLE.BlitFramebufferANGLE" />, <see cref="GL.EXT.BlitFramebufferLayerEXT" />, ...</summary>
     public enum BlitFramebufferFilter : uint
     {
         Nearest = 9728,

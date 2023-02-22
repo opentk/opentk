@@ -43368,26 +43368,26 @@ namespace OpenTK.Graphics.OpenGL
                     SpriteParameterfvSGIX(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, int*)"/>
-            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, ReadOnlySpan<int> parameters)
+            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, SpriteModeSGIX*)"/>
+            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, ReadOnlySpan<SpriteModeSGIX> parameters)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (SpriteModeSGIX* parameters_ptr = parameters)
                 {
                     SpriteParameterivSGIX(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, int*)"/>
-            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, int[] parameters)
+            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, SpriteModeSGIX*)"/>
+            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX[] parameters)
             {
-                fixed (int* parameters_ptr = parameters)
+                fixed (SpriteModeSGIX* parameters_ptr = parameters)
                 {
                     SpriteParameterivSGIX(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, int*)"/>
-            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, in int parameters)
+            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, SpriteModeSGIX*)"/>
+            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, in SpriteModeSGIX parameters)
             {
-                fixed (int* parameters_ptr = &parameters)
+                fixed (SpriteModeSGIX* parameters_ptr = &parameters)
                 {
                     SpriteParameterivSGIX(pname, parameters_ptr);
                 }

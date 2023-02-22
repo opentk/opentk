@@ -12300,6 +12300,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             /// <summary> <b>[requires: GL_EXT_framebuffer_blit] [glBlitFramebufferEXT]</b>  </summary>
             public static void BlitFramebufferEXT(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
+            /// <summary> <b>[requires: GL_EXT_framebuffer_blit_layers] [glBlitFramebufferLayersEXT]</b>  </summary>
+            public static void BlitFramebufferLayersEXT(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferLayersEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
+            
+            /// <summary> <b>[requires: GL_EXT_framebuffer_blit_layers] [glBlitFramebufferLayerEXT]</b>  </summary>
+            public static void BlitFramebufferLayerEXT(int srcX0, int srcY0, int srcX1, int srcY1, int srcLayer, int dstX0, int dstY0, int dstX1, int dstY1, int dstLayer, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferLayerEXT_fnptr(srcX0, srcY0, srcX1, srcY1, srcLayer, dstX0, dstY0, dstX1, dstY1, dstLayer, (uint)mask, (uint)filter);
+            
             /// <summary> <b>[requires: GL_EXT_framebuffer_multisample] [glRenderbufferStorageMultisampleEXT]</b>  </summary>
             public static void RenderbufferStorageMultisampleEXT(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleEXT_fnptr((uint)target, samples, (uint)internalformat, width, height);
             
@@ -15770,10 +15776,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void SpriteParameterfvSGIX(SpriteParameterNameSGIX pname, float* parameters) => GLPointers._glSpriteParameterfvSGIX_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_sprite] [glSpriteParameteriSGIX]</b>  </summary>
-            public static void SpriteParameteriSGIX(SpriteParameterNameSGIX pname, int param) => GLPointers._glSpriteParameteriSGIX_fnptr((uint)pname, param);
+            public static void SpriteParameteriSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX param) => GLPointers._glSpriteParameteriSGIX_fnptr((uint)pname, (int)param);
             
             /// <summary> <b>[requires: GL_SGIX_sprite] [glSpriteParameterivSGIX]</b>  </summary>
-            public static void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, int* parameters) => GLPointers._glSpriteParameterivSGIX_fnptr((uint)pname, parameters);
+            public static void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX* parameters) => GLPointers._glSpriteParameterivSGIX_fnptr((uint)pname, (int*)parameters);
             
             /// <summary> <b>[requires: GL_SGIX_tag_sample_buffer] [glTagSampleBufferSGIX]</b>  </summary>
             public static void TagSampleBufferSGIX() => GLPointers._glTagSampleBufferSGIX_fnptr();

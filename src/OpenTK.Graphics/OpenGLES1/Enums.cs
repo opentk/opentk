@@ -919,9 +919,11 @@ namespace OpenTK.Graphics.OpenGLES1
     public enum TextureEnvMode : uint
     {
         Blend = 3042,
+        Replace = 7681,
         Modulate = 8448,
         Decal = 8449,
         Add = 260,
+        Combine = 34160,
     }
     public enum LightEnvModeSGIX : uint
     {
@@ -1242,6 +1244,34 @@ namespace OpenTK.Graphics.OpenGLES1
     public enum PixelTransferParameter : uint
     {
         AlphaScale = 3356,
+    }
+    ///<summary>Used in <see cref="GL.GetTexEnvfv" />, <see cref="GL.GetTexEnviv" />, <see cref="GL.GetTexEnvxv" />, ...</summary>
+    public enum TextureEnvParameter : uint
+    {
+        TextureEnvMode = 8704,
+        TextureEnvColor = 8705,
+        Combine = 34160,
+        CombineRgb = 34161,
+        CombineAlpha = 34162,
+        RgbScale = 34163,
+        AddSigned = 34164,
+        Interpolate = 34165,
+        Constant = 34166,
+        PrimaryColor = 34167,
+        Previous = 34168,
+        Operand0Rgb = 34192,
+        Operand1Rgb = 34193,
+        Operand2Rgb = 34194,
+        Operand0Alpha = 34200,
+        Operand1Alpha = 34201,
+        Operand2Alpha = 34202,
+        AlphaScale = 3356,
+        Src0Rgb = 34176,
+        Src1Rgb = 34177,
+        Src2Rgb = 34178,
+        Src0Alpha = 34184,
+        Src1Alpha = 34185,
+        Src2Alpha = 34186,
     }
     ///<summary>Used in <see cref="GL.OES.GetMapxvOES" />, <see cref="GL.OES.Map1xOES" />, <see cref="GL.OES.Map2xOES" /></summary>
     public enum MapTarget : uint
@@ -1690,33 +1720,6 @@ namespace OpenTK.Graphics.OpenGLES1
     public enum TextureCoordName : uint
     {
         TextureGenStrOes = 36192,
-    }
-    ///<summary>Used in <see cref="GL.GetTexEnvfv" />, <see cref="GL.GetTexEnviv" />, <see cref="GL.GetTexEnvxv" />, ...</summary>
-    public enum TextureEnvParameter : uint
-    {
-        TextureEnvMode = 8704,
-        TextureEnvColor = 8705,
-        Combine = 34160,
-        CombineRgb = 34161,
-        CombineAlpha = 34162,
-        RgbScale = 34163,
-        AddSigned = 34164,
-        Interpolate = 34165,
-        Constant = 34166,
-        PrimaryColor = 34167,
-        Previous = 34168,
-        Operand0Rgb = 34192,
-        Operand1Rgb = 34193,
-        Operand2Rgb = 34194,
-        Operand0Alpha = 34200,
-        Operand1Alpha = 34201,
-        Operand2Alpha = 34202,
-        Src0Rgb = 34176,
-        Src1Rgb = 34177,
-        Src2Rgb = 34178,
-        Src0Alpha = 34184,
-        Src1Alpha = 34185,
-        Src2Alpha = 34186,
     }
     ///<summary>Used in <see cref="GL.GetTexEnvfv" />, <see cref="GL.GetTexEnviv" />, <see cref="GL.GetTexEnvxv" />, ...</summary>
     public enum TextureEnvTarget : uint
