@@ -732,7 +732,7 @@ namespace OpenTK.Graphics.OpenGLES1
         ContextFlagDebugBit = 2,
         ContextFlagDebugBitKhr = 2,
     }
-    ///<summary>Used in <see cref="GL.EXT.MapBufferRangeEXT" /></summary>
+    ///<summary>Used in <see cref="GL.EXT.MapBufferRange" /></summary>
     [Flags]
     public enum MapBufferAccessMask : uint
     {
@@ -743,13 +743,13 @@ namespace OpenTK.Graphics.OpenGLES1
         MapFlushExplicitBitExt = 16,
         MapUnsynchronizedBitExt = 32,
     }
-    ///<summary>Used in <see cref="GL.APPLE.ClientWaitSyncAPPLE" /></summary>
+    ///<summary>Used in <see cref="GL.APPLE.ClientWaitSync" /></summary>
     [Flags]
     public enum SyncObjectMask : uint
     {
         SyncFlushCommandsBitApple = 1,
     }
-    ///<summary>Used in <see cref="GL.QCOM.EndTilingQCOM" />, <see cref="GL.QCOM.StartTilingQCOM" /></summary>
+    ///<summary>Used in <see cref="GL.QCOM.EndTiling" />, <see cref="GL.QCOM.StartTiling" /></summary>
     [Flags]
     public enum BufferBitQCOM : uint
     {
@@ -801,7 +801,7 @@ namespace OpenTK.Graphics.OpenGLES1
         False = 0,
         True = 1,
     }
-    ///<summary>Used in <see cref="GL.EXT.GetGraphicsResetStatusEXT" /></summary>
+    ///<summary>Used in <see cref="GL.EXT.GetGraphicsResetStatus" /></summary>
     public enum GraphicsResetStatus : uint
     {
         NoError = 0,
@@ -834,7 +834,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Incr = 7682,
         Decr = 7683,
     }
-    ///<summary>Used in <see cref="GL.BlendFunc" />, <see cref="GL.OES.BlendFuncSeparateOES" /></summary>
+    ///<summary>Used in <see cref="GL.BlendFunc" />, <see cref="GL.OES.BlendFuncSeparate" /></summary>
     public enum BlendingFactor : uint
     {
         Zero = 0,
@@ -860,7 +860,7 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         Alpha = 6406,
     }
-    ///<summary>Used in <see cref="GL.APPLE.FenceSyncAPPLE" />, <see cref="GL.APPLE.WaitSyncAPPLE" /></summary>
+    ///<summary>Used in <see cref="GL.APPLE.FenceSync" />, <see cref="GL.APPLE.WaitSync" /></summary>
     public enum SyncBehaviorFlags : uint
     {
     }
@@ -901,7 +901,7 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         Constant = 34166,
     }
-    ///<summary>Used in <see cref="GL.DrawArrays" />, <see cref="GL.DrawElements" />, <see cref="GL.EXT.MultiDrawArraysEXT" />, ...</summary>
+    ///<summary>Used in <see cref="GL.DrawArrays" />, <see cref="GL.DrawElements" />, <see cref="GL.EXT.MultiDrawArrays" />, ...</summary>
     public enum PrimitiveType : uint
     {
         Points = 0,
@@ -954,7 +954,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Gequal = 518,
         Always = 519,
     }
-    ///<summary>Used in <see cref="GL.AlphaFunc" />, <see cref="GL.AlphaFuncx" />, <see cref="GL.OES.AlphaFuncxOES" /></summary>
+    ///<summary>Used in <see cref="GL.AlphaFunc" />, <see cref="GL.AlphaFuncx" />, <see cref="GL.OES.AlphaFuncx" /></summary>
     public enum AlphaFunction : uint
     {
         Never = 512,
@@ -997,7 +997,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Cw = 2304,
         Ccw = 2305,
     }
-    ///<summary>Used in <see cref="GL.OES.GetMapxvOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.GetMapxv" /></summary>
     public enum GetMapQuery : uint
     {
     }
@@ -1199,7 +1199,7 @@ namespace OpenTK.Graphics.OpenGLES1
         LightModelAmbient = 2899,
         LightModelTwoSide = 2898,
     }
-    ///<summary>Used in <see cref="GL.Fogx" />, <see cref="GL.Fogxv" />, <see cref="GL.OES.FogxOES" />, ...</summary>
+    ///<summary>Used in <see cref="GL.Fogx" />, <see cref="GL.Fogxv" />, <see cref="GL.OES.Fogx" />, ...</summary>
     public enum FogPName : uint
     {
         FogDensity = 2914,
@@ -1240,7 +1240,7 @@ namespace OpenTK.Graphics.OpenGLES1
         UnpackAlignment = 3317,
         PackAlignment = 3333,
     }
-    ///<summary>Used in <see cref="GL.OES.PixelTransferxOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.PixelTransferx" /></summary>
     public enum PixelTransferParameter : uint
     {
         AlphaScale = 3356,
@@ -1273,7 +1273,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Src1Alpha = 34185,
         Src2Alpha = 34186,
     }
-    ///<summary>Used in <see cref="GL.OES.GetMapxvOES" />, <see cref="GL.OES.Map1xOES" />, <see cref="GL.OES.Map2xOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.GetMapxv" />, <see cref="GL.OES.Map1x" />, <see cref="GL.OES.Map2x" /></summary>
     public enum MapTarget : uint
     {
     }
@@ -1513,14 +1513,14 @@ namespace OpenTK.Graphics.OpenGLES1
         UnsignedShort = 5123,
         UnsignedInt = 5125,
     }
-    ///<summary>Used in <see cref="GL.OES.MatrixIndexPointerOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.MatrixIndexPointer" /></summary>
     public enum MatrixIndexPointerTypeARB : uint
     {
         UnsignedByte = 5121,
         UnsignedShort = 5123,
         UnsignedInt = 5125,
     }
-    ///<summary>Used in <see cref="GL.DrawElements" />, <see cref="GL.EXT.MultiDrawElementsEXT" /></summary>
+    ///<summary>Used in <see cref="GL.DrawElements" />, <see cref="GL.EXT.MultiDrawElements" /></summary>
     public enum DrawElementsType : uint
     {
         UnsignedByte = 5121,
@@ -1641,7 +1641,7 @@ namespace OpenTK.Graphics.OpenGLES1
         DepthExt = 6145,
         StencilExt = 6146,
     }
-    ///<summary>Used in <see cref="GL.EXT.DiscardFramebufferEXT" /></summary>
+    ///<summary>Used in <see cref="GL.EXT.DiscardFramebuffer" /></summary>
     public enum InvalidateFramebufferAttachment : uint
     {
         ColorAttachment0Oes = 36064,
@@ -1716,7 +1716,7 @@ namespace OpenTK.Graphics.OpenGLES1
         Version = 7938,
         Extensions = 7939,
     }
-    ///<summary>Used in <see cref="GL.OES.GetTexGenfvOES" />, <see cref="GL.OES.GetTexGenivOES" />, <see cref="GL.OES.GetTexGenxvOES" />, ...</summary>
+    ///<summary>Used in <see cref="GL.OES.GetTexGenfv" />, <see cref="GL.OES.GetTexGeniv" />, <see cref="GL.OES.GetTexGenxv" />, ...</summary>
     public enum TextureCoordName : uint
     {
         TextureGenStrOes = 36192,
@@ -1726,7 +1726,7 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         TextureEnv = 8960,
     }
-    ///<summary>Used in <see cref="GL.OES.GetTexGenfvOES" />, <see cref="GL.OES.GetTexGenivOES" />, <see cref="GL.OES.GetTexGenxvOES" />, ...</summary>
+    ///<summary>Used in <see cref="GL.OES.GetTexGenfv" />, <see cref="GL.OES.GetTexGeniv" />, <see cref="GL.OES.GetTexGenxv" />, ...</summary>
     public enum TextureGenParameter : uint
     {
         TextureGenModeOes = 9472,
@@ -1763,7 +1763,7 @@ namespace OpenTK.Graphics.OpenGLES1
         TextureWrapS = 10242,
         TextureWrapT = 10243,
     }
-    ///<summary>Used in <see cref="GL.EXT.TexStorage1DEXT" />, <see cref="GL.EXT.TexStorage2DEXT" />, <see cref="GL.EXT.TexStorage3DEXT" />, ...</summary>
+    ///<summary>Used in <see cref="GL.EXT.TexStorage1D" />, <see cref="GL.EXT.TexStorage2D" />, <see cref="GL.EXT.TexStorage3D" />, ...</summary>
     public enum SizedInternalFormat : uint
     {
         Srgb8Alpha8Ext = 35907,
@@ -1824,26 +1824,26 @@ namespace OpenTK.Graphics.OpenGLES1
         Light6 = 16390,
         Light7 = 16391,
     }
-    ///<summary>Used in <see cref="GL.EXT.BlendEquationEXT" />, <see cref="GL.OES.BlendEquationOES" />, <see cref="GL.OES.BlendEquationSeparateOES" /></summary>
+    ///<summary>Used in <see cref="GL.EXT.BlendEquation" />, <see cref="GL.OES.BlendEquation" />, <see cref="GL.OES.BlendEquationSeparate" /></summary>
     public enum BlendEquationModeEXT : uint
     {
         MinExt = 32775,
         MaxExt = 32776,
         FuncAddExt = 32774,
     }
-    ///<summary>Used in <see cref="GL.OES.ConvolutionParameterxOES" />, <see cref="GL.OES.ConvolutionParameterxvOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.ConvolutionParameterx" />, <see cref="GL.OES.ConvolutionParameterxv" /></summary>
     public enum ConvolutionTargetEXT : uint
     {
     }
-    ///<summary>Used in <see cref="GL.OES.ConvolutionParameterxOES" />, <see cref="GL.OES.ConvolutionParameterxvOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.ConvolutionParameterx" />, <see cref="GL.OES.ConvolutionParameterxv" /></summary>
     public enum ConvolutionParameter : uint
     {
     }
-    ///<summary>Used in <see cref="GL.OES.GetHistogramParameterxvOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.GetHistogramParameterxv" /></summary>
     public enum HistogramTargetEXT : uint
     {
     }
-    ///<summary>Used in <see cref="GL.OES.GetHistogramParameterxvOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.GetHistogramParameterxv" /></summary>
     public enum GetHistogramParameterPNameEXT : uint
     {
     }
@@ -1866,7 +1866,7 @@ namespace OpenTK.Graphics.OpenGLES1
         PointFadeThresholdSize = 33064,
         PointDistanceAttenuation = 33065,
     }
-    ///<summary>Used in <see cref="GL.OES.GetFramebufferAttachmentParameterivOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.GetFramebufferAttachmentParameteriv" /></summary>
     public enum FramebufferAttachmentParameterName : uint
     {
         FramebufferAttachmentTextureSamplesExt = 36204,
@@ -1876,11 +1876,11 @@ namespace OpenTK.Graphics.OpenGLES1
         FramebufferAttachmentTextureLevelOes = 36050,
         FramebufferAttachmentTextureCubeMapFaceOes = 36051,
     }
-    ///<summary>Used in <see cref="GL.OES.CheckFramebufferStatusOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.CheckFramebufferStatus" /></summary>
     public enum FramebufferStatus : uint
     {
     }
-    ///<summary>Used in <see cref="GL.OES.FramebufferRenderbufferOES" />, <see cref="GL.EXT.FramebufferTexture2DMultisampleEXT" />, <see cref="GL.IMG.FramebufferTexture2DMultisampleIMG" />, ...</summary>
+    ///<summary>Used in <see cref="GL.OES.FramebufferRenderbuffer" />, <see cref="GL.EXT.FramebufferTexture2DMultisample" />, <see cref="GL.IMG.FramebufferTexture2DMultisample" />, ...</summary>
     public enum FramebufferAttachment : uint
     {
     }
@@ -1961,12 +1961,12 @@ namespace OpenTK.Graphics.OpenGLES1
         Texture30 = 34014,
         Texture31 = 34015,
     }
-    ///<summary>Used in <see cref="GL.NV.SetFenceNV" /></summary>
+    ///<summary>Used in <see cref="GL.NV.SetFence" /></summary>
     public enum FenceConditionNV : uint
     {
         AllCompletedNv = 34034,
     }
-    ///<summary>Used in <see cref="GL.NV.GetFenceivNV" /></summary>
+    ///<summary>Used in <see cref="GL.NV.GetFenceiv" /></summary>
     public enum FenceParameterNameNV : uint
     {
         FenceStatusNv = 34035,
@@ -1986,11 +1986,11 @@ namespace OpenTK.Graphics.OpenGLES1
         ArrayBuffer = 34962,
         ElementArrayBuffer = 34963,
     }
-    ///<summary>Used in <see cref="GL.OES.MapBufferOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.MapBuffer" /></summary>
     public enum BufferAccessARB : uint
     {
     }
-    ///<summary>Used in <see cref="GL.OES.GetBufferPointervOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.GetBufferPointerv" /></summary>
     public enum BufferPointerNameARB : uint
     {
     }
@@ -2005,16 +2005,16 @@ namespace OpenTK.Graphics.OpenGLES1
         StaticDraw = 35044,
         DynamicDraw = 35048,
     }
-    ///<summary>Used in <see cref="GL.QCOM.ExtGetProgramBinarySourceQCOM" /></summary>
+    ///<summary>Used in <see cref="GL.QCOM.ExtGetProgramBinarySource" /></summary>
     public enum ShaderType : uint
     {
     }
-    ///<summary>Used in <see cref="GL.OES.BindFramebufferOES" />, <see cref="GL.OES.CheckFramebufferStatusOES" />, <see cref="GL.EXT.DiscardFramebufferEXT" />, ...</summary>
+    ///<summary>Used in <see cref="GL.OES.BindFramebuffer" />, <see cref="GL.OES.CheckFramebufferStatus" />, <see cref="GL.EXT.DiscardFramebuffer" />, ...</summary>
     public enum FramebufferTarget : uint
     {
         FramebufferOes = 36160,
     }
-    ///<summary>Used in <see cref="GL.OES.GetRenderbufferParameterivOES" /></summary>
+    ///<summary>Used in <see cref="GL.OES.GetRenderbufferParameteriv" /></summary>
     public enum RenderbufferParameterName : uint
     {
         RenderbufferSamplesApple = 36011,
@@ -2030,20 +2030,20 @@ namespace OpenTK.Graphics.OpenGLES1
         RenderbufferDepthSizeOes = 36180,
         RenderbufferStencilSizeOes = 36181,
     }
-    ///<summary>Used in <see cref="GL.OES.BindRenderbufferOES" />, <see cref="GL.OES.FramebufferRenderbufferOES" />, <see cref="GL.OES.GetRenderbufferParameterivOES" />, ...</summary>
+    ///<summary>Used in <see cref="GL.OES.BindRenderbuffer" />, <see cref="GL.OES.FramebufferRenderbuffer" />, <see cref="GL.OES.GetRenderbufferParameteriv" />, ...</summary>
     public enum RenderbufferTarget : uint
     {
         RenderbufferOes = 36161,
     }
-    ///<summary>Used in <see cref="GL.APPLE.GetSyncivAPPLE" /></summary>
+    ///<summary>Used in <see cref="GL.APPLE.GetSynciv" /></summary>
     public enum SyncParameterName : uint
     {
     }
-    ///<summary>Used in <see cref="GL.APPLE.FenceSyncAPPLE" /></summary>
+    ///<summary>Used in <see cref="GL.APPLE.FenceSync" /></summary>
     public enum SyncCondition : uint
     {
     }
-    ///<summary>Used in <see cref="GL.APPLE.ClientWaitSyncAPPLE" /></summary>
+    ///<summary>Used in <see cref="GL.APPLE.ClientWaitSync" /></summary>
     public enum SyncStatus : uint
     {
     }

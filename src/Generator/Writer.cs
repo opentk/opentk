@@ -8,6 +8,7 @@ using System.Text;
 using System.CodeDom.Compiler;
 using Generator.Parsing;
 using Generator.Utility;
+using System.Text.RegularExpressions;
 
 namespace Generator.Writing
 {
@@ -81,7 +82,7 @@ namespace Generator.Writing
             // Write delegate field initialized to the lazy loader.
             // Write public function definition that calls delegate.
             // Write lazy loader function.
-            GetNativeFunctionSignature(function, postfixName: false, swapTypesForUnderlyingType: true,
+            GetNativeFunctionSignature(function, postfixName: false, swapTypesForUnderlyingType: true, removeVendorPostfix: false,
                 out string _,
                 out StringBuilder paramNames,
                 out StringBuilder delegateTypes,
@@ -113,10 +114,11 @@ namespace Generator.Writing
             writer.WriteLine();
         }
 
-        private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, bool swapTypesForUnderlyingType,
+        private static void GetNativeFunctionSignature(NativeFunction function, bool postfixName, bool swapTypesForUnderlyingType, bool removeVendorPostfix,
             out string name, out StringBuilder paramNames, out StringBuilder delegateTypes, out StringBuilder signature, out bool castReturnType, out string returnType)
         {
             name = function.FunctionName;
+            if (removeVendorPostfix) name = NameMangler.RemoveVendorPostfix(name);
             if (postfixName) name += "_";
 
             paramNames = new StringBuilder();
@@ -225,8 +227,9 @@ namespace Generator.Writing
                         foreach (var function in group.NativeFunctions)
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
+                            bool removeVendorPostfix = group.NativeFunctionWithRemovableVendorPostfix.Contains(function);
                             documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
-                            WriteNativeFunction(writer, function, postfixName, functionDocumentation);
+                            WriteNativeFunction(writer, function, postfixName, removeVendorPostfix, functionDocumentation);
                         }
 
                         scope?.Dispose();
@@ -237,9 +240,9 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
+        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, bool removeVendorPostfix, FunctionDocumentation? documentation)
         {
-            GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: false,
+            GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: false, removeVendorPostfix,
                 out string name,
                 out StringBuilder paramNames,
                 out StringBuilder delegateTypes,
@@ -316,7 +319,8 @@ namespace Generator.Writing
                             foreach (var overload in nativeFunctionOverloads)
                             {
                                 bool postfixNativeCall = group.NativeFunctionsWithPostfix.Contains(overload.NativeFunction);
-                                WriteOverloadMethod(writer, overload, postfixNativeCall);
+                                bool removeVendorPostfix = group.NativeFunctionWithRemovableVendorPostfix.Contains(overload.NativeFunction);
+                                WriteOverloadMethod(writer, overload, postfixNativeCall, removeVendorPostfix);
                             }
                         }
 
@@ -328,7 +332,7 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall)
+        private static void WriteOverloadMethod(IndentedTextWriter writer, Overload overload, bool postfixNativeCall, bool removeVendorPostfix)
         {
             string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.Type.ToCSString()));
 
@@ -336,13 +340,15 @@ namespace Generator.Writing
 
             writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
 
-            string parameterString =
-                string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
+            string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
+            string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
 
-            string genericTypes =
-                overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
-            writer.WriteLine(
-                $"public static unsafe {overload.ReturnType.ToCSString()} {overload.OverloadName}{genericTypes}({parameterString})");
+            string name = overload.OverloadName;
+            // FIXME: We want to move this into the processing stage
+            // - 2023-02-22 NogginBops
+            if (removeVendorPostfix) name = NameMangler.RemoveVendorPostfix(name);
+
+            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {name}{genericTypes}({parameterString})");
             using (writer.Indent())
             {
                 foreach (var type in overload.GenericTypes)
@@ -358,7 +364,7 @@ namespace Generator.Writing
                     writer.WriteLine($"{overload.NativeFunction.ReturnType.ToCSString()} returnValue;");
                 }
 
-                string? returnName = WriteNestedOverload(writer, overload, new NameTable(), postfixNativeCall);
+                string? returnName = WriteNestedOverload(writer, overload, new NameTable(), postfixNativeCall, removeVendorPostfix);
 
                 if (returnName != null)
                 {
@@ -367,7 +373,7 @@ namespace Generator.Writing
             }
         }
 
-        private static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload, NameTable nameTable, bool postfixNativeCall)
+        private static string? WriteNestedOverload(IndentedTextWriter writer, Overload overload, NameTable nameTable, bool postfixNativeCall, bool removeVendorPostfix)
         {
             // Update the name table with the names for this overload.
             nameTable.Apply(overload.NameTable);
@@ -377,13 +383,14 @@ namespace Generator.Writing
             string? returnName;
             if (overload.NestedOverload != null)
             {
-                returnName = WriteNestedOverload(writer, overload.NestedOverload, nameTable, postfixNativeCall);
+                returnName = WriteNestedOverload(writer, overload.NestedOverload, nameTable, postfixNativeCall, removeVendorPostfix);
             }
             else
             {
                 // Writes the native call.
                 NativeFunction nativeFunction = overload.NativeFunction;
                 string name = nativeFunction.FunctionName;
+                if (removeVendorPostfix) name = NameMangler.RemoveVendorPostfix(name);
                 if (postfixNativeCall) name += "_";
 
                 string arguments = string.Join(", ", nativeFunction.Parameters.Select(p => nameTable[p]));
@@ -449,11 +456,13 @@ namespace Generator.Writing
                 {
                     if (group.FunctionsUsingEnumGroup.Count > 3)
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");
+                        if (group.FunctionsUsingEnumGroup.Take(3).Any(f => f.RemoveVendorName))
+                            ;
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{(f.RemoveVendorName ? NameMangler.RemoveVendorPostfix(f.Function.FunctionName) : f.Function.FunctionName)}\" />"))}, ...</summary>");
                     }
                     else
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{(f.RemoveVendorName ? NameMangler.RemoveVendorPostfix(f.Function.FunctionName) : f.Function.FunctionName)}\" />"))}</summary>");
                     }
                 }
 
