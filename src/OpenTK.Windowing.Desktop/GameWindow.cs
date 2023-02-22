@@ -210,7 +210,11 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
-        /// </summary>
+        /// </summary>'
+        /// <remarks>
+        /// On windows this function calls <c>timeBeginPeriod(1)</c> to get better sleep timings, which can increase power usage.
+        /// This can be undone by calling <c>timeEndPeriod(1)</c> in <see cref="OnLoad"/> and <c>timeBeginPeriod(1)</c> in <see cref="OnUnload"/>.
+        /// </remarks>
         public virtual unsafe void Run()
         {
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
