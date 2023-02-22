@@ -1,3 +1,35 @@
+## 4.7.6
+
+* BREAKING: Changed the default value of `NativeWindowSettings.Flags` from `ContextFlags.Default` to `ContextFlags.ForwardCompatible` for better out of the box macos support. (@NogginBops)
+
+* API: Added `NativeWindowSettings.TransparentFramebuffer` and `NativeWindowSettings.VSync`. (@NogginBops)
+
+* API: Component-wise `Lerp` methods for `float` and `double` vector types. (@g7ChoGXh)
+
+* API: Implemented `IFormattable` for most `OpenTK.Mathematics` types. (@g7ChoGXh)
+
+* API: Add bindings for `EXT_fragment_shading_rate`. (@BoyBaykiller)
+
+* API: Added casts from `Vector2i` and `Vector2` to `System.Drawing.Point`/`System.Drawing.Size` and `System.Drawing.PointF`/`System.Drawing.SizeF` respectively. (@NogginBops)
+
+* API: Added missing entries in `SizedInternalFormat`. (@BoyBaykiller)
+
+* API: `BinaryFormat` now contains the `ShaderBinaryFormatSpirV` enum value. (@NogginBops)
+
+* FIX: Many fixes related to `NativeWindow.WindowState`. Most notably, going from fullscreen to maximized and back works correctly. (@NogginBops)
+
+* FIX: `MonitorInfo.WorkArea` now gives the correct values. (@utkumaden)
+
+* FIX: Spelling and formatting corrections in documentation. (@sg-wizard-maker)
+
+* FIX: Math types now change their formatting when `CurrentCulture` is changed. (@g7ChoGXh)
+
+* FIX: `Matrix4x3`/`Matrix4x3d` now print their final row. (@NogginBops)
+
+* FIX: On Windows, setting `GameWindowSettings.UpdateFrequency` and `GameWindowSettings.RenderFrequency` should be more accurate. For details see documentation for `GameWindow.Run()`. (@NogginBops)
+
+* The OpenTK solution should now build directly in Visual Studio with no need to run `build.cmd` any more. (@NogginBops)
+
 ## 4.7.5
 
 * BREAKING: Removed the `ALTest` class from the OpenAL namespace. This was an internal test class that was accidentally included in the package. (@NogginBops)
