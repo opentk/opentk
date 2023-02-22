@@ -1,4 +1,10 @@
+## 4.7.7
+
+* FIX: `ToString()` on all math types no longer throw `NullReferenceException`. (@NogginBops)
+
 ## 4.7.6
+
+**This version is broken, use 4.7.7 instead.**
 
 * BREAKING: Changed the default value of `NativeWindowSettings.Flags` from `ContextFlags.Default` to `ContextFlags.ForwardCompatible` for better out of the box macos support. (@NogginBops)
 
