@@ -337,6 +337,7 @@ namespace Generator.Writing
             string parameterTypes = string.Join(", ", overload.NativeFunction.Parameters.Select(p => p.Type.ToCSString()));
 
             string nativeFunctionName = overload.NativeFunction.FunctionName;
+            if (removeVendorPostfix) nativeFunctionName = NameMangler.RemoveVendorPostfix(nativeFunctionName);
 
             writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
 
