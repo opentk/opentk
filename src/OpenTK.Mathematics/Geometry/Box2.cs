@@ -304,6 +304,16 @@ namespace OpenTK.Mathematics
             return !(left == right);
         }
 
+        /// <summary>
+        /// Converts this <see cref="Box2i"/> to a <see cref="System.Drawing.Rectangle"/> using <see cref="Min"/> as the position and <see cref="Size"/> as the size.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        [Pure]
+        public static explicit operator System.Drawing.RectangleF(Box2 box)
+        {
+            return new System.Drawing.RectangleF((System.Drawing.PointF)box.Min, (System.Drawing.SizeF)box.Size);
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
