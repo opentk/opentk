@@ -28,7 +28,8 @@ namespace Generator.Writing
     public record GLVendorFunctions(
         List<NativeFunction> NativeFunctions,
         List<Overload[]> OverloadsGroupedByNativeFunctions,
-        HashSet<NativeFunction> NativeFunctionsWithPostfix);
+        HashSet<NativeFunction> NativeFunctionsWithPostfix,
+        HashSet<NativeFunction> NativeFunctionWithRemovableVendorPostfix);
 
     public record NativeFunction(
         string EntryPoint,
@@ -66,7 +67,7 @@ namespace Generator.Writing
         string Name,
         bool IsFlags,
         List<EnumGroupMember> Members,
-        List<(string Vendor, NativeFunction Function)>? FunctionsUsingEnumGroup);
+        List<(string Vendor, bool RemoveVendorName, NativeFunction Function)>? FunctionsUsingEnumGroup);
 
 
     public interface IOverloadLayer
