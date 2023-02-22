@@ -259,7 +259,10 @@ namespace OpenTK.Windowing.Desktop
 
             OnUnload();
 
-            timeEndPeriod(1);
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                timeEndPeriod(1);
+            }
         }
 
         private unsafe void StartRenderThread()
