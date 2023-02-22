@@ -2995,6 +2995,12 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
+
+        public static void Viewport(Box2i box)
+        {
+            GL.Viewport(box.Min.X, box.Min.Y, box.Size.X, box.Size.Y);
+        }
+
 #if MINIMAL
         /// <summary>
         /// [requires: v1.0]

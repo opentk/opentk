@@ -373,6 +373,12 @@ namespace OpenTK.Graphics.ES20
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
+
+        public static void Viewport(Box2i box)
+        {
+            GL.Viewport(box.Min.X, box.Min.Y, box.Size.X, box.Size.Y);
+        }
+
 #if MINIMAL
         public static void Viewport(OpenTK.Point location, OpenTK.Size size)
         {

@@ -1055,6 +1055,28 @@ namespace OpenTK.Mathematics
             return new Vector2i((int)vec.X, (int)vec.Y);
         }
 
+        /// <summary>
+        /// Converts <see cref="Vector2"/> to <see cref="System.Drawing.PointF"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector2"/> to cast.</param>
+        /// <returns>The resulting <see cref="System.Drawing.PointF"/>.</returns>
+        [Pure]
+        public static explicit operator System.Drawing.PointF(Vector2 vec)
+        {
+            return new System.Drawing.PointF(vec.X, vec.Y);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector2"/> to <see cref="System.Drawing.SizeF"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector2"/> to cast.</param>
+        /// <returns>The resulting <see cref="System.Drawing.SizeF"/>.</returns>
+        [Pure]
+        public static explicit operator System.Drawing.SizeF(Vector2 vec)
+        {
+            return new System.Drawing.SizeF(vec.X, vec.Y);
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
