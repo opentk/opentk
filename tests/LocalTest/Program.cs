@@ -14,8 +14,8 @@ namespace LocalTest
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
-                //UpdateFrequency = 10,
-                //RenderFrequency = 10,
+                // UpdateFrequency = 60,
+                // RenderFrequency = 60,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -28,7 +28,7 @@ namespace LocalTest
                 Profile = ContextProfile.Core,
                 Size = (800, 600),
                 StartFocused = true,
-                StartVisible = false,
+                StartVisible = true,
                 Title = "Local OpenTK Test",
                 WindowBorder = WindowBorder.Resizable,
                 WindowState = WindowState.Normal,
@@ -57,6 +57,8 @@ namespace LocalTest
 
             GL.ClearColor(Color4.Coral);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            Console.WriteLine($"{1/args.Time:0.000}");
 
             SwapBuffers();
         }
