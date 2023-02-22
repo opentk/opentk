@@ -9,6 +9,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
@@ -201,13 +202,28 @@ namespace OpenTK.Windowing.Desktop
             UpdateFrequency = gameWindowSettings.UpdateFrequency;
         }
 
+        [DllImport("winmm")]
+        private static extern uint timeBeginPeriod(uint uPeriod);
+
+        [DllImport("winmm")]
+        private static extern uint timeEndPeriod(uint uPeriod);
+
         /// <summary>
         /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
-        /// </summary>
+        /// </summary>'
+        /// <remarks>
+        /// On windows this function calls <c>timeBeginPeriod(1)</c> to get better sleep timings, which can increase power usage.
+        /// This can be undone by calling <c>timeEndPeriod(1)</c> in <see cref="OnLoad"/> and <c>timeBeginPeriod(1)</c> in <see cref="OnUnload"/>.
+        /// </remarks>
         public virtual unsafe void Run()
         {
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context?.MakeCurrent();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                timeBeginPeriod(1);
+            }
 
             // Send the OnLoad event, to load all user code.
             OnLoad();
@@ -246,6 +262,11 @@ namespace OpenTK.Windowing.Desktop
             }
 
             OnUnload();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                timeEndPeriod(1);
+            }
         }
 
         private unsafe void StartRenderThread()
