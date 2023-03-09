@@ -867,13 +867,17 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.INPUTLANGCHANGE:
                     {
+                        // This might not always work
+                        // See: http://archives.miloush.net/michkap/archive/2006/05/16/598980.html
+                        // For now we don't do anything about this as we assume TSF is not going to
+                        // be activated for our windows
+                        // - Noggin_bops 2023-03-09
+
                         HWND h = HWndDict[hWnd];
 
                         IntPtr hKL = lParam;
 
                         KeyboardComponent.KeyboardLayoutChange(h, hKL);
-
-                        Console.WriteLine("Change!");
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
