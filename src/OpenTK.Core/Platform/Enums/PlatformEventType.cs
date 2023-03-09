@@ -40,6 +40,8 @@ namespace OpenTK.Core.Platform
         TextInput,
         TextEditing,
 
+        InputLanguageChanged,
+
         FileDrop,
 
         ThemeChange,

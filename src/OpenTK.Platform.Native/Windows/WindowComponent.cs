@@ -865,6 +865,18 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
+                case WM.INPUTLANGCHANGE:
+                    {
+                        HWND h = HWndDict[hWnd];
+
+                        IntPtr hKL = lParam;
+
+                        KeyboardComponent.KeyboardLayoutChange(h, hKL);
+
+                        Console.WriteLine("Change!");
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
                 default:
                     {
                         //Console.WriteLine(uMsg);

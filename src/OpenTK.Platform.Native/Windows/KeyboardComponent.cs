@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -13,6 +14,9 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class KeyboardComponent : IKeyboardComponent
     {
+        // FIXME: We should change the design
+        private static KeyboardComponent? Instance;
+
         /// <inheritdoc/>
         public string Name => "Win32KeyboardComponent";
 
@@ -22,7 +26,13 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
-        private Key[] Keymap;
+        private Key[] Keymap = new Key[256];
+
+        private static readonly Guid CLSID_TF_ThreadMgr = new Guid(0x529A9E6B, 0x6587, 0x4F23, 0xAB, 0x9E, 0x9C, 0x7D, 0x68, 0x3E, 0x3C, 0x50);
+
+        private static readonly Guid IID_ITfThreadMgr = new Guid(0xAA80E801, 0x2021, 0x11D2, 0x93, 0xE0, 0x00, 0x60, 0xB0, 0x67, 0xB8, 0x6E);
+
+        COM.ITfThreadMgr ime_ThreadMgr;
 
         /// <inheritdoc/>
         public void Initialize(PalComponents which)
@@ -32,10 +42,17 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Exception("KeyboardComponent can only initialize the KeyboardInput component.");
             }
 
-            // FIXME: Make this a function we can call to update the keymap!
+            // FIXME: Signleton, we should change the design!
+            Instance = this;
 
-            Keymap = new Key[256];
+            UpdateKeymap();
 
+            // Resources for custom IME window:
+            // https://learn.microsoft.com/en-us/windows/win32/dxtecharts/using-an-input-method-editor-in-a-game
+        }
+
+        private void UpdateKeymap()
+        {
             // Loop through all scancodes and get their keys.
             Scancode[] scancodes = Enum.GetValues<Scancode>();
             for (int i = 0; i < scancodes.Length; i++)
@@ -43,7 +60,7 @@ namespace OpenTK.Platform.Native.Windows
                 if (scancodes[i] == Scancode.Unknown) continue;
 
                 // Find the windows VK_ that corresponds to this scancode
-                int index    = Array.IndexOf(ScancodeLookup, scancodes[i]);
+                int index = Array.IndexOf(ScancodeLookup, scancodes[i]);
                 int indexExt = Array.IndexOf(ScancodeLookupExt, scancodes[i]);
 
                 Key key;
@@ -85,6 +102,31 @@ namespace OpenTK.Platform.Native.Windows
                 }
 
                 Keymap[(int)scancodes[i]] = key;
+            }
+        }
+
+        public static void KeyboardLayoutChange(WindowHandle handle, IntPtr hKL)
+        {
+            // FIXME: We shouldn't need to call this statically...
+            if (Instance != null)
+            {
+                Instance.UpdateKeymap();
+
+                // FIXME: Make a platform independent language name/id!
+                int langid = (int)(hKL.ToInt64() & 0x0000FFFF);
+                int lcid = (int)SortOrderIdentifier.SORT_DEFAULT << 16 | langid;
+                StringBuilder localeName = new StringBuilder(Win32.LOCALE_NAME_MAX_LENGTH);
+                Win32.LCIDToLocaleName(lcid, localeName, localeName.Capacity, 0);
+
+
+                int length = Win32.GetLocaleInfoEx(localeName, LCType.SLocalizedDisplayName, null, 0);
+                StringBuilder displayName = new StringBuilder(length);
+                Win32.GetLocaleInfoEx(localeName, LCType.SLocalizedDisplayName, displayName, displayName.Capacity);
+
+                // FIXME: Get a better name
+                string layout = Instance.LayoutNameFromKeyboardLayoutName(Instance.GetHKLLayoutName(hKL));
+
+                EventQueue.Raise(handle, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(layout, localeName.ToString(), displayName.ToString()));
             }
         }
 
@@ -141,9 +183,26 @@ namespace OpenTK.Platform.Native.Windows
             return layoutText;
         }
 
+        private string GetHKLLayoutName(IntPtr hKL)
+        {
+            // FIXME: Maybe error check?
+            IntPtr oldLayout = Win32.ActivateKeyboardLayout(hKL, 0);
+
+            StringBuilder builder = new StringBuilder();
+            builder.EnsureCapacity(Win32.KL_NAMELENGTH);
+            Win32.GetKeyboardLayoutName(builder);
+
+            Win32.ActivateKeyboardLayout(oldLayout, 0);
+
+            return builder.ToString();
+        }
+
         /// <inheritdoc/>
         public string GetActiveKeyboardLayout(WindowHandle? handle = null)
         {
+            // FIXME: The window doesn't matter here??
+            // Can window have differing layouts?
+
             StringBuilder builder = new StringBuilder();
             builder.EnsureCapacity(Win32.KL_NAMELENGTH);
             Win32.GetKeyboardLayoutName(builder);

@@ -46,6 +46,7 @@ namespace OpenTK.Platform.Tests
             keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
+            var debugLogger = new DebugFileLogger();
             logger.Filter = 0;
             windowComp.Logger = logger;
             glComp.Logger = logger;
@@ -54,6 +55,7 @@ namespace OpenTK.Platform.Tests
             shellComp.Logger = logger;
             displayComp.Logger = logger;
             keyboardComp.Logger = logger;
+            keyboardComp.Logger = debugLogger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
@@ -63,20 +65,28 @@ namespace OpenTK.Platform.Tests
             displayComp.Initialize(PalComponents.Display);
             keyboardComp.Initialize(PalComponents.KeyboardInput);
 
+            keyboardComp.Logger.LogDebug($"Available keyboard layouts: {string.Join(", ", keyboardComp.GetAvailableKeyboardLayouts())}");
+            keyboardComp.Logger.LogDebug($"Current keyboard layout: {keyboardComp.GetActiveKeyboardLayout()}");
+
             Console.WriteLine($"Scancode to Key:");
+            keyboardComp.Logger.LogDebug($"Scancode to Key:");
             foreach (var scancode in Enum.GetValues<Scancode>())
             {
                 Key key = keyboardComp.GetKeyFromScancode(scancode);
                 //if (key != Key.Unknown) continue;
                 Console.WriteLine($"{scancode} -> {key}");
+                keyboardComp.Logger.LogDebug($"{scancode} -> {key}");
             }
             Console.WriteLine();
             Console.WriteLine($"Key to Scancode:");
+            keyboardComp.Logger.LogDebug($"");
+            keyboardComp.Logger.LogDebug($"Key to Scancode:");
             foreach (var key in Enum.GetValues<Key>())
             {
                 Scancode scancode = keyboardComp.GetScancodeFromKey(key);
                 //if (scancode != Scancode.Unknown) continue;
                 Console.WriteLine($"{key} -> {scancode}");
+                keyboardComp.Logger.LogDebug($"{scancode} -> {key}");
             }
 
             if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
@@ -305,6 +315,11 @@ namespace OpenTK.Platform.Tests
                 {
                     Console.WriteLine("Awoken from sleep!");
                 }
+            }
+            else if (args is InputLanguageChangedEventArgs inputLanguageChange)
+            {
+                Console.WriteLine($"New keyboard layout: {inputLanguageChange.KeyboardLayout}");
+                Console.WriteLine($"New input language: {inputLanguageChange.InputLanguage}, {inputLanguageChange.InputLanguageDisplayName}");
             }
         }
     }

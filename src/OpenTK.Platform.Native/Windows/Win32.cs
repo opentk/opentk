@@ -44,7 +44,9 @@ namespace OpenTK.Platform.Native.Windows
         internal const int S_OK = 0x0;
         internal const int E_INVALIDARG = unchecked((int)0x80070057);
         internal const int E_ACCESSDENIED = unchecked((int)0x80070005);
-        
+
+        internal const int LOCALE_NAME_MAX_LENGTH = 85;
+
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
@@ -1022,6 +1024,25 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool ClipCursor(ref RECT lpRect);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int GetUserDefaultLocaleName([Out] StringBuilder lpLocaleName, int cchLocaleName);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int LCIDToLocaleName(
+              int /* LCID */ Locale,
+              [Out] StringBuilder lpName,
+              int cchName,
+              int dwFlags
+            );
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern int GetLocaleInfoEx(
+              StringBuilder lpLocaleName,
+              LCType LCType,
+              [Out] StringBuilder? lpLCData,
+              int cchData
+            );
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

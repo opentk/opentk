@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -826,6 +828,38 @@ namespace OpenTK.Platform.Native.Windows
         /// Represents audio data in one of the standard wave formats, such as 11 kHz or 22 kHz PCM.
         /// </summary>
         Wave = 12,
+    }
+
+    internal enum CLSCTX : uint
+    {
+        CLSCTX_INPROC_SERVER = 0x1,
+        CLSCTX_INPROC_HANDLER = 0x2,
+        CLSCTX_LOCAL_SERVER = 0x4,
+        CLSCTX_INPROC_SERVER16 = 0x8,
+        CLSCTX_REMOTE_SERVER = 0x10,
+        CLSCTX_INPROC_HANDLER16 = 0x20,
+        CLSCTX_RESERVED1 = 0x40,
+        CLSCTX_RESERVED2 = 0x80,
+        CLSCTX_RESERVED3 = 0x100,
+        CLSCTX_RESERVED4 = 0x200,
+        CLSCTX_NO_CODE_DOWNLOAD = 0x400,
+        CLSCTX_RESERVED5 = 0x800,
+        CLSCTX_NO_CUSTOM_MARSHAL = 0x1000,
+        CLSCTX_ENABLE_CODE_DOWNLOAD = 0x2000,
+        CLSCTX_NO_FAILURE_LOG = 0x4000,
+        CLSCTX_DISABLE_AAA = 0x8000,
+        CLSCTX_ENABLE_AAA = 0x10000,
+        CLSCTX_FROM_DEFAULT_CONTEXT = 0x20000,
+        CLSCTX_ACTIVATE_X86_SERVER = 0x40000,
+        CLSCTX_ACTIVATE_32_BIT_SERVER,
+        CLSCTX_ACTIVATE_64_BIT_SERVER = 0x80000,
+        CLSCTX_ENABLE_CLOAKING = 0x100000,
+        CLSCTX_APPCONTAINER = 0x400000,
+        CLSCTX_ACTIVATE_AAA_AS_IU = 0x800000,
+        CLSCTX_RESERVED6 = 0x1000000,
+        CLSCTX_ACTIVATE_ARM32_SERVER = 0x2000000,
+        CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION,
+        CLSCTX_PS_DLL = 0x80000000,
     }
 
     [Flags]
@@ -1999,6 +2033,35 @@ namespace OpenTK.Platform.Native.Windows
         Icon = 1,
     }
 
+    internal enum LCType : int
+    {
+        // Incomplete, see: https://learn.microsoft.com/en-us/windows/win32/intl/locale-information-constants#constants-used-in-the-lctype-parameter-of-getlocaleinfo-getlocaleinfoex-and-setlocaleinfo
+
+        /// <summary>
+        /// Windows 7 and later:
+        /// Full localized name of the country/region, for example, Deutschland for Germany.
+        /// The maximum number of characters allowed for this string is 80, including a terminating null character.
+        /// Since this name is based on the localization of the product, it changes for each localized version.
+        /// </summary>
+        SLocalizedCountryName = 0x00000006,
+
+        /// <summary>
+        /// Windows 7 and later:
+        /// Full localized name of the locale for the user interface language, for example, Deutsch(Deutschland) for German(Germany)".
+        /// There is no limit on the number of characters allowed for this string.
+        /// Since this name is based on the localization of the product, it changes for each localized version.
+        /// </summary>
+        SLocalizedDisplayName = 0x00000002,
+
+        /// <summary>
+        /// Windows Vista:
+        /// Full localized primary name of the user interface language included in a localized display name,
+        /// for example, Deutsch representing German.
+        /// Since this name is based on the localization of the product, it changes for each localized version.
+        /// </summary>
+        SLocalizedLanguageName = 0x0000006f,
+    }
+
     internal enum DIB
     {
         /// <summary>
@@ -2971,6 +3034,123 @@ namespace OpenTK.Platform.Native.Windows
         /// This flag cannot be combined with the SHGFI_ATTRIBUTES, SHGFI_EXETYPE, or SHGFI_PIDL flags.
         /// </summary>
         UseFileAttributes = 0x000000010,
+    }
+
+    internal enum SortOrderIdentifier : int
+    {
+        // See: https://github.com/tpn/winsdk-10/blob/9b69fd26ac0c7d0b83d378dba01080e93349c2ed/Include/10.0.10240.0/shared/ntdef.h#L2730
+
+        /// <summary>
+        /// Chinese BIG5 order
+        /// zh-TW
+        /// zh-HK
+        /// zh-MO
+        /// </summary>
+        SORT_CHINESE_BIG5 = 0,
+
+        /// <summary>
+        /// Traditional Chinese Bopomofo order
+        /// zh-TW_pronun
+        /// </summary>
+        SORT_CHINESE_BOPOMOFO = 3,
+
+        /// <summary>
+        /// PRC Chinese stroke count order
+        /// zh-CN_stroke
+        /// zh-HK_stroke
+        /// zh-MO_stroke
+        /// zh-SG_stroke
+        /// </summary>
+        SORT_CHINESE_PRC = 2,
+
+        /// <summary>
+        /// PRC Chinese phonetic order
+        /// zh-CN
+        /// zh-SG
+        /// </summary>
+        SORT_CHINESE_PRCP = 0,
+
+        /// <summary>
+        /// Chinese radical/stroke order
+        /// zh-TW
+        /// zh-HK
+        /// zh-MO
+        /// </summary>
+        SORT_CHINESE_RADICALSTROKE = 4,
+
+        /// <summary>
+        /// Chinese Unicode order
+        /// Windows 2000: Not supported.
+        /// </summary>
+        SORT_CHINESE_UNICODE = 1,
+
+        /// <summary>
+        /// Default sort order
+        /// Locale name that is the same as the corresponding language name 
+        /// </summary>
+        SORT_DEFAULT = 0,
+
+        SORT_INVARIANT_MATH = 1,
+
+        /// <summary>
+        /// Georgian modern order
+        /// ka-GE_modern
+        /// </summary>
+        SORT_GEORGIAN_MODERN = 1,
+
+        /// <summary>
+        /// Georgian traditional order
+        /// ka-GE
+        /// </summary>
+        SORT_GEORGIAN_TRADITIONAL = 0,
+
+        /// <summary>
+        /// German phone book order
+        /// de-DE_phoneb
+        /// </summary>
+        SORT_GERMAN_PHONE_BOOK = 1,
+
+        /// <summary>
+        /// Hungarian default order
+        /// hu-HU
+        /// </summary>
+        SORT_HUNGARIAN_DEFAULT = 0,
+
+        /// <summary>
+        /// Hungarian technical order
+        /// hu-HU_technl
+        /// </summary>
+        SORT_HUNGARIAN_TECHNICAL = 1,
+
+        /// <summary>
+        /// Japanese radical/stroke order
+        /// ja-JP
+        /// </summary>
+        SORT_JAPANESE_RADICALSTROKE = 4,
+
+        /// <summary>
+        /// Japanese Unicode order
+        /// Windows 2000: Not supported.
+        /// </summary>
+        SORT_JAPANESE_UNICODE = 1,
+
+        /// <summary>
+        /// Japanese XJIS order
+        /// ja-JP
+        /// </summary>
+        SORT_JAPANESE_XJIS = 0,
+
+        /// <summary>
+        /// Korean KSC order
+        /// ko-KR
+        /// </summary>
+        SORT_KOREAN_KSC = 0,
+
+        /// <summary>
+        /// Korean Unicode order
+        /// Windows 2000: Not supported.
+        /// </summary>
+        SORT_KOREAN_UNICODE = 1,
     }
 
     [Flags]

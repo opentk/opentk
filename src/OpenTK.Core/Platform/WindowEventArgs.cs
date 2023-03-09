@@ -230,6 +230,43 @@ namespace OpenTK.Core.Platform
     }
 
     /// <summary>
+    /// This event is triggered when the input language is changed.
+    /// This can change the keyboard layout.
+    /// When this event occurs the values from
+    /// <see cref="IKeyboardComponent.GetKeyFromScancode(Scancode)"/> and
+    /// <see cref="IKeyboardComponent.GetScancodeFromKey(Key)"/>
+    /// are updated to reflect the new layout keyboard layout.
+    /// </summary>
+    public class InputLanguageChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The new keyboard layout. This indicates how physical keys are mapped to virtual keys.
+        /// E.g. The difference between QWERTY and AZERTY.
+        /// </summary>
+        public string KeyboardLayout { get; private set; }
+
+        /// <summary>
+        /// The input language. This is separate from keyboard layout.
+        /// This could be used for features such as spell checking.
+        ///
+        /// FIXME: In what fromat should the input language be sent in?
+        /// </summary>
+        public string InputLanguage { get; private set; }
+
+        /// <summary>
+        /// Localized display name for the new input language.
+        /// </summary>
+        public string InputLanguageDisplayName { get; private set; }
+
+        public InputLanguageChangedEventArgs(string keyboardLayout, string inputLanguage, string inputLanguageDisplayName)
+        {
+            KeyboardLayout = keyboardLayout;
+            InputLanguage = inputLanguage;
+            InputLanguageDisplayName = inputLanguageDisplayName;
+        }
+    }
+
+    /// <summary>
     /// This event is triggered when the mouse cursor enters or exits a window.
     /// </summary>
     public class MouseEnterEventArgs : WindowEventArgs
