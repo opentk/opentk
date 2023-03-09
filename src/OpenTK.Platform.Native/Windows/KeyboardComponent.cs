@@ -32,8 +32,6 @@ namespace OpenTK.Platform.Native.Windows
 
         private static readonly Guid IID_ITfThreadMgr = new Guid(0xAA80E801, 0x2021, 0x11D2, 0x93, 0xE0, 0x00, 0x60, 0xB0, 0x67, 0xB8, 0x6E);
 
-        COM.ITfThreadMgr ime_ThreadMgr;
-
         /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
