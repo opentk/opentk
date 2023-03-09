@@ -5,7 +5,9 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native.X11;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Tests
@@ -33,6 +35,38 @@ namespace OpenTK.Platform.Tests
 
         static Color4<Rgba> BackgroundColor = LightModeColor;
 
+        class CompositeLogger : ILogger
+        {
+            public LogLevel Filter { get; set; }
+
+            public List<ILogger> Loggers = new List<ILogger>();
+
+            void ILogger.LogInternal(string str, LogLevel level, string filePath, int lineNumber, string member)
+            {
+                foreach (var logger in Loggers)
+                {
+                    logger.Log(str, level, filePath, lineNumber, member);
+                }
+            }
+        }
+
+        class DebugThing : TraceListener
+        {
+            readonly TextWriter Writer = new StreamWriter(new FileStream("./log.log", FileMode.Create));
+
+            public override void Write(string? message)
+            {
+                Writer.Write(message);
+                Writer.Flush();
+            }
+
+            public override void WriteLine(string? message)
+            {
+                Writer.WriteLine(message);
+                Writer.Flush();
+            }
+        }
+
         static void Main()
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
@@ -46,8 +80,6 @@ namespace OpenTK.Platform.Tests
             keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
-            var debugLogger = new DebugFileLogger();
-            logger.Filter = 0;
             windowComp.Logger = logger;
             glComp.Logger = logger;
             cursorComp.Logger = logger;
@@ -55,7 +87,7 @@ namespace OpenTK.Platform.Tests
             shellComp.Logger = logger;
             displayComp.Logger = logger;
             keyboardComp.Logger = logger;
-            keyboardComp.Logger = debugLogger;
+            keyboardComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);

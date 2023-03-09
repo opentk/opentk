@@ -14,12 +14,12 @@ namespace OpenTK.Core.Utility
     {
         public LogLevel Filter { get; set; } = LogLevel.Debug;
 
-        private TextWriter _writer;
+        public TextWriter Writer { get; set; }
 
         public DebugFileLogger(string fileName = "OpenTK_debug.log")
         {
             string path = Path.Combine(".", fileName);
-            _writer = new StreamWriter(path);
+            Writer = new StreamWriter(path);
         }
 
         void ILogger.LogInternal(string str, LogLevel level, string filePath, int lineNumber, string member)
@@ -29,8 +29,8 @@ namespace OpenTK.Core.Utility
                 return;
             }
 
-            _writer.Write($"[{level}] {member} {Path.GetFileName(filePath)}:{lineNumber} ");
-            _writer.WriteLine(str);
+            Writer.Write($"[{level}] {member} {Path.GetFileName(filePath)}:{lineNumber} ");
+            Writer.WriteLine(str);
         }
     }
 }

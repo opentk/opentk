@@ -1497,7 +1497,7 @@ namespace OpenTK.Platform.Native.Windows
             // and ToInt32 is going to throw in that case
             WindowStylesEx windowStyleEx = (WindowStylesEx)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.ExStyle).ToInt64();
 
-            Console.WriteLine($"StyleEx: {windowStyleEx}");
+            Logger?.LogDebug($"StyleEx: {windowStyleEx}");
 
             return (windowStyleEx & WindowStylesEx.TopMost) == WindowStylesEx.TopMost;
         }
