@@ -28,10 +28,6 @@ namespace OpenTK.Platform.Native.Windows
 
         private Key[] Keymap = new Key[256];
 
-        private static readonly Guid CLSID_TF_ThreadMgr = new Guid(0x529A9E6B, 0x6587, 0x4F23, 0xAB, 0x9E, 0x9C, 0x7D, 0x68, 0x3E, 0x3C, 0x50);
-
-        private static readonly Guid IID_ITfThreadMgr = new Guid(0xAA80E801, 0x2021, 0x11D2, 0x93, 0xE0, 0x00, 0x60, 0xB0, 0x67, 0xB8, 0x6E);
-
         /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
