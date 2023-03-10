@@ -210,6 +210,30 @@ namespace OpenTK.Platform.Native.X11
             return handle.As<XOpenGLContextHandle>(this).SharedContext;
         }
 
+        /// <summary>
+        /// Queries EXT_swap_control for the max supported swap interval.
+        /// This function returns <c>null<c/> if EXT_swap_control is not supported.
+        /// <summary/>
+        public int? EXT_swap_control_GetMaxSwapInterval()
+        {
+            if (GLXExtensions.Contains("GLX_EXT_swap_control"))
+            {
+                XOpenGLContextHandle? context = GetCurrentContext() as XOpenGLContextHandle;
+                if (context == null)
+                {
+                    throw new InvalidOperationException("No context bound. Can't set swap interval.");
+                }
+
+                glXQueryDrawable(X11.Display, context.Drawable, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
+
+                return (int)max_interval;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public void SetSwapInterval(int interval)
         {
             XOpenGLContextHandle? context = GetCurrentContext() as XOpenGLContextHandle;
@@ -220,7 +244,6 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_EXT_swap_control"))
             {
-                // FIXME: API for getting the maximum supported interval instead!
                 glXQueryDrawable(X11.Display, context.Drawable, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
                 if (interval > max_interval)
                 {
@@ -235,7 +258,7 @@ namespace OpenTK.Platform.Native.X11
                 int status = glXSwapIntervalMESA((uint)interval);
                 if (status != 0)
                 {
-                    // FAILED!
+                    Logger?.LogWarning($"glXSwapIntervalMESA failed with: {status}");
                 }
             }
             else if (GLXExtensions.Contains("GLX_SGI_swap_control"))
@@ -243,7 +266,7 @@ namespace OpenTK.Platform.Native.X11
                 int status = glXSwapIntervalSGI(interval);
                 if (status != 0)
                 {
-                    // FAILED!
+                    Logger?.LogWarning($"glXSwapIntervalSGI failed with: {status}");
                 }
                 else
                 {

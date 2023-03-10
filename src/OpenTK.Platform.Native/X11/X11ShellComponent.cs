@@ -70,8 +70,11 @@ namespace OpenTK.Platform.Native.X11
                 {
                     // FIXME: "evergy_now" and "energy_full" might not always be available.
                     // We could also look at using "charge_now" and "charge_full"
-                    bool has_energy_now = int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_now")), out int energy_now);
-                    bool has_energy_full = int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_full")), out int energy_full);
+                    bool has_energy_now = false;//int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_now")), out int energy_now);
+                    bool has_energy_full = false;//int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_full")), out int energy_full);
+
+                    int energy_now = 0;
+                    int energy_full = 0;
 
                     if (has_energy_now && has_energy_full && energy_now != -1 && energy_full != -1)
                     {

@@ -38,7 +38,7 @@ namespace OpenTK.Platform.Native.X11
                     XRRQueryVersion(X11.Display, ref major, ref minor);
                     if (major != 1 && minor < 3)
                     {
-                        Logger?.LogError("XRandR failed to load.");
+                        Logger?.LogError($"XRandR failed to load. Got version {major}.{minor} but 1.3 is required.");
                         // FIXME: Fallback to XINERAMA or just X11?
                         DisplayExtension = DisplayExtensionType.None;
                         return;

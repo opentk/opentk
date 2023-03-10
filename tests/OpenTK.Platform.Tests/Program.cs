@@ -19,7 +19,7 @@ namespace OpenTK.Platform.Tests
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
-        static IKeyboardComponent keyboardComp;
+        //static IKeyboardComponent keyboardComp;
 
         static IDisplayComponent displayComp;
 
@@ -77,7 +77,7 @@ namespace OpenTK.Platform.Tests
             mouseComp = Native.PlatformComponents.CreateMouseComponent();
             shellComp = Native.PlatformComponents.CreateShellComponent();
             displayComp = Native.PlatformComponents.CreateDisplayComponent();
-            keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
+            //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
             windowComp.Logger = logger;
@@ -86,8 +86,7 @@ namespace OpenTK.Platform.Tests
             mouseComp.Logger = logger;
             shellComp.Logger = logger;
             displayComp.Logger = logger;
-            keyboardComp.Logger = logger;
-            keyboardComp.Logger = logger;
+            //keyboardComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
@@ -95,8 +94,9 @@ namespace OpenTK.Platform.Tests
             mouseComp.Initialize(PalComponents.MiceInput);
             shellComp.Initialize(PalComponents.Shell);
             displayComp.Initialize(PalComponents.Display);
-            keyboardComp.Initialize(PalComponents.KeyboardInput);
+            //keyboardComp.Initialize(PalComponents.KeyboardInput);
 
+            /*
             keyboardComp.Logger.LogDebug($"Available keyboard layouts: {string.Join(", ", keyboardComp.GetAvailableKeyboardLayouts())}");
             keyboardComp.Logger.LogDebug($"Current keyboard layout: {keyboardComp.GetActiveKeyboardLayout()}");
 
@@ -120,6 +120,7 @@ namespace OpenTK.Platform.Tests
                 Console.WriteLine($"{key} -> {scancode}");
                 keyboardComp.Logger.LogDebug($"{scancode} -> {key}");
             }
+            */
 
             if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
             {
@@ -162,6 +163,9 @@ namespace OpenTK.Platform.Tests
             SystemCursorType cursor = SystemCursorType.Default;
             cursorHandle = cursorComp.Create();
 
+            cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
+            Console.WriteLine($"Default cursor size: {cWidth}, {cHeight}");
+
             windowComp.SetCursor(Window, cursorHandle);
 
             cursorHandle = cursorComp.Create();
@@ -182,6 +186,8 @@ namespace OpenTK.Platform.Tests
             }
             //cursorComp.SetHotspot(cursorHandle, 8, 8);
             cursorComp.Load(cursorHandle, 16, 16, image, mask);
+            cursorComp.GetSize(cursorHandle, out cWidth, out cHeight);
+            Console.WriteLine($"Custom cursor size: {cWidth}, {cHeight}");
             //cursorComp.SetHotspot(cursorHandle, 7, 7);
             windowComp.SetCursor(Window, cursorHandle);
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.LibX11;
+using static OpenTK.Platform.Native.X11.XFixes;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -19,6 +20,8 @@ namespace OpenTK.Platform.Native.X11
 
         public ILogger? Logger { get; set; }
 
+        private bool HasXFixes = false;
+
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -26,7 +29,22 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
             }
 
+            if (XFixesQueryExtension(X11.Display, out int event_base, out int error_base))
+            {
+                HasXFixes = true;
 
+                int major = 5;
+                int minor = 0;
+                int status = XFixesQueryVersion(X11.Display, ref major, ref minor);
+
+                if (major < 5)
+                {
+                    Logger?.LogError($"Could not load XFixes. Got version: {major}.{minor} but we require 5.0. Status: {status}");
+                    HasXFixes = false;
+                }
+
+                Console.WriteLine("Loaded xfixes!");
+            }
         }
 
         public bool CanLoadFromFile => throw new NotImplementedException();
@@ -55,9 +73,28 @@ namespace OpenTK.Platform.Native.X11
             xcursor.Cursor = XCursor.None;
         }
 
-        public void GetSize(CursorHandle handle, out int width, out int height)
+        public unsafe void GetSize(CursorHandle handle, out int width, out int height)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            if (HasXFixes)
+            {
+                // FIXME: This only works for the current cursor
+                // So we are likely going to have to temporarily change the cursor,
+                // - Noggin_bops 2023-03-10
+                XFixesCursorImage* cursor = XFixesGetCursorImage(X11.Display);
+
+                width = cursor->width;
+                height = cursor->height;
+
+                XFree(cursor);
+            }
+            else
+            {
+                Logger?.LogError("Can't get cursor size because XFixes is not available!");
+                width = 0;
+                height = 0;
+            }
         }
 
         public void GetHotspot(CursorHandle handle, out int x, out int y)

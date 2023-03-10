@@ -249,7 +249,7 @@ namespace OpenTK.Core.Platform
         /// The input language. This is separate from keyboard layout.
         /// This could be used for features such as spell checking.
         ///
-        /// FIXME: In what fromat should the input language be sent in?
+        /// FIXME: In what fromat should the input language be sent in?.
         /// </summary>
         public string InputLanguage { get; private set; }
 

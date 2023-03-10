@@ -90,7 +90,7 @@ namespace OpenTK.Platform.Native
             }
             else
             {
-                throw new NotSupportedException("This platform doesn't support this component yet.");
+                throw new NotSupportedException($"This platform doesn't support the {typeof(TComp)} component yet.");
             }
         }
 
