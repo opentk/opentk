@@ -172,6 +172,14 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// The expected scheduler period in milliseconds. Used to provide accurate sleep timings.
+        ///
+        /// On windows the scheduler period can be set using <c>timeBeginPeriod()</c>, OpenTK sets this value to 8ms by default.
+        /// </summary>
+        // FIXME: Figure out a story for Linux and macos
+        public int ExpectedSchedulerPeriod { get; set; } = 16;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
         /// </summary>
         /// <param name="gameWindowSettings">The <see cref="GameWindow"/> related settings.</param>
@@ -211,10 +219,18 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         /// <remarks>
         /// <para>On windows this function sets the thread affinity mask to avoid the thread from changing cores.</para>
-        /// <para>On windows this function sets the timer resolution to 1ms which improves frame timing but may increase battery consumption (this can be undone in <see cref="OnLoad"/>).</para>
+        /// <para>
+        /// On windows this function calls <c>timeBeginPeriod(8)</c> to get better sleep timings, which can increase power usage.
+        /// This can be undone by calling <c>timeEndPeriod(8)</c> in <see cref="OnLoad"/> and <c>timeBeginPeriod(8)</c> in <see cref="OnUnload"/>.
+        /// </para>
         /// </remarks>
         public virtual unsafe void Run()
         {
+            // 8 is a good compromise between accuracy and power consumption
+            // according to: https://chromium-review.googlesource.com/c/chromium/src/+/2265402
+            // FIXME: Maybe expose this as a constant so that we can change this without source breaking code
+            const int TIME_PERIOD = 8;
+
             // We do this before OnLoad so that users have some way to affect these settings in OnLoad if they need to.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -223,7 +239,8 @@ namespace OpenTK.Windowing.Desktop
 
                 // Make Thread.Sleep more accurate.
                 // FIXME: We probably only care about this if we are not event driven.
-                timeBeginPeriod(1);
+                timeBeginPeriod(TIME_PERIOD);
+                ExpectedSchedulerPeriod = TIME_PERIOD;
             }
 
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
@@ -236,8 +253,6 @@ namespace OpenTK.Windowing.Desktop
             OnResize(new ResizeEventArgs(Size));
 
             Debug.Print("Entering main loop.");
-
-            Utils.SleepTimings runSleepTimings = new Utils.SleepTimings(2);
 
             _watchUpdate.Start();
             while (GLFW.WindowShouldClose(WindowPtr) == false)
@@ -295,11 +310,16 @@ namespace OpenTK.Windowing.Desktop
 
                 if (timeToNextUpdate > 0)
                 {
-                    runSleepTimings.PreciseSleep(timeToNextUpdate);
+                    Utils.AccurateSleep(timeToNextUpdate, ExpectedSchedulerPeriod);
                 }
             }
 
             OnUnload();
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                timeEndPeriod(TIME_PERIOD);
+            }
         }
 
         /// <summary>
