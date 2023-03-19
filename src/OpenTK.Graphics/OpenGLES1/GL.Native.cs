@@ -914,117 +914,117 @@ namespace OpenTK.Graphics.OpenGLES1
         public static unsafe partial class APPLE
         {
             /// <summary> <b>[requires: GL_APPLE_copy_texture_levels] [glCopyTextureLevelsAPPLE]</b>  </summary>
-            public static void CopyTextureLevels(uint destinationTexture, uint sourceTexture, int sourceBaseLevel, int sourceLevelCount) => GLPointers._glCopyTextureLevelsAPPLE_fnptr(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
+            public static void CopyTextureLevelsAPPLE(uint destinationTexture, uint sourceTexture, int sourceBaseLevel, int sourceLevelCount) => GLPointers._glCopyTextureLevelsAPPLE_fnptr(destinationTexture, sourceTexture, sourceBaseLevel, sourceLevelCount);
             
             /// <summary> <b>[requires: GL_APPLE_framebuffer_multisample] [glRenderbufferStorageMultisampleAPPLE]</b>  </summary>
-            public static void RenderbufferStorageMultisample(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleAPPLE_fnptr((uint)target, samples, (uint)internalformat, width, height);
+            public static void RenderbufferStorageMultisampleAPPLE(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleAPPLE_fnptr((uint)target, samples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_APPLE_framebuffer_multisample] [glResolveMultisampleFramebufferAPPLE]</b>  </summary>
-            public static void ResolveMultisampleFramebuffer() => GLPointers._glResolveMultisampleFramebufferAPPLE_fnptr();
+            public static void ResolveMultisampleFramebufferAPPLE() => GLPointers._glResolveMultisampleFramebufferAPPLE_fnptr();
             
             /// <summary> <b>[requires: GL_APPLE_sync] [glFenceSyncAPPLE]</b>  </summary>
-            public static GLSync FenceSync(SyncCondition condition, SyncBehaviorFlags flags) => (GLSync) GLPointers._glFenceSyncAPPLE_fnptr((uint)condition, (uint)flags);
+            public static GLSync FenceSyncAPPLE(SyncCondition condition, SyncBehaviorFlags flags) => (GLSync) GLPointers._glFenceSyncAPPLE_fnptr((uint)condition, (uint)flags);
             
             /// <summary> <b>[requires: GL_APPLE_sync] [glIsSyncAPPLE]</b>  </summary>
-            public static bool IsSync(GLSync sync) => GLPointers._glIsSyncAPPLE_fnptr((IntPtr)sync) != 0;
+            public static bool IsSyncAPPLE(GLSync sync) => GLPointers._glIsSyncAPPLE_fnptr((IntPtr)sync) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_sync] [glDeleteSyncAPPLE]</b>  </summary>
-            public static void DeleteSync(GLSync sync) => GLPointers._glDeleteSyncAPPLE_fnptr((IntPtr)sync);
+            public static void DeleteSyncAPPLE(GLSync sync) => GLPointers._glDeleteSyncAPPLE_fnptr((IntPtr)sync);
             
             /// <summary> <b>[requires: GL_APPLE_sync] [glClientWaitSyncAPPLE]</b>  </summary>
-            public static SyncStatus ClientWaitSync(GLSync sync, SyncObjectMask flags, ulong timeout) => (SyncStatus) GLPointers._glClientWaitSyncAPPLE_fnptr((IntPtr)sync, (uint)flags, timeout);
+            public static SyncStatus ClientWaitSyncAPPLE(GLSync sync, SyncObjectMask flags, ulong timeout) => (SyncStatus) GLPointers._glClientWaitSyncAPPLE_fnptr((IntPtr)sync, (uint)flags, timeout);
             
             /// <summary> <b>[requires: GL_APPLE_sync] [glWaitSyncAPPLE]</b>  </summary>
-            public static void WaitSync(GLSync sync, SyncBehaviorFlags flags, ulong timeout) => GLPointers._glWaitSyncAPPLE_fnptr((IntPtr)sync, (uint)flags, timeout);
+            public static void WaitSyncAPPLE(GLSync sync, SyncBehaviorFlags flags, ulong timeout) => GLPointers._glWaitSyncAPPLE_fnptr((IntPtr)sync, (uint)flags, timeout);
             
             /// <summary> <b>[requires: GL_APPLE_sync] [glGetInteger64vAPPLE]</b>  </summary>
-            public static void GetInteger64v(GetPName pname, long* parameters) => GLPointers._glGetInteger64vAPPLE_fnptr((uint)pname, parameters);
+            public static void GetInteger64vAPPLE(GetPName pname, long* parameters) => GLPointers._glGetInteger64vAPPLE_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_APPLE_sync] [glGetSyncivAPPLE]</b>  </summary>
-            public static void GetSynciv(GLSync sync, SyncParameterName pname, int count, int* length, int* values) => GLPointers._glGetSyncivAPPLE_fnptr((IntPtr)sync, (uint)pname, count, length, values);
+            public static void GetSyncivAPPLE(GLSync sync, SyncParameterName pname, int count, int* length, int* values) => GLPointers._glGetSyncivAPPLE_fnptr((IntPtr)sync, (uint)pname, count, length, values);
             
         }
         /// <summary>EXT extensions.</summary>
         public static unsafe partial class EXT
         {
             /// <summary> <b>[requires: GL_EXT_blend_minmax] [glBlendEquationEXT]</b>  </summary>
-            public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
+            public static void BlendEquationEXT(BlendEquationModeEXT mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_debug_marker] [glInsertEventMarkerEXT]</b>  </summary>
-            public static void InsertEventMarker(int length, byte* marker) => GLPointers._glInsertEventMarkerEXT_fnptr(length, marker);
+            public static void InsertEventMarkerEXT(int length, byte* marker) => GLPointers._glInsertEventMarkerEXT_fnptr(length, marker);
             
             /// <summary> <b>[requires: GL_EXT_debug_marker] [glPushGroupMarkerEXT]</b>  </summary>
-            public static void PushGroupMarker(int length, byte* marker) => GLPointers._glPushGroupMarkerEXT_fnptr(length, marker);
+            public static void PushGroupMarkerEXT(int length, byte* marker) => GLPointers._glPushGroupMarkerEXT_fnptr(length, marker);
             
             /// <summary> <b>[requires: GL_EXT_debug_marker] [glPopGroupMarkerEXT]</b>  </summary>
-            public static void PopGroupMarker() => GLPointers._glPopGroupMarkerEXT_fnptr();
+            public static void PopGroupMarkerEXT() => GLPointers._glPopGroupMarkerEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_discard_framebuffer] [glDiscardFramebufferEXT]</b>  </summary>
-            public static void DiscardFramebuffer(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments) => GLPointers._glDiscardFramebufferEXT_fnptr((uint)target, numAttachments, (uint*)attachments);
+            public static void DiscardFramebufferEXT(FramebufferTarget target, int numAttachments, InvalidateFramebufferAttachment* attachments) => GLPointers._glDiscardFramebufferEXT_fnptr((uint)target, numAttachments, (uint*)attachments);
             
             /// <summary> <b>[requires: GL_EXT_map_buffer_range] [glMapBufferRangeEXT]</b>  </summary>
-            public static void* MapBufferRange(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRangeEXT_fnptr((uint)target, offset, length, (uint)access);
+            public static void* MapBufferRangeEXT(BufferTargetARB target, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapBufferRangeEXT_fnptr((uint)target, offset, length, (uint)access);
             
             /// <summary> <b>[requires: GL_EXT_map_buffer_range] [glFlushMappedBufferRangeEXT]</b>  </summary>
-            public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRangeEXT_fnptr((uint)target, offset, length);
+            public static void FlushMappedBufferRangeEXT(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRangeEXT_fnptr((uint)target, offset, length);
             
             /// <summary> <b>[requires: GL_EXT_multi_draw_arrays] [glMultiDrawArraysEXT]</b>  </summary>
-            public static void MultiDrawArrays(PrimitiveType mode, int* first, int* count, int primcount) => GLPointers._glMultiDrawArraysEXT_fnptr((uint)mode, first, count, primcount);
+            public static void MultiDrawArraysEXT(PrimitiveType mode, int* first, int* count, int primcount) => GLPointers._glMultiDrawArraysEXT_fnptr((uint)mode, first, count, primcount);
             
             /// <summary> <b>[requires: GL_EXT_multi_draw_arrays] [glMultiDrawElementsEXT]</b>  </summary>
-            public static void MultiDrawElements(PrimitiveType mode, int* count, DrawElementsType type, void** indices, int primcount) => GLPointers._glMultiDrawElementsEXT_fnptr((uint)mode, count, (uint)type, indices, primcount);
+            public static void MultiDrawElementsEXT(PrimitiveType mode, int* count, DrawElementsType type, void** indices, int primcount) => GLPointers._glMultiDrawElementsEXT_fnptr((uint)mode, count, (uint)type, indices, primcount);
             
             /// <summary> <b>[requires: GL_EXT_multisampled_render_to_texture] [glRenderbufferStorageMultisampleEXT]</b>  </summary>
-            public static void RenderbufferStorageMultisample(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleEXT_fnptr((uint)target, samples, (uint)internalformat, width, height);
+            public static void RenderbufferStorageMultisampleEXT(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleEXT_fnptr((uint)target, samples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_multisampled_render_to_texture] [glFramebufferTexture2DMultisampleEXT]</b>  </summary>
-            public static void FramebufferTexture2DMultisample(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int samples) => GLPointers._glFramebufferTexture2DMultisampleEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, samples);
+            public static void FramebufferTexture2DMultisampleEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int samples) => GLPointers._glFramebufferTexture2DMultisampleEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, samples);
             
             /// <summary> <b>[requires: GL_EXT_robustness] [glGetGraphicsResetStatusEXT]</b>  </summary>
-            public static GraphicsResetStatus GetGraphicsResetStatus() => (GraphicsResetStatus) GLPointers._glGetGraphicsResetStatusEXT_fnptr();
+            public static GraphicsResetStatus GetGraphicsResetStatusEXT() => (GraphicsResetStatus) GLPointers._glGetGraphicsResetStatusEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_robustness] [glReadnPixelsEXT]</b>  </summary>
-            public static void ReadnPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => GLPointers._glReadnPixelsEXT_fnptr(x, y, width, height, (uint)format, (uint)type, bufSize, data);
+            public static void ReadnPixelsEXT(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => GLPointers._glReadnPixelsEXT_fnptr(x, y, width, height, (uint)format, (uint)type, bufSize, data);
             
             /// <summary> <b>[requires: GL_EXT_robustness] [glGetnUniformfvEXT]</b>  </summary>
-            public static void GetnUniformfv(int program, int location, int bufSize, float* parameters) => GLPointers._glGetnUniformfvEXT_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformfvEXT(int program, int location, int bufSize, float* parameters) => GLPointers._glGetnUniformfvEXT_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_EXT_robustness] [glGetnUniformivEXT]</b>  </summary>
-            public static void GetnUniformiv(int program, int location, int bufSize, int* parameters) => GLPointers._glGetnUniformivEXT_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformivEXT(int program, int location, int bufSize, int* parameters) => GLPointers._glGetnUniformivEXT_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTexStorage1DEXT]</b>  </summary>
-            public static void TexStorage1D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTexStorage1DEXT_fnptr((uint)target, levels, (uint)internalformat, width);
+            public static void TexStorage1DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTexStorage1DEXT_fnptr((uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTexStorage2DEXT]</b>  </summary>
-            public static void TexStorage2D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTexStorage2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height);
+            public static void TexStorage2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTexStorage2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTexStorage3DEXT]</b>  </summary>
-            public static void TexStorage3D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTexStorage3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth);
+            public static void TexStorage3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTexStorage3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTextureStorage1DEXT]</b>  </summary>
-            public static void TextureStorage1D(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
+            public static void TextureStorage1DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTextureStorage2DEXT]</b>  </summary>
-            public static void TextureStorage2D(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
+            public static void TextureStorage2DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTextureStorage3DEXT]</b>  </summary>
-            public static void TextureStorage3D(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTextureStorage3DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height, depth);
+            public static void TextureStorage3DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTextureStorage3DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height, depth);
             
         }
         /// <summary>IMG extensions.</summary>
         public static unsafe partial class IMG
         {
             /// <summary> <b>[requires: GL_IMG_multisampled_render_to_texture] [glRenderbufferStorageMultisampleIMG]</b>  </summary>
-            public static void RenderbufferStorageMultisample(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleIMG_fnptr((uint)target, samples, (uint)internalformat, width, height);
+            public static void RenderbufferStorageMultisampleIMG(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleIMG_fnptr((uint)target, samples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_IMG_multisampled_render_to_texture] [glFramebufferTexture2DMultisampleIMG]</b>  </summary>
-            public static void FramebufferTexture2DMultisample(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int samples) => GLPointers._glFramebufferTexture2DMultisampleIMG_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, samples);
+            public static void FramebufferTexture2DMultisampleIMG(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int samples) => GLPointers._glFramebufferTexture2DMultisampleIMG_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, samples);
             
             /// <summary> <b>[requires: GL_IMG_user_clip_plane] [glClipPlanefIMG]</b>  </summary>
-            public static void ClipPlanef(ClipPlaneName p, float* eqn) => GLPointers._glClipPlanefIMG_fnptr((uint)p, eqn);
+            public static void ClipPlanefIMG(ClipPlaneName p, float* eqn) => GLPointers._glClipPlanefIMG_fnptr((uint)p, eqn);
             
             /// <summary> <b>[requires: GL_IMG_user_clip_plane] [glClipPlanexIMG]</b>  </summary>
-            public static void ClipPlanex(ClipPlaneName p, int* eqn) => GLPointers._glClipPlanexIMG_fnptr((uint)p, eqn);
+            public static void ClipPlanexIMG(ClipPlaneName p, int* eqn) => GLPointers._glClipPlanexIMG_fnptr((uint)p, eqn);
             
         }
         /// <summary>KHR extensions.</summary>
@@ -1104,110 +1104,110 @@ namespace OpenTK.Graphics.OpenGLES1
         public static unsafe partial class NV
         {
             /// <summary> <b>[requires: GL_NV_fence] [glDeleteFencesNV]</b>  </summary>
-            public static void DeleteFences(int n, uint* fences) => GLPointers._glDeleteFencesNV_fnptr(n, fences);
+            public static void DeleteFencesNV(int n, uint* fences) => GLPointers._glDeleteFencesNV_fnptr(n, fences);
             
             /// <summary> <b>[requires: GL_NV_fence] [glGenFencesNV]</b>  </summary>
-            public static void GenFences(int n, uint* fences) => GLPointers._glGenFencesNV_fnptr(n, fences);
+            public static void GenFencesNV(int n, uint* fences) => GLPointers._glGenFencesNV_fnptr(n, fences);
             
             /// <summary> <b>[requires: GL_NV_fence] [glIsFenceNV]</b>  </summary>
-            public static bool IsFence(uint fence) => GLPointers._glIsFenceNV_fnptr(fence) != 0;
+            public static bool IsFenceNV(uint fence) => GLPointers._glIsFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence] [glTestFenceNV]</b>  </summary>
-            public static bool TestFence(uint fence) => GLPointers._glTestFenceNV_fnptr(fence) != 0;
+            public static bool TestFenceNV(uint fence) => GLPointers._glTestFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence] [glGetFenceivNV]</b>  </summary>
-            public static void GetFenceiv(uint fence, FenceParameterNameNV pname, int* parameters) => GLPointers._glGetFenceivNV_fnptr(fence, (uint)pname, parameters);
+            public static void GetFenceivNV(uint fence, FenceParameterNameNV pname, int* parameters) => GLPointers._glGetFenceivNV_fnptr(fence, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_fence] [glFinishFenceNV]</b>  </summary>
-            public static void FinishFence(uint fence) => GLPointers._glFinishFenceNV_fnptr(fence);
+            public static void FinishFenceNV(uint fence) => GLPointers._glFinishFenceNV_fnptr(fence);
             
             /// <summary> <b>[requires: GL_NV_fence] [glSetFenceNV]</b>  </summary>
-            public static void SetFence(uint fence, FenceConditionNV condition) => GLPointers._glSetFenceNV_fnptr(fence, (uint)condition);
+            public static void SetFenceNV(uint fence, FenceConditionNV condition) => GLPointers._glSetFenceNV_fnptr(fence, (uint)condition);
             
         }
         /// <summary>OES extensions.</summary>
         public static unsafe partial class OES
         {
             /// <summary> <b>[requires: GL_OES_EGL_image] [glEGLImageTargetTexture2DOES]</b>  </summary>
-            public static void EGLImageTargetTexture2D(All target, void* image) => GLPointers._glEGLImageTargetTexture2DOES_fnptr((uint)target, image);
+            public static void EGLImageTargetTexture2DOES(All target, void* image) => GLPointers._glEGLImageTargetTexture2DOES_fnptr((uint)target, image);
             
             /// <summary> <b>[requires: GL_OES_EGL_image] [glEGLImageTargetRenderbufferStorageOES]</b>  </summary>
-            public static void EGLImageTargetRenderbufferStorage(All target, void* image) => GLPointers._glEGLImageTargetRenderbufferStorageOES_fnptr((uint)target, image);
+            public static void EGLImageTargetRenderbufferStorageOES(All target, void* image) => GLPointers._glEGLImageTargetRenderbufferStorageOES_fnptr((uint)target, image);
             
             /// <summary> <b>[requires: GL_OES_blend_equation_separate] [glBlendEquationSeparateOES]</b>  </summary>
-            public static void BlendEquationSeparate(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateOES_fnptr((uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateOES(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateOES_fnptr((uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_OES_blend_func_separate] [glBlendFuncSeparateOES]</b>  </summary>
-            public static void BlendFuncSeparate(BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparateOES_fnptr((uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
+            public static void BlendFuncSeparateOES(BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparateOES_fnptr((uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
             
             /// <summary> <b>[requires: GL_OES_blend_subtract] [glBlendEquationOES]</b>  </summary>
-            public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquationOES_fnptr((uint)mode);
+            public static void BlendEquationOES(BlendEquationModeEXT mode) => GLPointers._glBlendEquationOES_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord1bOES]</b>  </summary>
-            public static void MultiTexCoord1b(TextureUnit texture, sbyte s) => GLPointers._glMultiTexCoord1bOES_fnptr((uint)texture, s);
+            public static void MultiTexCoord1bOES(TextureUnit texture, sbyte s) => GLPointers._glMultiTexCoord1bOES_fnptr((uint)texture, s);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord1bvOES]</b>  </summary>
-            public static void MultiTexCoord1bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord1bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord1bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord1bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord2bOES]</b>  </summary>
-            public static void MultiTexCoord2b(TextureUnit texture, sbyte s, sbyte t) => GLPointers._glMultiTexCoord2bOES_fnptr((uint)texture, s, t);
+            public static void MultiTexCoord2bOES(TextureUnit texture, sbyte s, sbyte t) => GLPointers._glMultiTexCoord2bOES_fnptr((uint)texture, s, t);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord2bvOES]</b>  </summary>
-            public static void MultiTexCoord2bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord2bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord2bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord2bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord3bOES]</b>  </summary>
-            public static void MultiTexCoord3b(TextureUnit texture, sbyte s, sbyte t, sbyte r) => GLPointers._glMultiTexCoord3bOES_fnptr((uint)texture, s, t, r);
+            public static void MultiTexCoord3bOES(TextureUnit texture, sbyte s, sbyte t, sbyte r) => GLPointers._glMultiTexCoord3bOES_fnptr((uint)texture, s, t, r);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord3bvOES]</b>  </summary>
-            public static void MultiTexCoord3bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord3bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord3bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord3bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord4bOES]</b>  </summary>
-            public static void MultiTexCoord4b(TextureUnit texture, sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glMultiTexCoord4bOES_fnptr((uint)texture, s, t, r, q);
+            public static void MultiTexCoord4bOES(TextureUnit texture, sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glMultiTexCoord4bOES_fnptr((uint)texture, s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord4bvOES]</b>  </summary>
-            public static void MultiTexCoord4bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord4bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord4bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord4bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord1bOES]</b>  </summary>
-            public static void TexCoord1b(sbyte s) => GLPointers._glTexCoord1bOES_fnptr(s);
+            public static void TexCoord1bOES(sbyte s) => GLPointers._glTexCoord1bOES_fnptr(s);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord1bvOES]</b>  </summary>
-            public static void TexCoord1bv(sbyte* coords) => GLPointers._glTexCoord1bvOES_fnptr(coords);
+            public static void TexCoord1bvOES(sbyte* coords) => GLPointers._glTexCoord1bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord2bOES]</b>  </summary>
-            public static void TexCoord2b(sbyte s, sbyte t) => GLPointers._glTexCoord2bOES_fnptr(s, t);
+            public static void TexCoord2bOES(sbyte s, sbyte t) => GLPointers._glTexCoord2bOES_fnptr(s, t);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord2bvOES]</b>  </summary>
-            public static void TexCoord2bv(sbyte* coords) => GLPointers._glTexCoord2bvOES_fnptr(coords);
+            public static void TexCoord2bvOES(sbyte* coords) => GLPointers._glTexCoord2bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord3bOES]</b>  </summary>
-            public static void TexCoord3b(sbyte s, sbyte t, sbyte r) => GLPointers._glTexCoord3bOES_fnptr(s, t, r);
+            public static void TexCoord3bOES(sbyte s, sbyte t, sbyte r) => GLPointers._glTexCoord3bOES_fnptr(s, t, r);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord3bvOES]</b>  </summary>
-            public static void TexCoord3bv(sbyte* coords) => GLPointers._glTexCoord3bvOES_fnptr(coords);
+            public static void TexCoord3bvOES(sbyte* coords) => GLPointers._glTexCoord3bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord4bOES]</b>  </summary>
-            public static void TexCoord4b(sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glTexCoord4bOES_fnptr(s, t, r, q);
+            public static void TexCoord4bOES(sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glTexCoord4bOES_fnptr(s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord4bvOES]</b>  </summary>
-            public static void TexCoord4bv(sbyte* coords) => GLPointers._glTexCoord4bvOES_fnptr(coords);
+            public static void TexCoord4bvOES(sbyte* coords) => GLPointers._glTexCoord4bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex2bOES]</b>  </summary>
-            public static void Vertex2b(sbyte x, sbyte y) => GLPointers._glVertex2bOES_fnptr(x, y);
+            public static void Vertex2bOES(sbyte x, sbyte y) => GLPointers._glVertex2bOES_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex2bvOES]</b>  </summary>
-            public static void Vertex2bv(sbyte* coords) => GLPointers._glVertex2bvOES_fnptr(coords);
+            public static void Vertex2bvOES(sbyte* coords) => GLPointers._glVertex2bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex3bOES]</b>  </summary>
-            public static void Vertex3b(sbyte x, sbyte y, sbyte z) => GLPointers._glVertex3bOES_fnptr(x, y, z);
+            public static void Vertex3bOES(sbyte x, sbyte y, sbyte z) => GLPointers._glVertex3bOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex3bvOES]</b>  </summary>
-            public static void Vertex3bv(sbyte* coords) => GLPointers._glVertex3bvOES_fnptr(coords);
+            public static void Vertex3bvOES(sbyte* coords) => GLPointers._glVertex3bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex4bOES]</b>  </summary>
-            public static void Vertex4b(sbyte x, sbyte y, sbyte z, sbyte w) => GLPointers._glVertex4bOES_fnptr(x, y, z, w);
+            public static void Vertex4bOES(sbyte x, sbyte y, sbyte z, sbyte w) => GLPointers._glVertex4bOES_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex4bvOES]</b>  </summary>
-            public static void Vertex4bv(sbyte* coords) => GLPointers._glVertex4bvOES_fnptr(coords);
+            public static void Vertex4bvOES(sbyte* coords) => GLPointers._glVertex4bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexsOES]</b> Draws a texture rectangle to the screen. </summary>
             /// <param name="x"> Specify the position of the affected screen rectangle. </param>
@@ -1216,7 +1216,7 @@ namespace OpenTK.Graphics.OpenGLES1
             /// <param name="width"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <param name="height"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDrawTex.xml" /></remarks>
-            public static void DrawTexs(short x, short y, short z, short width, short height) => GLPointers._glDrawTexsOES_fnptr(x, y, z, width, height);
+            public static void DrawTexsOES(short x, short y, short z, short width, short height) => GLPointers._glDrawTexsOES_fnptr(x, y, z, width, height);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexiOES]</b> Draws a texture rectangle to the screen. </summary>
             /// <param name="x"> Specify the position of the affected screen rectangle. </param>
@@ -1225,7 +1225,7 @@ namespace OpenTK.Graphics.OpenGLES1
             /// <param name="width"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <param name="height"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDrawTex.xml" /></remarks>
-            public static void DrawTexi(int x, int y, int z, int width, int height) => GLPointers._glDrawTexiOES_fnptr(x, y, z, width, height);
+            public static void DrawTexiOES(int x, int y, int z, int width, int height) => GLPointers._glDrawTexiOES_fnptr(x, y, z, width, height);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexxOES]</b> Draws a texture rectangle to the screen. </summary>
             /// <param name="x"> Specify the position of the affected screen rectangle. </param>
@@ -1234,16 +1234,16 @@ namespace OpenTK.Graphics.OpenGLES1
             /// <param name="width"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <param name="height"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDrawTex.xml" /></remarks>
-            public static void DrawTexx(int x, int y, int z, int width, int height) => GLPointers._glDrawTexxOES_fnptr(x, y, z, width, height);
+            public static void DrawTexxOES(int x, int y, int z, int width, int height) => GLPointers._glDrawTexxOES_fnptr(x, y, z, width, height);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexsvOES]</b>  </summary>
-            public static void DrawTexsv(short* coords) => GLPointers._glDrawTexsvOES_fnptr(coords);
+            public static void DrawTexsvOES(short* coords) => GLPointers._glDrawTexsvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexivOES]</b>  </summary>
-            public static void DrawTexiv(int* coords) => GLPointers._glDrawTexivOES_fnptr(coords);
+            public static void DrawTexivOES(int* coords) => GLPointers._glDrawTexivOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexxvOES]</b>  </summary>
-            public static void DrawTexxv(int* coords) => GLPointers._glDrawTexxvOES_fnptr(coords);
+            public static void DrawTexxvOES(int* coords) => GLPointers._glDrawTexxvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexfOES]</b> Draws a texture rectangle to the screen. </summary>
             /// <param name="x"> Specify the position of the affected screen rectangle. </param>
@@ -1252,244 +1252,244 @@ namespace OpenTK.Graphics.OpenGLES1
             /// <param name="width"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <param name="height"> Specifies the width and height of the affected screen rectangle in pixels. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glDrawTex.xml" /></remarks>
-            public static void DrawTexf(float x, float y, float z, float width, float height) => GLPointers._glDrawTexfOES_fnptr(x, y, z, width, height);
+            public static void DrawTexfOES(float x, float y, float z, float width, float height) => GLPointers._glDrawTexfOES_fnptr(x, y, z, width, height);
             
             /// <summary> <b>[requires: GL_OES_draw_texture] [glDrawTexfvOES]</b>  </summary>
-            public static void DrawTexfv(float* coords) => GLPointers._glDrawTexfvOES_fnptr(coords);
+            public static void DrawTexfvOES(float* coords) => GLPointers._glDrawTexfvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glAlphaFuncxOES]</b>  </summary>
-            public static void AlphaFuncx(AlphaFunction func, int reference) => GLPointers._glAlphaFuncxOES_fnptr((uint)func, reference);
+            public static void AlphaFuncxOES(AlphaFunction func, int reference) => GLPointers._glAlphaFuncxOES_fnptr((uint)func, reference);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClearColorxOES]</b>  </summary>
-            public static void ClearColorx(int red, int green, int blue, int alpha) => GLPointers._glClearColorxOES_fnptr(red, green, blue, alpha);
+            public static void ClearColorxOES(int red, int green, int blue, int alpha) => GLPointers._glClearColorxOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClearDepthxOES]</b>  </summary>
-            public static void ClearDepthx(int depth) => GLPointers._glClearDepthxOES_fnptr(depth);
+            public static void ClearDepthxOES(int depth) => GLPointers._glClearDepthxOES_fnptr(depth);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClipPlanexOES]</b>  </summary>
-            public static void ClipPlanex(ClipPlaneName plane, int* equation) => GLPointers._glClipPlanexOES_fnptr((uint)plane, equation);
+            public static void ClipPlanexOES(ClipPlaneName plane, int* equation) => GLPointers._glClipPlanexOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor4xOES]</b>  </summary>
-            public static void Color4x(int red, int green, int blue, int alpha) => GLPointers._glColor4xOES_fnptr(red, green, blue, alpha);
+            public static void Color4xOES(int red, int green, int blue, int alpha) => GLPointers._glColor4xOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glDepthRangexOES]</b>  </summary>
-            public static void DepthRangex(int n, int f) => GLPointers._glDepthRangexOES_fnptr(n, f);
+            public static void DepthRangexOES(int n, int f) => GLPointers._glDepthRangexOES_fnptr(n, f);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFogxOES]</b>  </summary>
-            public static void Fogx(FogPName pname, int param) => GLPointers._glFogxOES_fnptr((uint)pname, param);
+            public static void FogxOES(FogPName pname, int param) => GLPointers._glFogxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFogxvOES]</b>  </summary>
-            public static void Fogxv(FogPName pname, int* param) => GLPointers._glFogxvOES_fnptr((uint)pname, param);
+            public static void FogxvOES(FogPName pname, int* param) => GLPointers._glFogxvOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFrustumxOES]</b>  </summary>
-            public static void Frustumx(int l, int r, int b, int t, int n, int f) => GLPointers._glFrustumxOES_fnptr(l, r, b, t, n, f);
+            public static void FrustumxOES(int l, int r, int b, int t, int n, int f) => GLPointers._glFrustumxOES_fnptr(l, r, b, t, n, f);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetClipPlanexOES]</b>  </summary>
-            public static void GetClipPlanex(ClipPlaneName plane, int* equation) => GLPointers._glGetClipPlanexOES_fnptr((uint)plane, equation);
+            public static void GetClipPlanexOES(ClipPlaneName plane, int* equation) => GLPointers._glGetClipPlanexOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetFixedvOES]</b>  </summary>
-            public static void GetFixedv(GetPName pname, int* parameters) => GLPointers._glGetFixedvOES_fnptr((uint)pname, parameters);
+            public static void GetFixedvOES(GetPName pname, int* parameters) => GLPointers._glGetFixedvOES_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetTexEnvxvOES]</b>  </summary>
-            public static void GetTexEnvxv(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glGetTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glGetTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetTexParameterxvOES]</b>  </summary>
-            public static void GetTexParameterxv(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightModelxOES]</b>  </summary>
-            public static void LightModelx(LightModelParameter pname, int param) => GLPointers._glLightModelxOES_fnptr((uint)pname, param);
+            public static void LightModelxOES(LightModelParameter pname, int param) => GLPointers._glLightModelxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightModelxvOES]</b>  </summary>
-            public static void LightModelxv(LightModelParameter pname, int* param) => GLPointers._glLightModelxvOES_fnptr((uint)pname, param);
+            public static void LightModelxvOES(LightModelParameter pname, int* param) => GLPointers._glLightModelxvOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightxOES]</b>  </summary>
-            public static void Lightx(LightName light, LightParameter pname, int param) => GLPointers._glLightxOES_fnptr((uint)light, (uint)pname, param);
+            public static void LightxOES(LightName light, LightParameter pname, int param) => GLPointers._glLightxOES_fnptr((uint)light, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightxvOES]</b>  </summary>
-            public static void Lightxv(LightName light, LightParameter pname, int* parameters) => GLPointers._glLightxvOES_fnptr((uint)light, (uint)pname, parameters);
+            public static void LightxvOES(LightName light, LightParameter pname, int* parameters) => GLPointers._glLightxvOES_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLineWidthxOES]</b>  </summary>
-            public static void LineWidthx(int width) => GLPointers._glLineWidthxOES_fnptr(width);
+            public static void LineWidthxOES(int width) => GLPointers._glLineWidthxOES_fnptr(width);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLoadMatrixxOES]</b>  </summary>
-            public static void LoadMatrixx(int* m) => GLPointers._glLoadMatrixxOES_fnptr(m);
+            public static void LoadMatrixxOES(int* m) => GLPointers._glLoadMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMaterialxOES]</b>  </summary>
-            public static void Materialx(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glMaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glMaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMaterialxvOES]</b>  </summary>
-            public static void Materialxv(TriangleFace face, MaterialParameter pname, int* param) => GLPointers._glMaterialxvOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxvOES(TriangleFace face, MaterialParameter pname, int* param) => GLPointers._glMaterialxvOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultMatrixxOES]</b>  </summary>
-            public static void MultMatrixx(int* m) => GLPointers._glMultMatrixxOES_fnptr(m);
+            public static void MultMatrixxOES(int* m) => GLPointers._glMultMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord4xOES]</b>  </summary>
-            public static void MultiTexCoord4x(TextureUnit texture, int s, int t, int r, int q) => GLPointers._glMultiTexCoord4xOES_fnptr((uint)texture, s, t, r, q);
+            public static void MultiTexCoord4xOES(TextureUnit texture, int s, int t, int r, int q) => GLPointers._glMultiTexCoord4xOES_fnptr((uint)texture, s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glNormal3xOES]</b>  </summary>
-            public static void Normal3x(int nx, int ny, int nz) => GLPointers._glNormal3xOES_fnptr(nx, ny, nz);
+            public static void Normal3xOES(int nx, int ny, int nz) => GLPointers._glNormal3xOES_fnptr(nx, ny, nz);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glOrthoxOES]</b>  </summary>
-            public static void Orthox(int l, int r, int b, int t, int n, int f) => GLPointers._glOrthoxOES_fnptr(l, r, b, t, n, f);
+            public static void OrthoxOES(int l, int r, int b, int t, int n, int f) => GLPointers._glOrthoxOES_fnptr(l, r, b, t, n, f);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPointParameterxvOES]</b>  </summary>
-            public static void PointParameterxv(PointParameterNameARB pname, int* parameters) => GLPointers._glPointParameterxvOES_fnptr((uint)pname, parameters);
+            public static void PointParameterxvOES(PointParameterNameARB pname, int* parameters) => GLPointers._glPointParameterxvOES_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPointSizexOES]</b>  </summary>
-            public static void PointSizex(int size) => GLPointers._glPointSizexOES_fnptr(size);
+            public static void PointSizexOES(int size) => GLPointers._glPointSizexOES_fnptr(size);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPolygonOffsetxOES]</b>  </summary>
-            public static void PolygonOffsetx(int factor, int units) => GLPointers._glPolygonOffsetxOES_fnptr(factor, units);
+            public static void PolygonOffsetxOES(int factor, int units) => GLPointers._glPolygonOffsetxOES_fnptr(factor, units);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRotatexOES]</b>  </summary>
-            public static void Rotatex(int angle, int x, int y, int z) => GLPointers._glRotatexOES_fnptr(angle, x, y, z);
+            public static void RotatexOES(int angle, int x, int y, int z) => GLPointers._glRotatexOES_fnptr(angle, x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glScalexOES]</b>  </summary>
-            public static void Scalex(int x, int y, int z) => GLPointers._glScalexOES_fnptr(x, y, z);
+            public static void ScalexOES(int x, int y, int z) => GLPointers._glScalexOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexEnvxOES]</b>  </summary>
-            public static void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int param) => GLPointers._glTexEnvxOES_fnptr((uint)target, (uint)pname, param);
+            public static void TexEnvxOES(TextureEnvTarget target, TextureEnvParameter pname, int param) => GLPointers._glTexEnvxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexEnvxvOES]</b>  </summary>
-            public static void TexEnvxv(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexParameterxOES]</b>  </summary>
-            public static void TexParameterx(TextureTarget target, GetTextureParameter pname, int param) => GLPointers._glTexParameterxOES_fnptr((uint)target, (uint)pname, param);
+            public static void TexParameterxOES(TextureTarget target, GetTextureParameter pname, int param) => GLPointers._glTexParameterxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexParameterxvOES]</b>  </summary>
-            public static void TexParameterxv(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTranslatexOES]</b>  </summary>
-            public static void Translatex(int x, int y, int z) => GLPointers._glTranslatexOES_fnptr(x, y, z);
+            public static void TranslatexOES(int x, int y, int z) => GLPointers._glTranslatexOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetLightxvOES]</b>  </summary>
-            public static void GetLightxv(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxvOES_fnptr((uint)light, (uint)pname, parameters);
+            public static void GetLightxvOES(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxvOES_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetMaterialxvOES]</b>  </summary>
-            public static void GetMaterialxv(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glGetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glGetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPointParameterxOES]</b>  </summary>
-            public static void PointParameterx(PointParameterNameARB pname, int param) => GLPointers._glPointParameterxOES_fnptr((uint)pname, param);
+            public static void PointParameterxOES(PointParameterNameARB pname, int param) => GLPointers._glPointParameterxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glSampleCoveragexOES]</b>  </summary>
-            public static void SampleCoveragex(int value, bool invert) => GLPointers._glSampleCoveragexOES_fnptr(value, (byte)(invert ? 1 : 0));
+            public static void SampleCoveragexOES(int value, bool invert) => GLPointers._glSampleCoveragexOES_fnptr(value, (byte)(invert ? 1 : 0));
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glAccumxOES]</b>  </summary>
-            public static void Accumx(All op, int value) => GLPointers._glAccumxOES_fnptr((uint)op, value);
+            public static void AccumxOES(All op, int value) => GLPointers._glAccumxOES_fnptr((uint)op, value);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glBitmapxOES]</b>  </summary>
-            public static void Bitmapx(int width, int height, int xorig, int yorig, int xmove, int ymove, byte* bitmap) => GLPointers._glBitmapxOES_fnptr(width, height, xorig, yorig, xmove, ymove, bitmap);
+            public static void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, byte* bitmap) => GLPointers._glBitmapxOES_fnptr(width, height, xorig, yorig, xmove, ymove, bitmap);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glBlendColorxOES]</b>  </summary>
-            public static void BlendColorx(int red, int green, int blue, int alpha) => GLPointers._glBlendColorxOES_fnptr(red, green, blue, alpha);
+            public static void BlendColorxOES(int red, int green, int blue, int alpha) => GLPointers._glBlendColorxOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClearAccumxOES]</b>  </summary>
-            public static void ClearAccumx(int red, int green, int blue, int alpha) => GLPointers._glClearAccumxOES_fnptr(red, green, blue, alpha);
+            public static void ClearAccumxOES(int red, int green, int blue, int alpha) => GLPointers._glClearAccumxOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor3xOES]</b>  </summary>
-            public static void Color3x(int red, int green, int blue) => GLPointers._glColor3xOES_fnptr(red, green, blue);
+            public static void Color3xOES(int red, int green, int blue) => GLPointers._glColor3xOES_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor3xvOES]</b>  </summary>
-            public static void Color3xv(int* components) => GLPointers._glColor3xvOES_fnptr(components);
+            public static void Color3xvOES(int* components) => GLPointers._glColor3xvOES_fnptr(components);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor4xvOES]</b>  </summary>
-            public static void Color4xv(int* components) => GLPointers._glColor4xvOES_fnptr(components);
+            public static void Color4xvOES(int* components) => GLPointers._glColor4xvOES_fnptr(components);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glConvolutionParameterxOES]</b>  </summary>
-            public static void ConvolutionParameterx(ConvolutionTargetEXT target, ConvolutionParameter pname, int param) => GLPointers._glConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
+            public static void ConvolutionParameterxOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int param) => GLPointers._glConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glConvolutionParameterxvOES]</b>  </summary>
-            public static void ConvolutionParameterxv(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord1xOES]</b>  </summary>
-            public static void EvalCoord1x(int u) => GLPointers._glEvalCoord1xOES_fnptr(u);
+            public static void EvalCoord1xOES(int u) => GLPointers._glEvalCoord1xOES_fnptr(u);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord1xvOES]</b>  </summary>
-            public static void EvalCoord1xv(int* coords) => GLPointers._glEvalCoord1xvOES_fnptr(coords);
+            public static void EvalCoord1xvOES(int* coords) => GLPointers._glEvalCoord1xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord2xOES]</b>  </summary>
-            public static void EvalCoord2x(int u, int v) => GLPointers._glEvalCoord2xOES_fnptr(u, v);
+            public static void EvalCoord2xOES(int u, int v) => GLPointers._glEvalCoord2xOES_fnptr(u, v);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord2xvOES]</b>  </summary>
-            public static void EvalCoord2xv(int* coords) => GLPointers._glEvalCoord2xvOES_fnptr(coords);
+            public static void EvalCoord2xvOES(int* coords) => GLPointers._glEvalCoord2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFeedbackBufferxOES]</b>  </summary>
-            public static void FeedbackBufferx(int n, All type, int* buffer) => GLPointers._glFeedbackBufferxOES_fnptr(n, (uint)type, buffer);
+            public static void FeedbackBufferxOES(int n, All type, int* buffer) => GLPointers._glFeedbackBufferxOES_fnptr(n, (uint)type, buffer);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetConvolutionParameterxvOES]</b>  </summary>
-            public static void GetConvolutionParameterxv(All target, All pname, int* parameters) => GLPointers._glGetConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameterxvOES(All target, All pname, int* parameters) => GLPointers._glGetConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetHistogramParameterxvOES]</b>  </summary>
-            public static void GetHistogramParameterxv(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int* parameters) => GLPointers._glGetHistogramParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int* parameters) => GLPointers._glGetHistogramParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetLightxOES]</b>  </summary>
-            public static void GetLightx(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxOES_fnptr((uint)light, (uint)pname, parameters);
+            public static void GetLightxOES(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxOES_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetMapxvOES]</b>  </summary>
-            public static void GetMapxv(MapTarget target, GetMapQuery query, int* v) => GLPointers._glGetMapxvOES_fnptr((uint)target, (uint)query, v);
+            public static void GetMapxvOES(MapTarget target, GetMapQuery query, int* v) => GLPointers._glGetMapxvOES_fnptr((uint)target, (uint)query, v);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetMaterialxOES]</b>  </summary>
-            public static void GetMaterialx(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glGetMaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void GetMaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glGetMaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetPixelMapxv]</b>  </summary>
             public static void GetPixelMapxv(PixelMap map, int size, int* values) => GLPointers._glGetPixelMapxv_fnptr((uint)map, size, values);
             
             /// <summary> <b>[requires: GL_OES_fixed_point | GL_OES_texture_cube_map] [glGetTexGenxvOES]</b>  </summary>
-            public static void GetTexGenxv(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetTexLevelParameterxvOES]</b>  </summary>
-            public static void GetTexLevelParameterxv(TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexLevelParameterxvOES_fnptr((uint)target, level, (uint)pname, parameters);
+            public static void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexLevelParameterxvOES_fnptr((uint)target, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glIndexxOES]</b>  </summary>
-            public static void Indexx(int component) => GLPointers._glIndexxOES_fnptr(component);
+            public static void IndexxOES(int component) => GLPointers._glIndexxOES_fnptr(component);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glIndexxvOES]</b>  </summary>
-            public static void Indexxv(int* component) => GLPointers._glIndexxvOES_fnptr(component);
+            public static void IndexxvOES(int* component) => GLPointers._glIndexxvOES_fnptr(component);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLoadTransposeMatrixxOES]</b>  </summary>
-            public static void LoadTransposeMatrixx(int* m) => GLPointers._glLoadTransposeMatrixxOES_fnptr(m);
+            public static void LoadTransposeMatrixxOES(int* m) => GLPointers._glLoadTransposeMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMap1xOES]</b>  </summary>
-            public static void Map1x(MapTarget target, int u1, int u2, int stride, int order, int points) => GLPointers._glMap1xOES_fnptr((uint)target, u1, u2, stride, order, points);
+            public static void Map1xOES(MapTarget target, int u1, int u2, int stride, int order, int points) => GLPointers._glMap1xOES_fnptr((uint)target, u1, u2, stride, order, points);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMap2xOES]</b>  </summary>
-            public static void Map2x(MapTarget target, int u1, int u2, int ustride, int uorder, int v1, int v2, int vstride, int vorder, int points) => GLPointers._glMap2xOES_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+            public static void Map2xOES(MapTarget target, int u1, int u2, int ustride, int uorder, int v1, int v2, int vstride, int vorder, int points) => GLPointers._glMap2xOES_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMapGrid1xOES]</b>  </summary>
-            public static void MapGrid1x(int n, int u1, int u2) => GLPointers._glMapGrid1xOES_fnptr(n, u1, u2);
+            public static void MapGrid1xOES(int n, int u1, int u2) => GLPointers._glMapGrid1xOES_fnptr(n, u1, u2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMapGrid2xOES]</b>  </summary>
-            public static void MapGrid2x(int n, int u1, int u2, int v1, int v2) => GLPointers._glMapGrid2xOES_fnptr(n, u1, u2, v1, v2);
+            public static void MapGrid2xOES(int n, int u1, int u2, int v1, int v2) => GLPointers._glMapGrid2xOES_fnptr(n, u1, u2, v1, v2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultTransposeMatrixxOES]</b>  </summary>
-            public static void MultTransposeMatrixx(int* m) => GLPointers._glMultTransposeMatrixxOES_fnptr(m);
+            public static void MultTransposeMatrixxOES(int* m) => GLPointers._glMultTransposeMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord1xOES]</b>  </summary>
-            public static void MultiTexCoord1x(TextureUnit texture, int s) => GLPointers._glMultiTexCoord1xOES_fnptr((uint)texture, s);
+            public static void MultiTexCoord1xOES(TextureUnit texture, int s) => GLPointers._glMultiTexCoord1xOES_fnptr((uint)texture, s);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord1xvOES]</b>  </summary>
-            public static void MultiTexCoord1xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord1xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord1xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord1xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord2xOES]</b>  </summary>
-            public static void MultiTexCoord2x(TextureUnit texture, int s, int t) => GLPointers._glMultiTexCoord2xOES_fnptr((uint)texture, s, t);
+            public static void MultiTexCoord2xOES(TextureUnit texture, int s, int t) => GLPointers._glMultiTexCoord2xOES_fnptr((uint)texture, s, t);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord2xvOES]</b>  </summary>
-            public static void MultiTexCoord2xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord2xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord2xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord2xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord3xOES]</b>  </summary>
-            public static void MultiTexCoord3x(TextureUnit texture, int s, int t, int r) => GLPointers._glMultiTexCoord3xOES_fnptr((uint)texture, s, t, r);
+            public static void MultiTexCoord3xOES(TextureUnit texture, int s, int t, int r) => GLPointers._glMultiTexCoord3xOES_fnptr((uint)texture, s, t, r);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord3xvOES]</b>  </summary>
-            public static void MultiTexCoord3xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord3xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord3xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord3xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord4xvOES]</b>  </summary>
-            public static void MultiTexCoord4xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord4xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord4xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord4xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glNormal3xvOES]</b>  </summary>
-            public static void Normal3xv(int* coords) => GLPointers._glNormal3xvOES_fnptr(coords);
+            public static void Normal3xvOES(int* coords) => GLPointers._glNormal3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPassThroughxOES]</b>  </summary>
-            public static void PassThroughx(int token) => GLPointers._glPassThroughxOES_fnptr(token);
+            public static void PassThroughxOES(int token) => GLPointers._glPassThroughxOES_fnptr(token);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPixelMapx]</b>  </summary>
             public static void PixelMapx(PixelMap map, int size, int* values) => GLPointers._glPixelMapx_fnptr((uint)map, size, values);
@@ -1498,148 +1498,148 @@ namespace OpenTK.Graphics.OpenGLES1
             public static void PixelStorex(PixelStoreParameter pname, int param) => GLPointers._glPixelStorex_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPixelTransferxOES]</b>  </summary>
-            public static void PixelTransferx(PixelTransferParameter pname, int param) => GLPointers._glPixelTransferxOES_fnptr((uint)pname, param);
+            public static void PixelTransferxOES(PixelTransferParameter pname, int param) => GLPointers._glPixelTransferxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPixelZoomxOES]</b>  </summary>
-            public static void PixelZoomx(int xfactor, int yfactor) => GLPointers._glPixelZoomxOES_fnptr(xfactor, yfactor);
+            public static void PixelZoomxOES(int xfactor, int yfactor) => GLPointers._glPixelZoomxOES_fnptr(xfactor, yfactor);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPrioritizeTexturesxOES]</b>  </summary>
-            public static void PrioritizeTexturesx(int n, int* textures, int* priorities) => GLPointers._glPrioritizeTexturesxOES_fnptr(n, textures, priorities);
+            public static void PrioritizeTexturesxOES(int n, int* textures, int* priorities) => GLPointers._glPrioritizeTexturesxOES_fnptr(n, textures, priorities);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos2xOES]</b>  </summary>
-            public static void RasterPos2x(int x, int y) => GLPointers._glRasterPos2xOES_fnptr(x, y);
+            public static void RasterPos2xOES(int x, int y) => GLPointers._glRasterPos2xOES_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos2xvOES]</b>  </summary>
-            public static void RasterPos2xv(int* coords) => GLPointers._glRasterPos2xvOES_fnptr(coords);
+            public static void RasterPos2xvOES(int* coords) => GLPointers._glRasterPos2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos3xOES]</b>  </summary>
-            public static void RasterPos3x(int x, int y, int z) => GLPointers._glRasterPos3xOES_fnptr(x, y, z);
+            public static void RasterPos3xOES(int x, int y, int z) => GLPointers._glRasterPos3xOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos3xvOES]</b>  </summary>
-            public static void RasterPos3xv(int* coords) => GLPointers._glRasterPos3xvOES_fnptr(coords);
+            public static void RasterPos3xvOES(int* coords) => GLPointers._glRasterPos3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos4xOES]</b>  </summary>
-            public static void RasterPos4x(int x, int y, int z, int w) => GLPointers._glRasterPos4xOES_fnptr(x, y, z, w);
+            public static void RasterPos4xOES(int x, int y, int z, int w) => GLPointers._glRasterPos4xOES_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos4xvOES]</b>  </summary>
-            public static void RasterPos4xv(int* coords) => GLPointers._glRasterPos4xvOES_fnptr(coords);
+            public static void RasterPos4xvOES(int* coords) => GLPointers._glRasterPos4xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRectxOES]</b>  </summary>
-            public static void Rectx(int x1, int y1, int x2, int y2) => GLPointers._glRectxOES_fnptr(x1, y1, x2, y2);
+            public static void RectxOES(int x1, int y1, int x2, int y2) => GLPointers._glRectxOES_fnptr(x1, y1, x2, y2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRectxvOES]</b>  </summary>
-            public static void Rectxv(int* v1, int* v2) => GLPointers._glRectxvOES_fnptr(v1, v2);
+            public static void RectxvOES(int* v1, int* v2) => GLPointers._glRectxvOES_fnptr(v1, v2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord1xOES]</b>  </summary>
-            public static void TexCoord1x(int s) => GLPointers._glTexCoord1xOES_fnptr(s);
+            public static void TexCoord1xOES(int s) => GLPointers._glTexCoord1xOES_fnptr(s);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord1xvOES]</b>  </summary>
-            public static void TexCoord1xv(int* coords) => GLPointers._glTexCoord1xvOES_fnptr(coords);
+            public static void TexCoord1xvOES(int* coords) => GLPointers._glTexCoord1xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord2xOES]</b>  </summary>
-            public static void TexCoord2x(int s, int t) => GLPointers._glTexCoord2xOES_fnptr(s, t);
+            public static void TexCoord2xOES(int s, int t) => GLPointers._glTexCoord2xOES_fnptr(s, t);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord2xvOES]</b>  </summary>
-            public static void TexCoord2xv(int* coords) => GLPointers._glTexCoord2xvOES_fnptr(coords);
+            public static void TexCoord2xvOES(int* coords) => GLPointers._glTexCoord2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord3xOES]</b>  </summary>
-            public static void TexCoord3x(int s, int t, int r) => GLPointers._glTexCoord3xOES_fnptr(s, t, r);
+            public static void TexCoord3xOES(int s, int t, int r) => GLPointers._glTexCoord3xOES_fnptr(s, t, r);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord3xvOES]</b>  </summary>
-            public static void TexCoord3xv(int* coords) => GLPointers._glTexCoord3xvOES_fnptr(coords);
+            public static void TexCoord3xvOES(int* coords) => GLPointers._glTexCoord3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord4xOES]</b>  </summary>
-            public static void TexCoord4x(int s, int t, int r, int q) => GLPointers._glTexCoord4xOES_fnptr(s, t, r, q);
+            public static void TexCoord4xOES(int s, int t, int r, int q) => GLPointers._glTexCoord4xOES_fnptr(s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord4xvOES]</b>  </summary>
-            public static void TexCoord4xv(int* coords) => GLPointers._glTexCoord4xvOES_fnptr(coords);
+            public static void TexCoord4xvOES(int* coords) => GLPointers._glTexCoord4xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point | GL_OES_texture_cube_map] [glTexGenxOES]</b>  </summary>
-            public static void TexGenx(TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glTexGenxOES_fnptr((uint)coord, (uint)pname, param);
+            public static void TexGenxOES(TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glTexGenxOES_fnptr((uint)coord, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point | GL_OES_texture_cube_map] [glTexGenxvOES]</b>  </summary>
-            public static void TexGenxv(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex2xOES]</b>  </summary>
-            public static void Vertex2x(int x) => GLPointers._glVertex2xOES_fnptr(x);
+            public static void Vertex2xOES(int x) => GLPointers._glVertex2xOES_fnptr(x);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex2xvOES]</b>  </summary>
-            public static void Vertex2xv(int* coords) => GLPointers._glVertex2xvOES_fnptr(coords);
+            public static void Vertex2xvOES(int* coords) => GLPointers._glVertex2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex3xOES]</b>  </summary>
-            public static void Vertex3x(int x, int y) => GLPointers._glVertex3xOES_fnptr(x, y);
+            public static void Vertex3xOES(int x, int y) => GLPointers._glVertex3xOES_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex3xvOES]</b>  </summary>
-            public static void Vertex3xv(int* coords) => GLPointers._glVertex3xvOES_fnptr(coords);
+            public static void Vertex3xvOES(int* coords) => GLPointers._glVertex3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex4xOES]</b>  </summary>
-            public static void Vertex4x(int x, int y, int z) => GLPointers._glVertex4xOES_fnptr(x, y, z);
+            public static void Vertex4xOES(int x, int y, int z) => GLPointers._glVertex4xOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex4xvOES]</b>  </summary>
-            public static void Vertex4xv(int* coords) => GLPointers._glVertex4xvOES_fnptr(coords);
+            public static void Vertex4xvOES(int* coords) => GLPointers._glVertex4xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glIsRenderbufferOES]</b>  </summary>
-            public static bool IsRenderbuffer(int renderbuffer) => GLPointers._glIsRenderbufferOES_fnptr(renderbuffer) != 0;
+            public static bool IsRenderbufferOES(int renderbuffer) => GLPointers._glIsRenderbufferOES_fnptr(renderbuffer) != 0;
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glBindRenderbufferOES]</b>  </summary>
-            public static void BindRenderbuffer(RenderbufferTarget target, int renderbuffer) => GLPointers._glBindRenderbufferOES_fnptr((uint)target, renderbuffer);
+            public static void BindRenderbufferOES(RenderbufferTarget target, int renderbuffer) => GLPointers._glBindRenderbufferOES_fnptr((uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glDeleteRenderbuffersOES]</b>  </summary>
-            public static void DeleteRenderbuffers(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffersOES_fnptr(n, renderbuffers);
+            public static void DeleteRenderbuffersOES(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffersOES_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glGenRenderbuffersOES]</b>  </summary>
-            public static void GenRenderbuffers(int n, int* renderbuffers) => GLPointers._glGenRenderbuffersOES_fnptr(n, renderbuffers);
+            public static void GenRenderbuffersOES(int n, int* renderbuffers) => GLPointers._glGenRenderbuffersOES_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glRenderbufferStorageOES]</b>  </summary>
-            public static void RenderbufferStorage(RenderbufferTarget target, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageOES_fnptr((uint)target, (uint)internalformat, width, height);
+            public static void RenderbufferStorageOES(RenderbufferTarget target, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageOES_fnptr((uint)target, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glGetRenderbufferParameterivOES]</b>  </summary>
-            public static void GetRenderbufferParameteriv(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetRenderbufferParameterivOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetRenderbufferParameterivOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glIsFramebufferOES]</b>  </summary>
-            public static bool IsFramebuffer(int framebuffer) => GLPointers._glIsFramebufferOES_fnptr(framebuffer) != 0;
+            public static bool IsFramebufferOES(int framebuffer) => GLPointers._glIsFramebufferOES_fnptr(framebuffer) != 0;
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glBindFramebufferOES]</b>  </summary>
-            public static void BindFramebuffer(FramebufferTarget target, int framebuffer) => GLPointers._glBindFramebufferOES_fnptr((uint)target, framebuffer);
+            public static void BindFramebufferOES(FramebufferTarget target, int framebuffer) => GLPointers._glBindFramebufferOES_fnptr((uint)target, framebuffer);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glDeleteFramebuffersOES]</b>  </summary>
-            public static void DeleteFramebuffers(int n, int* framebuffers) => GLPointers._glDeleteFramebuffersOES_fnptr(n, framebuffers);
+            public static void DeleteFramebuffersOES(int n, int* framebuffers) => GLPointers._glDeleteFramebuffersOES_fnptr(n, framebuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glGenFramebuffersOES]</b>  </summary>
-            public static void GenFramebuffers(int n, int* framebuffers) => GLPointers._glGenFramebuffersOES_fnptr(n, framebuffers);
+            public static void GenFramebuffersOES(int n, int* framebuffers) => GLPointers._glGenFramebuffersOES_fnptr(n, framebuffers);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glCheckFramebufferStatusOES]</b>  </summary>
-            public static FramebufferStatus CheckFramebufferStatus(FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckFramebufferStatusOES_fnptr((uint)target);
+            public static FramebufferStatus CheckFramebufferStatusOES(FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckFramebufferStatusOES_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glFramebufferRenderbufferOES]</b>  </summary>
-            public static void FramebufferRenderbuffer(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._glFramebufferRenderbufferOES_fnptr((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
+            public static void FramebufferRenderbufferOES(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._glFramebufferRenderbufferOES_fnptr((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glFramebufferTexture2DOES]</b>  </summary>
-            public static void FramebufferTexture2D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glFramebufferTexture2DOES_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
+            public static void FramebufferTexture2DOES(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glFramebufferTexture2DOES_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glGetFramebufferAttachmentParameterivOES]</b>  </summary>
-            public static void GetFramebufferAttachmentParameteriv(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferAttachmentParameterivOES_fnptr((uint)target, (uint)attachment, (uint)pname, parameters);
+            public static void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferAttachmentParameterivOES_fnptr((uint)target, (uint)attachment, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_framebuffer_object] [glGenerateMipmapOES]</b>  </summary>
-            public static void GenerateMipmap(TextureTarget target) => GLPointers._glGenerateMipmapOES_fnptr((uint)target);
+            public static void GenerateMipmapOES(TextureTarget target) => GLPointers._glGenerateMipmapOES_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_OES_mapbuffer] [glMapBufferOES]</b>  </summary>
-            public static void* MapBuffer(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBufferOES_fnptr((uint)target, (uint)access);
+            public static void* MapBufferOES(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBufferOES_fnptr((uint)target, (uint)access);
             
             /// <summary> <b>[requires: GL_OES_mapbuffer] [glUnmapBufferOES]</b>  </summary>
-            public static bool UnmapBuffer(All target) => GLPointers._glUnmapBufferOES_fnptr((uint)target) != 0;
+            public static bool UnmapBufferOES(All target) => GLPointers._glUnmapBufferOES_fnptr((uint)target) != 0;
             
             /// <summary> <b>[requires: GL_OES_mapbuffer] [glGetBufferPointervOES]</b>  </summary>
-            public static void GetBufferPointerv(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervOES(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_matrix_palette] [glCurrentPaletteMatrixOES]</b>         defines which of the palette&apos;s matrices is affected by        subsequent matrix operations        . </summary>
             /// <param name="index"> specifies the index into the palette&apos;s matrices. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glCurrentPaletteMatrix.xml" /></remarks>
-            public static void CurrentPaletteMatrix(uint matrixpaletteindex) => GLPointers._glCurrentPaletteMatrixOES_fnptr(matrixpaletteindex);
+            public static void CurrentPaletteMatrixOES(uint matrixpaletteindex) => GLPointers._glCurrentPaletteMatrixOES_fnptr(matrixpaletteindex);
             
             /// <summary> <b>[requires: GL_OES_matrix_palette] [glLoadPaletteFromModelViewMatrixOES]</b>         copies the current model view matrix to a        matrix in the current matrix palette        . </summary>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glLoadPaletteFromModelViewMatrix.xml" /></remarks>
-            public static void LoadPaletteFromModelViewMatrix() => GLPointers._glLoadPaletteFromModelViewMatrixOES_fnptr();
+            public static void LoadPaletteFromModelViewMatrixOES() => GLPointers._glLoadPaletteFromModelViewMatrixOES_fnptr();
             
             /// <summary> <b>[requires: GL_OES_matrix_palette] [glMatrixIndexPointerOES]</b> Define an array of matrix indices. </summary>
             /// <param name="size"> Specifies the number of matrix indices per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
@@ -1647,7 +1647,7 @@ namespace OpenTK.Graphics.OpenGLES1
             /// <param name="stride"> Specifies the byte offset between consecutive matrix indices. If stride is 0, the matrix indices are understood to be tightly packed in the array. The initial value is 0. </param>
             /// <param name="pointer"> Specifies a pointer to the first matrix index of the first vertex in the array. The initial value is 0. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glMatrixIndexPointer.xml" /></remarks>
-            public static void MatrixIndexPointer(int size, MatrixIndexPointerTypeARB type, int stride, void* pointer) => GLPointers._glMatrixIndexPointerOES_fnptr(size, (uint)type, stride, pointer);
+            public static void MatrixIndexPointerOES(int size, MatrixIndexPointerTypeARB type, int stride, void* pointer) => GLPointers._glMatrixIndexPointerOES_fnptr(size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_OES_matrix_palette] [glWeightPointerOES]</b> Define an array of weights. </summary>
             /// <param name="size"> Specifies the number of weights per vertex. Must be is less than or equal to GL_MAX_VERTEX_UNITS_OES. The initial value is 0. </param>
@@ -1655,126 +1655,126 @@ namespace OpenTK.Graphics.OpenGLES1
             /// <param name="stride"> Specifies the byte offset between consecutive weights. If stride is 0, the weights are understood to be tightly packed in the array. The initial value is 0. </param>
             /// <param name="pointer"> Specifies a pointer to the first weight of the first vertex in the array. The initial value is 0. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glWeightPointer.xml" /></remarks>
-            public static void WeightPointer(int size, All type, int stride, void* pointer) => GLPointers._glWeightPointerOES_fnptr(size, (uint)type, stride, pointer);
+            public static void WeightPointerOES(int size, All type, int stride, void* pointer) => GLPointers._glWeightPointerOES_fnptr(size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_OES_point_size_array] [glPointSizePointerOES]</b> Define an array of point sizes. </summary>
             /// <param name="type"> Specifies the data type of each point size in the array. Symbolic constant GL_FIXED is accepted. However, the common profile also accepts the symbolic constant GL_FLOAT. The initial value is GL_FIXED for the common lite profile, or GL_FLOAT for the common profile. </param>
             /// <param name="stride"> Specifies the byte offset between consecutive point sizes. If stride is 0, the point sizes are understood to be tightly packed in the array. The initial value is 0. </param>
             /// <param name="pointer"> Specifies a pointer to the point size of the first vertex in the array. The initial value is 0. </param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glPointSizePointerOES.xml" /></remarks>
-            public static void PointSizePointer(All type, int stride, void* pointer) => GLPointers._glPointSizePointerOES_fnptr((uint)type, stride, pointer);
+            public static void PointSizePointerOES(All type, int stride, void* pointer) => GLPointers._glPointSizePointerOES_fnptr((uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_OES_query_matrix] [glQueryMatrixxOES]</b> Return the values of the current matrix. </summary>
             /// <param name="mantissa">Returns the mantissa values of the current matrix.</param>
             /// <param name="exponent">Returns the exponents of the current matrix.</param>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glQueryMatrix.xml" /></remarks>
-            public static uint QueryMatrixx(int* mantissa, int* exponent) => GLPointers._glQueryMatrixxOES_fnptr(mantissa, exponent);
+            public static uint QueryMatrixxOES(int* mantissa, int* exponent) => GLPointers._glQueryMatrixxOES_fnptr(mantissa, exponent);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glClearDepthfOES]</b>  </summary>
-            public static void ClearDepthf(float depth) => GLPointers._glClearDepthfOES_fnptr(depth);
+            public static void ClearDepthfOES(float depth) => GLPointers._glClearDepthfOES_fnptr(depth);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glClipPlanefOES]</b>  </summary>
-            public static void ClipPlanef(ClipPlaneName plane, float* equation) => GLPointers._glClipPlanefOES_fnptr((uint)plane, equation);
+            public static void ClipPlanefOES(ClipPlaneName plane, float* equation) => GLPointers._glClipPlanefOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glDepthRangefOES]</b>  </summary>
-            public static void DepthRangef(float n, float f) => GLPointers._glDepthRangefOES_fnptr(n, f);
+            public static void DepthRangefOES(float n, float f) => GLPointers._glDepthRangefOES_fnptr(n, f);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glFrustumfOES]</b>  </summary>
-            public static void Frustumf(float l, float r, float b, float t, float n, float f) => GLPointers._glFrustumfOES_fnptr(l, r, b, t, n, f);
+            public static void FrustumfOES(float l, float r, float b, float t, float n, float f) => GLPointers._glFrustumfOES_fnptr(l, r, b, t, n, f);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glGetClipPlanefOES]</b>  </summary>
-            public static void GetClipPlanef(ClipPlaneName plane, float* equation) => GLPointers._glGetClipPlanefOES_fnptr((uint)plane, equation);
+            public static void GetClipPlanefOES(ClipPlaneName plane, float* equation) => GLPointers._glGetClipPlanefOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glOrthofOES]</b>  </summary>
-            public static void Orthof(float l, float r, float b, float t, float n, float f) => GLPointers._glOrthofOES_fnptr(l, r, b, t, n, f);
+            public static void OrthofOES(float l, float r, float b, float t, float n, float f) => GLPointers._glOrthofOES_fnptr(l, r, b, t, n, f);
             
             /// <summary> <b>[requires: GL_OES_texture_cube_map] [glTexGenfOES]</b>  </summary>
-            public static void TexGenf(TextureCoordName coord, TextureGenParameter pname, float param) => GLPointers._glTexGenfOES_fnptr((uint)coord, (uint)pname, param);
+            public static void TexGenfOES(TextureCoordName coord, TextureGenParameter pname, float param) => GLPointers._glTexGenfOES_fnptr((uint)coord, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_texture_cube_map] [glTexGenfvOES]</b>  </summary>
-            public static void TexGenfv(TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glTexGenfvOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void TexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glTexGenfvOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_texture_cube_map] [glTexGeniOES]</b>  </summary>
-            public static void TexGeni(TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glTexGeniOES_fnptr((uint)coord, (uint)pname, param);
+            public static void TexGeniOES(TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glTexGeniOES_fnptr((uint)coord, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_texture_cube_map] [glTexGenivOES]</b>  </summary>
-            public static void TexGeniv(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glTexGenivOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void TexGenivOES(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glTexGenivOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_texture_cube_map] [glGetTexGenfvOES]</b>  </summary>
-            public static void GetTexGenfv(TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glGetTexGenfvOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glGetTexGenfvOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_texture_cube_map] [glGetTexGenivOES]</b>  </summary>
-            public static void GetTexGeniv(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetTexGenivOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetTexGenivOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object] [glBindVertexArrayOES]</b>  </summary>
-            public static void BindVertexArray(int array) => GLPointers._glBindVertexArrayOES_fnptr(array);
+            public static void BindVertexArrayOES(int array) => GLPointers._glBindVertexArrayOES_fnptr(array);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object] [glDeleteVertexArraysOES]</b>  </summary>
-            public static void DeleteVertexArrays(int n, int* arrays) => GLPointers._glDeleteVertexArraysOES_fnptr(n, arrays);
+            public static void DeleteVertexArraysOES(int n, int* arrays) => GLPointers._glDeleteVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object] [glGenVertexArraysOES]</b>  </summary>
-            public static void GenVertexArrays(int n, int* arrays) => GLPointers._glGenVertexArraysOES_fnptr(n, arrays);
+            public static void GenVertexArraysOES(int n, int* arrays) => GLPointers._glGenVertexArraysOES_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_OES_vertex_array_object] [glIsVertexArrayOES]</b>  </summary>
-            public static bool IsVertexArray(int array) => GLPointers._glIsVertexArrayOES_fnptr(array) != 0;
+            public static bool IsVertexArrayOES(int array) => GLPointers._glIsVertexArrayOES_fnptr(array) != 0;
             
         }
         /// <summary>QCOM extensions.</summary>
         public static unsafe partial class QCOM
         {
             /// <summary> <b>[requires: GL_QCOM_driver_control] [glGetDriverControlsQCOM]</b>  </summary>
-            public static void GetDriverControls(int* num, int size, uint* driverControls) => GLPointers._glGetDriverControlsQCOM_fnptr(num, size, driverControls);
+            public static void GetDriverControlsQCOM(int* num, int size, uint* driverControls) => GLPointers._glGetDriverControlsQCOM_fnptr(num, size, driverControls);
             
             /// <summary> <b>[requires: GL_QCOM_driver_control] [glGetDriverControlStringQCOM]</b>  </summary>
-            public static void GetDriverControlString(uint driverControl, int bufSize, int* length, byte* driverControlString) => GLPointers._glGetDriverControlStringQCOM_fnptr(driverControl, bufSize, length, driverControlString);
+            public static void GetDriverControlStringQCOM(uint driverControl, int bufSize, int* length, byte* driverControlString) => GLPointers._glGetDriverControlStringQCOM_fnptr(driverControl, bufSize, length, driverControlString);
             
             /// <summary> <b>[requires: GL_QCOM_driver_control] [glEnableDriverControlQCOM]</b>  </summary>
-            public static void EnableDriverControl(uint driverControl) => GLPointers._glEnableDriverControlQCOM_fnptr(driverControl);
+            public static void EnableDriverControlQCOM(uint driverControl) => GLPointers._glEnableDriverControlQCOM_fnptr(driverControl);
             
             /// <summary> <b>[requires: GL_QCOM_driver_control] [glDisableDriverControlQCOM]</b>  </summary>
-            public static void DisableDriverControl(uint driverControl) => GLPointers._glDisableDriverControlQCOM_fnptr(driverControl);
+            public static void DisableDriverControlQCOM(uint driverControl) => GLPointers._glDisableDriverControlQCOM_fnptr(driverControl);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtGetTexturesQCOM]</b>  </summary>
-            public static void ExtGetTextures(int* textures, int maxTextures, int* numTextures) => GLPointers._glExtGetTexturesQCOM_fnptr(textures, maxTextures, numTextures);
+            public static void ExtGetTexturesQCOM(int* textures, int maxTextures, int* numTextures) => GLPointers._glExtGetTexturesQCOM_fnptr(textures, maxTextures, numTextures);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtGetBuffersQCOM]</b>  </summary>
-            public static void ExtGetBuffers(int* buffers, int maxBuffers, int* numBuffers) => GLPointers._glExtGetBuffersQCOM_fnptr(buffers, maxBuffers, numBuffers);
+            public static void ExtGetBuffersQCOM(int* buffers, int maxBuffers, int* numBuffers) => GLPointers._glExtGetBuffersQCOM_fnptr(buffers, maxBuffers, numBuffers);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtGetRenderbuffersQCOM]</b>  </summary>
-            public static void ExtGetRenderbuffers(int* renderbuffers, int maxRenderbuffers, int* numRenderbuffers) => GLPointers._glExtGetRenderbuffersQCOM_fnptr(renderbuffers, maxRenderbuffers, numRenderbuffers);
+            public static void ExtGetRenderbuffersQCOM(int* renderbuffers, int maxRenderbuffers, int* numRenderbuffers) => GLPointers._glExtGetRenderbuffersQCOM_fnptr(renderbuffers, maxRenderbuffers, numRenderbuffers);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtGetFramebuffersQCOM]</b>  </summary>
-            public static void ExtGetFramebuffers(int* framebuffers, int maxFramebuffers, int* numFramebuffers) => GLPointers._glExtGetFramebuffersQCOM_fnptr(framebuffers, maxFramebuffers, numFramebuffers);
+            public static void ExtGetFramebuffersQCOM(int* framebuffers, int maxFramebuffers, int* numFramebuffers) => GLPointers._glExtGetFramebuffersQCOM_fnptr(framebuffers, maxFramebuffers, numFramebuffers);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtGetTexLevelParameterivQCOM]</b>  </summary>
-            public static void ExtGetTexLevelParameteriv(int texture, All face, int level, All pname, int* parameters) => GLPointers._glExtGetTexLevelParameterivQCOM_fnptr(texture, (uint)face, level, (uint)pname, parameters);
+            public static void ExtGetTexLevelParameterivQCOM(int texture, All face, int level, All pname, int* parameters) => GLPointers._glExtGetTexLevelParameterivQCOM_fnptr(texture, (uint)face, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtTexObjectStateOverrideiQCOM]</b>  </summary>
-            public static void ExtTexObjectStateOverridei(All target, All pname, int param) => GLPointers._glExtTexObjectStateOverrideiQCOM_fnptr((uint)target, (uint)pname, param);
+            public static void ExtTexObjectStateOverrideiQCOM(All target, All pname, int param) => GLPointers._glExtTexObjectStateOverrideiQCOM_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtGetTexSubImageQCOM]</b>  </summary>
-            public static void ExtGetTexSubImage(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* texels) => GLPointers._glExtGetTexSubImageQCOM_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, texels);
+            public static void ExtGetTexSubImageQCOM(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* texels) => GLPointers._glExtGetTexSubImageQCOM_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, texels);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get] [glExtGetBufferPointervQCOM]</b>  </summary>
-            public static void ExtGetBufferPointerv(All target, void** parameters) => GLPointers._glExtGetBufferPointervQCOM_fnptr((uint)target, parameters);
+            public static void ExtGetBufferPointervQCOM(All target, void** parameters) => GLPointers._glExtGetBufferPointervQCOM_fnptr((uint)target, parameters);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2] [glExtGetShadersQCOM]</b>  </summary>
-            public static void ExtGetShaders(int* shaders, int maxShaders, int* numShaders) => GLPointers._glExtGetShadersQCOM_fnptr(shaders, maxShaders, numShaders);
+            public static void ExtGetShadersQCOM(int* shaders, int maxShaders, int* numShaders) => GLPointers._glExtGetShadersQCOM_fnptr(shaders, maxShaders, numShaders);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2] [glExtGetProgramsQCOM]</b>  </summary>
-            public static void ExtGetPrograms(int* programs, int maxPrograms, int* numPrograms) => GLPointers._glExtGetProgramsQCOM_fnptr(programs, maxPrograms, numPrograms);
+            public static void ExtGetProgramsQCOM(int* programs, int maxPrograms, int* numPrograms) => GLPointers._glExtGetProgramsQCOM_fnptr(programs, maxPrograms, numPrograms);
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2] [glExtIsProgramBinaryQCOM]</b>  </summary>
-            public static bool ExtIsProgramBinary(int program) => GLPointers._glExtIsProgramBinaryQCOM_fnptr(program) != 0;
+            public static bool ExtIsProgramBinaryQCOM(int program) => GLPointers._glExtIsProgramBinaryQCOM_fnptr(program) != 0;
             
             /// <summary> <b>[requires: GL_QCOM_extended_get2] [glExtGetProgramBinarySourceQCOM]</b>  </summary>
-            public static void ExtGetProgramBinarySource(int program, ShaderType shadertype, byte* source, int* length) => GLPointers._glExtGetProgramBinarySourceQCOM_fnptr(program, (uint)shadertype, source, length);
+            public static void ExtGetProgramBinarySourceQCOM(int program, ShaderType shadertype, byte* source, int* length) => GLPointers._glExtGetProgramBinarySourceQCOM_fnptr(program, (uint)shadertype, source, length);
             
             /// <summary> <b>[requires: GL_QCOM_tiled_rendering] [glStartTilingQCOM]</b>  </summary>
-            public static void StartTiling(uint x, uint y, uint width, uint height, BufferBitQCOM preserveMask) => GLPointers._glStartTilingQCOM_fnptr(x, y, width, height, (uint)preserveMask);
+            public static void StartTilingQCOM(uint x, uint y, uint width, uint height, BufferBitQCOM preserveMask) => GLPointers._glStartTilingQCOM_fnptr(x, y, width, height, (uint)preserveMask);
             
             /// <summary> <b>[requires: GL_QCOM_tiled_rendering] [glEndTilingQCOM]</b>  </summary>
-            public static void EndTiling(BufferBitQCOM preserveMask) => GLPointers._glEndTilingQCOM_fnptr((uint)preserveMask);
+            public static void EndTilingQCOM(BufferBitQCOM preserveMask) => GLPointers._glEndTilingQCOM_fnptr((uint)preserveMask);
             
         }
     }

@@ -4743,46 +4743,46 @@ namespace OpenTK.Graphics.OpenGL
         public static unsafe partial class AMD
         {
             /// <summary> <b>[requires: GL_AMD_debug_output] [glDebugMessageEnableAMD]</b>  </summary>
-            public static void DebugMessageEnable(All category, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._glDebugMessageEnableAMD_fnptr((uint)category, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
+            public static void DebugMessageEnableAMD(All category, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._glDebugMessageEnableAMD_fnptr((uint)category, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
             
             /// <summary> <b>[requires: GL_AMD_debug_output] [glDebugMessageInsertAMD]</b>  </summary>
-            public static void DebugMessageInsert(All category, DebugSeverity severity, uint id, int length, byte* buf) => GLPointers._glDebugMessageInsertAMD_fnptr((uint)category, (uint)severity, id, length, buf);
+            public static void DebugMessageInsertAMD(All category, DebugSeverity severity, uint id, int length, byte* buf) => GLPointers._glDebugMessageInsertAMD_fnptr((uint)category, (uint)severity, id, length, buf);
             
             /// <summary> <b>[requires: GL_AMD_debug_output] [glDebugMessageCallbackAMD]</b>  </summary>
-            public static void DebugMessageCallback(IntPtr callback, void* userParam) => GLPointers._glDebugMessageCallbackAMD_fnptr(callback, userParam);
+            public static void DebugMessageCallbackAMD(IntPtr callback, void* userParam) => GLPointers._glDebugMessageCallbackAMD_fnptr(callback, userParam);
             
             /// <summary> <b>[requires: GL_AMD_debug_output] [glGetDebugMessageLogAMD]</b>  </summary>
-            public static uint GetDebugMessageLog(uint count, int bufSize, All* categories, DebugSeverity* severities, uint* ids, int* lengths, byte* message) => GLPointers._glGetDebugMessageLogAMD_fnptr(count, bufSize, (uint*)categories, (uint*)severities, ids, lengths, message);
+            public static uint GetDebugMessageLogAMD(uint count, int bufSize, All* categories, DebugSeverity* severities, uint* ids, int* lengths, byte* message) => GLPointers._glGetDebugMessageLogAMD_fnptr(count, bufSize, (uint*)categories, (uint*)severities, ids, lengths, message);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend] [glBlendFuncIndexedAMD]</b>  </summary>
-            public static void BlendFuncIndexed(uint buf, All src, All dst) => GLPointers._glBlendFuncIndexedAMD_fnptr(buf, (uint)src, (uint)dst);
+            public static void BlendFuncIndexedAMD(uint buf, All src, All dst) => GLPointers._glBlendFuncIndexedAMD_fnptr(buf, (uint)src, (uint)dst);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend] [glBlendFuncSeparateIndexedAMD]</b>  </summary>
-            public static void BlendFuncSeparateIndexed(uint buf, BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparateIndexedAMD_fnptr(buf, (uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
+            public static void BlendFuncSeparateIndexedAMD(uint buf, BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparateIndexedAMD_fnptr(buf, (uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend] [glBlendEquationIndexedAMD]</b>  </summary>
-            public static void BlendEquationIndexed(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationIndexedAMD_fnptr(buf, (uint)mode);
+            public static void BlendEquationIndexedAMD(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationIndexedAMD_fnptr(buf, (uint)mode);
             
             /// <summary> <b>[requires: GL_AMD_draw_buffers_blend] [glBlendEquationSeparateIndexedAMD]</b>  </summary>
-            public static void BlendEquationSeparateIndexed(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateIndexedAMD_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateIndexedAMD(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateIndexedAMD_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_AMD_framebuffer_multisample_advanced] [glRenderbufferStorageMultisampleAdvancedAMD]</b>  </summary>
-            public static void RenderbufferStorageMultisampleAdvanced(RenderbufferTarget target, int samples, int storageSamples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleAdvancedAMD_fnptr((uint)target, samples, storageSamples, (uint)internalformat, width, height);
+            public static void RenderbufferStorageMultisampleAdvancedAMD(RenderbufferTarget target, int samples, int storageSamples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleAdvancedAMD_fnptr((uint)target, samples, storageSamples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_AMD_framebuffer_multisample_advanced] [glNamedRenderbufferStorageMultisampleAdvancedAMD]</b>  </summary>
-            public static void NamedRenderbufferStorageMultisampleAdvanced(int renderbuffer, int samples, int storageSamples, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageMultisampleAdvancedAMD_fnptr(renderbuffer, samples, storageSamples, (uint)internalformat, width, height);
+            public static void NamedRenderbufferStorageMultisampleAdvancedAMD(int renderbuffer, int samples, int storageSamples, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageMultisampleAdvancedAMD_fnptr(renderbuffer, samples, storageSamples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_AMD_framebuffer_sample_positions] [glFramebufferSamplePositionsfvAMD]</b>  </summary>
-            public static void FramebufferSamplePositionsfv(FramebufferTarget target, uint numsamples, uint pixelindex, float* values) => GLPointers._glFramebufferSamplePositionsfvAMD_fnptr((uint)target, numsamples, pixelindex, values);
+            public static void FramebufferSamplePositionsfvAMD(FramebufferTarget target, uint numsamples, uint pixelindex, float* values) => GLPointers._glFramebufferSamplePositionsfvAMD_fnptr((uint)target, numsamples, pixelindex, values);
             
             /// <summary> <b>[requires: GL_AMD_framebuffer_sample_positions] [glNamedFramebufferSamplePositionsfvAMD]</b>  </summary>
-            public static void NamedFramebufferSamplePositionsfv(int framebuffer, uint numsamples, uint pixelindex, float* values) => GLPointers._glNamedFramebufferSamplePositionsfvAMD_fnptr(framebuffer, numsamples, pixelindex, values);
+            public static void NamedFramebufferSamplePositionsfvAMD(int framebuffer, uint numsamples, uint pixelindex, float* values) => GLPointers._glNamedFramebufferSamplePositionsfvAMD_fnptr(framebuffer, numsamples, pixelindex, values);
             
             /// <summary> <b>[requires: GL_AMD_framebuffer_sample_positions] [glGetFramebufferParameterfvAMD]</b>  </summary>
-            public static void GetFramebufferParameterfv(FramebufferTarget target, FramebufferAttachmentParameterName pname, uint numsamples, uint pixelindex, int size, float* values) => GLPointers._glGetFramebufferParameterfvAMD_fnptr((uint)target, (uint)pname, numsamples, pixelindex, size, values);
+            public static void GetFramebufferParameterfvAMD(FramebufferTarget target, FramebufferAttachmentParameterName pname, uint numsamples, uint pixelindex, int size, float* values) => GLPointers._glGetFramebufferParameterfvAMD_fnptr((uint)target, (uint)pname, numsamples, pixelindex, size, values);
             
             /// <summary> <b>[requires: GL_AMD_framebuffer_sample_positions] [glGetNamedFramebufferParameterfvAMD]</b>  </summary>
-            public static void GetNamedFramebufferParameterfv(int framebuffer, All pname, uint numsamples, uint pixelindex, int size, float* values) => GLPointers._glGetNamedFramebufferParameterfvAMD_fnptr(framebuffer, (uint)pname, numsamples, pixelindex, size, values);
+            public static void GetNamedFramebufferParameterfvAMD(int framebuffer, All pname, uint numsamples, uint pixelindex, int size, float* values) => GLPointers._glGetNamedFramebufferParameterfvAMD_fnptr(framebuffer, (uint)pname, numsamples, pixelindex, size, values);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform1i64NV]</b>  </summary>
             public static void Uniform1i64NV(int location, long x) => GLPointers._glUniform1i64NV_fnptr(location, x);
@@ -4887,182 +4887,182 @@ namespace OpenTK.Graphics.OpenGL
             public static void ProgramUniform4ui64vNV(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform4ui64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_interleaved_elements] [glVertexAttribParameteriAMD]</b>  </summary>
-            public static void VertexAttribParameteri(uint index, All pname, int param) => GLPointers._glVertexAttribParameteriAMD_fnptr(index, (uint)pname, param);
+            public static void VertexAttribParameteriAMD(uint index, All pname, int param) => GLPointers._glVertexAttribParameteriAMD_fnptr(index, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_AMD_multi_draw_indirect] [glMultiDrawArraysIndirectAMD]</b>  </summary>
-            public static void MultiDrawArraysIndirect(PrimitiveType mode, void* indirect, int primcount, int stride) => GLPointers._glMultiDrawArraysIndirectAMD_fnptr((uint)mode, indirect, primcount, stride);
+            public static void MultiDrawArraysIndirectAMD(PrimitiveType mode, void* indirect, int primcount, int stride) => GLPointers._glMultiDrawArraysIndirectAMD_fnptr((uint)mode, indirect, primcount, stride);
             
             /// <summary> <b>[requires: GL_AMD_multi_draw_indirect] [glMultiDrawElementsIndirectAMD]</b>  </summary>
-            public static void MultiDrawElementsIndirect(PrimitiveType mode, DrawElementsType type, void* indirect, int primcount, int stride) => GLPointers._glMultiDrawElementsIndirectAMD_fnptr((uint)mode, (uint)type, indirect, primcount, stride);
+            public static void MultiDrawElementsIndirectAMD(PrimitiveType mode, DrawElementsType type, void* indirect, int primcount, int stride) => GLPointers._glMultiDrawElementsIndirectAMD_fnptr((uint)mode, (uint)type, indirect, primcount, stride);
             
             /// <summary> <b>[requires: GL_AMD_name_gen_delete] [glGenNamesAMD]</b>  </summary>
-            public static void GenNames(All identifier, uint num, uint* names) => GLPointers._glGenNamesAMD_fnptr((uint)identifier, num, names);
+            public static void GenNamesAMD(All identifier, uint num, uint* names) => GLPointers._glGenNamesAMD_fnptr((uint)identifier, num, names);
             
             /// <summary> <b>[requires: GL_AMD_name_gen_delete] [glDeleteNamesAMD]</b>  </summary>
-            public static void DeleteNames(All identifier, uint num, uint* names) => GLPointers._glDeleteNamesAMD_fnptr((uint)identifier, num, names);
+            public static void DeleteNamesAMD(All identifier, uint num, uint* names) => GLPointers._glDeleteNamesAMD_fnptr((uint)identifier, num, names);
             
             /// <summary> <b>[requires: GL_AMD_name_gen_delete] [glIsNameAMD]</b>  </summary>
-            public static bool IsName(All identifier, uint name) => GLPointers._glIsNameAMD_fnptr((uint)identifier, name) != 0;
+            public static bool IsNameAMD(All identifier, uint name) => GLPointers._glIsNameAMD_fnptr((uint)identifier, name) != 0;
             
             /// <summary> <b>[requires: GL_AMD_occlusion_query_event] [glQueryObjectParameteruiAMD]</b>  </summary>
-            public static void QueryObjectParameterui(QueryTarget target, int id, All pname, OcclusionQueryEventMaskAMD param) => GLPointers._glQueryObjectParameteruiAMD_fnptr((uint)target, id, (uint)pname, (uint)param);
+            public static void QueryObjectParameteruiAMD(QueryTarget target, int id, All pname, OcclusionQueryEventMaskAMD param) => GLPointers._glQueryObjectParameteruiAMD_fnptr((uint)target, id, (uint)pname, (uint)param);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glGetPerfMonitorGroupsAMD]</b>  </summary>
-            public static void GetPerfMonitorGroups(int* numGroups, int groupsSize, uint* groups) => GLPointers._glGetPerfMonitorGroupsAMD_fnptr(numGroups, groupsSize, groups);
+            public static void GetPerfMonitorGroupsAMD(int* numGroups, int groupsSize, uint* groups) => GLPointers._glGetPerfMonitorGroupsAMD_fnptr(numGroups, groupsSize, groups);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glGetPerfMonitorCountersAMD]</b>  </summary>
-            public static void GetPerfMonitorCounters(uint group, int* numCounters, int* maxActiveCounters, int counterSize, uint* counters) => GLPointers._glGetPerfMonitorCountersAMD_fnptr(group, numCounters, maxActiveCounters, counterSize, counters);
+            public static void GetPerfMonitorCountersAMD(uint group, int* numCounters, int* maxActiveCounters, int counterSize, uint* counters) => GLPointers._glGetPerfMonitorCountersAMD_fnptr(group, numCounters, maxActiveCounters, counterSize, counters);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glGetPerfMonitorGroupStringAMD]</b>  </summary>
-            public static void GetPerfMonitorGroupString(uint group, int bufSize, int* length, byte* groupString) => GLPointers._glGetPerfMonitorGroupStringAMD_fnptr(group, bufSize, length, groupString);
+            public static void GetPerfMonitorGroupStringAMD(uint group, int bufSize, int* length, byte* groupString) => GLPointers._glGetPerfMonitorGroupStringAMD_fnptr(group, bufSize, length, groupString);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glGetPerfMonitorCounterStringAMD]</b>  </summary>
-            public static void GetPerfMonitorCounterString(uint group, uint counter, int bufSize, int* length, byte* counterString) => GLPointers._glGetPerfMonitorCounterStringAMD_fnptr(group, counter, bufSize, length, counterString);
+            public static void GetPerfMonitorCounterStringAMD(uint group, uint counter, int bufSize, int* length, byte* counterString) => GLPointers._glGetPerfMonitorCounterStringAMD_fnptr(group, counter, bufSize, length, counterString);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glGetPerfMonitorCounterInfoAMD]</b>  </summary>
-            public static void GetPerfMonitorCounterInfo(uint group, uint counter, All pname, void* data) => GLPointers._glGetPerfMonitorCounterInfoAMD_fnptr(group, counter, (uint)pname, data);
+            public static void GetPerfMonitorCounterInfoAMD(uint group, uint counter, All pname, void* data) => GLPointers._glGetPerfMonitorCounterInfoAMD_fnptr(group, counter, (uint)pname, data);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glGenPerfMonitorsAMD]</b>  </summary>
-            public static void GenPerfMonitors(int n, uint* monitors) => GLPointers._glGenPerfMonitorsAMD_fnptr(n, monitors);
+            public static void GenPerfMonitorsAMD(int n, uint* monitors) => GLPointers._glGenPerfMonitorsAMD_fnptr(n, monitors);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glDeletePerfMonitorsAMD]</b>  </summary>
-            public static void DeletePerfMonitors(int n, uint* monitors) => GLPointers._glDeletePerfMonitorsAMD_fnptr(n, monitors);
+            public static void DeletePerfMonitorsAMD(int n, uint* monitors) => GLPointers._glDeletePerfMonitorsAMD_fnptr(n, monitors);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glSelectPerfMonitorCountersAMD]</b>  </summary>
-            public static void SelectPerfMonitorCounters(uint monitor, bool enable, uint group, int numCounters, uint* counterList) => GLPointers._glSelectPerfMonitorCountersAMD_fnptr(monitor, (byte)(enable ? 1 : 0), group, numCounters, counterList);
+            public static void SelectPerfMonitorCountersAMD(uint monitor, bool enable, uint group, int numCounters, uint* counterList) => GLPointers._glSelectPerfMonitorCountersAMD_fnptr(monitor, (byte)(enable ? 1 : 0), group, numCounters, counterList);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glBeginPerfMonitorAMD]</b>  </summary>
-            public static void BeginPerfMonitor(uint monitor) => GLPointers._glBeginPerfMonitorAMD_fnptr(monitor);
+            public static void BeginPerfMonitorAMD(uint monitor) => GLPointers._glBeginPerfMonitorAMD_fnptr(monitor);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glEndPerfMonitorAMD]</b>  </summary>
-            public static void EndPerfMonitor(uint monitor) => GLPointers._glEndPerfMonitorAMD_fnptr(monitor);
+            public static void EndPerfMonitorAMD(uint monitor) => GLPointers._glEndPerfMonitorAMD_fnptr(monitor);
             
             /// <summary> <b>[requires: GL_AMD_performance_monitor] [glGetPerfMonitorCounterDataAMD]</b>  </summary>
-            public static void GetPerfMonitorCounterData(uint monitor, All pname, int dataSize, uint* data, int* bytesWritten) => GLPointers._glGetPerfMonitorCounterDataAMD_fnptr(monitor, (uint)pname, dataSize, data, bytesWritten);
+            public static void GetPerfMonitorCounterDataAMD(uint monitor, All pname, int dataSize, uint* data, int* bytesWritten) => GLPointers._glGetPerfMonitorCounterDataAMD_fnptr(monitor, (uint)pname, dataSize, data, bytesWritten);
             
             /// <summary> <b>[requires: GL_AMD_sample_positions] [glSetMultisamplefvAMD]</b>  </summary>
-            public static void SetMultisamplefv(All pname, uint index, float* val) => GLPointers._glSetMultisamplefvAMD_fnptr((uint)pname, index, val);
+            public static void SetMultisamplefvAMD(All pname, uint index, float* val) => GLPointers._glSetMultisamplefvAMD_fnptr((uint)pname, index, val);
             
             /// <summary> <b>[requires: GL_AMD_sparse_texture] [glTexStorageSparseAMD]</b>  </summary>
-            public static void TexStorageSparse(TextureTarget target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTexStorageSparseAMD_fnptr((uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
+            public static void TexStorageSparseAMD(TextureTarget target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTexStorageSparseAMD_fnptr((uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
             
             /// <summary> <b>[requires: GL_AMD_sparse_texture] [glTextureStorageSparseAMD]</b>  </summary>
-            public static void TextureStorageSparse(int texture, All target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTextureStorageSparseAMD_fnptr(texture, (uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
+            public static void TextureStorageSparseAMD(int texture, All target, SizedInternalFormat internalFormat, int width, int height, int depth, int layers, TextureStorageMaskAMD flags) => GLPointers._glTextureStorageSparseAMD_fnptr(texture, (uint)target, (uint)internalFormat, width, height, depth, layers, (uint)flags);
             
             /// <summary> <b>[requires: GL_AMD_stencil_operation_extended] [glStencilOpValueAMD]</b>  </summary>
-            public static void StencilOpValue(TriangleFace face, uint value) => GLPointers._glStencilOpValueAMD_fnptr((uint)face, value);
+            public static void StencilOpValueAMD(TriangleFace face, uint value) => GLPointers._glStencilOpValueAMD_fnptr((uint)face, value);
             
             /// <summary> <b>[requires: GL_AMD_vertex_shader_tessellator] [glTessellationFactorAMD]</b>  </summary>
-            public static void TessellationFactor(float factor) => GLPointers._glTessellationFactorAMD_fnptr(factor);
+            public static void TessellationFactorAMD(float factor) => GLPointers._glTessellationFactorAMD_fnptr(factor);
             
             /// <summary> <b>[requires: GL_AMD_vertex_shader_tessellator] [glTessellationModeAMD]</b>  </summary>
-            public static void TessellationMode(All mode) => GLPointers._glTessellationModeAMD_fnptr((uint)mode);
+            public static void TessellationModeAMD(All mode) => GLPointers._glTessellationModeAMD_fnptr((uint)mode);
             
         }
         /// <summary>APPLE extensions.</summary>
         public static unsafe partial class APPLE
         {
             /// <summary> <b>[requires: GL_APPLE_element_array] [glElementPointerAPPLE]</b>  </summary>
-            public static void ElementPointer(ElementPointerTypeATI type, void* pointer) => GLPointers._glElementPointerAPPLE_fnptr((uint)type, pointer);
+            public static void ElementPointerAPPLE(ElementPointerTypeATI type, void* pointer) => GLPointers._glElementPointerAPPLE_fnptr((uint)type, pointer);
             
             /// <summary> <b>[requires: GL_APPLE_element_array] [glDrawElementArrayAPPLE]</b>  </summary>
-            public static void DrawElementArray(PrimitiveType mode, int first, int count) => GLPointers._glDrawElementArrayAPPLE_fnptr((uint)mode, first, count);
+            public static void DrawElementArrayAPPLE(PrimitiveType mode, int first, int count) => GLPointers._glDrawElementArrayAPPLE_fnptr((uint)mode, first, count);
             
             /// <summary> <b>[requires: GL_APPLE_element_array] [glDrawRangeElementArrayAPPLE]</b>  </summary>
-            public static void DrawRangeElementArray(PrimitiveType mode, uint start, uint end, int first, int count) => GLPointers._glDrawRangeElementArrayAPPLE_fnptr((uint)mode, start, end, first, count);
+            public static void DrawRangeElementArrayAPPLE(PrimitiveType mode, uint start, uint end, int first, int count) => GLPointers._glDrawRangeElementArrayAPPLE_fnptr((uint)mode, start, end, first, count);
             
             /// <summary> <b>[requires: GL_APPLE_element_array] [glMultiDrawElementArrayAPPLE]</b>  </summary>
-            public static void MultiDrawElementArray(PrimitiveType mode, int* first, int* count, int primcount) => GLPointers._glMultiDrawElementArrayAPPLE_fnptr((uint)mode, first, count, primcount);
+            public static void MultiDrawElementArrayAPPLE(PrimitiveType mode, int* first, int* count, int primcount) => GLPointers._glMultiDrawElementArrayAPPLE_fnptr((uint)mode, first, count, primcount);
             
             /// <summary> <b>[requires: GL_APPLE_element_array] [glMultiDrawRangeElementArrayAPPLE]</b>  </summary>
-            public static void MultiDrawRangeElementArray(PrimitiveType mode, uint start, uint end, int* first, int* count, int primcount) => GLPointers._glMultiDrawRangeElementArrayAPPLE_fnptr((uint)mode, start, end, first, count, primcount);
+            public static void MultiDrawRangeElementArrayAPPLE(PrimitiveType mode, uint start, uint end, int* first, int* count, int primcount) => GLPointers._glMultiDrawRangeElementArrayAPPLE_fnptr((uint)mode, start, end, first, count, primcount);
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glGenFencesAPPLE]</b>  </summary>
-            public static void GenFences(int n, uint* fences) => GLPointers._glGenFencesAPPLE_fnptr(n, fences);
+            public static void GenFencesAPPLE(int n, uint* fences) => GLPointers._glGenFencesAPPLE_fnptr(n, fences);
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glDeleteFencesAPPLE]</b>  </summary>
-            public static void DeleteFences(int n, uint* fences) => GLPointers._glDeleteFencesAPPLE_fnptr(n, fences);
+            public static void DeleteFencesAPPLE(int n, uint* fences) => GLPointers._glDeleteFencesAPPLE_fnptr(n, fences);
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glSetFenceAPPLE]</b>  </summary>
-            public static void SetFence(uint fence) => GLPointers._glSetFenceAPPLE_fnptr(fence);
+            public static void SetFenceAPPLE(uint fence) => GLPointers._glSetFenceAPPLE_fnptr(fence);
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glIsFenceAPPLE]</b>  </summary>
-            public static bool IsFence(uint fence) => GLPointers._glIsFenceAPPLE_fnptr(fence) != 0;
+            public static bool IsFenceAPPLE(uint fence) => GLPointers._glIsFenceAPPLE_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glTestFenceAPPLE]</b>  </summary>
-            public static bool TestFence(uint fence) => GLPointers._glTestFenceAPPLE_fnptr(fence) != 0;
+            public static bool TestFenceAPPLE(uint fence) => GLPointers._glTestFenceAPPLE_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glFinishFenceAPPLE]</b>  </summary>
-            public static void FinishFence(uint fence) => GLPointers._glFinishFenceAPPLE_fnptr(fence);
+            public static void FinishFenceAPPLE(uint fence) => GLPointers._glFinishFenceAPPLE_fnptr(fence);
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glTestObjectAPPLE]</b>  </summary>
-            public static bool TestObject(ObjectTypeAPPLE obj, uint name) => GLPointers._glTestObjectAPPLE_fnptr((uint)obj, name) != 0;
+            public static bool TestObjectAPPLE(ObjectTypeAPPLE obj, uint name) => GLPointers._glTestObjectAPPLE_fnptr((uint)obj, name) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_fence] [glFinishObjectAPPLE]</b>  </summary>
-            public static void FinishObject(ObjectTypeAPPLE obj, int name) => GLPointers._glFinishObjectAPPLE_fnptr((uint)obj, name);
+            public static void FinishObjectAPPLE(ObjectTypeAPPLE obj, int name) => GLPointers._glFinishObjectAPPLE_fnptr((uint)obj, name);
             
             /// <summary> <b>[requires: GL_APPLE_flush_buffer_range] [glBufferParameteriAPPLE]</b>  </summary>
-            public static void BufferParameteri(All target, All pname, int param) => GLPointers._glBufferParameteriAPPLE_fnptr((uint)target, (uint)pname, param);
+            public static void BufferParameteriAPPLE(All target, All pname, int param) => GLPointers._glBufferParameteriAPPLE_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_APPLE_flush_buffer_range] [glFlushMappedBufferRangeAPPLE]</b>  </summary>
-            public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint size) => GLPointers._glFlushMappedBufferRangeAPPLE_fnptr((uint)target, offset, size);
+            public static void FlushMappedBufferRangeAPPLE(BufferTargetARB target, IntPtr offset, nint size) => GLPointers._glFlushMappedBufferRangeAPPLE_fnptr((uint)target, offset, size);
             
             /// <summary> <b>[requires: GL_APPLE_object_purgeable] [glObjectPurgeableAPPLE]</b>  </summary>
-            public static All ObjectPurgeable(All objectType, uint name, All option) => (All) GLPointers._glObjectPurgeableAPPLE_fnptr((uint)objectType, name, (uint)option);
+            public static All ObjectPurgeableAPPLE(All objectType, uint name, All option) => (All) GLPointers._glObjectPurgeableAPPLE_fnptr((uint)objectType, name, (uint)option);
             
             /// <summary> <b>[requires: GL_APPLE_object_purgeable] [glObjectUnpurgeableAPPLE]</b>  </summary>
-            public static All ObjectUnpurgeable(All objectType, uint name, All option) => (All) GLPointers._glObjectUnpurgeableAPPLE_fnptr((uint)objectType, name, (uint)option);
+            public static All ObjectUnpurgeableAPPLE(All objectType, uint name, All option) => (All) GLPointers._glObjectUnpurgeableAPPLE_fnptr((uint)objectType, name, (uint)option);
             
             /// <summary> <b>[requires: GL_APPLE_object_purgeable] [glGetObjectParameterivAPPLE]</b>  </summary>
-            public static void GetObjectParameteriv(All objectType, uint name, All pname, int* parameters) => GLPointers._glGetObjectParameterivAPPLE_fnptr((uint)objectType, name, (uint)pname, parameters);
+            public static void GetObjectParameterivAPPLE(All objectType, uint name, All pname, int* parameters) => GLPointers._glGetObjectParameterivAPPLE_fnptr((uint)objectType, name, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_APPLE_texture_range] [glTextureRangeAPPLE]</b>  </summary>
-            public static void TextureRange(All target, int length, void* pointer) => GLPointers._glTextureRangeAPPLE_fnptr((uint)target, length, pointer);
+            public static void TextureRangeAPPLE(All target, int length, void* pointer) => GLPointers._glTextureRangeAPPLE_fnptr((uint)target, length, pointer);
             
             /// <summary> <b>[requires: GL_APPLE_texture_range] [glGetTexParameterPointervAPPLE]</b>  </summary>
-            public static void GetTexParameterPointerv(All target, All pname, void** parameters) => GLPointers._glGetTexParameterPointervAPPLE_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexParameterPointervAPPLE(All target, All pname, void** parameters) => GLPointers._glGetTexParameterPointervAPPLE_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_object] [glBindVertexArrayAPPLE]</b>  </summary>
-            public static void BindVertexArray(int array) => GLPointers._glBindVertexArrayAPPLE_fnptr(array);
+            public static void BindVertexArrayAPPLE(int array) => GLPointers._glBindVertexArrayAPPLE_fnptr(array);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_object] [glDeleteVertexArraysAPPLE]</b>  </summary>
-            public static void DeleteVertexArrays(int n, int* arrays) => GLPointers._glDeleteVertexArraysAPPLE_fnptr(n, arrays);
+            public static void DeleteVertexArraysAPPLE(int n, int* arrays) => GLPointers._glDeleteVertexArraysAPPLE_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_object] [glGenVertexArraysAPPLE]</b>  </summary>
-            public static void GenVertexArrays(int n, int* arrays) => GLPointers._glGenVertexArraysAPPLE_fnptr(n, arrays);
+            public static void GenVertexArraysAPPLE(int n, int* arrays) => GLPointers._glGenVertexArraysAPPLE_fnptr(n, arrays);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_object] [glIsVertexArrayAPPLE]</b>  </summary>
-            public static bool IsVertexArray(int array) => GLPointers._glIsVertexArrayAPPLE_fnptr(array) != 0;
+            public static bool IsVertexArrayAPPLE(int array) => GLPointers._glIsVertexArrayAPPLE_fnptr(array) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_range] [glVertexArrayRangeAPPLE]</b>  </summary>
-            public static void VertexArrayRange(int length, void* pointer) => GLPointers._glVertexArrayRangeAPPLE_fnptr(length, pointer);
+            public static void VertexArrayRangeAPPLE(int length, void* pointer) => GLPointers._glVertexArrayRangeAPPLE_fnptr(length, pointer);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_range] [glFlushVertexArrayRangeAPPLE]</b>  </summary>
-            public static void FlushVertexArrayRange(int length, void* pointer) => GLPointers._glFlushVertexArrayRangeAPPLE_fnptr(length, pointer);
+            public static void FlushVertexArrayRangeAPPLE(int length, void* pointer) => GLPointers._glFlushVertexArrayRangeAPPLE_fnptr(length, pointer);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_array_range] [glVertexArrayParameteriAPPLE]</b>  </summary>
-            public static void VertexArrayParameteri(VertexArrayPNameAPPLE pname, int param) => GLPointers._glVertexArrayParameteriAPPLE_fnptr((uint)pname, param);
+            public static void VertexArrayParameteriAPPLE(VertexArrayPNameAPPLE pname, int param) => GLPointers._glVertexArrayParameteriAPPLE_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_program_evaluators] [glEnableVertexAttribAPPLE]</b>  </summary>
-            public static void EnableVertexAttrib(uint index, All pname) => GLPointers._glEnableVertexAttribAPPLE_fnptr(index, (uint)pname);
+            public static void EnableVertexAttribAPPLE(uint index, All pname) => GLPointers._glEnableVertexAttribAPPLE_fnptr(index, (uint)pname);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_program_evaluators] [glDisableVertexAttribAPPLE]</b>  </summary>
-            public static void DisableVertexAttrib(uint index, All pname) => GLPointers._glDisableVertexAttribAPPLE_fnptr(index, (uint)pname);
+            public static void DisableVertexAttribAPPLE(uint index, All pname) => GLPointers._glDisableVertexAttribAPPLE_fnptr(index, (uint)pname);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_program_evaluators] [glIsVertexAttribEnabledAPPLE]</b>  </summary>
-            public static bool IsVertexAttribEnabled(uint index, All pname) => GLPointers._glIsVertexAttribEnabledAPPLE_fnptr(index, (uint)pname) != 0;
+            public static bool IsVertexAttribEnabledAPPLE(uint index, All pname) => GLPointers._glIsVertexAttribEnabledAPPLE_fnptr(index, (uint)pname) != 0;
             
             /// <summary> <b>[requires: GL_APPLE_vertex_program_evaluators] [glMapVertexAttrib1dAPPLE]</b>  </summary>
-            public static void MapVertexAttrib1d(uint index, uint size, double u1, double u2, int stride, int order, double* points) => GLPointers._glMapVertexAttrib1dAPPLE_fnptr(index, size, u1, u2, stride, order, points);
+            public static void MapVertexAttrib1dAPPLE(uint index, uint size, double u1, double u2, int stride, int order, double* points) => GLPointers._glMapVertexAttrib1dAPPLE_fnptr(index, size, u1, u2, stride, order, points);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_program_evaluators] [glMapVertexAttrib1fAPPLE]</b>  </summary>
-            public static void MapVertexAttrib1f(uint index, uint size, float u1, float u2, int stride, int order, float* points) => GLPointers._glMapVertexAttrib1fAPPLE_fnptr(index, size, u1, u2, stride, order, points);
+            public static void MapVertexAttrib1fAPPLE(uint index, uint size, float u1, float u2, int stride, int order, float* points) => GLPointers._glMapVertexAttrib1fAPPLE_fnptr(index, size, u1, u2, stride, order, points);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_program_evaluators] [glMapVertexAttrib2dAPPLE]</b>  </summary>
-            public static void MapVertexAttrib2d(uint index, uint size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double* points) => GLPointers._glMapVertexAttrib2dAPPLE_fnptr(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+            public static void MapVertexAttrib2dAPPLE(uint index, uint size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double* points) => GLPointers._glMapVertexAttrib2dAPPLE_fnptr(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
             
             /// <summary> <b>[requires: GL_APPLE_vertex_program_evaluators] [glMapVertexAttrib2fAPPLE]</b>  </summary>
-            public static void MapVertexAttrib2f(uint index, uint size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float* points) => GLPointers._glMapVertexAttrib2fAPPLE_fnptr(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+            public static void MapVertexAttrib2fAPPLE(uint index, uint size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float* points) => GLPointers._glMapVertexAttrib2fAPPLE_fnptr(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
             
         }
         /// <summary>ARB extensions.</summary>
@@ -5106,7 +5106,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void MemoryBarrierByRegion(MemoryBarrierMask barriers) => GLPointers._glMemoryBarrierByRegion_fnptr((uint)barriers);
             
             /// <summary> <b>[requires: GL_ARB_ES3_2_compatibility] [glPrimitiveBoundingBoxARB]</b>  </summary>
-            public static void PrimitiveBoundingBox(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW) => GLPointers._glPrimitiveBoundingBoxARB_fnptr(minX, minY, minZ, minW, maxX, maxY, maxZ, maxW);
+            public static void PrimitiveBoundingBoxARB(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW) => GLPointers._glPrimitiveBoundingBoxARB_fnptr(minX, minY, minZ, minW, maxX, maxY, maxZ, maxW);
             
             /// <summary> <b>[requires: v4.2 | GL_ARB_base_instance] [glDrawArraysInstancedBaseInstance]</b> Draw multiple instances of a range of elements with offset applied to instanced attributes. </summary>
             /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>
@@ -5139,52 +5139,52 @@ namespace OpenTK.Graphics.OpenGL
             public static void DrawElementsInstancedBaseVertexBaseInstance(PrimitiveType mode, int count, DrawElementsType type, void* indices, int instancecount, int basevertex, uint baseinstance) => GLPointers._glDrawElementsInstancedBaseVertexBaseInstance_fnptr((uint)mode, count, (uint)type, indices, instancecount, basevertex, baseinstance);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glGetTextureHandleARB]</b>  </summary>
-            public static ulong GetTextureHandle(int texture) => GLPointers._glGetTextureHandleARB_fnptr(texture);
+            public static ulong GetTextureHandleARB(int texture) => GLPointers._glGetTextureHandleARB_fnptr(texture);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glGetTextureSamplerHandleARB]</b>  </summary>
-            public static ulong GetTextureSamplerHandle(int texture, int sampler) => GLPointers._glGetTextureSamplerHandleARB_fnptr(texture, sampler);
+            public static ulong GetTextureSamplerHandleARB(int texture, int sampler) => GLPointers._glGetTextureSamplerHandleARB_fnptr(texture, sampler);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glMakeTextureHandleResidentARB]</b>  </summary>
-            public static void MakeTextureHandleResident(ulong handle) => GLPointers._glMakeTextureHandleResidentARB_fnptr(handle);
+            public static void MakeTextureHandleResidentARB(ulong handle) => GLPointers._glMakeTextureHandleResidentARB_fnptr(handle);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glMakeTextureHandleNonResidentARB]</b>  </summary>
-            public static void MakeTextureHandleNonResident(ulong handle) => GLPointers._glMakeTextureHandleNonResidentARB_fnptr(handle);
+            public static void MakeTextureHandleNonResidentARB(ulong handle) => GLPointers._glMakeTextureHandleNonResidentARB_fnptr(handle);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glGetImageHandleARB]</b>  </summary>
-            public static ulong GetImageHandle(int texture, int level, bool layered, int layer, PixelFormat format) => GLPointers._glGetImageHandleARB_fnptr(texture, level, (byte)(layered ? 1 : 0), layer, (uint)format);
+            public static ulong GetImageHandleARB(int texture, int level, bool layered, int layer, PixelFormat format) => GLPointers._glGetImageHandleARB_fnptr(texture, level, (byte)(layered ? 1 : 0), layer, (uint)format);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glMakeImageHandleResidentARB]</b>  </summary>
-            public static void MakeImageHandleResident(ulong handle, All access) => GLPointers._glMakeImageHandleResidentARB_fnptr(handle, (uint)access);
+            public static void MakeImageHandleResidentARB(ulong handle, All access) => GLPointers._glMakeImageHandleResidentARB_fnptr(handle, (uint)access);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glMakeImageHandleNonResidentARB]</b>  </summary>
-            public static void MakeImageHandleNonResident(ulong handle) => GLPointers._glMakeImageHandleNonResidentARB_fnptr(handle);
+            public static void MakeImageHandleNonResidentARB(ulong handle) => GLPointers._glMakeImageHandleNonResidentARB_fnptr(handle);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glUniformHandleui64ARB]</b>  </summary>
-            public static void UniformHandleui64(int location, ulong value) => GLPointers._glUniformHandleui64ARB_fnptr(location, value);
+            public static void UniformHandleui64ARB(int location, ulong value) => GLPointers._glUniformHandleui64ARB_fnptr(location, value);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glUniformHandleui64vARB]</b>  </summary>
-            public static void UniformHandleui64v(int location, int count, ulong* value) => GLPointers._glUniformHandleui64vARB_fnptr(location, count, value);
+            public static void UniformHandleui64vARB(int location, int count, ulong* value) => GLPointers._glUniformHandleui64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glProgramUniformHandleui64ARB]</b>  </summary>
-            public static void ProgramUniformHandleui64(int program, int location, ulong value) => GLPointers._glProgramUniformHandleui64ARB_fnptr(program, location, value);
+            public static void ProgramUniformHandleui64ARB(int program, int location, ulong value) => GLPointers._glProgramUniformHandleui64ARB_fnptr(program, location, value);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glProgramUniformHandleui64vARB]</b>  </summary>
-            public static void ProgramUniformHandleui64v(int program, int location, int count, ulong* values) => GLPointers._glProgramUniformHandleui64vARB_fnptr(program, location, count, values);
+            public static void ProgramUniformHandleui64vARB(int program, int location, int count, ulong* values) => GLPointers._glProgramUniformHandleui64vARB_fnptr(program, location, count, values);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glIsTextureHandleResidentARB]</b>  </summary>
-            public static bool IsTextureHandleResident(ulong handle) => GLPointers._glIsTextureHandleResidentARB_fnptr(handle) != 0;
+            public static bool IsTextureHandleResidentARB(ulong handle) => GLPointers._glIsTextureHandleResidentARB_fnptr(handle) != 0;
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glIsImageHandleResidentARB]</b>  </summary>
-            public static bool IsImageHandleResident(ulong handle) => GLPointers._glIsImageHandleResidentARB_fnptr(handle) != 0;
+            public static bool IsImageHandleResidentARB(ulong handle) => GLPointers._glIsImageHandleResidentARB_fnptr(handle) != 0;
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glVertexAttribL1ui64ARB]</b>  </summary>
-            public static void VertexAttribL1ui64(uint index, ulong x) => GLPointers._glVertexAttribL1ui64ARB_fnptr(index, x);
+            public static void VertexAttribL1ui64ARB(uint index, ulong x) => GLPointers._glVertexAttribL1ui64ARB_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glVertexAttribL1ui64vARB]</b>  </summary>
-            public static void VertexAttribL1ui64v(uint index, ulong* v) => GLPointers._glVertexAttribL1ui64vARB_fnptr(index, v);
+            public static void VertexAttribL1ui64vARB(uint index, ulong* v) => GLPointers._glVertexAttribL1ui64vARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_bindless_texture] [glGetVertexAttribLui64vARB]</b>  </summary>
-            public static void GetVertexAttribLui64v(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vARB_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribLui64vARB(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vARB_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_blend_func_extended] [glBindFragDataLocationIndexed]</b> Bind a user-defined varying out variable to a fragment shader color number and index. </summary>
             /// <param name="program"> The name of the program containing varying out variable whose binding to modify </param>
@@ -5209,7 +5209,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void BufferStorage(BufferStorageTarget target, nint size, void* data, BufferStorageMask flags) => GLPointers._glBufferStorage_fnptr((uint)target, size, data, (uint)flags);
             
             /// <summary> <b>[requires: GL_ARB_cl_event] [glCreateSyncFromCLeventARB]</b>  </summary>
-            public static GLSync CreateSyncFromCLevent(CLContext* context, CLEvent* @event, uint flags) => (GLSync) GLPointers._glCreateSyncFromCLeventARB_fnptr((IntPtr*)context, (IntPtr*)@event, flags);
+            public static GLSync CreateSyncFromCLeventARB(CLContext* context, CLEvent* @event, uint flags) => (GLSync) GLPointers._glCreateSyncFromCLeventARB_fnptr((IntPtr*)context, (IntPtr*)@event, flags);
             
             /// <summary> <b>[requires: v4.3 | GL_ARB_clear_buffer_object] [glClearBufferData]</b> Fill a buffer object&apos;s data store with a fixed value. </summary>
             /// <param name="target"> Specifies the target to which the buffer object is bound for glClearBufferData, which must be one of the buffer binding targets in the following table: </param>
@@ -5262,7 +5262,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void ClipControl(ClipControlOrigin origin, ClipControlDepth depth) => GLPointers._glClipControl_fnptr((uint)origin, (uint)depth);
             
             /// <summary> <b>[requires: GL_ARB_color_buffer_float] [glClampColorARB]</b>  </summary>
-            public static void ClampColor(ClampColorTargetARB target, ClampColorModeARB clamp) => GLPointers._glClampColorARB_fnptr((uint)target, (uint)clamp);
+            public static void ClampColorARB(ClampColorTargetARB target, ClampColorModeARB clamp) => GLPointers._glClampColorARB_fnptr((uint)target, (uint)clamp);
             
             /// <summary> <b>[requires: v4.3 | GL_ARB_compute_shader] [glDispatchCompute]</b> Launch one or more compute work groups. </summary>
             /// <param name="num_groups_x"> The number of work groups to be launched in the X dimension. </param>
@@ -5277,7 +5277,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void DispatchComputeIndirect(IntPtr indirect) => GLPointers._glDispatchComputeIndirect_fnptr(indirect);
             
             /// <summary> <b>[requires: GL_ARB_compute_variable_group_size] [glDispatchComputeGroupSizeARB]</b>  </summary>
-            public static void DispatchComputeGroupSize(uint num_groups_x, uint num_groups_y, uint num_groups_z, uint group_size_x, uint group_size_y, uint group_size_z) => GLPointers._glDispatchComputeGroupSizeARB_fnptr(num_groups_x, num_groups_y, num_groups_z, group_size_x, group_size_y, group_size_z);
+            public static void DispatchComputeGroupSizeARB(uint num_groups_x, uint num_groups_y, uint num_groups_z, uint group_size_x, uint group_size_y, uint group_size_z) => GLPointers._glDispatchComputeGroupSizeARB_fnptr(num_groups_x, num_groups_y, num_groups_z, group_size_x, group_size_y, group_size_z);
             
             /// <summary> <b>[requires: v3.1 | GL_ARB_copy_buffer] [glCopyBufferSubData]</b> Copy all or part of the data store of a buffer object to the data store of another buffer object. </summary>
             /// <param name="readTarget"> Specifies the target to which the source buffer object is bound for glCopyBufferSubData </param>
@@ -5308,16 +5308,16 @@ namespace OpenTK.Graphics.OpenGL
             public static void CopyImageSubData(uint srcName, CopyImageSubDataTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, CopyImageSubDataTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) => GLPointers._glCopyImageSubData_fnptr(srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
             
             /// <summary> <b>[requires: GL_ARB_debug_output] [glDebugMessageControlARB]</b>  </summary>
-            public static void DebugMessageControl(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._glDebugMessageControlARB_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
+            public static void DebugMessageControlARB(DebugSource source, DebugType type, DebugSeverity severity, int count, uint* ids, bool enabled) => GLPointers._glDebugMessageControlARB_fnptr((uint)source, (uint)type, (uint)severity, count, ids, (byte)(enabled ? 1 : 0));
             
             /// <summary> <b>[requires: GL_ARB_debug_output] [glDebugMessageInsertARB]</b>  </summary>
-            public static void DebugMessageInsert(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => GLPointers._glDebugMessageInsertARB_fnptr((uint)source, (uint)type, id, (uint)severity, length, buf);
+            public static void DebugMessageInsertARB(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, byte* buf) => GLPointers._glDebugMessageInsertARB_fnptr((uint)source, (uint)type, id, (uint)severity, length, buf);
             
             /// <summary> <b>[requires: GL_ARB_debug_output] [glDebugMessageCallbackARB]</b>  </summary>
-            public static void DebugMessageCallback(IntPtr callback, void* userParam) => GLPointers._glDebugMessageCallbackARB_fnptr(callback, userParam);
+            public static void DebugMessageCallbackARB(IntPtr callback, void* userParam) => GLPointers._glDebugMessageCallbackARB_fnptr(callback, userParam);
             
             /// <summary> <b>[requires: GL_ARB_debug_output] [glGetDebugMessageLogARB]</b>  </summary>
-            public static uint GetDebugMessageLog(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog) => GLPointers._glGetDebugMessageLogARB_fnptr(count, bufSize, (uint*)sources, (uint*)types, ids, (uint*)severities, lengths, messageLog);
+            public static uint GetDebugMessageLogARB(uint count, int bufSize, DebugSource* sources, DebugType* types, uint* ids, DebugSeverity* severities, int* lengths, byte* messageLog) => GLPointers._glGetDebugMessageLogARB_fnptr(count, bufSize, (uint*)sources, (uint*)types, ids, (uint*)severities, lengths, messageLog);
             
             /// <summary> <b>[requires: v4.5 | GL_ARB_direct_state_access] [glCreateTransformFeedbacks]</b> Create transform feedback objects. </summary>
             /// <param name="n"> Number of transform feedback objects to create. </param>
@@ -6112,19 +6112,19 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetQueryBufferObjectuiv(int id, int buffer, QueryObjectParameterName pname, IntPtr offset) => GLPointers._glGetQueryBufferObjectuiv_fnptr(id, buffer, (uint)pname, offset);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers] [glDrawBuffersARB]</b>  </summary>
-            public static void DrawBuffers(int n, DrawBufferMode* bufs) => GLPointers._glDrawBuffersARB_fnptr(n, (uint*)bufs);
+            public static void DrawBuffersARB(int n, DrawBufferMode* bufs) => GLPointers._glDrawBuffersARB_fnptr(n, (uint*)bufs);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers_blend] [glBlendEquationiARB]</b>  </summary>
-            public static void BlendEquationi(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationiARB_fnptr(buf, (uint)mode);
+            public static void BlendEquationiARB(uint buf, BlendEquationModeEXT mode) => GLPointers._glBlendEquationiARB_fnptr(buf, (uint)mode);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers_blend] [glBlendEquationSeparateiARB]</b>  </summary>
-            public static void BlendEquationSeparatei(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateiARB_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateiARB(uint buf, BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateiARB_fnptr(buf, (uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers_blend] [glBlendFunciARB]</b>  </summary>
-            public static void BlendFunci(uint buf, BlendingFactor src, BlendingFactor dst) => GLPointers._glBlendFunciARB_fnptr(buf, (uint)src, (uint)dst);
+            public static void BlendFunciARB(uint buf, BlendingFactor src, BlendingFactor dst) => GLPointers._glBlendFunciARB_fnptr(buf, (uint)src, (uint)dst);
             
             /// <summary> <b>[requires: GL_ARB_draw_buffers_blend] [glBlendFuncSeparateiARB]</b>  </summary>
-            public static void BlendFuncSeparatei(uint buf, BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparateiARB_fnptr(buf, (uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
+            public static void BlendFuncSeparateiARB(uint buf, BlendingFactor srcRGB, BlendingFactor dstRGB, BlendingFactor srcAlpha, BlendingFactor dstAlpha) => GLPointers._glBlendFuncSeparateiARB_fnptr(buf, (uint)srcRGB, (uint)dstRGB, (uint)srcAlpha, (uint)dstAlpha);
             
             /// <summary> <b>[requires: v3.2 | GL_ARB_draw_elements_base_vertex] [glDrawElementsBaseVertex]</b> Render primitives from array data with a per-element offset. </summary>
             /// <param name="mode"> Specifies what kind of primitives to render. Symbolic constants GL_POINTS, GL_LINE_STRIP, GL_LINE_LOOP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES, GL_LINES_ADJACENCY, GL_LINE_STRIP_ADJACENCY, GL_TRIANGLES_ADJACENCY, GL_TRIANGLE_STRIP_ADJACENCY and GL_PATCHES are accepted. </param>
@@ -6180,67 +6180,67 @@ namespace OpenTK.Graphics.OpenGL
             public static void DrawElementsIndirect(PrimitiveType mode, DrawElementsType type, void* indirect) => GLPointers._glDrawElementsIndirect_fnptr((uint)mode, (uint)type, indirect);
             
             /// <summary> <b>[requires: GL_ARB_draw_instanced] [glDrawArraysInstancedARB]</b>  </summary>
-            public static void DrawArraysInstanced(PrimitiveType mode, int first, int count, int primcount) => GLPointers._glDrawArraysInstancedARB_fnptr((uint)mode, first, count, primcount);
+            public static void DrawArraysInstancedARB(PrimitiveType mode, int first, int count, int primcount) => GLPointers._glDrawArraysInstancedARB_fnptr((uint)mode, first, count, primcount);
             
             /// <summary> <b>[requires: GL_ARB_draw_instanced] [glDrawElementsInstancedARB]</b>  </summary>
-            public static void DrawElementsInstanced(PrimitiveType mode, int count, DrawElementsType type, void* indices, int primcount) => GLPointers._glDrawElementsInstancedARB_fnptr((uint)mode, count, (uint)type, indices, primcount);
+            public static void DrawElementsInstancedARB(PrimitiveType mode, int count, DrawElementsType type, void* indices, int primcount) => GLPointers._glDrawElementsInstancedARB_fnptr((uint)mode, count, (uint)type, indices, primcount);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramStringARB]</b>  </summary>
-            public static void ProgramString(ProgramTarget target, ProgramFormat format, int len, void* str) => GLPointers._glProgramStringARB_fnptr((uint)target, (uint)format, len, str);
+            public static void ProgramStringARB(ProgramTarget target, ProgramFormat format, int len, void* str) => GLPointers._glProgramStringARB_fnptr((uint)target, (uint)format, len, str);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glBindProgramARB]</b>  </summary>
-            public static void BindProgram(ProgramTarget target, int program) => GLPointers._glBindProgramARB_fnptr((uint)target, program);
+            public static void BindProgramARB(ProgramTarget target, int program) => GLPointers._glBindProgramARB_fnptr((uint)target, program);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glDeleteProgramsARB]</b>  </summary>
-            public static void DeletePrograms(int n, int* programs) => GLPointers._glDeleteProgramsARB_fnptr(n, programs);
+            public static void DeleteProgramsARB(int n, int* programs) => GLPointers._glDeleteProgramsARB_fnptr(n, programs);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glGenProgramsARB]</b>  </summary>
-            public static void GenPrograms(int n, int* programs) => GLPointers._glGenProgramsARB_fnptr(n, programs);
+            public static void GenProgramsARB(int n, int* programs) => GLPointers._glGenProgramsARB_fnptr(n, programs);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramEnvParameter4dARB]</b>  </summary>
-            public static void ProgramEnvParameter4d(ProgramTarget target, uint index, double x, double y, double z, double w) => GLPointers._glProgramEnvParameter4dARB_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramEnvParameter4dARB(ProgramTarget target, uint index, double x, double y, double z, double w) => GLPointers._glProgramEnvParameter4dARB_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramEnvParameter4dvARB]</b>  </summary>
-            public static void ProgramEnvParameter4dv(ProgramTarget target, uint index, double* parameters) => GLPointers._glProgramEnvParameter4dvARB_fnptr((uint)target, index, parameters);
+            public static void ProgramEnvParameter4dvARB(ProgramTarget target, uint index, double* parameters) => GLPointers._glProgramEnvParameter4dvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramEnvParameter4fARB]</b>  </summary>
-            public static void ProgramEnvParameter4f(ProgramTarget target, uint index, float x, float y, float z, float w) => GLPointers._glProgramEnvParameter4fARB_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramEnvParameter4fARB(ProgramTarget target, uint index, float x, float y, float z, float w) => GLPointers._glProgramEnvParameter4fARB_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramEnvParameter4fvARB]</b>  </summary>
-            public static void ProgramEnvParameter4fv(ProgramTarget target, uint index, float* parameters) => GLPointers._glProgramEnvParameter4fvARB_fnptr((uint)target, index, parameters);
+            public static void ProgramEnvParameter4fvARB(ProgramTarget target, uint index, float* parameters) => GLPointers._glProgramEnvParameter4fvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramLocalParameter4dARB]</b>  </summary>
-            public static void ProgramLocalParameter4d(ProgramTarget target, uint index, double x, double y, double z, double w) => GLPointers._glProgramLocalParameter4dARB_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramLocalParameter4dARB(ProgramTarget target, uint index, double x, double y, double z, double w) => GLPointers._glProgramLocalParameter4dARB_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramLocalParameter4dvARB]</b>  </summary>
-            public static void ProgramLocalParameter4dv(ProgramTarget target, uint index, double* parameters) => GLPointers._glProgramLocalParameter4dvARB_fnptr((uint)target, index, parameters);
+            public static void ProgramLocalParameter4dvARB(ProgramTarget target, uint index, double* parameters) => GLPointers._glProgramLocalParameter4dvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramLocalParameter4fARB]</b>  </summary>
-            public static void ProgramLocalParameter4f(ProgramTarget target, uint index, float x, float y, float z, float w) => GLPointers._glProgramLocalParameter4fARB_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramLocalParameter4fARB(ProgramTarget target, uint index, float x, float y, float z, float w) => GLPointers._glProgramLocalParameter4fARB_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glProgramLocalParameter4fvARB]</b>  </summary>
-            public static void ProgramLocalParameter4fv(ProgramTarget target, uint index, float* parameters) => GLPointers._glProgramLocalParameter4fvARB_fnptr((uint)target, index, parameters);
+            public static void ProgramLocalParameter4fvARB(ProgramTarget target, uint index, float* parameters) => GLPointers._glProgramLocalParameter4fvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glGetProgramEnvParameterdvARB]</b>  </summary>
-            public static void GetProgramEnvParameterdv(ProgramTarget target, uint index, double* parameters) => GLPointers._glGetProgramEnvParameterdvARB_fnptr((uint)target, index, parameters);
+            public static void GetProgramEnvParameterdvARB(ProgramTarget target, uint index, double* parameters) => GLPointers._glGetProgramEnvParameterdvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glGetProgramEnvParameterfvARB]</b>  </summary>
-            public static void GetProgramEnvParameterfv(ProgramTarget target, uint index, float* parameters) => GLPointers._glGetProgramEnvParameterfvARB_fnptr((uint)target, index, parameters);
+            public static void GetProgramEnvParameterfvARB(ProgramTarget target, uint index, float* parameters) => GLPointers._glGetProgramEnvParameterfvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glGetProgramLocalParameterdvARB]</b>  </summary>
-            public static void GetProgramLocalParameterdv(ProgramTarget target, uint index, double* parameters) => GLPointers._glGetProgramLocalParameterdvARB_fnptr((uint)target, index, parameters);
+            public static void GetProgramLocalParameterdvARB(ProgramTarget target, uint index, double* parameters) => GLPointers._glGetProgramLocalParameterdvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glGetProgramLocalParameterfvARB]</b>  </summary>
-            public static void GetProgramLocalParameterfv(ProgramTarget target, uint index, float* parameters) => GLPointers._glGetProgramLocalParameterfvARB_fnptr((uint)target, index, parameters);
+            public static void GetProgramLocalParameterfvARB(ProgramTarget target, uint index, float* parameters) => GLPointers._glGetProgramLocalParameterfvARB_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glGetProgramivARB]</b>  </summary>
-            public static void GetProgramiv(ProgramTarget target, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetProgramivARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetProgramivARB(ProgramTarget target, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetProgramivARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glGetProgramStringARB]</b>  </summary>
-            public static void GetProgramString(ProgramTarget target, ProgramStringProperty pname, void* str) => GLPointers._glGetProgramStringARB_fnptr((uint)target, (uint)pname, str);
+            public static void GetProgramStringARB(ProgramTarget target, ProgramStringProperty pname, void* str) => GLPointers._glGetProgramStringARB_fnptr((uint)target, (uint)pname, str);
             
             /// <summary> <b>[requires: GL_ARB_fragment_program | GL_ARB_vertex_program] [glIsProgramARB]</b>  </summary>
-            public static bool IsProgram(int program) => GLPointers._glIsProgramARB_fnptr(program) != 0;
+            public static bool IsProgramARB(int program) => GLPointers._glIsProgramARB_fnptr(program) != 0;
             
             /// <summary> <b>[requires: v4.3 | GL_ARB_framebuffer_no_attachments] [glFramebufferParameteri]</b> Set a named parameter of a framebuffer object. </summary>
             /// <param name="target"> Specifies the target to which the framebuffer is bound for glFramebufferParameteri. </param>
@@ -6407,13 +6407,13 @@ namespace OpenTK.Graphics.OpenGL
             public static void ProgramParameteriARB(int program, ProgramParameterPName pname, int value) => GLPointers._glProgramParameteriARB_fnptr(program, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_ARB_geometry_shader4] [glFramebufferTextureARB]</b>  </summary>
-            public static void FramebufferTexture(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level) => GLPointers._glFramebufferTextureARB_fnptr((uint)target, (uint)attachment, texture, level);
+            public static void FramebufferTextureARB(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level) => GLPointers._glFramebufferTextureARB_fnptr((uint)target, (uint)attachment, texture, level);
             
             /// <summary> <b>[requires: GL_ARB_geometry_shader4] [glFramebufferTextureLayerARB]</b>  </summary>
             public static void FramebufferTextureLayerARB(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int layer) => GLPointers._glFramebufferTextureLayerARB_fnptr((uint)target, (uint)attachment, texture, level, layer);
             
             /// <summary> <b>[requires: GL_ARB_geometry_shader4] [glFramebufferTextureFaceARB]</b>  </summary>
-            public static void FramebufferTextureFace(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, TextureTarget face) => GLPointers._glFramebufferTextureFaceARB_fnptr((uint)target, (uint)attachment, texture, level, (uint)face);
+            public static void FramebufferTextureFaceARB(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, TextureTarget face) => GLPointers._glFramebufferTextureFaceARB_fnptr((uint)target, (uint)attachment, texture, level, (uint)face);
             
             /// <summary> <b>[requires: v4.1 | GL_ARB_get_program_binary] [glGetProgramBinary]</b> Return a binary representation of a program object&apos;s compiled and linked executable source. </summary>
             /// <param name="program"> Specifies the name of a program object whose binary representation to retrieve. </param>
@@ -6470,7 +6470,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetCompressedTextureSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int bufSize, void* pixels) => GLPointers._glGetCompressedTextureSubImage_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, bufSize, pixels);
             
             /// <summary> <b>[requires: GL_ARB_gl_spirv] [glSpecializeShaderARB]</b>  </summary>
-            public static void SpecializeShader(int shader, byte* pEntryPoint, uint numSpecializationConstants, uint* pConstantIndex, uint* pConstantValue) => GLPointers._glSpecializeShaderARB_fnptr(shader, pEntryPoint, numSpecializationConstants, pConstantIndex, pConstantValue);
+            public static void SpecializeShaderARB(int shader, byte* pEntryPoint, uint numSpecializationConstants, uint* pConstantIndex, uint* pConstantValue) => GLPointers._glSpecializeShaderARB_fnptr(shader, pEntryPoint, numSpecializationConstants, pConstantIndex, pConstantValue);
             
             /// <summary> <b>[requires: v4.0 | GL_ARB_gpu_shader_fp64] [glUniform1d]</b>  </summary>
             public static void Uniform1d(int location, double x) => GLPointers._glUniform1d_fnptr(location, x);
@@ -6531,112 +6531,112 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetUniformdv(int program, int location, double* parameters) => GLPointers._glGetUniformdv_fnptr(program, location, parameters);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform1i64ARB]</b>  </summary>
-            public static void Uniform1i64(int location, long x) => GLPointers._glUniform1i64ARB_fnptr(location, x);
+            public static void Uniform1i64ARB(int location, long x) => GLPointers._glUniform1i64ARB_fnptr(location, x);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform2i64ARB]</b>  </summary>
-            public static void Uniform2i64(int location, long x, long y) => GLPointers._glUniform2i64ARB_fnptr(location, x, y);
+            public static void Uniform2i64ARB(int location, long x, long y) => GLPointers._glUniform2i64ARB_fnptr(location, x, y);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform3i64ARB]</b>  </summary>
-            public static void Uniform3i64(int location, long x, long y, long z) => GLPointers._glUniform3i64ARB_fnptr(location, x, y, z);
+            public static void Uniform3i64ARB(int location, long x, long y, long z) => GLPointers._glUniform3i64ARB_fnptr(location, x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform4i64ARB]</b>  </summary>
-            public static void Uniform4i64(int location, long x, long y, long z, long w) => GLPointers._glUniform4i64ARB_fnptr(location, x, y, z, w);
+            public static void Uniform4i64ARB(int location, long x, long y, long z, long w) => GLPointers._glUniform4i64ARB_fnptr(location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform1i64vARB]</b>  </summary>
-            public static void Uniform1i64v(int location, int count, long* value) => GLPointers._glUniform1i64vARB_fnptr(location, count, value);
+            public static void Uniform1i64vARB(int location, int count, long* value) => GLPointers._glUniform1i64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform2i64vARB]</b>  </summary>
-            public static void Uniform2i64v(int location, int count, long* value) => GLPointers._glUniform2i64vARB_fnptr(location, count, value);
+            public static void Uniform2i64vARB(int location, int count, long* value) => GLPointers._glUniform2i64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform3i64vARB]</b>  </summary>
-            public static void Uniform3i64v(int location, int count, long* value) => GLPointers._glUniform3i64vARB_fnptr(location, count, value);
+            public static void Uniform3i64vARB(int location, int count, long* value) => GLPointers._glUniform3i64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform4i64vARB]</b>  </summary>
-            public static void Uniform4i64v(int location, int count, long* value) => GLPointers._glUniform4i64vARB_fnptr(location, count, value);
+            public static void Uniform4i64vARB(int location, int count, long* value) => GLPointers._glUniform4i64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform1ui64ARB]</b>  </summary>
-            public static void Uniform1ui64(int location, ulong x) => GLPointers._glUniform1ui64ARB_fnptr(location, x);
+            public static void Uniform1ui64ARB(int location, ulong x) => GLPointers._glUniform1ui64ARB_fnptr(location, x);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform2ui64ARB]</b>  </summary>
-            public static void Uniform2ui64(int location, ulong x, ulong y) => GLPointers._glUniform2ui64ARB_fnptr(location, x, y);
+            public static void Uniform2ui64ARB(int location, ulong x, ulong y) => GLPointers._glUniform2ui64ARB_fnptr(location, x, y);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform3ui64ARB]</b>  </summary>
-            public static void Uniform3ui64(int location, ulong x, ulong y, ulong z) => GLPointers._glUniform3ui64ARB_fnptr(location, x, y, z);
+            public static void Uniform3ui64ARB(int location, ulong x, ulong y, ulong z) => GLPointers._glUniform3ui64ARB_fnptr(location, x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform4ui64ARB]</b>  </summary>
-            public static void Uniform4ui64(int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glUniform4ui64ARB_fnptr(location, x, y, z, w);
+            public static void Uniform4ui64ARB(int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glUniform4ui64ARB_fnptr(location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform1ui64vARB]</b>  </summary>
-            public static void Uniform1ui64v(int location, int count, ulong* value) => GLPointers._glUniform1ui64vARB_fnptr(location, count, value);
+            public static void Uniform1ui64vARB(int location, int count, ulong* value) => GLPointers._glUniform1ui64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform2ui64vARB]</b>  </summary>
-            public static void Uniform2ui64v(int location, int count, ulong* value) => GLPointers._glUniform2ui64vARB_fnptr(location, count, value);
+            public static void Uniform2ui64vARB(int location, int count, ulong* value) => GLPointers._glUniform2ui64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform3ui64vARB]</b>  </summary>
-            public static void Uniform3ui64v(int location, int count, ulong* value) => GLPointers._glUniform3ui64vARB_fnptr(location, count, value);
+            public static void Uniform3ui64vARB(int location, int count, ulong* value) => GLPointers._glUniform3ui64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glUniform4ui64vARB]</b>  </summary>
-            public static void Uniform4ui64v(int location, int count, ulong* value) => GLPointers._glUniform4ui64vARB_fnptr(location, count, value);
+            public static void Uniform4ui64vARB(int location, int count, ulong* value) => GLPointers._glUniform4ui64vARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glGetUniformi64vARB]</b>  </summary>
-            public static void GetUniformi64v(int program, int location, long* parameters) => GLPointers._glGetUniformi64vARB_fnptr(program, location, parameters);
+            public static void GetUniformi64vARB(int program, int location, long* parameters) => GLPointers._glGetUniformi64vARB_fnptr(program, location, parameters);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glGetUniformui64vARB]</b>  </summary>
-            public static void GetUniformui64v(int program, int location, ulong* parameters) => GLPointers._glGetUniformui64vARB_fnptr(program, location, parameters);
+            public static void GetUniformui64vARB(int program, int location, ulong* parameters) => GLPointers._glGetUniformui64vARB_fnptr(program, location, parameters);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glGetnUniformi64vARB]</b>  </summary>
-            public static void GetnUniformi64v(int program, int location, int bufSize, long* parameters) => GLPointers._glGetnUniformi64vARB_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformi64vARB(int program, int location, int bufSize, long* parameters) => GLPointers._glGetnUniformi64vARB_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glGetnUniformui64vARB]</b>  </summary>
-            public static void GetnUniformui64v(int program, int location, int bufSize, ulong* parameters) => GLPointers._glGetnUniformui64vARB_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformui64vARB(int program, int location, int bufSize, ulong* parameters) => GLPointers._glGetnUniformui64vARB_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform1i64ARB]</b>  </summary>
-            public static void ProgramUniform1i64(int program, int location, long x) => GLPointers._glProgramUniform1i64ARB_fnptr(program, location, x);
+            public static void ProgramUniform1i64ARB(int program, int location, long x) => GLPointers._glProgramUniform1i64ARB_fnptr(program, location, x);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform2i64ARB]</b>  </summary>
-            public static void ProgramUniform2i64(int program, int location, long x, long y) => GLPointers._glProgramUniform2i64ARB_fnptr(program, location, x, y);
+            public static void ProgramUniform2i64ARB(int program, int location, long x, long y) => GLPointers._glProgramUniform2i64ARB_fnptr(program, location, x, y);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform3i64ARB]</b>  </summary>
-            public static void ProgramUniform3i64(int program, int location, long x, long y, long z) => GLPointers._glProgramUniform3i64ARB_fnptr(program, location, x, y, z);
+            public static void ProgramUniform3i64ARB(int program, int location, long x, long y, long z) => GLPointers._glProgramUniform3i64ARB_fnptr(program, location, x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform4i64ARB]</b>  </summary>
-            public static void ProgramUniform4i64(int program, int location, long x, long y, long z, long w) => GLPointers._glProgramUniform4i64ARB_fnptr(program, location, x, y, z, w);
+            public static void ProgramUniform4i64ARB(int program, int location, long x, long y, long z, long w) => GLPointers._glProgramUniform4i64ARB_fnptr(program, location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform1i64vARB]</b>  </summary>
-            public static void ProgramUniform1i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform1i64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform1i64vARB(int program, int location, int count, long* value) => GLPointers._glProgramUniform1i64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform2i64vARB]</b>  </summary>
-            public static void ProgramUniform2i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform2i64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform2i64vARB(int program, int location, int count, long* value) => GLPointers._glProgramUniform2i64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform3i64vARB]</b>  </summary>
-            public static void ProgramUniform3i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform3i64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform3i64vARB(int program, int location, int count, long* value) => GLPointers._glProgramUniform3i64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform4i64vARB]</b>  </summary>
-            public static void ProgramUniform4i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform4i64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform4i64vARB(int program, int location, int count, long* value) => GLPointers._glProgramUniform4i64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform1ui64ARB]</b>  </summary>
-            public static void ProgramUniform1ui64(int program, int location, ulong x) => GLPointers._glProgramUniform1ui64ARB_fnptr(program, location, x);
+            public static void ProgramUniform1ui64ARB(int program, int location, ulong x) => GLPointers._glProgramUniform1ui64ARB_fnptr(program, location, x);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform2ui64ARB]</b>  </summary>
-            public static void ProgramUniform2ui64(int program, int location, ulong x, ulong y) => GLPointers._glProgramUniform2ui64ARB_fnptr(program, location, x, y);
+            public static void ProgramUniform2ui64ARB(int program, int location, ulong x, ulong y) => GLPointers._glProgramUniform2ui64ARB_fnptr(program, location, x, y);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform3ui64ARB]</b>  </summary>
-            public static void ProgramUniform3ui64(int program, int location, ulong x, ulong y, ulong z) => GLPointers._glProgramUniform3ui64ARB_fnptr(program, location, x, y, z);
+            public static void ProgramUniform3ui64ARB(int program, int location, ulong x, ulong y, ulong z) => GLPointers._glProgramUniform3ui64ARB_fnptr(program, location, x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform4ui64ARB]</b>  </summary>
-            public static void ProgramUniform4ui64(int program, int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glProgramUniform4ui64ARB_fnptr(program, location, x, y, z, w);
+            public static void ProgramUniform4ui64ARB(int program, int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glProgramUniform4ui64ARB_fnptr(program, location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform1ui64vARB]</b>  </summary>
-            public static void ProgramUniform1ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform1ui64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform1ui64vARB(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform1ui64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform2ui64vARB]</b>  </summary>
-            public static void ProgramUniform2ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform2ui64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform2ui64vARB(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform2ui64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform3ui64vARB]</b>  </summary>
-            public static void ProgramUniform3ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform3ui64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform3ui64vARB(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform3ui64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_gpu_shader_int64] [glProgramUniform4ui64vARB]</b>  </summary>
-            public static void ProgramUniform4ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform4ui64vARB_fnptr(program, location, count, value);
+            public static void ProgramUniform4ui64vARB(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform4ui64vARB_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: v1.4 | GL_ARB_imaging] [glBlendColor]</b> Set the blend color. </summary>
             /// <param name="red"> specify the components of GL_BLEND_COLOR </param>
@@ -6652,13 +6652,13 @@ namespace OpenTK.Graphics.OpenGL
             public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquation_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_ARB_indirect_parameters] [glMultiDrawArraysIndirectCountARB]</b>  </summary>
-            public static void MultiDrawArraysIndirectCount(PrimitiveType mode, void* indirect, IntPtr drawcount, int maxdrawcount, int stride) => GLPointers._glMultiDrawArraysIndirectCountARB_fnptr((uint)mode, indirect, drawcount, maxdrawcount, stride);
+            public static void MultiDrawArraysIndirectCountARB(PrimitiveType mode, void* indirect, IntPtr drawcount, int maxdrawcount, int stride) => GLPointers._glMultiDrawArraysIndirectCountARB_fnptr((uint)mode, indirect, drawcount, maxdrawcount, stride);
             
             /// <summary> <b>[requires: GL_ARB_indirect_parameters] [glMultiDrawElementsIndirectCountARB]</b>  </summary>
-            public static void MultiDrawElementsIndirectCount(PrimitiveType mode, DrawElementsType type, void* indirect, IntPtr drawcount, int maxdrawcount, int stride) => GLPointers._glMultiDrawElementsIndirectCountARB_fnptr((uint)mode, (uint)type, indirect, drawcount, maxdrawcount, stride);
+            public static void MultiDrawElementsIndirectCountARB(PrimitiveType mode, DrawElementsType type, void* indirect, IntPtr drawcount, int maxdrawcount, int stride) => GLPointers._glMultiDrawElementsIndirectCountARB_fnptr((uint)mode, (uint)type, indirect, drawcount, maxdrawcount, stride);
             
             /// <summary> <b>[requires: GL_ARB_instanced_arrays] [glVertexAttribDivisorARB]</b>  </summary>
-            public static void VertexAttribDivisor(uint index, uint divisor) => GLPointers._glVertexAttribDivisorARB_fnptr(index, divisor);
+            public static void VertexAttribDivisorARB(uint index, uint divisor) => GLPointers._glVertexAttribDivisorARB_fnptr(index, divisor);
             
             /// <summary> <b>[requires: v4.2 | GL_ARB_internalformat_query] [glGetInternalformativ]</b> Retrieve information about implementation-dependent support for internal formats. </summary>
             /// <param name="target"> Indicates the usage of the internal format. target must be GL_TEXTURE_1D, GL_TEXTURE_1D_ARRAY, GL_TEXTURE_2D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_3D, GL_TEXTURE_CUBE_MAP, GL_TEXTURE_CUBE_MAP_ARRAY, GL_TEXTURE_RECTANGLE, GL_TEXTURE_BUFFER, GL_RENDERBUFFER, GL_TEXTURE_2D_MULTISAMPLE or GL_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
@@ -6742,19 +6742,19 @@ namespace OpenTK.Graphics.OpenGL
             public static void FlushMappedBufferRange(BufferTargetARB target, IntPtr offset, nint length) => GLPointers._glFlushMappedBufferRange_fnptr((uint)target, offset, length);
             
             /// <summary> <b>[requires: GL_ARB_matrix_palette] [glCurrentPaletteMatrixARB]</b>  </summary>
-            public static void CurrentPaletteMatrix(int index) => GLPointers._glCurrentPaletteMatrixARB_fnptr(index);
+            public static void CurrentPaletteMatrixARB(int index) => GLPointers._glCurrentPaletteMatrixARB_fnptr(index);
             
             /// <summary> <b>[requires: GL_ARB_matrix_palette] [glMatrixIndexubvARB]</b>  </summary>
-            public static void MatrixIndexubv(int size, byte* indices) => GLPointers._glMatrixIndexubvARB_fnptr(size, indices);
+            public static void MatrixIndexubvARB(int size, byte* indices) => GLPointers._glMatrixIndexubvARB_fnptr(size, indices);
             
             /// <summary> <b>[requires: GL_ARB_matrix_palette] [glMatrixIndexusvARB]</b>  </summary>
-            public static void MatrixIndexusv(int size, ushort* indices) => GLPointers._glMatrixIndexusvARB_fnptr(size, indices);
+            public static void MatrixIndexusvARB(int size, ushort* indices) => GLPointers._glMatrixIndexusvARB_fnptr(size, indices);
             
             /// <summary> <b>[requires: GL_ARB_matrix_palette] [glMatrixIndexuivARB]</b>  </summary>
-            public static void MatrixIndexuiv(int size, uint* indices) => GLPointers._glMatrixIndexuivARB_fnptr(size, indices);
+            public static void MatrixIndexuivARB(int size, uint* indices) => GLPointers._glMatrixIndexuivARB_fnptr(size, indices);
             
             /// <summary> <b>[requires: GL_ARB_matrix_palette] [glMatrixIndexPointerARB]</b>  </summary>
-            public static void MatrixIndexPointer(int size, MatrixIndexPointerTypeARB type, int stride, void* pointer) => GLPointers._glMatrixIndexPointerARB_fnptr(size, (uint)type, stride, pointer);
+            public static void MatrixIndexPointerARB(int size, MatrixIndexPointerTypeARB type, int stride, void* pointer) => GLPointers._glMatrixIndexPointerARB_fnptr(size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: v4.4 | GL_ARB_multi_bind] [glBindBuffersBase]</b> Bind one or more buffer objects to a sequence of indexed buffer targets. </summary>
             /// <param name="target"> Specify the target of the bind operation. target must be one of GL_ATOMIC_COUNTER_BUFFER, GL_TRANSFORM_FEEDBACK_BUFFER, GL_UNIFORM_BUFFER or GL_SHADER_STORAGE_BUFFER. </param>
@@ -6822,142 +6822,142 @@ namespace OpenTK.Graphics.OpenGL
             public static void MultiDrawElementsIndirect(PrimitiveType mode, DrawElementsType type, void* indirect, int drawcount, int stride) => GLPointers._glMultiDrawElementsIndirect_fnptr((uint)mode, (uint)type, indirect, drawcount, stride);
             
             /// <summary> <b>[requires: GL_ARB_multisample] [glSampleCoverageARB]</b>  </summary>
-            public static void SampleCoverage(float value, bool invert) => GLPointers._glSampleCoverageARB_fnptr(value, (byte)(invert ? 1 : 0));
+            public static void SampleCoverageARB(float value, bool invert) => GLPointers._glSampleCoverageARB_fnptr(value, (byte)(invert ? 1 : 0));
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glActiveTextureARB]</b>  </summary>
-            public static void ActiveTexture(TextureUnit texture) => GLPointers._glActiveTextureARB_fnptr((uint)texture);
+            public static void ActiveTextureARB(TextureUnit texture) => GLPointers._glActiveTextureARB_fnptr((uint)texture);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glClientActiveTextureARB]</b>  </summary>
-            public static void ClientActiveTexture(TextureUnit texture) => GLPointers._glClientActiveTextureARB_fnptr((uint)texture);
+            public static void ClientActiveTextureARB(TextureUnit texture) => GLPointers._glClientActiveTextureARB_fnptr((uint)texture);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1dARB]</b>  </summary>
-            public static void MultiTexCoord1d(TextureUnit target, double s) => GLPointers._glMultiTexCoord1dARB_fnptr((uint)target, s);
+            public static void MultiTexCoord1dARB(TextureUnit target, double s) => GLPointers._glMultiTexCoord1dARB_fnptr((uint)target, s);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1dvARB]</b>  </summary>
-            public static void MultiTexCoord1dv(TextureUnit target, double* v) => GLPointers._glMultiTexCoord1dvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord1dvARB(TextureUnit target, double* v) => GLPointers._glMultiTexCoord1dvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1fARB]</b>  </summary>
-            public static void MultiTexCoord1f(TextureUnit target, float s) => GLPointers._glMultiTexCoord1fARB_fnptr((uint)target, s);
+            public static void MultiTexCoord1fARB(TextureUnit target, float s) => GLPointers._glMultiTexCoord1fARB_fnptr((uint)target, s);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1fvARB]</b>  </summary>
-            public static void MultiTexCoord1fv(TextureUnit target, float* v) => GLPointers._glMultiTexCoord1fvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord1fvARB(TextureUnit target, float* v) => GLPointers._glMultiTexCoord1fvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1iARB]</b>  </summary>
-            public static void MultiTexCoord1i(TextureUnit target, int s) => GLPointers._glMultiTexCoord1iARB_fnptr((uint)target, s);
+            public static void MultiTexCoord1iARB(TextureUnit target, int s) => GLPointers._glMultiTexCoord1iARB_fnptr((uint)target, s);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1ivARB]</b>  </summary>
-            public static void MultiTexCoord1iv(TextureUnit target, int* v) => GLPointers._glMultiTexCoord1ivARB_fnptr((uint)target, v);
+            public static void MultiTexCoord1ivARB(TextureUnit target, int* v) => GLPointers._glMultiTexCoord1ivARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1sARB]</b>  </summary>
-            public static void MultiTexCoord1s(TextureUnit target, short s) => GLPointers._glMultiTexCoord1sARB_fnptr((uint)target, s);
+            public static void MultiTexCoord1sARB(TextureUnit target, short s) => GLPointers._glMultiTexCoord1sARB_fnptr((uint)target, s);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord1svARB]</b>  </summary>
-            public static void MultiTexCoord1sv(TextureUnit target, short* v) => GLPointers._glMultiTexCoord1svARB_fnptr((uint)target, v);
+            public static void MultiTexCoord1svARB(TextureUnit target, short* v) => GLPointers._glMultiTexCoord1svARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2dARB]</b>  </summary>
-            public static void MultiTexCoord2d(TextureUnit target, double s, double t) => GLPointers._glMultiTexCoord2dARB_fnptr((uint)target, s, t);
+            public static void MultiTexCoord2dARB(TextureUnit target, double s, double t) => GLPointers._glMultiTexCoord2dARB_fnptr((uint)target, s, t);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2dvARB]</b>  </summary>
-            public static void MultiTexCoord2dv(TextureUnit target, double* v) => GLPointers._glMultiTexCoord2dvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord2dvARB(TextureUnit target, double* v) => GLPointers._glMultiTexCoord2dvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2fARB]</b>  </summary>
-            public static void MultiTexCoord2f(TextureUnit target, float s, float t) => GLPointers._glMultiTexCoord2fARB_fnptr((uint)target, s, t);
+            public static void MultiTexCoord2fARB(TextureUnit target, float s, float t) => GLPointers._glMultiTexCoord2fARB_fnptr((uint)target, s, t);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2fvARB]</b>  </summary>
-            public static void MultiTexCoord2fv(TextureUnit target, float* v) => GLPointers._glMultiTexCoord2fvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord2fvARB(TextureUnit target, float* v) => GLPointers._glMultiTexCoord2fvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2iARB]</b>  </summary>
-            public static void MultiTexCoord2i(TextureUnit target, int s, int t) => GLPointers._glMultiTexCoord2iARB_fnptr((uint)target, s, t);
+            public static void MultiTexCoord2iARB(TextureUnit target, int s, int t) => GLPointers._glMultiTexCoord2iARB_fnptr((uint)target, s, t);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2ivARB]</b>  </summary>
-            public static void MultiTexCoord2iv(TextureUnit target, int* v) => GLPointers._glMultiTexCoord2ivARB_fnptr((uint)target, v);
+            public static void MultiTexCoord2ivARB(TextureUnit target, int* v) => GLPointers._glMultiTexCoord2ivARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2sARB]</b>  </summary>
-            public static void MultiTexCoord2s(TextureUnit target, short s, short t) => GLPointers._glMultiTexCoord2sARB_fnptr((uint)target, s, t);
+            public static void MultiTexCoord2sARB(TextureUnit target, short s, short t) => GLPointers._glMultiTexCoord2sARB_fnptr((uint)target, s, t);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord2svARB]</b>  </summary>
-            public static void MultiTexCoord2sv(TextureUnit target, short* v) => GLPointers._glMultiTexCoord2svARB_fnptr((uint)target, v);
+            public static void MultiTexCoord2svARB(TextureUnit target, short* v) => GLPointers._glMultiTexCoord2svARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3dARB]</b>  </summary>
-            public static void MultiTexCoord3d(TextureUnit target, double s, double t, double r) => GLPointers._glMultiTexCoord3dARB_fnptr((uint)target, s, t, r);
+            public static void MultiTexCoord3dARB(TextureUnit target, double s, double t, double r) => GLPointers._glMultiTexCoord3dARB_fnptr((uint)target, s, t, r);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3dvARB]</b>  </summary>
-            public static void MultiTexCoord3dv(TextureUnit target, double* v) => GLPointers._glMultiTexCoord3dvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord3dvARB(TextureUnit target, double* v) => GLPointers._glMultiTexCoord3dvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3fARB]</b>  </summary>
-            public static void MultiTexCoord3f(TextureUnit target, float s, float t, float r) => GLPointers._glMultiTexCoord3fARB_fnptr((uint)target, s, t, r);
+            public static void MultiTexCoord3fARB(TextureUnit target, float s, float t, float r) => GLPointers._glMultiTexCoord3fARB_fnptr((uint)target, s, t, r);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3fvARB]</b>  </summary>
-            public static void MultiTexCoord3fv(TextureUnit target, float* v) => GLPointers._glMultiTexCoord3fvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord3fvARB(TextureUnit target, float* v) => GLPointers._glMultiTexCoord3fvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3iARB]</b>  </summary>
-            public static void MultiTexCoord3i(TextureUnit target, int s, int t, int r) => GLPointers._glMultiTexCoord3iARB_fnptr((uint)target, s, t, r);
+            public static void MultiTexCoord3iARB(TextureUnit target, int s, int t, int r) => GLPointers._glMultiTexCoord3iARB_fnptr((uint)target, s, t, r);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3ivARB]</b>  </summary>
-            public static void MultiTexCoord3iv(TextureUnit target, int* v) => GLPointers._glMultiTexCoord3ivARB_fnptr((uint)target, v);
+            public static void MultiTexCoord3ivARB(TextureUnit target, int* v) => GLPointers._glMultiTexCoord3ivARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3sARB]</b>  </summary>
-            public static void MultiTexCoord3s(TextureUnit target, short s, short t, short r) => GLPointers._glMultiTexCoord3sARB_fnptr((uint)target, s, t, r);
+            public static void MultiTexCoord3sARB(TextureUnit target, short s, short t, short r) => GLPointers._glMultiTexCoord3sARB_fnptr((uint)target, s, t, r);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord3svARB]</b>  </summary>
-            public static void MultiTexCoord3sv(TextureUnit target, short* v) => GLPointers._glMultiTexCoord3svARB_fnptr((uint)target, v);
+            public static void MultiTexCoord3svARB(TextureUnit target, short* v) => GLPointers._glMultiTexCoord3svARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4dARB]</b>  </summary>
-            public static void MultiTexCoord4d(TextureUnit target, double s, double t, double r, double q) => GLPointers._glMultiTexCoord4dARB_fnptr((uint)target, s, t, r, q);
+            public static void MultiTexCoord4dARB(TextureUnit target, double s, double t, double r, double q) => GLPointers._glMultiTexCoord4dARB_fnptr((uint)target, s, t, r, q);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4dvARB]</b>  </summary>
-            public static void MultiTexCoord4dv(TextureUnit target, double* v) => GLPointers._glMultiTexCoord4dvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord4dvARB(TextureUnit target, double* v) => GLPointers._glMultiTexCoord4dvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4fARB]</b>  </summary>
-            public static void MultiTexCoord4f(TextureUnit target, float s, float t, float r, float q) => GLPointers._glMultiTexCoord4fARB_fnptr((uint)target, s, t, r, q);
+            public static void MultiTexCoord4fARB(TextureUnit target, float s, float t, float r, float q) => GLPointers._glMultiTexCoord4fARB_fnptr((uint)target, s, t, r, q);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4fvARB]</b>  </summary>
-            public static void MultiTexCoord4fv(TextureUnit target, float* v) => GLPointers._glMultiTexCoord4fvARB_fnptr((uint)target, v);
+            public static void MultiTexCoord4fvARB(TextureUnit target, float* v) => GLPointers._glMultiTexCoord4fvARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4iARB]</b>  </summary>
-            public static void MultiTexCoord4i(TextureUnit target, int s, int t, int r, int q) => GLPointers._glMultiTexCoord4iARB_fnptr((uint)target, s, t, r, q);
+            public static void MultiTexCoord4iARB(TextureUnit target, int s, int t, int r, int q) => GLPointers._glMultiTexCoord4iARB_fnptr((uint)target, s, t, r, q);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4ivARB]</b>  </summary>
-            public static void MultiTexCoord4iv(TextureUnit target, int* v) => GLPointers._glMultiTexCoord4ivARB_fnptr((uint)target, v);
+            public static void MultiTexCoord4ivARB(TextureUnit target, int* v) => GLPointers._glMultiTexCoord4ivARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4sARB]</b>  </summary>
-            public static void MultiTexCoord4s(TextureUnit target, short s, short t, short r, short q) => GLPointers._glMultiTexCoord4sARB_fnptr((uint)target, s, t, r, q);
+            public static void MultiTexCoord4sARB(TextureUnit target, short s, short t, short r, short q) => GLPointers._glMultiTexCoord4sARB_fnptr((uint)target, s, t, r, q);
             
             /// <summary> <b>[requires: GL_ARB_multitexture] [glMultiTexCoord4svARB]</b>  </summary>
-            public static void MultiTexCoord4sv(TextureUnit target, short* v) => GLPointers._glMultiTexCoord4svARB_fnptr((uint)target, v);
+            public static void MultiTexCoord4svARB(TextureUnit target, short* v) => GLPointers._glMultiTexCoord4svARB_fnptr((uint)target, v);
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glGenQueriesARB]</b>  </summary>
-            public static void GenQueries(int n, int* ids) => GLPointers._glGenQueriesARB_fnptr(n, ids);
+            public static void GenQueriesARB(int n, int* ids) => GLPointers._glGenQueriesARB_fnptr(n, ids);
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glDeleteQueriesARB]</b>  </summary>
-            public static void DeleteQueries(int n, int* ids) => GLPointers._glDeleteQueriesARB_fnptr(n, ids);
+            public static void DeleteQueriesARB(int n, int* ids) => GLPointers._glDeleteQueriesARB_fnptr(n, ids);
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glIsQueryARB]</b>  </summary>
-            public static bool IsQuery(int id) => GLPointers._glIsQueryARB_fnptr(id) != 0;
+            public static bool IsQueryARB(int id) => GLPointers._glIsQueryARB_fnptr(id) != 0;
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glBeginQueryARB]</b>  </summary>
-            public static void BeginQuery(QueryTarget target, int id) => GLPointers._glBeginQueryARB_fnptr((uint)target, id);
+            public static void BeginQueryARB(QueryTarget target, int id) => GLPointers._glBeginQueryARB_fnptr((uint)target, id);
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glEndQueryARB]</b>  </summary>
-            public static void EndQuery(QueryTarget target) => GLPointers._glEndQueryARB_fnptr((uint)target);
+            public static void EndQueryARB(QueryTarget target) => GLPointers._glEndQueryARB_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glGetQueryivARB]</b>  </summary>
-            public static void GetQueryiv(QueryTarget target, QueryParameterName pname, int* parameters) => GLPointers._glGetQueryivARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetQueryivARB(QueryTarget target, QueryParameterName pname, int* parameters) => GLPointers._glGetQueryivARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glGetQueryObjectivARB]</b>  </summary>
-            public static void GetQueryObjectiv(int id, QueryObjectParameterName pname, int* parameters) => GLPointers._glGetQueryObjectivARB_fnptr(id, (uint)pname, parameters);
+            public static void GetQueryObjectivARB(int id, QueryObjectParameterName pname, int* parameters) => GLPointers._glGetQueryObjectivARB_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_occlusion_query] [glGetQueryObjectuivARB]</b>  </summary>
-            public static void GetQueryObjectuiv(int id, QueryObjectParameterName pname, uint* parameters) => GLPointers._glGetQueryObjectuivARB_fnptr(id, (uint)pname, parameters);
+            public static void GetQueryObjectuivARB(int id, QueryObjectParameterName pname, uint* parameters) => GLPointers._glGetQueryObjectuivARB_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_parallel_shader_compile] [glMaxShaderCompilerThreadsARB]</b>  </summary>
-            public static void MaxShaderCompilerThreads(uint count) => GLPointers._glMaxShaderCompilerThreadsARB_fnptr(count);
+            public static void MaxShaderCompilerThreadsARB(uint count) => GLPointers._glMaxShaderCompilerThreadsARB_fnptr(count);
             
             /// <summary> <b>[requires: GL_ARB_point_parameters] [glPointParameterfARB]</b>  </summary>
-            public static void PointParameterf(PointParameterNameARB pname, float param) => GLPointers._glPointParameterfARB_fnptr((uint)pname, param);
+            public static void PointParameterfARB(PointParameterNameARB pname, float param) => GLPointers._glPointParameterfARB_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ARB_point_parameters] [glPointParameterfvARB]</b>  </summary>
-            public static void PointParameterfv(PointParameterNameARB pname, float* parameters) => GLPointers._glPointParameterfvARB_fnptr((uint)pname, parameters);
+            public static void PointParameterfvARB(PointParameterNameARB pname, float* parameters) => GLPointers._glPointParameterfvARB_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: v4.6 | GL_ARB_polygon_offset_clamp] [glPolygonOffsetClamp]</b>  </summary>
             public static void PolygonOffsetClamp(float factor, float units, float clamp) => GLPointers._glPolygonOffsetClamp_fnptr(factor, units, clamp);
@@ -7019,40 +7019,40 @@ namespace OpenTK.Graphics.OpenGL
             public static void ProvokingVertex(VertexProvokingMode mode) => GLPointers._glProvokingVertex_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glGetGraphicsResetStatusARB]</b>  </summary>
-            public static GraphicsResetStatus GetGraphicsResetStatus() => (GraphicsResetStatus) GLPointers._glGetGraphicsResetStatusARB_fnptr();
+            public static GraphicsResetStatus GetGraphicsResetStatusARB() => (GraphicsResetStatus) GLPointers._glGetGraphicsResetStatusARB_fnptr();
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glGetnTexImageARB]</b>  </summary>
-            public static void GetnTexImage(TextureTarget target, int level, PixelFormat format, PixelType type, int bufSize, void* img) => GLPointers._glGetnTexImageARB_fnptr((uint)target, level, (uint)format, (uint)type, bufSize, img);
+            public static void GetnTexImageARB(TextureTarget target, int level, PixelFormat format, PixelType type, int bufSize, void* img) => GLPointers._glGetnTexImageARB_fnptr((uint)target, level, (uint)format, (uint)type, bufSize, img);
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glReadnPixelsARB]</b>  </summary>
-            public static void ReadnPixels(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => GLPointers._glReadnPixelsARB_fnptr(x, y, width, height, (uint)format, (uint)type, bufSize, data);
+            public static void ReadnPixelsARB(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, void* data) => GLPointers._glReadnPixelsARB_fnptr(x, y, width, height, (uint)format, (uint)type, bufSize, data);
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glGetnCompressedTexImageARB]</b>  </summary>
-            public static void GetnCompressedTexImage(TextureTarget target, int lod, int bufSize, void* img) => GLPointers._glGetnCompressedTexImageARB_fnptr((uint)target, lod, bufSize, img);
+            public static void GetnCompressedTexImageARB(TextureTarget target, int lod, int bufSize, void* img) => GLPointers._glGetnCompressedTexImageARB_fnptr((uint)target, lod, bufSize, img);
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glGetnUniformfvARB]</b>  </summary>
-            public static void GetnUniformfv(int program, int location, int bufSize, float* parameters) => GLPointers._glGetnUniformfvARB_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformfvARB(int program, int location, int bufSize, float* parameters) => GLPointers._glGetnUniformfvARB_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glGetnUniformivARB]</b>  </summary>
-            public static void GetnUniformiv(int program, int location, int bufSize, int* parameters) => GLPointers._glGetnUniformivARB_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformivARB(int program, int location, int bufSize, int* parameters) => GLPointers._glGetnUniformivARB_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glGetnUniformuivARB]</b>  </summary>
-            public static void GetnUniformuiv(int program, int location, int bufSize, uint* parameters) => GLPointers._glGetnUniformuivARB_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformuivARB(int program, int location, int bufSize, uint* parameters) => GLPointers._glGetnUniformuivARB_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_ARB_robustness] [glGetnUniformdvARB]</b>  </summary>
-            public static void GetnUniformdv(int program, int location, int bufSize, double* parameters) => GLPointers._glGetnUniformdvARB_fnptr(program, location, bufSize, parameters);
+            public static void GetnUniformdvARB(int program, int location, int bufSize, double* parameters) => GLPointers._glGetnUniformdvARB_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_ARB_sample_locations] [glFramebufferSampleLocationsfvARB]</b>  </summary>
-            public static void FramebufferSampleLocationsfv(FramebufferTarget target, uint start, int count, float* v) => GLPointers._glFramebufferSampleLocationsfvARB_fnptr((uint)target, start, count, v);
+            public static void FramebufferSampleLocationsfvARB(FramebufferTarget target, uint start, int count, float* v) => GLPointers._glFramebufferSampleLocationsfvARB_fnptr((uint)target, start, count, v);
             
             /// <summary> <b>[requires: GL_ARB_sample_locations] [glNamedFramebufferSampleLocationsfvARB]</b>  </summary>
-            public static void NamedFramebufferSampleLocationsfv(int framebuffer, uint start, int count, float* v) => GLPointers._glNamedFramebufferSampleLocationsfvARB_fnptr(framebuffer, start, count, v);
+            public static void NamedFramebufferSampleLocationsfvARB(int framebuffer, uint start, int count, float* v) => GLPointers._glNamedFramebufferSampleLocationsfvARB_fnptr(framebuffer, start, count, v);
             
             /// <summary> <b>[requires: GL_ARB_sample_locations] [glEvaluateDepthValuesARB]</b>  </summary>
-            public static void EvaluateDepthValues() => GLPointers._glEvaluateDepthValuesARB_fnptr();
+            public static void EvaluateDepthValuesARB() => GLPointers._glEvaluateDepthValuesARB_fnptr();
             
             /// <summary> <b>[requires: GL_ARB_sample_shading] [glMinSampleShadingARB]</b>  </summary>
-            public static void MinSampleShading(float value) => GLPointers._glMinSampleShadingARB_fnptr(value);
+            public static void MinSampleShadingARB(float value) => GLPointers._glMinSampleShadingARB_fnptr(value);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_sampler_objects] [glGenSamplers]</b> Generate sampler object names. </summary>
             /// <param name="n"> Specifies the number of sampler object names to generate. </param>
@@ -7564,121 +7564,121 @@ namespace OpenTK.Graphics.OpenGL
             public static void MemoryBarrier(MemoryBarrierMask barriers) => GLPointers._glMemoryBarrier_fnptr((uint)barriers);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glDeleteObjectARB]</b>  </summary>
-            public static void DeleteObject(GLHandleARB obj) => GLPointers._glDeleteObjectARB_fnptr((IntPtr)obj);
+            public static void DeleteObjectARB(GLHandleARB obj) => GLPointers._glDeleteObjectARB_fnptr((IntPtr)obj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetHandleARB]</b>  </summary>
-            public static GLHandleARB GetHandle(ContainerType pname) => (GLHandleARB) GLPointers._glGetHandleARB_fnptr((uint)pname);
+            public static GLHandleARB GetHandleARB(ContainerType pname) => (GLHandleARB) GLPointers._glGetHandleARB_fnptr((uint)pname);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glDetachObjectARB]</b>  </summary>
-            public static void DetachObject(GLHandleARB containerObj, GLHandleARB attachedObj) => GLPointers._glDetachObjectARB_fnptr((IntPtr)containerObj, (IntPtr)attachedObj);
+            public static void DetachObjectARB(GLHandleARB containerObj, GLHandleARB attachedObj) => GLPointers._glDetachObjectARB_fnptr((IntPtr)containerObj, (IntPtr)attachedObj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glCreateShaderObjectARB]</b>  </summary>
-            public static GLHandleARB CreateShaderObject(ShaderType shaderType) => (GLHandleARB) GLPointers._glCreateShaderObjectARB_fnptr((uint)shaderType);
+            public static GLHandleARB CreateShaderObjectARB(ShaderType shaderType) => (GLHandleARB) GLPointers._glCreateShaderObjectARB_fnptr((uint)shaderType);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glShaderSourceARB]</b>  </summary>
-            public static void ShaderSource(GLHandleARB shaderObj, int count, byte** str, int* length) => GLPointers._glShaderSourceARB_fnptr((IntPtr)shaderObj, count, str, length);
+            public static void ShaderSourceARB(GLHandleARB shaderObj, int count, byte** str, int* length) => GLPointers._glShaderSourceARB_fnptr((IntPtr)shaderObj, count, str, length);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glCompileShaderARB]</b>  </summary>
-            public static void CompileShader(GLHandleARB shaderObj) => GLPointers._glCompileShaderARB_fnptr((IntPtr)shaderObj);
+            public static void CompileShaderARB(GLHandleARB shaderObj) => GLPointers._glCompileShaderARB_fnptr((IntPtr)shaderObj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glCreateProgramObjectARB]</b>  </summary>
-            public static GLHandleARB CreateProgramObject() => (GLHandleARB) GLPointers._glCreateProgramObjectARB_fnptr();
+            public static GLHandleARB CreateProgramObjectARB() => (GLHandleARB) GLPointers._glCreateProgramObjectARB_fnptr();
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glAttachObjectARB]</b>  </summary>
-            public static void AttachObject(GLHandleARB containerObj, GLHandleARB obj) => GLPointers._glAttachObjectARB_fnptr((IntPtr)containerObj, (IntPtr)obj);
+            public static void AttachObjectARB(GLHandleARB containerObj, GLHandleARB obj) => GLPointers._glAttachObjectARB_fnptr((IntPtr)containerObj, (IntPtr)obj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glLinkProgramARB]</b>  </summary>
-            public static void LinkProgram(GLHandleARB programObj) => GLPointers._glLinkProgramARB_fnptr((IntPtr)programObj);
+            public static void LinkProgramARB(GLHandleARB programObj) => GLPointers._glLinkProgramARB_fnptr((IntPtr)programObj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUseProgramObjectARB]</b>  </summary>
-            public static void UseProgramObject(GLHandleARB programObj) => GLPointers._glUseProgramObjectARB_fnptr((IntPtr)programObj);
+            public static void UseProgramObjectARB(GLHandleARB programObj) => GLPointers._glUseProgramObjectARB_fnptr((IntPtr)programObj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glValidateProgramARB]</b>  </summary>
-            public static void ValidateProgram(GLHandleARB programObj) => GLPointers._glValidateProgramARB_fnptr((IntPtr)programObj);
+            public static void ValidateProgramARB(GLHandleARB programObj) => GLPointers._glValidateProgramARB_fnptr((IntPtr)programObj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform1fARB]</b>  </summary>
-            public static void Uniform1f(int location, float v0) => GLPointers._glUniform1fARB_fnptr(location, v0);
+            public static void Uniform1fARB(int location, float v0) => GLPointers._glUniform1fARB_fnptr(location, v0);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform2fARB]</b>  </summary>
-            public static void Uniform2f(int location, float v0, float v1) => GLPointers._glUniform2fARB_fnptr(location, v0, v1);
+            public static void Uniform2fARB(int location, float v0, float v1) => GLPointers._glUniform2fARB_fnptr(location, v0, v1);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform3fARB]</b>  </summary>
-            public static void Uniform3f(int location, float v0, float v1, float v2) => GLPointers._glUniform3fARB_fnptr(location, v0, v1, v2);
+            public static void Uniform3fARB(int location, float v0, float v1, float v2) => GLPointers._glUniform3fARB_fnptr(location, v0, v1, v2);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform4fARB]</b>  </summary>
-            public static void Uniform4f(int location, float v0, float v1, float v2, float v3) => GLPointers._glUniform4fARB_fnptr(location, v0, v1, v2, v3);
+            public static void Uniform4fARB(int location, float v0, float v1, float v2, float v3) => GLPointers._glUniform4fARB_fnptr(location, v0, v1, v2, v3);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform1iARB]</b>  </summary>
-            public static void Uniform1i(int location, int v0) => GLPointers._glUniform1iARB_fnptr(location, v0);
+            public static void Uniform1iARB(int location, int v0) => GLPointers._glUniform1iARB_fnptr(location, v0);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform2iARB]</b>  </summary>
-            public static void Uniform2i(int location, int v0, int v1) => GLPointers._glUniform2iARB_fnptr(location, v0, v1);
+            public static void Uniform2iARB(int location, int v0, int v1) => GLPointers._glUniform2iARB_fnptr(location, v0, v1);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform3iARB]</b>  </summary>
-            public static void Uniform3i(int location, int v0, int v1, int v2) => GLPointers._glUniform3iARB_fnptr(location, v0, v1, v2);
+            public static void Uniform3iARB(int location, int v0, int v1, int v2) => GLPointers._glUniform3iARB_fnptr(location, v0, v1, v2);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform4iARB]</b>  </summary>
-            public static void Uniform4i(int location, int v0, int v1, int v2, int v3) => GLPointers._glUniform4iARB_fnptr(location, v0, v1, v2, v3);
+            public static void Uniform4iARB(int location, int v0, int v1, int v2, int v3) => GLPointers._glUniform4iARB_fnptr(location, v0, v1, v2, v3);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform1fvARB]</b>  </summary>
-            public static void Uniform1fv(int location, int count, float* value) => GLPointers._glUniform1fvARB_fnptr(location, count, value);
+            public static void Uniform1fvARB(int location, int count, float* value) => GLPointers._glUniform1fvARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform2fvARB]</b>  </summary>
-            public static void Uniform2fv(int location, int count, float* value) => GLPointers._glUniform2fvARB_fnptr(location, count, value);
+            public static void Uniform2fvARB(int location, int count, float* value) => GLPointers._glUniform2fvARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform3fvARB]</b>  </summary>
-            public static void Uniform3fv(int location, int count, float* value) => GLPointers._glUniform3fvARB_fnptr(location, count, value);
+            public static void Uniform3fvARB(int location, int count, float* value) => GLPointers._glUniform3fvARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform4fvARB]</b>  </summary>
-            public static void Uniform4fv(int location, int count, float* value) => GLPointers._glUniform4fvARB_fnptr(location, count, value);
+            public static void Uniform4fvARB(int location, int count, float* value) => GLPointers._glUniform4fvARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform1ivARB]</b>  </summary>
-            public static void Uniform1iv(int location, int count, int* value) => GLPointers._glUniform1ivARB_fnptr(location, count, value);
+            public static void Uniform1ivARB(int location, int count, int* value) => GLPointers._glUniform1ivARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform2ivARB]</b>  </summary>
-            public static void Uniform2iv(int location, int count, int* value) => GLPointers._glUniform2ivARB_fnptr(location, count, value);
+            public static void Uniform2ivARB(int location, int count, int* value) => GLPointers._glUniform2ivARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform3ivARB]</b>  </summary>
-            public static void Uniform3iv(int location, int count, int* value) => GLPointers._glUniform3ivARB_fnptr(location, count, value);
+            public static void Uniform3ivARB(int location, int count, int* value) => GLPointers._glUniform3ivARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniform4ivARB]</b>  </summary>
-            public static void Uniform4iv(int location, int count, int* value) => GLPointers._glUniform4ivARB_fnptr(location, count, value);
+            public static void Uniform4ivARB(int location, int count, int* value) => GLPointers._glUniform4ivARB_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniformMatrix2fvARB]</b>  </summary>
-            public static void UniformMatrix2fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix2fvARB_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
+            public static void UniformMatrix2fvARB(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix2fvARB_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniformMatrix3fvARB]</b>  </summary>
-            public static void UniformMatrix3fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix3fvARB_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
+            public static void UniformMatrix3fvARB(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix3fvARB_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glUniformMatrix4fvARB]</b>  </summary>
-            public static void UniformMatrix4fv(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix4fvARB_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
+            public static void UniformMatrix4fvARB(int location, int count, bool transpose, float* value) => GLPointers._glUniformMatrix4fvARB_fnptr(location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetObjectParameterfvARB]</b>  </summary>
-            public static void GetObjectParameterfv(GLHandleARB obj, All pname, float* parameters) => GLPointers._glGetObjectParameterfvARB_fnptr((IntPtr)obj, (uint)pname, parameters);
+            public static void GetObjectParameterfvARB(GLHandleARB obj, All pname, float* parameters) => GLPointers._glGetObjectParameterfvARB_fnptr((IntPtr)obj, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetObjectParameterivARB]</b>  </summary>
-            public static void GetObjectParameteriv(GLHandleARB obj, All pname, int* parameters) => GLPointers._glGetObjectParameterivARB_fnptr((IntPtr)obj, (uint)pname, parameters);
+            public static void GetObjectParameterivARB(GLHandleARB obj, All pname, int* parameters) => GLPointers._glGetObjectParameterivARB_fnptr((IntPtr)obj, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetInfoLogARB]</b>  </summary>
-            public static void GetInfoLog(GLHandleARB obj, int maxLength, int* length, byte* infoLog) => GLPointers._glGetInfoLogARB_fnptr((IntPtr)obj, maxLength, length, infoLog);
+            public static void GetInfoLogARB(GLHandleARB obj, int maxLength, int* length, byte* infoLog) => GLPointers._glGetInfoLogARB_fnptr((IntPtr)obj, maxLength, length, infoLog);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetAttachedObjectsARB]</b>  </summary>
-            public static void GetAttachedObjects(GLHandleARB containerObj, int maxCount, int* count, GLHandleARB* obj) => GLPointers._glGetAttachedObjectsARB_fnptr((IntPtr)containerObj, maxCount, count, (IntPtr*)obj);
+            public static void GetAttachedObjectsARB(GLHandleARB containerObj, int maxCount, int* count, GLHandleARB* obj) => GLPointers._glGetAttachedObjectsARB_fnptr((IntPtr)containerObj, maxCount, count, (IntPtr*)obj);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetUniformLocationARB]</b>  </summary>
-            public static int GetUniformLocation(GLHandleARB programObj, byte* name) => GLPointers._glGetUniformLocationARB_fnptr((IntPtr)programObj, name);
+            public static int GetUniformLocationARB(GLHandleARB programObj, byte* name) => GLPointers._glGetUniformLocationARB_fnptr((IntPtr)programObj, name);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetActiveUniformARB]</b>  </summary>
-            public static void GetActiveUniform(GLHandleARB programObj, uint index, int maxLength, int* length, int* size, UniformType* type, byte* name) => GLPointers._glGetActiveUniformARB_fnptr((IntPtr)programObj, index, maxLength, length, size, (uint*)type, name);
+            public static void GetActiveUniformARB(GLHandleARB programObj, uint index, int maxLength, int* length, int* size, UniformType* type, byte* name) => GLPointers._glGetActiveUniformARB_fnptr((IntPtr)programObj, index, maxLength, length, size, (uint*)type, name);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetUniformfvARB]</b>  </summary>
-            public static void GetUniformfv(GLHandleARB programObj, int location, float* parameters) => GLPointers._glGetUniformfvARB_fnptr((IntPtr)programObj, location, parameters);
+            public static void GetUniformfvARB(GLHandleARB programObj, int location, float* parameters) => GLPointers._glGetUniformfvARB_fnptr((IntPtr)programObj, location, parameters);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetUniformivARB]</b>  </summary>
-            public static void GetUniformiv(GLHandleARB programObj, int location, int* parameters) => GLPointers._glGetUniformivARB_fnptr((IntPtr)programObj, location, parameters);
+            public static void GetUniformivARB(GLHandleARB programObj, int location, int* parameters) => GLPointers._glGetUniformivARB_fnptr((IntPtr)programObj, location, parameters);
             
             /// <summary> <b>[requires: GL_ARB_shader_objects] [glGetShaderSourceARB]</b>  </summary>
-            public static void GetShaderSource(GLHandleARB obj, int maxLength, int* length, byte* source) => GLPointers._glGetShaderSourceARB_fnptr((IntPtr)obj, maxLength, length, source);
+            public static void GetShaderSourceARB(GLHandleARB obj, int maxLength, int* length, byte* source) => GLPointers._glGetShaderSourceARB_fnptr((IntPtr)obj, maxLength, length, source);
             
             /// <summary> <b>[requires: v4.3 | GL_ARB_shader_storage_buffer_object] [glShaderStorageBlockBinding]</b> Change an active shader storage block binding. </summary>
             /// <param name="program"> The name of the program containing the block whose binding to change. </param>
@@ -7753,34 +7753,34 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetProgramStageiv(int program, ShaderType shadertype, ProgramStagePName pname, int* values) => GLPointers._glGetProgramStageiv_fnptr(program, (uint)shadertype, (uint)pname, values);
             
             /// <summary> <b>[requires: GL_ARB_shading_language_include] [glNamedStringARB]</b>  </summary>
-            public static void NamedString(All type, int namelen, byte* name, int stringlen, byte* str) => GLPointers._glNamedStringARB_fnptr((uint)type, namelen, name, stringlen, str);
+            public static void NamedStringARB(All type, int namelen, byte* name, int stringlen, byte* str) => GLPointers._glNamedStringARB_fnptr((uint)type, namelen, name, stringlen, str);
             
             /// <summary> <b>[requires: GL_ARB_shading_language_include] [glDeleteNamedStringARB]</b>  </summary>
-            public static void DeleteNamedString(int namelen, byte* name) => GLPointers._glDeleteNamedStringARB_fnptr(namelen, name);
+            public static void DeleteNamedStringARB(int namelen, byte* name) => GLPointers._glDeleteNamedStringARB_fnptr(namelen, name);
             
             /// <summary> <b>[requires: GL_ARB_shading_language_include] [glCompileShaderIncludeARB]</b>  </summary>
-            public static void CompileShaderInclude(int shader, int count, byte** path, int* length) => GLPointers._glCompileShaderIncludeARB_fnptr(shader, count, path, length);
+            public static void CompileShaderIncludeARB(int shader, int count, byte** path, int* length) => GLPointers._glCompileShaderIncludeARB_fnptr(shader, count, path, length);
             
             /// <summary> <b>[requires: GL_ARB_shading_language_include] [glIsNamedStringARB]</b>  </summary>
-            public static bool IsNamedString(int namelen, byte* name) => GLPointers._glIsNamedStringARB_fnptr(namelen, name) != 0;
+            public static bool IsNamedStringARB(int namelen, byte* name) => GLPointers._glIsNamedStringARB_fnptr(namelen, name) != 0;
             
             /// <summary> <b>[requires: GL_ARB_shading_language_include] [glGetNamedStringARB]</b>  </summary>
-            public static void GetNamedString(int namelen, byte* name, int bufSize, int* stringlen, byte* str) => GLPointers._glGetNamedStringARB_fnptr(namelen, name, bufSize, stringlen, str);
+            public static void GetNamedStringARB(int namelen, byte* name, int bufSize, int* stringlen, byte* str) => GLPointers._glGetNamedStringARB_fnptr(namelen, name, bufSize, stringlen, str);
             
             /// <summary> <b>[requires: GL_ARB_shading_language_include] [glGetNamedStringivARB]</b>  </summary>
-            public static void GetNamedStringiv(int namelen, byte* name, All pname, int* parameters) => GLPointers._glGetNamedStringivARB_fnptr(namelen, name, (uint)pname, parameters);
+            public static void GetNamedStringivARB(int namelen, byte* name, All pname, int* parameters) => GLPointers._glGetNamedStringivARB_fnptr(namelen, name, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_sparse_buffer] [glBufferPageCommitmentARB]</b>  </summary>
-            public static void BufferPageCommitment(All target, IntPtr offset, nint size, bool commit) => GLPointers._glBufferPageCommitmentARB_fnptr((uint)target, offset, size, (byte)(commit ? 1 : 0));
+            public static void BufferPageCommitmentARB(All target, IntPtr offset, nint size, bool commit) => GLPointers._glBufferPageCommitmentARB_fnptr((uint)target, offset, size, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_ARB_sparse_buffer] [glNamedBufferPageCommitmentEXT]</b>  </summary>
             public static void NamedBufferPageCommitmentEXT(int buffer, IntPtr offset, nint size, bool commit) => GLPointers._glNamedBufferPageCommitmentEXT_fnptr(buffer, offset, size, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_ARB_sparse_buffer] [glNamedBufferPageCommitmentARB]</b>  </summary>
-            public static void NamedBufferPageCommitment(int buffer, IntPtr offset, nint size, bool commit) => GLPointers._glNamedBufferPageCommitmentARB_fnptr(buffer, offset, size, (byte)(commit ? 1 : 0));
+            public static void NamedBufferPageCommitmentARB(int buffer, IntPtr offset, nint size, bool commit) => GLPointers._glNamedBufferPageCommitmentARB_fnptr(buffer, offset, size, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_ARB_sparse_texture] [glTexPageCommitmentARB]</b>  </summary>
-            public static void TexPageCommitment(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
+            public static void TexPageCommitmentARB(All target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexPageCommitmentARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: v3.2 | GL_ARB_sync] [glFenceSync]</b> Create a new sync object and insert it into the GL command stream. </summary>
             /// <param name="condition"> Specifies the condition that must be met to set the sync object&apos;s state to signaled. condition must be GL_SYNC_GPU_COMMANDS_COMPLETE. </param>
@@ -7844,7 +7844,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void TextureBarrier() => GLPointers._glTextureBarrier_fnptr();
             
             /// <summary> <b>[requires: GL_ARB_texture_buffer_object] [glTexBufferARB]</b>  </summary>
-            public static void TexBuffer(TextureTarget target, SizedInternalFormat internalformat, int buffer) => GLPointers._glTexBufferARB_fnptr((uint)target, (uint)internalformat, buffer);
+            public static void TexBufferARB(TextureTarget target, SizedInternalFormat internalformat, int buffer) => GLPointers._glTexBufferARB_fnptr((uint)target, (uint)internalformat, buffer);
             
             /// <summary> <b>[requires: v4.3 | GL_ARB_texture_buffer_range] [glTexBufferRange]</b> Attach a range of a buffer object&apos;s data store to a buffer texture object. </summary>
             /// <param name="target"> Specifies the target to which the texture object is bound for glTexBufferRange. Must be GL_TEXTURE_BUFFER. </param>
@@ -7856,25 +7856,25 @@ namespace OpenTK.Graphics.OpenGL
             public static void TexBufferRange(TextureTarget target, SizedInternalFormat internalformat, int buffer, IntPtr offset, nint size) => GLPointers._glTexBufferRange_fnptr((uint)target, (uint)internalformat, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_ARB_texture_compression] [glCompressedTexImage3DARB]</b>  </summary>
-            public static void CompressedTexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage3DARB_fnptr((uint)target, level, (uint)internalformat, width, height, depth, border, imageSize, data);
+            public static void CompressedTexImage3DARB(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage3DARB_fnptr((uint)target, level, (uint)internalformat, width, height, depth, border, imageSize, data);
             
             /// <summary> <b>[requires: GL_ARB_texture_compression] [glCompressedTexImage2DARB]</b>  </summary>
-            public static void CompressedTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage2DARB_fnptr((uint)target, level, (uint)internalformat, width, height, border, imageSize, data);
+            public static void CompressedTexImage2DARB(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage2DARB_fnptr((uint)target, level, (uint)internalformat, width, height, border, imageSize, data);
             
             /// <summary> <b>[requires: GL_ARB_texture_compression] [glCompressedTexImage1DARB]</b>  </summary>
-            public static void CompressedTexImage1D(TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage1DARB_fnptr((uint)target, level, (uint)internalformat, width, border, imageSize, data);
+            public static void CompressedTexImage1DARB(TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, void* data) => GLPointers._glCompressedTexImage1DARB_fnptr((uint)target, level, (uint)internalformat, width, border, imageSize, data);
             
             /// <summary> <b>[requires: GL_ARB_texture_compression] [glCompressedTexSubImage3DARB]</b>  </summary>
-            public static void CompressedTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage3DARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, imageSize, data);
+            public static void CompressedTexSubImage3DARB(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage3DARB_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, imageSize, data);
             
             /// <summary> <b>[requires: GL_ARB_texture_compression] [glCompressedTexSubImage2DARB]</b>  </summary>
-            public static void CompressedTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage2DARB_fnptr((uint)target, level, xoffset, yoffset, width, height, (uint)format, imageSize, data);
+            public static void CompressedTexSubImage2DARB(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage2DARB_fnptr((uint)target, level, xoffset, yoffset, width, height, (uint)format, imageSize, data);
             
             /// <summary> <b>[requires: GL_ARB_texture_compression] [glCompressedTexSubImage1DARB]</b>  </summary>
-            public static void CompressedTexSubImage1D(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage1DARB_fnptr((uint)target, level, xoffset, width, (uint)format, imageSize, data);
+            public static void CompressedTexSubImage1DARB(TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* data) => GLPointers._glCompressedTexSubImage1DARB_fnptr((uint)target, level, xoffset, width, (uint)format, imageSize, data);
             
             /// <summary> <b>[requires: GL_ARB_texture_compression] [glGetCompressedTexImageARB]</b>  </summary>
-            public static void GetCompressedTexImage(TextureTarget target, int level, void* img) => GLPointers._glGetCompressedTexImageARB_fnptr((uint)target, level, img);
+            public static void GetCompressedTexImageARB(TextureTarget target, int level, void* img) => GLPointers._glGetCompressedTexImageARB_fnptr((uint)target, level, img);
             
             /// <summary> <b>[requires: v3.2 | GL_ARB_texture_multisample] [glTexImage2DMultisample]</b> Establish the data storage, format, dimensions, and number of samples of a multisample texture&apos;s image. </summary>
             /// <param name="target"> Specifies the target of the operation. target must be GL_TEXTURE_2D_MULTISAMPLE or GL_PROXY_TEXTURE_2D_MULTISAMPLE. </param>
@@ -8071,16 +8071,16 @@ namespace OpenTK.Graphics.OpenGL
             public static void DrawTransformFeedbackStreamInstanced(PrimitiveType mode, int id, uint stream, int instancecount) => GLPointers._glDrawTransformFeedbackStreamInstanced_fnptr((uint)mode, id, stream, instancecount);
             
             /// <summary> <b>[requires: GL_ARB_transpose_matrix] [glLoadTransposeMatrixfARB]</b>  </summary>
-            public static void LoadTransposeMatrixf(float* m) => GLPointers._glLoadTransposeMatrixfARB_fnptr(m);
+            public static void LoadTransposeMatrixfARB(float* m) => GLPointers._glLoadTransposeMatrixfARB_fnptr(m);
             
             /// <summary> <b>[requires: GL_ARB_transpose_matrix] [glLoadTransposeMatrixdARB]</b>  </summary>
-            public static void LoadTransposeMatrixd(double* m) => GLPointers._glLoadTransposeMatrixdARB_fnptr(m);
+            public static void LoadTransposeMatrixdARB(double* m) => GLPointers._glLoadTransposeMatrixdARB_fnptr(m);
             
             /// <summary> <b>[requires: GL_ARB_transpose_matrix] [glMultTransposeMatrixfARB]</b>  </summary>
-            public static void MultTransposeMatrixf(float* m) => GLPointers._glMultTransposeMatrixfARB_fnptr(m);
+            public static void MultTransposeMatrixfARB(float* m) => GLPointers._glMultTransposeMatrixfARB_fnptr(m);
             
             /// <summary> <b>[requires: GL_ARB_transpose_matrix] [glMultTransposeMatrixdARB]</b>  </summary>
-            public static void MultTransposeMatrixd(double* m) => GLPointers._glMultTransposeMatrixdARB_fnptr(m);
+            public static void MultTransposeMatrixdARB(double* m) => GLPointers._glMultTransposeMatrixdARB_fnptr(m);
             
             /// <summary> <b>[requires: v3.1 | GL_ARB_uniform_buffer_object] [glGetUniformIndices]</b> Retrieve the index of a named uniform block. </summary>
             /// <param name="program"> Specifies the name of a program containing uniforms whose indices to query. </param>
@@ -8299,205 +8299,205 @@ namespace OpenTK.Graphics.OpenGL
             public static void VertexBindingDivisor(uint bindingindex, uint divisor) => GLPointers._glVertexBindingDivisor_fnptr(bindingindex, divisor);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightbvARB]</b>  </summary>
-            public static void Weightbv(int size, sbyte* weights) => GLPointers._glWeightbvARB_fnptr(size, weights);
+            public static void WeightbvARB(int size, sbyte* weights) => GLPointers._glWeightbvARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightsvARB]</b>  </summary>
-            public static void Weightsv(int size, short* weights) => GLPointers._glWeightsvARB_fnptr(size, weights);
+            public static void WeightsvARB(int size, short* weights) => GLPointers._glWeightsvARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightivARB]</b>  </summary>
-            public static void Weightiv(int size, int* weights) => GLPointers._glWeightivARB_fnptr(size, weights);
+            public static void WeightivARB(int size, int* weights) => GLPointers._glWeightivARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightfvARB]</b>  </summary>
-            public static void Weightfv(int size, float* weights) => GLPointers._glWeightfvARB_fnptr(size, weights);
+            public static void WeightfvARB(int size, float* weights) => GLPointers._glWeightfvARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightdvARB]</b>  </summary>
-            public static void Weightdv(int size, double* weights) => GLPointers._glWeightdvARB_fnptr(size, weights);
+            public static void WeightdvARB(int size, double* weights) => GLPointers._glWeightdvARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightubvARB]</b>  </summary>
-            public static void Weightubv(int size, byte* weights) => GLPointers._glWeightubvARB_fnptr(size, weights);
+            public static void WeightubvARB(int size, byte* weights) => GLPointers._glWeightubvARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightusvARB]</b>  </summary>
-            public static void Weightusv(int size, ushort* weights) => GLPointers._glWeightusvARB_fnptr(size, weights);
+            public static void WeightusvARB(int size, ushort* weights) => GLPointers._glWeightusvARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightuivARB]</b>  </summary>
-            public static void Weightuiv(int size, uint* weights) => GLPointers._glWeightuivARB_fnptr(size, weights);
+            public static void WeightuivARB(int size, uint* weights) => GLPointers._glWeightuivARB_fnptr(size, weights);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glWeightPointerARB]</b>  </summary>
-            public static void WeightPointer(int size, WeightPointerTypeARB type, int stride, void* pointer) => GLPointers._glWeightPointerARB_fnptr(size, (uint)type, stride, pointer);
+            public static void WeightPointerARB(int size, WeightPointerTypeARB type, int stride, void* pointer) => GLPointers._glWeightPointerARB_fnptr(size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_ARB_vertex_blend] [glVertexBlendARB]</b>  </summary>
-            public static void VertexBlend(int count) => GLPointers._glVertexBlendARB_fnptr(count);
+            public static void VertexBlendARB(int count) => GLPointers._glVertexBlendARB_fnptr(count);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glBindBufferARB]</b>  </summary>
-            public static void BindBuffer(BufferTargetARB target, int buffer) => GLPointers._glBindBufferARB_fnptr((uint)target, buffer);
+            public static void BindBufferARB(BufferTargetARB target, int buffer) => GLPointers._glBindBufferARB_fnptr((uint)target, buffer);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glDeleteBuffersARB]</b>  </summary>
-            public static void DeleteBuffers(int n, int* buffers) => GLPointers._glDeleteBuffersARB_fnptr(n, buffers);
+            public static void DeleteBuffersARB(int n, int* buffers) => GLPointers._glDeleteBuffersARB_fnptr(n, buffers);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glGenBuffersARB]</b>  </summary>
-            public static void GenBuffers(int n, int* buffers) => GLPointers._glGenBuffersARB_fnptr(n, buffers);
+            public static void GenBuffersARB(int n, int* buffers) => GLPointers._glGenBuffersARB_fnptr(n, buffers);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glIsBufferARB]</b>  </summary>
-            public static bool IsBuffer(int buffer) => GLPointers._glIsBufferARB_fnptr(buffer) != 0;
+            public static bool IsBufferARB(int buffer) => GLPointers._glIsBufferARB_fnptr(buffer) != 0;
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glBufferDataARB]</b>  </summary>
-            public static void BufferData(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferDataARB_fnptr((uint)target, size, data, (uint)usage);
+            public static void BufferDataARB(BufferTargetARB target, nint size, void* data, BufferUsageARB usage) => GLPointers._glBufferDataARB_fnptr((uint)target, size, data, (uint)usage);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glBufferSubDataARB]</b>  </summary>
-            public static void BufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubDataARB_fnptr((uint)target, offset, size, data);
+            public static void BufferSubDataARB(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glBufferSubDataARB_fnptr((uint)target, offset, size, data);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glGetBufferSubDataARB]</b>  </summary>
-            public static void GetBufferSubData(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubDataARB_fnptr((uint)target, offset, size, data);
+            public static void GetBufferSubDataARB(BufferTargetARB target, IntPtr offset, nint size, void* data) => GLPointers._glGetBufferSubDataARB_fnptr((uint)target, offset, size, data);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glMapBufferARB]</b>  </summary>
-            public static void* MapBuffer(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBufferARB_fnptr((uint)target, (uint)access);
+            public static void* MapBufferARB(BufferTargetARB target, BufferAccessARB access) => GLPointers._glMapBufferARB_fnptr((uint)target, (uint)access);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glUnmapBufferARB]</b>  </summary>
-            public static bool UnmapBuffer(BufferTargetARB target) => GLPointers._glUnmapBufferARB_fnptr((uint)target) != 0;
+            public static bool UnmapBufferARB(BufferTargetARB target) => GLPointers._glUnmapBufferARB_fnptr((uint)target) != 0;
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glGetBufferParameterivARB]</b>  </summary>
-            public static void GetBufferParameteriv(BufferTargetARB target, BufferPNameARB pname, int* parameters) => GLPointers._glGetBufferParameterivARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferParameterivARB(BufferTargetARB target, BufferPNameARB pname, int* parameters) => GLPointers._glGetBufferParameterivARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_buffer_object] [glGetBufferPointervARB]</b>  </summary>
-            public static void GetBufferPointerv(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferPointervARB(BufferTargetARB target, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetBufferPointervARB_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib1dARB]</b>  </summary>
-            public static void VertexAttrib1d(uint index, double x) => GLPointers._glVertexAttrib1dARB_fnptr(index, x);
+            public static void VertexAttrib1dARB(uint index, double x) => GLPointers._glVertexAttrib1dARB_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib1dvARB]</b>  </summary>
-            public static void VertexAttrib1dv(uint index, double* v) => GLPointers._glVertexAttrib1dvARB_fnptr(index, v);
+            public static void VertexAttrib1dvARB(uint index, double* v) => GLPointers._glVertexAttrib1dvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib1fARB]</b>  </summary>
-            public static void VertexAttrib1f(uint index, float x) => GLPointers._glVertexAttrib1fARB_fnptr(index, x);
+            public static void VertexAttrib1fARB(uint index, float x) => GLPointers._glVertexAttrib1fARB_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib1fvARB]</b>  </summary>
-            public static void VertexAttrib1fv(uint index, float* v) => GLPointers._glVertexAttrib1fvARB_fnptr(index, v);
+            public static void VertexAttrib1fvARB(uint index, float* v) => GLPointers._glVertexAttrib1fvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib1sARB]</b>  </summary>
-            public static void VertexAttrib1s(uint index, short x) => GLPointers._glVertexAttrib1sARB_fnptr(index, x);
+            public static void VertexAttrib1sARB(uint index, short x) => GLPointers._glVertexAttrib1sARB_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib1svARB]</b>  </summary>
-            public static void VertexAttrib1sv(uint index, short* v) => GLPointers._glVertexAttrib1svARB_fnptr(index, v);
+            public static void VertexAttrib1svARB(uint index, short* v) => GLPointers._glVertexAttrib1svARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib2dARB]</b>  </summary>
-            public static void VertexAttrib2d(uint index, double x, double y) => GLPointers._glVertexAttrib2dARB_fnptr(index, x, y);
+            public static void VertexAttrib2dARB(uint index, double x, double y) => GLPointers._glVertexAttrib2dARB_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib2dvARB]</b>  </summary>
-            public static void VertexAttrib2dv(uint index, double* v) => GLPointers._glVertexAttrib2dvARB_fnptr(index, v);
+            public static void VertexAttrib2dvARB(uint index, double* v) => GLPointers._glVertexAttrib2dvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib2fARB]</b>  </summary>
-            public static void VertexAttrib2f(uint index, float x, float y) => GLPointers._glVertexAttrib2fARB_fnptr(index, x, y);
+            public static void VertexAttrib2fARB(uint index, float x, float y) => GLPointers._glVertexAttrib2fARB_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib2fvARB]</b>  </summary>
-            public static void VertexAttrib2fv(uint index, float* v) => GLPointers._glVertexAttrib2fvARB_fnptr(index, v);
+            public static void VertexAttrib2fvARB(uint index, float* v) => GLPointers._glVertexAttrib2fvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib2sARB]</b>  </summary>
-            public static void VertexAttrib2s(uint index, short x, short y) => GLPointers._glVertexAttrib2sARB_fnptr(index, x, y);
+            public static void VertexAttrib2sARB(uint index, short x, short y) => GLPointers._glVertexAttrib2sARB_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib2svARB]</b>  </summary>
-            public static void VertexAttrib2sv(uint index, short* v) => GLPointers._glVertexAttrib2svARB_fnptr(index, v);
+            public static void VertexAttrib2svARB(uint index, short* v) => GLPointers._glVertexAttrib2svARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib3dARB]</b>  </summary>
-            public static void VertexAttrib3d(uint index, double x, double y, double z) => GLPointers._glVertexAttrib3dARB_fnptr(index, x, y, z);
+            public static void VertexAttrib3dARB(uint index, double x, double y, double z) => GLPointers._glVertexAttrib3dARB_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib3dvARB]</b>  </summary>
-            public static void VertexAttrib3dv(uint index, double* v) => GLPointers._glVertexAttrib3dvARB_fnptr(index, v);
+            public static void VertexAttrib3dvARB(uint index, double* v) => GLPointers._glVertexAttrib3dvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib3fARB]</b>  </summary>
-            public static void VertexAttrib3f(uint index, float x, float y, float z) => GLPointers._glVertexAttrib3fARB_fnptr(index, x, y, z);
+            public static void VertexAttrib3fARB(uint index, float x, float y, float z) => GLPointers._glVertexAttrib3fARB_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib3fvARB]</b>  </summary>
-            public static void VertexAttrib3fv(uint index, float* v) => GLPointers._glVertexAttrib3fvARB_fnptr(index, v);
+            public static void VertexAttrib3fvARB(uint index, float* v) => GLPointers._glVertexAttrib3fvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib3sARB]</b>  </summary>
-            public static void VertexAttrib3s(uint index, short x, short y, short z) => GLPointers._glVertexAttrib3sARB_fnptr(index, x, y, z);
+            public static void VertexAttrib3sARB(uint index, short x, short y, short z) => GLPointers._glVertexAttrib3sARB_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib3svARB]</b>  </summary>
-            public static void VertexAttrib3sv(uint index, short* v) => GLPointers._glVertexAttrib3svARB_fnptr(index, v);
+            public static void VertexAttrib3svARB(uint index, short* v) => GLPointers._glVertexAttrib3svARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4NbvARB]</b>  </summary>
-            public static void VertexAttrib4Nbv(uint index, sbyte* v) => GLPointers._glVertexAttrib4NbvARB_fnptr(index, v);
+            public static void VertexAttrib4NbvARB(uint index, sbyte* v) => GLPointers._glVertexAttrib4NbvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4NivARB]</b>  </summary>
-            public static void VertexAttrib4Niv(uint index, int* v) => GLPointers._glVertexAttrib4NivARB_fnptr(index, v);
+            public static void VertexAttrib4NivARB(uint index, int* v) => GLPointers._glVertexAttrib4NivARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4NsvARB]</b>  </summary>
-            public static void VertexAttrib4Nsv(uint index, short* v) => GLPointers._glVertexAttrib4NsvARB_fnptr(index, v);
+            public static void VertexAttrib4NsvARB(uint index, short* v) => GLPointers._glVertexAttrib4NsvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4NubARB]</b>  </summary>
-            public static void VertexAttrib4Nub(uint index, byte x, byte y, byte z, byte w) => GLPointers._glVertexAttrib4NubARB_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4NubARB(uint index, byte x, byte y, byte z, byte w) => GLPointers._glVertexAttrib4NubARB_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4NubvARB]</b>  </summary>
-            public static void VertexAttrib4Nubv(uint index, byte* v) => GLPointers._glVertexAttrib4NubvARB_fnptr(index, v);
+            public static void VertexAttrib4NubvARB(uint index, byte* v) => GLPointers._glVertexAttrib4NubvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4NuivARB]</b>  </summary>
-            public static void VertexAttrib4Nuiv(uint index, uint* v) => GLPointers._glVertexAttrib4NuivARB_fnptr(index, v);
+            public static void VertexAttrib4NuivARB(uint index, uint* v) => GLPointers._glVertexAttrib4NuivARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4NusvARB]</b>  </summary>
-            public static void VertexAttrib4Nusv(uint index, ushort* v) => GLPointers._glVertexAttrib4NusvARB_fnptr(index, v);
+            public static void VertexAttrib4NusvARB(uint index, ushort* v) => GLPointers._glVertexAttrib4NusvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4bvARB]</b>  </summary>
-            public static void VertexAttrib4bv(uint index, sbyte* v) => GLPointers._glVertexAttrib4bvARB_fnptr(index, v);
+            public static void VertexAttrib4bvARB(uint index, sbyte* v) => GLPointers._glVertexAttrib4bvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4dARB]</b>  </summary>
-            public static void VertexAttrib4d(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttrib4dARB_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4dARB(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttrib4dARB_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4dvARB]</b>  </summary>
-            public static void VertexAttrib4dv(uint index, double* v) => GLPointers._glVertexAttrib4dvARB_fnptr(index, v);
+            public static void VertexAttrib4dvARB(uint index, double* v) => GLPointers._glVertexAttrib4dvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4fARB]</b>  </summary>
-            public static void VertexAttrib4f(uint index, float x, float y, float z, float w) => GLPointers._glVertexAttrib4fARB_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4fARB(uint index, float x, float y, float z, float w) => GLPointers._glVertexAttrib4fARB_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4fvARB]</b>  </summary>
-            public static void VertexAttrib4fv(uint index, float* v) => GLPointers._glVertexAttrib4fvARB_fnptr(index, v);
+            public static void VertexAttrib4fvARB(uint index, float* v) => GLPointers._glVertexAttrib4fvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4ivARB]</b>  </summary>
-            public static void VertexAttrib4iv(uint index, int* v) => GLPointers._glVertexAttrib4ivARB_fnptr(index, v);
+            public static void VertexAttrib4ivARB(uint index, int* v) => GLPointers._glVertexAttrib4ivARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4sARB]</b>  </summary>
-            public static void VertexAttrib4s(uint index, short x, short y, short z, short w) => GLPointers._glVertexAttrib4sARB_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4sARB(uint index, short x, short y, short z, short w) => GLPointers._glVertexAttrib4sARB_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4svARB]</b>  </summary>
-            public static void VertexAttrib4sv(uint index, short* v) => GLPointers._glVertexAttrib4svARB_fnptr(index, v);
+            public static void VertexAttrib4svARB(uint index, short* v) => GLPointers._glVertexAttrib4svARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4ubvARB]</b>  </summary>
-            public static void VertexAttrib4ubv(uint index, byte* v) => GLPointers._glVertexAttrib4ubvARB_fnptr(index, v);
+            public static void VertexAttrib4ubvARB(uint index, byte* v) => GLPointers._glVertexAttrib4ubvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4uivARB]</b>  </summary>
-            public static void VertexAttrib4uiv(uint index, uint* v) => GLPointers._glVertexAttrib4uivARB_fnptr(index, v);
+            public static void VertexAttrib4uivARB(uint index, uint* v) => GLPointers._glVertexAttrib4uivARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttrib4usvARB]</b>  </summary>
-            public static void VertexAttrib4usv(uint index, ushort* v) => GLPointers._glVertexAttrib4usvARB_fnptr(index, v);
+            public static void VertexAttrib4usvARB(uint index, ushort* v) => GLPointers._glVertexAttrib4usvARB_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glVertexAttribPointerARB]</b>  </summary>
-            public static void VertexAttribPointer(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, void* pointer) => GLPointers._glVertexAttribPointerARB_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, pointer);
+            public static void VertexAttribPointerARB(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, void* pointer) => GLPointers._glVertexAttribPointerARB_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, pointer);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glEnableVertexAttribArrayARB]</b>  </summary>
-            public static void EnableVertexAttribArray(uint index) => GLPointers._glEnableVertexAttribArrayARB_fnptr(index);
+            public static void EnableVertexAttribArrayARB(uint index) => GLPointers._glEnableVertexAttribArrayARB_fnptr(index);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glDisableVertexAttribArrayARB]</b>  </summary>
-            public static void DisableVertexAttribArray(uint index) => GLPointers._glDisableVertexAttribArrayARB_fnptr(index);
+            public static void DisableVertexAttribArrayARB(uint index) => GLPointers._glDisableVertexAttribArrayARB_fnptr(index);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glGetVertexAttribdvARB]</b>  </summary>
-            public static void GetVertexAttribdv(uint index, VertexAttribPropertyARB pname, double* parameters) => GLPointers._glGetVertexAttribdvARB_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribdvARB(uint index, VertexAttribPropertyARB pname, double* parameters) => GLPointers._glGetVertexAttribdvARB_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glGetVertexAttribfvARB]</b>  </summary>
-            public static void GetVertexAttribfv(uint index, VertexAttribPropertyARB pname, float* parameters) => GLPointers._glGetVertexAttribfvARB_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribfvARB(uint index, VertexAttribPropertyARB pname, float* parameters) => GLPointers._glGetVertexAttribfvARB_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glGetVertexAttribivARB]</b>  </summary>
-            public static void GetVertexAttribiv(uint index, VertexAttribPropertyARB pname, int* parameters) => GLPointers._glGetVertexAttribivARB_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribivARB(uint index, VertexAttribPropertyARB pname, int* parameters) => GLPointers._glGetVertexAttribivARB_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ARB_vertex_program | GL_ARB_vertex_shader] [glGetVertexAttribPointervARB]</b>  </summary>
-            public static void GetVertexAttribPointerv(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => GLPointers._glGetVertexAttribPointervARB_fnptr(index, (uint)pname, pointer);
+            public static void GetVertexAttribPointervARB(uint index, VertexAttribPointerPropertyARB pname, void** pointer) => GLPointers._glGetVertexAttribPointervARB_fnptr(index, (uint)pname, pointer);
             
             /// <summary> <b>[requires: GL_ARB_vertex_shader] [glBindAttribLocationARB]</b>  </summary>
-            public static void BindAttribLocation(GLHandleARB programObj, uint index, byte* name) => GLPointers._glBindAttribLocationARB_fnptr((IntPtr)programObj, index, name);
+            public static void BindAttribLocationARB(GLHandleARB programObj, uint index, byte* name) => GLPointers._glBindAttribLocationARB_fnptr((IntPtr)programObj, index, name);
             
             /// <summary> <b>[requires: GL_ARB_vertex_shader] [glGetActiveAttribARB]</b>  </summary>
-            public static void GetActiveAttrib(GLHandleARB programObj, uint index, int maxLength, int* length, int* size, AttributeType* type, byte* name) => GLPointers._glGetActiveAttribARB_fnptr((IntPtr)programObj, index, maxLength, length, size, (uint*)type, name);
+            public static void GetActiveAttribARB(GLHandleARB programObj, uint index, int maxLength, int* length, int* size, AttributeType* type, byte* name) => GLPointers._glGetActiveAttribARB_fnptr((IntPtr)programObj, index, maxLength, length, size, (uint*)type, name);
             
             /// <summary> <b>[requires: GL_ARB_vertex_shader] [glGetAttribLocationARB]</b>  </summary>
-            public static int GetAttribLocation(GLHandleARB programObj, byte* name) => GLPointers._glGetAttribLocationARB_fnptr((IntPtr)programObj, name);
+            public static int GetAttribLocationARB(GLHandleARB programObj, byte* name) => GLPointers._glGetAttribLocationARB_fnptr((IntPtr)programObj, name);
             
             /// <summary> <b>[requires: v3.3 | GL_ARB_vertex_type_2_10_10_10_rev] [glVertexAttribP1ui]</b> Specifies the value of a generic vertex attribute. </summary>
             /// <param name="index">Specifies the index of the generic vertex attribute to be modified.</param>
@@ -8622,2350 +8622,2350 @@ namespace OpenTK.Graphics.OpenGL
             public static void DepthRangeIndexeddNV(uint index, double n, double f) => GLPointers._glDepthRangeIndexeddNV_fnptr(index, n, f);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2dARB]</b>  </summary>
-            public static void WindowPos2d(double x, double y) => GLPointers._glWindowPos2dARB_fnptr(x, y);
+            public static void WindowPos2dARB(double x, double y) => GLPointers._glWindowPos2dARB_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2dvARB]</b>  </summary>
-            public static void WindowPos2dv(double* v) => GLPointers._glWindowPos2dvARB_fnptr(v);
+            public static void WindowPos2dvARB(double* v) => GLPointers._glWindowPos2dvARB_fnptr(v);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2fARB]</b>  </summary>
-            public static void WindowPos2f(float x, float y) => GLPointers._glWindowPos2fARB_fnptr(x, y);
+            public static void WindowPos2fARB(float x, float y) => GLPointers._glWindowPos2fARB_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2fvARB]</b>  </summary>
-            public static void WindowPos2fv(float* v) => GLPointers._glWindowPos2fvARB_fnptr(v);
+            public static void WindowPos2fvARB(float* v) => GLPointers._glWindowPos2fvARB_fnptr(v);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2iARB]</b>  </summary>
-            public static void WindowPos2i(int x, int y) => GLPointers._glWindowPos2iARB_fnptr(x, y);
+            public static void WindowPos2iARB(int x, int y) => GLPointers._glWindowPos2iARB_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2ivARB]</b>  </summary>
-            public static void WindowPos2iv(int* v) => GLPointers._glWindowPos2ivARB_fnptr(v);
+            public static void WindowPos2ivARB(int* v) => GLPointers._glWindowPos2ivARB_fnptr(v);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2sARB]</b>  </summary>
-            public static void WindowPos2s(short x, short y) => GLPointers._glWindowPos2sARB_fnptr(x, y);
+            public static void WindowPos2sARB(short x, short y) => GLPointers._glWindowPos2sARB_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos2svARB]</b>  </summary>
-            public static void WindowPos2sv(short* v) => GLPointers._glWindowPos2svARB_fnptr(v);
+            public static void WindowPos2svARB(short* v) => GLPointers._glWindowPos2svARB_fnptr(v);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3dARB]</b>  </summary>
-            public static void WindowPos3d(double x, double y, double z) => GLPointers._glWindowPos3dARB_fnptr(x, y, z);
+            public static void WindowPos3dARB(double x, double y, double z) => GLPointers._glWindowPos3dARB_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3dvARB]</b>  </summary>
-            public static void WindowPos3dv(double* v) => GLPointers._glWindowPos3dvARB_fnptr(v);
+            public static void WindowPos3dvARB(double* v) => GLPointers._glWindowPos3dvARB_fnptr(v);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3fARB]</b>  </summary>
-            public static void WindowPos3f(float x, float y, float z) => GLPointers._glWindowPos3fARB_fnptr(x, y, z);
+            public static void WindowPos3fARB(float x, float y, float z) => GLPointers._glWindowPos3fARB_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3fvARB]</b>  </summary>
-            public static void WindowPos3fv(float* v) => GLPointers._glWindowPos3fvARB_fnptr(v);
+            public static void WindowPos3fvARB(float* v) => GLPointers._glWindowPos3fvARB_fnptr(v);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3iARB]</b>  </summary>
-            public static void WindowPos3i(int x, int y, int z) => GLPointers._glWindowPos3iARB_fnptr(x, y, z);
+            public static void WindowPos3iARB(int x, int y, int z) => GLPointers._glWindowPos3iARB_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3ivARB]</b>  </summary>
-            public static void WindowPos3iv(int* v) => GLPointers._glWindowPos3ivARB_fnptr(v);
+            public static void WindowPos3ivARB(int* v) => GLPointers._glWindowPos3ivARB_fnptr(v);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3sARB]</b>  </summary>
-            public static void WindowPos3s(short x, short y, short z) => GLPointers._glWindowPos3sARB_fnptr(x, y, z);
+            public static void WindowPos3sARB(short x, short y, short z) => GLPointers._glWindowPos3sARB_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_ARB_window_pos] [glWindowPos3svARB]</b>  </summary>
-            public static void WindowPos3sv(short* v) => GLPointers._glWindowPos3svARB_fnptr(v);
+            public static void WindowPos3svARB(short* v) => GLPointers._glWindowPos3svARB_fnptr(v);
             
         }
         /// <summary>ATI extensions.</summary>
         public static unsafe partial class ATI
         {
             /// <summary> <b>[requires: GL_ATI_draw_buffers] [glDrawBuffersATI]</b>  </summary>
-            public static void DrawBuffers(int n, DrawBufferMode* bufs) => GLPointers._glDrawBuffersATI_fnptr(n, (uint*)bufs);
+            public static void DrawBuffersATI(int n, DrawBufferMode* bufs) => GLPointers._glDrawBuffersATI_fnptr(n, (uint*)bufs);
             
             /// <summary> <b>[requires: GL_ATI_element_array] [glElementPointerATI]</b>  </summary>
-            public static void ElementPointer(ElementPointerTypeATI type, void* pointer) => GLPointers._glElementPointerATI_fnptr((uint)type, pointer);
+            public static void ElementPointerATI(ElementPointerTypeATI type, void* pointer) => GLPointers._glElementPointerATI_fnptr((uint)type, pointer);
             
             /// <summary> <b>[requires: GL_ATI_element_array] [glDrawElementArrayATI]</b>  </summary>
-            public static void DrawElementArray(PrimitiveType mode, int count) => GLPointers._glDrawElementArrayATI_fnptr((uint)mode, count);
+            public static void DrawElementArrayATI(PrimitiveType mode, int count) => GLPointers._glDrawElementArrayATI_fnptr((uint)mode, count);
             
             /// <summary> <b>[requires: GL_ATI_element_array] [glDrawRangeElementArrayATI]</b>  </summary>
-            public static void DrawRangeElementArray(PrimitiveType mode, uint start, uint end, int count) => GLPointers._glDrawRangeElementArrayATI_fnptr((uint)mode, start, end, count);
+            public static void DrawRangeElementArrayATI(PrimitiveType mode, uint start, uint end, int count) => GLPointers._glDrawRangeElementArrayATI_fnptr((uint)mode, start, end, count);
             
             /// <summary> <b>[requires: GL_ATI_envmap_bumpmap] [glTexBumpParameterivATI]</b>  </summary>
-            public static void TexBumpParameteriv(TexBumpParameterATI pname, int* param) => GLPointers._glTexBumpParameterivATI_fnptr((uint)pname, param);
+            public static void TexBumpParameterivATI(TexBumpParameterATI pname, int* param) => GLPointers._glTexBumpParameterivATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_envmap_bumpmap] [glTexBumpParameterfvATI]</b>  </summary>
-            public static void TexBumpParameterfv(TexBumpParameterATI pname, float* param) => GLPointers._glTexBumpParameterfvATI_fnptr((uint)pname, param);
+            public static void TexBumpParameterfvATI(TexBumpParameterATI pname, float* param) => GLPointers._glTexBumpParameterfvATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_envmap_bumpmap] [glGetTexBumpParameterivATI]</b>  </summary>
-            public static void GetTexBumpParameteriv(GetTexBumpParameterATI pname, int* param) => GLPointers._glGetTexBumpParameterivATI_fnptr((uint)pname, param);
+            public static void GetTexBumpParameterivATI(GetTexBumpParameterATI pname, int* param) => GLPointers._glGetTexBumpParameterivATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_envmap_bumpmap] [glGetTexBumpParameterfvATI]</b>  </summary>
-            public static void GetTexBumpParameterfv(GetTexBumpParameterATI pname, float* param) => GLPointers._glGetTexBumpParameterfvATI_fnptr((uint)pname, param);
+            public static void GetTexBumpParameterfvATI(GetTexBumpParameterATI pname, float* param) => GLPointers._glGetTexBumpParameterfvATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glGenFragmentShadersATI]</b>  </summary>
-            public static uint GenFragmentShaders(uint range) => GLPointers._glGenFragmentShadersATI_fnptr(range);
+            public static uint GenFragmentShadersATI(uint range) => GLPointers._glGenFragmentShadersATI_fnptr(range);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glBindFragmentShaderATI]</b>  </summary>
-            public static void BindFragmentShader(uint id) => GLPointers._glBindFragmentShaderATI_fnptr(id);
+            public static void BindFragmentShaderATI(uint id) => GLPointers._glBindFragmentShaderATI_fnptr(id);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glDeleteFragmentShaderATI]</b>  </summary>
-            public static void DeleteFragmentShader(uint id) => GLPointers._glDeleteFragmentShaderATI_fnptr(id);
+            public static void DeleteFragmentShaderATI(uint id) => GLPointers._glDeleteFragmentShaderATI_fnptr(id);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glBeginFragmentShaderATI]</b>  </summary>
-            public static void BeginFragmentShader() => GLPointers._glBeginFragmentShaderATI_fnptr();
+            public static void BeginFragmentShaderATI() => GLPointers._glBeginFragmentShaderATI_fnptr();
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glEndFragmentShaderATI]</b>  </summary>
-            public static void EndFragmentShader() => GLPointers._glEndFragmentShaderATI_fnptr();
+            public static void EndFragmentShaderATI() => GLPointers._glEndFragmentShaderATI_fnptr();
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glPassTexCoordATI]</b>  </summary>
-            public static void PassTexCoord(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI coord, SwizzleOpATI swizzle) => GLPointers._glPassTexCoordATI_fnptr((uint)dst, (uint)coord, (uint)swizzle);
+            public static void PassTexCoordATI(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI coord, SwizzleOpATI swizzle) => GLPointers._glPassTexCoordATI_fnptr((uint)dst, (uint)coord, (uint)swizzle);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glSampleMapATI]</b>  </summary>
-            public static void SampleMap(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI interp, SwizzleOpATI swizzle) => GLPointers._glSampleMapATI_fnptr((uint)dst, (uint)interp, (uint)swizzle);
+            public static void SampleMapATI(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI interp, SwizzleOpATI swizzle) => GLPointers._glSampleMapATI_fnptr((uint)dst, (uint)interp, (uint)swizzle);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glColorFragmentOp1ATI]</b>  </summary>
-            public static void ColorFragmentOp1(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => GLPointers._glColorFragmentOp1ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod);
+            public static void ColorFragmentOp1ATI(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => GLPointers._glColorFragmentOp1ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glColorFragmentOp2ATI]</b>  </summary>
-            public static void ColorFragmentOp2(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => GLPointers._glColorFragmentOp2ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod);
+            public static void ColorFragmentOp2ATI(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => GLPointers._glColorFragmentOp2ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glColorFragmentOp3ATI]</b>  </summary>
-            public static void ColorFragmentOp3(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => GLPointers._glColorFragmentOp3ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod, (uint)arg3, (uint)arg3Rep, (uint)arg3Mod);
+            public static void ColorFragmentOp3ATI(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => GLPointers._glColorFragmentOp3ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod, (uint)arg3, (uint)arg3Rep, (uint)arg3Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glAlphaFragmentOp1ATI]</b>  </summary>
-            public static void AlphaFragmentOp1(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => GLPointers._glAlphaFragmentOp1ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod);
+            public static void AlphaFragmentOp1ATI(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => GLPointers._glAlphaFragmentOp1ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glAlphaFragmentOp2ATI]</b>  </summary>
-            public static void AlphaFragmentOp2(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => GLPointers._glAlphaFragmentOp2ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod);
+            public static void AlphaFragmentOp2ATI(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => GLPointers._glAlphaFragmentOp2ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glAlphaFragmentOp3ATI]</b>  </summary>
-            public static void AlphaFragmentOp3(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => GLPointers._glAlphaFragmentOp3ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod, (uint)arg3, (uint)arg3Rep, (uint)arg3Mod);
+            public static void AlphaFragmentOp3ATI(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => GLPointers._glAlphaFragmentOp3ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod, (uint)arg3, (uint)arg3Rep, (uint)arg3Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader] [glSetFragmentShaderConstantATI]</b>  </summary>
-            public static void SetFragmentShaderConstant(FragmentShaderConATI dst, float* value) => GLPointers._glSetFragmentShaderConstantATI_fnptr((uint)dst, value);
+            public static void SetFragmentShaderConstantATI(FragmentShaderConATI dst, float* value) => GLPointers._glSetFragmentShaderConstantATI_fnptr((uint)dst, value);
             
             /// <summary> <b>[requires: GL_ATI_map_object_buffer] [glMapObjectBufferATI]</b>  </summary>
-            public static void* MapObjectBuffer(int buffer) => GLPointers._glMapObjectBufferATI_fnptr(buffer);
+            public static void* MapObjectBufferATI(int buffer) => GLPointers._glMapObjectBufferATI_fnptr(buffer);
             
             /// <summary> <b>[requires: GL_ATI_map_object_buffer] [glUnmapObjectBufferATI]</b>  </summary>
-            public static void UnmapObjectBuffer(int buffer) => GLPointers._glUnmapObjectBufferATI_fnptr(buffer);
+            public static void UnmapObjectBufferATI(int buffer) => GLPointers._glUnmapObjectBufferATI_fnptr(buffer);
             
             /// <summary> <b>[requires: GL_ATI_pn_triangles] [glPNTrianglesiATI]</b>  </summary>
-            public static void PNTrianglesi(PNTrianglesPNameATI pname, int param) => GLPointers._glPNTrianglesiATI_fnptr((uint)pname, param);
+            public static void PNTrianglesiATI(PNTrianglesPNameATI pname, int param) => GLPointers._glPNTrianglesiATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_pn_triangles] [glPNTrianglesfATI]</b>  </summary>
-            public static void PNTrianglesf(PNTrianglesPNameATI pname, float param) => GLPointers._glPNTrianglesfATI_fnptr((uint)pname, param);
+            public static void PNTrianglesfATI(PNTrianglesPNameATI pname, float param) => GLPointers._glPNTrianglesfATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_separate_stencil] [glStencilOpSeparateATI]</b>  </summary>
-            public static void StencilOpSeparate(TriangleFace face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._glStencilOpSeparateATI_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
+            public static void StencilOpSeparateATI(TriangleFace face, StencilOp sfail, StencilOp dpfail, StencilOp dppass) => GLPointers._glStencilOpSeparateATI_fnptr((uint)face, (uint)sfail, (uint)dpfail, (uint)dppass);
             
             /// <summary> <b>[requires: GL_ATI_separate_stencil] [glStencilFuncSeparateATI]</b>  </summary>
-            public static void StencilFuncSeparate(StencilFunction frontfunc, StencilFunction backfunc, int reference, uint mask) => GLPointers._glStencilFuncSeparateATI_fnptr((uint)frontfunc, (uint)backfunc, reference, mask);
+            public static void StencilFuncSeparateATI(StencilFunction frontfunc, StencilFunction backfunc, int reference, uint mask) => GLPointers._glStencilFuncSeparateATI_fnptr((uint)frontfunc, (uint)backfunc, reference, mask);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glNewObjectBufferATI]</b>  </summary>
-            public static uint NewObjectBuffer(int size, void* pointer, ArrayObjectUsageATI usage) => GLPointers._glNewObjectBufferATI_fnptr(size, pointer, (uint)usage);
+            public static uint NewObjectBufferATI(int size, void* pointer, ArrayObjectUsageATI usage) => GLPointers._glNewObjectBufferATI_fnptr(size, pointer, (uint)usage);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glIsObjectBufferATI]</b>  </summary>
-            public static bool IsObjectBuffer(int buffer) => GLPointers._glIsObjectBufferATI_fnptr(buffer) != 0;
+            public static bool IsObjectBufferATI(int buffer) => GLPointers._glIsObjectBufferATI_fnptr(buffer) != 0;
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glUpdateObjectBufferATI]</b>  </summary>
-            public static void UpdateObjectBuffer(int buffer, uint offset, int size, void* pointer, PreserveModeATI preserve) => GLPointers._glUpdateObjectBufferATI_fnptr(buffer, offset, size, pointer, (uint)preserve);
+            public static void UpdateObjectBufferATI(int buffer, uint offset, int size, void* pointer, PreserveModeATI preserve) => GLPointers._glUpdateObjectBufferATI_fnptr(buffer, offset, size, pointer, (uint)preserve);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glGetObjectBufferfvATI]</b>  </summary>
-            public static void GetObjectBufferfv(int buffer, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetObjectBufferfvATI_fnptr(buffer, (uint)pname, parameters);
+            public static void GetObjectBufferfvATI(int buffer, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetObjectBufferfvATI_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glGetObjectBufferivATI]</b>  </summary>
-            public static void GetObjectBufferiv(int buffer, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetObjectBufferivATI_fnptr(buffer, (uint)pname, parameters);
+            public static void GetObjectBufferivATI(int buffer, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetObjectBufferivATI_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glFreeObjectBufferATI]</b>  </summary>
-            public static void FreeObjectBuffer(int buffer) => GLPointers._glFreeObjectBufferATI_fnptr(buffer);
+            public static void FreeObjectBufferATI(int buffer) => GLPointers._glFreeObjectBufferATI_fnptr(buffer);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glArrayObjectATI]</b>  </summary>
-            public static void ArrayObject(EnableCap array, int size, ScalarType type, int stride, int buffer, uint offset) => GLPointers._glArrayObjectATI_fnptr((uint)array, size, (uint)type, stride, buffer, offset);
+            public static void ArrayObjectATI(EnableCap array, int size, ScalarType type, int stride, int buffer, uint offset) => GLPointers._glArrayObjectATI_fnptr((uint)array, size, (uint)type, stride, buffer, offset);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glGetArrayObjectfvATI]</b>  </summary>
-            public static void GetArrayObjectfv(EnableCap array, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetArrayObjectfvATI_fnptr((uint)array, (uint)pname, parameters);
+            public static void GetArrayObjectfvATI(EnableCap array, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetArrayObjectfvATI_fnptr((uint)array, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glGetArrayObjectivATI]</b>  </summary>
-            public static void GetArrayObjectiv(EnableCap array, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetArrayObjectivATI_fnptr((uint)array, (uint)pname, parameters);
+            public static void GetArrayObjectivATI(EnableCap array, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetArrayObjectivATI_fnptr((uint)array, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glVariantArrayObjectATI]</b>  </summary>
-            public static void VariantArrayObject(uint id, ScalarType type, int stride, int buffer, uint offset) => GLPointers._glVariantArrayObjectATI_fnptr(id, (uint)type, stride, buffer, offset);
+            public static void VariantArrayObjectATI(uint id, ScalarType type, int stride, int buffer, uint offset) => GLPointers._glVariantArrayObjectATI_fnptr(id, (uint)type, stride, buffer, offset);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glGetVariantArrayObjectfvATI]</b>  </summary>
-            public static void GetVariantArrayObjectfv(uint id, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetVariantArrayObjectfvATI_fnptr(id, (uint)pname, parameters);
+            public static void GetVariantArrayObjectfvATI(uint id, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetVariantArrayObjectfvATI_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object] [glGetVariantArrayObjectivATI]</b>  </summary>
-            public static void GetVariantArrayObjectiv(uint id, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetVariantArrayObjectivATI_fnptr(id, (uint)pname, parameters);
+            public static void GetVariantArrayObjectivATI(uint id, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetVariantArrayObjectivATI_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_attrib_array_object] [glVertexAttribArrayObjectATI]</b>  </summary>
-            public static void VertexAttribArrayObject(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int buffer, uint offset) => GLPointers._glVertexAttribArrayObjectATI_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, buffer, offset);
+            public static void VertexAttribArrayObjectATI(uint index, int size, VertexAttribPointerType type, bool normalized, int stride, int buffer, uint offset) => GLPointers._glVertexAttribArrayObjectATI_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, buffer, offset);
             
             /// <summary> <b>[requires: GL_ATI_vertex_attrib_array_object] [glGetVertexAttribArrayObjectfvATI]</b>  </summary>
-            public static void GetVertexAttribArrayObjectfv(uint index, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetVertexAttribArrayObjectfvATI_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribArrayObjectfvATI(uint index, ArrayObjectPNameATI pname, float* parameters) => GLPointers._glGetVertexAttribArrayObjectfvATI_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_attrib_array_object] [glGetVertexAttribArrayObjectivATI]</b>  </summary>
-            public static void GetVertexAttribArrayObjectiv(uint index, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetVertexAttribArrayObjectivATI_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribArrayObjectivATI(uint index, ArrayObjectPNameATI pname, int* parameters) => GLPointers._glGetVertexAttribArrayObjectivATI_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1sATI]</b>  </summary>
-            public static void VertexStream1s(VertexStreamATI stream, short x) => GLPointers._glVertexStream1sATI_fnptr((uint)stream, x);
+            public static void VertexStream1sATI(VertexStreamATI stream, short x) => GLPointers._glVertexStream1sATI_fnptr((uint)stream, x);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1svATI]</b>  </summary>
-            public static void VertexStream1sv(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream1svATI_fnptr((uint)stream, coords);
+            public static void VertexStream1svATI(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream1svATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1iATI]</b>  </summary>
-            public static void VertexStream1i(VertexStreamATI stream, int x) => GLPointers._glVertexStream1iATI_fnptr((uint)stream, x);
+            public static void VertexStream1iATI(VertexStreamATI stream, int x) => GLPointers._glVertexStream1iATI_fnptr((uint)stream, x);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1ivATI]</b>  </summary>
-            public static void VertexStream1iv(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream1ivATI_fnptr((uint)stream, coords);
+            public static void VertexStream1ivATI(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream1ivATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1fATI]</b>  </summary>
-            public static void VertexStream1f(VertexStreamATI stream, float x) => GLPointers._glVertexStream1fATI_fnptr((uint)stream, x);
+            public static void VertexStream1fATI(VertexStreamATI stream, float x) => GLPointers._glVertexStream1fATI_fnptr((uint)stream, x);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1fvATI]</b>  </summary>
-            public static void VertexStream1fv(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream1fvATI_fnptr((uint)stream, coords);
+            public static void VertexStream1fvATI(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream1fvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1dATI]</b>  </summary>
-            public static void VertexStream1d(VertexStreamATI stream, double x) => GLPointers._glVertexStream1dATI_fnptr((uint)stream, x);
+            public static void VertexStream1dATI(VertexStreamATI stream, double x) => GLPointers._glVertexStream1dATI_fnptr((uint)stream, x);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream1dvATI]</b>  </summary>
-            public static void VertexStream1dv(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream1dvATI_fnptr((uint)stream, coords);
+            public static void VertexStream1dvATI(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream1dvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2sATI]</b>  </summary>
-            public static void VertexStream2s(VertexStreamATI stream, short x, short y) => GLPointers._glVertexStream2sATI_fnptr((uint)stream, x, y);
+            public static void VertexStream2sATI(VertexStreamATI stream, short x, short y) => GLPointers._glVertexStream2sATI_fnptr((uint)stream, x, y);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2svATI]</b>  </summary>
-            public static void VertexStream2sv(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream2svATI_fnptr((uint)stream, coords);
+            public static void VertexStream2svATI(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream2svATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2iATI]</b>  </summary>
-            public static void VertexStream2i(VertexStreamATI stream, int x, int y) => GLPointers._glVertexStream2iATI_fnptr((uint)stream, x, y);
+            public static void VertexStream2iATI(VertexStreamATI stream, int x, int y) => GLPointers._glVertexStream2iATI_fnptr((uint)stream, x, y);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2ivATI]</b>  </summary>
-            public static void VertexStream2iv(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream2ivATI_fnptr((uint)stream, coords);
+            public static void VertexStream2ivATI(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream2ivATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2fATI]</b>  </summary>
-            public static void VertexStream2f(VertexStreamATI stream, float x, float y) => GLPointers._glVertexStream2fATI_fnptr((uint)stream, x, y);
+            public static void VertexStream2fATI(VertexStreamATI stream, float x, float y) => GLPointers._glVertexStream2fATI_fnptr((uint)stream, x, y);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2fvATI]</b>  </summary>
-            public static void VertexStream2fv(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream2fvATI_fnptr((uint)stream, coords);
+            public static void VertexStream2fvATI(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream2fvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2dATI]</b>  </summary>
-            public static void VertexStream2d(VertexStreamATI stream, double x, double y) => GLPointers._glVertexStream2dATI_fnptr((uint)stream, x, y);
+            public static void VertexStream2dATI(VertexStreamATI stream, double x, double y) => GLPointers._glVertexStream2dATI_fnptr((uint)stream, x, y);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream2dvATI]</b>  </summary>
-            public static void VertexStream2dv(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream2dvATI_fnptr((uint)stream, coords);
+            public static void VertexStream2dvATI(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream2dvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3sATI]</b>  </summary>
-            public static void VertexStream3s(VertexStreamATI stream, short x, short y, short z) => GLPointers._glVertexStream3sATI_fnptr((uint)stream, x, y, z);
+            public static void VertexStream3sATI(VertexStreamATI stream, short x, short y, short z) => GLPointers._glVertexStream3sATI_fnptr((uint)stream, x, y, z);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3svATI]</b>  </summary>
-            public static void VertexStream3sv(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream3svATI_fnptr((uint)stream, coords);
+            public static void VertexStream3svATI(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream3svATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3iATI]</b>  </summary>
-            public static void VertexStream3i(VertexStreamATI stream, int x, int y, int z) => GLPointers._glVertexStream3iATI_fnptr((uint)stream, x, y, z);
+            public static void VertexStream3iATI(VertexStreamATI stream, int x, int y, int z) => GLPointers._glVertexStream3iATI_fnptr((uint)stream, x, y, z);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3ivATI]</b>  </summary>
-            public static void VertexStream3iv(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream3ivATI_fnptr((uint)stream, coords);
+            public static void VertexStream3ivATI(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream3ivATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3fATI]</b>  </summary>
-            public static void VertexStream3f(VertexStreamATI stream, float x, float y, float z) => GLPointers._glVertexStream3fATI_fnptr((uint)stream, x, y, z);
+            public static void VertexStream3fATI(VertexStreamATI stream, float x, float y, float z) => GLPointers._glVertexStream3fATI_fnptr((uint)stream, x, y, z);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3fvATI]</b>  </summary>
-            public static void VertexStream3fv(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream3fvATI_fnptr((uint)stream, coords);
+            public static void VertexStream3fvATI(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream3fvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3dATI]</b>  </summary>
-            public static void VertexStream3d(VertexStreamATI stream, double x, double y, double z) => GLPointers._glVertexStream3dATI_fnptr((uint)stream, x, y, z);
+            public static void VertexStream3dATI(VertexStreamATI stream, double x, double y, double z) => GLPointers._glVertexStream3dATI_fnptr((uint)stream, x, y, z);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream3dvATI]</b>  </summary>
-            public static void VertexStream3dv(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream3dvATI_fnptr((uint)stream, coords);
+            public static void VertexStream3dvATI(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream3dvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4sATI]</b>  </summary>
-            public static void VertexStream4s(VertexStreamATI stream, short x, short y, short z, short w) => GLPointers._glVertexStream4sATI_fnptr((uint)stream, x, y, z, w);
+            public static void VertexStream4sATI(VertexStreamATI stream, short x, short y, short z, short w) => GLPointers._glVertexStream4sATI_fnptr((uint)stream, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4svATI]</b>  </summary>
-            public static void VertexStream4sv(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream4svATI_fnptr((uint)stream, coords);
+            public static void VertexStream4svATI(VertexStreamATI stream, short* coords) => GLPointers._glVertexStream4svATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4iATI]</b>  </summary>
-            public static void VertexStream4i(VertexStreamATI stream, int x, int y, int z, int w) => GLPointers._glVertexStream4iATI_fnptr((uint)stream, x, y, z, w);
+            public static void VertexStream4iATI(VertexStreamATI stream, int x, int y, int z, int w) => GLPointers._glVertexStream4iATI_fnptr((uint)stream, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4ivATI]</b>  </summary>
-            public static void VertexStream4iv(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream4ivATI_fnptr((uint)stream, coords);
+            public static void VertexStream4ivATI(VertexStreamATI stream, int* coords) => GLPointers._glVertexStream4ivATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4fATI]</b>  </summary>
-            public static void VertexStream4f(VertexStreamATI stream, float x, float y, float z, float w) => GLPointers._glVertexStream4fATI_fnptr((uint)stream, x, y, z, w);
+            public static void VertexStream4fATI(VertexStreamATI stream, float x, float y, float z, float w) => GLPointers._glVertexStream4fATI_fnptr((uint)stream, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4fvATI]</b>  </summary>
-            public static void VertexStream4fv(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream4fvATI_fnptr((uint)stream, coords);
+            public static void VertexStream4fvATI(VertexStreamATI stream, float* coords) => GLPointers._glVertexStream4fvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4dATI]</b>  </summary>
-            public static void VertexStream4d(VertexStreamATI stream, double x, double y, double z, double w) => GLPointers._glVertexStream4dATI_fnptr((uint)stream, x, y, z, w);
+            public static void VertexStream4dATI(VertexStreamATI stream, double x, double y, double z, double w) => GLPointers._glVertexStream4dATI_fnptr((uint)stream, x, y, z, w);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexStream4dvATI]</b>  </summary>
-            public static void VertexStream4dv(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream4dvATI_fnptr((uint)stream, coords);
+            public static void VertexStream4dvATI(VertexStreamATI stream, double* coords) => GLPointers._glVertexStream4dvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3bATI]</b>  </summary>
-            public static void NormalStream3b(VertexStreamATI stream, sbyte nx, sbyte ny, sbyte nz) => GLPointers._glNormalStream3bATI_fnptr((uint)stream, nx, ny, nz);
+            public static void NormalStream3bATI(VertexStreamATI stream, sbyte nx, sbyte ny, sbyte nz) => GLPointers._glNormalStream3bATI_fnptr((uint)stream, nx, ny, nz);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3bvATI]</b>  </summary>
-            public static void NormalStream3bv(VertexStreamATI stream, sbyte* coords) => GLPointers._glNormalStream3bvATI_fnptr((uint)stream, coords);
+            public static void NormalStream3bvATI(VertexStreamATI stream, sbyte* coords) => GLPointers._glNormalStream3bvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3sATI]</b>  </summary>
-            public static void NormalStream3s(VertexStreamATI stream, short nx, short ny, short nz) => GLPointers._glNormalStream3sATI_fnptr((uint)stream, nx, ny, nz);
+            public static void NormalStream3sATI(VertexStreamATI stream, short nx, short ny, short nz) => GLPointers._glNormalStream3sATI_fnptr((uint)stream, nx, ny, nz);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3svATI]</b>  </summary>
-            public static void NormalStream3sv(VertexStreamATI stream, short* coords) => GLPointers._glNormalStream3svATI_fnptr((uint)stream, coords);
+            public static void NormalStream3svATI(VertexStreamATI stream, short* coords) => GLPointers._glNormalStream3svATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3iATI]</b>  </summary>
-            public static void NormalStream3i(VertexStreamATI stream, int nx, int ny, int nz) => GLPointers._glNormalStream3iATI_fnptr((uint)stream, nx, ny, nz);
+            public static void NormalStream3iATI(VertexStreamATI stream, int nx, int ny, int nz) => GLPointers._glNormalStream3iATI_fnptr((uint)stream, nx, ny, nz);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3ivATI]</b>  </summary>
-            public static void NormalStream3iv(VertexStreamATI stream, int* coords) => GLPointers._glNormalStream3ivATI_fnptr((uint)stream, coords);
+            public static void NormalStream3ivATI(VertexStreamATI stream, int* coords) => GLPointers._glNormalStream3ivATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3fATI]</b>  </summary>
-            public static void NormalStream3f(VertexStreamATI stream, float nx, float ny, float nz) => GLPointers._glNormalStream3fATI_fnptr((uint)stream, nx, ny, nz);
+            public static void NormalStream3fATI(VertexStreamATI stream, float nx, float ny, float nz) => GLPointers._glNormalStream3fATI_fnptr((uint)stream, nx, ny, nz);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3fvATI]</b>  </summary>
-            public static void NormalStream3fv(VertexStreamATI stream, float* coords) => GLPointers._glNormalStream3fvATI_fnptr((uint)stream, coords);
+            public static void NormalStream3fvATI(VertexStreamATI stream, float* coords) => GLPointers._glNormalStream3fvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3dATI]</b>  </summary>
-            public static void NormalStream3d(VertexStreamATI stream, double nx, double ny, double nz) => GLPointers._glNormalStream3dATI_fnptr((uint)stream, nx, ny, nz);
+            public static void NormalStream3dATI(VertexStreamATI stream, double nx, double ny, double nz) => GLPointers._glNormalStream3dATI_fnptr((uint)stream, nx, ny, nz);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glNormalStream3dvATI]</b>  </summary>
-            public static void NormalStream3dv(VertexStreamATI stream, double* coords) => GLPointers._glNormalStream3dvATI_fnptr((uint)stream, coords);
+            public static void NormalStream3dvATI(VertexStreamATI stream, double* coords) => GLPointers._glNormalStream3dvATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glClientActiveVertexStreamATI]</b>  </summary>
-            public static void ClientActiveVertexStream(VertexStreamATI stream) => GLPointers._glClientActiveVertexStreamATI_fnptr((uint)stream);
+            public static void ClientActiveVertexStreamATI(VertexStreamATI stream) => GLPointers._glClientActiveVertexStreamATI_fnptr((uint)stream);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexBlendEnviATI]</b>  </summary>
-            public static void VertexBlendEnvi(VertexStreamATI pname, int param) => GLPointers._glVertexBlendEnviATI_fnptr((uint)pname, param);
+            public static void VertexBlendEnviATI(VertexStreamATI pname, int param) => GLPointers._glVertexBlendEnviATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_vertex_streams] [glVertexBlendEnvfATI]</b>  </summary>
-            public static void VertexBlendEnvf(VertexStreamATI pname, float param) => GLPointers._glVertexBlendEnvfATI_fnptr((uint)pname, param);
+            public static void VertexBlendEnvfATI(VertexStreamATI pname, float param) => GLPointers._glVertexBlendEnvfATI_fnptr((uint)pname, param);
             
         }
         /// <summary>EXT extensions.</summary>
         public static unsafe partial class EXT
         {
             /// <summary> <b>[requires: GL_EXT_EGL_image_storage] [glEGLImageTargetTexStorageEXT]</b>  </summary>
-            public static void EGLImageTargetTexStorage(All target, void* image, int* attrib_list) => GLPointers._glEGLImageTargetTexStorageEXT_fnptr((uint)target, image, attrib_list);
+            public static void EGLImageTargetTexStorageEXT(All target, void* image, int* attrib_list) => GLPointers._glEGLImageTargetTexStorageEXT_fnptr((uint)target, image, attrib_list);
             
             /// <summary> <b>[requires: GL_EXT_EGL_image_storage] [glEGLImageTargetTextureStorageEXT]</b>  </summary>
-            public static void EGLImageTargetTextureStorage(int texture, void* image, int* attrib_list) => GLPointers._glEGLImageTargetTextureStorageEXT_fnptr(texture, image, attrib_list);
+            public static void EGLImageTargetTextureStorageEXT(int texture, void* image, int* attrib_list) => GLPointers._glEGLImageTargetTextureStorageEXT_fnptr(texture, image, attrib_list);
             
             /// <summary> <b>[requires: GL_EXT_bindable_uniform] [glUniformBufferEXT]</b>  </summary>
-            public static void UniformBuffer(int program, int location, int buffer) => GLPointers._glUniformBufferEXT_fnptr(program, location, buffer);
+            public static void UniformBufferEXT(int program, int location, int buffer) => GLPointers._glUniformBufferEXT_fnptr(program, location, buffer);
             
             /// <summary> <b>[requires: GL_EXT_bindable_uniform] [glGetUniformBufferSizeEXT]</b>  </summary>
-            public static int GetUniformBufferSize(int program, int location) => GLPointers._glGetUniformBufferSizeEXT_fnptr(program, location);
+            public static int GetUniformBufferSizeEXT(int program, int location) => GLPointers._glGetUniformBufferSizeEXT_fnptr(program, location);
             
             /// <summary> <b>[requires: GL_EXT_bindable_uniform] [glGetUniformOffsetEXT]</b>  </summary>
-            public static IntPtr GetUniformOffset(int program, int location) => GLPointers._glGetUniformOffsetEXT_fnptr(program, location);
+            public static IntPtr GetUniformOffsetEXT(int program, int location) => GLPointers._glGetUniformOffsetEXT_fnptr(program, location);
             
             /// <summary> <b>[requires: GL_EXT_blend_color] [glBlendColorEXT]</b>  </summary>
-            public static void BlendColor(float red, float green, float blue, float alpha) => GLPointers._glBlendColorEXT_fnptr(red, green, blue, alpha);
+            public static void BlendColorEXT(float red, float green, float blue, float alpha) => GLPointers._glBlendColorEXT_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_EXT_blend_equation_separate] [glBlendEquationSeparateEXT]</b>  </summary>
-            public static void BlendEquationSeparate(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateEXT_fnptr((uint)modeRGB, (uint)modeAlpha);
+            public static void BlendEquationSeparateEXT(BlendEquationModeEXT modeRGB, BlendEquationModeEXT modeAlpha) => GLPointers._glBlendEquationSeparateEXT_fnptr((uint)modeRGB, (uint)modeAlpha);
             
             /// <summary> <b>[requires: GL_EXT_blend_func_separate] [glBlendFuncSeparateEXT]</b>  </summary>
-            public static void BlendFuncSeparate(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => GLPointers._glBlendFuncSeparateEXT_fnptr((uint)sfactorRGB, (uint)dfactorRGB, (uint)sfactorAlpha, (uint)dfactorAlpha);
+            public static void BlendFuncSeparateEXT(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => GLPointers._glBlendFuncSeparateEXT_fnptr((uint)sfactorRGB, (uint)dfactorRGB, (uint)sfactorAlpha, (uint)dfactorAlpha);
             
             /// <summary> <b>[requires: GL_EXT_blend_minmax] [glBlendEquationEXT]</b>  </summary>
-            public static void BlendEquation(BlendEquationModeEXT mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
+            public static void BlendEquationEXT(BlendEquationModeEXT mode) => GLPointers._glBlendEquationEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_color_subtable] [glColorSubTableEXT]</b>  </summary>
-            public static void ColorSubTable(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, void* data) => GLPointers._glColorSubTableEXT_fnptr((uint)target, start, count, (uint)format, (uint)type, data);
+            public static void ColorSubTableEXT(ColorTableTarget target, int start, int count, PixelFormat format, PixelType type, void* data) => GLPointers._glColorSubTableEXT_fnptr((uint)target, start, count, (uint)format, (uint)type, data);
             
             /// <summary> <b>[requires: GL_EXT_color_subtable] [glCopyColorSubTableEXT]</b>  </summary>
-            public static void CopyColorSubTable(ColorTableTarget target, int start, int x, int y, int width) => GLPointers._glCopyColorSubTableEXT_fnptr((uint)target, start, x, y, width);
+            public static void CopyColorSubTableEXT(ColorTableTarget target, int start, int x, int y, int width) => GLPointers._glCopyColorSubTableEXT_fnptr((uint)target, start, x, y, width);
             
             /// <summary> <b>[requires: GL_EXT_compiled_vertex_array] [glLockArraysEXT]</b>  </summary>
-            public static void LockArrays(int first, int count) => GLPointers._glLockArraysEXT_fnptr(first, count);
+            public static void LockArraysEXT(int first, int count) => GLPointers._glLockArraysEXT_fnptr(first, count);
             
             /// <summary> <b>[requires: GL_EXT_compiled_vertex_array] [glUnlockArraysEXT]</b>  </summary>
-            public static void UnlockArrays() => GLPointers._glUnlockArraysEXT_fnptr();
+            public static void UnlockArraysEXT() => GLPointers._glUnlockArraysEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glConvolutionFilter1DEXT]</b>  </summary>
-            public static void ConvolutionFilter1D(ConvolutionTargetEXT target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, void* image) => GLPointers._glConvolutionFilter1DEXT_fnptr((uint)target, (uint)internalformat, width, (uint)format, (uint)type, image);
+            public static void ConvolutionFilter1DEXT(ConvolutionTargetEXT target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, void* image) => GLPointers._glConvolutionFilter1DEXT_fnptr((uint)target, (uint)internalformat, width, (uint)format, (uint)type, image);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glConvolutionFilter2DEXT]</b>  </summary>
-            public static void ConvolutionFilter2D(ConvolutionTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, void* image) => GLPointers._glConvolutionFilter2DEXT_fnptr((uint)target, (uint)internalformat, width, height, (uint)format, (uint)type, image);
+            public static void ConvolutionFilter2DEXT(ConvolutionTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, void* image) => GLPointers._glConvolutionFilter2DEXT_fnptr((uint)target, (uint)internalformat, width, height, (uint)format, (uint)type, image);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glConvolutionParameterfEXT]</b>  </summary>
-            public static void ConvolutionParameterf(ConvolutionTargetEXT target, ConvolutionParameter pname, float parameters) => GLPointers._glConvolutionParameterfEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterfEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, float parameters) => GLPointers._glConvolutionParameterfEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glConvolutionParameterfvEXT]</b>  </summary>
-            public static void ConvolutionParameterfv(ConvolutionTargetEXT target, ConvolutionParameter pname, float* parameters) => GLPointers._glConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, float* parameters) => GLPointers._glConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glConvolutionParameteriEXT]</b>  </summary>
-            public static void ConvolutionParameteri(ConvolutionTargetEXT target, ConvolutionParameter pname, int parameters) => GLPointers._glConvolutionParameteriEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameteriEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, int parameters) => GLPointers._glConvolutionParameteriEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glConvolutionParameterivEXT]</b>  </summary>
-            public static void ConvolutionParameteriv(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glCopyConvolutionFilter1DEXT]</b>  </summary>
-            public static void CopyConvolutionFilter1D(ConvolutionTargetEXT target, InternalFormat internalformat, int x, int y, int width) => GLPointers._glCopyConvolutionFilter1DEXT_fnptr((uint)target, (uint)internalformat, x, y, width);
+            public static void CopyConvolutionFilter1DEXT(ConvolutionTargetEXT target, InternalFormat internalformat, int x, int y, int width) => GLPointers._glCopyConvolutionFilter1DEXT_fnptr((uint)target, (uint)internalformat, x, y, width);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glCopyConvolutionFilter2DEXT]</b>  </summary>
-            public static void CopyConvolutionFilter2D(ConvolutionTargetEXT target, InternalFormat internalformat, int x, int y, int width, int height) => GLPointers._glCopyConvolutionFilter2DEXT_fnptr((uint)target, (uint)internalformat, x, y, width, height);
+            public static void CopyConvolutionFilter2DEXT(ConvolutionTargetEXT target, InternalFormat internalformat, int x, int y, int width, int height) => GLPointers._glCopyConvolutionFilter2DEXT_fnptr((uint)target, (uint)internalformat, x, y, width, height);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glGetConvolutionFilterEXT]</b>  </summary>
-            public static void GetConvolutionFilter(ConvolutionTargetEXT target, PixelFormat format, PixelType type, void* image) => GLPointers._glGetConvolutionFilterEXT_fnptr((uint)target, (uint)format, (uint)type, image);
+            public static void GetConvolutionFilterEXT(ConvolutionTargetEXT target, PixelFormat format, PixelType type, void* image) => GLPointers._glGetConvolutionFilterEXT_fnptr((uint)target, (uint)format, (uint)type, image);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glGetConvolutionParameterfvEXT]</b>  </summary>
-            public static void GetConvolutionParameterfv(ConvolutionTargetEXT target, ConvolutionParameter pname, float* parameters) => GLPointers._glGetConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameterfvEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, float* parameters) => GLPointers._glGetConvolutionParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glGetConvolutionParameterivEXT]</b>  </summary>
-            public static void GetConvolutionParameteriv(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glGetConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameterivEXT(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glGetConvolutionParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glGetSeparableFilterEXT]</b>  </summary>
-            public static void GetSeparableFilter(SeparableTargetEXT target, PixelFormat format, PixelType type, void* row, void* column, void* span) => GLPointers._glGetSeparableFilterEXT_fnptr((uint)target, (uint)format, (uint)type, row, column, span);
+            public static void GetSeparableFilterEXT(SeparableTargetEXT target, PixelFormat format, PixelType type, void* row, void* column, void* span) => GLPointers._glGetSeparableFilterEXT_fnptr((uint)target, (uint)format, (uint)type, row, column, span);
             
             /// <summary> <b>[requires: GL_EXT_convolution] [glSeparableFilter2DEXT]</b>  </summary>
-            public static void SeparableFilter2D(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, void* row, void* column) => GLPointers._glSeparableFilter2DEXT_fnptr((uint)target, (uint)internalformat, width, height, (uint)format, (uint)type, row, column);
+            public static void SeparableFilter2DEXT(SeparableTargetEXT target, InternalFormat internalformat, int width, int height, PixelFormat format, PixelType type, void* row, void* column) => GLPointers._glSeparableFilter2DEXT_fnptr((uint)target, (uint)internalformat, width, height, (uint)format, (uint)type, row, column);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3bEXT]</b>  </summary>
-            public static void Tangent3b(sbyte tx, sbyte ty, sbyte tz) => GLPointers._glTangent3bEXT_fnptr(tx, ty, tz);
+            public static void Tangent3bEXT(sbyte tx, sbyte ty, sbyte tz) => GLPointers._glTangent3bEXT_fnptr(tx, ty, tz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3bvEXT]</b>  </summary>
-            public static void Tangent3bv(sbyte* v) => GLPointers._glTangent3bvEXT_fnptr(v);
+            public static void Tangent3bvEXT(sbyte* v) => GLPointers._glTangent3bvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3dEXT]</b>  </summary>
-            public static void Tangent3d(double tx, double ty, double tz) => GLPointers._glTangent3dEXT_fnptr(tx, ty, tz);
+            public static void Tangent3dEXT(double tx, double ty, double tz) => GLPointers._glTangent3dEXT_fnptr(tx, ty, tz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3dvEXT]</b>  </summary>
-            public static void Tangent3dv(double* v) => GLPointers._glTangent3dvEXT_fnptr(v);
+            public static void Tangent3dvEXT(double* v) => GLPointers._glTangent3dvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3fEXT]</b>  </summary>
-            public static void Tangent3f(float tx, float ty, float tz) => GLPointers._glTangent3fEXT_fnptr(tx, ty, tz);
+            public static void Tangent3fEXT(float tx, float ty, float tz) => GLPointers._glTangent3fEXT_fnptr(tx, ty, tz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3fvEXT]</b>  </summary>
-            public static void Tangent3fv(float* v) => GLPointers._glTangent3fvEXT_fnptr(v);
+            public static void Tangent3fvEXT(float* v) => GLPointers._glTangent3fvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3iEXT]</b>  </summary>
-            public static void Tangent3i(int tx, int ty, int tz) => GLPointers._glTangent3iEXT_fnptr(tx, ty, tz);
+            public static void Tangent3iEXT(int tx, int ty, int tz) => GLPointers._glTangent3iEXT_fnptr(tx, ty, tz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3ivEXT]</b>  </summary>
-            public static void Tangent3iv(int* v) => GLPointers._glTangent3ivEXT_fnptr(v);
+            public static void Tangent3ivEXT(int* v) => GLPointers._glTangent3ivEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3sEXT]</b>  </summary>
-            public static void Tangent3s(short tx, short ty, short tz) => GLPointers._glTangent3sEXT_fnptr(tx, ty, tz);
+            public static void Tangent3sEXT(short tx, short ty, short tz) => GLPointers._glTangent3sEXT_fnptr(tx, ty, tz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangent3svEXT]</b>  </summary>
-            public static void Tangent3sv(short* v) => GLPointers._glTangent3svEXT_fnptr(v);
+            public static void Tangent3svEXT(short* v) => GLPointers._glTangent3svEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3bEXT]</b>  </summary>
-            public static void Binormal3b(sbyte bx, sbyte by, sbyte bz) => GLPointers._glBinormal3bEXT_fnptr(bx, by, bz);
+            public static void Binormal3bEXT(sbyte bx, sbyte by, sbyte bz) => GLPointers._glBinormal3bEXT_fnptr(bx, by, bz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3bvEXT]</b>  </summary>
-            public static void Binormal3bv(sbyte* v) => GLPointers._glBinormal3bvEXT_fnptr(v);
+            public static void Binormal3bvEXT(sbyte* v) => GLPointers._glBinormal3bvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3dEXT]</b>  </summary>
-            public static void Binormal3d(double bx, double by, double bz) => GLPointers._glBinormal3dEXT_fnptr(bx, by, bz);
+            public static void Binormal3dEXT(double bx, double by, double bz) => GLPointers._glBinormal3dEXT_fnptr(bx, by, bz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3dvEXT]</b>  </summary>
-            public static void Binormal3dv(double* v) => GLPointers._glBinormal3dvEXT_fnptr(v);
+            public static void Binormal3dvEXT(double* v) => GLPointers._glBinormal3dvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3fEXT]</b>  </summary>
-            public static void Binormal3f(float bx, float by, float bz) => GLPointers._glBinormal3fEXT_fnptr(bx, by, bz);
+            public static void Binormal3fEXT(float bx, float by, float bz) => GLPointers._glBinormal3fEXT_fnptr(bx, by, bz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3fvEXT]</b>  </summary>
-            public static void Binormal3fv(float* v) => GLPointers._glBinormal3fvEXT_fnptr(v);
+            public static void Binormal3fvEXT(float* v) => GLPointers._glBinormal3fvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3iEXT]</b>  </summary>
-            public static void Binormal3i(int bx, int by, int bz) => GLPointers._glBinormal3iEXT_fnptr(bx, by, bz);
+            public static void Binormal3iEXT(int bx, int by, int bz) => GLPointers._glBinormal3iEXT_fnptr(bx, by, bz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3ivEXT]</b>  </summary>
-            public static void Binormal3iv(int* v) => GLPointers._glBinormal3ivEXT_fnptr(v);
+            public static void Binormal3ivEXT(int* v) => GLPointers._glBinormal3ivEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3sEXT]</b>  </summary>
-            public static void Binormal3s(short bx, short by, short bz) => GLPointers._glBinormal3sEXT_fnptr(bx, by, bz);
+            public static void Binormal3sEXT(short bx, short by, short bz) => GLPointers._glBinormal3sEXT_fnptr(bx, by, bz);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormal3svEXT]</b>  </summary>
-            public static void Binormal3sv(short* v) => GLPointers._glBinormal3svEXT_fnptr(v);
+            public static void Binormal3svEXT(short* v) => GLPointers._glBinormal3svEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glTangentPointerEXT]</b>  </summary>
-            public static void TangentPointer(TangentPointerTypeEXT type, int stride, void* pointer) => GLPointers._glTangentPointerEXT_fnptr((uint)type, stride, pointer);
+            public static void TangentPointerEXT(TangentPointerTypeEXT type, int stride, void* pointer) => GLPointers._glTangentPointerEXT_fnptr((uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_coordinate_frame] [glBinormalPointerEXT]</b>  </summary>
-            public static void BinormalPointer(BinormalPointerTypeEXT type, int stride, void* pointer) => GLPointers._glBinormalPointerEXT_fnptr((uint)type, stride, pointer);
+            public static void BinormalPointerEXT(BinormalPointerTypeEXT type, int stride, void* pointer) => GLPointers._glBinormalPointerEXT_fnptr((uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_copy_texture] [glCopyTexImage1DEXT]</b>  </summary>
-            public static void CopyTexImage1D(TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int border) => GLPointers._glCopyTexImage1DEXT_fnptr((uint)target, level, (uint)internalformat, x, y, width, border);
+            public static void CopyTexImage1DEXT(TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int border) => GLPointers._glCopyTexImage1DEXT_fnptr((uint)target, level, (uint)internalformat, x, y, width, border);
             
             /// <summary> <b>[requires: GL_EXT_copy_texture] [glCopyTexImage2DEXT]</b>  </summary>
-            public static void CopyTexImage2D(TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => GLPointers._glCopyTexImage2DEXT_fnptr((uint)target, level, (uint)internalformat, x, y, width, height, border);
+            public static void CopyTexImage2DEXT(TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => GLPointers._glCopyTexImage2DEXT_fnptr((uint)target, level, (uint)internalformat, x, y, width, height, border);
             
             /// <summary> <b>[requires: GL_EXT_copy_texture] [glCopyTexSubImage1DEXT]</b>  </summary>
-            public static void CopyTexSubImage1D(TextureTarget target, int level, int xoffset, int x, int y, int width) => GLPointers._glCopyTexSubImage1DEXT_fnptr((uint)target, level, xoffset, x, y, width);
+            public static void CopyTexSubImage1DEXT(TextureTarget target, int level, int xoffset, int x, int y, int width) => GLPointers._glCopyTexSubImage1DEXT_fnptr((uint)target, level, xoffset, x, y, width);
             
             /// <summary> <b>[requires: GL_EXT_copy_texture] [glCopyTexSubImage2DEXT]</b>  </summary>
-            public static void CopyTexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage2DEXT_fnptr((uint)target, level, xoffset, yoffset, x, y, width, height);
+            public static void CopyTexSubImage2DEXT(TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage2DEXT_fnptr((uint)target, level, xoffset, yoffset, x, y, width, height);
             
             /// <summary> <b>[requires: GL_EXT_copy_texture] [glCopyTexSubImage3DEXT]</b>  </summary>
-            public static void CopyTexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage3DEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
+            public static void CopyTexSubImage3DEXT(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyTexSubImage3DEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
             
             /// <summary> <b>[requires: GL_EXT_cull_vertex] [glCullParameterdvEXT]</b>  </summary>
-            public static void CullParameterdv(CullParameterEXT pname, double* parameters) => GLPointers._glCullParameterdvEXT_fnptr((uint)pname, parameters);
+            public static void CullParameterdvEXT(CullParameterEXT pname, double* parameters) => GLPointers._glCullParameterdvEXT_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_cull_vertex] [glCullParameterfvEXT]</b>  </summary>
-            public static void CullParameterfv(CullParameterEXT pname, float* parameters) => GLPointers._glCullParameterfvEXT_fnptr((uint)pname, parameters);
+            public static void CullParameterfvEXT(CullParameterEXT pname, float* parameters) => GLPointers._glCullParameterfvEXT_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_debug_label] [glLabelObjectEXT]</b>  </summary>
-            public static void LabelObject(All type, uint obj, int length, byte* label) => GLPointers._glLabelObjectEXT_fnptr((uint)type, obj, length, label);
+            public static void LabelObjectEXT(All type, uint obj, int length, byte* label) => GLPointers._glLabelObjectEXT_fnptr((uint)type, obj, length, label);
             
             /// <summary> <b>[requires: GL_EXT_debug_label] [glGetObjectLabelEXT]</b>  </summary>
-            public static void GetObjectLabel(All type, uint obj, int bufSize, int* length, byte* label) => GLPointers._glGetObjectLabelEXT_fnptr((uint)type, obj, bufSize, length, label);
+            public static void GetObjectLabelEXT(All type, uint obj, int bufSize, int* length, byte* label) => GLPointers._glGetObjectLabelEXT_fnptr((uint)type, obj, bufSize, length, label);
             
             /// <summary> <b>[requires: GL_EXT_debug_marker] [glInsertEventMarkerEXT]</b>  </summary>
-            public static void InsertEventMarker(int length, byte* marker) => GLPointers._glInsertEventMarkerEXT_fnptr(length, marker);
+            public static void InsertEventMarkerEXT(int length, byte* marker) => GLPointers._glInsertEventMarkerEXT_fnptr(length, marker);
             
             /// <summary> <b>[requires: GL_EXT_debug_marker] [glPushGroupMarkerEXT]</b>  </summary>
-            public static void PushGroupMarker(int length, byte* marker) => GLPointers._glPushGroupMarkerEXT_fnptr(length, marker);
+            public static void PushGroupMarkerEXT(int length, byte* marker) => GLPointers._glPushGroupMarkerEXT_fnptr(length, marker);
             
             /// <summary> <b>[requires: GL_EXT_debug_marker] [glPopGroupMarkerEXT]</b>  </summary>
-            public static void PopGroupMarker() => GLPointers._glPopGroupMarkerEXT_fnptr();
+            public static void PopGroupMarkerEXT() => GLPointers._glPopGroupMarkerEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_depth_bounds_test] [glDepthBoundsEXT]</b>  </summary>
-            public static void DepthBounds(double zmin, double zmax) => GLPointers._glDepthBoundsEXT_fnptr(zmin, zmax);
+            public static void DepthBoundsEXT(double zmin, double zmax) => GLPointers._glDepthBoundsEXT_fnptr(zmin, zmax);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixLoadfEXT]</b>  </summary>
-            public static void MatrixLoadf(MatrixMode mode, float* m) => GLPointers._glMatrixLoadfEXT_fnptr((uint)mode, m);
+            public static void MatrixLoadfEXT(MatrixMode mode, float* m) => GLPointers._glMatrixLoadfEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixLoaddEXT]</b>  </summary>
-            public static void MatrixLoadd(MatrixMode mode, double* m) => GLPointers._glMatrixLoaddEXT_fnptr((uint)mode, m);
+            public static void MatrixLoaddEXT(MatrixMode mode, double* m) => GLPointers._glMatrixLoaddEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixMultfEXT]</b>  </summary>
-            public static void MatrixMultf(MatrixMode mode, float* m) => GLPointers._glMatrixMultfEXT_fnptr((uint)mode, m);
+            public static void MatrixMultfEXT(MatrixMode mode, float* m) => GLPointers._glMatrixMultfEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixMultdEXT]</b>  </summary>
-            public static void MatrixMultd(MatrixMode mode, double* m) => GLPointers._glMatrixMultdEXT_fnptr((uint)mode, m);
+            public static void MatrixMultdEXT(MatrixMode mode, double* m) => GLPointers._glMatrixMultdEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixLoadIdentityEXT]</b>  </summary>
-            public static void MatrixLoadIdentity(MatrixMode mode) => GLPointers._glMatrixLoadIdentityEXT_fnptr((uint)mode);
+            public static void MatrixLoadIdentityEXT(MatrixMode mode) => GLPointers._glMatrixLoadIdentityEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixRotatefEXT]</b>  </summary>
-            public static void MatrixRotatef(MatrixMode mode, float angle, float x, float y, float z) => GLPointers._glMatrixRotatefEXT_fnptr((uint)mode, angle, x, y, z);
+            public static void MatrixRotatefEXT(MatrixMode mode, float angle, float x, float y, float z) => GLPointers._glMatrixRotatefEXT_fnptr((uint)mode, angle, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixRotatedEXT]</b>  </summary>
-            public static void MatrixRotated(MatrixMode mode, double angle, double x, double y, double z) => GLPointers._glMatrixRotatedEXT_fnptr((uint)mode, angle, x, y, z);
+            public static void MatrixRotatedEXT(MatrixMode mode, double angle, double x, double y, double z) => GLPointers._glMatrixRotatedEXT_fnptr((uint)mode, angle, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixScalefEXT]</b>  </summary>
-            public static void MatrixScalef(MatrixMode mode, float x, float y, float z) => GLPointers._glMatrixScalefEXT_fnptr((uint)mode, x, y, z);
+            public static void MatrixScalefEXT(MatrixMode mode, float x, float y, float z) => GLPointers._glMatrixScalefEXT_fnptr((uint)mode, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixScaledEXT]</b>  </summary>
-            public static void MatrixScaled(MatrixMode mode, double x, double y, double z) => GLPointers._glMatrixScaledEXT_fnptr((uint)mode, x, y, z);
+            public static void MatrixScaledEXT(MatrixMode mode, double x, double y, double z) => GLPointers._glMatrixScaledEXT_fnptr((uint)mode, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixTranslatefEXT]</b>  </summary>
-            public static void MatrixTranslatef(MatrixMode mode, float x, float y, float z) => GLPointers._glMatrixTranslatefEXT_fnptr((uint)mode, x, y, z);
+            public static void MatrixTranslatefEXT(MatrixMode mode, float x, float y, float z) => GLPointers._glMatrixTranslatefEXT_fnptr((uint)mode, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixTranslatedEXT]</b>  </summary>
-            public static void MatrixTranslated(MatrixMode mode, double x, double y, double z) => GLPointers._glMatrixTranslatedEXT_fnptr((uint)mode, x, y, z);
+            public static void MatrixTranslatedEXT(MatrixMode mode, double x, double y, double z) => GLPointers._glMatrixTranslatedEXT_fnptr((uint)mode, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixFrustumEXT]</b>  </summary>
-            public static void MatrixFrustum(MatrixMode mode, double left, double right, double bottom, double top, double zNear, double zFar) => GLPointers._glMatrixFrustumEXT_fnptr((uint)mode, left, right, bottom, top, zNear, zFar);
+            public static void MatrixFrustumEXT(MatrixMode mode, double left, double right, double bottom, double top, double zNear, double zFar) => GLPointers._glMatrixFrustumEXT_fnptr((uint)mode, left, right, bottom, top, zNear, zFar);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixOrthoEXT]</b>  </summary>
-            public static void MatrixOrtho(MatrixMode mode, double left, double right, double bottom, double top, double zNear, double zFar) => GLPointers._glMatrixOrthoEXT_fnptr((uint)mode, left, right, bottom, top, zNear, zFar);
+            public static void MatrixOrthoEXT(MatrixMode mode, double left, double right, double bottom, double top, double zNear, double zFar) => GLPointers._glMatrixOrthoEXT_fnptr((uint)mode, left, right, bottom, top, zNear, zFar);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixPopEXT]</b>  </summary>
-            public static void MatrixPop(MatrixMode mode) => GLPointers._glMatrixPopEXT_fnptr((uint)mode);
+            public static void MatrixPopEXT(MatrixMode mode) => GLPointers._glMatrixPopEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixPushEXT]</b>  </summary>
-            public static void MatrixPush(MatrixMode mode) => GLPointers._glMatrixPushEXT_fnptr((uint)mode);
+            public static void MatrixPushEXT(MatrixMode mode) => GLPointers._glMatrixPushEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glClientAttribDefaultEXT]</b>  </summary>
-            public static void ClientAttribDefault(ClientAttribMask mask) => GLPointers._glClientAttribDefaultEXT_fnptr((uint)mask);
+            public static void ClientAttribDefaultEXT(ClientAttribMask mask) => GLPointers._glClientAttribDefaultEXT_fnptr((uint)mask);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glPushClientAttribDefaultEXT]</b>  </summary>
-            public static void PushClientAttribDefault(ClientAttribMask mask) => GLPointers._glPushClientAttribDefaultEXT_fnptr((uint)mask);
+            public static void PushClientAttribDefaultEXT(ClientAttribMask mask) => GLPointers._glPushClientAttribDefaultEXT_fnptr((uint)mask);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureParameterfEXT]</b>  </summary>
-            public static void TextureParameterf(int texture, TextureTarget target, TextureParameterName pname, float param) => GLPointers._glTextureParameterfEXT_fnptr(texture, (uint)target, (uint)pname, param);
+            public static void TextureParameterfEXT(int texture, TextureTarget target, TextureParameterName pname, float param) => GLPointers._glTextureParameterfEXT_fnptr(texture, (uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureParameterfvEXT]</b>  </summary>
-            public static void TextureParameterfv(int texture, TextureTarget target, TextureParameterName pname, float* parameters) => GLPointers._glTextureParameterfvEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void TextureParameterfvEXT(int texture, TextureTarget target, TextureParameterName pname, float* parameters) => GLPointers._glTextureParameterfvEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureParameteriEXT]</b>  </summary>
-            public static void TextureParameteri(int texture, TextureTarget target, TextureParameterName pname, int param) => GLPointers._glTextureParameteriEXT_fnptr(texture, (uint)target, (uint)pname, param);
+            public static void TextureParameteriEXT(int texture, TextureTarget target, TextureParameterName pname, int param) => GLPointers._glTextureParameteriEXT_fnptr(texture, (uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureParameterivEXT]</b>  </summary>
-            public static void TextureParameteriv(int texture, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTextureParameterivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void TextureParameterivEXT(int texture, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTextureParameterivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureImage1DEXT]</b>  </summary>
-            public static void TextureImage1D(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage1DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
+            public static void TextureImage1DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage1DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureImage2DEXT]</b>  </summary>
-            public static void TextureImage2D(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage2DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
+            public static void TextureImage2DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage2DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureSubImage1DEXT]</b>  </summary>
-            public static void TextureSubImage1D(int texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureSubImage1DEXT_fnptr(texture, (uint)target, level, xoffset, width, (uint)format, (uint)type, pixels);
+            public static void TextureSubImage1DEXT(int texture, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureSubImage1DEXT_fnptr(texture, (uint)target, level, xoffset, width, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureSubImage2DEXT]</b>  </summary>
-            public static void TextureSubImage2D(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureSubImage2DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, width, height, (uint)format, (uint)type, pixels);
+            public static void TextureSubImage2DEXT(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureSubImage2DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, width, height, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyTextureImage1DEXT]</b>  </summary>
-            public static void CopyTextureImage1D(int texture, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int border) => GLPointers._glCopyTextureImage1DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, x, y, width, border);
+            public static void CopyTextureImage1DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int border) => GLPointers._glCopyTextureImage1DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, x, y, width, border);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyTextureImage2DEXT]</b>  </summary>
-            public static void CopyTextureImage2D(int texture, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => GLPointers._glCopyTextureImage2DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, x, y, width, height, border);
+            public static void CopyTextureImage2DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => GLPointers._glCopyTextureImage2DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, x, y, width, height, border);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyTextureSubImage1DEXT]</b>  </summary>
-            public static void CopyTextureSubImage1D(int texture, TextureTarget target, int level, int xoffset, int x, int y, int width) => GLPointers._glCopyTextureSubImage1DEXT_fnptr(texture, (uint)target, level, xoffset, x, y, width);
+            public static void CopyTextureSubImage1DEXT(int texture, TextureTarget target, int level, int xoffset, int x, int y, int width) => GLPointers._glCopyTextureSubImage1DEXT_fnptr(texture, (uint)target, level, xoffset, x, y, width);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyTextureSubImage2DEXT]</b>  </summary>
-            public static void CopyTextureSubImage2D(int texture, TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => GLPointers._glCopyTextureSubImage2DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, x, y, width, height);
+            public static void CopyTextureSubImage2DEXT(int texture, TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => GLPointers._glCopyTextureSubImage2DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, x, y, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetTextureImageEXT]</b>  </summary>
-            public static void GetTextureImage(int texture, TextureTarget target, int level, PixelFormat format, PixelType type, void* pixels) => GLPointers._glGetTextureImageEXT_fnptr(texture, (uint)target, level, (uint)format, (uint)type, pixels);
+            public static void GetTextureImageEXT(int texture, TextureTarget target, int level, PixelFormat format, PixelType type, void* pixels) => GLPointers._glGetTextureImageEXT_fnptr(texture, (uint)target, level, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetTextureParameterfvEXT]</b>  </summary>
-            public static void GetTextureParameterfv(int texture, TextureTarget target, GetTextureParameter pname, float* parameters) => GLPointers._glGetTextureParameterfvEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void GetTextureParameterfvEXT(int texture, TextureTarget target, GetTextureParameter pname, float* parameters) => GLPointers._glGetTextureParameterfvEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetTextureParameterivEXT]</b>  </summary>
-            public static void GetTextureParameteriv(int texture, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTextureParameterivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void GetTextureParameterivEXT(int texture, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTextureParameterivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetTextureLevelParameterfvEXT]</b>  </summary>
-            public static void GetTextureLevelParameterfv(int texture, TextureTarget target, int level, GetTextureParameter pname, float* parameters) => GLPointers._glGetTextureLevelParameterfvEXT_fnptr(texture, (uint)target, level, (uint)pname, parameters);
+            public static void GetTextureLevelParameterfvEXT(int texture, TextureTarget target, int level, GetTextureParameter pname, float* parameters) => GLPointers._glGetTextureLevelParameterfvEXT_fnptr(texture, (uint)target, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetTextureLevelParameterivEXT]</b>  </summary>
-            public static void GetTextureLevelParameteriv(int texture, TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetTextureLevelParameterivEXT_fnptr(texture, (uint)target, level, (uint)pname, parameters);
+            public static void GetTextureLevelParameterivEXT(int texture, TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetTextureLevelParameterivEXT_fnptr(texture, (uint)target, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureImage3DEXT]</b>  </summary>
-            public static void TextureImage3D(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage3DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+            public static void TextureImage3DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage3DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureSubImage3DEXT]</b>  </summary>
-            public static void TextureSubImage3D(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureSubImage3DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
+            public static void TextureSubImage3DEXT(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureSubImage3DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyTextureSubImage3DEXT]</b>  </summary>
-            public static void CopyTextureSubImage3D(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyTextureSubImage3DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
+            public static void CopyTextureSubImage3DEXT(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyTextureSubImage3DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glBindMultiTextureEXT]</b>  </summary>
-            public static void BindMultiTexture(TextureUnit texunit, TextureTarget target, int texture) => GLPointers._glBindMultiTextureEXT_fnptr((uint)texunit, (uint)target, texture);
+            public static void BindMultiTextureEXT(TextureUnit texunit, TextureTarget target, int texture) => GLPointers._glBindMultiTextureEXT_fnptr((uint)texunit, (uint)target, texture);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexCoordPointerEXT]</b>  </summary>
-            public static void MultiTexCoordPointer(TextureUnit texunit, int size, TexCoordPointerType type, int stride, void* pointer) => GLPointers._glMultiTexCoordPointerEXT_fnptr((uint)texunit, size, (uint)type, stride, pointer);
+            public static void MultiTexCoordPointerEXT(TextureUnit texunit, int size, TexCoordPointerType type, int stride, void* pointer) => GLPointers._glMultiTexCoordPointerEXT_fnptr((uint)texunit, size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexEnvfEXT]</b>  </summary>
-            public static void MultiTexEnvf(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, float param) => GLPointers._glMultiTexEnvfEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
+            public static void MultiTexEnvfEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, float param) => GLPointers._glMultiTexEnvfEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexEnvfvEXT]</b>  </summary>
-            public static void MultiTexEnvfv(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, float* parameters) => GLPointers._glMultiTexEnvfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void MultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, float* parameters) => GLPointers._glMultiTexEnvfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexEnviEXT]</b>  </summary>
-            public static void MultiTexEnvi(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, int param) => GLPointers._glMultiTexEnviEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
+            public static void MultiTexEnviEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, int param) => GLPointers._glMultiTexEnviEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexEnvivEXT]</b>  </summary>
-            public static void MultiTexEnviv(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glMultiTexEnvivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void MultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glMultiTexEnvivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexGendEXT]</b>  </summary>
-            public static void MultiTexGend(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, double param) => GLPointers._glMultiTexGendEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, param);
+            public static void MultiTexGendEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, double param) => GLPointers._glMultiTexGendEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexGendvEXT]</b>  </summary>
-            public static void MultiTexGendv(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, double* parameters) => GLPointers._glMultiTexGendvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
+            public static void MultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, double* parameters) => GLPointers._glMultiTexGendvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexGenfEXT]</b>  </summary>
-            public static void MultiTexGenf(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, float param) => GLPointers._glMultiTexGenfEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, param);
+            public static void MultiTexGenfEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, float param) => GLPointers._glMultiTexGenfEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexGenfvEXT]</b>  </summary>
-            public static void MultiTexGenfv(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glMultiTexGenfvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
+            public static void MultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glMultiTexGenfvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexGeniEXT]</b>  </summary>
-            public static void MultiTexGeni(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glMultiTexGeniEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, param);
+            public static void MultiTexGeniEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glMultiTexGeniEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexGenivEXT]</b>  </summary>
-            public static void MultiTexGeniv(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glMultiTexGenivEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
+            public static void MultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glMultiTexGenivEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexEnvfvEXT]</b>  </summary>
-            public static void GetMultiTexEnvfv(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, float* parameters) => GLPointers._glGetMultiTexEnvfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void GetMultiTexEnvfvEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, float* parameters) => GLPointers._glGetMultiTexEnvfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexEnvivEXT]</b>  </summary>
-            public static void GetMultiTexEnviv(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glGetMultiTexEnvivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void GetMultiTexEnvivEXT(TextureUnit texunit, TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glGetMultiTexEnvivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexGendvEXT]</b>  </summary>
-            public static void GetMultiTexGendv(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, double* parameters) => GLPointers._glGetMultiTexGendvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
+            public static void GetMultiTexGendvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, double* parameters) => GLPointers._glGetMultiTexGendvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexGenfvEXT]</b>  </summary>
-            public static void GetMultiTexGenfv(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glGetMultiTexGenfvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
+            public static void GetMultiTexGenfvEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, float* parameters) => GLPointers._glGetMultiTexGenfvEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexGenivEXT]</b>  </summary>
-            public static void GetMultiTexGeniv(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetMultiTexGenivEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
+            public static void GetMultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetMultiTexGenivEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexParameteriEXT]</b>  </summary>
-            public static void MultiTexParameteri(TextureUnit texunit, TextureTarget target, TextureParameterName pname, int param) => GLPointers._glMultiTexParameteriEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
+            public static void MultiTexParameteriEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, int param) => GLPointers._glMultiTexParameteriEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexParameterivEXT]</b>  </summary>
-            public static void MultiTexParameteriv(TextureUnit texunit, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glMultiTexParameterivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void MultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glMultiTexParameterivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexParameterfEXT]</b>  </summary>
-            public static void MultiTexParameterf(TextureUnit texunit, TextureTarget target, TextureParameterName pname, float param) => GLPointers._glMultiTexParameterfEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
+            public static void MultiTexParameterfEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, float param) => GLPointers._glMultiTexParameterfEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexParameterfvEXT]</b>  </summary>
-            public static void MultiTexParameterfv(TextureUnit texunit, TextureTarget target, TextureParameterName pname, float* parameters) => GLPointers._glMultiTexParameterfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void MultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, float* parameters) => GLPointers._glMultiTexParameterfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexImage1DEXT]</b>  </summary>
-            public static void MultiTexImage1D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
+            public static void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexImage2DEXT]</b>  </summary>
-            public static void MultiTexImage2D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
+            public static void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexSubImage1DEXT]</b>  </summary>
-            public static void MultiTexSubImage1D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexSubImage1DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, width, (uint)format, (uint)type, pixels);
+            public static void MultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexSubImage1DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, width, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexSubImage2DEXT]</b>  </summary>
-            public static void MultiTexSubImage2D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexSubImage2DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, width, height, (uint)format, (uint)type, pixels);
+            public static void MultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexSubImage2DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, width, height, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyMultiTexImage1DEXT]</b>  </summary>
-            public static void CopyMultiTexImage1D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int border) => GLPointers._glCopyMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, x, y, width, border);
+            public static void CopyMultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int border) => GLPointers._glCopyMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, x, y, width, border);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyMultiTexImage2DEXT]</b>  </summary>
-            public static void CopyMultiTexImage2D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => GLPointers._glCopyMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, x, y, width, height, border);
+            public static void CopyMultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int x, int y, int width, int height, int border) => GLPointers._glCopyMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, x, y, width, height, border);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyMultiTexSubImage1DEXT]</b>  </summary>
-            public static void CopyMultiTexSubImage1D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int x, int y, int width) => GLPointers._glCopyMultiTexSubImage1DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, x, y, width);
+            public static void CopyMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int x, int y, int width) => GLPointers._glCopyMultiTexSubImage1DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, x, y, width);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyMultiTexSubImage2DEXT]</b>  </summary>
-            public static void CopyMultiTexSubImage2D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => GLPointers._glCopyMultiTexSubImage2DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, x, y, width, height);
+            public static void CopyMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int x, int y, int width, int height) => GLPointers._glCopyMultiTexSubImage2DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, x, y, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexImageEXT]</b>  </summary>
-            public static void GetMultiTexImage(TextureUnit texunit, TextureTarget target, int level, PixelFormat format, PixelType type, void* pixels) => GLPointers._glGetMultiTexImageEXT_fnptr((uint)texunit, (uint)target, level, (uint)format, (uint)type, pixels);
+            public static void GetMultiTexImageEXT(TextureUnit texunit, TextureTarget target, int level, PixelFormat format, PixelType type, void* pixels) => GLPointers._glGetMultiTexImageEXT_fnptr((uint)texunit, (uint)target, level, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexParameterfvEXT]</b>  </summary>
-            public static void GetMultiTexParameterfv(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, float* parameters) => GLPointers._glGetMultiTexParameterfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void GetMultiTexParameterfvEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, float* parameters) => GLPointers._glGetMultiTexParameterfvEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexParameterivEXT]</b>  </summary>
-            public static void GetMultiTexParameteriv(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetMultiTexParameterivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void GetMultiTexParameterivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetMultiTexParameterivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexLevelParameterfvEXT]</b>  </summary>
-            public static void GetMultiTexLevelParameterfv(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, float* parameters) => GLPointers._glGetMultiTexLevelParameterfvEXT_fnptr((uint)texunit, (uint)target, level, (uint)pname, parameters);
+            public static void GetMultiTexLevelParameterfvEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, float* parameters) => GLPointers._glGetMultiTexLevelParameterfvEXT_fnptr((uint)texunit, (uint)target, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexLevelParameterivEXT]</b>  </summary>
-            public static void GetMultiTexLevelParameteriv(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetMultiTexLevelParameterivEXT_fnptr((uint)texunit, (uint)target, level, (uint)pname, parameters);
+            public static void GetMultiTexLevelParameterivEXT(TextureUnit texunit, TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetMultiTexLevelParameterivEXT_fnptr((uint)texunit, (uint)target, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexImage3DEXT]</b>  </summary>
-            public static void MultiTexImage3D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage3DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+            public static void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage3DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexSubImage3DEXT]</b>  </summary>
-            public static void MultiTexSubImage3D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexSubImage3DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
+            public static void MultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexSubImage3DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCopyMultiTexSubImage3DEXT]</b>  </summary>
-            public static void CopyMultiTexSubImage3D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyMultiTexSubImage3DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
+            public static void CopyMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) => GLPointers._glCopyMultiTexSubImage3DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, zoffset, x, y, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glEnableClientStateIndexedEXT]</b>  </summary>
-            public static void EnableClientStateIndexed(EnableCap array, uint index) => GLPointers._glEnableClientStateIndexedEXT_fnptr((uint)array, index);
+            public static void EnableClientStateIndexedEXT(EnableCap array, uint index) => GLPointers._glEnableClientStateIndexedEXT_fnptr((uint)array, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glDisableClientStateIndexedEXT]</b>  </summary>
-            public static void DisableClientStateIndexed(EnableCap array, uint index) => GLPointers._glDisableClientStateIndexedEXT_fnptr((uint)array, index);
+            public static void DisableClientStateIndexedEXT(EnableCap array, uint index) => GLPointers._glDisableClientStateIndexedEXT_fnptr((uint)array, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetFloatIndexedvEXT]</b>  </summary>
-            public static void GetFloatIndexedv(GetPName target, uint index, float* data) => GLPointers._glGetFloatIndexedvEXT_fnptr((uint)target, index, data);
+            public static void GetFloatIndexedvEXT(GetPName target, uint index, float* data) => GLPointers._glGetFloatIndexedvEXT_fnptr((uint)target, index, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetDoubleIndexedvEXT]</b>  </summary>
-            public static void GetDoubleIndexedv(GetPName target, uint index, double* data) => GLPointers._glGetDoubleIndexedvEXT_fnptr((uint)target, index, data);
+            public static void GetDoubleIndexedvEXT(GetPName target, uint index, double* data) => GLPointers._glGetDoubleIndexedvEXT_fnptr((uint)target, index, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetPointerIndexedvEXT]</b>  </summary>
-            public static void GetPointerIndexedv(All target, uint index, void** data) => GLPointers._glGetPointerIndexedvEXT_fnptr((uint)target, index, data);
+            public static void GetPointerIndexedvEXT(All target, uint index, void** data) => GLPointers._glGetPointerIndexedvEXT_fnptr((uint)target, index, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_draw_buffers2] [glEnableIndexedEXT]</b>  </summary>
-            public static void EnableIndexed(EnableCap target, uint index) => GLPointers._glEnableIndexedEXT_fnptr((uint)target, index);
+            public static void EnableIndexedEXT(EnableCap target, uint index) => GLPointers._glEnableIndexedEXT_fnptr((uint)target, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_draw_buffers2] [glDisableIndexedEXT]</b>  </summary>
-            public static void DisableIndexed(EnableCap target, uint index) => GLPointers._glDisableIndexedEXT_fnptr((uint)target, index);
+            public static void DisableIndexedEXT(EnableCap target, uint index) => GLPointers._glDisableIndexedEXT_fnptr((uint)target, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_draw_buffers2] [glIsEnabledIndexedEXT]</b>  </summary>
-            public static bool IsEnabledIndexed(EnableCap target, uint index) => GLPointers._glIsEnabledIndexedEXT_fnptr((uint)target, index) != 0;
+            public static bool IsEnabledIndexedEXT(EnableCap target, uint index) => GLPointers._glIsEnabledIndexedEXT_fnptr((uint)target, index) != 0;
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_draw_buffers2] [glGetIntegerIndexedvEXT]</b>  </summary>
-            public static void GetIntegerIndexedv(GetPName target, uint index, int* data) => GLPointers._glGetIntegerIndexedvEXT_fnptr((uint)target, index, data);
+            public static void GetIntegerIndexedvEXT(GetPName target, uint index, int* data) => GLPointers._glGetIntegerIndexedvEXT_fnptr((uint)target, index, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_draw_buffers2] [glGetBooleanIndexedvEXT]</b>  </summary>
-            public static void GetBooleanIndexedv(BufferTargetARB target, uint index, bool* data) => GLPointers._glGetBooleanIndexedvEXT_fnptr((uint)target, index, (byte*)data);
+            public static void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, bool* data) => GLPointers._glGetBooleanIndexedvEXT_fnptr((uint)target, index, (byte*)data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedTextureImage3DEXT]</b>  </summary>
-            public static void CompressedTextureImage3D(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* bits) => GLPointers._glCompressedTextureImage3DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, width, height, depth, border, imageSize, bits);
+            public static void CompressedTextureImage3DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* bits) => GLPointers._glCompressedTextureImage3DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, width, height, depth, border, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedTextureImage2DEXT]</b>  </summary>
-            public static void CompressedTextureImage2D(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* bits) => GLPointers._glCompressedTextureImage2DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, width, height, border, imageSize, bits);
+            public static void CompressedTextureImage2DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* bits) => GLPointers._glCompressedTextureImage2DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, width, height, border, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedTextureImage1DEXT]</b>  </summary>
-            public static void CompressedTextureImage1D(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, void* bits) => GLPointers._glCompressedTextureImage1DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, width, border, imageSize, bits);
+            public static void CompressedTextureImage1DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, void* bits) => GLPointers._glCompressedTextureImage1DEXT_fnptr(texture, (uint)target, level, (uint)internalformat, width, border, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedTextureSubImage3DEXT]</b>  </summary>
-            public static void CompressedTextureSubImage3D(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedTextureSubImage3DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, imageSize, bits);
+            public static void CompressedTextureSubImage3DEXT(int texture, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedTextureSubImage3DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedTextureSubImage2DEXT]</b>  </summary>
-            public static void CompressedTextureSubImage2D(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedTextureSubImage2DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, width, height, (uint)format, imageSize, bits);
+            public static void CompressedTextureSubImage2DEXT(int texture, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedTextureSubImage2DEXT_fnptr(texture, (uint)target, level, xoffset, yoffset, width, height, (uint)format, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedTextureSubImage1DEXT]</b>  </summary>
-            public static void CompressedTextureSubImage1D(int texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedTextureSubImage1DEXT_fnptr(texture, (uint)target, level, xoffset, width, (uint)format, imageSize, bits);
+            public static void CompressedTextureSubImage1DEXT(int texture, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedTextureSubImage1DEXT_fnptr(texture, (uint)target, level, xoffset, width, (uint)format, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetCompressedTextureImageEXT]</b>  </summary>
-            public static void GetCompressedTextureImage(int texture, TextureTarget target, int lod, void* img) => GLPointers._glGetCompressedTextureImageEXT_fnptr(texture, (uint)target, lod, img);
+            public static void GetCompressedTextureImageEXT(int texture, TextureTarget target, int lod, void* img) => GLPointers._glGetCompressedTextureImageEXT_fnptr(texture, (uint)target, lod, img);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedMultiTexImage3DEXT]</b>  </summary>
-            public static void CompressedMultiTexImage3D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* bits) => GLPointers._glCompressedMultiTexImage3DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, width, height, depth, border, imageSize, bits);
+            public static void CompressedMultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, void* bits) => GLPointers._glCompressedMultiTexImage3DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, width, height, depth, border, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedMultiTexImage2DEXT]</b>  </summary>
-            public static void CompressedMultiTexImage2D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* bits) => GLPointers._glCompressedMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, width, height, border, imageSize, bits);
+            public static void CompressedMultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, int imageSize, void* bits) => GLPointers._glCompressedMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, width, height, border, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedMultiTexImage1DEXT]</b>  </summary>
-            public static void CompressedMultiTexImage1D(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, void* bits) => GLPointers._glCompressedMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, width, border, imageSize, bits);
+            public static void CompressedMultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, int imageSize, void* bits) => GLPointers._glCompressedMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, (uint)internalformat, width, border, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedMultiTexSubImage3DEXT]</b>  </summary>
-            public static void CompressedMultiTexSubImage3D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedMultiTexSubImage3DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, imageSize, bits);
+            public static void CompressedMultiTexSubImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedMultiTexSubImage3DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedMultiTexSubImage2DEXT]</b>  </summary>
-            public static void CompressedMultiTexSubImage2D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedMultiTexSubImage2DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, width, height, (uint)format, imageSize, bits);
+            public static void CompressedMultiTexSubImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int yoffset, int width, int height, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedMultiTexSubImage2DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, yoffset, width, height, (uint)format, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCompressedMultiTexSubImage1DEXT]</b>  </summary>
-            public static void CompressedMultiTexSubImage1D(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedMultiTexSubImage1DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, width, (uint)format, imageSize, bits);
+            public static void CompressedMultiTexSubImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int xoffset, int width, InternalFormat format, int imageSize, void* bits) => GLPointers._glCompressedMultiTexSubImage1DEXT_fnptr((uint)texunit, (uint)target, level, xoffset, width, (uint)format, imageSize, bits);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetCompressedMultiTexImageEXT]</b>  </summary>
-            public static void GetCompressedMultiTexImage(TextureUnit texunit, TextureTarget target, int lod, void* img) => GLPointers._glGetCompressedMultiTexImageEXT_fnptr((uint)texunit, (uint)target, lod, img);
+            public static void GetCompressedMultiTexImageEXT(TextureUnit texunit, TextureTarget target, int lod, void* img) => GLPointers._glGetCompressedMultiTexImageEXT_fnptr((uint)texunit, (uint)target, lod, img);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixLoadTransposefEXT]</b>  </summary>
-            public static void MatrixLoadTransposef(MatrixMode mode, float* m) => GLPointers._glMatrixLoadTransposefEXT_fnptr((uint)mode, m);
+            public static void MatrixLoadTransposefEXT(MatrixMode mode, float* m) => GLPointers._glMatrixLoadTransposefEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixLoadTransposedEXT]</b>  </summary>
-            public static void MatrixLoadTransposed(MatrixMode mode, double* m) => GLPointers._glMatrixLoadTransposedEXT_fnptr((uint)mode, m);
+            public static void MatrixLoadTransposedEXT(MatrixMode mode, double* m) => GLPointers._glMatrixLoadTransposedEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixMultTransposefEXT]</b>  </summary>
-            public static void MatrixMultTransposef(MatrixMode mode, float* m) => GLPointers._glMatrixMultTransposefEXT_fnptr((uint)mode, m);
+            public static void MatrixMultTransposefEXT(MatrixMode mode, float* m) => GLPointers._glMatrixMultTransposefEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixMultTransposedEXT]</b>  </summary>
-            public static void MatrixMultTransposed(MatrixMode mode, double* m) => GLPointers._glMatrixMultTransposedEXT_fnptr((uint)mode, m);
+            public static void MatrixMultTransposedEXT(MatrixMode mode, double* m) => GLPointers._glMatrixMultTransposedEXT_fnptr((uint)mode, m);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedBufferDataEXT]</b>  </summary>
-            public static void NamedBufferData(int buffer, nint size, void* data, VertexBufferObjectUsage usage) => GLPointers._glNamedBufferDataEXT_fnptr(buffer, size, data, (uint)usage);
+            public static void NamedBufferDataEXT(int buffer, nint size, void* data, VertexBufferObjectUsage usage) => GLPointers._glNamedBufferDataEXT_fnptr(buffer, size, data, (uint)usage);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedBufferSubDataEXT]</b>  </summary>
-            public static void NamedBufferSubData(int buffer, IntPtr offset, nint size, void* data) => GLPointers._glNamedBufferSubDataEXT_fnptr(buffer, offset, size, data);
+            public static void NamedBufferSubDataEXT(int buffer, IntPtr offset, nint size, void* data) => GLPointers._glNamedBufferSubDataEXT_fnptr(buffer, offset, size, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMapNamedBufferEXT]</b>  </summary>
-            public static void* MapNamedBuffer(int buffer, BufferAccessARB access) => GLPointers._glMapNamedBufferEXT_fnptr(buffer, (uint)access);
+            public static void* MapNamedBufferEXT(int buffer, BufferAccessARB access) => GLPointers._glMapNamedBufferEXT_fnptr(buffer, (uint)access);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glUnmapNamedBufferEXT]</b>  </summary>
-            public static bool UnmapNamedBuffer(int buffer) => GLPointers._glUnmapNamedBufferEXT_fnptr(buffer) != 0;
+            public static bool UnmapNamedBufferEXT(int buffer) => GLPointers._glUnmapNamedBufferEXT_fnptr(buffer) != 0;
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedBufferParameterivEXT]</b>  </summary>
-            public static void GetNamedBufferParameteriv(int buffer, BufferPNameARB pname, int* parameters) => GLPointers._glGetNamedBufferParameterivEXT_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferParameterivEXT(int buffer, BufferPNameARB pname, int* parameters) => GLPointers._glGetNamedBufferParameterivEXT_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedBufferPointervEXT]</b>  </summary>
-            public static void GetNamedBufferPointerv(int buffer, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetNamedBufferPointervEXT_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferPointervEXT(int buffer, BufferPointerNameARB pname, void** parameters) => GLPointers._glGetNamedBufferPointervEXT_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedBufferSubDataEXT]</b>  </summary>
-            public static void GetNamedBufferSubData(int buffer, IntPtr offset, nint size, void* data) => GLPointers._glGetNamedBufferSubDataEXT_fnptr(buffer, offset, size, data);
+            public static void GetNamedBufferSubDataEXT(int buffer, IntPtr offset, nint size, void* data) => GLPointers._glGetNamedBufferSubDataEXT_fnptr(buffer, offset, size, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform1fEXT]</b>  </summary>
-            public static void ProgramUniform1f(int program, int location, float v0) => GLPointers._glProgramUniform1fEXT_fnptr(program, location, v0);
+            public static void ProgramUniform1fEXT(int program, int location, float v0) => GLPointers._glProgramUniform1fEXT_fnptr(program, location, v0);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform2fEXT]</b>  </summary>
-            public static void ProgramUniform2f(int program, int location, float v0, float v1) => GLPointers._glProgramUniform2fEXT_fnptr(program, location, v0, v1);
+            public static void ProgramUniform2fEXT(int program, int location, float v0, float v1) => GLPointers._glProgramUniform2fEXT_fnptr(program, location, v0, v1);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform3fEXT]</b>  </summary>
-            public static void ProgramUniform3f(int program, int location, float v0, float v1, float v2) => GLPointers._glProgramUniform3fEXT_fnptr(program, location, v0, v1, v2);
+            public static void ProgramUniform3fEXT(int program, int location, float v0, float v1, float v2) => GLPointers._glProgramUniform3fEXT_fnptr(program, location, v0, v1, v2);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform4fEXT]</b>  </summary>
-            public static void ProgramUniform4f(int program, int location, float v0, float v1, float v2, float v3) => GLPointers._glProgramUniform4fEXT_fnptr(program, location, v0, v1, v2, v3);
+            public static void ProgramUniform4fEXT(int program, int location, float v0, float v1, float v2, float v3) => GLPointers._glProgramUniform4fEXT_fnptr(program, location, v0, v1, v2, v3);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform1iEXT]</b>  </summary>
-            public static void ProgramUniform1i(int program, int location, int v0) => GLPointers._glProgramUniform1iEXT_fnptr(program, location, v0);
+            public static void ProgramUniform1iEXT(int program, int location, int v0) => GLPointers._glProgramUniform1iEXT_fnptr(program, location, v0);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform2iEXT]</b>  </summary>
-            public static void ProgramUniform2i(int program, int location, int v0, int v1) => GLPointers._glProgramUniform2iEXT_fnptr(program, location, v0, v1);
+            public static void ProgramUniform2iEXT(int program, int location, int v0, int v1) => GLPointers._glProgramUniform2iEXT_fnptr(program, location, v0, v1);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform3iEXT]</b>  </summary>
-            public static void ProgramUniform3i(int program, int location, int v0, int v1, int v2) => GLPointers._glProgramUniform3iEXT_fnptr(program, location, v0, v1, v2);
+            public static void ProgramUniform3iEXT(int program, int location, int v0, int v1, int v2) => GLPointers._glProgramUniform3iEXT_fnptr(program, location, v0, v1, v2);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform4iEXT]</b>  </summary>
-            public static void ProgramUniform4i(int program, int location, int v0, int v1, int v2, int v3) => GLPointers._glProgramUniform4iEXT_fnptr(program, location, v0, v1, v2, v3);
+            public static void ProgramUniform4iEXT(int program, int location, int v0, int v1, int v2, int v3) => GLPointers._glProgramUniform4iEXT_fnptr(program, location, v0, v1, v2, v3);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform1fvEXT]</b>  </summary>
-            public static void ProgramUniform1fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform1fvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform1fvEXT(int program, int location, int count, float* value) => GLPointers._glProgramUniform1fvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform2fvEXT]</b>  </summary>
-            public static void ProgramUniform2fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform2fvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform2fvEXT(int program, int location, int count, float* value) => GLPointers._glProgramUniform2fvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform3fvEXT]</b>  </summary>
-            public static void ProgramUniform3fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform3fvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform3fvEXT(int program, int location, int count, float* value) => GLPointers._glProgramUniform3fvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform4fvEXT]</b>  </summary>
-            public static void ProgramUniform4fv(int program, int location, int count, float* value) => GLPointers._glProgramUniform4fvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform4fvEXT(int program, int location, int count, float* value) => GLPointers._glProgramUniform4fvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform1ivEXT]</b>  </summary>
-            public static void ProgramUniform1iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform1ivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform1ivEXT(int program, int location, int count, int* value) => GLPointers._glProgramUniform1ivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform2ivEXT]</b>  </summary>
-            public static void ProgramUniform2iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform2ivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform2ivEXT(int program, int location, int count, int* value) => GLPointers._glProgramUniform2ivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform3ivEXT]</b>  </summary>
-            public static void ProgramUniform3iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform3ivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform3ivEXT(int program, int location, int count, int* value) => GLPointers._glProgramUniform3ivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform4ivEXT]</b>  </summary>
-            public static void ProgramUniform4iv(int program, int location, int count, int* value) => GLPointers._glProgramUniform4ivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform4ivEXT(int program, int location, int count, int* value) => GLPointers._glProgramUniform4ivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix2fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix2fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix2fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix3fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix3fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix4fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix4fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix2x3fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix2x3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2x3fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix2x3fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2x3fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix3x2fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3x2fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix3x2fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3x2fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix2x4fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix2x4fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2x4fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix2x4fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix2x4fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix4x2fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix4x2fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x2fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix4x2fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x2fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix3x4fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix3x4fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3x4fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix3x4fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix3x4fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniformMatrix4x3fvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x3fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix4x3fvEXT(int program, int location, int count, bool transpose, float* value) => GLPointers._glProgramUniformMatrix4x3fvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureBufferEXT]</b>  </summary>
-            public static void TextureBuffer(int texture, TextureTarget target, SizedInternalFormat internalformat, int buffer) => GLPointers._glTextureBufferEXT_fnptr(texture, (uint)target, (uint)internalformat, buffer);
+            public static void TextureBufferEXT(int texture, TextureTarget target, SizedInternalFormat internalformat, int buffer) => GLPointers._glTextureBufferEXT_fnptr(texture, (uint)target, (uint)internalformat, buffer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexBufferEXT]</b>  </summary>
-            public static void MultiTexBuffer(TextureUnit texunit, TextureTarget target, InternalFormat internalformat, int buffer) => GLPointers._glMultiTexBufferEXT_fnptr((uint)texunit, (uint)target, (uint)internalformat, buffer);
+            public static void MultiTexBufferEXT(TextureUnit texunit, TextureTarget target, InternalFormat internalformat, int buffer) => GLPointers._glMultiTexBufferEXT_fnptr((uint)texunit, (uint)target, (uint)internalformat, buffer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureParameterIivEXT]</b>  </summary>
-            public static void TextureParameterIiv(int texture, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTextureParameterIivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void TextureParameterIivEXT(int texture, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTextureParameterIivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureParameterIuivEXT]</b>  </summary>
-            public static void TextureParameterIuiv(int texture, TextureTarget target, TextureParameterName pname, uint* parameters) => GLPointers._glTextureParameterIuivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void TextureParameterIuivEXT(int texture, TextureTarget target, TextureParameterName pname, uint* parameters) => GLPointers._glTextureParameterIuivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetTextureParameterIivEXT]</b>  </summary>
-            public static void GetTextureParameterIiv(int texture, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTextureParameterIivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void GetTextureParameterIivEXT(int texture, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTextureParameterIivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetTextureParameterIuivEXT]</b>  </summary>
-            public static void GetTextureParameterIuiv(int texture, TextureTarget target, GetTextureParameter pname, uint* parameters) => GLPointers._glGetTextureParameterIuivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
+            public static void GetTextureParameterIuivEXT(int texture, TextureTarget target, GetTextureParameter pname, uint* parameters) => GLPointers._glGetTextureParameterIuivEXT_fnptr(texture, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexParameterIivEXT]</b>  </summary>
-            public static void MultiTexParameterIiv(TextureUnit texunit, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glMultiTexParameterIivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void MultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glMultiTexParameterIivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexParameterIuivEXT]</b>  </summary>
-            public static void MultiTexParameterIuiv(TextureUnit texunit, TextureTarget target, TextureParameterName pname, uint* parameters) => GLPointers._glMultiTexParameterIuivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void MultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, uint* parameters) => GLPointers._glMultiTexParameterIuivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexParameterIivEXT]</b>  </summary>
-            public static void GetMultiTexParameterIiv(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetMultiTexParameterIivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void GetMultiTexParameterIivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetMultiTexParameterIivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetMultiTexParameterIuivEXT]</b>  </summary>
-            public static void GetMultiTexParameterIuiv(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, uint* parameters) => GLPointers._glGetMultiTexParameterIuivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
+            public static void GetMultiTexParameterIuivEXT(TextureUnit texunit, TextureTarget target, GetTextureParameter pname, uint* parameters) => GLPointers._glGetMultiTexParameterIuivEXT_fnptr((uint)texunit, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform1uiEXT]</b>  </summary>
-            public static void ProgramUniform1ui(int program, int location, uint v0) => GLPointers._glProgramUniform1uiEXT_fnptr(program, location, v0);
+            public static void ProgramUniform1uiEXT(int program, int location, uint v0) => GLPointers._glProgramUniform1uiEXT_fnptr(program, location, v0);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform2uiEXT]</b>  </summary>
-            public static void ProgramUniform2ui(int program, int location, uint v0, uint v1) => GLPointers._glProgramUniform2uiEXT_fnptr(program, location, v0, v1);
+            public static void ProgramUniform2uiEXT(int program, int location, uint v0, uint v1) => GLPointers._glProgramUniform2uiEXT_fnptr(program, location, v0, v1);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform3uiEXT]</b>  </summary>
-            public static void ProgramUniform3ui(int program, int location, uint v0, uint v1, uint v2) => GLPointers._glProgramUniform3uiEXT_fnptr(program, location, v0, v1, v2);
+            public static void ProgramUniform3uiEXT(int program, int location, uint v0, uint v1, uint v2) => GLPointers._glProgramUniform3uiEXT_fnptr(program, location, v0, v1, v2);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform4uiEXT]</b>  </summary>
-            public static void ProgramUniform4ui(int program, int location, uint v0, uint v1, uint v2, uint v3) => GLPointers._glProgramUniform4uiEXT_fnptr(program, location, v0, v1, v2, v3);
+            public static void ProgramUniform4uiEXT(int program, int location, uint v0, uint v1, uint v2, uint v3) => GLPointers._glProgramUniform4uiEXT_fnptr(program, location, v0, v1, v2, v3);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform1uivEXT]</b>  </summary>
-            public static void ProgramUniform1uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform1uivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform1uivEXT(int program, int location, int count, uint* value) => GLPointers._glProgramUniform1uivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform2uivEXT]</b>  </summary>
-            public static void ProgramUniform2uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform2uivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform2uivEXT(int program, int location, int count, uint* value) => GLPointers._glProgramUniform2uivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform3uivEXT]</b>  </summary>
-            public static void ProgramUniform3uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform3uivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform3uivEXT(int program, int location, int count, uint* value) => GLPointers._glProgramUniform3uivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_separate_shader_objects] [glProgramUniform4uivEXT]</b>  </summary>
-            public static void ProgramUniform4uiv(int program, int location, int count, uint* value) => GLPointers._glProgramUniform4uivEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform4uivEXT(int program, int location, int count, uint* value) => GLPointers._glProgramUniform4uivEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameters4fvEXT]</b>  </summary>
-            public static void NamedProgramLocalParameters4fv(int program, ProgramTarget target, uint index, int count, float* parameters) => GLPointers._glNamedProgramLocalParameters4fvEXT_fnptr(program, (uint)target, index, count, parameters);
+            public static void NamedProgramLocalParameters4fvEXT(int program, ProgramTarget target, uint index, int count, float* parameters) => GLPointers._glNamedProgramLocalParameters4fvEXT_fnptr(program, (uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameterI4iEXT]</b>  </summary>
-            public static void NamedProgramLocalParameterI4i(int program, ProgramTarget target, uint index, int x, int y, int z, int w) => GLPointers._glNamedProgramLocalParameterI4iEXT_fnptr(program, (uint)target, index, x, y, z, w);
+            public static void NamedProgramLocalParameterI4iEXT(int program, ProgramTarget target, uint index, int x, int y, int z, int w) => GLPointers._glNamedProgramLocalParameterI4iEXT_fnptr(program, (uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameterI4ivEXT]</b>  </summary>
-            public static void NamedProgramLocalParameterI4iv(int program, ProgramTarget target, uint index, int* parameters) => GLPointers._glNamedProgramLocalParameterI4ivEXT_fnptr(program, (uint)target, index, parameters);
+            public static void NamedProgramLocalParameterI4ivEXT(int program, ProgramTarget target, uint index, int* parameters) => GLPointers._glNamedProgramLocalParameterI4ivEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParametersI4ivEXT]</b>  </summary>
-            public static void NamedProgramLocalParametersI4iv(int program, ProgramTarget target, uint index, int count, int* parameters) => GLPointers._glNamedProgramLocalParametersI4ivEXT_fnptr(program, (uint)target, index, count, parameters);
+            public static void NamedProgramLocalParametersI4ivEXT(int program, ProgramTarget target, uint index, int count, int* parameters) => GLPointers._glNamedProgramLocalParametersI4ivEXT_fnptr(program, (uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameterI4uiEXT]</b>  </summary>
-            public static void NamedProgramLocalParameterI4ui(int program, ProgramTarget target, uint index, uint x, uint y, uint z, uint w) => GLPointers._glNamedProgramLocalParameterI4uiEXT_fnptr(program, (uint)target, index, x, y, z, w);
+            public static void NamedProgramLocalParameterI4uiEXT(int program, ProgramTarget target, uint index, uint x, uint y, uint z, uint w) => GLPointers._glNamedProgramLocalParameterI4uiEXT_fnptr(program, (uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameterI4uivEXT]</b>  </summary>
-            public static void NamedProgramLocalParameterI4uiv(int program, ProgramTarget target, uint index, uint* parameters) => GLPointers._glNamedProgramLocalParameterI4uivEXT_fnptr(program, (uint)target, index, parameters);
+            public static void NamedProgramLocalParameterI4uivEXT(int program, ProgramTarget target, uint index, uint* parameters) => GLPointers._glNamedProgramLocalParameterI4uivEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParametersI4uivEXT]</b>  </summary>
-            public static void NamedProgramLocalParametersI4uiv(int program, ProgramTarget target, uint index, int count, uint* parameters) => GLPointers._glNamedProgramLocalParametersI4uivEXT_fnptr(program, (uint)target, index, count, parameters);
+            public static void NamedProgramLocalParametersI4uivEXT(int program, ProgramTarget target, uint index, int count, uint* parameters) => GLPointers._glNamedProgramLocalParametersI4uivEXT_fnptr(program, (uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedProgramLocalParameterIivEXT]</b>  </summary>
-            public static void GetNamedProgramLocalParameterIiv(int program, ProgramTarget target, uint index, int* parameters) => GLPointers._glGetNamedProgramLocalParameterIivEXT_fnptr(program, (uint)target, index, parameters);
+            public static void GetNamedProgramLocalParameterIivEXT(int program, ProgramTarget target, uint index, int* parameters) => GLPointers._glGetNamedProgramLocalParameterIivEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedProgramLocalParameterIuivEXT]</b>  </summary>
-            public static void GetNamedProgramLocalParameterIuiv(int program, ProgramTarget target, uint index, uint* parameters) => GLPointers._glGetNamedProgramLocalParameterIuivEXT_fnptr(program, (uint)target, index, parameters);
+            public static void GetNamedProgramLocalParameterIuivEXT(int program, ProgramTarget target, uint index, uint* parameters) => GLPointers._glGetNamedProgramLocalParameterIuivEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glEnableClientStateiEXT]</b>  </summary>
-            public static void EnableClientStatei(EnableCap array, uint index) => GLPointers._glEnableClientStateiEXT_fnptr((uint)array, index);
+            public static void EnableClientStateiEXT(EnableCap array, uint index) => GLPointers._glEnableClientStateiEXT_fnptr((uint)array, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glDisableClientStateiEXT]</b>  </summary>
-            public static void DisableClientStatei(EnableCap array, uint index) => GLPointers._glDisableClientStateiEXT_fnptr((uint)array, index);
+            public static void DisableClientStateiEXT(EnableCap array, uint index) => GLPointers._glDisableClientStateiEXT_fnptr((uint)array, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetFloati_vEXT]</b>  </summary>
-            public static void GetFloati_v(GetPName pname, uint index, float* parameters) => GLPointers._glGetFloati_vEXT_fnptr((uint)pname, index, parameters);
+            public static void GetFloati_vEXT(GetPName pname, uint index, float* parameters) => GLPointers._glGetFloati_vEXT_fnptr((uint)pname, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetDoublei_vEXT]</b>  </summary>
-            public static void GetDoublei_v(GetPName pname, uint index, double* parameters) => GLPointers._glGetDoublei_vEXT_fnptr((uint)pname, index, parameters);
+            public static void GetDoublei_vEXT(GetPName pname, uint index, double* parameters) => GLPointers._glGetDoublei_vEXT_fnptr((uint)pname, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetPointeri_vEXT]</b>  </summary>
-            public static void GetPointeri_v(All pname, uint index, void** parameters) => GLPointers._glGetPointeri_vEXT_fnptr((uint)pname, index, parameters);
+            public static void GetPointeri_vEXT(All pname, uint index, void** parameters) => GLPointers._glGetPointeri_vEXT_fnptr((uint)pname, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramStringEXT]</b>  </summary>
-            public static void NamedProgramString(int program, ProgramTarget target, ProgramFormat format, int len, void* str) => GLPointers._glNamedProgramStringEXT_fnptr(program, (uint)target, (uint)format, len, str);
+            public static void NamedProgramStringEXT(int program, ProgramTarget target, ProgramFormat format, int len, void* str) => GLPointers._glNamedProgramStringEXT_fnptr(program, (uint)target, (uint)format, len, str);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameter4dEXT]</b>  </summary>
-            public static void NamedProgramLocalParameter4d(int program, ProgramTarget target, uint index, double x, double y, double z, double w) => GLPointers._glNamedProgramLocalParameter4dEXT_fnptr(program, (uint)target, index, x, y, z, w);
+            public static void NamedProgramLocalParameter4dEXT(int program, ProgramTarget target, uint index, double x, double y, double z, double w) => GLPointers._glNamedProgramLocalParameter4dEXT_fnptr(program, (uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameter4dvEXT]</b>  </summary>
-            public static void NamedProgramLocalParameter4dv(int program, ProgramTarget target, uint index, double* parameters) => GLPointers._glNamedProgramLocalParameter4dvEXT_fnptr(program, (uint)target, index, parameters);
+            public static void NamedProgramLocalParameter4dvEXT(int program, ProgramTarget target, uint index, double* parameters) => GLPointers._glNamedProgramLocalParameter4dvEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameter4fEXT]</b>  </summary>
-            public static void NamedProgramLocalParameter4f(int program, ProgramTarget target, uint index, float x, float y, float z, float w) => GLPointers._glNamedProgramLocalParameter4fEXT_fnptr(program, (uint)target, index, x, y, z, w);
+            public static void NamedProgramLocalParameter4fEXT(int program, ProgramTarget target, uint index, float x, float y, float z, float w) => GLPointers._glNamedProgramLocalParameter4fEXT_fnptr(program, (uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedProgramLocalParameter4fvEXT]</b>  </summary>
-            public static void NamedProgramLocalParameter4fv(int program, ProgramTarget target, uint index, float* parameters) => GLPointers._glNamedProgramLocalParameter4fvEXT_fnptr(program, (uint)target, index, parameters);
+            public static void NamedProgramLocalParameter4fvEXT(int program, ProgramTarget target, uint index, float* parameters) => GLPointers._glNamedProgramLocalParameter4fvEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedProgramLocalParameterdvEXT]</b>  </summary>
-            public static void GetNamedProgramLocalParameterdv(int program, ProgramTarget target, uint index, double* parameters) => GLPointers._glGetNamedProgramLocalParameterdvEXT_fnptr(program, (uint)target, index, parameters);
+            public static void GetNamedProgramLocalParameterdvEXT(int program, ProgramTarget target, uint index, double* parameters) => GLPointers._glGetNamedProgramLocalParameterdvEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedProgramLocalParameterfvEXT]</b>  </summary>
-            public static void GetNamedProgramLocalParameterfv(int program, ProgramTarget target, uint index, float* parameters) => GLPointers._glGetNamedProgramLocalParameterfvEXT_fnptr(program, (uint)target, index, parameters);
+            public static void GetNamedProgramLocalParameterfvEXT(int program, ProgramTarget target, uint index, float* parameters) => GLPointers._glGetNamedProgramLocalParameterfvEXT_fnptr(program, (uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedProgramivEXT]</b>  </summary>
-            public static void GetNamedProgramiv(int program, ProgramTarget target, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetNamedProgramivEXT_fnptr(program, (uint)target, (uint)pname, parameters);
+            public static void GetNamedProgramivEXT(int program, ProgramTarget target, ProgramPropertyARB pname, int* parameters) => GLPointers._glGetNamedProgramivEXT_fnptr(program, (uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedProgramStringEXT]</b>  </summary>
-            public static void GetNamedProgramString(int program, ProgramTarget target, ProgramStringProperty pname, void* str) => GLPointers._glGetNamedProgramStringEXT_fnptr(program, (uint)target, (uint)pname, str);
+            public static void GetNamedProgramStringEXT(int program, ProgramTarget target, ProgramStringProperty pname, void* str) => GLPointers._glGetNamedProgramStringEXT_fnptr(program, (uint)target, (uint)pname, str);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedRenderbufferStorageEXT]</b>  </summary>
-            public static void NamedRenderbufferStorage(int renderbuffer, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageEXT_fnptr(renderbuffer, (uint)internalformat, width, height);
+            public static void NamedRenderbufferStorageEXT(int renderbuffer, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageEXT_fnptr(renderbuffer, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedRenderbufferParameterivEXT]</b>  </summary>
-            public static void GetNamedRenderbufferParameteriv(int renderbuffer, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetNamedRenderbufferParameterivEXT_fnptr(renderbuffer, (uint)pname, parameters);
+            public static void GetNamedRenderbufferParameterivEXT(int renderbuffer, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetNamedRenderbufferParameterivEXT_fnptr(renderbuffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedRenderbufferStorageMultisampleEXT]</b>  </summary>
-            public static void NamedRenderbufferStorageMultisample(int renderbuffer, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageMultisampleEXT_fnptr(renderbuffer, samples, (uint)internalformat, width, height);
+            public static void NamedRenderbufferStorageMultisampleEXT(int renderbuffer, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageMultisampleEXT_fnptr(renderbuffer, samples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedRenderbufferStorageMultisampleCoverageEXT]</b>  </summary>
-            public static void NamedRenderbufferStorageMultisampleCoverage(int renderbuffer, int coverageSamples, int colorSamples, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageMultisampleCoverageEXT_fnptr(renderbuffer, coverageSamples, colorSamples, (uint)internalformat, width, height);
+            public static void NamedRenderbufferStorageMultisampleCoverageEXT(int renderbuffer, int coverageSamples, int colorSamples, InternalFormat internalformat, int width, int height) => GLPointers._glNamedRenderbufferStorageMultisampleCoverageEXT_fnptr(renderbuffer, coverageSamples, colorSamples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glCheckNamedFramebufferStatusEXT]</b>  </summary>
-            public static FramebufferStatus CheckNamedFramebufferStatus(int framebuffer, FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckNamedFramebufferStatusEXT_fnptr(framebuffer, (uint)target);
+            public static FramebufferStatus CheckNamedFramebufferStatusEXT(int framebuffer, FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckNamedFramebufferStatusEXT_fnptr(framebuffer, (uint)target);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferTexture1DEXT]</b>  </summary>
-            public static void NamedFramebufferTexture1D(int framebuffer, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glNamedFramebufferTexture1DEXT_fnptr(framebuffer, (uint)attachment, (uint)textarget, texture, level);
+            public static void NamedFramebufferTexture1DEXT(int framebuffer, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glNamedFramebufferTexture1DEXT_fnptr(framebuffer, (uint)attachment, (uint)textarget, texture, level);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferTexture2DEXT]</b>  </summary>
-            public static void NamedFramebufferTexture2D(int framebuffer, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glNamedFramebufferTexture2DEXT_fnptr(framebuffer, (uint)attachment, (uint)textarget, texture, level);
+            public static void NamedFramebufferTexture2DEXT(int framebuffer, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glNamedFramebufferTexture2DEXT_fnptr(framebuffer, (uint)attachment, (uint)textarget, texture, level);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferTexture3DEXT]</b>  </summary>
-            public static void NamedFramebufferTexture3D(int framebuffer, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int zoffset) => GLPointers._glNamedFramebufferTexture3DEXT_fnptr(framebuffer, (uint)attachment, (uint)textarget, texture, level, zoffset);
+            public static void NamedFramebufferTexture3DEXT(int framebuffer, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int zoffset) => GLPointers._glNamedFramebufferTexture3DEXT_fnptr(framebuffer, (uint)attachment, (uint)textarget, texture, level, zoffset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferRenderbufferEXT]</b>  </summary>
-            public static void NamedFramebufferRenderbuffer(int framebuffer, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._glNamedFramebufferRenderbufferEXT_fnptr(framebuffer, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
+            public static void NamedFramebufferRenderbufferEXT(int framebuffer, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._glNamedFramebufferRenderbufferEXT_fnptr(framebuffer, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedFramebufferAttachmentParameterivEXT]</b>  </summary>
-            public static void GetNamedFramebufferAttachmentParameteriv(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetNamedFramebufferAttachmentParameterivEXT_fnptr(framebuffer, (uint)attachment, (uint)pname, parameters);
+            public static void GetNamedFramebufferAttachmentParameterivEXT(int framebuffer, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetNamedFramebufferAttachmentParameterivEXT_fnptr(framebuffer, (uint)attachment, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGenerateTextureMipmapEXT]</b>  </summary>
-            public static void GenerateTextureMipmap(int texture, TextureTarget target) => GLPointers._glGenerateTextureMipmapEXT_fnptr(texture, (uint)target);
+            public static void GenerateTextureMipmapEXT(int texture, TextureTarget target) => GLPointers._glGenerateTextureMipmapEXT_fnptr(texture, (uint)target);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGenerateMultiTexMipmapEXT]</b>  </summary>
-            public static void GenerateMultiTexMipmap(TextureUnit texunit, TextureTarget target) => GLPointers._glGenerateMultiTexMipmapEXT_fnptr((uint)texunit, (uint)target);
+            public static void GenerateMultiTexMipmapEXT(TextureUnit texunit, TextureTarget target) => GLPointers._glGenerateMultiTexMipmapEXT_fnptr((uint)texunit, (uint)target);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glFramebufferDrawBufferEXT]</b>  </summary>
-            public static void FramebufferDrawBuffer(int framebuffer, DrawBufferMode mode) => GLPointers._glFramebufferDrawBufferEXT_fnptr(framebuffer, (uint)mode);
+            public static void FramebufferDrawBufferEXT(int framebuffer, DrawBufferMode mode) => GLPointers._glFramebufferDrawBufferEXT_fnptr(framebuffer, (uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glFramebufferDrawBuffersEXT]</b>  </summary>
-            public static void FramebufferDrawBuffers(int framebuffer, int n, DrawBufferMode* bufs) => GLPointers._glFramebufferDrawBuffersEXT_fnptr(framebuffer, n, (uint*)bufs);
+            public static void FramebufferDrawBuffersEXT(int framebuffer, int n, DrawBufferMode* bufs) => GLPointers._glFramebufferDrawBuffersEXT_fnptr(framebuffer, n, (uint*)bufs);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glFramebufferReadBufferEXT]</b>  </summary>
-            public static void FramebufferReadBuffer(int framebuffer, ReadBufferMode mode) => GLPointers._glFramebufferReadBufferEXT_fnptr(framebuffer, (uint)mode);
+            public static void FramebufferReadBufferEXT(int framebuffer, ReadBufferMode mode) => GLPointers._glFramebufferReadBufferEXT_fnptr(framebuffer, (uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetFramebufferParameterivEXT]</b>  </summary>
-            public static void GetFramebufferParameteriv(int framebuffer, GetFramebufferParameter pname, int* parameters) => GLPointers._glGetFramebufferParameterivEXT_fnptr(framebuffer, (uint)pname, parameters);
+            public static void GetFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, int* parameters) => GLPointers._glGetFramebufferParameterivEXT_fnptr(framebuffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedCopyBufferSubDataEXT]</b>  </summary>
-            public static void NamedCopyBufferSubData(int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size) => GLPointers._glNamedCopyBufferSubDataEXT_fnptr(readBuffer, writeBuffer, readOffset, writeOffset, size);
+            public static void NamedCopyBufferSubDataEXT(int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size) => GLPointers._glNamedCopyBufferSubDataEXT_fnptr(readBuffer, writeBuffer, readOffset, writeOffset, size);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferTextureEXT]</b>  </summary>
-            public static void NamedFramebufferTexture(int framebuffer, FramebufferAttachment attachment, int texture, int level) => GLPointers._glNamedFramebufferTextureEXT_fnptr(framebuffer, (uint)attachment, texture, level);
+            public static void NamedFramebufferTextureEXT(int framebuffer, FramebufferAttachment attachment, int texture, int level) => GLPointers._glNamedFramebufferTextureEXT_fnptr(framebuffer, (uint)attachment, texture, level);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferTextureLayerEXT]</b>  </summary>
-            public static void NamedFramebufferTextureLayer(int framebuffer, FramebufferAttachment attachment, int texture, int level, int layer) => GLPointers._glNamedFramebufferTextureLayerEXT_fnptr(framebuffer, (uint)attachment, texture, level, layer);
+            public static void NamedFramebufferTextureLayerEXT(int framebuffer, FramebufferAttachment attachment, int texture, int level, int layer) => GLPointers._glNamedFramebufferTextureLayerEXT_fnptr(framebuffer, (uint)attachment, texture, level, layer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferTextureFaceEXT]</b>  </summary>
-            public static void NamedFramebufferTextureFace(int framebuffer, FramebufferAttachment attachment, int texture, int level, TextureTarget face) => GLPointers._glNamedFramebufferTextureFaceEXT_fnptr(framebuffer, (uint)attachment, texture, level, (uint)face);
+            public static void NamedFramebufferTextureFaceEXT(int framebuffer, FramebufferAttachment attachment, int texture, int level, TextureTarget face) => GLPointers._glNamedFramebufferTextureFaceEXT_fnptr(framebuffer, (uint)attachment, texture, level, (uint)face);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureRenderbufferEXT]</b>  </summary>
-            public static void TextureRenderbuffer(int texture, TextureTarget target, int renderbuffer) => GLPointers._glTextureRenderbufferEXT_fnptr(texture, (uint)target, renderbuffer);
+            public static void TextureRenderbufferEXT(int texture, TextureTarget target, int renderbuffer) => GLPointers._glTextureRenderbufferEXT_fnptr(texture, (uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMultiTexRenderbufferEXT]</b>  </summary>
-            public static void MultiTexRenderbuffer(TextureUnit texunit, TextureTarget target, int renderbuffer) => GLPointers._glMultiTexRenderbufferEXT_fnptr((uint)texunit, (uint)target, renderbuffer);
+            public static void MultiTexRenderbufferEXT(TextureUnit texunit, TextureTarget target, int renderbuffer) => GLPointers._glMultiTexRenderbufferEXT_fnptr((uint)texunit, (uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexOffsetEXT]</b>  </summary>
-            public static void VertexArrayVertexOffset(int vaobj, int buffer, int size, VertexPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
+            public static void VertexArrayVertexOffsetEXT(int vaobj, int buffer, int size, VertexPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayColorOffsetEXT]</b>  </summary>
-            public static void VertexArrayColorOffset(int vaobj, int buffer, int size, ColorPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayColorOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
+            public static void VertexArrayColorOffsetEXT(int vaobj, int buffer, int size, ColorPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayColorOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayEdgeFlagOffsetEXT]</b>  </summary>
-            public static void VertexArrayEdgeFlagOffset(int vaobj, int buffer, int stride, IntPtr offset) => GLPointers._glVertexArrayEdgeFlagOffsetEXT_fnptr(vaobj, buffer, stride, offset);
+            public static void VertexArrayEdgeFlagOffsetEXT(int vaobj, int buffer, int stride, IntPtr offset) => GLPointers._glVertexArrayEdgeFlagOffsetEXT_fnptr(vaobj, buffer, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayIndexOffsetEXT]</b>  </summary>
-            public static void VertexArrayIndexOffset(int vaobj, int buffer, IndexPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayIndexOffsetEXT_fnptr(vaobj, buffer, (uint)type, stride, offset);
+            public static void VertexArrayIndexOffsetEXT(int vaobj, int buffer, IndexPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayIndexOffsetEXT_fnptr(vaobj, buffer, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayNormalOffsetEXT]</b>  </summary>
-            public static void VertexArrayNormalOffset(int vaobj, int buffer, NormalPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayNormalOffsetEXT_fnptr(vaobj, buffer, (uint)type, stride, offset);
+            public static void VertexArrayNormalOffsetEXT(int vaobj, int buffer, NormalPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayNormalOffsetEXT_fnptr(vaobj, buffer, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayTexCoordOffsetEXT]</b>  </summary>
-            public static void VertexArrayTexCoordOffset(int vaobj, int buffer, int size, TexCoordPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayTexCoordOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
+            public static void VertexArrayTexCoordOffsetEXT(int vaobj, int buffer, int size, TexCoordPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayTexCoordOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayMultiTexCoordOffsetEXT]</b>  </summary>
-            public static void VertexArrayMultiTexCoordOffset(int vaobj, int buffer, All texunit, int size, TexCoordPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayMultiTexCoordOffsetEXT_fnptr(vaobj, buffer, (uint)texunit, size, (uint)type, stride, offset);
+            public static void VertexArrayMultiTexCoordOffsetEXT(int vaobj, int buffer, All texunit, int size, TexCoordPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayMultiTexCoordOffsetEXT_fnptr(vaobj, buffer, (uint)texunit, size, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayFogCoordOffsetEXT]</b>  </summary>
-            public static void VertexArrayFogCoordOffset(int vaobj, int buffer, FogCoordinatePointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayFogCoordOffsetEXT_fnptr(vaobj, buffer, (uint)type, stride, offset);
+            public static void VertexArrayFogCoordOffsetEXT(int vaobj, int buffer, FogCoordinatePointerType type, int stride, IntPtr offset) => GLPointers._glVertexArrayFogCoordOffsetEXT_fnptr(vaobj, buffer, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArraySecondaryColorOffsetEXT]</b>  </summary>
-            public static void VertexArraySecondaryColorOffset(int vaobj, int buffer, int size, ColorPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArraySecondaryColorOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
+            public static void VertexArraySecondaryColorOffsetEXT(int vaobj, int buffer, int size, ColorPointerType type, int stride, IntPtr offset) => GLPointers._glVertexArraySecondaryColorOffsetEXT_fnptr(vaobj, buffer, size, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribOffsetEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribOffset(int vaobj, int buffer, uint index, int size, VertexAttribPointerType type, bool normalized, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexAttribOffsetEXT_fnptr(vaobj, buffer, index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, offset);
+            public static void VertexArrayVertexAttribOffsetEXT(int vaobj, int buffer, uint index, int size, VertexAttribPointerType type, bool normalized, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexAttribOffsetEXT_fnptr(vaobj, buffer, index, size, (uint)type, (byte)(normalized ? 1 : 0), stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribIOffsetEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribIOffset(int vaobj, int buffer, uint index, int size, VertexAttribType type, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexAttribIOffsetEXT_fnptr(vaobj, buffer, index, size, (uint)type, stride, offset);
+            public static void VertexArrayVertexAttribIOffsetEXT(int vaobj, int buffer, uint index, int size, VertexAttribType type, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexAttribIOffsetEXT_fnptr(vaobj, buffer, index, size, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glEnableVertexArrayEXT]</b>  </summary>
-            public static void EnableVertexArray(int vaobj, EnableCap array) => GLPointers._glEnableVertexArrayEXT_fnptr(vaobj, (uint)array);
+            public static void EnableVertexArrayEXT(int vaobj, EnableCap array) => GLPointers._glEnableVertexArrayEXT_fnptr(vaobj, (uint)array);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glDisableVertexArrayEXT]</b>  </summary>
-            public static void DisableVertexArray(int vaobj, EnableCap array) => GLPointers._glDisableVertexArrayEXT_fnptr(vaobj, (uint)array);
+            public static void DisableVertexArrayEXT(int vaobj, EnableCap array) => GLPointers._glDisableVertexArrayEXT_fnptr(vaobj, (uint)array);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glEnableVertexArrayAttribEXT]</b>  </summary>
-            public static void EnableVertexArrayAttrib(int vaobj, uint index) => GLPointers._glEnableVertexArrayAttribEXT_fnptr(vaobj, index);
+            public static void EnableVertexArrayAttribEXT(int vaobj, uint index) => GLPointers._glEnableVertexArrayAttribEXT_fnptr(vaobj, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glDisableVertexArrayAttribEXT]</b>  </summary>
-            public static void DisableVertexArrayAttrib(int vaobj, uint index) => GLPointers._glDisableVertexArrayAttribEXT_fnptr(vaobj, index);
+            public static void DisableVertexArrayAttribEXT(int vaobj, uint index) => GLPointers._glDisableVertexArrayAttribEXT_fnptr(vaobj, index);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetVertexArrayIntegervEXT]</b>  </summary>
-            public static void GetVertexArrayIntegerv(int vaobj, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegervEXT_fnptr(vaobj, (uint)pname, param);
+            public static void GetVertexArrayIntegervEXT(int vaobj, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegervEXT_fnptr(vaobj, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetVertexArrayPointervEXT]</b>  </summary>
-            public static void GetVertexArrayPointerv(int vaobj, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointervEXT_fnptr(vaobj, (uint)pname, param);
+            public static void GetVertexArrayPointervEXT(int vaobj, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointervEXT_fnptr(vaobj, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetVertexArrayIntegeri_vEXT]</b>  </summary>
-            public static void GetVertexArrayIntegeri_v(int vaobj, uint index, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
+            public static void GetVertexArrayIntegeri_vEXT(int vaobj, uint index, VertexArrayPName pname, int* param) => GLPointers._glGetVertexArrayIntegeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetVertexArrayPointeri_vEXT]</b>  </summary>
-            public static void GetVertexArrayPointeri_v(int vaobj, uint index, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
+            public static void GetVertexArrayPointeri_vEXT(int vaobj, uint index, VertexArrayPName pname, void** param) => GLPointers._glGetVertexArrayPointeri_vEXT_fnptr(vaobj, index, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glMapNamedBufferRangeEXT]</b>  </summary>
-            public static void* MapNamedBufferRange(int buffer, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapNamedBufferRangeEXT_fnptr(buffer, offset, length, (uint)access);
+            public static void* MapNamedBufferRangeEXT(int buffer, IntPtr offset, nint length, MapBufferAccessMask access) => GLPointers._glMapNamedBufferRangeEXT_fnptr(buffer, offset, length, (uint)access);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glFlushMappedNamedBufferRangeEXT]</b>  </summary>
-            public static void FlushMappedNamedBufferRange(int buffer, IntPtr offset, nint length) => GLPointers._glFlushMappedNamedBufferRangeEXT_fnptr(buffer, offset, length);
+            public static void FlushMappedNamedBufferRangeEXT(int buffer, IntPtr offset, nint length) => GLPointers._glFlushMappedNamedBufferRangeEXT_fnptr(buffer, offset, length);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedBufferStorageEXT]</b>  </summary>
-            public static void NamedBufferStorage(int buffer, nint size, void* data, BufferStorageMask flags) => GLPointers._glNamedBufferStorageEXT_fnptr(buffer, size, data, (uint)flags);
+            public static void NamedBufferStorageEXT(int buffer, nint size, void* data, BufferStorageMask flags) => GLPointers._glNamedBufferStorageEXT_fnptr(buffer, size, data, (uint)flags);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glClearNamedBufferDataEXT]</b>  </summary>
-            public static void ClearNamedBufferData(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, void* data) => GLPointers._glClearNamedBufferDataEXT_fnptr(buffer, (uint)internalformat, (uint)format, (uint)type, data);
+            public static void ClearNamedBufferDataEXT(int buffer, SizedInternalFormat internalformat, PixelFormat format, PixelType type, void* data) => GLPointers._glClearNamedBufferDataEXT_fnptr(buffer, (uint)internalformat, (uint)format, (uint)type, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glClearNamedBufferSubDataEXT]</b>  </summary>
-            public static void ClearNamedBufferSubData(int buffer, SizedInternalFormat internalformat, nint offset, nint size, PixelFormat format, PixelType type, void* data) => GLPointers._glClearNamedBufferSubDataEXT_fnptr(buffer, (uint)internalformat, offset, size, (uint)format, (uint)type, data);
+            public static void ClearNamedBufferSubDataEXT(int buffer, SizedInternalFormat internalformat, nint offset, nint size, PixelFormat format, PixelType type, void* data) => GLPointers._glClearNamedBufferSubDataEXT_fnptr(buffer, (uint)internalformat, offset, size, (uint)format, (uint)type, data);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glNamedFramebufferParameteriEXT]</b>  </summary>
-            public static void NamedFramebufferParameteri(int framebuffer, FramebufferParameterName pname, int param) => GLPointers._glNamedFramebufferParameteriEXT_fnptr(framebuffer, (uint)pname, param);
+            public static void NamedFramebufferParameteriEXT(int framebuffer, FramebufferParameterName pname, int param) => GLPointers._glNamedFramebufferParameteriEXT_fnptr(framebuffer, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glGetNamedFramebufferParameterivEXT]</b>  </summary>
-            public static void GetNamedFramebufferParameteriv(int framebuffer, GetFramebufferParameter pname, int* parameters) => GLPointers._glGetNamedFramebufferParameterivEXT_fnptr(framebuffer, (uint)pname, parameters);
+            public static void GetNamedFramebufferParameterivEXT(int framebuffer, GetFramebufferParameter pname, int* parameters) => GLPointers._glGetNamedFramebufferParameterivEXT_fnptr(framebuffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform1dEXT]</b>  </summary>
-            public static void ProgramUniform1d(int program, int location, double x) => GLPointers._glProgramUniform1dEXT_fnptr(program, location, x);
+            public static void ProgramUniform1dEXT(int program, int location, double x) => GLPointers._glProgramUniform1dEXT_fnptr(program, location, x);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform2dEXT]</b>  </summary>
-            public static void ProgramUniform2d(int program, int location, double x, double y) => GLPointers._glProgramUniform2dEXT_fnptr(program, location, x, y);
+            public static void ProgramUniform2dEXT(int program, int location, double x, double y) => GLPointers._glProgramUniform2dEXT_fnptr(program, location, x, y);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform3dEXT]</b>  </summary>
-            public static void ProgramUniform3d(int program, int location, double x, double y, double z) => GLPointers._glProgramUniform3dEXT_fnptr(program, location, x, y, z);
+            public static void ProgramUniform3dEXT(int program, int location, double x, double y, double z) => GLPointers._glProgramUniform3dEXT_fnptr(program, location, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform4dEXT]</b>  </summary>
-            public static void ProgramUniform4d(int program, int location, double x, double y, double z, double w) => GLPointers._glProgramUniform4dEXT_fnptr(program, location, x, y, z, w);
+            public static void ProgramUniform4dEXT(int program, int location, double x, double y, double z, double w) => GLPointers._glProgramUniform4dEXT_fnptr(program, location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform1dvEXT]</b>  </summary>
-            public static void ProgramUniform1dv(int program, int location, int count, double* value) => GLPointers._glProgramUniform1dvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform1dvEXT(int program, int location, int count, double* value) => GLPointers._glProgramUniform1dvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform2dvEXT]</b>  </summary>
-            public static void ProgramUniform2dv(int program, int location, int count, double* value) => GLPointers._glProgramUniform2dvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform2dvEXT(int program, int location, int count, double* value) => GLPointers._glProgramUniform2dvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform3dvEXT]</b>  </summary>
-            public static void ProgramUniform3dv(int program, int location, int count, double* value) => GLPointers._glProgramUniform3dvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform3dvEXT(int program, int location, int count, double* value) => GLPointers._glProgramUniform3dvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniform4dvEXT]</b>  </summary>
-            public static void ProgramUniform4dv(int program, int location, int count, double* value) => GLPointers._glProgramUniform4dvEXT_fnptr(program, location, count, value);
+            public static void ProgramUniform4dvEXT(int program, int location, int count, double* value) => GLPointers._glProgramUniform4dvEXT_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix2dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix2dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix2dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix2dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix2dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix3dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix3dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix3dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix3dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix3dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix4dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix4dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix4dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix4dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix4dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix2x3dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix2x3dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix2x3dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix2x3dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix2x3dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix2x4dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix2x4dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix2x4dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix2x4dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix2x4dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix3x2dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix3x2dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix3x2dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix3x2dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix3x2dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix3x4dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix3x4dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix3x4dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix3x4dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix3x4dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix4x2dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix4x2dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix4x2dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix4x2dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix4x2dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glProgramUniformMatrix4x3dvEXT]</b>  </summary>
-            public static void ProgramUniformMatrix4x3dv(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix4x3dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
+            public static void ProgramUniformMatrix4x3dvEXT(int program, int location, int count, bool transpose, double* value) => GLPointers._glProgramUniformMatrix4x3dvEXT_fnptr(program, location, count, (byte)(transpose ? 1 : 0), value);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureBufferRangeEXT]</b>  </summary>
-            public static void TextureBufferRange(int texture, TextureTarget target, SizedInternalFormat internalformat, int buffer, IntPtr offset, nint size) => GLPointers._glTextureBufferRangeEXT_fnptr(texture, (uint)target, (uint)internalformat, buffer, offset, size);
+            public static void TextureBufferRangeEXT(int texture, TextureTarget target, SizedInternalFormat internalformat, int buffer, IntPtr offset, nint size) => GLPointers._glTextureBufferRangeEXT_fnptr(texture, (uint)target, (uint)internalformat, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_texture_storage] [glTextureStorage1DEXT]</b>  </summary>
-            public static void TextureStorage1D(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
+            public static void TextureStorage1DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTextureStorage1DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_texture_storage] [glTextureStorage2DEXT]</b>  </summary>
-            public static void TextureStorage2D(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
+            public static void TextureStorage2DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTextureStorage2DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_EXT_texture_storage] [glTextureStorage3DEXT]</b>  </summary>
-            public static void TextureStorage3D(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTextureStorage3DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height, depth);
+            public static void TextureStorage3DEXT(int texture, All target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTextureStorage3DEXT_fnptr(texture, (uint)target, levels, (uint)internalformat, width, height, depth);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureStorage2DMultisampleEXT]</b>  </summary>
-            public static void TextureStorage2DMultisample(int texture, TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations) => GLPointers._glTextureStorage2DMultisampleEXT_fnptr(texture, (uint)target, samples, (uint)internalformat, width, height, (byte)(fixedsamplelocations ? 1 : 0));
+            public static void TextureStorage2DMultisampleEXT(int texture, TextureTarget target, int samples, SizedInternalFormat internalformat, int width, int height, bool fixedsamplelocations) => GLPointers._glTextureStorage2DMultisampleEXT_fnptr(texture, (uint)target, samples, (uint)internalformat, width, height, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTextureStorage3DMultisampleEXT]</b>  </summary>
-            public static void TextureStorage3DMultisample(int texture, All target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._glTextureStorage3DMultisampleEXT_fnptr(texture, (uint)target, samples, (uint)internalformat, width, height, depth, (byte)(fixedsamplelocations ? 1 : 0));
+            public static void TextureStorage3DMultisampleEXT(int texture, All target, int samples, SizedInternalFormat internalformat, int width, int height, int depth, bool fixedsamplelocations) => GLPointers._glTextureStorage3DMultisampleEXT_fnptr(texture, (uint)target, samples, (uint)internalformat, width, height, depth, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayBindVertexBufferEXT]</b>  </summary>
-            public static void VertexArrayBindVertexBuffer(int vaobj, uint bindingindex, int buffer, IntPtr offset, int stride) => GLPointers._glVertexArrayBindVertexBufferEXT_fnptr(vaobj, bindingindex, buffer, offset, stride);
+            public static void VertexArrayBindVertexBufferEXT(int vaobj, uint bindingindex, int buffer, IntPtr offset, int stride) => GLPointers._glVertexArrayBindVertexBufferEXT_fnptr(vaobj, bindingindex, buffer, offset, stride);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribFormatEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribFormat(int vaobj, uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset) => GLPointers._glVertexArrayVertexAttribFormatEXT_fnptr(vaobj, attribindex, size, (uint)type, (byte)(normalized ? 1 : 0), relativeoffset);
+            public static void VertexArrayVertexAttribFormatEXT(int vaobj, uint attribindex, int size, VertexAttribType type, bool normalized, uint relativeoffset) => GLPointers._glVertexArrayVertexAttribFormatEXT_fnptr(vaobj, attribindex, size, (uint)type, (byte)(normalized ? 1 : 0), relativeoffset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribIFormatEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribIFormat(int vaobj, uint attribindex, int size, VertexAttribIType type, uint relativeoffset) => GLPointers._glVertexArrayVertexAttribIFormatEXT_fnptr(vaobj, attribindex, size, (uint)type, relativeoffset);
+            public static void VertexArrayVertexAttribIFormatEXT(int vaobj, uint attribindex, int size, VertexAttribIType type, uint relativeoffset) => GLPointers._glVertexArrayVertexAttribIFormatEXT_fnptr(vaobj, attribindex, size, (uint)type, relativeoffset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribLFormatEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribLFormat(int vaobj, uint attribindex, int size, VertexAttribLType type, uint relativeoffset) => GLPointers._glVertexArrayVertexAttribLFormatEXT_fnptr(vaobj, attribindex, size, (uint)type, relativeoffset);
+            public static void VertexArrayVertexAttribLFormatEXT(int vaobj, uint attribindex, int size, VertexAttribLType type, uint relativeoffset) => GLPointers._glVertexArrayVertexAttribLFormatEXT_fnptr(vaobj, attribindex, size, (uint)type, relativeoffset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribBindingEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribBinding(int vaobj, uint attribindex, uint bindingindex) => GLPointers._glVertexArrayVertexAttribBindingEXT_fnptr(vaobj, attribindex, bindingindex);
+            public static void VertexArrayVertexAttribBindingEXT(int vaobj, uint attribindex, uint bindingindex) => GLPointers._glVertexArrayVertexAttribBindingEXT_fnptr(vaobj, attribindex, bindingindex);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexBindingDivisorEXT]</b>  </summary>
-            public static void VertexArrayVertexBindingDivisor(int vaobj, uint bindingindex, uint divisor) => GLPointers._glVertexArrayVertexBindingDivisorEXT_fnptr(vaobj, bindingindex, divisor);
+            public static void VertexArrayVertexBindingDivisorEXT(int vaobj, uint bindingindex, uint divisor) => GLPointers._glVertexArrayVertexBindingDivisorEXT_fnptr(vaobj, bindingindex, divisor);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribLOffsetEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribLOffset(int vaobj, int buffer, uint index, int size, VertexAttribLType type, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexAttribLOffsetEXT_fnptr(vaobj, buffer, index, size, (uint)type, stride, offset);
+            public static void VertexArrayVertexAttribLOffsetEXT(int vaobj, int buffer, uint index, int size, VertexAttribLType type, int stride, IntPtr offset) => GLPointers._glVertexArrayVertexAttribLOffsetEXT_fnptr(vaobj, buffer, index, size, (uint)type, stride, offset);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glTexturePageCommitmentEXT]</b>  </summary>
-            public static void TexturePageCommitment(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexturePageCommitmentEXT_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
+            public static void TexturePageCommitmentEXT(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, bool commit) => GLPointers._glTexturePageCommitmentEXT_fnptr(texture, level, xoffset, yoffset, zoffset, width, height, depth, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access] [glVertexArrayVertexAttribDivisorEXT]</b>  </summary>
-            public static void VertexArrayVertexAttribDivisor(int vaobj, uint index, uint divisor) => GLPointers._glVertexArrayVertexAttribDivisorEXT_fnptr(vaobj, index, divisor);
+            public static void VertexArrayVertexAttribDivisorEXT(int vaobj, uint index, uint divisor) => GLPointers._glVertexArrayVertexAttribDivisorEXT_fnptr(vaobj, index, divisor);
             
             /// <summary> <b>[requires: GL_EXT_draw_buffers2] [glColorMaskIndexedEXT]</b>  </summary>
-            public static void ColorMaskIndexed(uint index, bool r, bool g, bool b, bool a) => GLPointers._glColorMaskIndexedEXT_fnptr(index, (byte)(r ? 1 : 0), (byte)(g ? 1 : 0), (byte)(b ? 1 : 0), (byte)(a ? 1 : 0));
+            public static void ColorMaskIndexedEXT(uint index, bool r, bool g, bool b, bool a) => GLPointers._glColorMaskIndexedEXT_fnptr(index, (byte)(r ? 1 : 0), (byte)(g ? 1 : 0), (byte)(b ? 1 : 0), (byte)(a ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_draw_instanced] [glDrawArraysInstancedEXT]</b>  </summary>
-            public static void DrawArraysInstanced(PrimitiveType mode, int start, int count, int primcount) => GLPointers._glDrawArraysInstancedEXT_fnptr((uint)mode, start, count, primcount);
+            public static void DrawArraysInstancedEXT(PrimitiveType mode, int start, int count, int primcount) => GLPointers._glDrawArraysInstancedEXT_fnptr((uint)mode, start, count, primcount);
             
             /// <summary> <b>[requires: GL_EXT_draw_instanced] [glDrawElementsInstancedEXT]</b>  </summary>
-            public static void DrawElementsInstanced(PrimitiveType mode, int count, DrawElementsType type, void* indices, int primcount) => GLPointers._glDrawElementsInstancedEXT_fnptr((uint)mode, count, (uint)type, indices, primcount);
+            public static void DrawElementsInstancedEXT(PrimitiveType mode, int count, DrawElementsType type, void* indices, int primcount) => GLPointers._glDrawElementsInstancedEXT_fnptr((uint)mode, count, (uint)type, indices, primcount);
             
             /// <summary> <b>[requires: GL_EXT_draw_range_elements] [glDrawRangeElementsEXT]</b>  </summary>
-            public static void DrawRangeElements(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices) => GLPointers._glDrawRangeElementsEXT_fnptr((uint)mode, start, end, count, (uint)type, indices);
+            public static void DrawRangeElementsEXT(PrimitiveType mode, uint start, uint end, int count, DrawElementsType type, void* indices) => GLPointers._glDrawRangeElementsEXT_fnptr((uint)mode, start, end, count, (uint)type, indices);
             
             /// <summary> <b>[requires: GL_EXT_external_buffer] [glBufferStorageExternalEXT]</b>  </summary>
-            public static void BufferStorageExternal(All target, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._glBufferStorageExternalEXT_fnptr((uint)target, offset, size, clientBuffer, (uint)flags);
+            public static void BufferStorageExternalEXT(All target, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._glBufferStorageExternalEXT_fnptr((uint)target, offset, size, clientBuffer, (uint)flags);
             
             /// <summary> <b>[requires: GL_EXT_external_buffer] [glNamedBufferStorageExternalEXT]</b>  </summary>
-            public static void NamedBufferStorageExternal(int buffer, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._glNamedBufferStorageExternalEXT_fnptr(buffer, offset, size, clientBuffer, (uint)flags);
+            public static void NamedBufferStorageExternalEXT(int buffer, IntPtr offset, nint size, void* clientBuffer, BufferStorageMask flags) => GLPointers._glNamedBufferStorageExternalEXT_fnptr(buffer, offset, size, clientBuffer, (uint)flags);
             
             /// <summary> <b>[requires: GL_EXT_fog_coord] [glFogCoordfEXT]</b>  </summary>
-            public static void FogCoordf(float coord) => GLPointers._glFogCoordfEXT_fnptr(coord);
+            public static void FogCoordfEXT(float coord) => GLPointers._glFogCoordfEXT_fnptr(coord);
             
             /// <summary> <b>[requires: GL_EXT_fog_coord] [glFogCoordfvEXT]</b>  </summary>
-            public static void FogCoordfv(float* coord) => GLPointers._glFogCoordfvEXT_fnptr(coord);
+            public static void FogCoordfvEXT(float* coord) => GLPointers._glFogCoordfvEXT_fnptr(coord);
             
             /// <summary> <b>[requires: GL_EXT_fog_coord] [glFogCoorddEXT]</b>  </summary>
-            public static void FogCoordd(double coord) => GLPointers._glFogCoorddEXT_fnptr(coord);
+            public static void FogCoorddEXT(double coord) => GLPointers._glFogCoorddEXT_fnptr(coord);
             
             /// <summary> <b>[requires: GL_EXT_fog_coord] [glFogCoorddvEXT]</b>  </summary>
-            public static void FogCoorddv(double* coord) => GLPointers._glFogCoorddvEXT_fnptr(coord);
+            public static void FogCoorddvEXT(double* coord) => GLPointers._glFogCoorddvEXT_fnptr(coord);
             
             /// <summary> <b>[requires: GL_EXT_fog_coord] [glFogCoordPointerEXT]</b>  </summary>
-            public static void FogCoordPointer(FogPointerTypeEXT type, int stride, void* pointer) => GLPointers._glFogCoordPointerEXT_fnptr((uint)type, stride, pointer);
+            public static void FogCoordPointerEXT(FogPointerTypeEXT type, int stride, void* pointer) => GLPointers._glFogCoordPointerEXT_fnptr((uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_blit] [glBlitFramebufferEXT]</b>  </summary>
-            public static void BlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
+            public static void BlitFramebufferEXT(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_blit_layers] [glBlitFramebufferLayersEXT]</b>  </summary>
-            public static void BlitFramebufferLayers(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferLayersEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
+            public static void BlitFramebufferLayersEXT(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferLayersEXT_fnptr(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_blit_layers] [glBlitFramebufferLayerEXT]</b>  </summary>
-            public static void BlitFramebufferLayer(int srcX0, int srcY0, int srcX1, int srcY1, int srcLayer, int dstX0, int dstY0, int dstX1, int dstY1, int dstLayer, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferLayerEXT_fnptr(srcX0, srcY0, srcX1, srcY1, srcLayer, dstX0, dstY0, dstX1, dstY1, dstLayer, (uint)mask, (uint)filter);
+            public static void BlitFramebufferLayerEXT(int srcX0, int srcY0, int srcX1, int srcY1, int srcLayer, int dstX0, int dstY0, int dstX1, int dstY1, int dstLayer, ClearBufferMask mask, BlitFramebufferFilter filter) => GLPointers._glBlitFramebufferLayerEXT_fnptr(srcX0, srcY0, srcX1, srcY1, srcLayer, dstX0, dstY0, dstX1, dstY1, dstLayer, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_multisample] [glRenderbufferStorageMultisampleEXT]</b>  </summary>
-            public static void RenderbufferStorageMultisample(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleEXT_fnptr((uint)target, samples, (uint)internalformat, width, height);
+            public static void RenderbufferStorageMultisampleEXT(RenderbufferTarget target, int samples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleEXT_fnptr((uint)target, samples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glIsRenderbufferEXT]</b>  </summary>
-            public static bool IsRenderbuffer(int renderbuffer) => GLPointers._glIsRenderbufferEXT_fnptr(renderbuffer) != 0;
+            public static bool IsRenderbufferEXT(int renderbuffer) => GLPointers._glIsRenderbufferEXT_fnptr(renderbuffer) != 0;
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glBindRenderbufferEXT]</b>  </summary>
-            public static void BindRenderbuffer(RenderbufferTarget target, int renderbuffer) => GLPointers._glBindRenderbufferEXT_fnptr((uint)target, renderbuffer);
+            public static void BindRenderbufferEXT(RenderbufferTarget target, int renderbuffer) => GLPointers._glBindRenderbufferEXT_fnptr((uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glDeleteRenderbuffersEXT]</b>  </summary>
-            public static void DeleteRenderbuffers(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffersEXT_fnptr(n, renderbuffers);
+            public static void DeleteRenderbuffersEXT(int n, int* renderbuffers) => GLPointers._glDeleteRenderbuffersEXT_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glGenRenderbuffersEXT]</b>  </summary>
-            public static void GenRenderbuffers(int n, int* renderbuffers) => GLPointers._glGenRenderbuffersEXT_fnptr(n, renderbuffers);
+            public static void GenRenderbuffersEXT(int n, int* renderbuffers) => GLPointers._glGenRenderbuffersEXT_fnptr(n, renderbuffers);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glRenderbufferStorageEXT]</b>  </summary>
-            public static void RenderbufferStorage(RenderbufferTarget target, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageEXT_fnptr((uint)target, (uint)internalformat, width, height);
+            public static void RenderbufferStorageEXT(RenderbufferTarget target, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageEXT_fnptr((uint)target, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glGetRenderbufferParameterivEXT]</b>  </summary>
-            public static void GetRenderbufferParameteriv(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetRenderbufferParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetRenderbufferParameterivEXT(RenderbufferTarget target, RenderbufferParameterName pname, int* parameters) => GLPointers._glGetRenderbufferParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glIsFramebufferEXT]</b>  </summary>
-            public static bool IsFramebuffer(int framebuffer) => GLPointers._glIsFramebufferEXT_fnptr(framebuffer) != 0;
+            public static bool IsFramebufferEXT(int framebuffer) => GLPointers._glIsFramebufferEXT_fnptr(framebuffer) != 0;
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glBindFramebufferEXT]</b>  </summary>
-            public static void BindFramebuffer(FramebufferTarget target, int framebuffer) => GLPointers._glBindFramebufferEXT_fnptr((uint)target, framebuffer);
+            public static void BindFramebufferEXT(FramebufferTarget target, int framebuffer) => GLPointers._glBindFramebufferEXT_fnptr((uint)target, framebuffer);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glDeleteFramebuffersEXT]</b>  </summary>
-            public static void DeleteFramebuffers(int n, int* framebuffers) => GLPointers._glDeleteFramebuffersEXT_fnptr(n, framebuffers);
+            public static void DeleteFramebuffersEXT(int n, int* framebuffers) => GLPointers._glDeleteFramebuffersEXT_fnptr(n, framebuffers);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glGenFramebuffersEXT]</b>  </summary>
-            public static void GenFramebuffers(int n, int* framebuffers) => GLPointers._glGenFramebuffersEXT_fnptr(n, framebuffers);
+            public static void GenFramebuffersEXT(int n, int* framebuffers) => GLPointers._glGenFramebuffersEXT_fnptr(n, framebuffers);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glCheckFramebufferStatusEXT]</b>  </summary>
-            public static FramebufferStatus CheckFramebufferStatus(FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckFramebufferStatusEXT_fnptr((uint)target);
+            public static FramebufferStatus CheckFramebufferStatusEXT(FramebufferTarget target) => (FramebufferStatus) GLPointers._glCheckFramebufferStatusEXT_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glFramebufferTexture1DEXT]</b>  </summary>
-            public static void FramebufferTexture1D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glFramebufferTexture1DEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
+            public static void FramebufferTexture1DEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glFramebufferTexture1DEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glFramebufferTexture2DEXT]</b>  </summary>
-            public static void FramebufferTexture2D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glFramebufferTexture2DEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
+            public static void FramebufferTexture2DEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level) => GLPointers._glFramebufferTexture2DEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glFramebufferTexture3DEXT]</b>  </summary>
-            public static void FramebufferTexture3D(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int zoffset) => GLPointers._glFramebufferTexture3DEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, zoffset);
+            public static void FramebufferTexture3DEXT(FramebufferTarget target, FramebufferAttachment attachment, TextureTarget textarget, int texture, int level, int zoffset) => GLPointers._glFramebufferTexture3DEXT_fnptr((uint)target, (uint)attachment, (uint)textarget, texture, level, zoffset);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glFramebufferRenderbufferEXT]</b>  </summary>
-            public static void FramebufferRenderbuffer(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._glFramebufferRenderbufferEXT_fnptr((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
+            public static void FramebufferRenderbufferEXT(FramebufferTarget target, FramebufferAttachment attachment, RenderbufferTarget renderbuffertarget, int renderbuffer) => GLPointers._glFramebufferRenderbufferEXT_fnptr((uint)target, (uint)attachment, (uint)renderbuffertarget, renderbuffer);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glGetFramebufferAttachmentParameterivEXT]</b>  </summary>
-            public static void GetFramebufferAttachmentParameteriv(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferAttachmentParameterivEXT_fnptr((uint)target, (uint)attachment, (uint)pname, parameters);
+            public static void GetFramebufferAttachmentParameterivEXT(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferAttachmentParameterivEXT_fnptr((uint)target, (uint)attachment, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_framebuffer_object] [glGenerateMipmapEXT]</b>  </summary>
-            public static void GenerateMipmap(TextureTarget target) => GLPointers._glGenerateMipmapEXT_fnptr((uint)target);
+            public static void GenerateMipmapEXT(TextureTarget target) => GLPointers._glGenerateMipmapEXT_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_EXT_geometry_shader4 | GL_EXT_separate_shader_objects] [glProgramParameteriEXT]</b>  </summary>
-            public static void ProgramParameteri(int program, ProgramParameterPName pname, int value) => GLPointers._glProgramParameteriEXT_fnptr(program, (uint)pname, value);
+            public static void ProgramParameteriEXT(int program, ProgramParameterPName pname, int value) => GLPointers._glProgramParameteriEXT_fnptr(program, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_EXT_gpu_program_parameters] [glProgramEnvParameters4fvEXT]</b>  </summary>
-            public static void ProgramEnvParameters4fv(ProgramTarget target, uint index, int count, float* parameters) => GLPointers._glProgramEnvParameters4fvEXT_fnptr((uint)target, index, count, parameters);
+            public static void ProgramEnvParameters4fvEXT(ProgramTarget target, uint index, int count, float* parameters) => GLPointers._glProgramEnvParameters4fvEXT_fnptr((uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_EXT_gpu_program_parameters] [glProgramLocalParameters4fvEXT]</b>  </summary>
-            public static void ProgramLocalParameters4fv(ProgramTarget target, uint index, int count, float* parameters) => GLPointers._glProgramLocalParameters4fvEXT_fnptr((uint)target, index, count, parameters);
+            public static void ProgramLocalParameters4fvEXT(ProgramTarget target, uint index, int count, float* parameters) => GLPointers._glProgramLocalParameters4fvEXT_fnptr((uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glGetUniformuivEXT]</b>  </summary>
-            public static void GetUniformuiv(int program, int location, uint* parameters) => GLPointers._glGetUniformuivEXT_fnptr(program, location, parameters);
+            public static void GetUniformuivEXT(int program, int location, uint* parameters) => GLPointers._glGetUniformuivEXT_fnptr(program, location, parameters);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glBindFragDataLocationEXT]</b>  </summary>
-            public static void BindFragDataLocation(int program, uint color, byte* name) => GLPointers._glBindFragDataLocationEXT_fnptr(program, color, name);
+            public static void BindFragDataLocationEXT(int program, uint color, byte* name) => GLPointers._glBindFragDataLocationEXT_fnptr(program, color, name);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glGetFragDataLocationEXT]</b>  </summary>
-            public static int GetFragDataLocation(int program, byte* name) => GLPointers._glGetFragDataLocationEXT_fnptr(program, name);
+            public static int GetFragDataLocationEXT(int program, byte* name) => GLPointers._glGetFragDataLocationEXT_fnptr(program, name);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform1uiEXT]</b>  </summary>
-            public static void Uniform1ui(int location, uint v0) => GLPointers._glUniform1uiEXT_fnptr(location, v0);
+            public static void Uniform1uiEXT(int location, uint v0) => GLPointers._glUniform1uiEXT_fnptr(location, v0);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform2uiEXT]</b>  </summary>
-            public static void Uniform2ui(int location, uint v0, uint v1) => GLPointers._glUniform2uiEXT_fnptr(location, v0, v1);
+            public static void Uniform2uiEXT(int location, uint v0, uint v1) => GLPointers._glUniform2uiEXT_fnptr(location, v0, v1);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform3uiEXT]</b>  </summary>
-            public static void Uniform3ui(int location, uint v0, uint v1, uint v2) => GLPointers._glUniform3uiEXT_fnptr(location, v0, v1, v2);
+            public static void Uniform3uiEXT(int location, uint v0, uint v1, uint v2) => GLPointers._glUniform3uiEXT_fnptr(location, v0, v1, v2);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform4uiEXT]</b>  </summary>
-            public static void Uniform4ui(int location, uint v0, uint v1, uint v2, uint v3) => GLPointers._glUniform4uiEXT_fnptr(location, v0, v1, v2, v3);
+            public static void Uniform4uiEXT(int location, uint v0, uint v1, uint v2, uint v3) => GLPointers._glUniform4uiEXT_fnptr(location, v0, v1, v2, v3);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform1uivEXT]</b>  </summary>
-            public static void Uniform1uiv(int location, int count, uint* value) => GLPointers._glUniform1uivEXT_fnptr(location, count, value);
+            public static void Uniform1uivEXT(int location, int count, uint* value) => GLPointers._glUniform1uivEXT_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform2uivEXT]</b>  </summary>
-            public static void Uniform2uiv(int location, int count, uint* value) => GLPointers._glUniform2uivEXT_fnptr(location, count, value);
+            public static void Uniform2uivEXT(int location, int count, uint* value) => GLPointers._glUniform2uivEXT_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform3uivEXT]</b>  </summary>
-            public static void Uniform3uiv(int location, int count, uint* value) => GLPointers._glUniform3uivEXT_fnptr(location, count, value);
+            public static void Uniform3uivEXT(int location, int count, uint* value) => GLPointers._glUniform3uivEXT_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4] [glUniform4uivEXT]</b>  </summary>
-            public static void Uniform4uiv(int location, int count, uint* value) => GLPointers._glUniform4uivEXT_fnptr(location, count, value);
+            public static void Uniform4uivEXT(int location, int count, uint* value) => GLPointers._glUniform4uivEXT_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI1iEXT]</b>  </summary>
-            public static void VertexAttribI1i(uint index, int x) => GLPointers._glVertexAttribI1iEXT_fnptr(index, x);
+            public static void VertexAttribI1iEXT(uint index, int x) => GLPointers._glVertexAttribI1iEXT_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI2iEXT]</b>  </summary>
-            public static void VertexAttribI2i(uint index, int x, int y) => GLPointers._glVertexAttribI2iEXT_fnptr(index, x, y);
+            public static void VertexAttribI2iEXT(uint index, int x, int y) => GLPointers._glVertexAttribI2iEXT_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI3iEXT]</b>  </summary>
-            public static void VertexAttribI3i(uint index, int x, int y, int z) => GLPointers._glVertexAttribI3iEXT_fnptr(index, x, y, z);
+            public static void VertexAttribI3iEXT(uint index, int x, int y, int z) => GLPointers._glVertexAttribI3iEXT_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4iEXT]</b>  </summary>
-            public static void VertexAttribI4i(uint index, int x, int y, int z, int w) => GLPointers._glVertexAttribI4iEXT_fnptr(index, x, y, z, w);
+            public static void VertexAttribI4iEXT(uint index, int x, int y, int z, int w) => GLPointers._glVertexAttribI4iEXT_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI1uiEXT]</b>  </summary>
-            public static void VertexAttribI1ui(uint index, uint x) => GLPointers._glVertexAttribI1uiEXT_fnptr(index, x);
+            public static void VertexAttribI1uiEXT(uint index, uint x) => GLPointers._glVertexAttribI1uiEXT_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI2uiEXT]</b>  </summary>
-            public static void VertexAttribI2ui(uint index, uint x, uint y) => GLPointers._glVertexAttribI2uiEXT_fnptr(index, x, y);
+            public static void VertexAttribI2uiEXT(uint index, uint x, uint y) => GLPointers._glVertexAttribI2uiEXT_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI3uiEXT]</b>  </summary>
-            public static void VertexAttribI3ui(uint index, uint x, uint y, uint z) => GLPointers._glVertexAttribI3uiEXT_fnptr(index, x, y, z);
+            public static void VertexAttribI3uiEXT(uint index, uint x, uint y, uint z) => GLPointers._glVertexAttribI3uiEXT_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4uiEXT]</b>  </summary>
-            public static void VertexAttribI4ui(uint index, uint x, uint y, uint z, uint w) => GLPointers._glVertexAttribI4uiEXT_fnptr(index, x, y, z, w);
+            public static void VertexAttribI4uiEXT(uint index, uint x, uint y, uint z, uint w) => GLPointers._glVertexAttribI4uiEXT_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI1ivEXT]</b>  </summary>
-            public static void VertexAttribI1iv(uint index, int* v) => GLPointers._glVertexAttribI1ivEXT_fnptr(index, v);
+            public static void VertexAttribI1ivEXT(uint index, int* v) => GLPointers._glVertexAttribI1ivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI2ivEXT]</b>  </summary>
-            public static void VertexAttribI2iv(uint index, int* v) => GLPointers._glVertexAttribI2ivEXT_fnptr(index, v);
+            public static void VertexAttribI2ivEXT(uint index, int* v) => GLPointers._glVertexAttribI2ivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI3ivEXT]</b>  </summary>
-            public static void VertexAttribI3iv(uint index, int* v) => GLPointers._glVertexAttribI3ivEXT_fnptr(index, v);
+            public static void VertexAttribI3ivEXT(uint index, int* v) => GLPointers._glVertexAttribI3ivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4ivEXT]</b>  </summary>
-            public static void VertexAttribI4iv(uint index, int* v) => GLPointers._glVertexAttribI4ivEXT_fnptr(index, v);
+            public static void VertexAttribI4ivEXT(uint index, int* v) => GLPointers._glVertexAttribI4ivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI1uivEXT]</b>  </summary>
-            public static void VertexAttribI1uiv(uint index, uint* v) => GLPointers._glVertexAttribI1uivEXT_fnptr(index, v);
+            public static void VertexAttribI1uivEXT(uint index, uint* v) => GLPointers._glVertexAttribI1uivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI2uivEXT]</b>  </summary>
-            public static void VertexAttribI2uiv(uint index, uint* v) => GLPointers._glVertexAttribI2uivEXT_fnptr(index, v);
+            public static void VertexAttribI2uivEXT(uint index, uint* v) => GLPointers._glVertexAttribI2uivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI3uivEXT]</b>  </summary>
-            public static void VertexAttribI3uiv(uint index, uint* v) => GLPointers._glVertexAttribI3uivEXT_fnptr(index, v);
+            public static void VertexAttribI3uivEXT(uint index, uint* v) => GLPointers._glVertexAttribI3uivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4uivEXT]</b>  </summary>
-            public static void VertexAttribI4uiv(uint index, uint* v) => GLPointers._glVertexAttribI4uivEXT_fnptr(index, v);
+            public static void VertexAttribI4uivEXT(uint index, uint* v) => GLPointers._glVertexAttribI4uivEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4bvEXT]</b>  </summary>
-            public static void VertexAttribI4bv(uint index, sbyte* v) => GLPointers._glVertexAttribI4bvEXT_fnptr(index, v);
+            public static void VertexAttribI4bvEXT(uint index, sbyte* v) => GLPointers._glVertexAttribI4bvEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4svEXT]</b>  </summary>
-            public static void VertexAttribI4sv(uint index, short* v) => GLPointers._glVertexAttribI4svEXT_fnptr(index, v);
+            public static void VertexAttribI4svEXT(uint index, short* v) => GLPointers._glVertexAttribI4svEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4ubvEXT]</b>  </summary>
-            public static void VertexAttribI4ubv(uint index, byte* v) => GLPointers._glVertexAttribI4ubvEXT_fnptr(index, v);
+            public static void VertexAttribI4ubvEXT(uint index, byte* v) => GLPointers._glVertexAttribI4ubvEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI4usvEXT]</b>  </summary>
-            public static void VertexAttribI4usv(uint index, ushort* v) => GLPointers._glVertexAttribI4usvEXT_fnptr(index, v);
+            public static void VertexAttribI4usvEXT(uint index, ushort* v) => GLPointers._glVertexAttribI4usvEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribIPointerEXT]</b>  </summary>
-            public static void VertexAttribIPointer(uint index, int size, VertexAttribIType type, int stride, void* pointer) => GLPointers._glVertexAttribIPointerEXT_fnptr(index, size, (uint)type, stride, pointer);
+            public static void VertexAttribIPointerEXT(uint index, int size, VertexAttribIType type, int stride, void* pointer) => GLPointers._glVertexAttribIPointerEXT_fnptr(index, size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glGetVertexAttribIivEXT]</b>  </summary>
-            public static void GetVertexAttribIiv(uint index, VertexAttribEnum pname, int* parameters) => GLPointers._glGetVertexAttribIivEXT_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribIivEXT(uint index, VertexAttribEnum pname, int* parameters) => GLPointers._glGetVertexAttribIivEXT_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glGetVertexAttribIuivEXT]</b>  </summary>
-            public static void GetVertexAttribIuiv(uint index, VertexAttribEnum pname, uint* parameters) => GLPointers._glGetVertexAttribIuivEXT_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname, uint* parameters) => GLPointers._glGetVertexAttribIuivEXT_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glGetHistogramEXT]</b>  </summary>
-            public static void GetHistogram(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, void* values) => GLPointers._glGetHistogramEXT_fnptr((uint)target, (byte)(reset ? 1 : 0), (uint)format, (uint)type, values);
+            public static void GetHistogramEXT(HistogramTargetEXT target, bool reset, PixelFormat format, PixelType type, void* values) => GLPointers._glGetHistogramEXT_fnptr((uint)target, (byte)(reset ? 1 : 0), (uint)format, (uint)type, values);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glGetHistogramParameterfvEXT]</b>  </summary>
-            public static void GetHistogramParameterfv(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, float* parameters) => GLPointers._glGetHistogramParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetHistogramParameterfvEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, float* parameters) => GLPointers._glGetHistogramParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glGetHistogramParameterivEXT]</b>  </summary>
-            public static void GetHistogramParameteriv(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int* parameters) => GLPointers._glGetHistogramParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetHistogramParameterivEXT(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int* parameters) => GLPointers._glGetHistogramParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glGetMinmaxEXT]</b>  </summary>
-            public static void GetMinmax(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, void* values) => GLPointers._glGetMinmaxEXT_fnptr((uint)target, (byte)(reset ? 1 : 0), (uint)format, (uint)type, values);
+            public static void GetMinmaxEXT(MinmaxTargetEXT target, bool reset, PixelFormat format, PixelType type, void* values) => GLPointers._glGetMinmaxEXT_fnptr((uint)target, (byte)(reset ? 1 : 0), (uint)format, (uint)type, values);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glGetMinmaxParameterfvEXT]</b>  </summary>
-            public static void GetMinmaxParameterfv(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, float* parameters) => GLPointers._glGetMinmaxParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetMinmaxParameterfvEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, float* parameters) => GLPointers._glGetMinmaxParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glGetMinmaxParameterivEXT]</b>  </summary>
-            public static void GetMinmaxParameteriv(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, int* parameters) => GLPointers._glGetMinmaxParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetMinmaxParameterivEXT(MinmaxTargetEXT target, GetMinmaxParameterPNameEXT pname, int* parameters) => GLPointers._glGetMinmaxParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glHistogramEXT]</b>  </summary>
-            public static void Histogram(HistogramTargetEXT target, int width, InternalFormat internalformat, bool sink) => GLPointers._glHistogramEXT_fnptr((uint)target, width, (uint)internalformat, (byte)(sink ? 1 : 0));
+            public static void HistogramEXT(HistogramTargetEXT target, int width, InternalFormat internalformat, bool sink) => GLPointers._glHistogramEXT_fnptr((uint)target, width, (uint)internalformat, (byte)(sink ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glMinmaxEXT]</b>  </summary>
-            public static void Minmax(MinmaxTargetEXT target, InternalFormat internalformat, bool sink) => GLPointers._glMinmaxEXT_fnptr((uint)target, (uint)internalformat, (byte)(sink ? 1 : 0));
+            public static void MinmaxEXT(MinmaxTargetEXT target, InternalFormat internalformat, bool sink) => GLPointers._glMinmaxEXT_fnptr((uint)target, (uint)internalformat, (byte)(sink ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glResetHistogramEXT]</b>  </summary>
-            public static void ResetHistogram(HistogramTargetEXT target) => GLPointers._glResetHistogramEXT_fnptr((uint)target);
+            public static void ResetHistogramEXT(HistogramTargetEXT target) => GLPointers._glResetHistogramEXT_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_EXT_histogram] [glResetMinmaxEXT]</b>  </summary>
-            public static void ResetMinmax(MinmaxTargetEXT target) => GLPointers._glResetMinmaxEXT_fnptr((uint)target);
+            public static void ResetMinmaxEXT(MinmaxTargetEXT target) => GLPointers._glResetMinmaxEXT_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_EXT_index_func] [glIndexFuncEXT]</b>  </summary>
-            public static void IndexFunc(IndexFunctionEXT func, float reference) => GLPointers._glIndexFuncEXT_fnptr((uint)func, reference);
+            public static void IndexFuncEXT(IndexFunctionEXT func, float reference) => GLPointers._glIndexFuncEXT_fnptr((uint)func, reference);
             
             /// <summary> <b>[requires: GL_EXT_index_material] [glIndexMaterialEXT]</b>  </summary>
-            public static void IndexMaterial(TriangleFace face, IndexMaterialParameterEXT mode) => GLPointers._glIndexMaterialEXT_fnptr((uint)face, (uint)mode);
+            public static void IndexMaterialEXT(TriangleFace face, IndexMaterialParameterEXT mode) => GLPointers._glIndexMaterialEXT_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_light_texture] [glApplyTextureEXT]</b>  </summary>
-            public static void ApplyTexture(LightTextureModeEXT mode) => GLPointers._glApplyTextureEXT_fnptr((uint)mode);
+            public static void ApplyTextureEXT(LightTextureModeEXT mode) => GLPointers._glApplyTextureEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_light_texture] [glTextureLightEXT]</b>  </summary>
-            public static void TextureLight(LightTexturePNameEXT pname) => GLPointers._glTextureLightEXT_fnptr((uint)pname);
+            public static void TextureLightEXT(LightTexturePNameEXT pname) => GLPointers._glTextureLightEXT_fnptr((uint)pname);
             
             /// <summary> <b>[requires: GL_EXT_light_texture] [glTextureMaterialEXT]</b>  </summary>
-            public static void TextureMaterial(TriangleFace face, MaterialParameter mode) => GLPointers._glTextureMaterialEXT_fnptr((uint)face, (uint)mode);
+            public static void TextureMaterialEXT(TriangleFace face, MaterialParameter mode) => GLPointers._glTextureMaterialEXT_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_memory_object | GL_EXT_semaphore] [glGetUnsignedBytevEXT]</b>  </summary>
-            public static void GetUnsignedBytev(GetPName pname, byte* data) => GLPointers._glGetUnsignedBytevEXT_fnptr((uint)pname, data);
+            public static void GetUnsignedBytevEXT(GetPName pname, byte* data) => GLPointers._glGetUnsignedBytevEXT_fnptr((uint)pname, data);
             
             /// <summary> <b>[requires: GL_EXT_memory_object | GL_EXT_semaphore] [glGetUnsignedBytei_vEXT]</b>  </summary>
-            public static void GetUnsignedBytei_v(All target, uint index, byte* data) => GLPointers._glGetUnsignedBytei_vEXT_fnptr((uint)target, index, data);
+            public static void GetUnsignedBytei_vEXT(All target, uint index, byte* data) => GLPointers._glGetUnsignedBytei_vEXT_fnptr((uint)target, index, data);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glDeleteMemoryObjectsEXT]</b>  </summary>
-            public static void DeleteMemoryObjects(int n, uint* memoryObjects) => GLPointers._glDeleteMemoryObjectsEXT_fnptr(n, memoryObjects);
+            public static void DeleteMemoryObjectsEXT(int n, uint* memoryObjects) => GLPointers._glDeleteMemoryObjectsEXT_fnptr(n, memoryObjects);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glIsMemoryObjectEXT]</b>  </summary>
-            public static bool IsMemoryObject(uint memoryObject) => GLPointers._glIsMemoryObjectEXT_fnptr(memoryObject) != 0;
+            public static bool IsMemoryObjectEXT(uint memoryObject) => GLPointers._glIsMemoryObjectEXT_fnptr(memoryObject) != 0;
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glCreateMemoryObjectsEXT]</b>  </summary>
-            public static void CreateMemoryObjects(int n, uint* memoryObjects) => GLPointers._glCreateMemoryObjectsEXT_fnptr(n, memoryObjects);
+            public static void CreateMemoryObjectsEXT(int n, uint* memoryObjects) => GLPointers._glCreateMemoryObjectsEXT_fnptr(n, memoryObjects);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glMemoryObjectParameterivEXT]</b>  </summary>
-            public static void MemoryObjectParameteriv(uint memoryObject, MemoryObjectParameterName pname, int* parameters) => GLPointers._glMemoryObjectParameterivEXT_fnptr(memoryObject, (uint)pname, parameters);
+            public static void MemoryObjectParameterivEXT(uint memoryObject, MemoryObjectParameterName pname, int* parameters) => GLPointers._glMemoryObjectParameterivEXT_fnptr(memoryObject, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glGetMemoryObjectParameterivEXT]</b>  </summary>
-            public static void GetMemoryObjectParameteriv(uint memoryObject, MemoryObjectParameterName pname, int* parameters) => GLPointers._glGetMemoryObjectParameterivEXT_fnptr(memoryObject, (uint)pname, parameters);
+            public static void GetMemoryObjectParameterivEXT(uint memoryObject, MemoryObjectParameterName pname, int* parameters) => GLPointers._glGetMemoryObjectParameterivEXT_fnptr(memoryObject, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTexStorageMem2DEXT]</b>  </summary>
-            public static void TexStorageMem2D(TextureTarget target, int levels, SizedInternalFormat internalFormat, int width, int height, uint memory, ulong offset) => GLPointers._glTexStorageMem2DEXT_fnptr((uint)target, levels, (uint)internalFormat, width, height, memory, offset);
+            public static void TexStorageMem2DEXT(TextureTarget target, int levels, SizedInternalFormat internalFormat, int width, int height, uint memory, ulong offset) => GLPointers._glTexStorageMem2DEXT_fnptr((uint)target, levels, (uint)internalFormat, width, height, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTexStorageMem2DMultisampleEXT]</b>  </summary>
-            public static void TexStorageMem2DMultisample(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTexStorageMem2DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
+            public static void TexStorageMem2DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTexStorageMem2DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTexStorageMem3DEXT]</b>  </summary>
-            public static void TexStorageMem3D(TextureTarget target, int levels, SizedInternalFormat internalFormat, int width, int height, int depth, uint memory, ulong offset) => GLPointers._glTexStorageMem3DEXT_fnptr((uint)target, levels, (uint)internalFormat, width, height, depth, memory, offset);
+            public static void TexStorageMem3DEXT(TextureTarget target, int levels, SizedInternalFormat internalFormat, int width, int height, int depth, uint memory, ulong offset) => GLPointers._glTexStorageMem3DEXT_fnptr((uint)target, levels, (uint)internalFormat, width, height, depth, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTexStorageMem3DMultisampleEXT]</b>  </summary>
-            public static void TexStorageMem3DMultisample(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTexStorageMem3DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
+            public static void TexStorageMem3DMultisampleEXT(TextureTarget target, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTexStorageMem3DMultisampleEXT_fnptr((uint)target, samples, (uint)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glBufferStorageMemEXT]</b>  </summary>
-            public static void BufferStorageMem(BufferTargetARB target, nint size, uint memory, ulong offset) => GLPointers._glBufferStorageMemEXT_fnptr((uint)target, size, memory, offset);
+            public static void BufferStorageMemEXT(BufferTargetARB target, nint size, uint memory, ulong offset) => GLPointers._glBufferStorageMemEXT_fnptr((uint)target, size, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTextureStorageMem2DEXT]</b>  </summary>
-            public static void TextureStorageMem2D(int texture, int levels, SizedInternalFormat internalFormat, int width, int height, uint memory, ulong offset) => GLPointers._glTextureStorageMem2DEXT_fnptr(texture, levels, (uint)internalFormat, width, height, memory, offset);
+            public static void TextureStorageMem2DEXT(int texture, int levels, SizedInternalFormat internalFormat, int width, int height, uint memory, ulong offset) => GLPointers._glTextureStorageMem2DEXT_fnptr(texture, levels, (uint)internalFormat, width, height, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTextureStorageMem2DMultisampleEXT]</b>  </summary>
-            public static void TextureStorageMem2DMultisample(int texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTextureStorageMem2DMultisampleEXT_fnptr(texture, samples, (uint)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
+            public static void TextureStorageMem2DMultisampleEXT(int texture, int samples, SizedInternalFormat internalFormat, int width, int height, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTextureStorageMem2DMultisampleEXT_fnptr(texture, samples, (uint)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTextureStorageMem3DEXT]</b>  </summary>
-            public static void TextureStorageMem3D(int texture, int levels, SizedInternalFormat internalFormat, int width, int height, int depth, uint memory, ulong offset) => GLPointers._glTextureStorageMem3DEXT_fnptr(texture, levels, (uint)internalFormat, width, height, depth, memory, offset);
+            public static void TextureStorageMem3DEXT(int texture, int levels, SizedInternalFormat internalFormat, int width, int height, int depth, uint memory, ulong offset) => GLPointers._glTextureStorageMem3DEXT_fnptr(texture, levels, (uint)internalFormat, width, height, depth, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTextureStorageMem3DMultisampleEXT]</b>  </summary>
-            public static void TextureStorageMem3DMultisample(int texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTextureStorageMem3DMultisampleEXT_fnptr(texture, samples, (uint)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
+            public static void TextureStorageMem3DMultisampleEXT(int texture, int samples, SizedInternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations, uint memory, ulong offset) => GLPointers._glTextureStorageMem3DMultisampleEXT_fnptr(texture, samples, (uint)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0), memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glNamedBufferStorageMemEXT]</b>  </summary>
-            public static void NamedBufferStorageMem(int buffer, nint size, uint memory, ulong offset) => GLPointers._glNamedBufferStorageMemEXT_fnptr(buffer, size, memory, offset);
+            public static void NamedBufferStorageMemEXT(int buffer, nint size, uint memory, ulong offset) => GLPointers._glNamedBufferStorageMemEXT_fnptr(buffer, size, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTexStorageMem1DEXT]</b>  </summary>
-            public static void TexStorageMem1D(TextureTarget target, int levels, SizedInternalFormat internalFormat, int width, uint memory, ulong offset) => GLPointers._glTexStorageMem1DEXT_fnptr((uint)target, levels, (uint)internalFormat, width, memory, offset);
+            public static void TexStorageMem1DEXT(TextureTarget target, int levels, SizedInternalFormat internalFormat, int width, uint memory, ulong offset) => GLPointers._glTexStorageMem1DEXT_fnptr((uint)target, levels, (uint)internalFormat, width, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object] [glTextureStorageMem1DEXT]</b>  </summary>
-            public static void TextureStorageMem1D(int texture, int levels, SizedInternalFormat internalFormat, int width, uint memory, ulong offset) => GLPointers._glTextureStorageMem1DEXT_fnptr(texture, levels, (uint)internalFormat, width, memory, offset);
+            public static void TextureStorageMem1DEXT(int texture, int levels, SizedInternalFormat internalFormat, int width, uint memory, ulong offset) => GLPointers._glTextureStorageMem1DEXT_fnptr(texture, levels, (uint)internalFormat, width, memory, offset);
             
             /// <summary> <b>[requires: GL_EXT_memory_object_fd] [glImportMemoryFdEXT]</b>  </summary>
-            public static void ImportMemoryFd(uint memory, ulong size, ExternalHandleType handleType, int fd) => GLPointers._glImportMemoryFdEXT_fnptr(memory, size, (uint)handleType, fd);
+            public static void ImportMemoryFdEXT(uint memory, ulong size, ExternalHandleType handleType, int fd) => GLPointers._glImportMemoryFdEXT_fnptr(memory, size, (uint)handleType, fd);
             
             /// <summary> <b>[requires: GL_EXT_memory_object_win32] [glImportMemoryWin32HandleEXT]</b>  </summary>
-            public static void ImportMemoryWin32Handle(uint memory, ulong size, ExternalHandleType handleType, void* handle) => GLPointers._glImportMemoryWin32HandleEXT_fnptr(memory, size, (uint)handleType, handle);
+            public static void ImportMemoryWin32HandleEXT(uint memory, ulong size, ExternalHandleType handleType, void* handle) => GLPointers._glImportMemoryWin32HandleEXT_fnptr(memory, size, (uint)handleType, handle);
             
             /// <summary> <b>[requires: GL_EXT_memory_object_win32] [glImportMemoryWin32NameEXT]</b>  </summary>
-            public static void ImportMemoryWin32Name(uint memory, ulong size, ExternalHandleType handleType, void* name) => GLPointers._glImportMemoryWin32NameEXT_fnptr(memory, size, (uint)handleType, name);
+            public static void ImportMemoryWin32NameEXT(uint memory, ulong size, ExternalHandleType handleType, void* name) => GLPointers._glImportMemoryWin32NameEXT_fnptr(memory, size, (uint)handleType, name);
             
             /// <summary> <b>[requires: GL_EXT_multi_draw_arrays] [glMultiDrawArraysEXT]</b>  </summary>
-            public static void MultiDrawArrays(PrimitiveType mode, int* first, int* count, int primcount) => GLPointers._glMultiDrawArraysEXT_fnptr((uint)mode, first, count, primcount);
+            public static void MultiDrawArraysEXT(PrimitiveType mode, int* first, int* count, int primcount) => GLPointers._glMultiDrawArraysEXT_fnptr((uint)mode, first, count, primcount);
             
             /// <summary> <b>[requires: GL_EXT_multi_draw_arrays] [glMultiDrawElementsEXT]</b>  </summary>
-            public static void MultiDrawElements(PrimitiveType mode, int* count, DrawElementsType type, void** indices, int primcount) => GLPointers._glMultiDrawElementsEXT_fnptr((uint)mode, count, (uint)type, indices, primcount);
+            public static void MultiDrawElementsEXT(PrimitiveType mode, int* count, DrawElementsType type, void** indices, int primcount) => GLPointers._glMultiDrawElementsEXT_fnptr((uint)mode, count, (uint)type, indices, primcount);
             
             /// <summary> <b>[requires: GL_EXT_multisample] [glSampleMaskEXT]</b>  </summary>
-            public static void SampleMask(float value, bool invert) => GLPointers._glSampleMaskEXT_fnptr(value, (byte)(invert ? 1 : 0));
+            public static void SampleMaskEXT(float value, bool invert) => GLPointers._glSampleMaskEXT_fnptr(value, (byte)(invert ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_multisample] [glSamplePatternEXT]</b>  </summary>
-            public static void SamplePattern(SamplePatternEXT pattern) => GLPointers._glSamplePatternEXT_fnptr((uint)pattern);
+            public static void SamplePatternEXT(SamplePatternEXT pattern) => GLPointers._glSamplePatternEXT_fnptr((uint)pattern);
             
             /// <summary> <b>[requires: GL_EXT_paletted_texture] [glColorTableEXT]</b>  </summary>
-            public static void ColorTable(ColorTableTarget target, InternalFormat internalFormat, int width, PixelFormat format, PixelType type, void* table) => GLPointers._glColorTableEXT_fnptr((uint)target, (uint)internalFormat, width, (uint)format, (uint)type, table);
+            public static void ColorTableEXT(ColorTableTarget target, InternalFormat internalFormat, int width, PixelFormat format, PixelType type, void* table) => GLPointers._glColorTableEXT_fnptr((uint)target, (uint)internalFormat, width, (uint)format, (uint)type, table);
             
             /// <summary> <b>[requires: GL_EXT_paletted_texture] [glGetColorTableEXT]</b>  </summary>
-            public static void GetColorTable(ColorTableTarget target, PixelFormat format, PixelType type, void* data) => GLPointers._glGetColorTableEXT_fnptr((uint)target, (uint)format, (uint)type, data);
+            public static void GetColorTableEXT(ColorTableTarget target, PixelFormat format, PixelType type, void* data) => GLPointers._glGetColorTableEXT_fnptr((uint)target, (uint)format, (uint)type, data);
             
             /// <summary> <b>[requires: GL_EXT_paletted_texture] [glGetColorTableParameterivEXT]</b>  </summary>
-            public static void GetColorTableParameteriv(ColorTableTarget target, ColorTableParameterPName pname, int* parameters) => GLPointers._glGetColorTableParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterivEXT(ColorTableTarget target, ColorTableParameterPName pname, int* parameters) => GLPointers._glGetColorTableParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_paletted_texture] [glGetColorTableParameterfvEXT]</b>  </summary>
-            public static void GetColorTableParameterfv(ColorTableTarget target, ColorTableParameterPName pname, float* parameters) => GLPointers._glGetColorTableParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterfvEXT(ColorTableTarget target, ColorTableParameterPName pname, float* parameters) => GLPointers._glGetColorTableParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_pixel_transform] [glPixelTransformParameteriEXT]</b>  </summary>
-            public static void PixelTransformParameteri(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, int param) => GLPointers._glPixelTransformParameteriEXT_fnptr((uint)target, (uint)pname, param);
+            public static void PixelTransformParameteriEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, int param) => GLPointers._glPixelTransformParameteriEXT_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_pixel_transform] [glPixelTransformParameterfEXT]</b>  </summary>
-            public static void PixelTransformParameterf(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, float param) => GLPointers._glPixelTransformParameterfEXT_fnptr((uint)target, (uint)pname, param);
+            public static void PixelTransformParameterfEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, float param) => GLPointers._glPixelTransformParameterfEXT_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_pixel_transform] [glPixelTransformParameterivEXT]</b>  </summary>
-            public static void PixelTransformParameteriv(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, int* parameters) => GLPointers._glPixelTransformParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void PixelTransformParameterivEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, int* parameters) => GLPointers._glPixelTransformParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_pixel_transform] [glPixelTransformParameterfvEXT]</b>  </summary>
-            public static void PixelTransformParameterfv(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, float* parameters) => GLPointers._glPixelTransformParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void PixelTransformParameterfvEXT(PixelTransformTargetEXT target, PixelTransformPNameEXT pname, float* parameters) => GLPointers._glPixelTransformParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_pixel_transform] [glGetPixelTransformParameterivEXT]</b>  </summary>
-            public static void GetPixelTransformParameteriv(All target, All pname, int* parameters) => GLPointers._glGetPixelTransformParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetPixelTransformParameterivEXT(All target, All pname, int* parameters) => GLPointers._glGetPixelTransformParameterivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_pixel_transform] [glGetPixelTransformParameterfvEXT]</b>  </summary>
-            public static void GetPixelTransformParameterfv(All target, All pname, float* parameters) => GLPointers._glGetPixelTransformParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetPixelTransformParameterfvEXT(All target, All pname, float* parameters) => GLPointers._glGetPixelTransformParameterfvEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_point_parameters] [glPointParameterfEXT]</b>  </summary>
-            public static void PointParameterf(PointParameterNameARB pname, float param) => GLPointers._glPointParameterfEXT_fnptr((uint)pname, param);
+            public static void PointParameterfEXT(PointParameterNameARB pname, float param) => GLPointers._glPointParameterfEXT_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_EXT_point_parameters] [glPointParameterfvEXT]</b>  </summary>
-            public static void PointParameterfv(PointParameterNameARB pname, float* parameters) => GLPointers._glPointParameterfvEXT_fnptr((uint)pname, parameters);
+            public static void PointParameterfvEXT(PointParameterNameARB pname, float* parameters) => GLPointers._glPointParameterfvEXT_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_polygon_offset] [glPolygonOffsetEXT]</b>  </summary>
-            public static void PolygonOffset(float factor, float bias) => GLPointers._glPolygonOffsetEXT_fnptr(factor, bias);
+            public static void PolygonOffsetEXT(float factor, float bias) => GLPointers._glPolygonOffsetEXT_fnptr(factor, bias);
             
             /// <summary> <b>[requires: GL_EXT_polygon_offset_clamp] [glPolygonOffsetClampEXT]</b>  </summary>
-            public static void PolygonOffsetClamp(float factor, float units, float clamp) => GLPointers._glPolygonOffsetClampEXT_fnptr(factor, units, clamp);
+            public static void PolygonOffsetClampEXT(float factor, float units, float clamp) => GLPointers._glPolygonOffsetClampEXT_fnptr(factor, units, clamp);
             
             /// <summary> <b>[requires: GL_EXT_provoking_vertex] [glProvokingVertexEXT]</b>  </summary>
-            public static void ProvokingVertex(VertexProvokingMode mode) => GLPointers._glProvokingVertexEXT_fnptr((uint)mode);
+            public static void ProvokingVertexEXT(VertexProvokingMode mode) => GLPointers._glProvokingVertexEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_raster_multisample | GL_NV_framebuffer_mixed_samples] [glRasterSamplesEXT]</b>  </summary>
-            public static void RasterSamples(uint samples, bool fixedsamplelocations) => GLPointers._glRasterSamplesEXT_fnptr(samples, (byte)(fixedsamplelocations ? 1 : 0));
+            public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => GLPointers._glRasterSamplesEXT_fnptr(samples, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_EXT_semaphore] [glGenSemaphoresEXT]</b>  </summary>
-            public static void GenSemaphores(int n, uint* semaphores) => GLPointers._glGenSemaphoresEXT_fnptr(n, semaphores);
+            public static void GenSemaphoresEXT(int n, uint* semaphores) => GLPointers._glGenSemaphoresEXT_fnptr(n, semaphores);
             
             /// <summary> <b>[requires: GL_EXT_semaphore] [glDeleteSemaphoresEXT]</b>  </summary>
-            public static void DeleteSemaphores(int n, uint* semaphores) => GLPointers._glDeleteSemaphoresEXT_fnptr(n, semaphores);
+            public static void DeleteSemaphoresEXT(int n, uint* semaphores) => GLPointers._glDeleteSemaphoresEXT_fnptr(n, semaphores);
             
             /// <summary> <b>[requires: GL_EXT_semaphore] [glIsSemaphoreEXT]</b>  </summary>
-            public static bool IsSemaphore(uint semaphore) => GLPointers._glIsSemaphoreEXT_fnptr(semaphore) != 0;
+            public static bool IsSemaphoreEXT(uint semaphore) => GLPointers._glIsSemaphoreEXT_fnptr(semaphore) != 0;
             
             /// <summary> <b>[requires: GL_EXT_semaphore] [glSemaphoreParameterui64vEXT]</b>  </summary>
-            public static void SemaphoreParameterui64v(uint semaphore, SemaphoreParameterName pname, ulong* parameters) => GLPointers._glSemaphoreParameterui64vEXT_fnptr(semaphore, (uint)pname, parameters);
+            public static void SemaphoreParameterui64vEXT(uint semaphore, SemaphoreParameterName pname, ulong* parameters) => GLPointers._glSemaphoreParameterui64vEXT_fnptr(semaphore, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_semaphore] [glGetSemaphoreParameterui64vEXT]</b>  </summary>
-            public static void GetSemaphoreParameterui64v(uint semaphore, SemaphoreParameterName pname, ulong* parameters) => GLPointers._glGetSemaphoreParameterui64vEXT_fnptr(semaphore, (uint)pname, parameters);
+            public static void GetSemaphoreParameterui64vEXT(uint semaphore, SemaphoreParameterName pname, ulong* parameters) => GLPointers._glGetSemaphoreParameterui64vEXT_fnptr(semaphore, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_semaphore] [glWaitSemaphoreEXT]</b>  </summary>
-            public static void WaitSemaphore(uint semaphore, uint numBufferBarriers, int* buffers, uint numTextureBarriers, int* textures, TextureLayout* srcLayouts) => GLPointers._glWaitSemaphoreEXT_fnptr(semaphore, numBufferBarriers, buffers, numTextureBarriers, textures, (uint*)srcLayouts);
+            public static void WaitSemaphoreEXT(uint semaphore, uint numBufferBarriers, int* buffers, uint numTextureBarriers, int* textures, TextureLayout* srcLayouts) => GLPointers._glWaitSemaphoreEXT_fnptr(semaphore, numBufferBarriers, buffers, numTextureBarriers, textures, (uint*)srcLayouts);
             
             /// <summary> <b>[requires: GL_EXT_semaphore] [glSignalSemaphoreEXT]</b>  </summary>
-            public static void SignalSemaphore(uint semaphore, uint numBufferBarriers, int* buffers, uint numTextureBarriers, int* textures, TextureLayout* dstLayouts) => GLPointers._glSignalSemaphoreEXT_fnptr(semaphore, numBufferBarriers, buffers, numTextureBarriers, textures, (uint*)dstLayouts);
+            public static void SignalSemaphoreEXT(uint semaphore, uint numBufferBarriers, int* buffers, uint numTextureBarriers, int* textures, TextureLayout* dstLayouts) => GLPointers._glSignalSemaphoreEXT_fnptr(semaphore, numBufferBarriers, buffers, numTextureBarriers, textures, (uint*)dstLayouts);
             
             /// <summary> <b>[requires: GL_EXT_semaphore_fd] [glImportSemaphoreFdEXT]</b>  </summary>
-            public static void ImportSemaphoreFd(uint semaphore, ExternalHandleType handleType, int fd) => GLPointers._glImportSemaphoreFdEXT_fnptr(semaphore, (uint)handleType, fd);
+            public static void ImportSemaphoreFdEXT(uint semaphore, ExternalHandleType handleType, int fd) => GLPointers._glImportSemaphoreFdEXT_fnptr(semaphore, (uint)handleType, fd);
             
             /// <summary> <b>[requires: GL_EXT_semaphore_win32] [glImportSemaphoreWin32HandleEXT]</b>  </summary>
-            public static void ImportSemaphoreWin32Handle(uint semaphore, ExternalHandleType handleType, void* handle) => GLPointers._glImportSemaphoreWin32HandleEXT_fnptr(semaphore, (uint)handleType, handle);
+            public static void ImportSemaphoreWin32HandleEXT(uint semaphore, ExternalHandleType handleType, void* handle) => GLPointers._glImportSemaphoreWin32HandleEXT_fnptr(semaphore, (uint)handleType, handle);
             
             /// <summary> <b>[requires: GL_EXT_semaphore_win32] [glImportSemaphoreWin32NameEXT]</b>  </summary>
-            public static void ImportSemaphoreWin32Name(uint semaphore, ExternalHandleType handleType, void* name) => GLPointers._glImportSemaphoreWin32NameEXT_fnptr(semaphore, (uint)handleType, name);
+            public static void ImportSemaphoreWin32NameEXT(uint semaphore, ExternalHandleType handleType, void* name) => GLPointers._glImportSemaphoreWin32NameEXT_fnptr(semaphore, (uint)handleType, name);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3bEXT]</b>  </summary>
-            public static void SecondaryColor3b(sbyte red, sbyte green, sbyte blue) => GLPointers._glSecondaryColor3bEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3bEXT(sbyte red, sbyte green, sbyte blue) => GLPointers._glSecondaryColor3bEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3bvEXT]</b>  </summary>
-            public static void SecondaryColor3bv(sbyte* v) => GLPointers._glSecondaryColor3bvEXT_fnptr(v);
+            public static void SecondaryColor3bvEXT(sbyte* v) => GLPointers._glSecondaryColor3bvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3dEXT]</b>  </summary>
-            public static void SecondaryColor3d(double red, double green, double blue) => GLPointers._glSecondaryColor3dEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3dEXT(double red, double green, double blue) => GLPointers._glSecondaryColor3dEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3dvEXT]</b>  </summary>
-            public static void SecondaryColor3dv(double* v) => GLPointers._glSecondaryColor3dvEXT_fnptr(v);
+            public static void SecondaryColor3dvEXT(double* v) => GLPointers._glSecondaryColor3dvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3fEXT]</b>  </summary>
-            public static void SecondaryColor3f(float red, float green, float blue) => GLPointers._glSecondaryColor3fEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3fEXT(float red, float green, float blue) => GLPointers._glSecondaryColor3fEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3fvEXT]</b>  </summary>
-            public static void SecondaryColor3fv(float* v) => GLPointers._glSecondaryColor3fvEXT_fnptr(v);
+            public static void SecondaryColor3fvEXT(float* v) => GLPointers._glSecondaryColor3fvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3iEXT]</b>  </summary>
-            public static void SecondaryColor3i(int red, int green, int blue) => GLPointers._glSecondaryColor3iEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3iEXT(int red, int green, int blue) => GLPointers._glSecondaryColor3iEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3ivEXT]</b>  </summary>
-            public static void SecondaryColor3iv(int* v) => GLPointers._glSecondaryColor3ivEXT_fnptr(v);
+            public static void SecondaryColor3ivEXT(int* v) => GLPointers._glSecondaryColor3ivEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3sEXT]</b>  </summary>
-            public static void SecondaryColor3s(short red, short green, short blue) => GLPointers._glSecondaryColor3sEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3sEXT(short red, short green, short blue) => GLPointers._glSecondaryColor3sEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3svEXT]</b>  </summary>
-            public static void SecondaryColor3sv(short* v) => GLPointers._glSecondaryColor3svEXT_fnptr(v);
+            public static void SecondaryColor3svEXT(short* v) => GLPointers._glSecondaryColor3svEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3ubEXT]</b>  </summary>
-            public static void SecondaryColor3ub(byte red, byte green, byte blue) => GLPointers._glSecondaryColor3ubEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3ubEXT(byte red, byte green, byte blue) => GLPointers._glSecondaryColor3ubEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3ubvEXT]</b>  </summary>
-            public static void SecondaryColor3ubv(byte* v) => GLPointers._glSecondaryColor3ubvEXT_fnptr(v);
+            public static void SecondaryColor3ubvEXT(byte* v) => GLPointers._glSecondaryColor3ubvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3uiEXT]</b>  </summary>
-            public static void SecondaryColor3ui(uint red, uint green, uint blue) => GLPointers._glSecondaryColor3uiEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3uiEXT(uint red, uint green, uint blue) => GLPointers._glSecondaryColor3uiEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3uivEXT]</b>  </summary>
-            public static void SecondaryColor3uiv(uint* v) => GLPointers._glSecondaryColor3uivEXT_fnptr(v);
+            public static void SecondaryColor3uivEXT(uint* v) => GLPointers._glSecondaryColor3uivEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3usEXT]</b>  </summary>
-            public static void SecondaryColor3us(ushort red, ushort green, ushort blue) => GLPointers._glSecondaryColor3usEXT_fnptr(red, green, blue);
+            public static void SecondaryColor3usEXT(ushort red, ushort green, ushort blue) => GLPointers._glSecondaryColor3usEXT_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColor3usvEXT]</b>  </summary>
-            public static void SecondaryColor3usv(ushort* v) => GLPointers._glSecondaryColor3usvEXT_fnptr(v);
+            public static void SecondaryColor3usvEXT(ushort* v) => GLPointers._glSecondaryColor3usvEXT_fnptr(v);
             
             /// <summary> <b>[requires: GL_EXT_secondary_color] [glSecondaryColorPointerEXT]</b>  </summary>
-            public static void SecondaryColorPointer(int size, ColorPointerType type, int stride, void* pointer) => GLPointers._glSecondaryColorPointerEXT_fnptr(size, (uint)type, stride, pointer);
+            public static void SecondaryColorPointerEXT(int size, ColorPointerType type, int stride, void* pointer) => GLPointers._glSecondaryColorPointerEXT_fnptr(size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glUseShaderProgramEXT]</b>  </summary>
-            public static void UseShaderProgram(All type, int program) => GLPointers._glUseShaderProgramEXT_fnptr((uint)type, program);
+            public static void UseShaderProgramEXT(All type, int program) => GLPointers._glUseShaderProgramEXT_fnptr((uint)type, program);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glActiveProgramEXT]</b>  </summary>
-            public static void ActiveProgram(int program) => GLPointers._glActiveProgramEXT_fnptr(program);
+            public static void ActiveProgramEXT(int program) => GLPointers._glActiveProgramEXT_fnptr(program);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glCreateShaderProgramEXT]</b>  </summary>
-            public static int CreateShaderProgram(ShaderType type, byte* str) => GLPointers._glCreateShaderProgramEXT_fnptr((uint)type, str);
+            public static int CreateShaderProgramEXT(ShaderType type, byte* str) => GLPointers._glCreateShaderProgramEXT_fnptr((uint)type, str);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glActiveShaderProgramEXT]</b>  </summary>
-            public static void ActiveShaderProgram(int pipeline, int program) => GLPointers._glActiveShaderProgramEXT_fnptr(pipeline, program);
+            public static void ActiveShaderProgramEXT(int pipeline, int program) => GLPointers._glActiveShaderProgramEXT_fnptr(pipeline, program);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glBindProgramPipelineEXT]</b>  </summary>
-            public static void BindProgramPipeline(int pipeline) => GLPointers._glBindProgramPipelineEXT_fnptr(pipeline);
+            public static void BindProgramPipelineEXT(int pipeline) => GLPointers._glBindProgramPipelineEXT_fnptr(pipeline);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glCreateShaderProgramvEXT]</b>  </summary>
-            public static int CreateShaderProgramv(ShaderType type, int count, byte** strings) => GLPointers._glCreateShaderProgramvEXT_fnptr((uint)type, count, strings);
+            public static int CreateShaderProgramvEXT(ShaderType type, int count, byte** strings) => GLPointers._glCreateShaderProgramvEXT_fnptr((uint)type, count, strings);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glDeleteProgramPipelinesEXT]</b>  </summary>
-            public static void DeleteProgramPipelines(int n, int* pipelines) => GLPointers._glDeleteProgramPipelinesEXT_fnptr(n, pipelines);
+            public static void DeleteProgramPipelinesEXT(int n, int* pipelines) => GLPointers._glDeleteProgramPipelinesEXT_fnptr(n, pipelines);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glGenProgramPipelinesEXT]</b>  </summary>
-            public static void GenProgramPipelines(int n, int* pipelines) => GLPointers._glGenProgramPipelinesEXT_fnptr(n, pipelines);
+            public static void GenProgramPipelinesEXT(int n, int* pipelines) => GLPointers._glGenProgramPipelinesEXT_fnptr(n, pipelines);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glGetProgramPipelineInfoLogEXT]</b>  </summary>
-            public static void GetProgramPipelineInfoLog(int pipeline, int bufSize, int* length, byte* infoLog) => GLPointers._glGetProgramPipelineInfoLogEXT_fnptr(pipeline, bufSize, length, infoLog);
+            public static void GetProgramPipelineInfoLogEXT(int pipeline, int bufSize, int* length, byte* infoLog) => GLPointers._glGetProgramPipelineInfoLogEXT_fnptr(pipeline, bufSize, length, infoLog);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glGetProgramPipelineivEXT]</b>  </summary>
-            public static void GetProgramPipelineiv(int pipeline, PipelineParameterName pname, int* parameters) => GLPointers._glGetProgramPipelineivEXT_fnptr(pipeline, (uint)pname, parameters);
+            public static void GetProgramPipelineivEXT(int pipeline, PipelineParameterName pname, int* parameters) => GLPointers._glGetProgramPipelineivEXT_fnptr(pipeline, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glIsProgramPipelineEXT]</b>  </summary>
-            public static bool IsProgramPipeline(int pipeline) => GLPointers._glIsProgramPipelineEXT_fnptr(pipeline) != 0;
+            public static bool IsProgramPipelineEXT(int pipeline) => GLPointers._glIsProgramPipelineEXT_fnptr(pipeline) != 0;
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glUseProgramStagesEXT]</b>  </summary>
-            public static void UseProgramStages(int pipeline, UseProgramStageMask stages, int program) => GLPointers._glUseProgramStagesEXT_fnptr(pipeline, (uint)stages, program);
+            public static void UseProgramStagesEXT(int pipeline, UseProgramStageMask stages, int program) => GLPointers._glUseProgramStagesEXT_fnptr(pipeline, (uint)stages, program);
             
             /// <summary> <b>[requires: GL_EXT_separate_shader_objects] [glValidateProgramPipelineEXT]</b>  </summary>
-            public static void ValidateProgramPipeline(int pipeline) => GLPointers._glValidateProgramPipelineEXT_fnptr(pipeline);
+            public static void ValidateProgramPipelineEXT(int pipeline) => GLPointers._glValidateProgramPipelineEXT_fnptr(pipeline);
             
             /// <summary> <b>[requires: GL_EXT_shader_framebuffer_fetch_non_coherent] [glFramebufferFetchBarrierEXT]</b>  </summary>
-            public static void FramebufferFetchBarrier() => GLPointers._glFramebufferFetchBarrierEXT_fnptr();
+            public static void FramebufferFetchBarrierEXT() => GLPointers._glFramebufferFetchBarrierEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_shader_image_load_store] [glBindImageTextureEXT]</b>  </summary>
-            public static void BindImageTexture(uint index, int texture, int level, bool layered, int layer, BufferAccessARB access, int format) => GLPointers._glBindImageTextureEXT_fnptr(index, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, format);
+            public static void BindImageTextureEXT(uint index, int texture, int level, bool layered, int layer, BufferAccessARB access, int format) => GLPointers._glBindImageTextureEXT_fnptr(index, texture, level, (byte)(layered ? 1 : 0), layer, (uint)access, format);
             
             /// <summary> <b>[requires: GL_EXT_shader_image_load_store] [glMemoryBarrierEXT]</b>  </summary>
-            public static void MemoryBarrier(MemoryBarrierMask barriers) => GLPointers._glMemoryBarrierEXT_fnptr((uint)barriers);
+            public static void MemoryBarrierEXT(MemoryBarrierMask barriers) => GLPointers._glMemoryBarrierEXT_fnptr((uint)barriers);
             
             /// <summary> <b>[requires: GL_EXT_stencil_clear_tag] [glStencilClearTagEXT]</b>  </summary>
-            public static void StencilClearTag(int stencilTagBits, uint stencilClearTag) => GLPointers._glStencilClearTagEXT_fnptr(stencilTagBits, stencilClearTag);
+            public static void StencilClearTagEXT(int stencilTagBits, uint stencilClearTag) => GLPointers._glStencilClearTagEXT_fnptr(stencilTagBits, stencilClearTag);
             
             /// <summary> <b>[requires: GL_EXT_stencil_two_side] [glActiveStencilFaceEXT]</b>  </summary>
-            public static void ActiveStencilFace(TriangleFace face) => GLPointers._glActiveStencilFaceEXT_fnptr((uint)face);
+            public static void ActiveStencilFaceEXT(TriangleFace face) => GLPointers._glActiveStencilFaceEXT_fnptr((uint)face);
             
             /// <summary> <b>[requires: GL_EXT_subtexture] [glTexSubImage1DEXT]</b>  </summary>
-            public static void TexSubImage1D(TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage1DEXT_fnptr((uint)target, level, xoffset, width, (uint)format, (uint)type, pixels);
+            public static void TexSubImage1DEXT(TextureTarget target, int level, int xoffset, int width, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage1DEXT_fnptr((uint)target, level, xoffset, width, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_subtexture] [glTexSubImage2DEXT]</b>  </summary>
-            public static void TexSubImage2D(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage2DEXT_fnptr((uint)target, level, xoffset, yoffset, width, height, (uint)format, (uint)type, pixels);
+            public static void TexSubImage2DEXT(TextureTarget target, int level, int xoffset, int yoffset, int width, int height, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage2DEXT_fnptr((uint)target, level, xoffset, yoffset, width, height, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_texture3D] [glTexImage3DEXT]</b>  </summary>
-            public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3DEXT_fnptr((uint)target, level, (uint)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+            public static void TexImage3DEXT(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3DEXT_fnptr((uint)target, level, (uint)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_texture3D] [glTexSubImage3DEXT]</b>  </summary>
-            public static void TexSubImage3D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage3DEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
+            public static void TexSubImage3DEXT(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage3DEXT_fnptr((uint)target, level, xoffset, yoffset, zoffset, width, height, depth, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_texture_array | GL_NV_geometry_program4] [glFramebufferTextureLayerEXT]</b>  </summary>
-            public static void FramebufferTextureLayer(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int layer) => GLPointers._glFramebufferTextureLayerEXT_fnptr((uint)target, (uint)attachment, texture, level, layer);
+            public static void FramebufferTextureLayerEXT(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int layer) => GLPointers._glFramebufferTextureLayerEXT_fnptr((uint)target, (uint)attachment, texture, level, layer);
             
             /// <summary> <b>[requires: GL_EXT_texture_buffer_object] [glTexBufferEXT]</b>  </summary>
-            public static void TexBuffer(TextureTarget target, SizedInternalFormat internalformat, int buffer) => GLPointers._glTexBufferEXT_fnptr((uint)target, (uint)internalformat, buffer);
+            public static void TexBufferEXT(TextureTarget target, SizedInternalFormat internalformat, int buffer) => GLPointers._glTexBufferEXT_fnptr((uint)target, (uint)internalformat, buffer);
             
             /// <summary> <b>[requires: GL_EXT_texture_integer] [glTexParameterIivEXT]</b>  </summary>
-            public static void TexParameterIiv(TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTexParameterIivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void TexParameterIivEXT(TextureTarget target, TextureParameterName pname, int* parameters) => GLPointers._glTexParameterIivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_texture_integer] [glTexParameterIuivEXT]</b>  </summary>
-            public static void TexParameterIuiv(TextureTarget target, TextureParameterName pname, uint* parameters) => GLPointers._glTexParameterIuivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void TexParameterIuivEXT(TextureTarget target, TextureParameterName pname, uint* parameters) => GLPointers._glTexParameterIuivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_texture_integer] [glGetTexParameterIivEXT]</b>  </summary>
-            public static void GetTexParameterIiv(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameterIivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexParameterIivEXT(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameterIivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_texture_integer] [glGetTexParameterIuivEXT]</b>  </summary>
-            public static void GetTexParameterIuiv(TextureTarget target, GetTextureParameter pname, uint* parameters) => GLPointers._glGetTexParameterIuivEXT_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexParameterIuivEXT(TextureTarget target, GetTextureParameter pname, uint* parameters) => GLPointers._glGetTexParameterIuivEXT_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_texture_integer] [glClearColorIiEXT]</b>  </summary>
-            public static void ClearColorIi(int red, int green, int blue, int alpha) => GLPointers._glClearColorIiEXT_fnptr(red, green, blue, alpha);
+            public static void ClearColorIiEXT(int red, int green, int blue, int alpha) => GLPointers._glClearColorIiEXT_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_EXT_texture_integer] [glClearColorIuiEXT]</b>  </summary>
-            public static void ClearColorIui(uint red, uint green, uint blue, uint alpha) => GLPointers._glClearColorIuiEXT_fnptr(red, green, blue, alpha);
+            public static void ClearColorIuiEXT(uint red, uint green, uint blue, uint alpha) => GLPointers._glClearColorIuiEXT_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_EXT_texture_object] [glAreTexturesResidentEXT]</b>  </summary>
-            public static bool AreTexturesResident(int n, int* textures, bool* residences) => GLPointers._glAreTexturesResidentEXT_fnptr(n, textures, (byte*)residences) != 0;
+            public static bool AreTexturesResidentEXT(int n, int* textures, bool* residences) => GLPointers._glAreTexturesResidentEXT_fnptr(n, textures, (byte*)residences) != 0;
             
             /// <summary> <b>[requires: GL_EXT_texture_object] [glBindTextureEXT]</b>  </summary>
-            public static void BindTexture(TextureTarget target, int texture) => GLPointers._glBindTextureEXT_fnptr((uint)target, texture);
+            public static void BindTextureEXT(TextureTarget target, int texture) => GLPointers._glBindTextureEXT_fnptr((uint)target, texture);
             
             /// <summary> <b>[requires: GL_EXT_texture_object] [glDeleteTexturesEXT]</b>  </summary>
-            public static void DeleteTextures(int n, int* textures) => GLPointers._glDeleteTexturesEXT_fnptr(n, textures);
+            public static void DeleteTexturesEXT(int n, int* textures) => GLPointers._glDeleteTexturesEXT_fnptr(n, textures);
             
             /// <summary> <b>[requires: GL_EXT_texture_object] [glGenTexturesEXT]</b>  </summary>
-            public static void GenTextures(int n, int* textures) => GLPointers._glGenTexturesEXT_fnptr(n, textures);
+            public static void GenTexturesEXT(int n, int* textures) => GLPointers._glGenTexturesEXT_fnptr(n, textures);
             
             /// <summary> <b>[requires: GL_EXT_texture_object] [glIsTextureEXT]</b>  </summary>
-            public static bool IsTexture(int texture) => GLPointers._glIsTextureEXT_fnptr(texture) != 0;
+            public static bool IsTextureEXT(int texture) => GLPointers._glIsTextureEXT_fnptr(texture) != 0;
             
             /// <summary> <b>[requires: GL_EXT_texture_object] [glPrioritizeTexturesEXT]</b>  </summary>
-            public static void PrioritizeTextures(int n, int* textures, float* priorities) => GLPointers._glPrioritizeTexturesEXT_fnptr(n, textures, priorities);
+            public static void PrioritizeTexturesEXT(int n, int* textures, float* priorities) => GLPointers._glPrioritizeTexturesEXT_fnptr(n, textures, priorities);
             
             /// <summary> <b>[requires: GL_EXT_texture_perturb_normal] [glTextureNormalEXT]</b>  </summary>
-            public static void TextureNormal(TextureNormalModeEXT mode) => GLPointers._glTextureNormalEXT_fnptr((uint)mode);
+            public static void TextureNormalEXT(TextureNormalModeEXT mode) => GLPointers._glTextureNormalEXT_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTexStorage1DEXT]</b>  </summary>
-            public static void TexStorage1D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTexStorage1DEXT_fnptr((uint)target, levels, (uint)internalformat, width);
+            public static void TexStorage1DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width) => GLPointers._glTexStorage1DEXT_fnptr((uint)target, levels, (uint)internalformat, width);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTexStorage2DEXT]</b>  </summary>
-            public static void TexStorage2D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTexStorage2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height);
+            public static void TexStorage2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height) => GLPointers._glTexStorage2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage] [glTexStorage3DEXT]</b>  </summary>
-            public static void TexStorage3D(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTexStorage3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth);
+            public static void TexStorage3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTexStorage3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth);
             
             /// <summary> <b>[requires: GL_EXT_timer_query] [glGetQueryObjecti64vEXT]</b>  </summary>
-            public static void GetQueryObjecti64v(int id, QueryObjectParameterName pname, long* parameters) => GLPointers._glGetQueryObjecti64vEXT_fnptr(id, (uint)pname, parameters);
+            public static void GetQueryObjecti64vEXT(int id, QueryObjectParameterName pname, long* parameters) => GLPointers._glGetQueryObjecti64vEXT_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_timer_query] [glGetQueryObjectui64vEXT]</b>  </summary>
-            public static void GetQueryObjectui64v(int id, QueryObjectParameterName pname, ulong* parameters) => GLPointers._glGetQueryObjectui64vEXT_fnptr(id, (uint)pname, parameters);
+            public static void GetQueryObjectui64vEXT(int id, QueryObjectParameterName pname, ulong* parameters) => GLPointers._glGetQueryObjectui64vEXT_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback] [glBeginTransformFeedbackEXT]</b>  </summary>
-            public static void BeginTransformFeedback(PrimitiveType primitiveMode) => GLPointers._glBeginTransformFeedbackEXT_fnptr((uint)primitiveMode);
+            public static void BeginTransformFeedbackEXT(PrimitiveType primitiveMode) => GLPointers._glBeginTransformFeedbackEXT_fnptr((uint)primitiveMode);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback] [glEndTransformFeedbackEXT]</b>  </summary>
-            public static void EndTransformFeedback() => GLPointers._glEndTransformFeedbackEXT_fnptr();
+            public static void EndTransformFeedbackEXT() => GLPointers._glEndTransformFeedbackEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback] [glBindBufferRangeEXT]</b>  </summary>
-            public static void BindBufferRange(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeEXT_fnptr((uint)target, index, buffer, offset, size);
+            public static void BindBufferRangeEXT(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeEXT_fnptr((uint)target, index, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback] [glBindBufferOffsetEXT]</b>  </summary>
-            public static void BindBufferOffset(BufferTargetARB target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetEXT_fnptr((uint)target, index, buffer, offset);
+            public static void BindBufferOffsetEXT(BufferTargetARB target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetEXT_fnptr((uint)target, index, buffer, offset);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback] [glBindBufferBaseEXT]</b>  </summary>
-            public static void BindBufferBase(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBaseEXT_fnptr((uint)target, index, buffer);
+            public static void BindBufferBaseEXT(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBaseEXT_fnptr((uint)target, index, buffer);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback] [glTransformFeedbackVaryingsEXT]</b>  </summary>
-            public static void TransformFeedbackVaryings(int program, int count, byte** varyings, TransformFeedbackBufferMode bufferMode) => GLPointers._glTransformFeedbackVaryingsEXT_fnptr(program, count, varyings, (uint)bufferMode);
+            public static void TransformFeedbackVaryingsEXT(int program, int count, byte** varyings, TransformFeedbackBufferMode bufferMode) => GLPointers._glTransformFeedbackVaryingsEXT_fnptr(program, count, varyings, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_EXT_transform_feedback] [glGetTransformFeedbackVaryingEXT]</b>  </summary>
-            public static void GetTransformFeedbackVarying(int program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name) => GLPointers._glGetTransformFeedbackVaryingEXT_fnptr(program, index, bufSize, length, size, (uint*)type, name);
+            public static void GetTransformFeedbackVaryingEXT(int program, uint index, int bufSize, int* length, int* size, AttributeType* type, byte* name) => GLPointers._glGetTransformFeedbackVaryingEXT_fnptr(program, index, bufSize, length, size, (uint*)type, name);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glArrayElementEXT]</b>  </summary>
-            public static void ArrayElement(int i) => GLPointers._glArrayElementEXT_fnptr(i);
+            public static void ArrayElementEXT(int i) => GLPointers._glArrayElementEXT_fnptr(i);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glColorPointerEXT]</b>  </summary>
-            public static void ColorPointer(int size, ColorPointerType type, int stride, int count, void* pointer) => GLPointers._glColorPointerEXT_fnptr(size, (uint)type, stride, count, pointer);
+            public static void ColorPointerEXT(int size, ColorPointerType type, int stride, int count, void* pointer) => GLPointers._glColorPointerEXT_fnptr(size, (uint)type, stride, count, pointer);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glDrawArraysEXT]</b>  </summary>
-            public static void DrawArrays(PrimitiveType mode, int first, int count) => GLPointers._glDrawArraysEXT_fnptr((uint)mode, first, count);
+            public static void DrawArraysEXT(PrimitiveType mode, int first, int count) => GLPointers._glDrawArraysEXT_fnptr((uint)mode, first, count);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glEdgeFlagPointerEXT]</b>  </summary>
-            public static void EdgeFlagPointer(int stride, int count, bool* pointer) => GLPointers._glEdgeFlagPointerEXT_fnptr(stride, count, (byte*)pointer);
+            public static void EdgeFlagPointerEXT(int stride, int count, bool* pointer) => GLPointers._glEdgeFlagPointerEXT_fnptr(stride, count, (byte*)pointer);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glGetPointervEXT]</b>  </summary>
-            public static void GetPointerv(GetPointervPName pname, void** parameters) => GLPointers._glGetPointervEXT_fnptr((uint)pname, parameters);
+            public static void GetPointervEXT(GetPointervPName pname, void** parameters) => GLPointers._glGetPointervEXT_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glIndexPointerEXT]</b>  </summary>
-            public static void IndexPointer(IndexPointerType type, int stride, int count, void* pointer) => GLPointers._glIndexPointerEXT_fnptr((uint)type, stride, count, pointer);
+            public static void IndexPointerEXT(IndexPointerType type, int stride, int count, void* pointer) => GLPointers._glIndexPointerEXT_fnptr((uint)type, stride, count, pointer);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glNormalPointerEXT]</b>  </summary>
-            public static void NormalPointer(NormalPointerType type, int stride, int count, void* pointer) => GLPointers._glNormalPointerEXT_fnptr((uint)type, stride, count, pointer);
+            public static void NormalPointerEXT(NormalPointerType type, int stride, int count, void* pointer) => GLPointers._glNormalPointerEXT_fnptr((uint)type, stride, count, pointer);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glTexCoordPointerEXT]</b>  </summary>
-            public static void TexCoordPointer(int size, TexCoordPointerType type, int stride, int count, void* pointer) => GLPointers._glTexCoordPointerEXT_fnptr(size, (uint)type, stride, count, pointer);
+            public static void TexCoordPointerEXT(int size, TexCoordPointerType type, int stride, int count, void* pointer) => GLPointers._glTexCoordPointerEXT_fnptr(size, (uint)type, stride, count, pointer);
             
             /// <summary> <b>[requires: GL_EXT_vertex_array] [glVertexPointerEXT]</b>  </summary>
-            public static void VertexPointer(int size, VertexPointerType type, int stride, int count, void* pointer) => GLPointers._glVertexPointerEXT_fnptr(size, (uint)type, stride, count, pointer);
+            public static void VertexPointerEXT(int size, VertexPointerType type, int stride, int count, void* pointer) => GLPointers._glVertexPointerEXT_fnptr(size, (uint)type, stride, count, pointer);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL1dEXT]</b>  </summary>
-            public static void VertexAttribL1d(uint index, double x) => GLPointers._glVertexAttribL1dEXT_fnptr(index, x);
+            public static void VertexAttribL1dEXT(uint index, double x) => GLPointers._glVertexAttribL1dEXT_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL2dEXT]</b>  </summary>
-            public static void VertexAttribL2d(uint index, double x, double y) => GLPointers._glVertexAttribL2dEXT_fnptr(index, x, y);
+            public static void VertexAttribL2dEXT(uint index, double x, double y) => GLPointers._glVertexAttribL2dEXT_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL3dEXT]</b>  </summary>
-            public static void VertexAttribL3d(uint index, double x, double y, double z) => GLPointers._glVertexAttribL3dEXT_fnptr(index, x, y, z);
+            public static void VertexAttribL3dEXT(uint index, double x, double y, double z) => GLPointers._glVertexAttribL3dEXT_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL4dEXT]</b>  </summary>
-            public static void VertexAttribL4d(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttribL4dEXT_fnptr(index, x, y, z, w);
+            public static void VertexAttribL4dEXT(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttribL4dEXT_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL1dvEXT]</b>  </summary>
-            public static void VertexAttribL1dv(uint index, double* v) => GLPointers._glVertexAttribL1dvEXT_fnptr(index, v);
+            public static void VertexAttribL1dvEXT(uint index, double* v) => GLPointers._glVertexAttribL1dvEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL2dvEXT]</b>  </summary>
-            public static void VertexAttribL2dv(uint index, double* v) => GLPointers._glVertexAttribL2dvEXT_fnptr(index, v);
+            public static void VertexAttribL2dvEXT(uint index, double* v) => GLPointers._glVertexAttribL2dvEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL3dvEXT]</b>  </summary>
-            public static void VertexAttribL3dv(uint index, double* v) => GLPointers._glVertexAttribL3dvEXT_fnptr(index, v);
+            public static void VertexAttribL3dvEXT(uint index, double* v) => GLPointers._glVertexAttribL3dvEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribL4dvEXT]</b>  </summary>
-            public static void VertexAttribL4dv(uint index, double* v) => GLPointers._glVertexAttribL4dvEXT_fnptr(index, v);
+            public static void VertexAttribL4dvEXT(uint index, double* v) => GLPointers._glVertexAttribL4dvEXT_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glVertexAttribLPointerEXT]</b>  </summary>
-            public static void VertexAttribLPointer(uint index, int size, VertexAttribLType type, int stride, void* pointer) => GLPointers._glVertexAttribLPointerEXT_fnptr(index, size, (uint)type, stride, pointer);
+            public static void VertexAttribLPointerEXT(uint index, int size, VertexAttribLType type, int stride, void* pointer) => GLPointers._glVertexAttribLPointerEXT_fnptr(index, size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_vertex_attrib_64bit] [glGetVertexAttribLdvEXT]</b>  </summary>
-            public static void GetVertexAttribLdv(uint index, VertexAttribEnum pname, double* parameters) => GLPointers._glGetVertexAttribLdvEXT_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribLdvEXT(uint index, VertexAttribEnum pname, double* parameters) => GLPointers._glGetVertexAttribLdvEXT_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glBeginVertexShaderEXT]</b>  </summary>
-            public static void BeginVertexShader() => GLPointers._glBeginVertexShaderEXT_fnptr();
+            public static void BeginVertexShaderEXT() => GLPointers._glBeginVertexShaderEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glEndVertexShaderEXT]</b>  </summary>
-            public static void EndVertexShader() => GLPointers._glEndVertexShaderEXT_fnptr();
+            public static void EndVertexShaderEXT() => GLPointers._glEndVertexShaderEXT_fnptr();
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glBindVertexShaderEXT]</b>  </summary>
-            public static void BindVertexShader(uint id) => GLPointers._glBindVertexShaderEXT_fnptr(id);
+            public static void BindVertexShaderEXT(uint id) => GLPointers._glBindVertexShaderEXT_fnptr(id);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGenVertexShadersEXT]</b>  </summary>
-            public static uint GenVertexShaders(uint range) => GLPointers._glGenVertexShadersEXT_fnptr(range);
+            public static uint GenVertexShadersEXT(uint range) => GLPointers._glGenVertexShadersEXT_fnptr(range);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glDeleteVertexShaderEXT]</b>  </summary>
-            public static void DeleteVertexShader(uint id) => GLPointers._glDeleteVertexShaderEXT_fnptr(id);
+            public static void DeleteVertexShaderEXT(uint id) => GLPointers._glDeleteVertexShaderEXT_fnptr(id);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glShaderOp1EXT]</b>  </summary>
-            public static void ShaderOp1(VertexShaderOpEXT op, uint res, uint arg1) => GLPointers._glShaderOp1EXT_fnptr((uint)op, res, arg1);
+            public static void ShaderOp1EXT(VertexShaderOpEXT op, uint res, uint arg1) => GLPointers._glShaderOp1EXT_fnptr((uint)op, res, arg1);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glShaderOp2EXT]</b>  </summary>
-            public static void ShaderOp2(VertexShaderOpEXT op, uint res, uint arg1, uint arg2) => GLPointers._glShaderOp2EXT_fnptr((uint)op, res, arg1, arg2);
+            public static void ShaderOp2EXT(VertexShaderOpEXT op, uint res, uint arg1, uint arg2) => GLPointers._glShaderOp2EXT_fnptr((uint)op, res, arg1, arg2);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glShaderOp3EXT]</b>  </summary>
-            public static void ShaderOp3(VertexShaderOpEXT op, uint res, uint arg1, uint arg2, uint arg3) => GLPointers._glShaderOp3EXT_fnptr((uint)op, res, arg1, arg2, arg3);
+            public static void ShaderOp3EXT(VertexShaderOpEXT op, uint res, uint arg1, uint arg2, uint arg3) => GLPointers._glShaderOp3EXT_fnptr((uint)op, res, arg1, arg2, arg3);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glSwizzleEXT]</b>  </summary>
-            public static void Swizzle(uint res, uint input, VertexShaderCoordOutEXT outX, VertexShaderCoordOutEXT outY, VertexShaderCoordOutEXT outZ, VertexShaderCoordOutEXT outW) => GLPointers._glSwizzleEXT_fnptr(res, input, (uint)outX, (uint)outY, (uint)outZ, (uint)outW);
+            public static void SwizzleEXT(uint res, uint input, VertexShaderCoordOutEXT outX, VertexShaderCoordOutEXT outY, VertexShaderCoordOutEXT outZ, VertexShaderCoordOutEXT outW) => GLPointers._glSwizzleEXT_fnptr(res, input, (uint)outX, (uint)outY, (uint)outZ, (uint)outW);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glWriteMaskEXT]</b>  </summary>
-            public static void WriteMask(uint res, uint input, VertexShaderWriteMaskEXT outX, VertexShaderWriteMaskEXT outY, VertexShaderWriteMaskEXT outZ, VertexShaderWriteMaskEXT outW) => GLPointers._glWriteMaskEXT_fnptr(res, input, (uint)outX, (uint)outY, (uint)outZ, (uint)outW);
+            public static void WriteMaskEXT(uint res, uint input, VertexShaderWriteMaskEXT outX, VertexShaderWriteMaskEXT outY, VertexShaderWriteMaskEXT outZ, VertexShaderWriteMaskEXT outW) => GLPointers._glWriteMaskEXT_fnptr(res, input, (uint)outX, (uint)outY, (uint)outZ, (uint)outW);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glInsertComponentEXT]</b>  </summary>
-            public static void InsertComponent(uint res, uint src, uint num) => GLPointers._glInsertComponentEXT_fnptr(res, src, num);
+            public static void InsertComponentEXT(uint res, uint src, uint num) => GLPointers._glInsertComponentEXT_fnptr(res, src, num);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glExtractComponentEXT]</b>  </summary>
-            public static void ExtractComponent(uint res, uint src, uint num) => GLPointers._glExtractComponentEXT_fnptr(res, src, num);
+            public static void ExtractComponentEXT(uint res, uint src, uint num) => GLPointers._glExtractComponentEXT_fnptr(res, src, num);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGenSymbolsEXT]</b>  </summary>
-            public static uint GenSymbols(DataTypeEXT datatype, VertexShaderStorageTypeEXT storagetype, ParameterRangeEXT range, uint components) => GLPointers._glGenSymbolsEXT_fnptr((uint)datatype, (uint)storagetype, (uint)range, components);
+            public static uint GenSymbolsEXT(DataTypeEXT datatype, VertexShaderStorageTypeEXT storagetype, ParameterRangeEXT range, uint components) => GLPointers._glGenSymbolsEXT_fnptr((uint)datatype, (uint)storagetype, (uint)range, components);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glSetInvariantEXT]</b>  </summary>
-            public static void SetInvariant(uint id, ScalarType type, void* addr) => GLPointers._glSetInvariantEXT_fnptr(id, (uint)type, addr);
+            public static void SetInvariantEXT(uint id, ScalarType type, void* addr) => GLPointers._glSetInvariantEXT_fnptr(id, (uint)type, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glSetLocalConstantEXT]</b>  </summary>
-            public static void SetLocalConstant(uint id, ScalarType type, void* addr) => GLPointers._glSetLocalConstantEXT_fnptr(id, (uint)type, addr);
+            public static void SetLocalConstantEXT(uint id, ScalarType type, void* addr) => GLPointers._glSetLocalConstantEXT_fnptr(id, (uint)type, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantbvEXT]</b>  </summary>
-            public static void Variantbv(uint id, sbyte* addr) => GLPointers._glVariantbvEXT_fnptr(id, addr);
+            public static void VariantbvEXT(uint id, sbyte* addr) => GLPointers._glVariantbvEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantsvEXT]</b>  </summary>
-            public static void Variantsv(uint id, short* addr) => GLPointers._glVariantsvEXT_fnptr(id, addr);
+            public static void VariantsvEXT(uint id, short* addr) => GLPointers._glVariantsvEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantivEXT]</b>  </summary>
-            public static void Variantiv(uint id, int* addr) => GLPointers._glVariantivEXT_fnptr(id, addr);
+            public static void VariantivEXT(uint id, int* addr) => GLPointers._glVariantivEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantfvEXT]</b>  </summary>
-            public static void Variantfv(uint id, float* addr) => GLPointers._glVariantfvEXT_fnptr(id, addr);
+            public static void VariantfvEXT(uint id, float* addr) => GLPointers._glVariantfvEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantdvEXT]</b>  </summary>
-            public static void Variantdv(uint id, double* addr) => GLPointers._glVariantdvEXT_fnptr(id, addr);
+            public static void VariantdvEXT(uint id, double* addr) => GLPointers._glVariantdvEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantubvEXT]</b>  </summary>
-            public static void Variantubv(uint id, byte* addr) => GLPointers._glVariantubvEXT_fnptr(id, addr);
+            public static void VariantubvEXT(uint id, byte* addr) => GLPointers._glVariantubvEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantusvEXT]</b>  </summary>
-            public static void Variantusv(uint id, ushort* addr) => GLPointers._glVariantusvEXT_fnptr(id, addr);
+            public static void VariantusvEXT(uint id, ushort* addr) => GLPointers._glVariantusvEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantuivEXT]</b>  </summary>
-            public static void Variantuiv(uint id, uint* addr) => GLPointers._glVariantuivEXT_fnptr(id, addr);
+            public static void VariantuivEXT(uint id, uint* addr) => GLPointers._glVariantuivEXT_fnptr(id, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glVariantPointerEXT]</b>  </summary>
-            public static void VariantPointer(uint id, ScalarType type, uint stride, void* addr) => GLPointers._glVariantPointerEXT_fnptr(id, (uint)type, stride, addr);
+            public static void VariantPointerEXT(uint id, ScalarType type, uint stride, void* addr) => GLPointers._glVariantPointerEXT_fnptr(id, (uint)type, stride, addr);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glEnableVariantClientStateEXT]</b>  </summary>
-            public static void EnableVariantClientState(uint id) => GLPointers._glEnableVariantClientStateEXT_fnptr(id);
+            public static void EnableVariantClientStateEXT(uint id) => GLPointers._glEnableVariantClientStateEXT_fnptr(id);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glDisableVariantClientStateEXT]</b>  </summary>
-            public static void DisableVariantClientState(uint id) => GLPointers._glDisableVariantClientStateEXT_fnptr(id);
+            public static void DisableVariantClientStateEXT(uint id) => GLPointers._glDisableVariantClientStateEXT_fnptr(id);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glBindLightParameterEXT]</b>  </summary>
-            public static uint BindLightParameter(LightName light, LightParameter value) => GLPointers._glBindLightParameterEXT_fnptr((uint)light, (uint)value);
+            public static uint BindLightParameterEXT(LightName light, LightParameter value) => GLPointers._glBindLightParameterEXT_fnptr((uint)light, (uint)value);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glBindMaterialParameterEXT]</b>  </summary>
-            public static uint BindMaterialParameter(TriangleFace face, MaterialParameter value) => GLPointers._glBindMaterialParameterEXT_fnptr((uint)face, (uint)value);
+            public static uint BindMaterialParameterEXT(TriangleFace face, MaterialParameter value) => GLPointers._glBindMaterialParameterEXT_fnptr((uint)face, (uint)value);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glBindTexGenParameterEXT]</b>  </summary>
-            public static uint BindTexGenParameter(TextureUnit unit, TextureCoordName coord, TextureGenParameter value) => GLPointers._glBindTexGenParameterEXT_fnptr((uint)unit, (uint)coord, (uint)value);
+            public static uint BindTexGenParameterEXT(TextureUnit unit, TextureCoordName coord, TextureGenParameter value) => GLPointers._glBindTexGenParameterEXT_fnptr((uint)unit, (uint)coord, (uint)value);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glBindTextureUnitParameterEXT]</b>  </summary>
-            public static uint BindTextureUnitParameter(TextureUnit unit, VertexShaderTextureUnitParameter value) => GLPointers._glBindTextureUnitParameterEXT_fnptr((uint)unit, (uint)value);
+            public static uint BindTextureUnitParameterEXT(TextureUnit unit, VertexShaderTextureUnitParameter value) => GLPointers._glBindTextureUnitParameterEXT_fnptr((uint)unit, (uint)value);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glBindParameterEXT]</b>  </summary>
-            public static uint BindParameter(VertexShaderParameterEXT value) => GLPointers._glBindParameterEXT_fnptr((uint)value);
+            public static uint BindParameterEXT(VertexShaderParameterEXT value) => GLPointers._glBindParameterEXT_fnptr((uint)value);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glIsVariantEnabledEXT]</b>  </summary>
-            public static bool IsVariantEnabled(uint id, VariantCapEXT cap) => GLPointers._glIsVariantEnabledEXT_fnptr(id, (uint)cap) != 0;
+            public static bool IsVariantEnabledEXT(uint id, VariantCapEXT cap) => GLPointers._glIsVariantEnabledEXT_fnptr(id, (uint)cap) != 0;
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetVariantBooleanvEXT]</b>  </summary>
-            public static void GetVariantBooleanv(uint id, GetVariantValueEXT value, bool* data) => GLPointers._glGetVariantBooleanvEXT_fnptr(id, (uint)value, (byte*)data);
+            public static void GetVariantBooleanvEXT(uint id, GetVariantValueEXT value, bool* data) => GLPointers._glGetVariantBooleanvEXT_fnptr(id, (uint)value, (byte*)data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetVariantIntegervEXT]</b>  </summary>
-            public static void GetVariantIntegerv(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetVariantIntegervEXT_fnptr(id, (uint)value, data);
+            public static void GetVariantIntegervEXT(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetVariantIntegervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetVariantFloatvEXT]</b>  </summary>
-            public static void GetVariantFloatv(uint id, GetVariantValueEXT value, float* data) => GLPointers._glGetVariantFloatvEXT_fnptr(id, (uint)value, data);
+            public static void GetVariantFloatvEXT(uint id, GetVariantValueEXT value, float* data) => GLPointers._glGetVariantFloatvEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetVariantPointervEXT]</b>  </summary>
-            public static void GetVariantPointerv(uint id, GetVariantValueEXT value, void** data) => GLPointers._glGetVariantPointervEXT_fnptr(id, (uint)value, data);
+            public static void GetVariantPointervEXT(uint id, GetVariantValueEXT value, void** data) => GLPointers._glGetVariantPointervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetInvariantBooleanvEXT]</b>  </summary>
-            public static void GetInvariantBooleanv(uint id, GetVariantValueEXT value, bool* data) => GLPointers._glGetInvariantBooleanvEXT_fnptr(id, (uint)value, (byte*)data);
+            public static void GetInvariantBooleanvEXT(uint id, GetVariantValueEXT value, bool* data) => GLPointers._glGetInvariantBooleanvEXT_fnptr(id, (uint)value, (byte*)data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetInvariantIntegervEXT]</b>  </summary>
-            public static void GetInvariantIntegerv(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetInvariantIntegervEXT_fnptr(id, (uint)value, data);
+            public static void GetInvariantIntegervEXT(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetInvariantIntegervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetInvariantFloatvEXT]</b>  </summary>
-            public static void GetInvariantFloatv(uint id, GetVariantValueEXT value, float* data) => GLPointers._glGetInvariantFloatvEXT_fnptr(id, (uint)value, data);
+            public static void GetInvariantFloatvEXT(uint id, GetVariantValueEXT value, float* data) => GLPointers._glGetInvariantFloatvEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetLocalConstantBooleanvEXT]</b>  </summary>
-            public static void GetLocalConstantBooleanv(uint id, GetVariantValueEXT value, bool* data) => GLPointers._glGetLocalConstantBooleanvEXT_fnptr(id, (uint)value, (byte*)data);
+            public static void GetLocalConstantBooleanvEXT(uint id, GetVariantValueEXT value, bool* data) => GLPointers._glGetLocalConstantBooleanvEXT_fnptr(id, (uint)value, (byte*)data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetLocalConstantIntegervEXT]</b>  </summary>
-            public static void GetLocalConstantIntegerv(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetLocalConstantIntegervEXT_fnptr(id, (uint)value, data);
+            public static void GetLocalConstantIntegervEXT(uint id, GetVariantValueEXT value, int* data) => GLPointers._glGetLocalConstantIntegervEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_shader] [glGetLocalConstantFloatvEXT]</b>  </summary>
-            public static void GetLocalConstantFloatv(uint id, GetVariantValueEXT value, float* data) => GLPointers._glGetLocalConstantFloatvEXT_fnptr(id, (uint)value, data);
+            public static void GetLocalConstantFloatvEXT(uint id, GetVariantValueEXT value, float* data) => GLPointers._glGetLocalConstantFloatvEXT_fnptr(id, (uint)value, data);
             
             /// <summary> <b>[requires: GL_EXT_vertex_weighting] [glVertexWeightfEXT]</b>  </summary>
-            public static void VertexWeightf(float weight) => GLPointers._glVertexWeightfEXT_fnptr(weight);
+            public static void VertexWeightfEXT(float weight) => GLPointers._glVertexWeightfEXT_fnptr(weight);
             
             /// <summary> <b>[requires: GL_EXT_vertex_weighting] [glVertexWeightfvEXT]</b>  </summary>
-            public static void VertexWeightfv(float* weight) => GLPointers._glVertexWeightfvEXT_fnptr(weight);
+            public static void VertexWeightfvEXT(float* weight) => GLPointers._glVertexWeightfvEXT_fnptr(weight);
             
             /// <summary> <b>[requires: GL_EXT_vertex_weighting] [glVertexWeightPointerEXT]</b>  </summary>
-            public static void VertexWeightPointer(int size, VertexWeightPointerTypeEXT type, int stride, void* pointer) => GLPointers._glVertexWeightPointerEXT_fnptr(size, (uint)type, stride, pointer);
+            public static void VertexWeightPointerEXT(int size, VertexWeightPointerTypeEXT type, int stride, void* pointer) => GLPointers._glVertexWeightPointerEXT_fnptr(size, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_EXT_win32_keyed_mutex] [glAcquireKeyedMutexWin32EXT]</b>  </summary>
-            public static bool AcquireKeyedMutexWin32(uint memory, ulong key, uint timeout) => GLPointers._glAcquireKeyedMutexWin32EXT_fnptr(memory, key, timeout) != 0;
+            public static bool AcquireKeyedMutexWin32EXT(uint memory, ulong key, uint timeout) => GLPointers._glAcquireKeyedMutexWin32EXT_fnptr(memory, key, timeout) != 0;
             
             /// <summary> <b>[requires: GL_EXT_win32_keyed_mutex] [glReleaseKeyedMutexWin32EXT]</b>  </summary>
-            public static bool ReleaseKeyedMutexWin32(uint memory, ulong key) => GLPointers._glReleaseKeyedMutexWin32EXT_fnptr(memory, key) != 0;
+            public static bool ReleaseKeyedMutexWin32EXT(uint memory, ulong key) => GLPointers._glReleaseKeyedMutexWin32EXT_fnptr(memory, key) != 0;
             
             /// <summary> <b>[requires: GL_EXT_window_rectangles] [glWindowRectanglesEXT]</b>  </summary>
-            public static void WindowRectangles(All mode, int count, int* box) => GLPointers._glWindowRectanglesEXT_fnptr((uint)mode, count, box);
+            public static void WindowRectanglesEXT(All mode, int count, int* box) => GLPointers._glWindowRectanglesEXT_fnptr((uint)mode, count, box);
             
             /// <summary> <b>[requires: GL_EXT_x11_sync_object] [glImportSyncEXT]</b>  </summary>
-            public static GLSync ImportSync(All external_sync_type, IntPtr external_sync, uint flags) => (GLSync) GLPointers._glImportSyncEXT_fnptr((uint)external_sync_type, external_sync, flags);
+            public static GLSync ImportSyncEXT(All external_sync_type, IntPtr external_sync, uint flags) => (GLSync) GLPointers._glImportSyncEXT_fnptr((uint)external_sync_type, external_sync, flags);
             
         }
         /// <summary>NV extensions.</summary>
         public static unsafe partial class NV
         {
             /// <summary> <b>[requires: GL_NV_timeline_semaphore] [glCreateSemaphoresNV]</b>  </summary>
-            public static void CreateSemaphores(int n, uint* semaphores) => GLPointers._glCreateSemaphoresNV_fnptr(n, semaphores);
+            public static void CreateSemaphoresNV(int n, uint* semaphores) => GLPointers._glCreateSemaphoresNV_fnptr(n, semaphores);
             
             /// <summary> <b>[requires: GL_NV_timeline_semaphore] [glSemaphoreParameterivNV]</b>  </summary>
-            public static void SemaphoreParameteriv(uint semaphore, SemaphoreParameterName pname, int* parameters) => GLPointers._glSemaphoreParameterivNV_fnptr(semaphore, (uint)pname, parameters);
+            public static void SemaphoreParameterivNV(uint semaphore, SemaphoreParameterName pname, int* parameters) => GLPointers._glSemaphoreParameterivNV_fnptr(semaphore, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_timeline_semaphore] [glGetSemaphoreParameterivNV]</b>  </summary>
-            public static void GetSemaphoreParameteriv(uint semaphore, SemaphoreParameterName pname, int* parameters) => GLPointers._glGetSemaphoreParameterivNV_fnptr(semaphore, (uint)pname, parameters);
+            public static void GetSemaphoreParameterivNV(uint semaphore, SemaphoreParameterName pname, int* parameters) => GLPointers._glGetSemaphoreParameterivNV_fnptr(semaphore, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_alpha_to_coverage_dither_control] [glAlphaToCoverageDitherControlNV]</b>  </summary>
-            public static void AlphaToCoverageDitherControl(All mode) => GLPointers._glAlphaToCoverageDitherControlNV_fnptr((uint)mode);
+            public static void AlphaToCoverageDitherControlNV(All mode) => GLPointers._glAlphaToCoverageDitherControlNV_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_NV_bindless_multi_draw_indirect] [glMultiDrawArraysIndirectBindlessNV]</b>  </summary>
-            public static void MultiDrawArraysIndirectBindless(PrimitiveType mode, void* indirect, int drawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawArraysIndirectBindlessNV_fnptr((uint)mode, indirect, drawCount, stride, vertexBufferCount);
+            public static void MultiDrawArraysIndirectBindlessNV(PrimitiveType mode, void* indirect, int drawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawArraysIndirectBindlessNV_fnptr((uint)mode, indirect, drawCount, stride, vertexBufferCount);
             
             /// <summary> <b>[requires: GL_NV_bindless_multi_draw_indirect] [glMultiDrawElementsIndirectBindlessNV]</b>  </summary>
-            public static void MultiDrawElementsIndirectBindless(PrimitiveType mode, DrawElementsType type, void* indirect, int drawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawElementsIndirectBindlessNV_fnptr((uint)mode, (uint)type, indirect, drawCount, stride, vertexBufferCount);
+            public static void MultiDrawElementsIndirectBindlessNV(PrimitiveType mode, DrawElementsType type, void* indirect, int drawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawElementsIndirectBindlessNV_fnptr((uint)mode, (uint)type, indirect, drawCount, stride, vertexBufferCount);
             
             /// <summary> <b>[requires: GL_NV_bindless_multi_draw_indirect_count] [glMultiDrawArraysIndirectBindlessCountNV]</b>  </summary>
-            public static void MultiDrawArraysIndirectBindlessCount(PrimitiveType mode, void* indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawArraysIndirectBindlessCountNV_fnptr((uint)mode, indirect, drawCount, maxDrawCount, stride, vertexBufferCount);
+            public static void MultiDrawArraysIndirectBindlessCountNV(PrimitiveType mode, void* indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawArraysIndirectBindlessCountNV_fnptr((uint)mode, indirect, drawCount, maxDrawCount, stride, vertexBufferCount);
             
             /// <summary> <b>[requires: GL_NV_bindless_multi_draw_indirect_count] [glMultiDrawElementsIndirectBindlessCountNV]</b>  </summary>
-            public static void MultiDrawElementsIndirectBindlessCount(PrimitiveType mode, DrawElementsType type, void* indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawElementsIndirectBindlessCountNV_fnptr((uint)mode, (uint)type, indirect, drawCount, maxDrawCount, stride, vertexBufferCount);
+            public static void MultiDrawElementsIndirectBindlessCountNV(PrimitiveType mode, DrawElementsType type, void* indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) => GLPointers._glMultiDrawElementsIndirectBindlessCountNV_fnptr((uint)mode, (uint)type, indirect, drawCount, maxDrawCount, stride, vertexBufferCount);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glGetTextureHandleNV]</b>  </summary>
-            public static ulong GetTextureHandle(int texture) => GLPointers._glGetTextureHandleNV_fnptr(texture);
+            public static ulong GetTextureHandleNV(int texture) => GLPointers._glGetTextureHandleNV_fnptr(texture);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glGetTextureSamplerHandleNV]</b>  </summary>
-            public static ulong GetTextureSamplerHandle(int texture, int sampler) => GLPointers._glGetTextureSamplerHandleNV_fnptr(texture, sampler);
+            public static ulong GetTextureSamplerHandleNV(int texture, int sampler) => GLPointers._glGetTextureSamplerHandleNV_fnptr(texture, sampler);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glMakeTextureHandleResidentNV]</b>  </summary>
-            public static void MakeTextureHandleResident(ulong handle) => GLPointers._glMakeTextureHandleResidentNV_fnptr(handle);
+            public static void MakeTextureHandleResidentNV(ulong handle) => GLPointers._glMakeTextureHandleResidentNV_fnptr(handle);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glMakeTextureHandleNonResidentNV]</b>  </summary>
-            public static void MakeTextureHandleNonResident(ulong handle) => GLPointers._glMakeTextureHandleNonResidentNV_fnptr(handle);
+            public static void MakeTextureHandleNonResidentNV(ulong handle) => GLPointers._glMakeTextureHandleNonResidentNV_fnptr(handle);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glGetImageHandleNV]</b>  </summary>
-            public static ulong GetImageHandle(int texture, int level, bool layered, int layer, PixelFormat format) => GLPointers._glGetImageHandleNV_fnptr(texture, level, (byte)(layered ? 1 : 0), layer, (uint)format);
+            public static ulong GetImageHandleNV(int texture, int level, bool layered, int layer, PixelFormat format) => GLPointers._glGetImageHandleNV_fnptr(texture, level, (byte)(layered ? 1 : 0), layer, (uint)format);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glMakeImageHandleResidentNV]</b>  </summary>
-            public static void MakeImageHandleResident(ulong handle, All access) => GLPointers._glMakeImageHandleResidentNV_fnptr(handle, (uint)access);
+            public static void MakeImageHandleResidentNV(ulong handle, All access) => GLPointers._glMakeImageHandleResidentNV_fnptr(handle, (uint)access);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glMakeImageHandleNonResidentNV]</b>  </summary>
-            public static void MakeImageHandleNonResident(ulong handle) => GLPointers._glMakeImageHandleNonResidentNV_fnptr(handle);
+            public static void MakeImageHandleNonResidentNV(ulong handle) => GLPointers._glMakeImageHandleNonResidentNV_fnptr(handle);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glUniformHandleui64NV]</b>  </summary>
-            public static void UniformHandleui64(int location, ulong value) => GLPointers._glUniformHandleui64NV_fnptr(location, value);
+            public static void UniformHandleui64NV(int location, ulong value) => GLPointers._glUniformHandleui64NV_fnptr(location, value);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glUniformHandleui64vNV]</b>  </summary>
-            public static void UniformHandleui64v(int location, int count, ulong* value) => GLPointers._glUniformHandleui64vNV_fnptr(location, count, value);
+            public static void UniformHandleui64vNV(int location, int count, ulong* value) => GLPointers._glUniformHandleui64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glProgramUniformHandleui64NV]</b>  </summary>
-            public static void ProgramUniformHandleui64(int program, int location, ulong value) => GLPointers._glProgramUniformHandleui64NV_fnptr(program, location, value);
+            public static void ProgramUniformHandleui64NV(int program, int location, ulong value) => GLPointers._glProgramUniformHandleui64NV_fnptr(program, location, value);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glProgramUniformHandleui64vNV]</b>  </summary>
-            public static void ProgramUniformHandleui64v(int program, int location, int count, ulong* values) => GLPointers._glProgramUniformHandleui64vNV_fnptr(program, location, count, values);
+            public static void ProgramUniformHandleui64vNV(int program, int location, int count, ulong* values) => GLPointers._glProgramUniformHandleui64vNV_fnptr(program, location, count, values);
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glIsTextureHandleResidentNV]</b>  </summary>
-            public static bool IsTextureHandleResident(ulong handle) => GLPointers._glIsTextureHandleResidentNV_fnptr(handle) != 0;
+            public static bool IsTextureHandleResidentNV(ulong handle) => GLPointers._glIsTextureHandleResidentNV_fnptr(handle) != 0;
             
             /// <summary> <b>[requires: GL_NV_bindless_texture] [glIsImageHandleResidentNV]</b>  </summary>
-            public static bool IsImageHandleResident(ulong handle) => GLPointers._glIsImageHandleResidentNV_fnptr(handle) != 0;
+            public static bool IsImageHandleResidentNV(ulong handle) => GLPointers._glIsImageHandleResidentNV_fnptr(handle) != 0;
             
             /// <summary> <b>[requires: GL_NV_blend_equation_advanced] [glBlendParameteriNV]</b>  </summary>
-            public static void BlendParameteri(All pname, int value) => GLPointers._glBlendParameteriNV_fnptr((uint)pname, value);
+            public static void BlendParameteriNV(All pname, int value) => GLPointers._glBlendParameteriNV_fnptr((uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_blend_equation_advanced] [glBlendBarrierNV]</b>  </summary>
-            public static void BlendBarrier() => GLPointers._glBlendBarrierNV_fnptr();
+            public static void BlendBarrierNV() => GLPointers._glBlendBarrierNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_clip_space_w_scaling] [glViewportPositionWScaleNV]</b>  </summary>
-            public static void ViewportPositionWScale(uint index, float xcoeff, float ycoeff) => GLPointers._glViewportPositionWScaleNV_fnptr(index, xcoeff, ycoeff);
+            public static void ViewportPositionWScaleNV(uint index, float xcoeff, float ycoeff) => GLPointers._glViewportPositionWScaleNV_fnptr(index, xcoeff, ycoeff);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glCreateStatesNV]</b>  </summary>
-            public static void CreateStates(int n, uint* states) => GLPointers._glCreateStatesNV_fnptr(n, states);
+            public static void CreateStatesNV(int n, uint* states) => GLPointers._glCreateStatesNV_fnptr(n, states);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glDeleteStatesNV]</b>  </summary>
-            public static void DeleteStates(int n, uint* states) => GLPointers._glDeleteStatesNV_fnptr(n, states);
+            public static void DeleteStatesNV(int n, uint* states) => GLPointers._glDeleteStatesNV_fnptr(n, states);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glIsStateNV]</b>  </summary>
-            public static bool IsState(uint state) => GLPointers._glIsStateNV_fnptr(state) != 0;
+            public static bool IsStateNV(uint state) => GLPointers._glIsStateNV_fnptr(state) != 0;
             
             /// <summary> <b>[requires: GL_NV_command_list] [glStateCaptureNV]</b>  </summary>
-            public static void StateCapture(uint state, All mode) => GLPointers._glStateCaptureNV_fnptr(state, (uint)mode);
+            public static void StateCaptureNV(uint state, All mode) => GLPointers._glStateCaptureNV_fnptr(state, (uint)mode);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glGetCommandHeaderNV]</b>  </summary>
-            public static uint GetCommandHeader(CommandOpcodesNV tokenID, uint size) => GLPointers._glGetCommandHeaderNV_fnptr((uint)tokenID, size);
+            public static uint GetCommandHeaderNV(CommandOpcodesNV tokenID, uint size) => GLPointers._glGetCommandHeaderNV_fnptr((uint)tokenID, size);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glGetStageIndexNV]</b>  </summary>
-            public static ushort GetStageIndex(ShaderType shadertype) => GLPointers._glGetStageIndexNV_fnptr((uint)shadertype);
+            public static ushort GetStageIndexNV(ShaderType shadertype) => GLPointers._glGetStageIndexNV_fnptr((uint)shadertype);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glDrawCommandsNV]</b>  </summary>
-            public static void DrawCommands(All primitiveMode, uint buffer, IntPtr* indirects, int* sizes, uint count) => GLPointers._glDrawCommandsNV_fnptr((uint)primitiveMode, buffer, indirects, sizes, count);
+            public static void DrawCommandsNV(All primitiveMode, uint buffer, IntPtr* indirects, int* sizes, uint count) => GLPointers._glDrawCommandsNV_fnptr((uint)primitiveMode, buffer, indirects, sizes, count);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glDrawCommandsAddressNV]</b>  </summary>
-            public static void DrawCommandsAddress(All primitiveMode, ulong* indirects, int* sizes, uint count) => GLPointers._glDrawCommandsAddressNV_fnptr((uint)primitiveMode, indirects, sizes, count);
+            public static void DrawCommandsAddressNV(All primitiveMode, ulong* indirects, int* sizes, uint count) => GLPointers._glDrawCommandsAddressNV_fnptr((uint)primitiveMode, indirects, sizes, count);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glDrawCommandsStatesNV]</b>  </summary>
-            public static void DrawCommandsStates(int buffer, IntPtr* indirects, int* sizes, uint* states, uint* fbos, uint count) => GLPointers._glDrawCommandsStatesNV_fnptr(buffer, indirects, sizes, states, fbos, count);
+            public static void DrawCommandsStatesNV(int buffer, IntPtr* indirects, int* sizes, uint* states, uint* fbos, uint count) => GLPointers._glDrawCommandsStatesNV_fnptr(buffer, indirects, sizes, states, fbos, count);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glDrawCommandsStatesAddressNV]</b>  </summary>
-            public static void DrawCommandsStatesAddress(ulong* indirects, int* sizes, uint* states, uint* fbos, uint count) => GLPointers._glDrawCommandsStatesAddressNV_fnptr(indirects, sizes, states, fbos, count);
+            public static void DrawCommandsStatesAddressNV(ulong* indirects, int* sizes, uint* states, uint* fbos, uint count) => GLPointers._glDrawCommandsStatesAddressNV_fnptr(indirects, sizes, states, fbos, count);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glCreateCommandListsNV]</b>  </summary>
-            public static void CreateCommandLists(int n, uint* lists) => GLPointers._glCreateCommandListsNV_fnptr(n, lists);
+            public static void CreateCommandListsNV(int n, uint* lists) => GLPointers._glCreateCommandListsNV_fnptr(n, lists);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glDeleteCommandListsNV]</b>  </summary>
-            public static void DeleteCommandLists(int n, uint* lists) => GLPointers._glDeleteCommandListsNV_fnptr(n, lists);
+            public static void DeleteCommandListsNV(int n, uint* lists) => GLPointers._glDeleteCommandListsNV_fnptr(n, lists);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glIsCommandListNV]</b>  </summary>
-            public static bool IsCommandList(uint list) => GLPointers._glIsCommandListNV_fnptr(list) != 0;
+            public static bool IsCommandListNV(uint list) => GLPointers._glIsCommandListNV_fnptr(list) != 0;
             
             /// <summary> <b>[requires: GL_NV_command_list] [glListDrawCommandsStatesClientNV]</b>  </summary>
-            public static void ListDrawCommandsStatesClient(uint list, uint segment, void** indirects, int* sizes, uint* states, uint* fbos, uint count) => GLPointers._glListDrawCommandsStatesClientNV_fnptr(list, segment, indirects, sizes, states, fbos, count);
+            public static void ListDrawCommandsStatesClientNV(uint list, uint segment, void** indirects, int* sizes, uint* states, uint* fbos, uint count) => GLPointers._glListDrawCommandsStatesClientNV_fnptr(list, segment, indirects, sizes, states, fbos, count);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glCommandListSegmentsNV]</b>  </summary>
-            public static void CommandListSegments(uint list, uint segments) => GLPointers._glCommandListSegmentsNV_fnptr(list, segments);
+            public static void CommandListSegmentsNV(uint list, uint segments) => GLPointers._glCommandListSegmentsNV_fnptr(list, segments);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glCompileCommandListNV]</b>  </summary>
-            public static void CompileCommandList(uint list) => GLPointers._glCompileCommandListNV_fnptr(list);
+            public static void CompileCommandListNV(uint list) => GLPointers._glCompileCommandListNV_fnptr(list);
             
             /// <summary> <b>[requires: GL_NV_command_list] [glCallCommandListNV]</b>  </summary>
-            public static void CallCommandList(uint list) => GLPointers._glCallCommandListNV_fnptr(list);
+            public static void CallCommandListNV(uint list) => GLPointers._glCallCommandListNV_fnptr(list);
             
             /// <summary> <b>[requires: GL_NV_conditional_render] [glBeginConditionalRenderNV]</b>  </summary>
-            public static void BeginConditionalRender(uint id, ConditionalRenderMode mode) => GLPointers._glBeginConditionalRenderNV_fnptr(id, (uint)mode);
+            public static void BeginConditionalRenderNV(uint id, ConditionalRenderMode mode) => GLPointers._glBeginConditionalRenderNV_fnptr(id, (uint)mode);
             
             /// <summary> <b>[requires: GL_NV_conditional_render] [glEndConditionalRenderNV]</b>  </summary>
-            public static void EndConditionalRender() => GLPointers._glEndConditionalRenderNV_fnptr();
+            public static void EndConditionalRenderNV() => GLPointers._glEndConditionalRenderNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_conservative_raster] [glSubpixelPrecisionBiasNV]</b>  </summary>
-            public static void SubpixelPrecisionBias(uint xbits, uint ybits) => GLPointers._glSubpixelPrecisionBiasNV_fnptr(xbits, ybits);
+            public static void SubpixelPrecisionBiasNV(uint xbits, uint ybits) => GLPointers._glSubpixelPrecisionBiasNV_fnptr(xbits, ybits);
             
             /// <summary> <b>[requires: GL_NV_conservative_raster_dilate] [glConservativeRasterParameterfNV]</b>  </summary>
-            public static void ConservativeRasterParameterf(All pname, float value) => GLPointers._glConservativeRasterParameterfNV_fnptr((uint)pname, value);
+            public static void ConservativeRasterParameterfNV(All pname, float value) => GLPointers._glConservativeRasterParameterfNV_fnptr((uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_conservative_raster_pre_snap_triangles] [glConservativeRasterParameteriNV]</b>  </summary>
-            public static void ConservativeRasterParameteri(All pname, int param) => GLPointers._glConservativeRasterParameteriNV_fnptr((uint)pname, param);
+            public static void ConservativeRasterParameteriNV(All pname, int param) => GLPointers._glConservativeRasterParameteriNV_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_NV_copy_image] [glCopyImageSubDataNV]</b>  </summary>
-            public static void CopyImageSubData(uint srcName, CopyBufferSubDataTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, CopyBufferSubDataTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth) => GLPointers._glCopyImageSubDataNV_fnptr(srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+            public static void CopyImageSubDataNV(uint srcName, CopyBufferSubDataTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, CopyBufferSubDataTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth) => GLPointers._glCopyImageSubDataNV_fnptr(srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
             
             /// <summary> <b>[requires: GL_NV_depth_buffer_float] [glDepthRangedNV]</b>  </summary>
-            public static void DepthRanged(double zNear, double zFar) => GLPointers._glDepthRangedNV_fnptr(zNear, zFar);
+            public static void DepthRangedNV(double zNear, double zFar) => GLPointers._glDepthRangedNV_fnptr(zNear, zFar);
             
             /// <summary> <b>[requires: GL_NV_depth_buffer_float] [glClearDepthdNV]</b>  </summary>
-            public static void ClearDepthd(double depth) => GLPointers._glClearDepthdNV_fnptr(depth);
+            public static void ClearDepthdNV(double depth) => GLPointers._glClearDepthdNV_fnptr(depth);
             
             /// <summary> <b>[requires: GL_NV_depth_buffer_float] [glDepthBoundsdNV]</b>  </summary>
-            public static void DepthBoundsd(double zmin, double zmax) => GLPointers._glDepthBoundsdNV_fnptr(zmin, zmax);
+            public static void DepthBoundsdNV(double zmin, double zmax) => GLPointers._glDepthBoundsdNV_fnptr(zmin, zmax);
             
             /// <summary> <b>[requires: GL_NV_draw_texture] [glDrawTextureNV]</b>  </summary>
-            public static void DrawTexture(int texture, int sampler, float x0, float y0, float x1, float y1, float z, float s0, float t0, float s1, float t1) => GLPointers._glDrawTextureNV_fnptr(texture, sampler, x0, y0, x1, y1, z, s0, t0, s1, t1);
+            public static void DrawTextureNV(int texture, int sampler, float x0, float y0, float x1, float y1, float z, float s0, float t0, float s1, float t1) => GLPointers._glDrawTextureNV_fnptr(texture, sampler, x0, y0, x1, y1, z, s0, t0, s1, t1);
             
             /// <summary> <b>[requires: GL_NV_draw_vulkan_image] [glDrawVkImageNV]</b>  </summary>
-            public static void DrawVkImage(ulong vkImage, int sampler, float x0, float y0, float x1, float y1, float z, float s0, float t0, float s1, float t1) => GLPointers._glDrawVkImageNV_fnptr(vkImage, sampler, x0, y0, x1, y1, z, s0, t0, s1, t1);
+            public static void DrawVkImageNV(ulong vkImage, int sampler, float x0, float y0, float x1, float y1, float z, float s0, float t0, float s1, float t1) => GLPointers._glDrawVkImageNV_fnptr(vkImage, sampler, x0, y0, x1, y1, z, s0, t0, s1, t1);
             
             /// <summary> <b>[requires: GL_NV_draw_vulkan_image] [glGetVkProcAddrNV]</b>  </summary>
-            public static IntPtr GetVkProcAddr(byte* name) => GLPointers._glGetVkProcAddrNV_fnptr(name);
+            public static IntPtr GetVkProcAddrNV(byte* name) => GLPointers._glGetVkProcAddrNV_fnptr(name);
             
             /// <summary> <b>[requires: GL_NV_draw_vulkan_image] [glWaitVkSemaphoreNV]</b>  </summary>
-            public static void WaitVkSemaphore(ulong vkSemaphore) => GLPointers._glWaitVkSemaphoreNV_fnptr(vkSemaphore);
+            public static void WaitVkSemaphoreNV(ulong vkSemaphore) => GLPointers._glWaitVkSemaphoreNV_fnptr(vkSemaphore);
             
             /// <summary> <b>[requires: GL_NV_draw_vulkan_image] [glSignalVkSemaphoreNV]</b>  </summary>
-            public static void SignalVkSemaphore(ulong vkSemaphore) => GLPointers._glSignalVkSemaphoreNV_fnptr(vkSemaphore);
+            public static void SignalVkSemaphoreNV(ulong vkSemaphore) => GLPointers._glSignalVkSemaphoreNV_fnptr(vkSemaphore);
             
             /// <summary> <b>[requires: GL_NV_draw_vulkan_image] [glSignalVkFenceNV]</b>  </summary>
-            public static void SignalVkFence(ulong vkFence) => GLPointers._glSignalVkFenceNV_fnptr(vkFence);
+            public static void SignalVkFenceNV(ulong vkFence) => GLPointers._glSignalVkFenceNV_fnptr(vkFence);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glMapControlPointsNV]</b>  </summary>
-            public static void MapControlPoints(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, int uorder, int vorder, bool packed, void* points) => GLPointers._glMapControlPointsNV_fnptr((uint)target, index, (uint)type, ustride, vstride, uorder, vorder, (byte)(packed ? 1 : 0), points);
+            public static void MapControlPointsNV(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, int uorder, int vorder, bool packed, void* points) => GLPointers._glMapControlPointsNV_fnptr((uint)target, index, (uint)type, ustride, vstride, uorder, vorder, (byte)(packed ? 1 : 0), points);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glMapParameterivNV]</b>  </summary>
-            public static void MapParameteriv(EvalTargetNV target, MapParameterNV pname, int* parameters) => GLPointers._glMapParameterivNV_fnptr((uint)target, (uint)pname, parameters);
+            public static void MapParameterivNV(EvalTargetNV target, MapParameterNV pname, int* parameters) => GLPointers._glMapParameterivNV_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glMapParameterfvNV]</b>  </summary>
-            public static void MapParameterfv(EvalTargetNV target, MapParameterNV pname, float* parameters) => GLPointers._glMapParameterfvNV_fnptr((uint)target, (uint)pname, parameters);
+            public static void MapParameterfvNV(EvalTargetNV target, MapParameterNV pname, float* parameters) => GLPointers._glMapParameterfvNV_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glGetMapControlPointsNV]</b>  </summary>
-            public static void GetMapControlPoints(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed, void* points) => GLPointers._glGetMapControlPointsNV_fnptr((uint)target, index, (uint)type, ustride, vstride, (byte)(packed ? 1 : 0), points);
+            public static void GetMapControlPointsNV(EvalTargetNV target, uint index, MapTypeNV type, int ustride, int vstride, bool packed, void* points) => GLPointers._glGetMapControlPointsNV_fnptr((uint)target, index, (uint)type, ustride, vstride, (byte)(packed ? 1 : 0), points);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glGetMapParameterivNV]</b>  </summary>
-            public static void GetMapParameteriv(EvalTargetNV target, MapParameterNV pname, int* parameters) => GLPointers._glGetMapParameterivNV_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetMapParameterivNV(EvalTargetNV target, MapParameterNV pname, int* parameters) => GLPointers._glGetMapParameterivNV_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glGetMapParameterfvNV]</b>  </summary>
-            public static void GetMapParameterfv(EvalTargetNV target, MapParameterNV pname, float* parameters) => GLPointers._glGetMapParameterfvNV_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetMapParameterfvNV(EvalTargetNV target, MapParameterNV pname, float* parameters) => GLPointers._glGetMapParameterfvNV_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glGetMapAttribParameterivNV]</b>  </summary>
-            public static void GetMapAttribParameteriv(EvalTargetNV target, uint index, MapAttribParameterNV pname, int* parameters) => GLPointers._glGetMapAttribParameterivNV_fnptr((uint)target, index, (uint)pname, parameters);
+            public static void GetMapAttribParameterivNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, int* parameters) => GLPointers._glGetMapAttribParameterivNV_fnptr((uint)target, index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glGetMapAttribParameterfvNV]</b>  </summary>
-            public static void GetMapAttribParameterfv(EvalTargetNV target, uint index, MapAttribParameterNV pname, float* parameters) => GLPointers._glGetMapAttribParameterfvNV_fnptr((uint)target, index, (uint)pname, parameters);
+            public static void GetMapAttribParameterfvNV(EvalTargetNV target, uint index, MapAttribParameterNV pname, float* parameters) => GLPointers._glGetMapAttribParameterfvNV_fnptr((uint)target, index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_evaluators] [glEvalMapsNV]</b>  </summary>
-            public static void EvalMaps(EvalTargetNV target, EvalMapsModeNV mode) => GLPointers._glEvalMapsNV_fnptr((uint)target, (uint)mode);
+            public static void EvalMapsNV(EvalTargetNV target, EvalMapsModeNV mode) => GLPointers._glEvalMapsNV_fnptr((uint)target, (uint)mode);
             
             /// <summary> <b>[requires: GL_NV_explicit_multisample] [glGetMultisamplefvNV]</b>  </summary>
-            public static void GetMultisamplefv(GetMultisamplePNameNV pname, uint index, float* val) => GLPointers._glGetMultisamplefvNV_fnptr((uint)pname, index, val);
+            public static void GetMultisamplefvNV(GetMultisamplePNameNV pname, uint index, float* val) => GLPointers._glGetMultisamplefvNV_fnptr((uint)pname, index, val);
             
             /// <summary> <b>[requires: GL_NV_explicit_multisample] [glSampleMaskIndexedNV]</b>  </summary>
-            public static void SampleMaskIndexed(uint index, uint mask) => GLPointers._glSampleMaskIndexedNV_fnptr(index, mask);
+            public static void SampleMaskIndexedNV(uint index, uint mask) => GLPointers._glSampleMaskIndexedNV_fnptr(index, mask);
             
             /// <summary> <b>[requires: GL_NV_explicit_multisample] [glTexRenderbufferNV]</b>  </summary>
-            public static void TexRenderbuffer(TextureTarget target, int renderbuffer) => GLPointers._glTexRenderbufferNV_fnptr((uint)target, renderbuffer);
+            public static void TexRenderbufferNV(TextureTarget target, int renderbuffer) => GLPointers._glTexRenderbufferNV_fnptr((uint)target, renderbuffer);
             
             /// <summary> <b>[requires: GL_NV_fence] [glDeleteFencesNV]</b>  </summary>
-            public static void DeleteFences(int n, uint* fences) => GLPointers._glDeleteFencesNV_fnptr(n, fences);
+            public static void DeleteFencesNV(int n, uint* fences) => GLPointers._glDeleteFencesNV_fnptr(n, fences);
             
             /// <summary> <b>[requires: GL_NV_fence] [glGenFencesNV]</b>  </summary>
-            public static void GenFences(int n, uint* fences) => GLPointers._glGenFencesNV_fnptr(n, fences);
+            public static void GenFencesNV(int n, uint* fences) => GLPointers._glGenFencesNV_fnptr(n, fences);
             
             /// <summary> <b>[requires: GL_NV_fence] [glIsFenceNV]</b>  </summary>
-            public static bool IsFence(uint fence) => GLPointers._glIsFenceNV_fnptr(fence) != 0;
+            public static bool IsFenceNV(uint fence) => GLPointers._glIsFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence] [glTestFenceNV]</b>  </summary>
-            public static bool TestFence(uint fence) => GLPointers._glTestFenceNV_fnptr(fence) != 0;
+            public static bool TestFenceNV(uint fence) => GLPointers._glTestFenceNV_fnptr(fence) != 0;
             
             /// <summary> <b>[requires: GL_NV_fence] [glGetFenceivNV]</b>  </summary>
-            public static void GetFenceiv(uint fence, FenceParameterNameNV pname, int* parameters) => GLPointers._glGetFenceivNV_fnptr(fence, (uint)pname, parameters);
+            public static void GetFenceivNV(uint fence, FenceParameterNameNV pname, int* parameters) => GLPointers._glGetFenceivNV_fnptr(fence, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_fence] [glFinishFenceNV]</b>  </summary>
-            public static void FinishFence(uint fence) => GLPointers._glFinishFenceNV_fnptr(fence);
+            public static void FinishFenceNV(uint fence) => GLPointers._glFinishFenceNV_fnptr(fence);
             
             /// <summary> <b>[requires: GL_NV_fence] [glSetFenceNV]</b>  </summary>
-            public static void SetFence(uint fence, FenceConditionNV condition) => GLPointers._glSetFenceNV_fnptr(fence, (uint)condition);
+            public static void SetFenceNV(uint fence, FenceConditionNV condition) => GLPointers._glSetFenceNV_fnptr(fence, (uint)condition);
             
             /// <summary> <b>[requires: GL_NV_fragment_coverage_to_color] [glFragmentCoverageColorNV]</b>  </summary>
-            public static void FragmentCoverageColor(uint color) => GLPointers._glFragmentCoverageColorNV_fnptr(color);
+            public static void FragmentCoverageColorNV(uint color) => GLPointers._glFragmentCoverageColorNV_fnptr(color);
             
             /// <summary> <b>[requires: GL_NV_fragment_program] [glProgramNamedParameter4fNV]</b>  </summary>
-            public static void ProgramNamedParameter4f(int id, int len, byte* name, float x, float y, float z, float w) => GLPointers._glProgramNamedParameter4fNV_fnptr(id, len, name, x, y, z, w);
+            public static void ProgramNamedParameter4fNV(int id, int len, byte* name, float x, float y, float z, float w) => GLPointers._glProgramNamedParameter4fNV_fnptr(id, len, name, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_fragment_program] [glProgramNamedParameter4fvNV]</b>  </summary>
-            public static void ProgramNamedParameter4fv(int id, int len, byte* name, float* v) => GLPointers._glProgramNamedParameter4fvNV_fnptr(id, len, name, v);
+            public static void ProgramNamedParameter4fvNV(int id, int len, byte* name, float* v) => GLPointers._glProgramNamedParameter4fvNV_fnptr(id, len, name, v);
             
             /// <summary> <b>[requires: GL_NV_fragment_program] [glProgramNamedParameter4dNV]</b>  </summary>
-            public static void ProgramNamedParameter4d(int id, int len, byte* name, double x, double y, double z, double w) => GLPointers._glProgramNamedParameter4dNV_fnptr(id, len, name, x, y, z, w);
+            public static void ProgramNamedParameter4dNV(int id, int len, byte* name, double x, double y, double z, double w) => GLPointers._glProgramNamedParameter4dNV_fnptr(id, len, name, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_fragment_program] [glProgramNamedParameter4dvNV]</b>  </summary>
-            public static void ProgramNamedParameter4dv(int id, int len, byte* name, double* v) => GLPointers._glProgramNamedParameter4dvNV_fnptr(id, len, name, v);
+            public static void ProgramNamedParameter4dvNV(int id, int len, byte* name, double* v) => GLPointers._glProgramNamedParameter4dvNV_fnptr(id, len, name, v);
             
             /// <summary> <b>[requires: GL_NV_fragment_program] [glGetProgramNamedParameterfvNV]</b>  </summary>
-            public static void GetProgramNamedParameterfv(int id, int len, byte* name, float* parameters) => GLPointers._glGetProgramNamedParameterfvNV_fnptr(id, len, name, parameters);
+            public static void GetProgramNamedParameterfvNV(int id, int len, byte* name, float* parameters) => GLPointers._glGetProgramNamedParameterfvNV_fnptr(id, len, name, parameters);
             
             /// <summary> <b>[requires: GL_NV_fragment_program] [glGetProgramNamedParameterdvNV]</b>  </summary>
-            public static void GetProgramNamedParameterdv(int id, int len, byte* name, double* parameters) => GLPointers._glGetProgramNamedParameterdvNV_fnptr(id, len, name, parameters);
+            public static void GetProgramNamedParameterdvNV(int id, int len, byte* name, double* parameters) => GLPointers._glGetProgramNamedParameterdvNV_fnptr(id, len, name, parameters);
             
             /// <summary> <b>[requires: GL_EXT_raster_multisample | GL_NV_framebuffer_mixed_samples] [glRasterSamplesEXT]</b>  </summary>
             public static void RasterSamplesEXT(uint samples, bool fixedsamplelocations) => GLPointers._glRasterSamplesEXT_fnptr(samples, (byte)(fixedsamplelocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_framebuffer_mixed_samples] [glCoverageModulationTableNV]</b>  </summary>
-            public static void CoverageModulationTable(int n, float* v) => GLPointers._glCoverageModulationTableNV_fnptr(n, v);
+            public static void CoverageModulationTableNV(int n, float* v) => GLPointers._glCoverageModulationTableNV_fnptr(n, v);
             
             /// <summary> <b>[requires: GL_NV_framebuffer_mixed_samples] [glGetCoverageModulationTableNV]</b>  </summary>
-            public static void GetCoverageModulationTable(int bufSize, float* v) => GLPointers._glGetCoverageModulationTableNV_fnptr(bufSize, v);
+            public static void GetCoverageModulationTableNV(int bufSize, float* v) => GLPointers._glGetCoverageModulationTableNV_fnptr(bufSize, v);
             
             /// <summary> <b>[requires: GL_NV_framebuffer_mixed_samples] [glCoverageModulationNV]</b>  </summary>
-            public static void CoverageModulation(All components) => GLPointers._glCoverageModulationNV_fnptr((uint)components);
+            public static void CoverageModulationNV(All components) => GLPointers._glCoverageModulationNV_fnptr((uint)components);
             
             /// <summary> <b>[requires: GL_NV_framebuffer_multisample_coverage] [glRenderbufferStorageMultisampleCoverageNV]</b>  </summary>
-            public static void RenderbufferStorageMultisampleCoverage(RenderbufferTarget target, int coverageSamples, int colorSamples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (uint)internalformat, width, height);
+            public static void RenderbufferStorageMultisampleCoverageNV(RenderbufferTarget target, int coverageSamples, int colorSamples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (uint)internalformat, width, height);
             
             /// <summary> <b>[requires: GL_NV_geometry_program4] [glProgramVertexLimitNV]</b>  </summary>
-            public static void ProgramVertexLimit(ProgramTarget target, int limit) => GLPointers._glProgramVertexLimitNV_fnptr((uint)target, limit);
+            public static void ProgramVertexLimitNV(ProgramTarget target, int limit) => GLPointers._glProgramVertexLimitNV_fnptr((uint)target, limit);
             
             /// <summary> <b>[requires: GL_NV_geometry_program4] [glFramebufferTextureEXT]</b>  </summary>
             public static void FramebufferTextureEXT(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level) => GLPointers._glFramebufferTextureEXT_fnptr((uint)target, (uint)attachment, texture, level);
@@ -10977,577 +10977,577 @@ namespace OpenTK.Graphics.OpenGL
             public static void FramebufferTextureFaceEXT(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, TextureTarget face) => GLPointers._glFramebufferTextureFaceEXT_fnptr((uint)target, (uint)attachment, texture, level, (uint)face);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramLocalParameterI4iNV]</b>  </summary>
-            public static void ProgramLocalParameterI4i(ProgramTarget target, uint index, int x, int y, int z, int w) => GLPointers._glProgramLocalParameterI4iNV_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramLocalParameterI4iNV(ProgramTarget target, uint index, int x, int y, int z, int w) => GLPointers._glProgramLocalParameterI4iNV_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramLocalParameterI4ivNV]</b>  </summary>
-            public static void ProgramLocalParameterI4iv(ProgramTarget target, uint index, int* parameters) => GLPointers._glProgramLocalParameterI4ivNV_fnptr((uint)target, index, parameters);
+            public static void ProgramLocalParameterI4ivNV(ProgramTarget target, uint index, int* parameters) => GLPointers._glProgramLocalParameterI4ivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramLocalParametersI4ivNV]</b>  </summary>
-            public static void ProgramLocalParametersI4iv(ProgramTarget target, uint index, int count, int* parameters) => GLPointers._glProgramLocalParametersI4ivNV_fnptr((uint)target, index, count, parameters);
+            public static void ProgramLocalParametersI4ivNV(ProgramTarget target, uint index, int count, int* parameters) => GLPointers._glProgramLocalParametersI4ivNV_fnptr((uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramLocalParameterI4uiNV]</b>  </summary>
-            public static void ProgramLocalParameterI4ui(ProgramTarget target, uint index, uint x, uint y, uint z, uint w) => GLPointers._glProgramLocalParameterI4uiNV_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramLocalParameterI4uiNV(ProgramTarget target, uint index, uint x, uint y, uint z, uint w) => GLPointers._glProgramLocalParameterI4uiNV_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramLocalParameterI4uivNV]</b>  </summary>
-            public static void ProgramLocalParameterI4uiv(ProgramTarget target, uint index, uint* parameters) => GLPointers._glProgramLocalParameterI4uivNV_fnptr((uint)target, index, parameters);
+            public static void ProgramLocalParameterI4uivNV(ProgramTarget target, uint index, uint* parameters) => GLPointers._glProgramLocalParameterI4uivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramLocalParametersI4uivNV]</b>  </summary>
-            public static void ProgramLocalParametersI4uiv(ProgramTarget target, uint index, int count, uint* parameters) => GLPointers._glProgramLocalParametersI4uivNV_fnptr((uint)target, index, count, parameters);
+            public static void ProgramLocalParametersI4uivNV(ProgramTarget target, uint index, int count, uint* parameters) => GLPointers._glProgramLocalParametersI4uivNV_fnptr((uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramEnvParameterI4iNV]</b>  </summary>
-            public static void ProgramEnvParameterI4i(ProgramTarget target, uint index, int x, int y, int z, int w) => GLPointers._glProgramEnvParameterI4iNV_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramEnvParameterI4iNV(ProgramTarget target, uint index, int x, int y, int z, int w) => GLPointers._glProgramEnvParameterI4iNV_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramEnvParameterI4ivNV]</b>  </summary>
-            public static void ProgramEnvParameterI4iv(ProgramTarget target, uint index, int* parameters) => GLPointers._glProgramEnvParameterI4ivNV_fnptr((uint)target, index, parameters);
+            public static void ProgramEnvParameterI4ivNV(ProgramTarget target, uint index, int* parameters) => GLPointers._glProgramEnvParameterI4ivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramEnvParametersI4ivNV]</b>  </summary>
-            public static void ProgramEnvParametersI4iv(ProgramTarget target, uint index, int count, int* parameters) => GLPointers._glProgramEnvParametersI4ivNV_fnptr((uint)target, index, count, parameters);
+            public static void ProgramEnvParametersI4ivNV(ProgramTarget target, uint index, int count, int* parameters) => GLPointers._glProgramEnvParametersI4ivNV_fnptr((uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramEnvParameterI4uiNV]</b>  </summary>
-            public static void ProgramEnvParameterI4ui(ProgramTarget target, uint index, uint x, uint y, uint z, uint w) => GLPointers._glProgramEnvParameterI4uiNV_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramEnvParameterI4uiNV(ProgramTarget target, uint index, uint x, uint y, uint z, uint w) => GLPointers._glProgramEnvParameterI4uiNV_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramEnvParameterI4uivNV]</b>  </summary>
-            public static void ProgramEnvParameterI4uiv(ProgramTarget target, uint index, uint* parameters) => GLPointers._glProgramEnvParameterI4uivNV_fnptr((uint)target, index, parameters);
+            public static void ProgramEnvParameterI4uivNV(ProgramTarget target, uint index, uint* parameters) => GLPointers._glProgramEnvParameterI4uivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glProgramEnvParametersI4uivNV]</b>  </summary>
-            public static void ProgramEnvParametersI4uiv(ProgramTarget target, uint index, int count, uint* parameters) => GLPointers._glProgramEnvParametersI4uivNV_fnptr((uint)target, index, count, parameters);
+            public static void ProgramEnvParametersI4uivNV(ProgramTarget target, uint index, int count, uint* parameters) => GLPointers._glProgramEnvParametersI4uivNV_fnptr((uint)target, index, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glGetProgramLocalParameterIivNV]</b>  </summary>
-            public static void GetProgramLocalParameterIiv(ProgramTarget target, uint index, int* parameters) => GLPointers._glGetProgramLocalParameterIivNV_fnptr((uint)target, index, parameters);
+            public static void GetProgramLocalParameterIivNV(ProgramTarget target, uint index, int* parameters) => GLPointers._glGetProgramLocalParameterIivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glGetProgramLocalParameterIuivNV]</b>  </summary>
-            public static void GetProgramLocalParameterIuiv(ProgramTarget target, uint index, uint* parameters) => GLPointers._glGetProgramLocalParameterIuivNV_fnptr((uint)target, index, parameters);
+            public static void GetProgramLocalParameterIuivNV(ProgramTarget target, uint index, uint* parameters) => GLPointers._glGetProgramLocalParameterIuivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glGetProgramEnvParameterIivNV]</b>  </summary>
-            public static void GetProgramEnvParameterIiv(ProgramTarget target, uint index, int* parameters) => GLPointers._glGetProgramEnvParameterIivNV_fnptr((uint)target, index, parameters);
+            public static void GetProgramEnvParameterIivNV(ProgramTarget target, uint index, int* parameters) => GLPointers._glGetProgramEnvParameterIivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program4] [glGetProgramEnvParameterIuivNV]</b>  </summary>
-            public static void GetProgramEnvParameterIuiv(ProgramTarget target, uint index, uint* parameters) => GLPointers._glGetProgramEnvParameterIuivNV_fnptr((uint)target, index, parameters);
+            public static void GetProgramEnvParameterIuivNV(ProgramTarget target, uint index, uint* parameters) => GLPointers._glGetProgramEnvParameterIuivNV_fnptr((uint)target, index, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program5] [glProgramSubroutineParametersuivNV]</b>  </summary>
-            public static void ProgramSubroutineParametersuiv(All target, int count, uint* parameters) => GLPointers._glProgramSubroutineParametersuivNV_fnptr((uint)target, count, parameters);
+            public static void ProgramSubroutineParametersuivNV(All target, int count, uint* parameters) => GLPointers._glProgramSubroutineParametersuivNV_fnptr((uint)target, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_program5] [glGetProgramSubroutineParameteruivNV]</b>  </summary>
-            public static void GetProgramSubroutineParameteruiv(All target, uint index, uint* param) => GLPointers._glGetProgramSubroutineParameteruivNV_fnptr((uint)target, index, param);
+            public static void GetProgramSubroutineParameteruivNV(All target, uint index, uint* param) => GLPointers._glGetProgramSubroutineParameteruivNV_fnptr((uint)target, index, param);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform1i64NV]</b>  </summary>
-            public static void Uniform1i64(int location, long x) => GLPointers._glUniform1i64NV_fnptr(location, x);
+            public static void Uniform1i64NV(int location, long x) => GLPointers._glUniform1i64NV_fnptr(location, x);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform2i64NV]</b>  </summary>
-            public static void Uniform2i64(int location, long x, long y) => GLPointers._glUniform2i64NV_fnptr(location, x, y);
+            public static void Uniform2i64NV(int location, long x, long y) => GLPointers._glUniform2i64NV_fnptr(location, x, y);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform3i64NV]</b>  </summary>
-            public static void Uniform3i64(int location, long x, long y, long z) => GLPointers._glUniform3i64NV_fnptr(location, x, y, z);
+            public static void Uniform3i64NV(int location, long x, long y, long z) => GLPointers._glUniform3i64NV_fnptr(location, x, y, z);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform4i64NV]</b>  </summary>
-            public static void Uniform4i64(int location, long x, long y, long z, long w) => GLPointers._glUniform4i64NV_fnptr(location, x, y, z, w);
+            public static void Uniform4i64NV(int location, long x, long y, long z, long w) => GLPointers._glUniform4i64NV_fnptr(location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform1i64vNV]</b>  </summary>
-            public static void Uniform1i64v(int location, int count, long* value) => GLPointers._glUniform1i64vNV_fnptr(location, count, value);
+            public static void Uniform1i64vNV(int location, int count, long* value) => GLPointers._glUniform1i64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform2i64vNV]</b>  </summary>
-            public static void Uniform2i64v(int location, int count, long* value) => GLPointers._glUniform2i64vNV_fnptr(location, count, value);
+            public static void Uniform2i64vNV(int location, int count, long* value) => GLPointers._glUniform2i64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform3i64vNV]</b>  </summary>
-            public static void Uniform3i64v(int location, int count, long* value) => GLPointers._glUniform3i64vNV_fnptr(location, count, value);
+            public static void Uniform3i64vNV(int location, int count, long* value) => GLPointers._glUniform3i64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform4i64vNV]</b>  </summary>
-            public static void Uniform4i64v(int location, int count, long* value) => GLPointers._glUniform4i64vNV_fnptr(location, count, value);
+            public static void Uniform4i64vNV(int location, int count, long* value) => GLPointers._glUniform4i64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform1ui64NV]</b>  </summary>
-            public static void Uniform1ui64(int location, ulong x) => GLPointers._glUniform1ui64NV_fnptr(location, x);
+            public static void Uniform1ui64NV(int location, ulong x) => GLPointers._glUniform1ui64NV_fnptr(location, x);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform2ui64NV]</b>  </summary>
-            public static void Uniform2ui64(int location, ulong x, ulong y) => GLPointers._glUniform2ui64NV_fnptr(location, x, y);
+            public static void Uniform2ui64NV(int location, ulong x, ulong y) => GLPointers._glUniform2ui64NV_fnptr(location, x, y);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform3ui64NV]</b>  </summary>
-            public static void Uniform3ui64(int location, ulong x, ulong y, ulong z) => GLPointers._glUniform3ui64NV_fnptr(location, x, y, z);
+            public static void Uniform3ui64NV(int location, ulong x, ulong y, ulong z) => GLPointers._glUniform3ui64NV_fnptr(location, x, y, z);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform4ui64NV]</b>  </summary>
-            public static void Uniform4ui64(int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glUniform4ui64NV_fnptr(location, x, y, z, w);
+            public static void Uniform4ui64NV(int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glUniform4ui64NV_fnptr(location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform1ui64vNV]</b>  </summary>
-            public static void Uniform1ui64v(int location, int count, ulong* value) => GLPointers._glUniform1ui64vNV_fnptr(location, count, value);
+            public static void Uniform1ui64vNV(int location, int count, ulong* value) => GLPointers._glUniform1ui64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform2ui64vNV]</b>  </summary>
-            public static void Uniform2ui64v(int location, int count, ulong* value) => GLPointers._glUniform2ui64vNV_fnptr(location, count, value);
+            public static void Uniform2ui64vNV(int location, int count, ulong* value) => GLPointers._glUniform2ui64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform3ui64vNV]</b>  </summary>
-            public static void Uniform3ui64v(int location, int count, ulong* value) => GLPointers._glUniform3ui64vNV_fnptr(location, count, value);
+            public static void Uniform3ui64vNV(int location, int count, ulong* value) => GLPointers._glUniform3ui64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glUniform4ui64vNV]</b>  </summary>
-            public static void Uniform4ui64v(int location, int count, ulong* value) => GLPointers._glUniform4ui64vNV_fnptr(location, count, value);
+            public static void Uniform4ui64vNV(int location, int count, ulong* value) => GLPointers._glUniform4ui64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glGetUniformi64vNV]</b>  </summary>
-            public static void GetUniformi64v(int program, int location, long* parameters) => GLPointers._glGetUniformi64vNV_fnptr(program, location, parameters);
+            public static void GetUniformi64vNV(int program, int location, long* parameters) => GLPointers._glGetUniformi64vNV_fnptr(program, location, parameters);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform1i64NV]</b>  </summary>
-            public static void ProgramUniform1i64(int program, int location, long x) => GLPointers._glProgramUniform1i64NV_fnptr(program, location, x);
+            public static void ProgramUniform1i64NV(int program, int location, long x) => GLPointers._glProgramUniform1i64NV_fnptr(program, location, x);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform2i64NV]</b>  </summary>
-            public static void ProgramUniform2i64(int program, int location, long x, long y) => GLPointers._glProgramUniform2i64NV_fnptr(program, location, x, y);
+            public static void ProgramUniform2i64NV(int program, int location, long x, long y) => GLPointers._glProgramUniform2i64NV_fnptr(program, location, x, y);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform3i64NV]</b>  </summary>
-            public static void ProgramUniform3i64(int program, int location, long x, long y, long z) => GLPointers._glProgramUniform3i64NV_fnptr(program, location, x, y, z);
+            public static void ProgramUniform3i64NV(int program, int location, long x, long y, long z) => GLPointers._glProgramUniform3i64NV_fnptr(program, location, x, y, z);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform4i64NV]</b>  </summary>
-            public static void ProgramUniform4i64(int program, int location, long x, long y, long z, long w) => GLPointers._glProgramUniform4i64NV_fnptr(program, location, x, y, z, w);
+            public static void ProgramUniform4i64NV(int program, int location, long x, long y, long z, long w) => GLPointers._glProgramUniform4i64NV_fnptr(program, location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform1i64vNV]</b>  </summary>
-            public static void ProgramUniform1i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform1i64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform1i64vNV(int program, int location, int count, long* value) => GLPointers._glProgramUniform1i64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform2i64vNV]</b>  </summary>
-            public static void ProgramUniform2i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform2i64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform2i64vNV(int program, int location, int count, long* value) => GLPointers._glProgramUniform2i64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform3i64vNV]</b>  </summary>
-            public static void ProgramUniform3i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform3i64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform3i64vNV(int program, int location, int count, long* value) => GLPointers._glProgramUniform3i64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform4i64vNV]</b>  </summary>
-            public static void ProgramUniform4i64v(int program, int location, int count, long* value) => GLPointers._glProgramUniform4i64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform4i64vNV(int program, int location, int count, long* value) => GLPointers._glProgramUniform4i64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform1ui64NV]</b>  </summary>
-            public static void ProgramUniform1ui64(int program, int location, ulong x) => GLPointers._glProgramUniform1ui64NV_fnptr(program, location, x);
+            public static void ProgramUniform1ui64NV(int program, int location, ulong x) => GLPointers._glProgramUniform1ui64NV_fnptr(program, location, x);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform2ui64NV]</b>  </summary>
-            public static void ProgramUniform2ui64(int program, int location, ulong x, ulong y) => GLPointers._glProgramUniform2ui64NV_fnptr(program, location, x, y);
+            public static void ProgramUniform2ui64NV(int program, int location, ulong x, ulong y) => GLPointers._glProgramUniform2ui64NV_fnptr(program, location, x, y);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform3ui64NV]</b>  </summary>
-            public static void ProgramUniform3ui64(int program, int location, ulong x, ulong y, ulong z) => GLPointers._glProgramUniform3ui64NV_fnptr(program, location, x, y, z);
+            public static void ProgramUniform3ui64NV(int program, int location, ulong x, ulong y, ulong z) => GLPointers._glProgramUniform3ui64NV_fnptr(program, location, x, y, z);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform4ui64NV]</b>  </summary>
-            public static void ProgramUniform4ui64(int program, int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glProgramUniform4ui64NV_fnptr(program, location, x, y, z, w);
+            public static void ProgramUniform4ui64NV(int program, int location, ulong x, ulong y, ulong z, ulong w) => GLPointers._glProgramUniform4ui64NV_fnptr(program, location, x, y, z, w);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform1ui64vNV]</b>  </summary>
-            public static void ProgramUniform1ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform1ui64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform1ui64vNV(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform1ui64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform2ui64vNV]</b>  </summary>
-            public static void ProgramUniform2ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform2ui64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform2ui64vNV(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform2ui64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform3ui64vNV]</b>  </summary>
-            public static void ProgramUniform3ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform3ui64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform3ui64vNV(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform3ui64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_gpu_shader5] [glProgramUniform4ui64vNV]</b>  </summary>
-            public static void ProgramUniform4ui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform4ui64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniform4ui64vNV(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform4ui64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertex2hNV]</b>  </summary>
-            public static void Vertex2h(Half x, Half y) => GLPointers._glVertex2hNV_fnptr((ushort)x, (ushort)y);
+            public static void Vertex2hNV(Half x, Half y) => GLPointers._glVertex2hNV_fnptr((ushort)x, (ushort)y);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertex2hvNV]</b>  </summary>
-            public static void Vertex2hv(Half* v) => GLPointers._glVertex2hvNV_fnptr((ushort*)v);
+            public static void Vertex2hvNV(Half* v) => GLPointers._glVertex2hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertex3hNV]</b>  </summary>
-            public static void Vertex3h(Half x, Half y, Half z) => GLPointers._glVertex3hNV_fnptr((ushort)x, (ushort)y, (ushort)z);
+            public static void Vertex3hNV(Half x, Half y, Half z) => GLPointers._glVertex3hNV_fnptr((ushort)x, (ushort)y, (ushort)z);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertex3hvNV]</b>  </summary>
-            public static void Vertex3hv(Half* v) => GLPointers._glVertex3hvNV_fnptr((ushort*)v);
+            public static void Vertex3hvNV(Half* v) => GLPointers._glVertex3hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertex4hNV]</b>  </summary>
-            public static void Vertex4h(Half x, Half y, Half z, Half w) => GLPointers._glVertex4hNV_fnptr((ushort)x, (ushort)y, (ushort)z, (ushort)w);
+            public static void Vertex4hNV(Half x, Half y, Half z, Half w) => GLPointers._glVertex4hNV_fnptr((ushort)x, (ushort)y, (ushort)z, (ushort)w);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertex4hvNV]</b>  </summary>
-            public static void Vertex4hv(Half* v) => GLPointers._glVertex4hvNV_fnptr((ushort*)v);
+            public static void Vertex4hvNV(Half* v) => GLPointers._glVertex4hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glNormal3hNV]</b>  </summary>
-            public static void Normal3h(Half nx, Half ny, Half nz) => GLPointers._glNormal3hNV_fnptr((ushort)nx, (ushort)ny, (ushort)nz);
+            public static void Normal3hNV(Half nx, Half ny, Half nz) => GLPointers._glNormal3hNV_fnptr((ushort)nx, (ushort)ny, (ushort)nz);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glNormal3hvNV]</b>  </summary>
-            public static void Normal3hv(Half* v) => GLPointers._glNormal3hvNV_fnptr((ushort*)v);
+            public static void Normal3hvNV(Half* v) => GLPointers._glNormal3hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glColor3hNV]</b>  </summary>
-            public static void Color3h(Half red, Half green, Half blue) => GLPointers._glColor3hNV_fnptr((ushort)red, (ushort)green, (ushort)blue);
+            public static void Color3hNV(Half red, Half green, Half blue) => GLPointers._glColor3hNV_fnptr((ushort)red, (ushort)green, (ushort)blue);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glColor3hvNV]</b>  </summary>
-            public static void Color3hv(Half* v) => GLPointers._glColor3hvNV_fnptr((ushort*)v);
+            public static void Color3hvNV(Half* v) => GLPointers._glColor3hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glColor4hNV]</b>  </summary>
-            public static void Color4h(Half red, Half green, Half blue, Half alpha) => GLPointers._glColor4hNV_fnptr((ushort)red, (ushort)green, (ushort)blue, (ushort)alpha);
+            public static void Color4hNV(Half red, Half green, Half blue, Half alpha) => GLPointers._glColor4hNV_fnptr((ushort)red, (ushort)green, (ushort)blue, (ushort)alpha);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glColor4hvNV]</b>  </summary>
-            public static void Color4hv(Half* v) => GLPointers._glColor4hvNV_fnptr((ushort*)v);
+            public static void Color4hvNV(Half* v) => GLPointers._glColor4hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord1hNV]</b>  </summary>
-            public static void TexCoord1h(Half s) => GLPointers._glTexCoord1hNV_fnptr((ushort)s);
+            public static void TexCoord1hNV(Half s) => GLPointers._glTexCoord1hNV_fnptr((ushort)s);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord1hvNV]</b>  </summary>
-            public static void TexCoord1hv(Half* v) => GLPointers._glTexCoord1hvNV_fnptr((ushort*)v);
+            public static void TexCoord1hvNV(Half* v) => GLPointers._glTexCoord1hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord2hNV]</b>  </summary>
-            public static void TexCoord2h(Half s, Half t) => GLPointers._glTexCoord2hNV_fnptr((ushort)s, (ushort)t);
+            public static void TexCoord2hNV(Half s, Half t) => GLPointers._glTexCoord2hNV_fnptr((ushort)s, (ushort)t);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord2hvNV]</b>  </summary>
-            public static void TexCoord2hv(Half* v) => GLPointers._glTexCoord2hvNV_fnptr((ushort*)v);
+            public static void TexCoord2hvNV(Half* v) => GLPointers._glTexCoord2hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord3hNV]</b>  </summary>
-            public static void TexCoord3h(Half s, Half t, Half r) => GLPointers._glTexCoord3hNV_fnptr((ushort)s, (ushort)t, (ushort)r);
+            public static void TexCoord3hNV(Half s, Half t, Half r) => GLPointers._glTexCoord3hNV_fnptr((ushort)s, (ushort)t, (ushort)r);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord3hvNV]</b>  </summary>
-            public static void TexCoord3hv(Half* v) => GLPointers._glTexCoord3hvNV_fnptr((ushort*)v);
+            public static void TexCoord3hvNV(Half* v) => GLPointers._glTexCoord3hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord4hNV]</b>  </summary>
-            public static void TexCoord4h(Half s, Half t, Half r, Half q) => GLPointers._glTexCoord4hNV_fnptr((ushort)s, (ushort)t, (ushort)r, (ushort)q);
+            public static void TexCoord4hNV(Half s, Half t, Half r, Half q) => GLPointers._glTexCoord4hNV_fnptr((ushort)s, (ushort)t, (ushort)r, (ushort)q);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glTexCoord4hvNV]</b>  </summary>
-            public static void TexCoord4hv(Half* v) => GLPointers._glTexCoord4hvNV_fnptr((ushort*)v);
+            public static void TexCoord4hvNV(Half* v) => GLPointers._glTexCoord4hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord1hNV]</b>  </summary>
-            public static void MultiTexCoord1h(TextureUnit target, Half s) => GLPointers._glMultiTexCoord1hNV_fnptr((uint)target, (ushort)s);
+            public static void MultiTexCoord1hNV(TextureUnit target, Half s) => GLPointers._glMultiTexCoord1hNV_fnptr((uint)target, (ushort)s);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord1hvNV]</b>  </summary>
-            public static void MultiTexCoord1hv(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord1hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord1hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord1hvNV_fnptr((uint)target, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord2hNV]</b>  </summary>
-            public static void MultiTexCoord2h(TextureUnit target, Half s, Half t) => GLPointers._glMultiTexCoord2hNV_fnptr((uint)target, (ushort)s, (ushort)t);
+            public static void MultiTexCoord2hNV(TextureUnit target, Half s, Half t) => GLPointers._glMultiTexCoord2hNV_fnptr((uint)target, (ushort)s, (ushort)t);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord2hvNV]</b>  </summary>
-            public static void MultiTexCoord2hv(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord2hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord2hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord2hvNV_fnptr((uint)target, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord3hNV]</b>  </summary>
-            public static void MultiTexCoord3h(TextureUnit target, Half s, Half t, Half r) => GLPointers._glMultiTexCoord3hNV_fnptr((uint)target, (ushort)s, (ushort)t, (ushort)r);
+            public static void MultiTexCoord3hNV(TextureUnit target, Half s, Half t, Half r) => GLPointers._glMultiTexCoord3hNV_fnptr((uint)target, (ushort)s, (ushort)t, (ushort)r);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord3hvNV]</b>  </summary>
-            public static void MultiTexCoord3hv(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord3hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord3hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord3hvNV_fnptr((uint)target, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord4hNV]</b>  </summary>
-            public static void MultiTexCoord4h(TextureUnit target, Half s, Half t, Half r, Half q) => GLPointers._glMultiTexCoord4hNV_fnptr((uint)target, (ushort)s, (ushort)t, (ushort)r, (ushort)q);
+            public static void MultiTexCoord4hNV(TextureUnit target, Half s, Half t, Half r, Half q) => GLPointers._glMultiTexCoord4hNV_fnptr((uint)target, (ushort)s, (ushort)t, (ushort)r, (ushort)q);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glMultiTexCoord4hvNV]</b>  </summary>
-            public static void MultiTexCoord4hv(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord4hvNV_fnptr((uint)target, (ushort*)v);
+            public static void MultiTexCoord4hvNV(TextureUnit target, Half* v) => GLPointers._glMultiTexCoord4hvNV_fnptr((uint)target, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glFogCoordhNV]</b>  </summary>
-            public static void FogCoordh(Half fog) => GLPointers._glFogCoordhNV_fnptr((ushort)fog);
+            public static void FogCoordhNV(Half fog) => GLPointers._glFogCoordhNV_fnptr((ushort)fog);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glFogCoordhvNV]</b>  </summary>
-            public static void FogCoordhv(Half* fog) => GLPointers._glFogCoordhvNV_fnptr((ushort*)fog);
+            public static void FogCoordhvNV(Half* fog) => GLPointers._glFogCoordhvNV_fnptr((ushort*)fog);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glSecondaryColor3hNV]</b>  </summary>
-            public static void SecondaryColor3h(Half red, Half green, Half blue) => GLPointers._glSecondaryColor3hNV_fnptr((ushort)red, (ushort)green, (ushort)blue);
+            public static void SecondaryColor3hNV(Half red, Half green, Half blue) => GLPointers._glSecondaryColor3hNV_fnptr((ushort)red, (ushort)green, (ushort)blue);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glSecondaryColor3hvNV]</b>  </summary>
-            public static void SecondaryColor3hv(Half* v) => GLPointers._glSecondaryColor3hvNV_fnptr((ushort*)v);
+            public static void SecondaryColor3hvNV(Half* v) => GLPointers._glSecondaryColor3hvNV_fnptr((ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexWeighthNV]</b>  </summary>
-            public static void VertexWeighth(Half weight) => GLPointers._glVertexWeighthNV_fnptr((ushort)weight);
+            public static void VertexWeighthNV(Half weight) => GLPointers._glVertexWeighthNV_fnptr((ushort)weight);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexWeighthvNV]</b>  </summary>
-            public static void VertexWeighthv(Half* weight) => GLPointers._glVertexWeighthvNV_fnptr((ushort*)weight);
+            public static void VertexWeighthvNV(Half* weight) => GLPointers._glVertexWeighthvNV_fnptr((ushort*)weight);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib1hNV]</b>  </summary>
-            public static void VertexAttrib1h(uint index, Half x) => GLPointers._glVertexAttrib1hNV_fnptr(index, (ushort)x);
+            public static void VertexAttrib1hNV(uint index, Half x) => GLPointers._glVertexAttrib1hNV_fnptr(index, (ushort)x);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib1hvNV]</b>  </summary>
-            public static void VertexAttrib1hv(uint index, Half* v) => GLPointers._glVertexAttrib1hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib1hvNV(uint index, Half* v) => GLPointers._glVertexAttrib1hvNV_fnptr(index, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib2hNV]</b>  </summary>
-            public static void VertexAttrib2h(uint index, Half x, Half y) => GLPointers._glVertexAttrib2hNV_fnptr(index, (ushort)x, (ushort)y);
+            public static void VertexAttrib2hNV(uint index, Half x, Half y) => GLPointers._glVertexAttrib2hNV_fnptr(index, (ushort)x, (ushort)y);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib2hvNV]</b>  </summary>
-            public static void VertexAttrib2hv(uint index, Half* v) => GLPointers._glVertexAttrib2hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib2hvNV(uint index, Half* v) => GLPointers._glVertexAttrib2hvNV_fnptr(index, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib3hNV]</b>  </summary>
-            public static void VertexAttrib3h(uint index, Half x, Half y, Half z) => GLPointers._glVertexAttrib3hNV_fnptr(index, (ushort)x, (ushort)y, (ushort)z);
+            public static void VertexAttrib3hNV(uint index, Half x, Half y, Half z) => GLPointers._glVertexAttrib3hNV_fnptr(index, (ushort)x, (ushort)y, (ushort)z);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib3hvNV]</b>  </summary>
-            public static void VertexAttrib3hv(uint index, Half* v) => GLPointers._glVertexAttrib3hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib3hvNV(uint index, Half* v) => GLPointers._glVertexAttrib3hvNV_fnptr(index, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib4hNV]</b>  </summary>
-            public static void VertexAttrib4h(uint index, Half x, Half y, Half z, Half w) => GLPointers._glVertexAttrib4hNV_fnptr(index, (ushort)x, (ushort)y, (ushort)z, (ushort)w);
+            public static void VertexAttrib4hNV(uint index, Half x, Half y, Half z, Half w) => GLPointers._glVertexAttrib4hNV_fnptr(index, (ushort)x, (ushort)y, (ushort)z, (ushort)w);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttrib4hvNV]</b>  </summary>
-            public static void VertexAttrib4hv(uint index, Half* v) => GLPointers._glVertexAttrib4hvNV_fnptr(index, (ushort*)v);
+            public static void VertexAttrib4hvNV(uint index, Half* v) => GLPointers._glVertexAttrib4hvNV_fnptr(index, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttribs1hvNV]</b>  </summary>
-            public static void VertexAttribs1hv(uint index, int n, Half* v) => GLPointers._glVertexAttribs1hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs1hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs1hvNV_fnptr(index, n, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttribs2hvNV]</b>  </summary>
-            public static void VertexAttribs2hv(uint index, int n, Half* v) => GLPointers._glVertexAttribs2hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs2hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs2hvNV_fnptr(index, n, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttribs3hvNV]</b>  </summary>
-            public static void VertexAttribs3hv(uint index, int n, Half* v) => GLPointers._glVertexAttribs3hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs3hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs3hvNV_fnptr(index, n, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_half_float] [glVertexAttribs4hvNV]</b>  </summary>
-            public static void VertexAttribs4hv(uint index, int n, Half* v) => GLPointers._glVertexAttribs4hvNV_fnptr(index, n, (ushort*)v);
+            public static void VertexAttribs4hvNV(uint index, int n, Half* v) => GLPointers._glVertexAttribs4hvNV_fnptr(index, n, (ushort*)v);
             
             /// <summary> <b>[requires: GL_NV_internalformat_sample_query] [glGetInternalformatSampleivNV]</b>  </summary>
-            public static void GetInternalformatSampleiv(TextureTarget target, InternalFormat internalformat, int samples, InternalFormatPName pname, int count, int* parameters) => GLPointers._glGetInternalformatSampleivNV_fnptr((uint)target, (uint)internalformat, samples, (uint)pname, count, parameters);
+            public static void GetInternalformatSampleivNV(TextureTarget target, InternalFormat internalformat, int samples, InternalFormatPName pname, int count, int* parameters) => GLPointers._glGetInternalformatSampleivNV_fnptr((uint)target, (uint)internalformat, samples, (uint)pname, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glRenderGpuMaskNV]</b>  </summary>
-            public static void RenderGpuMask(uint mask) => GLPointers._glRenderGpuMaskNV_fnptr(mask);
+            public static void RenderGpuMaskNV(uint mask) => GLPointers._glRenderGpuMaskNV_fnptr(mask);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastBufferSubDataNV]</b>  </summary>
-            public static void MulticastBufferSubData(uint gpuMask, int buffer, IntPtr offset, nint size, void* data) => GLPointers._glMulticastBufferSubDataNV_fnptr(gpuMask, buffer, offset, size, data);
+            public static void MulticastBufferSubDataNV(uint gpuMask, int buffer, IntPtr offset, nint size, void* data) => GLPointers._glMulticastBufferSubDataNV_fnptr(gpuMask, buffer, offset, size, data);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastCopyBufferSubDataNV]</b>  </summary>
-            public static void MulticastCopyBufferSubData(uint readGpu, uint writeGpuMask, int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size) => GLPointers._glMulticastCopyBufferSubDataNV_fnptr(readGpu, writeGpuMask, readBuffer, writeBuffer, readOffset, writeOffset, size);
+            public static void MulticastCopyBufferSubDataNV(uint readGpu, uint writeGpuMask, int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size) => GLPointers._glMulticastCopyBufferSubDataNV_fnptr(readGpu, writeGpuMask, readBuffer, writeBuffer, readOffset, writeOffset, size);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastCopyImageSubDataNV]</b>  </summary>
-            public static void MulticastCopyImageSubData(uint srcGpu, uint dstGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) => GLPointers._glMulticastCopyImageSubDataNV_fnptr(srcGpu, dstGpuMask, srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
+            public static void MulticastCopyImageSubDataNV(uint srcGpu, uint dstGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) => GLPointers._glMulticastCopyImageSubDataNV_fnptr(srcGpu, dstGpuMask, srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastBlitFramebufferNV]</b>  </summary>
-            public static void MulticastBlitFramebuffer(uint srcGpu, uint dstGpu, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, All filter) => GLPointers._glMulticastBlitFramebufferNV_fnptr(srcGpu, dstGpu, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
+            public static void MulticastBlitFramebufferNV(uint srcGpu, uint dstGpu, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, All filter) => GLPointers._glMulticastBlitFramebufferNV_fnptr(srcGpu, dstGpu, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastFramebufferSampleLocationsfvNV]</b>  </summary>
-            public static void MulticastFramebufferSampleLocationsfv(uint gpu, int framebuffer, uint start, int count, float* v) => GLPointers._glMulticastFramebufferSampleLocationsfvNV_fnptr(gpu, framebuffer, start, count, v);
+            public static void MulticastFramebufferSampleLocationsfvNV(uint gpu, int framebuffer, uint start, int count, float* v) => GLPointers._glMulticastFramebufferSampleLocationsfvNV_fnptr(gpu, framebuffer, start, count, v);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastBarrierNV]</b>  </summary>
-            public static void MulticastBarrier() => GLPointers._glMulticastBarrierNV_fnptr();
+            public static void MulticastBarrierNV() => GLPointers._glMulticastBarrierNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastWaitSyncNV]</b>  </summary>
-            public static void MulticastWaitSync(uint signalGpu, uint waitGpuMask) => GLPointers._glMulticastWaitSyncNV_fnptr(signalGpu, waitGpuMask);
+            public static void MulticastWaitSyncNV(uint signalGpu, uint waitGpuMask) => GLPointers._glMulticastWaitSyncNV_fnptr(signalGpu, waitGpuMask);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastGetQueryObjectivNV]</b>  </summary>
-            public static void MulticastGetQueryObjectiv(uint gpu, uint id, All pname, int* parameters) => GLPointers._glMulticastGetQueryObjectivNV_fnptr(gpu, id, (uint)pname, parameters);
+            public static void MulticastGetQueryObjectivNV(uint gpu, uint id, All pname, int* parameters) => GLPointers._glMulticastGetQueryObjectivNV_fnptr(gpu, id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastGetQueryObjectuivNV]</b>  </summary>
-            public static void MulticastGetQueryObjectuiv(uint gpu, uint id, All pname, uint* parameters) => GLPointers._glMulticastGetQueryObjectuivNV_fnptr(gpu, id, (uint)pname, parameters);
+            public static void MulticastGetQueryObjectuivNV(uint gpu, uint id, All pname, uint* parameters) => GLPointers._glMulticastGetQueryObjectuivNV_fnptr(gpu, id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastGetQueryObjecti64vNV]</b>  </summary>
-            public static void MulticastGetQueryObjecti64v(uint gpu, uint id, All pname, long* parameters) => GLPointers._glMulticastGetQueryObjecti64vNV_fnptr(gpu, id, (uint)pname, parameters);
+            public static void MulticastGetQueryObjecti64vNV(uint gpu, uint id, All pname, long* parameters) => GLPointers._glMulticastGetQueryObjecti64vNV_fnptr(gpu, id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_gpu_multicast] [glMulticastGetQueryObjectui64vNV]</b>  </summary>
-            public static void MulticastGetQueryObjectui64v(uint gpu, uint id, All pname, ulong* parameters) => GLPointers._glMulticastGetQueryObjectui64vNV_fnptr(gpu, id, (uint)pname, parameters);
+            public static void MulticastGetQueryObjectui64vNV(uint gpu, uint id, All pname, ulong* parameters) => GLPointers._glMulticastGetQueryObjectui64vNV_fnptr(gpu, id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment] [glGetMemoryObjectDetachedResourcesuivNV]</b>  </summary>
-            public static void GetMemoryObjectDetachedResourcesuiv(uint memory, All pname, int first, int count, uint* parameters) => GLPointers._glGetMemoryObjectDetachedResourcesuivNV_fnptr(memory, (uint)pname, first, count, parameters);
+            public static void GetMemoryObjectDetachedResourcesuivNV(uint memory, All pname, int first, int count, uint* parameters) => GLPointers._glGetMemoryObjectDetachedResourcesuivNV_fnptr(memory, (uint)pname, first, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment] [glResetMemoryObjectParameterNV]</b>  </summary>
-            public static void ResetMemoryObjectParameter(uint memory, All pname) => GLPointers._glResetMemoryObjectParameterNV_fnptr(memory, (uint)pname);
+            public static void ResetMemoryObjectParameterNV(uint memory, All pname) => GLPointers._glResetMemoryObjectParameterNV_fnptr(memory, (uint)pname);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment] [glTexAttachMemoryNV]</b>  </summary>
-            public static void TexAttachMemory(TextureTarget target, uint memory, ulong offset) => GLPointers._glTexAttachMemoryNV_fnptr((uint)target, memory, offset);
+            public static void TexAttachMemoryNV(TextureTarget target, uint memory, ulong offset) => GLPointers._glTexAttachMemoryNV_fnptr((uint)target, memory, offset);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment] [glBufferAttachMemoryNV]</b>  </summary>
-            public static void BufferAttachMemory(BufferTargetARB target, uint memory, ulong offset) => GLPointers._glBufferAttachMemoryNV_fnptr((uint)target, memory, offset);
+            public static void BufferAttachMemoryNV(BufferTargetARB target, uint memory, ulong offset) => GLPointers._glBufferAttachMemoryNV_fnptr((uint)target, memory, offset);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment] [glTextureAttachMemoryNV]</b>  </summary>
-            public static void TextureAttachMemory(int texture, uint memory, ulong offset) => GLPointers._glTextureAttachMemoryNV_fnptr(texture, memory, offset);
+            public static void TextureAttachMemoryNV(int texture, uint memory, ulong offset) => GLPointers._glTextureAttachMemoryNV_fnptr(texture, memory, offset);
             
             /// <summary> <b>[requires: GL_NV_memory_attachment] [glNamedBufferAttachMemoryNV]</b>  </summary>
-            public static void NamedBufferAttachMemory(int buffer, uint memory, ulong offset) => GLPointers._glNamedBufferAttachMemoryNV_fnptr(buffer, memory, offset);
+            public static void NamedBufferAttachMemoryNV(int buffer, uint memory, ulong offset) => GLPointers._glNamedBufferAttachMemoryNV_fnptr(buffer, memory, offset);
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse] [glBufferPageCommitmentMemNV]</b>  </summary>
-            public static void BufferPageCommitmentMem(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._glBufferPageCommitmentMemNV_fnptr((uint)target, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
+            public static void BufferPageCommitmentMemNV(BufferStorageTarget target, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._glBufferPageCommitmentMemNV_fnptr((uint)target, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse] [glTexPageCommitmentMemNV]</b>  </summary>
-            public static void TexPageCommitmentMem(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._glTexPageCommitmentMemNV_fnptr((uint)target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
+            public static void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._glTexPageCommitmentMemNV_fnptr((uint)target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse] [glNamedBufferPageCommitmentMemNV]</b>  </summary>
-            public static void NamedBufferPageCommitmentMem(int buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._glNamedBufferPageCommitmentMemNV_fnptr(buffer, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
+            public static void NamedBufferPageCommitmentMemNV(int buffer, IntPtr offset, nint size, uint memory, ulong memOffset, bool commit) => GLPointers._glNamedBufferPageCommitmentMemNV_fnptr(buffer, offset, size, memory, memOffset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse] [glTexturePageCommitmentMemNV]</b>  </summary>
-            public static void TexturePageCommitmentMem(int texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._glTexturePageCommitmentMemNV_fnptr(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
+            public static void TexturePageCommitmentMemNV(int texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._glTexturePageCommitmentMemNV_fnptr(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_mesh_shader] [glDrawMeshTasksNV]</b>  </summary>
-            public static void DrawMeshTasks(uint first, uint count) => GLPointers._glDrawMeshTasksNV_fnptr(first, count);
+            public static void DrawMeshTasksNV(uint first, uint count) => GLPointers._glDrawMeshTasksNV_fnptr(first, count);
             
             /// <summary> <b>[requires: GL_NV_mesh_shader] [glDrawMeshTasksIndirectNV]</b>  </summary>
-            public static void DrawMeshTasksIndirect(IntPtr indirect) => GLPointers._glDrawMeshTasksIndirectNV_fnptr(indirect);
+            public static void DrawMeshTasksIndirectNV(IntPtr indirect) => GLPointers._glDrawMeshTasksIndirectNV_fnptr(indirect);
             
             /// <summary> <b>[requires: GL_NV_mesh_shader] [glMultiDrawMeshTasksIndirectNV]</b>  </summary>
-            public static void MultiDrawMeshTasksIndirect(IntPtr indirect, int drawcount, int stride) => GLPointers._glMultiDrawMeshTasksIndirectNV_fnptr(indirect, drawcount, stride);
+            public static void MultiDrawMeshTasksIndirectNV(IntPtr indirect, int drawcount, int stride) => GLPointers._glMultiDrawMeshTasksIndirectNV_fnptr(indirect, drawcount, stride);
             
             /// <summary> <b>[requires: GL_NV_mesh_shader] [glMultiDrawMeshTasksIndirectCountNV]</b>  </summary>
-            public static void MultiDrawMeshTasksIndirectCount(IntPtr indirect, IntPtr drawcount, int maxdrawcount, int stride) => GLPointers._glMultiDrawMeshTasksIndirectCountNV_fnptr(indirect, drawcount, maxdrawcount, stride);
+            public static void MultiDrawMeshTasksIndirectCountNV(IntPtr indirect, IntPtr drawcount, int maxdrawcount, int stride) => GLPointers._glMultiDrawMeshTasksIndirectCountNV_fnptr(indirect, drawcount, maxdrawcount, stride);
             
             /// <summary> <b>[requires: GL_NV_occlusion_query] [glGenOcclusionQueriesNV]</b>  </summary>
-            public static void GenOcclusionQueries(int n, uint* ids) => GLPointers._glGenOcclusionQueriesNV_fnptr(n, ids);
+            public static void GenOcclusionQueriesNV(int n, uint* ids) => GLPointers._glGenOcclusionQueriesNV_fnptr(n, ids);
             
             /// <summary> <b>[requires: GL_NV_occlusion_query] [glDeleteOcclusionQueriesNV]</b>  </summary>
-            public static void DeleteOcclusionQueries(int n, uint* ids) => GLPointers._glDeleteOcclusionQueriesNV_fnptr(n, ids);
+            public static void DeleteOcclusionQueriesNV(int n, uint* ids) => GLPointers._glDeleteOcclusionQueriesNV_fnptr(n, ids);
             
             /// <summary> <b>[requires: GL_NV_occlusion_query] [glIsOcclusionQueryNV]</b>  </summary>
-            public static bool IsOcclusionQuery(uint id) => GLPointers._glIsOcclusionQueryNV_fnptr(id) != 0;
+            public static bool IsOcclusionQueryNV(uint id) => GLPointers._glIsOcclusionQueryNV_fnptr(id) != 0;
             
             /// <summary> <b>[requires: GL_NV_occlusion_query] [glBeginOcclusionQueryNV]</b>  </summary>
-            public static void BeginOcclusionQuery(uint id) => GLPointers._glBeginOcclusionQueryNV_fnptr(id);
+            public static void BeginOcclusionQueryNV(uint id) => GLPointers._glBeginOcclusionQueryNV_fnptr(id);
             
             /// <summary> <b>[requires: GL_NV_occlusion_query] [glEndOcclusionQueryNV]</b>  </summary>
-            public static void EndOcclusionQuery() => GLPointers._glEndOcclusionQueryNV_fnptr();
+            public static void EndOcclusionQueryNV() => GLPointers._glEndOcclusionQueryNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_occlusion_query] [glGetOcclusionQueryivNV]</b>  </summary>
-            public static void GetOcclusionQueryiv(uint id, OcclusionQueryParameterNameNV pname, int* parameters) => GLPointers._glGetOcclusionQueryivNV_fnptr(id, (uint)pname, parameters);
+            public static void GetOcclusionQueryivNV(uint id, OcclusionQueryParameterNameNV pname, int* parameters) => GLPointers._glGetOcclusionQueryivNV_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_occlusion_query] [glGetOcclusionQueryuivNV]</b>  </summary>
-            public static void GetOcclusionQueryuiv(uint id, OcclusionQueryParameterNameNV pname, uint* parameters) => GLPointers._glGetOcclusionQueryuivNV_fnptr(id, (uint)pname, parameters);
+            public static void GetOcclusionQueryuivNV(uint id, OcclusionQueryParameterNameNV pname, uint* parameters) => GLPointers._glGetOcclusionQueryuivNV_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_parameter_buffer_object] [glProgramBufferParametersfvNV]</b>  </summary>
-            public static void ProgramBufferParametersfv(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, float* parameters) => GLPointers._glProgramBufferParametersfvNV_fnptr((uint)target, bindingIndex, wordIndex, count, parameters);
+            public static void ProgramBufferParametersfvNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, float* parameters) => GLPointers._glProgramBufferParametersfvNV_fnptr((uint)target, bindingIndex, wordIndex, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_parameter_buffer_object] [glProgramBufferParametersIivNV]</b>  </summary>
-            public static void ProgramBufferParametersIiv(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, int* parameters) => GLPointers._glProgramBufferParametersIivNV_fnptr((uint)target, bindingIndex, wordIndex, count, parameters);
+            public static void ProgramBufferParametersIivNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, int* parameters) => GLPointers._glProgramBufferParametersIivNV_fnptr((uint)target, bindingIndex, wordIndex, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_parameter_buffer_object] [glProgramBufferParametersIuivNV]</b>  </summary>
-            public static void ProgramBufferParametersIuiv(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, uint* parameters) => GLPointers._glProgramBufferParametersIuivNV_fnptr((uint)target, bindingIndex, wordIndex, count, parameters);
+            public static void ProgramBufferParametersIuivNV(ProgramTarget target, uint bindingIndex, uint wordIndex, int count, uint* parameters) => GLPointers._glProgramBufferParametersIuivNV_fnptr((uint)target, bindingIndex, wordIndex, count, parameters);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGenPathsNV]</b>  </summary>
-            public static uint GenPaths(int range) => GLPointers._glGenPathsNV_fnptr(range);
+            public static uint GenPathsNV(int range) => GLPointers._glGenPathsNV_fnptr(range);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glDeletePathsNV]</b>  </summary>
-            public static void DeletePaths(uint path, int range) => GLPointers._glDeletePathsNV_fnptr(path, range);
+            public static void DeletePathsNV(uint path, int range) => GLPointers._glDeletePathsNV_fnptr(path, range);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glIsPathNV]</b>  </summary>
-            public static bool IsPath(uint path) => GLPointers._glIsPathNV_fnptr(path) != 0;
+            public static bool IsPathNV(uint path) => GLPointers._glIsPathNV_fnptr(path) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathCommandsNV]</b>  </summary>
-            public static void PathCommands(uint path, int numCommands, byte* commands, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathCommandsNV_fnptr(path, numCommands, commands, numCoords, (uint)coordType, coords);
+            public static void PathCommandsNV(uint path, int numCommands, byte* commands, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathCommandsNV_fnptr(path, numCommands, commands, numCoords, (uint)coordType, coords);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathCoordsNV]</b>  </summary>
-            public static void PathCoords(uint path, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathCoordsNV_fnptr(path, numCoords, (uint)coordType, coords);
+            public static void PathCoordsNV(uint path, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathCoordsNV_fnptr(path, numCoords, (uint)coordType, coords);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathSubCommandsNV]</b>  </summary>
-            public static void PathSubCommands(uint path, int commandStart, int commandsToDelete, int numCommands, byte* commands, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathSubCommandsNV_fnptr(path, commandStart, commandsToDelete, numCommands, commands, numCoords, (uint)coordType, coords);
+            public static void PathSubCommandsNV(uint path, int commandStart, int commandsToDelete, int numCommands, byte* commands, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathSubCommandsNV_fnptr(path, commandStart, commandsToDelete, numCommands, commands, numCoords, (uint)coordType, coords);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathSubCoordsNV]</b>  </summary>
-            public static void PathSubCoords(uint path, int coordStart, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathSubCoordsNV_fnptr(path, coordStart, numCoords, (uint)coordType, coords);
+            public static void PathSubCoordsNV(uint path, int coordStart, int numCoords, PathCoordType coordType, void* coords) => GLPointers._glPathSubCoordsNV_fnptr(path, coordStart, numCoords, (uint)coordType, coords);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathStringNV]</b>  </summary>
-            public static void PathString(uint path, PathStringFormat format, int length, void* pathString) => GLPointers._glPathStringNV_fnptr(path, (uint)format, length, pathString);
+            public static void PathStringNV(uint path, PathStringFormat format, int length, void* pathString) => GLPointers._glPathStringNV_fnptr(path, (uint)format, length, pathString);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathGlyphsNV]</b>  </summary>
-            public static void PathGlyphs(uint firstPathName, PathFontTarget fontTarget, void* fontName, PathFontStyle fontStyle, int numGlyphs, PathElementType type, void* charcodes, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale) => GLPointers._glPathGlyphsNV_fnptr(firstPathName, (uint)fontTarget, fontName, (uint)fontStyle, numGlyphs, (uint)type, charcodes, (uint)handleMissingGlyphs, pathParameterTemplate, emScale);
+            public static void PathGlyphsNV(uint firstPathName, PathFontTarget fontTarget, void* fontName, PathFontStyle fontStyle, int numGlyphs, PathElementType type, void* charcodes, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale) => GLPointers._glPathGlyphsNV_fnptr(firstPathName, (uint)fontTarget, fontName, (uint)fontStyle, numGlyphs, (uint)type, charcodes, (uint)handleMissingGlyphs, pathParameterTemplate, emScale);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathGlyphRangeNV]</b>  </summary>
-            public static void PathGlyphRange(uint firstPathName, PathFontTarget fontTarget, void* fontName, PathFontStyle fontStyle, uint firstGlyph, int numGlyphs, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale) => GLPointers._glPathGlyphRangeNV_fnptr(firstPathName, (uint)fontTarget, fontName, (uint)fontStyle, firstGlyph, numGlyphs, (uint)handleMissingGlyphs, pathParameterTemplate, emScale);
+            public static void PathGlyphRangeNV(uint firstPathName, PathFontTarget fontTarget, void* fontName, PathFontStyle fontStyle, uint firstGlyph, int numGlyphs, PathHandleMissingGlyphs handleMissingGlyphs, uint pathParameterTemplate, float emScale) => GLPointers._glPathGlyphRangeNV_fnptr(firstPathName, (uint)fontTarget, fontName, (uint)fontStyle, firstGlyph, numGlyphs, (uint)handleMissingGlyphs, pathParameterTemplate, emScale);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glWeightPathsNV]</b>  </summary>
-            public static void WeightPaths(uint resultPath, int numPaths, uint* paths, float* weights) => GLPointers._glWeightPathsNV_fnptr(resultPath, numPaths, paths, weights);
+            public static void WeightPathsNV(uint resultPath, int numPaths, uint* paths, float* weights) => GLPointers._glWeightPathsNV_fnptr(resultPath, numPaths, paths, weights);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glCopyPathNV]</b>  </summary>
-            public static void CopyPath(uint resultPath, uint srcPath) => GLPointers._glCopyPathNV_fnptr(resultPath, srcPath);
+            public static void CopyPathNV(uint resultPath, uint srcPath) => GLPointers._glCopyPathNV_fnptr(resultPath, srcPath);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glInterpolatePathsNV]</b>  </summary>
-            public static void InterpolatePaths(uint resultPath, uint pathA, uint pathB, float weight) => GLPointers._glInterpolatePathsNV_fnptr(resultPath, pathA, pathB, weight);
+            public static void InterpolatePathsNV(uint resultPath, uint pathA, uint pathB, float weight) => GLPointers._glInterpolatePathsNV_fnptr(resultPath, pathA, pathB, weight);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glTransformPathNV]</b>  </summary>
-            public static void TransformPath(uint resultPath, uint srcPath, PathTransformType transformType, float* transformValues) => GLPointers._glTransformPathNV_fnptr(resultPath, srcPath, (uint)transformType, transformValues);
+            public static void TransformPathNV(uint resultPath, uint srcPath, PathTransformType transformType, float* transformValues) => GLPointers._glTransformPathNV_fnptr(resultPath, srcPath, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathParameterivNV]</b>  </summary>
-            public static void PathParameteriv(uint path, PathParameter pname, int* value) => GLPointers._glPathParameterivNV_fnptr(path, (uint)pname, value);
+            public static void PathParameterivNV(uint path, PathParameter pname, int* value) => GLPointers._glPathParameterivNV_fnptr(path, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathParameteriNV]</b>  </summary>
-            public static void PathParameteri(uint path, PathParameter pname, int value) => GLPointers._glPathParameteriNV_fnptr(path, (uint)pname, value);
+            public static void PathParameteriNV(uint path, PathParameter pname, int value) => GLPointers._glPathParameteriNV_fnptr(path, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathParameterfvNV]</b>  </summary>
-            public static void PathParameterfv(uint path, PathParameter pname, float* value) => GLPointers._glPathParameterfvNV_fnptr(path, (uint)pname, value);
+            public static void PathParameterfvNV(uint path, PathParameter pname, float* value) => GLPointers._glPathParameterfvNV_fnptr(path, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathParameterfNV]</b>  </summary>
-            public static void PathParameterf(uint path, PathParameter pname, float value) => GLPointers._glPathParameterfNV_fnptr(path, (uint)pname, value);
+            public static void PathParameterfNV(uint path, PathParameter pname, float value) => GLPointers._glPathParameterfNV_fnptr(path, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathDashArrayNV]</b>  </summary>
-            public static void PathDashArray(uint path, int dashCount, float* dashArray) => GLPointers._glPathDashArrayNV_fnptr(path, dashCount, dashArray);
+            public static void PathDashArrayNV(uint path, int dashCount, float* dashArray) => GLPointers._glPathDashArrayNV_fnptr(path, dashCount, dashArray);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathStencilFuncNV]</b>  </summary>
-            public static void PathStencilFunc(StencilFunction func, int reference, uint mask) => GLPointers._glPathStencilFuncNV_fnptr((uint)func, reference, mask);
+            public static void PathStencilFuncNV(StencilFunction func, int reference, uint mask) => GLPointers._glPathStencilFuncNV_fnptr((uint)func, reference, mask);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathStencilDepthOffsetNV]</b>  </summary>
-            public static void PathStencilDepthOffset(float factor, float units) => GLPointers._glPathStencilDepthOffsetNV_fnptr(factor, units);
+            public static void PathStencilDepthOffsetNV(float factor, float units) => GLPointers._glPathStencilDepthOffsetNV_fnptr(factor, units);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilFillPathNV]</b>  </summary>
-            public static void StencilFillPath(uint path, PathFillMode fillMode, uint mask) => GLPointers._glStencilFillPathNV_fnptr(path, (uint)fillMode, mask);
+            public static void StencilFillPathNV(uint path, PathFillMode fillMode, uint mask) => GLPointers._glStencilFillPathNV_fnptr(path, (uint)fillMode, mask);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilStrokePathNV]</b>  </summary>
-            public static void StencilStrokePath(uint path, int reference, uint mask) => GLPointers._glStencilStrokePathNV_fnptr(path, reference, mask);
+            public static void StencilStrokePathNV(uint path, int reference, uint mask) => GLPointers._glStencilStrokePathNV_fnptr(path, reference, mask);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilFillPathInstancedNV]</b>  </summary>
-            public static void StencilFillPathInstanced(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, PathFillMode fillMode, uint mask, PathTransformType transformType, float* transformValues) => GLPointers._glStencilFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)fillMode, mask, (uint)transformType, transformValues);
+            public static void StencilFillPathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, PathFillMode fillMode, uint mask, PathTransformType transformType, float* transformValues) => GLPointers._glStencilFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)fillMode, mask, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilStrokePathInstancedNV]</b>  </summary>
-            public static void StencilStrokePathInstanced(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, int reference, uint mask, PathTransformType transformType, float* transformValues) => GLPointers._glStencilStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, reference, mask, (uint)transformType, transformValues);
+            public static void StencilStrokePathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, int reference, uint mask, PathTransformType transformType, float* transformValues) => GLPointers._glStencilStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, reference, mask, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathCoverDepthFuncNV]</b>  </summary>
-            public static void PathCoverDepthFunc(DepthFunction func) => GLPointers._glPathCoverDepthFuncNV_fnptr((uint)func);
+            public static void PathCoverDepthFuncNV(DepthFunction func) => GLPointers._glPathCoverDepthFuncNV_fnptr((uint)func);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glCoverFillPathNV]</b>  </summary>
-            public static void CoverFillPath(uint path, PathCoverMode coverMode) => GLPointers._glCoverFillPathNV_fnptr(path, (uint)coverMode);
+            public static void CoverFillPathNV(uint path, PathCoverMode coverMode) => GLPointers._glCoverFillPathNV_fnptr(path, (uint)coverMode);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glCoverStrokePathNV]</b>  </summary>
-            public static void CoverStrokePath(uint path, PathCoverMode coverMode) => GLPointers._glCoverStrokePathNV_fnptr(path, (uint)coverMode);
+            public static void CoverStrokePathNV(uint path, PathCoverMode coverMode) => GLPointers._glCoverStrokePathNV_fnptr(path, (uint)coverMode);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glCoverFillPathInstancedNV]</b>  </summary>
-            public static void CoverFillPathInstanced(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glCoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
+            public static void CoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glCoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glCoverStrokePathInstancedNV]</b>  </summary>
-            public static void CoverStrokePathInstanced(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glCoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
+            public static void CoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glCoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathParameterivNV]</b>  </summary>
-            public static void GetPathParameteriv(uint path, PathParameter pname, int* value) => GLPointers._glGetPathParameterivNV_fnptr(path, (uint)pname, value);
+            public static void GetPathParameterivNV(uint path, PathParameter pname, int* value) => GLPointers._glGetPathParameterivNV_fnptr(path, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathParameterfvNV]</b>  </summary>
-            public static void GetPathParameterfv(uint path, PathParameter pname, float* value) => GLPointers._glGetPathParameterfvNV_fnptr(path, (uint)pname, value);
+            public static void GetPathParameterfvNV(uint path, PathParameter pname, float* value) => GLPointers._glGetPathParameterfvNV_fnptr(path, (uint)pname, value);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathCommandsNV]</b>  </summary>
-            public static void GetPathCommands(uint path, byte* commands) => GLPointers._glGetPathCommandsNV_fnptr(path, commands);
+            public static void GetPathCommandsNV(uint path, byte* commands) => GLPointers._glGetPathCommandsNV_fnptr(path, commands);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathCoordsNV]</b>  </summary>
-            public static void GetPathCoords(uint path, float* coords) => GLPointers._glGetPathCoordsNV_fnptr(path, coords);
+            public static void GetPathCoordsNV(uint path, float* coords) => GLPointers._glGetPathCoordsNV_fnptr(path, coords);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathDashArrayNV]</b>  </summary>
-            public static void GetPathDashArray(uint path, float* dashArray) => GLPointers._glGetPathDashArrayNV_fnptr(path, dashArray);
+            public static void GetPathDashArrayNV(uint path, float* dashArray) => GLPointers._glGetPathDashArrayNV_fnptr(path, dashArray);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathMetricsNV]</b>  </summary>
-            public static void GetPathMetrics(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, void* paths, uint pathBase, int stride, float* metrics) => GLPointers._glGetPathMetricsNV_fnptr((uint)metricQueryMask, numPaths, (uint)pathNameType, paths, pathBase, stride, metrics);
+            public static void GetPathMetricsNV(PathMetricMask metricQueryMask, int numPaths, PathElementType pathNameType, void* paths, uint pathBase, int stride, float* metrics) => GLPointers._glGetPathMetricsNV_fnptr((uint)metricQueryMask, numPaths, (uint)pathNameType, paths, pathBase, stride, metrics);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathMetricRangeNV]</b>  </summary>
-            public static void GetPathMetricRange(PathMetricMask metricQueryMask, uint firstPathName, int numPaths, int stride, float* metrics) => GLPointers._glGetPathMetricRangeNV_fnptr((uint)metricQueryMask, firstPathName, numPaths, stride, metrics);
+            public static void GetPathMetricRangeNV(PathMetricMask metricQueryMask, uint firstPathName, int numPaths, int stride, float* metrics) => GLPointers._glGetPathMetricRangeNV_fnptr((uint)metricQueryMask, firstPathName, numPaths, stride, metrics);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathSpacingNV]</b>  </summary>
-            public static void GetPathSpacing(PathListMode pathListMode, int numPaths, PathElementType pathNameType, void* paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, float* returnedSpacing) => GLPointers._glGetPathSpacingNV_fnptr((uint)pathListMode, numPaths, (uint)pathNameType, paths, pathBase, advanceScale, kerningScale, (uint)transformType, returnedSpacing);
+            public static void GetPathSpacingNV(PathListMode pathListMode, int numPaths, PathElementType pathNameType, void* paths, uint pathBase, float advanceScale, float kerningScale, PathTransformType transformType, float* returnedSpacing) => GLPointers._glGetPathSpacingNV_fnptr((uint)pathListMode, numPaths, (uint)pathNameType, paths, pathBase, advanceScale, kerningScale, (uint)transformType, returnedSpacing);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glIsPointInFillPathNV]</b>  </summary>
-            public static bool IsPointInFillPath(uint path, uint mask, float x, float y) => GLPointers._glIsPointInFillPathNV_fnptr(path, mask, x, y) != 0;
+            public static bool IsPointInFillPathNV(uint path, uint mask, float x, float y) => GLPointers._glIsPointInFillPathNV_fnptr(path, mask, x, y) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glIsPointInStrokePathNV]</b>  </summary>
-            public static bool IsPointInStrokePath(uint path, float x, float y) => GLPointers._glIsPointInStrokePathNV_fnptr(path, x, y) != 0;
+            public static bool IsPointInStrokePathNV(uint path, float x, float y) => GLPointers._glIsPointInStrokePathNV_fnptr(path, x, y) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetPathLengthNV]</b>  </summary>
-            public static float GetPathLength(uint path, int startSegment, int numSegments) => GLPointers._glGetPathLengthNV_fnptr(path, startSegment, numSegments);
+            public static float GetPathLengthNV(uint path, int startSegment, int numSegments) => GLPointers._glGetPathLengthNV_fnptr(path, startSegment, numSegments);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPointAlongPathNV]</b>  </summary>
-            public static bool PointAlongPath(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY) => GLPointers._glPointAlongPathNV_fnptr(path, startSegment, numSegments, distance, x, y, tangentX, tangentY) != 0;
+            public static bool PointAlongPathNV(uint path, int startSegment, int numSegments, float distance, float* x, float* y, float* tangentX, float* tangentY) => GLPointers._glPointAlongPathNV_fnptr(path, startSegment, numSegments, distance, x, y, tangentX, tangentY) != 0;
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glMatrixLoad3x2fNV]</b>  </summary>
-            public static void MatrixLoad3x2f(All matrixMode, float* m) => GLPointers._glMatrixLoad3x2fNV_fnptr((uint)matrixMode, m);
+            public static void MatrixLoad3x2fNV(All matrixMode, float* m) => GLPointers._glMatrixLoad3x2fNV_fnptr((uint)matrixMode, m);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glMatrixLoad3x3fNV]</b>  </summary>
-            public static void MatrixLoad3x3f(All matrixMode, float* m) => GLPointers._glMatrixLoad3x3fNV_fnptr((uint)matrixMode, m);
+            public static void MatrixLoad3x3fNV(All matrixMode, float* m) => GLPointers._glMatrixLoad3x3fNV_fnptr((uint)matrixMode, m);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glMatrixLoadTranspose3x3fNV]</b>  </summary>
-            public static void MatrixLoadTranspose3x3f(All matrixMode, float* m) => GLPointers._glMatrixLoadTranspose3x3fNV_fnptr((uint)matrixMode, m);
+            public static void MatrixLoadTranspose3x3fNV(All matrixMode, float* m) => GLPointers._glMatrixLoadTranspose3x3fNV_fnptr((uint)matrixMode, m);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glMatrixMult3x2fNV]</b>  </summary>
-            public static void MatrixMult3x2f(All matrixMode, float* m) => GLPointers._glMatrixMult3x2fNV_fnptr((uint)matrixMode, m);
+            public static void MatrixMult3x2fNV(All matrixMode, float* m) => GLPointers._glMatrixMult3x2fNV_fnptr((uint)matrixMode, m);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glMatrixMult3x3fNV]</b>  </summary>
-            public static void MatrixMult3x3f(All matrixMode, float* m) => GLPointers._glMatrixMult3x3fNV_fnptr((uint)matrixMode, m);
+            public static void MatrixMult3x3fNV(All matrixMode, float* m) => GLPointers._glMatrixMult3x3fNV_fnptr((uint)matrixMode, m);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glMatrixMultTranspose3x3fNV]</b>  </summary>
-            public static void MatrixMultTranspose3x3f(All matrixMode, float* m) => GLPointers._glMatrixMultTranspose3x3fNV_fnptr((uint)matrixMode, m);
+            public static void MatrixMultTranspose3x3fNV(All matrixMode, float* m) => GLPointers._glMatrixMultTranspose3x3fNV_fnptr((uint)matrixMode, m);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilThenCoverFillPathNV]</b>  </summary>
-            public static void StencilThenCoverFillPath(uint path, PathFillMode fillMode, uint mask, PathCoverMode coverMode) => GLPointers._glStencilThenCoverFillPathNV_fnptr(path, (uint)fillMode, mask, (uint)coverMode);
+            public static void StencilThenCoverFillPathNV(uint path, PathFillMode fillMode, uint mask, PathCoverMode coverMode) => GLPointers._glStencilThenCoverFillPathNV_fnptr(path, (uint)fillMode, mask, (uint)coverMode);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilThenCoverStrokePathNV]</b>  </summary>
-            public static void StencilThenCoverStrokePath(uint path, int reference, uint mask, PathCoverMode coverMode) => GLPointers._glStencilThenCoverStrokePathNV_fnptr(path, reference, mask, (uint)coverMode);
+            public static void StencilThenCoverStrokePathNV(uint path, int reference, uint mask, PathCoverMode coverMode) => GLPointers._glStencilThenCoverStrokePathNV_fnptr(path, reference, mask, (uint)coverMode);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilThenCoverFillPathInstancedNV]</b>  </summary>
-            public static void StencilThenCoverFillPathInstanced(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glStencilThenCoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)fillMode, mask, (uint)coverMode, (uint)transformType, transformValues);
+            public static void StencilThenCoverFillPathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, PathFillMode fillMode, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glStencilThenCoverFillPathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, (uint)fillMode, mask, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glStencilThenCoverStrokePathInstancedNV]</b>  </summary>
-            public static void StencilThenCoverStrokePathInstanced(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glStencilThenCoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, reference, mask, (uint)coverMode, (uint)transformType, transformValues);
+            public static void StencilThenCoverStrokePathInstancedNV(int numPaths, PathElementType pathNameType, void* paths, uint pathBase, int reference, uint mask, InstancedPathCoverMode coverMode, PathTransformType transformType, float* transformValues) => GLPointers._glStencilThenCoverStrokePathInstancedNV_fnptr(numPaths, (uint)pathNameType, paths, pathBase, reference, mask, (uint)coverMode, (uint)transformType, transformValues);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathGlyphIndexRangeNV]</b>  </summary>
-            public static All PathGlyphIndexRange(All fontTarget, void* fontName, PathFontStyle fontStyle, uint pathParameterTemplate, float emScale, uint* baseAndCount) => (All) GLPointers._glPathGlyphIndexRangeNV_fnptr((uint)fontTarget, fontName, (uint)fontStyle, pathParameterTemplate, emScale, baseAndCount);
+            public static All PathGlyphIndexRangeNV(All fontTarget, void* fontName, PathFontStyle fontStyle, uint pathParameterTemplate, float emScale, uint* baseAndCount) => (All) GLPointers._glPathGlyphIndexRangeNV_fnptr((uint)fontTarget, fontName, (uint)fontStyle, pathParameterTemplate, emScale, baseAndCount);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathGlyphIndexArrayNV]</b>  </summary>
-            public static All PathGlyphIndexArray(uint firstPathName, All fontTarget, void* fontName, PathFontStyle fontStyle, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale) => (All) GLPointers._glPathGlyphIndexArrayNV_fnptr(firstPathName, (uint)fontTarget, fontName, (uint)fontStyle, firstGlyphIndex, numGlyphs, pathParameterTemplate, emScale);
+            public static All PathGlyphIndexArrayNV(uint firstPathName, All fontTarget, void* fontName, PathFontStyle fontStyle, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale) => (All) GLPointers._glPathGlyphIndexArrayNV_fnptr(firstPathName, (uint)fontTarget, fontName, (uint)fontStyle, firstGlyphIndex, numGlyphs, pathParameterTemplate, emScale);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glPathMemoryGlyphIndexArrayNV]</b>  </summary>
-            public static All PathMemoryGlyphIndexArray(uint firstPathName, All fontTarget, nint fontSize, void* fontData, int faceIndex, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale) => (All) GLPointers._glPathMemoryGlyphIndexArrayNV_fnptr(firstPathName, (uint)fontTarget, fontSize, fontData, faceIndex, firstGlyphIndex, numGlyphs, pathParameterTemplate, emScale);
+            public static All PathMemoryGlyphIndexArrayNV(uint firstPathName, All fontTarget, nint fontSize, void* fontData, int faceIndex, uint firstGlyphIndex, int numGlyphs, uint pathParameterTemplate, float emScale) => (All) GLPointers._glPathMemoryGlyphIndexArrayNV_fnptr(firstPathName, (uint)fontTarget, fontSize, fontData, faceIndex, firstGlyphIndex, numGlyphs, pathParameterTemplate, emScale);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glProgramPathFragmentInputGenNV]</b>  </summary>
-            public static void ProgramPathFragmentInputGen(int program, int location, All genMode, int components, float* coeffs) => GLPointers._glProgramPathFragmentInputGenNV_fnptr(program, location, (uint)genMode, components, coeffs);
+            public static void ProgramPathFragmentInputGenNV(int program, int location, All genMode, int components, float* coeffs) => GLPointers._glProgramPathFragmentInputGenNV_fnptr(program, location, (uint)genMode, components, coeffs);
             
             /// <summary> <b>[requires: GL_NV_path_rendering] [glGetProgramResourcefvNV]</b>  </summary>
-            public static void GetProgramResourcefv(int program, ProgramInterface programInterface, uint index, int propCount, All* props, int count, int* length, float* parameters) => GLPointers._glGetProgramResourcefvNV_fnptr(program, (uint)programInterface, index, propCount, (uint*)props, count, length, parameters);
+            public static void GetProgramResourcefvNV(int program, ProgramInterface programInterface, uint index, int propCount, All* props, int count, int* length, float* parameters) => GLPointers._glGetProgramResourcefvNV_fnptr(program, (uint)programInterface, index, propCount, (uint*)props, count, length, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access | GL_NV_path_rendering] [glMatrixFrustumEXT]</b>  </summary>
             public static void MatrixFrustumEXT(MatrixMode mode, double left, double right, double bottom, double top, double zNear, double zFar) => GLPointers._glMatrixFrustumEXT_fnptr((uint)mode, left, right, bottom, top, zNear, zFar);
@@ -11607,577 +11607,577 @@ namespace OpenTK.Graphics.OpenGL
             public static void MatrixTranslatedEXT(MatrixMode mode, double x, double y, double z) => GLPointers._glMatrixTranslatedEXT_fnptr((uint)mode, x, y, z);
             
             /// <summary> <b>[requires: GL_NV_pixel_data_range] [glPixelDataRangeNV]</b>  </summary>
-            public static void PixelDataRange(PixelDataRangeTargetNV target, int length, void* pointer) => GLPointers._glPixelDataRangeNV_fnptr((uint)target, length, pointer);
+            public static void PixelDataRangeNV(PixelDataRangeTargetNV target, int length, void* pointer) => GLPointers._glPixelDataRangeNV_fnptr((uint)target, length, pointer);
             
             /// <summary> <b>[requires: GL_NV_pixel_data_range] [glFlushPixelDataRangeNV]</b>  </summary>
-            public static void FlushPixelDataRange(PixelDataRangeTargetNV target) => GLPointers._glFlushPixelDataRangeNV_fnptr((uint)target);
+            public static void FlushPixelDataRangeNV(PixelDataRangeTargetNV target) => GLPointers._glFlushPixelDataRangeNV_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_NV_point_sprite] [glPointParameteriNV]</b>  </summary>
-            public static void PointParameteri(PointParameterNameARB pname, int param) => GLPointers._glPointParameteriNV_fnptr((uint)pname, param);
+            public static void PointParameteriNV(PointParameterNameARB pname, int param) => GLPointers._glPointParameteriNV_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_NV_point_sprite] [glPointParameterivNV]</b>  </summary>
-            public static void PointParameteriv(PointParameterNameARB pname, int* parameters) => GLPointers._glPointParameterivNV_fnptr((uint)pname, parameters);
+            public static void PointParameterivNV(PointParameterNameARB pname, int* parameters) => GLPointers._glPointParameterivNV_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_present_video] [glPresentFrameKeyedNV]</b>  </summary>
-            public static void PresentFrameKeyed(uint video_slot, ulong minPresentTime, uint beginPresentTimeId, uint presentDurationId, All type, All target0, uint fill0, uint key0, All target1, uint fill1, uint key1) => GLPointers._glPresentFrameKeyedNV_fnptr(video_slot, minPresentTime, beginPresentTimeId, presentDurationId, (uint)type, (uint)target0, fill0, key0, (uint)target1, fill1, key1);
+            public static void PresentFrameKeyedNV(uint video_slot, ulong minPresentTime, uint beginPresentTimeId, uint presentDurationId, All type, All target0, uint fill0, uint key0, All target1, uint fill1, uint key1) => GLPointers._glPresentFrameKeyedNV_fnptr(video_slot, minPresentTime, beginPresentTimeId, presentDurationId, (uint)type, (uint)target0, fill0, key0, (uint)target1, fill1, key1);
             
             /// <summary> <b>[requires: GL_NV_present_video] [glPresentFrameDualFillNV]</b>  </summary>
-            public static void PresentFrameDualFill(uint video_slot, ulong minPresentTime, uint beginPresentTimeId, uint presentDurationId, All type, All target0, uint fill0, All target1, uint fill1, All target2, uint fill2, All target3, uint fill3) => GLPointers._glPresentFrameDualFillNV_fnptr(video_slot, minPresentTime, beginPresentTimeId, presentDurationId, (uint)type, (uint)target0, fill0, (uint)target1, fill1, (uint)target2, fill2, (uint)target3, fill3);
+            public static void PresentFrameDualFillNV(uint video_slot, ulong minPresentTime, uint beginPresentTimeId, uint presentDurationId, All type, All target0, uint fill0, All target1, uint fill1, All target2, uint fill2, All target3, uint fill3) => GLPointers._glPresentFrameDualFillNV_fnptr(video_slot, minPresentTime, beginPresentTimeId, presentDurationId, (uint)type, (uint)target0, fill0, (uint)target1, fill1, (uint)target2, fill2, (uint)target3, fill3);
             
             /// <summary> <b>[requires: GL_NV_present_video] [glGetVideoivNV]</b>  </summary>
-            public static void GetVideoiv(uint video_slot, All pname, int* parameters) => GLPointers._glGetVideoivNV_fnptr(video_slot, (uint)pname, parameters);
+            public static void GetVideoivNV(uint video_slot, All pname, int* parameters) => GLPointers._glGetVideoivNV_fnptr(video_slot, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_present_video] [glGetVideouivNV]</b>  </summary>
-            public static void GetVideouiv(uint video_slot, All pname, uint* parameters) => GLPointers._glGetVideouivNV_fnptr(video_slot, (uint)pname, parameters);
+            public static void GetVideouivNV(uint video_slot, All pname, uint* parameters) => GLPointers._glGetVideouivNV_fnptr(video_slot, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_present_video] [glGetVideoi64vNV]</b>  </summary>
-            public static void GetVideoi64v(uint video_slot, All pname, long* parameters) => GLPointers._glGetVideoi64vNV_fnptr(video_slot, (uint)pname, parameters);
+            public static void GetVideoi64vNV(uint video_slot, All pname, long* parameters) => GLPointers._glGetVideoi64vNV_fnptr(video_slot, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_present_video] [glGetVideoui64vNV]</b>  </summary>
-            public static void GetVideoui64v(uint video_slot, All pname, ulong* parameters) => GLPointers._glGetVideoui64vNV_fnptr(video_slot, (uint)pname, parameters);
+            public static void GetVideoui64vNV(uint video_slot, All pname, ulong* parameters) => GLPointers._glGetVideoui64vNV_fnptr(video_slot, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_primitive_restart] [glPrimitiveRestartNV]</b>  </summary>
-            public static void PrimitiveRestart() => GLPointers._glPrimitiveRestartNV_fnptr();
+            public static void PrimitiveRestartNV() => GLPointers._glPrimitiveRestartNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_primitive_restart] [glPrimitiveRestartIndexNV]</b>  </summary>
-            public static void PrimitiveRestartIndex(uint index) => GLPointers._glPrimitiveRestartIndexNV_fnptr(index);
+            public static void PrimitiveRestartIndexNV(uint index) => GLPointers._glPrimitiveRestartIndexNV_fnptr(index);
             
             /// <summary> <b>[requires: GL_NV_query_resource] [glQueryResourceNV]</b>  </summary>
-            public static int QueryResource(All queryType, int tagId, uint count, int* buffer) => GLPointers._glQueryResourceNV_fnptr((uint)queryType, tagId, count, buffer);
+            public static int QueryResourceNV(All queryType, int tagId, uint count, int* buffer) => GLPointers._glQueryResourceNV_fnptr((uint)queryType, tagId, count, buffer);
             
             /// <summary> <b>[requires: GL_NV_query_resource_tag] [glGenQueryResourceTagNV]</b>  </summary>
-            public static void GenQueryResourceTag(int n, int* tagIds) => GLPointers._glGenQueryResourceTagNV_fnptr(n, tagIds);
+            public static void GenQueryResourceTagNV(int n, int* tagIds) => GLPointers._glGenQueryResourceTagNV_fnptr(n, tagIds);
             
             /// <summary> <b>[requires: GL_NV_query_resource_tag] [glDeleteQueryResourceTagNV]</b>  </summary>
-            public static void DeleteQueryResourceTag(int n, int* tagIds) => GLPointers._glDeleteQueryResourceTagNV_fnptr(n, tagIds);
+            public static void DeleteQueryResourceTagNV(int n, int* tagIds) => GLPointers._glDeleteQueryResourceTagNV_fnptr(n, tagIds);
             
             /// <summary> <b>[requires: GL_NV_query_resource_tag] [glQueryResourceTagNV]</b>  </summary>
-            public static void QueryResourceTag(int tagId, byte* tagString) => GLPointers._glQueryResourceTagNV_fnptr(tagId, tagString);
+            public static void QueryResourceTagNV(int tagId, byte* tagString) => GLPointers._glQueryResourceTagNV_fnptr(tagId, tagString);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glCombinerParameterfvNV]</b>  </summary>
-            public static void CombinerParameterfv(CombinerParameterNV pname, float* parameters) => GLPointers._glCombinerParameterfvNV_fnptr((uint)pname, parameters);
+            public static void CombinerParameterfvNV(CombinerParameterNV pname, float* parameters) => GLPointers._glCombinerParameterfvNV_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glCombinerParameterfNV]</b>  </summary>
-            public static void CombinerParameterf(CombinerParameterNV pname, float param) => GLPointers._glCombinerParameterfNV_fnptr((uint)pname, param);
+            public static void CombinerParameterfNV(CombinerParameterNV pname, float param) => GLPointers._glCombinerParameterfNV_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glCombinerParameterivNV]</b>  </summary>
-            public static void CombinerParameteriv(CombinerParameterNV pname, int* parameters) => GLPointers._glCombinerParameterivNV_fnptr((uint)pname, parameters);
+            public static void CombinerParameterivNV(CombinerParameterNV pname, int* parameters) => GLPointers._glCombinerParameterivNV_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glCombinerParameteriNV]</b>  </summary>
-            public static void CombinerParameteri(CombinerParameterNV pname, int param) => GLPointers._glCombinerParameteriNV_fnptr((uint)pname, param);
+            public static void CombinerParameteriNV(CombinerParameterNV pname, int param) => GLPointers._glCombinerParameteriNV_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glCombinerInputNV]</b>  </summary>
-            public static void CombinerInput(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerRegisterNV input, CombinerMappingNV mapping, CombinerComponentUsageNV componentUsage) => GLPointers._glCombinerInputNV_fnptr((uint)stage, (uint)portion, (uint)variable, (uint)input, (uint)mapping, (uint)componentUsage);
+            public static void CombinerInputNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerRegisterNV input, CombinerMappingNV mapping, CombinerComponentUsageNV componentUsage) => GLPointers._glCombinerInputNV_fnptr((uint)stage, (uint)portion, (uint)variable, (uint)input, (uint)mapping, (uint)componentUsage);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glCombinerOutputNV]</b>  </summary>
-            public static void CombinerOutput(CombinerStageNV stage, CombinerPortionNV portion, CombinerRegisterNV abOutput, CombinerRegisterNV cdOutput, CombinerRegisterNV sumOutput, CombinerScaleNV scale, CombinerBiasNV bias, bool abDotProduct, bool cdDotProduct, bool muxSum) => GLPointers._glCombinerOutputNV_fnptr((uint)stage, (uint)portion, (uint)abOutput, (uint)cdOutput, (uint)sumOutput, (uint)scale, (uint)bias, (byte)(abDotProduct ? 1 : 0), (byte)(cdDotProduct ? 1 : 0), (byte)(muxSum ? 1 : 0));
+            public static void CombinerOutputNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerRegisterNV abOutput, CombinerRegisterNV cdOutput, CombinerRegisterNV sumOutput, CombinerScaleNV scale, CombinerBiasNV bias, bool abDotProduct, bool cdDotProduct, bool muxSum) => GLPointers._glCombinerOutputNV_fnptr((uint)stage, (uint)portion, (uint)abOutput, (uint)cdOutput, (uint)sumOutput, (uint)scale, (uint)bias, (byte)(abDotProduct ? 1 : 0), (byte)(cdDotProduct ? 1 : 0), (byte)(muxSum ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glFinalCombinerInputNV]</b>  </summary>
-            public static void FinalCombinerInput(CombinerVariableNV variable, CombinerRegisterNV input, CombinerMappingNV mapping, CombinerComponentUsageNV componentUsage) => GLPointers._glFinalCombinerInputNV_fnptr((uint)variable, (uint)input, (uint)mapping, (uint)componentUsage);
+            public static void FinalCombinerInputNV(CombinerVariableNV variable, CombinerRegisterNV input, CombinerMappingNV mapping, CombinerComponentUsageNV componentUsage) => GLPointers._glFinalCombinerInputNV_fnptr((uint)variable, (uint)input, (uint)mapping, (uint)componentUsage);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glGetCombinerInputParameterfvNV]</b>  </summary>
-            public static void GetCombinerInputParameterfv(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, float* parameters) => GLPointers._glGetCombinerInputParameterfvNV_fnptr((uint)stage, (uint)portion, (uint)variable, (uint)pname, parameters);
+            public static void GetCombinerInputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, float* parameters) => GLPointers._glGetCombinerInputParameterfvNV_fnptr((uint)stage, (uint)portion, (uint)variable, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glGetCombinerInputParameterivNV]</b>  </summary>
-            public static void GetCombinerInputParameteriv(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, int* parameters) => GLPointers._glGetCombinerInputParameterivNV_fnptr((uint)stage, (uint)portion, (uint)variable, (uint)pname, parameters);
+            public static void GetCombinerInputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerVariableNV variable, CombinerParameterNV pname, int* parameters) => GLPointers._glGetCombinerInputParameterivNV_fnptr((uint)stage, (uint)portion, (uint)variable, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glGetCombinerOutputParameterfvNV]</b>  </summary>
-            public static void GetCombinerOutputParameterfv(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, float* parameters) => GLPointers._glGetCombinerOutputParameterfvNV_fnptr((uint)stage, (uint)portion, (uint)pname, parameters);
+            public static void GetCombinerOutputParameterfvNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, float* parameters) => GLPointers._glGetCombinerOutputParameterfvNV_fnptr((uint)stage, (uint)portion, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glGetCombinerOutputParameterivNV]</b>  </summary>
-            public static void GetCombinerOutputParameteriv(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, int* parameters) => GLPointers._glGetCombinerOutputParameterivNV_fnptr((uint)stage, (uint)portion, (uint)pname, parameters);
+            public static void GetCombinerOutputParameterivNV(CombinerStageNV stage, CombinerPortionNV portion, CombinerParameterNV pname, int* parameters) => GLPointers._glGetCombinerOutputParameterivNV_fnptr((uint)stage, (uint)portion, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glGetFinalCombinerInputParameterfvNV]</b>  </summary>
-            public static void GetFinalCombinerInputParameterfv(CombinerVariableNV variable, CombinerParameterNV pname, float* parameters) => GLPointers._glGetFinalCombinerInputParameterfvNV_fnptr((uint)variable, (uint)pname, parameters);
+            public static void GetFinalCombinerInputParameterfvNV(CombinerVariableNV variable, CombinerParameterNV pname, float* parameters) => GLPointers._glGetFinalCombinerInputParameterfvNV_fnptr((uint)variable, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners] [glGetFinalCombinerInputParameterivNV]</b>  </summary>
-            public static void GetFinalCombinerInputParameteriv(CombinerVariableNV variable, CombinerParameterNV pname, int* parameters) => GLPointers._glGetFinalCombinerInputParameterivNV_fnptr((uint)variable, (uint)pname, parameters);
+            public static void GetFinalCombinerInputParameterivNV(CombinerVariableNV variable, CombinerParameterNV pname, int* parameters) => GLPointers._glGetFinalCombinerInputParameterivNV_fnptr((uint)variable, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners2] [glCombinerStageParameterfvNV]</b>  </summary>
-            public static void CombinerStageParameterfv(CombinerStageNV stage, CombinerParameterNV pname, float* parameters) => GLPointers._glCombinerStageParameterfvNV_fnptr((uint)stage, (uint)pname, parameters);
+            public static void CombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname, float* parameters) => GLPointers._glCombinerStageParameterfvNV_fnptr((uint)stage, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_register_combiners2] [glGetCombinerStageParameterfvNV]</b>  </summary>
-            public static void GetCombinerStageParameterfv(CombinerStageNV stage, CombinerParameterNV pname, float* parameters) => GLPointers._glGetCombinerStageParameterfvNV_fnptr((uint)stage, (uint)pname, parameters);
+            public static void GetCombinerStageParameterfvNV(CombinerStageNV stage, CombinerParameterNV pname, float* parameters) => GLPointers._glGetCombinerStageParameterfvNV_fnptr((uint)stage, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_sample_locations] [glFramebufferSampleLocationsfvNV]</b>  </summary>
-            public static void FramebufferSampleLocationsfv(FramebufferTarget target, uint start, int count, float* v) => GLPointers._glFramebufferSampleLocationsfvNV_fnptr((uint)target, start, count, v);
+            public static void FramebufferSampleLocationsfvNV(FramebufferTarget target, uint start, int count, float* v) => GLPointers._glFramebufferSampleLocationsfvNV_fnptr((uint)target, start, count, v);
             
             /// <summary> <b>[requires: GL_NV_sample_locations] [glNamedFramebufferSampleLocationsfvNV]</b>  </summary>
-            public static void NamedFramebufferSampleLocationsfv(int framebuffer, uint start, int count, float* v) => GLPointers._glNamedFramebufferSampleLocationsfvNV_fnptr(framebuffer, start, count, v);
+            public static void NamedFramebufferSampleLocationsfvNV(int framebuffer, uint start, int count, float* v) => GLPointers._glNamedFramebufferSampleLocationsfvNV_fnptr(framebuffer, start, count, v);
             
             /// <summary> <b>[requires: GL_NV_sample_locations] [glResolveDepthValuesNV]</b>  </summary>
-            public static void ResolveDepthValues() => GLPointers._glResolveDepthValuesNV_fnptr();
+            public static void ResolveDepthValuesNV() => GLPointers._glResolveDepthValuesNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_scissor_exclusive] [glScissorExclusiveNV]</b>  </summary>
-            public static void ScissorExclusive(int x, int y, int width, int height) => GLPointers._glScissorExclusiveNV_fnptr(x, y, width, height);
+            public static void ScissorExclusiveNV(int x, int y, int width, int height) => GLPointers._glScissorExclusiveNV_fnptr(x, y, width, height);
             
             /// <summary> <b>[requires: GL_NV_scissor_exclusive] [glScissorExclusiveArrayvNV]</b>  </summary>
-            public static void ScissorExclusiveArrayv(uint first, int count, int* v) => GLPointers._glScissorExclusiveArrayvNV_fnptr(first, count, v);
+            public static void ScissorExclusiveArrayvNV(uint first, int count, int* v) => GLPointers._glScissorExclusiveArrayvNV_fnptr(first, count, v);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glMakeBufferResidentNV]</b>  </summary>
-            public static void MakeBufferResident(All target, All access) => GLPointers._glMakeBufferResidentNV_fnptr((uint)target, (uint)access);
+            public static void MakeBufferResidentNV(All target, All access) => GLPointers._glMakeBufferResidentNV_fnptr((uint)target, (uint)access);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glMakeBufferNonResidentNV]</b>  </summary>
-            public static void MakeBufferNonResident(All target) => GLPointers._glMakeBufferNonResidentNV_fnptr((uint)target);
+            public static void MakeBufferNonResidentNV(All target) => GLPointers._glMakeBufferNonResidentNV_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glIsBufferResidentNV]</b>  </summary>
-            public static bool IsBufferResident(All target) => GLPointers._glIsBufferResidentNV_fnptr((uint)target) != 0;
+            public static bool IsBufferResidentNV(All target) => GLPointers._glIsBufferResidentNV_fnptr((uint)target) != 0;
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glMakeNamedBufferResidentNV]</b>  </summary>
-            public static void MakeNamedBufferResident(int buffer, All access) => GLPointers._glMakeNamedBufferResidentNV_fnptr(buffer, (uint)access);
+            public static void MakeNamedBufferResidentNV(int buffer, All access) => GLPointers._glMakeNamedBufferResidentNV_fnptr(buffer, (uint)access);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glMakeNamedBufferNonResidentNV]</b>  </summary>
-            public static void MakeNamedBufferNonResident(int buffer) => GLPointers._glMakeNamedBufferNonResidentNV_fnptr(buffer);
+            public static void MakeNamedBufferNonResidentNV(int buffer) => GLPointers._glMakeNamedBufferNonResidentNV_fnptr(buffer);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glIsNamedBufferResidentNV]</b>  </summary>
-            public static bool IsNamedBufferResident(int buffer) => GLPointers._glIsNamedBufferResidentNV_fnptr(buffer) != 0;
+            public static bool IsNamedBufferResidentNV(int buffer) => GLPointers._glIsNamedBufferResidentNV_fnptr(buffer) != 0;
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glGetBufferParameterui64vNV]</b>  </summary>
-            public static void GetBufferParameterui64v(BufferTargetARB target, All pname, ulong* parameters) => GLPointers._glGetBufferParameterui64vNV_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetBufferParameterui64vNV(BufferTargetARB target, All pname, ulong* parameters) => GLPointers._glGetBufferParameterui64vNV_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glGetNamedBufferParameterui64vNV]</b>  </summary>
-            public static void GetNamedBufferParameterui64v(int buffer, BufferPNameARB pname, ulong* parameters) => GLPointers._glGetNamedBufferParameterui64vNV_fnptr(buffer, (uint)pname, parameters);
+            public static void GetNamedBufferParameterui64vNV(int buffer, BufferPNameARB pname, ulong* parameters) => GLPointers._glGetNamedBufferParameterui64vNV_fnptr(buffer, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glGetIntegerui64vNV]</b>  </summary>
-            public static void GetIntegerui64v(All value, ulong* result) => GLPointers._glGetIntegerui64vNV_fnptr((uint)value, result);
+            public static void GetIntegerui64vNV(All value, ulong* result) => GLPointers._glGetIntegerui64vNV_fnptr((uint)value, result);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glUniformui64NV]</b>  </summary>
-            public static void Uniformui64(int location, ulong value) => GLPointers._glUniformui64NV_fnptr(location, value);
+            public static void Uniformui64NV(int location, ulong value) => GLPointers._glUniformui64NV_fnptr(location, value);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glUniformui64vNV]</b>  </summary>
-            public static void Uniformui64v(int location, int count, ulong* value) => GLPointers._glUniformui64vNV_fnptr(location, count, value);
+            public static void Uniformui64vNV(int location, int count, ulong* value) => GLPointers._glUniformui64vNV_fnptr(location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_gpu_shader_int64 | GL_NV_shader_buffer_load] [glGetUniformui64vNV]</b>  </summary>
-            public static void GetUniformui64v(int program, int location, ulong* parameters) => GLPointers._glGetUniformui64vNV_fnptr(program, location, parameters);
+            public static void GetUniformui64vNV(int program, int location, ulong* parameters) => GLPointers._glGetUniformui64vNV_fnptr(program, location, parameters);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glProgramUniformui64NV]</b>  </summary>
-            public static void ProgramUniformui64(int program, int location, ulong value) => GLPointers._glProgramUniformui64NV_fnptr(program, location, value);
+            public static void ProgramUniformui64NV(int program, int location, ulong value) => GLPointers._glProgramUniformui64NV_fnptr(program, location, value);
             
             /// <summary> <b>[requires: GL_NV_shader_buffer_load] [glProgramUniformui64vNV]</b>  </summary>
-            public static void ProgramUniformui64v(int program, int location, int count, ulong* value) => GLPointers._glProgramUniformui64vNV_fnptr(program, location, count, value);
+            public static void ProgramUniformui64vNV(int program, int location, int count, ulong* value) => GLPointers._glProgramUniformui64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image] [glBindShadingRateImageNV]</b>  </summary>
-            public static void BindShadingRateImage(int texture) => GLPointers._glBindShadingRateImageNV_fnptr(texture);
+            public static void BindShadingRateImageNV(int texture) => GLPointers._glBindShadingRateImageNV_fnptr(texture);
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image] [glGetShadingRateImagePaletteNV]</b>  </summary>
-            public static void GetShadingRateImagePalette(uint viewport, uint entry, All* rate) => GLPointers._glGetShadingRateImagePaletteNV_fnptr(viewport, entry, (uint*)rate);
+            public static void GetShadingRateImagePaletteNV(uint viewport, uint entry, All* rate) => GLPointers._glGetShadingRateImagePaletteNV_fnptr(viewport, entry, (uint*)rate);
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image] [glGetShadingRateSampleLocationivNV]</b>  </summary>
-            public static void GetShadingRateSampleLocationiv(All rate, uint samples, uint index, int* location) => GLPointers._glGetShadingRateSampleLocationivNV_fnptr((uint)rate, samples, index, location);
+            public static void GetShadingRateSampleLocationivNV(All rate, uint samples, uint index, int* location) => GLPointers._glGetShadingRateSampleLocationivNV_fnptr((uint)rate, samples, index, location);
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image] [glShadingRateImageBarrierNV]</b>  </summary>
-            public static void ShadingRateImageBarrier(bool synchronize) => GLPointers._glShadingRateImageBarrierNV_fnptr((byte)(synchronize ? 1 : 0));
+            public static void ShadingRateImageBarrierNV(bool synchronize) => GLPointers._glShadingRateImageBarrierNV_fnptr((byte)(synchronize ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image] [glShadingRateImagePaletteNV]</b>  </summary>
-            public static void ShadingRateImagePalette(uint viewport, uint first, int count, All* rates) => GLPointers._glShadingRateImagePaletteNV_fnptr(viewport, first, count, (uint*)rates);
+            public static void ShadingRateImagePaletteNV(uint viewport, uint first, int count, All* rates) => GLPointers._glShadingRateImagePaletteNV_fnptr(viewport, first, count, (uint*)rates);
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image] [glShadingRateSampleOrderNV]</b>  </summary>
-            public static void ShadingRateSampleOrder(All order) => GLPointers._glShadingRateSampleOrderNV_fnptr((uint)order);
+            public static void ShadingRateSampleOrderNV(All order) => GLPointers._glShadingRateSampleOrderNV_fnptr((uint)order);
             
             /// <summary> <b>[requires: GL_NV_shading_rate_image] [glShadingRateSampleOrderCustomNV]</b>  </summary>
-            public static void ShadingRateSampleOrderCustom(All rate, uint samples, int* locations) => GLPointers._glShadingRateSampleOrderCustomNV_fnptr((uint)rate, samples, locations);
+            public static void ShadingRateSampleOrderCustomNV(All rate, uint samples, int* locations) => GLPointers._glShadingRateSampleOrderCustomNV_fnptr((uint)rate, samples, locations);
             
             /// <summary> <b>[requires: GL_NV_texture_barrier] [glTextureBarrierNV]</b>  </summary>
-            public static void TextureBarrier() => GLPointers._glTextureBarrierNV_fnptr();
+            public static void TextureBarrierNV() => GLPointers._glTextureBarrierNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_texture_multisample] [glTexImage2DMultisampleCoverageNV]</b>  </summary>
-            public static void TexImage2DMultisampleCoverage(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTexImage2DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTexImage2DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample] [glTexImage3DMultisampleCoverageNV]</b>  </summary>
-            public static void TexImage3DMultisampleCoverage(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTexImage3DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTexImage3DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample] [glTextureImage2DMultisampleNV]</b>  </summary>
-            public static void TextureImage2DMultisample(int texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleNV_fnptr(texture, (uint)target, samples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage2DMultisampleNV(int texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleNV_fnptr(texture, (uint)target, samples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample] [glTextureImage3DMultisampleNV]</b>  </summary>
-            public static void TextureImage3DMultisample(int texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleNV_fnptr(texture, (uint)target, samples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage3DMultisampleNV(int texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleNV_fnptr(texture, (uint)target, samples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample] [glTextureImage2DMultisampleCoverageNV]</b>  </summary>
-            public static void TextureImage2DMultisampleCoverage(int texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage2DMultisampleCoverageNV(int texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample] [glTextureImage3DMultisampleCoverageNV]</b>  </summary>
-            public static void TextureImage3DMultisampleCoverage(int texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage3DMultisampleCoverageNV(int texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glBeginTransformFeedbackNV]</b>  </summary>
-            public static void BeginTransformFeedback(PrimitiveType primitiveMode) => GLPointers._glBeginTransformFeedbackNV_fnptr((uint)primitiveMode);
+            public static void BeginTransformFeedbackNV(PrimitiveType primitiveMode) => GLPointers._glBeginTransformFeedbackNV_fnptr((uint)primitiveMode);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glEndTransformFeedbackNV]</b>  </summary>
-            public static void EndTransformFeedback() => GLPointers._glEndTransformFeedbackNV_fnptr();
+            public static void EndTransformFeedbackNV() => GLPointers._glEndTransformFeedbackNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glTransformFeedbackAttribsNV]</b>  </summary>
-            public static void TransformFeedbackAttribs(int count, int* attribs, All bufferMode) => GLPointers._glTransformFeedbackAttribsNV_fnptr(count, attribs, (uint)bufferMode);
+            public static void TransformFeedbackAttribsNV(int count, int* attribs, All bufferMode) => GLPointers._glTransformFeedbackAttribsNV_fnptr(count, attribs, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glBindBufferRangeNV]</b>  </summary>
-            public static void BindBufferRange(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeNV_fnptr((uint)target, index, buffer, offset, size);
+            public static void BindBufferRangeNV(BufferTargetARB target, uint index, int buffer, IntPtr offset, nint size) => GLPointers._glBindBufferRangeNV_fnptr((uint)target, index, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glBindBufferOffsetNV]</b>  </summary>
-            public static void BindBufferOffset(BufferTargetARB target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetNV_fnptr((uint)target, index, buffer, offset);
+            public static void BindBufferOffsetNV(BufferTargetARB target, uint index, int buffer, IntPtr offset) => GLPointers._glBindBufferOffsetNV_fnptr((uint)target, index, buffer, offset);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glBindBufferBaseNV]</b>  </summary>
-            public static void BindBufferBase(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBaseNV_fnptr((uint)target, index, buffer);
+            public static void BindBufferBaseNV(BufferTargetARB target, uint index, int buffer) => GLPointers._glBindBufferBaseNV_fnptr((uint)target, index, buffer);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glTransformFeedbackVaryingsNV]</b>  </summary>
-            public static void TransformFeedbackVaryings(int program, int count, TransformFeedbackTokenNV* locations, TransformFeedbackBufferMode bufferMode) => GLPointers._glTransformFeedbackVaryingsNV_fnptr(program, count, (int*)locations, (uint)bufferMode);
+            public static void TransformFeedbackVaryingsNV(int program, int count, TransformFeedbackTokenNV* locations, TransformFeedbackBufferMode bufferMode) => GLPointers._glTransformFeedbackVaryingsNV_fnptr(program, count, (int*)locations, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glActiveVaryingNV]</b>  </summary>
-            public static void ActiveVarying(int program, byte* name) => GLPointers._glActiveVaryingNV_fnptr(program, name);
+            public static void ActiveVaryingNV(int program, byte* name) => GLPointers._glActiveVaryingNV_fnptr(program, name);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glGetVaryingLocationNV]</b>  </summary>
-            public static int GetVaryingLocation(int program, byte* name) => GLPointers._glGetVaryingLocationNV_fnptr(program, name);
+            public static int GetVaryingLocationNV(int program, byte* name) => GLPointers._glGetVaryingLocationNV_fnptr(program, name);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glGetActiveVaryingNV]</b>  </summary>
-            public static void GetActiveVarying(int program, uint index, int bufSize, int* length, int* size, All* type, byte* name) => GLPointers._glGetActiveVaryingNV_fnptr(program, index, bufSize, length, size, (uint*)type, name);
+            public static void GetActiveVaryingNV(int program, uint index, int bufSize, int* length, int* size, All* type, byte* name) => GLPointers._glGetActiveVaryingNV_fnptr(program, index, bufSize, length, size, (uint*)type, name);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glGetTransformFeedbackVaryingNV]</b>  </summary>
-            public static void GetTransformFeedbackVarying(int program, uint index, int* location) => GLPointers._glGetTransformFeedbackVaryingNV_fnptr(program, index, location);
+            public static void GetTransformFeedbackVaryingNV(int program, uint index, int* location) => GLPointers._glGetTransformFeedbackVaryingNV_fnptr(program, index, location);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback] [glTransformFeedbackStreamAttribsNV]</b>  </summary>
-            public static void TransformFeedbackStreamAttribs(int count, int* attribs, int nbuffers, int* bufstreams, All bufferMode) => GLPointers._glTransformFeedbackStreamAttribsNV_fnptr(count, attribs, nbuffers, bufstreams, (uint)bufferMode);
+            public static void TransformFeedbackStreamAttribsNV(int count, int* attribs, int nbuffers, int* bufstreams, All bufferMode) => GLPointers._glTransformFeedbackStreamAttribsNV_fnptr(count, attribs, nbuffers, bufstreams, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2] [glBindTransformFeedbackNV]</b>  </summary>
-            public static void BindTransformFeedback(BufferTargetARB target, int id) => GLPointers._glBindTransformFeedbackNV_fnptr((uint)target, id);
+            public static void BindTransformFeedbackNV(BufferTargetARB target, int id) => GLPointers._glBindTransformFeedbackNV_fnptr((uint)target, id);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2] [glDeleteTransformFeedbacksNV]</b>  </summary>
-            public static void DeleteTransformFeedbacks(int n, int* ids) => GLPointers._glDeleteTransformFeedbacksNV_fnptr(n, ids);
+            public static void DeleteTransformFeedbacksNV(int n, int* ids) => GLPointers._glDeleteTransformFeedbacksNV_fnptr(n, ids);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2] [glGenTransformFeedbacksNV]</b>  </summary>
-            public static void GenTransformFeedbacks(int n, int* ids) => GLPointers._glGenTransformFeedbacksNV_fnptr(n, ids);
+            public static void GenTransformFeedbacksNV(int n, int* ids) => GLPointers._glGenTransformFeedbacksNV_fnptr(n, ids);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2] [glIsTransformFeedbackNV]</b>  </summary>
-            public static bool IsTransformFeedback(int id) => GLPointers._glIsTransformFeedbackNV_fnptr(id) != 0;
+            public static bool IsTransformFeedbackNV(int id) => GLPointers._glIsTransformFeedbackNV_fnptr(id) != 0;
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2] [glPauseTransformFeedbackNV]</b>  </summary>
-            public static void PauseTransformFeedback() => GLPointers._glPauseTransformFeedbackNV_fnptr();
+            public static void PauseTransformFeedbackNV() => GLPointers._glPauseTransformFeedbackNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2] [glResumeTransformFeedbackNV]</b>  </summary>
-            public static void ResumeTransformFeedback() => GLPointers._glResumeTransformFeedbackNV_fnptr();
+            public static void ResumeTransformFeedbackNV() => GLPointers._glResumeTransformFeedbackNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_transform_feedback2] [glDrawTransformFeedbackNV]</b>  </summary>
-            public static void DrawTransformFeedback(PrimitiveType mode, int id) => GLPointers._glDrawTransformFeedbackNV_fnptr((uint)mode, id);
+            public static void DrawTransformFeedbackNV(PrimitiveType mode, int id) => GLPointers._glDrawTransformFeedbackNV_fnptr((uint)mode, id);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUInitNV]</b>  </summary>
-            public static void VDPAUInit(void* vdpDevice, void* getProcAddress) => GLPointers._glVDPAUInitNV_fnptr(vdpDevice, getProcAddress);
+            public static void VDPAUInitNV(void* vdpDevice, void* getProcAddress) => GLPointers._glVDPAUInitNV_fnptr(vdpDevice, getProcAddress);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUFiniNV]</b>  </summary>
-            public static void VDPAUFini() => GLPointers._glVDPAUFiniNV_fnptr();
+            public static void VDPAUFiniNV() => GLPointers._glVDPAUFiniNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAURegisterVideoSurfaceNV]</b>  </summary>
-            public static IntPtr VDPAURegisterVideoSurface(void* vdpSurface, All target, int numTextureNames, uint* textureNames) => GLPointers._glVDPAURegisterVideoSurfaceNV_fnptr(vdpSurface, (uint)target, numTextureNames, textureNames);
+            public static IntPtr VDPAURegisterVideoSurfaceNV(void* vdpSurface, All target, int numTextureNames, uint* textureNames) => GLPointers._glVDPAURegisterVideoSurfaceNV_fnptr(vdpSurface, (uint)target, numTextureNames, textureNames);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAURegisterOutputSurfaceNV]</b>  </summary>
-            public static IntPtr VDPAURegisterOutputSurface(void* vdpSurface, All target, int numTextureNames, uint* textureNames) => GLPointers._glVDPAURegisterOutputSurfaceNV_fnptr(vdpSurface, (uint)target, numTextureNames, textureNames);
+            public static IntPtr VDPAURegisterOutputSurfaceNV(void* vdpSurface, All target, int numTextureNames, uint* textureNames) => GLPointers._glVDPAURegisterOutputSurfaceNV_fnptr(vdpSurface, (uint)target, numTextureNames, textureNames);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUIsSurfaceNV]</b>  </summary>
-            public static bool VDPAUIsSurface(IntPtr surface) => GLPointers._glVDPAUIsSurfaceNV_fnptr(surface) != 0;
+            public static bool VDPAUIsSurfaceNV(IntPtr surface) => GLPointers._glVDPAUIsSurfaceNV_fnptr(surface) != 0;
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUUnregisterSurfaceNV]</b>  </summary>
-            public static void VDPAUUnregisterSurface(IntPtr surface) => GLPointers._glVDPAUUnregisterSurfaceNV_fnptr(surface);
+            public static void VDPAUUnregisterSurfaceNV(IntPtr surface) => GLPointers._glVDPAUUnregisterSurfaceNV_fnptr(surface);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUGetSurfaceivNV]</b>  </summary>
-            public static void VDPAUGetSurfaceiv(IntPtr surface, All pname, int count, int* length, int* values) => GLPointers._glVDPAUGetSurfaceivNV_fnptr(surface, (uint)pname, count, length, values);
+            public static void VDPAUGetSurfaceivNV(IntPtr surface, All pname, int count, int* length, int* values) => GLPointers._glVDPAUGetSurfaceivNV_fnptr(surface, (uint)pname, count, length, values);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUSurfaceAccessNV]</b>  </summary>
-            public static void VDPAUSurfaceAccess(IntPtr surface, All access) => GLPointers._glVDPAUSurfaceAccessNV_fnptr(surface, (uint)access);
+            public static void VDPAUSurfaceAccessNV(IntPtr surface, All access) => GLPointers._glVDPAUSurfaceAccessNV_fnptr(surface, (uint)access);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUMapSurfacesNV]</b>  </summary>
-            public static void VDPAUMapSurfaces(int numSurfaces, IntPtr* surfaces) => GLPointers._glVDPAUMapSurfacesNV_fnptr(numSurfaces, surfaces);
+            public static void VDPAUMapSurfacesNV(int numSurfaces, IntPtr* surfaces) => GLPointers._glVDPAUMapSurfacesNV_fnptr(numSurfaces, surfaces);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop] [glVDPAUUnmapSurfacesNV]</b>  </summary>
-            public static void VDPAUUnmapSurfaces(int numSurface, IntPtr* surfaces) => GLPointers._glVDPAUUnmapSurfacesNV_fnptr(numSurface, surfaces);
+            public static void VDPAUUnmapSurfacesNV(int numSurface, IntPtr* surfaces) => GLPointers._glVDPAUUnmapSurfacesNV_fnptr(numSurface, surfaces);
             
             /// <summary> <b>[requires: GL_NV_vdpau_interop2] [glVDPAURegisterVideoSurfaceWithPictureStructureNV]</b>  </summary>
-            public static IntPtr VDPAURegisterVideoSurfaceWithPictureStructure(void* vdpSurface, All target, int numTextureNames, uint* textureNames, bool isFrameStructure) => GLPointers._glVDPAURegisterVideoSurfaceWithPictureStructureNV_fnptr(vdpSurface, (uint)target, numTextureNames, textureNames, (byte)(isFrameStructure ? 1 : 0));
+            public static IntPtr VDPAURegisterVideoSurfaceWithPictureStructureNV(void* vdpSurface, All target, int numTextureNames, uint* textureNames, bool isFrameStructure) => GLPointers._glVDPAURegisterVideoSurfaceWithPictureStructureNV_fnptr(vdpSurface, (uint)target, numTextureNames, textureNames, (byte)(isFrameStructure ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_vertex_array_range] [glFlushVertexArrayRangeNV]</b>  </summary>
-            public static void FlushVertexArrayRange() => GLPointers._glFlushVertexArrayRangeNV_fnptr();
+            public static void FlushVertexArrayRangeNV() => GLPointers._glFlushVertexArrayRangeNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_vertex_array_range] [glVertexArrayRangeNV]</b>  </summary>
-            public static void VertexArrayRange(int length, void* pointer) => GLPointers._glVertexArrayRangeNV_fnptr(length, pointer);
+            public static void VertexArrayRangeNV(int length, void* pointer) => GLPointers._glVertexArrayRangeNV_fnptr(length, pointer);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL1i64NV]</b>  </summary>
-            public static void VertexAttribL1i64(uint index, long x) => GLPointers._glVertexAttribL1i64NV_fnptr(index, x);
+            public static void VertexAttribL1i64NV(uint index, long x) => GLPointers._glVertexAttribL1i64NV_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL2i64NV]</b>  </summary>
-            public static void VertexAttribL2i64(uint index, long x, long y) => GLPointers._glVertexAttribL2i64NV_fnptr(index, x, y);
+            public static void VertexAttribL2i64NV(uint index, long x, long y) => GLPointers._glVertexAttribL2i64NV_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL3i64NV]</b>  </summary>
-            public static void VertexAttribL3i64(uint index, long x, long y, long z) => GLPointers._glVertexAttribL3i64NV_fnptr(index, x, y, z);
+            public static void VertexAttribL3i64NV(uint index, long x, long y, long z) => GLPointers._glVertexAttribL3i64NV_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL4i64NV]</b>  </summary>
-            public static void VertexAttribL4i64(uint index, long x, long y, long z, long w) => GLPointers._glVertexAttribL4i64NV_fnptr(index, x, y, z, w);
+            public static void VertexAttribL4i64NV(uint index, long x, long y, long z, long w) => GLPointers._glVertexAttribL4i64NV_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL1i64vNV]</b>  </summary>
-            public static void VertexAttribL1i64v(uint index, long* v) => GLPointers._glVertexAttribL1i64vNV_fnptr(index, v);
+            public static void VertexAttribL1i64vNV(uint index, long* v) => GLPointers._glVertexAttribL1i64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL2i64vNV]</b>  </summary>
-            public static void VertexAttribL2i64v(uint index, long* v) => GLPointers._glVertexAttribL2i64vNV_fnptr(index, v);
+            public static void VertexAttribL2i64vNV(uint index, long* v) => GLPointers._glVertexAttribL2i64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL3i64vNV]</b>  </summary>
-            public static void VertexAttribL3i64v(uint index, long* v) => GLPointers._glVertexAttribL3i64vNV_fnptr(index, v);
+            public static void VertexAttribL3i64vNV(uint index, long* v) => GLPointers._glVertexAttribL3i64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL4i64vNV]</b>  </summary>
-            public static void VertexAttribL4i64v(uint index, long* v) => GLPointers._glVertexAttribL4i64vNV_fnptr(index, v);
+            public static void VertexAttribL4i64vNV(uint index, long* v) => GLPointers._glVertexAttribL4i64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL1ui64NV]</b>  </summary>
-            public static void VertexAttribL1ui64(uint index, ulong x) => GLPointers._glVertexAttribL1ui64NV_fnptr(index, x);
+            public static void VertexAttribL1ui64NV(uint index, ulong x) => GLPointers._glVertexAttribL1ui64NV_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL2ui64NV]</b>  </summary>
-            public static void VertexAttribL2ui64(uint index, ulong x, ulong y) => GLPointers._glVertexAttribL2ui64NV_fnptr(index, x, y);
+            public static void VertexAttribL2ui64NV(uint index, ulong x, ulong y) => GLPointers._glVertexAttribL2ui64NV_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL3ui64NV]</b>  </summary>
-            public static void VertexAttribL3ui64(uint index, ulong x, ulong y, ulong z) => GLPointers._glVertexAttribL3ui64NV_fnptr(index, x, y, z);
+            public static void VertexAttribL3ui64NV(uint index, ulong x, ulong y, ulong z) => GLPointers._glVertexAttribL3ui64NV_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL4ui64NV]</b>  </summary>
-            public static void VertexAttribL4ui64(uint index, ulong x, ulong y, ulong z, ulong w) => GLPointers._glVertexAttribL4ui64NV_fnptr(index, x, y, z, w);
+            public static void VertexAttribL4ui64NV(uint index, ulong x, ulong y, ulong z, ulong w) => GLPointers._glVertexAttribL4ui64NV_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL1ui64vNV]</b>  </summary>
-            public static void VertexAttribL1ui64v(uint index, ulong* v) => GLPointers._glVertexAttribL1ui64vNV_fnptr(index, v);
+            public static void VertexAttribL1ui64vNV(uint index, ulong* v) => GLPointers._glVertexAttribL1ui64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL2ui64vNV]</b>  </summary>
-            public static void VertexAttribL2ui64v(uint index, ulong* v) => GLPointers._glVertexAttribL2ui64vNV_fnptr(index, v);
+            public static void VertexAttribL2ui64vNV(uint index, ulong* v) => GLPointers._glVertexAttribL2ui64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL3ui64vNV]</b>  </summary>
-            public static void VertexAttribL3ui64v(uint index, ulong* v) => GLPointers._glVertexAttribL3ui64vNV_fnptr(index, v);
+            public static void VertexAttribL3ui64vNV(uint index, ulong* v) => GLPointers._glVertexAttribL3ui64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribL4ui64vNV]</b>  </summary>
-            public static void VertexAttribL4ui64v(uint index, ulong* v) => GLPointers._glVertexAttribL4ui64vNV_fnptr(index, v);
+            public static void VertexAttribL4ui64vNV(uint index, ulong* v) => GLPointers._glVertexAttribL4ui64vNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glGetVertexAttribLi64vNV]</b>  </summary>
-            public static void GetVertexAttribLi64v(uint index, VertexAttribEnum pname, long* parameters) => GLPointers._glGetVertexAttribLi64vNV_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribLi64vNV(uint index, VertexAttribEnum pname, long* parameters) => GLPointers._glGetVertexAttribLi64vNV_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glGetVertexAttribLui64vNV]</b>  </summary>
-            public static void GetVertexAttribLui64v(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vNV_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribLui64vNV(uint index, VertexAttribEnum pname, ulong* parameters) => GLPointers._glGetVertexAttribLui64vNV_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_attrib_integer_64bit] [glVertexAttribLFormatNV]</b>  </summary>
-            public static void VertexAttribLFormat(uint index, int size, VertexAttribLType type, int stride) => GLPointers._glVertexAttribLFormatNV_fnptr(index, size, (uint)type, stride);
+            public static void VertexAttribLFormatNV(uint index, int size, VertexAttribLType type, int stride) => GLPointers._glVertexAttribLFormatNV_fnptr(index, size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glBufferAddressRangeNV]</b>  </summary>
-            public static void BufferAddressRange(All pname, uint index, ulong address, nint length) => GLPointers._glBufferAddressRangeNV_fnptr((uint)pname, index, address, length);
+            public static void BufferAddressRangeNV(All pname, uint index, ulong address, nint length) => GLPointers._glBufferAddressRangeNV_fnptr((uint)pname, index, address, length);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glVertexFormatNV]</b>  </summary>
-            public static void VertexFormat(int size, VertexPointerType type, int stride) => GLPointers._glVertexFormatNV_fnptr(size, (uint)type, stride);
+            public static void VertexFormatNV(int size, VertexPointerType type, int stride) => GLPointers._glVertexFormatNV_fnptr(size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glNormalFormatNV]</b>  </summary>
-            public static void NormalFormat(All type, int stride) => GLPointers._glNormalFormatNV_fnptr((uint)type, stride);
+            public static void NormalFormatNV(All type, int stride) => GLPointers._glNormalFormatNV_fnptr((uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glColorFormatNV]</b>  </summary>
-            public static void ColorFormat(int size, ColorPointerType type, int stride) => GLPointers._glColorFormatNV_fnptr(size, (uint)type, stride);
+            public static void ColorFormatNV(int size, ColorPointerType type, int stride) => GLPointers._glColorFormatNV_fnptr(size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glIndexFormatNV]</b>  </summary>
-            public static void IndexFormat(All type, int stride) => GLPointers._glIndexFormatNV_fnptr((uint)type, stride);
+            public static void IndexFormatNV(All type, int stride) => GLPointers._glIndexFormatNV_fnptr((uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glTexCoordFormatNV]</b>  </summary>
-            public static void TexCoordFormat(int size, All type, int stride) => GLPointers._glTexCoordFormatNV_fnptr(size, (uint)type, stride);
+            public static void TexCoordFormatNV(int size, All type, int stride) => GLPointers._glTexCoordFormatNV_fnptr(size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glEdgeFlagFormatNV]</b>  </summary>
-            public static void EdgeFlagFormat(int stride) => GLPointers._glEdgeFlagFormatNV_fnptr(stride);
+            public static void EdgeFlagFormatNV(int stride) => GLPointers._glEdgeFlagFormatNV_fnptr(stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glSecondaryColorFormatNV]</b>  </summary>
-            public static void SecondaryColorFormat(int size, ColorPointerType type, int stride) => GLPointers._glSecondaryColorFormatNV_fnptr(size, (uint)type, stride);
+            public static void SecondaryColorFormatNV(int size, ColorPointerType type, int stride) => GLPointers._glSecondaryColorFormatNV_fnptr(size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glFogCoordFormatNV]</b>  </summary>
-            public static void FogCoordFormat(All type, int stride) => GLPointers._glFogCoordFormatNV_fnptr((uint)type, stride);
+            public static void FogCoordFormatNV(All type, int stride) => GLPointers._glFogCoordFormatNV_fnptr((uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glVertexAttribFormatNV]</b>  </summary>
-            public static void VertexAttribFormat(uint index, int size, VertexAttribType type, bool normalized, int stride) => GLPointers._glVertexAttribFormatNV_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride);
+            public static void VertexAttribFormatNV(uint index, int size, VertexAttribType type, bool normalized, int stride) => GLPointers._glVertexAttribFormatNV_fnptr(index, size, (uint)type, (byte)(normalized ? 1 : 0), stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glVertexAttribIFormatNV]</b>  </summary>
-            public static void VertexAttribIFormat(uint index, int size, VertexAttribIType type, int stride) => GLPointers._glVertexAttribIFormatNV_fnptr(index, size, (uint)type, stride);
+            public static void VertexAttribIFormatNV(uint index, int size, VertexAttribIType type, int stride) => GLPointers._glVertexAttribIFormatNV_fnptr(index, size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_vertex_buffer_unified_memory] [glGetIntegerui64i_vNV]</b>  </summary>
-            public static void GetIntegerui64i_v(All value, uint index, ulong* result) => GLPointers._glGetIntegerui64i_vNV_fnptr((uint)value, index, result);
+            public static void GetIntegerui64i_vNV(All value, uint index, ulong* result) => GLPointers._glGetIntegerui64i_vNV_fnptr((uint)value, index, result);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glAreProgramsResidentNV]</b>  </summary>
-            public static bool AreProgramsResident(int n, int* programs, bool* residences) => GLPointers._glAreProgramsResidentNV_fnptr(n, programs, (byte*)residences) != 0;
+            public static bool AreProgramsResidentNV(int n, int* programs, bool* residences) => GLPointers._glAreProgramsResidentNV_fnptr(n, programs, (byte*)residences) != 0;
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glBindProgramNV]</b>  </summary>
-            public static void BindProgram(VertexAttribEnumNV target, int id) => GLPointers._glBindProgramNV_fnptr((uint)target, id);
+            public static void BindProgramNV(VertexAttribEnumNV target, int id) => GLPointers._glBindProgramNV_fnptr((uint)target, id);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glDeleteProgramsNV]</b>  </summary>
-            public static void DeletePrograms(int n, int* programs) => GLPointers._glDeleteProgramsNV_fnptr(n, programs);
+            public static void DeleteProgramsNV(int n, int* programs) => GLPointers._glDeleteProgramsNV_fnptr(n, programs);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glExecuteProgramNV]</b>  </summary>
-            public static void ExecuteProgram(VertexAttribEnumNV target, uint id, float* parameters) => GLPointers._glExecuteProgramNV_fnptr((uint)target, id, parameters);
+            public static void ExecuteProgramNV(VertexAttribEnumNV target, uint id, float* parameters) => GLPointers._glExecuteProgramNV_fnptr((uint)target, id, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGenProgramsNV]</b>  </summary>
-            public static void GenPrograms(int n, int* programs) => GLPointers._glGenProgramsNV_fnptr(n, programs);
+            public static void GenProgramsNV(int n, int* programs) => GLPointers._glGenProgramsNV_fnptr(n, programs);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetProgramParameterdvNV]</b>  </summary>
-            public static void GetProgramParameterdv(VertexAttribEnumNV target, uint index, VertexAttribEnumNV pname, double* parameters) => GLPointers._glGetProgramParameterdvNV_fnptr((uint)target, index, (uint)pname, parameters);
+            public static void GetProgramParameterdvNV(VertexAttribEnumNV target, uint index, VertexAttribEnumNV pname, double* parameters) => GLPointers._glGetProgramParameterdvNV_fnptr((uint)target, index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetProgramParameterfvNV]</b>  </summary>
-            public static void GetProgramParameterfv(VertexAttribEnumNV target, uint index, VertexAttribEnumNV pname, float* parameters) => GLPointers._glGetProgramParameterfvNV_fnptr((uint)target, index, (uint)pname, parameters);
+            public static void GetProgramParameterfvNV(VertexAttribEnumNV target, uint index, VertexAttribEnumNV pname, float* parameters) => GLPointers._glGetProgramParameterfvNV_fnptr((uint)target, index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetProgramivNV]</b>  </summary>
-            public static void GetProgramiv(int id, VertexAttribEnumNV pname, int* parameters) => GLPointers._glGetProgramivNV_fnptr(id, (uint)pname, parameters);
+            public static void GetProgramivNV(int id, VertexAttribEnumNV pname, int* parameters) => GLPointers._glGetProgramivNV_fnptr(id, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetProgramStringNV]</b>  </summary>
-            public static void GetProgramString(int id, VertexAttribEnumNV pname, byte* program) => GLPointers._glGetProgramStringNV_fnptr(id, (uint)pname, program);
+            public static void GetProgramStringNV(int id, VertexAttribEnumNV pname, byte* program) => GLPointers._glGetProgramStringNV_fnptr(id, (uint)pname, program);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetTrackMatrixivNV]</b>  </summary>
-            public static void GetTrackMatrixiv(VertexAttribEnumNV target, uint address, VertexAttribEnumNV pname, int* parameters) => GLPointers._glGetTrackMatrixivNV_fnptr((uint)target, address, (uint)pname, parameters);
+            public static void GetTrackMatrixivNV(VertexAttribEnumNV target, uint address, VertexAttribEnumNV pname, int* parameters) => GLPointers._glGetTrackMatrixivNV_fnptr((uint)target, address, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetVertexAttribdvNV]</b>  </summary>
-            public static void GetVertexAttribdv(uint index, VertexAttribEnumNV pname, double* parameters) => GLPointers._glGetVertexAttribdvNV_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribdvNV(uint index, VertexAttribEnumNV pname, double* parameters) => GLPointers._glGetVertexAttribdvNV_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetVertexAttribfvNV]</b>  </summary>
-            public static void GetVertexAttribfv(uint index, VertexAttribEnumNV pname, float* parameters) => GLPointers._glGetVertexAttribfvNV_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribfvNV(uint index, VertexAttribEnumNV pname, float* parameters) => GLPointers._glGetVertexAttribfvNV_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetVertexAttribivNV]</b>  </summary>
-            public static void GetVertexAttribiv(uint index, VertexAttribEnumNV pname, int* parameters) => GLPointers._glGetVertexAttribivNV_fnptr(index, (uint)pname, parameters);
+            public static void GetVertexAttribivNV(uint index, VertexAttribEnumNV pname, int* parameters) => GLPointers._glGetVertexAttribivNV_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glGetVertexAttribPointervNV]</b>  </summary>
-            public static void GetVertexAttribPointerv(uint index, VertexAttribEnumNV pname, void** pointer) => GLPointers._glGetVertexAttribPointervNV_fnptr(index, (uint)pname, pointer);
+            public static void GetVertexAttribPointervNV(uint index, VertexAttribEnumNV pname, void** pointer) => GLPointers._glGetVertexAttribPointervNV_fnptr(index, (uint)pname, pointer);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glIsProgramNV]</b>  </summary>
-            public static bool IsProgram(int id) => GLPointers._glIsProgramNV_fnptr(id) != 0;
+            public static bool IsProgramNV(int id) => GLPointers._glIsProgramNV_fnptr(id) != 0;
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glLoadProgramNV]</b>  </summary>
-            public static void LoadProgram(VertexAttribEnumNV target, uint id, int len, byte* program) => GLPointers._glLoadProgramNV_fnptr((uint)target, id, len, program);
+            public static void LoadProgramNV(VertexAttribEnumNV target, uint id, int len, byte* program) => GLPointers._glLoadProgramNV_fnptr((uint)target, id, len, program);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glProgramParameter4dNV]</b>  </summary>
-            public static void ProgramParameter4d(VertexAttribEnumNV target, uint index, double x, double y, double z, double w) => GLPointers._glProgramParameter4dNV_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramParameter4dNV(VertexAttribEnumNV target, uint index, double x, double y, double z, double w) => GLPointers._glProgramParameter4dNV_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glProgramParameter4dvNV]</b>  </summary>
-            public static void ProgramParameter4dv(VertexAttribEnumNV target, uint index, double* v) => GLPointers._glProgramParameter4dvNV_fnptr((uint)target, index, v);
+            public static void ProgramParameter4dvNV(VertexAttribEnumNV target, uint index, double* v) => GLPointers._glProgramParameter4dvNV_fnptr((uint)target, index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glProgramParameter4fNV]</b>  </summary>
-            public static void ProgramParameter4f(VertexAttribEnumNV target, uint index, float x, float y, float z, float w) => GLPointers._glProgramParameter4fNV_fnptr((uint)target, index, x, y, z, w);
+            public static void ProgramParameter4fNV(VertexAttribEnumNV target, uint index, float x, float y, float z, float w) => GLPointers._glProgramParameter4fNV_fnptr((uint)target, index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glProgramParameter4fvNV]</b>  </summary>
-            public static void ProgramParameter4fv(VertexAttribEnumNV target, uint index, float* v) => GLPointers._glProgramParameter4fvNV_fnptr((uint)target, index, v);
+            public static void ProgramParameter4fvNV(VertexAttribEnumNV target, uint index, float* v) => GLPointers._glProgramParameter4fvNV_fnptr((uint)target, index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glProgramParameters4dvNV]</b>  </summary>
-            public static void ProgramParameters4dv(VertexAttribEnumNV target, uint index, int count, double* v) => GLPointers._glProgramParameters4dvNV_fnptr((uint)target, index, count, v);
+            public static void ProgramParameters4dvNV(VertexAttribEnumNV target, uint index, int count, double* v) => GLPointers._glProgramParameters4dvNV_fnptr((uint)target, index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glProgramParameters4fvNV]</b>  </summary>
-            public static void ProgramParameters4fv(VertexAttribEnumNV target, uint index, int count, float* v) => GLPointers._glProgramParameters4fvNV_fnptr((uint)target, index, count, v);
+            public static void ProgramParameters4fvNV(VertexAttribEnumNV target, uint index, int count, float* v) => GLPointers._glProgramParameters4fvNV_fnptr((uint)target, index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glRequestResidentProgramsNV]</b>  </summary>
-            public static void RequestResidentPrograms(int n, int* programs) => GLPointers._glRequestResidentProgramsNV_fnptr(n, programs);
+            public static void RequestResidentProgramsNV(int n, int* programs) => GLPointers._glRequestResidentProgramsNV_fnptr(n, programs);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glTrackMatrixNV]</b>  </summary>
-            public static void TrackMatrix(VertexAttribEnumNV target, uint address, VertexAttribEnumNV matrix, VertexAttribEnumNV transform) => GLPointers._glTrackMatrixNV_fnptr((uint)target, address, (uint)matrix, (uint)transform);
+            public static void TrackMatrixNV(VertexAttribEnumNV target, uint address, VertexAttribEnumNV matrix, VertexAttribEnumNV transform) => GLPointers._glTrackMatrixNV_fnptr((uint)target, address, (uint)matrix, (uint)transform);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribPointerNV]</b>  </summary>
-            public static void VertexAttribPointer(uint index, int fsize, VertexAttribEnumNV type, int stride, void* pointer) => GLPointers._glVertexAttribPointerNV_fnptr(index, fsize, (uint)type, stride, pointer);
+            public static void VertexAttribPointerNV(uint index, int fsize, VertexAttribEnumNV type, int stride, void* pointer) => GLPointers._glVertexAttribPointerNV_fnptr(index, fsize, (uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib1dNV]</b>  </summary>
-            public static void VertexAttrib1d(uint index, double x) => GLPointers._glVertexAttrib1dNV_fnptr(index, x);
+            public static void VertexAttrib1dNV(uint index, double x) => GLPointers._glVertexAttrib1dNV_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib1dvNV]</b>  </summary>
-            public static void VertexAttrib1dv(uint index, double* v) => GLPointers._glVertexAttrib1dvNV_fnptr(index, v);
+            public static void VertexAttrib1dvNV(uint index, double* v) => GLPointers._glVertexAttrib1dvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib1fNV]</b>  </summary>
-            public static void VertexAttrib1f(uint index, float x) => GLPointers._glVertexAttrib1fNV_fnptr(index, x);
+            public static void VertexAttrib1fNV(uint index, float x) => GLPointers._glVertexAttrib1fNV_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib1fvNV]</b>  </summary>
-            public static void VertexAttrib1fv(uint index, float* v) => GLPointers._glVertexAttrib1fvNV_fnptr(index, v);
+            public static void VertexAttrib1fvNV(uint index, float* v) => GLPointers._glVertexAttrib1fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib1sNV]</b>  </summary>
-            public static void VertexAttrib1s(uint index, short x) => GLPointers._glVertexAttrib1sNV_fnptr(index, x);
+            public static void VertexAttrib1sNV(uint index, short x) => GLPointers._glVertexAttrib1sNV_fnptr(index, x);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib1svNV]</b>  </summary>
-            public static void VertexAttrib1sv(uint index, short* v) => GLPointers._glVertexAttrib1svNV_fnptr(index, v);
+            public static void VertexAttrib1svNV(uint index, short* v) => GLPointers._glVertexAttrib1svNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib2dNV]</b>  </summary>
-            public static void VertexAttrib2d(uint index, double x, double y) => GLPointers._glVertexAttrib2dNV_fnptr(index, x, y);
+            public static void VertexAttrib2dNV(uint index, double x, double y) => GLPointers._glVertexAttrib2dNV_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib2dvNV]</b>  </summary>
-            public static void VertexAttrib2dv(uint index, double* v) => GLPointers._glVertexAttrib2dvNV_fnptr(index, v);
+            public static void VertexAttrib2dvNV(uint index, double* v) => GLPointers._glVertexAttrib2dvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib2fNV]</b>  </summary>
-            public static void VertexAttrib2f(uint index, float x, float y) => GLPointers._glVertexAttrib2fNV_fnptr(index, x, y);
+            public static void VertexAttrib2fNV(uint index, float x, float y) => GLPointers._glVertexAttrib2fNV_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib2fvNV]</b>  </summary>
-            public static void VertexAttrib2fv(uint index, float* v) => GLPointers._glVertexAttrib2fvNV_fnptr(index, v);
+            public static void VertexAttrib2fvNV(uint index, float* v) => GLPointers._glVertexAttrib2fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib2sNV]</b>  </summary>
-            public static void VertexAttrib2s(uint index, short x, short y) => GLPointers._glVertexAttrib2sNV_fnptr(index, x, y);
+            public static void VertexAttrib2sNV(uint index, short x, short y) => GLPointers._glVertexAttrib2sNV_fnptr(index, x, y);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib2svNV]</b>  </summary>
-            public static void VertexAttrib2sv(uint index, short* v) => GLPointers._glVertexAttrib2svNV_fnptr(index, v);
+            public static void VertexAttrib2svNV(uint index, short* v) => GLPointers._glVertexAttrib2svNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib3dNV]</b>  </summary>
-            public static void VertexAttrib3d(uint index, double x, double y, double z) => GLPointers._glVertexAttrib3dNV_fnptr(index, x, y, z);
+            public static void VertexAttrib3dNV(uint index, double x, double y, double z) => GLPointers._glVertexAttrib3dNV_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib3dvNV]</b>  </summary>
-            public static void VertexAttrib3dv(uint index, double* v) => GLPointers._glVertexAttrib3dvNV_fnptr(index, v);
+            public static void VertexAttrib3dvNV(uint index, double* v) => GLPointers._glVertexAttrib3dvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib3fNV]</b>  </summary>
-            public static void VertexAttrib3f(uint index, float x, float y, float z) => GLPointers._glVertexAttrib3fNV_fnptr(index, x, y, z);
+            public static void VertexAttrib3fNV(uint index, float x, float y, float z) => GLPointers._glVertexAttrib3fNV_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib3fvNV]</b>  </summary>
-            public static void VertexAttrib3fv(uint index, float* v) => GLPointers._glVertexAttrib3fvNV_fnptr(index, v);
+            public static void VertexAttrib3fvNV(uint index, float* v) => GLPointers._glVertexAttrib3fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib3sNV]</b>  </summary>
-            public static void VertexAttrib3s(uint index, short x, short y, short z) => GLPointers._glVertexAttrib3sNV_fnptr(index, x, y, z);
+            public static void VertexAttrib3sNV(uint index, short x, short y, short z) => GLPointers._glVertexAttrib3sNV_fnptr(index, x, y, z);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib3svNV]</b>  </summary>
-            public static void VertexAttrib3sv(uint index, short* v) => GLPointers._glVertexAttrib3svNV_fnptr(index, v);
+            public static void VertexAttrib3svNV(uint index, short* v) => GLPointers._glVertexAttrib3svNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4dNV]</b>  </summary>
-            public static void VertexAttrib4d(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttrib4dNV_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4dNV(uint index, double x, double y, double z, double w) => GLPointers._glVertexAttrib4dNV_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4dvNV]</b>  </summary>
-            public static void VertexAttrib4dv(uint index, double* v) => GLPointers._glVertexAttrib4dvNV_fnptr(index, v);
+            public static void VertexAttrib4dvNV(uint index, double* v) => GLPointers._glVertexAttrib4dvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4fNV]</b>  </summary>
-            public static void VertexAttrib4f(uint index, float x, float y, float z, float w) => GLPointers._glVertexAttrib4fNV_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4fNV(uint index, float x, float y, float z, float w) => GLPointers._glVertexAttrib4fNV_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4fvNV]</b>  </summary>
-            public static void VertexAttrib4fv(uint index, float* v) => GLPointers._glVertexAttrib4fvNV_fnptr(index, v);
+            public static void VertexAttrib4fvNV(uint index, float* v) => GLPointers._glVertexAttrib4fvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4sNV]</b>  </summary>
-            public static void VertexAttrib4s(uint index, short x, short y, short z, short w) => GLPointers._glVertexAttrib4sNV_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4sNV(uint index, short x, short y, short z, short w) => GLPointers._glVertexAttrib4sNV_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4svNV]</b>  </summary>
-            public static void VertexAttrib4sv(uint index, short* v) => GLPointers._glVertexAttrib4svNV_fnptr(index, v);
+            public static void VertexAttrib4svNV(uint index, short* v) => GLPointers._glVertexAttrib4svNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4ubNV]</b>  </summary>
-            public static void VertexAttrib4ub(uint index, byte x, byte y, byte z, byte w) => GLPointers._glVertexAttrib4ubNV_fnptr(index, x, y, z, w);
+            public static void VertexAttrib4ubNV(uint index, byte x, byte y, byte z, byte w) => GLPointers._glVertexAttrib4ubNV_fnptr(index, x, y, z, w);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttrib4ubvNV]</b>  </summary>
-            public static void VertexAttrib4ubv(uint index, byte* v) => GLPointers._glVertexAttrib4ubvNV_fnptr(index, v);
+            public static void VertexAttrib4ubvNV(uint index, byte* v) => GLPointers._glVertexAttrib4ubvNV_fnptr(index, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs1dvNV]</b>  </summary>
-            public static void VertexAttribs1dv(uint index, int count, double* v) => GLPointers._glVertexAttribs1dvNV_fnptr(index, count, v);
+            public static void VertexAttribs1dvNV(uint index, int count, double* v) => GLPointers._glVertexAttribs1dvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs1fvNV]</b>  </summary>
-            public static void VertexAttribs1fv(uint index, int count, float* v) => GLPointers._glVertexAttribs1fvNV_fnptr(index, count, v);
+            public static void VertexAttribs1fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs1fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs1svNV]</b>  </summary>
-            public static void VertexAttribs1sv(uint index, int count, short* v) => GLPointers._glVertexAttribs1svNV_fnptr(index, count, v);
+            public static void VertexAttribs1svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs1svNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs2dvNV]</b>  </summary>
-            public static void VertexAttribs2dv(uint index, int count, double* v) => GLPointers._glVertexAttribs2dvNV_fnptr(index, count, v);
+            public static void VertexAttribs2dvNV(uint index, int count, double* v) => GLPointers._glVertexAttribs2dvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs2fvNV]</b>  </summary>
-            public static void VertexAttribs2fv(uint index, int count, float* v) => GLPointers._glVertexAttribs2fvNV_fnptr(index, count, v);
+            public static void VertexAttribs2fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs2fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs2svNV]</b>  </summary>
-            public static void VertexAttribs2sv(uint index, int count, short* v) => GLPointers._glVertexAttribs2svNV_fnptr(index, count, v);
+            public static void VertexAttribs2svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs2svNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs3dvNV]</b>  </summary>
-            public static void VertexAttribs3dv(uint index, int count, double* v) => GLPointers._glVertexAttribs3dvNV_fnptr(index, count, v);
+            public static void VertexAttribs3dvNV(uint index, int count, double* v) => GLPointers._glVertexAttribs3dvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs3fvNV]</b>  </summary>
-            public static void VertexAttribs3fv(uint index, int count, float* v) => GLPointers._glVertexAttribs3fvNV_fnptr(index, count, v);
+            public static void VertexAttribs3fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs3fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs3svNV]</b>  </summary>
-            public static void VertexAttribs3sv(uint index, int count, short* v) => GLPointers._glVertexAttribs3svNV_fnptr(index, count, v);
+            public static void VertexAttribs3svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs3svNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs4dvNV]</b>  </summary>
-            public static void VertexAttribs4dv(uint index, int count, double* v) => GLPointers._glVertexAttribs4dvNV_fnptr(index, count, v);
+            public static void VertexAttribs4dvNV(uint index, int count, double* v) => GLPointers._glVertexAttribs4dvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs4fvNV]</b>  </summary>
-            public static void VertexAttribs4fv(uint index, int count, float* v) => GLPointers._glVertexAttribs4fvNV_fnptr(index, count, v);
+            public static void VertexAttribs4fvNV(uint index, int count, float* v) => GLPointers._glVertexAttribs4fvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs4svNV]</b>  </summary>
-            public static void VertexAttribs4sv(uint index, int count, short* v) => GLPointers._glVertexAttribs4svNV_fnptr(index, count, v);
+            public static void VertexAttribs4svNV(uint index, int count, short* v) => GLPointers._glVertexAttribs4svNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_NV_vertex_program] [glVertexAttribs4ubvNV]</b>  </summary>
-            public static void VertexAttribs4ubv(uint index, int count, byte* v) => GLPointers._glVertexAttribs4ubvNV_fnptr(index, count, v);
+            public static void VertexAttribs4ubvNV(uint index, int count, byte* v) => GLPointers._glVertexAttribs4ubvNV_fnptr(index, count, v);
             
             /// <summary> <b>[requires: GL_EXT_gpu_shader4 | GL_NV_vertex_program4] [glVertexAttribI1iEXT]</b>  </summary>
             public static void VertexAttribI1iEXT(uint index, int x) => GLPointers._glVertexAttribI1iEXT_fnptr(index, x);
@@ -12249,184 +12249,184 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetVertexAttribIuivEXT(uint index, VertexAttribEnum pname, uint* parameters) => GLPointers._glGetVertexAttribIuivEXT_fnptr(index, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glBeginVideoCaptureNV]</b>  </summary>
-            public static void BeginVideoCapture(uint video_capture_slot) => GLPointers._glBeginVideoCaptureNV_fnptr(video_capture_slot);
+            public static void BeginVideoCaptureNV(uint video_capture_slot) => GLPointers._glBeginVideoCaptureNV_fnptr(video_capture_slot);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glBindVideoCaptureStreamBufferNV]</b>  </summary>
-            public static void BindVideoCaptureStreamBuffer(uint video_capture_slot, uint stream, All frame_region, IntPtr offset) => GLPointers._glBindVideoCaptureStreamBufferNV_fnptr(video_capture_slot, stream, (uint)frame_region, offset);
+            public static void BindVideoCaptureStreamBufferNV(uint video_capture_slot, uint stream, All frame_region, IntPtr offset) => GLPointers._glBindVideoCaptureStreamBufferNV_fnptr(video_capture_slot, stream, (uint)frame_region, offset);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glBindVideoCaptureStreamTextureNV]</b>  </summary>
-            public static void BindVideoCaptureStreamTexture(uint video_capture_slot, uint stream, All frame_region, All target, int texture) => GLPointers._glBindVideoCaptureStreamTextureNV_fnptr(video_capture_slot, stream, (uint)frame_region, (uint)target, texture);
+            public static void BindVideoCaptureStreamTextureNV(uint video_capture_slot, uint stream, All frame_region, All target, int texture) => GLPointers._glBindVideoCaptureStreamTextureNV_fnptr(video_capture_slot, stream, (uint)frame_region, (uint)target, texture);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glEndVideoCaptureNV]</b>  </summary>
-            public static void EndVideoCapture(uint video_capture_slot) => GLPointers._glEndVideoCaptureNV_fnptr(video_capture_slot);
+            public static void EndVideoCaptureNV(uint video_capture_slot) => GLPointers._glEndVideoCaptureNV_fnptr(video_capture_slot);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glGetVideoCaptureivNV]</b>  </summary>
-            public static void GetVideoCaptureiv(uint video_capture_slot, All pname, int* parameters) => GLPointers._glGetVideoCaptureivNV_fnptr(video_capture_slot, (uint)pname, parameters);
+            public static void GetVideoCaptureivNV(uint video_capture_slot, All pname, int* parameters) => GLPointers._glGetVideoCaptureivNV_fnptr(video_capture_slot, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glGetVideoCaptureStreamivNV]</b>  </summary>
-            public static void GetVideoCaptureStreamiv(uint video_capture_slot, uint stream, All pname, int* parameters) => GLPointers._glGetVideoCaptureStreamivNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
+            public static void GetVideoCaptureStreamivNV(uint video_capture_slot, uint stream, All pname, int* parameters) => GLPointers._glGetVideoCaptureStreamivNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glGetVideoCaptureStreamfvNV]</b>  </summary>
-            public static void GetVideoCaptureStreamfv(uint video_capture_slot, uint stream, All pname, float* parameters) => GLPointers._glGetVideoCaptureStreamfvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
+            public static void GetVideoCaptureStreamfvNV(uint video_capture_slot, uint stream, All pname, float* parameters) => GLPointers._glGetVideoCaptureStreamfvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glGetVideoCaptureStreamdvNV]</b>  </summary>
-            public static void GetVideoCaptureStreamdv(uint video_capture_slot, uint stream, All pname, double* parameters) => GLPointers._glGetVideoCaptureStreamdvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
+            public static void GetVideoCaptureStreamdvNV(uint video_capture_slot, uint stream, All pname, double* parameters) => GLPointers._glGetVideoCaptureStreamdvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glVideoCaptureNV]</b>  </summary>
-            public static All VideoCapture(uint video_capture_slot, uint* sequence_num, ulong* capture_time) => (All) GLPointers._glVideoCaptureNV_fnptr(video_capture_slot, sequence_num, capture_time);
+            public static All VideoCaptureNV(uint video_capture_slot, uint* sequence_num, ulong* capture_time) => (All) GLPointers._glVideoCaptureNV_fnptr(video_capture_slot, sequence_num, capture_time);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glVideoCaptureStreamParameterivNV]</b>  </summary>
-            public static void VideoCaptureStreamParameteriv(uint video_capture_slot, uint stream, All pname, int* parameters) => GLPointers._glVideoCaptureStreamParameterivNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
+            public static void VideoCaptureStreamParameterivNV(uint video_capture_slot, uint stream, All pname, int* parameters) => GLPointers._glVideoCaptureStreamParameterivNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glVideoCaptureStreamParameterfvNV]</b>  </summary>
-            public static void VideoCaptureStreamParameterfv(uint video_capture_slot, uint stream, All pname, float* parameters) => GLPointers._glVideoCaptureStreamParameterfvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
+            public static void VideoCaptureStreamParameterfvNV(uint video_capture_slot, uint stream, All pname, float* parameters) => GLPointers._glVideoCaptureStreamParameterfvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_video_capture] [glVideoCaptureStreamParameterdvNV]</b>  </summary>
-            public static void VideoCaptureStreamParameterdv(uint video_capture_slot, uint stream, All pname, double* parameters) => GLPointers._glVideoCaptureStreamParameterdvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
+            public static void VideoCaptureStreamParameterdvNV(uint video_capture_slot, uint stream, All pname, double* parameters) => GLPointers._glVideoCaptureStreamParameterdvNV_fnptr(video_capture_slot, stream, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_NV_viewport_swizzle] [glViewportSwizzleNV]</b>  </summary>
-            public static void ViewportSwizzle(uint index, All swizzlex, All swizzley, All swizzlez, All swizzlew) => GLPointers._glViewportSwizzleNV_fnptr(index, (uint)swizzlex, (uint)swizzley, (uint)swizzlez, (uint)swizzlew);
+            public static void ViewportSwizzleNV(uint index, All swizzlex, All swizzley, All swizzlez, All swizzlew) => GLPointers._glViewportSwizzleNV_fnptr(index, (uint)swizzlex, (uint)swizzley, (uint)swizzlez, (uint)swizzlew);
             
         }
         /// <summary>GREMEDY extensions.</summary>
         public static unsafe partial class GREMEDY
         {
             /// <summary> <b>[requires: GL_GREMEDY_frame_terminator] [glFrameTerminatorGREMEDY]</b>  </summary>
-            public static void FrameTerminator() => GLPointers._glFrameTerminatorGREMEDY_fnptr();
+            public static void FrameTerminatorGREMEDY() => GLPointers._glFrameTerminatorGREMEDY_fnptr();
             
             /// <summary> <b>[requires: GL_GREMEDY_string_marker] [glStringMarkerGREMEDY]</b>  </summary>
-            public static void StringMarker(int len, void* str) => GLPointers._glStringMarkerGREMEDY_fnptr(len, str);
+            public static void StringMarkerGREMEDY(int len, void* str) => GLPointers._glStringMarkerGREMEDY_fnptr(len, str);
             
         }
         /// <summary>HP extensions.</summary>
         public static unsafe partial class HP
         {
             /// <summary> <b>[requires: GL_HP_image_transform] [glImageTransformParameteriHP]</b>  </summary>
-            public static void ImageTransformParameteri(ImageTransformTargetHP target, ImageTransformPNameHP pname, int param) => GLPointers._glImageTransformParameteriHP_fnptr((uint)target, (uint)pname, param);
+            public static void ImageTransformParameteriHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, int param) => GLPointers._glImageTransformParameteriHP_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_HP_image_transform] [glImageTransformParameterfHP]</b>  </summary>
-            public static void ImageTransformParameterf(ImageTransformTargetHP target, ImageTransformPNameHP pname, float param) => GLPointers._glImageTransformParameterfHP_fnptr((uint)target, (uint)pname, param);
+            public static void ImageTransformParameterfHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, float param) => GLPointers._glImageTransformParameterfHP_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_HP_image_transform] [glImageTransformParameterivHP]</b>  </summary>
-            public static void ImageTransformParameteriv(ImageTransformTargetHP target, ImageTransformPNameHP pname, int* parameters) => GLPointers._glImageTransformParameterivHP_fnptr((uint)target, (uint)pname, parameters);
+            public static void ImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, int* parameters) => GLPointers._glImageTransformParameterivHP_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_HP_image_transform] [glImageTransformParameterfvHP]</b>  </summary>
-            public static void ImageTransformParameterfv(ImageTransformTargetHP target, ImageTransformPNameHP pname, float* parameters) => GLPointers._glImageTransformParameterfvHP_fnptr((uint)target, (uint)pname, parameters);
+            public static void ImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, float* parameters) => GLPointers._glImageTransformParameterfvHP_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_HP_image_transform] [glGetImageTransformParameterivHP]</b>  </summary>
-            public static void GetImageTransformParameteriv(ImageTransformTargetHP target, ImageTransformPNameHP pname, int* parameters) => GLPointers._glGetImageTransformParameterivHP_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetImageTransformParameterivHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, int* parameters) => GLPointers._glGetImageTransformParameterivHP_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_HP_image_transform] [glGetImageTransformParameterfvHP]</b>  </summary>
-            public static void GetImageTransformParameterfv(ImageTransformTargetHP target, ImageTransformPNameHP pname, float* parameters) => GLPointers._glGetImageTransformParameterfvHP_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetImageTransformParameterfvHP(ImageTransformTargetHP target, ImageTransformPNameHP pname, float* parameters) => GLPointers._glGetImageTransformParameterfvHP_fnptr((uint)target, (uint)pname, parameters);
             
         }
         /// <summary>IBM extensions.</summary>
         public static unsafe partial class IBM
         {
             /// <summary> <b>[requires: GL_IBM_multimode_draw_arrays] [glMultiModeDrawArraysIBM]</b>  </summary>
-            public static void MultiModeDrawArrays(PrimitiveType* mode, int* first, int* count, int primcount, int modestride) => GLPointers._glMultiModeDrawArraysIBM_fnptr((uint*)mode, first, count, primcount, modestride);
+            public static void MultiModeDrawArraysIBM(PrimitiveType* mode, int* first, int* count, int primcount, int modestride) => GLPointers._glMultiModeDrawArraysIBM_fnptr((uint*)mode, first, count, primcount, modestride);
             
             /// <summary> <b>[requires: GL_IBM_multimode_draw_arrays] [glMultiModeDrawElementsIBM]</b>  </summary>
-            public static void MultiModeDrawElements(PrimitiveType* mode, int* count, DrawElementsType type, void** indices, int primcount, int modestride) => GLPointers._glMultiModeDrawElementsIBM_fnptr((uint*)mode, count, (uint)type, indices, primcount, modestride);
+            public static void MultiModeDrawElementsIBM(PrimitiveType* mode, int* count, DrawElementsType type, void** indices, int primcount, int modestride) => GLPointers._glMultiModeDrawElementsIBM_fnptr((uint*)mode, count, (uint)type, indices, primcount, modestride);
             
             /// <summary> <b>[requires: GL_IBM_static_data] [glFlushStaticDataIBM]</b>  </summary>
-            public static void FlushStaticData(All target) => GLPointers._glFlushStaticDataIBM_fnptr((uint)target);
+            public static void FlushStaticDataIBM(All target) => GLPointers._glFlushStaticDataIBM_fnptr((uint)target);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glColorPointerListIBM]</b>  </summary>
-            public static void ColorPointerList(int size, ColorPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glColorPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
+            public static void ColorPointerListIBM(int size, ColorPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glColorPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glSecondaryColorPointerListIBM]</b>  </summary>
-            public static void SecondaryColorPointerList(int size, SecondaryColorPointerTypeIBM type, int stride, void** pointer, int ptrstride) => GLPointers._glSecondaryColorPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
+            public static void SecondaryColorPointerListIBM(int size, SecondaryColorPointerTypeIBM type, int stride, void** pointer, int ptrstride) => GLPointers._glSecondaryColorPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glEdgeFlagPointerListIBM]</b>  </summary>
-            public static void EdgeFlagPointerList(int stride, bool** pointer, int ptrstride) => GLPointers._glEdgeFlagPointerListIBM_fnptr(stride, (byte**)pointer, ptrstride);
+            public static void EdgeFlagPointerListIBM(int stride, bool** pointer, int ptrstride) => GLPointers._glEdgeFlagPointerListIBM_fnptr(stride, (byte**)pointer, ptrstride);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glFogCoordPointerListIBM]</b>  </summary>
-            public static void FogCoordPointerList(FogPointerTypeIBM type, int stride, void** pointer, int ptrstride) => GLPointers._glFogCoordPointerListIBM_fnptr((uint)type, stride, pointer, ptrstride);
+            public static void FogCoordPointerListIBM(FogPointerTypeIBM type, int stride, void** pointer, int ptrstride) => GLPointers._glFogCoordPointerListIBM_fnptr((uint)type, stride, pointer, ptrstride);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glIndexPointerListIBM]</b>  </summary>
-            public static void IndexPointerList(IndexPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glIndexPointerListIBM_fnptr((uint)type, stride, pointer, ptrstride);
+            public static void IndexPointerListIBM(IndexPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glIndexPointerListIBM_fnptr((uint)type, stride, pointer, ptrstride);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glNormalPointerListIBM]</b>  </summary>
-            public static void NormalPointerList(NormalPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glNormalPointerListIBM_fnptr((uint)type, stride, pointer, ptrstride);
+            public static void NormalPointerListIBM(NormalPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glNormalPointerListIBM_fnptr((uint)type, stride, pointer, ptrstride);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glTexCoordPointerListIBM]</b>  </summary>
-            public static void TexCoordPointerList(int size, TexCoordPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glTexCoordPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
+            public static void TexCoordPointerListIBM(int size, TexCoordPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glTexCoordPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
             
             /// <summary> <b>[requires: GL_IBM_vertex_array_lists] [glVertexPointerListIBM]</b>  </summary>
-            public static void VertexPointerList(int size, VertexPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glVertexPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
+            public static void VertexPointerListIBM(int size, VertexPointerType type, int stride, void** pointer, int ptrstride) => GLPointers._glVertexPointerListIBM_fnptr(size, (uint)type, stride, pointer, ptrstride);
             
         }
         /// <summary>INGR extensions.</summary>
         public static unsafe partial class INGR
         {
             /// <summary> <b>[requires: GL_INGR_blend_func_separate] [glBlendFuncSeparateINGR]</b>  </summary>
-            public static void BlendFuncSeparate(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => GLPointers._glBlendFuncSeparateINGR_fnptr((uint)sfactorRGB, (uint)dfactorRGB, (uint)sfactorAlpha, (uint)dfactorAlpha);
+            public static void BlendFuncSeparateINGR(BlendingFactor sfactorRGB, BlendingFactor dfactorRGB, BlendingFactor sfactorAlpha, BlendingFactor dfactorAlpha) => GLPointers._glBlendFuncSeparateINGR_fnptr((uint)sfactorRGB, (uint)dfactorRGB, (uint)sfactorAlpha, (uint)dfactorAlpha);
             
         }
         /// <summary>INTEL extensions.</summary>
         public static unsafe partial class INTEL
         {
             /// <summary> <b>[requires: GL_INTEL_framebuffer_CMAA] [glApplyFramebufferAttachmentCMAAINTEL]</b>  </summary>
-            public static void ApplyFramebufferAttachmentCMAA() => GLPointers._glApplyFramebufferAttachmentCMAAINTEL_fnptr();
+            public static void ApplyFramebufferAttachmentCMAAINTEL() => GLPointers._glApplyFramebufferAttachmentCMAAINTEL_fnptr();
             
             /// <summary> <b>[requires: GL_INTEL_map_texture] [glSyncTextureINTEL]</b>  </summary>
-            public static void SyncTexture(int texture) => GLPointers._glSyncTextureINTEL_fnptr(texture);
+            public static void SyncTextureINTEL(int texture) => GLPointers._glSyncTextureINTEL_fnptr(texture);
             
             /// <summary> <b>[requires: GL_INTEL_map_texture] [glUnmapTexture2DINTEL]</b>  </summary>
-            public static void UnmapTexture2D(int texture, int level) => GLPointers._glUnmapTexture2DINTEL_fnptr(texture, level);
+            public static void UnmapTexture2DINTEL(int texture, int level) => GLPointers._glUnmapTexture2DINTEL_fnptr(texture, level);
             
             /// <summary> <b>[requires: GL_INTEL_map_texture] [glMapTexture2DINTEL]</b>  </summary>
-            public static void* MapTexture2D(int texture, int level, uint access, int* stride, All* layout) => GLPointers._glMapTexture2DINTEL_fnptr(texture, level, access, stride, (uint*)layout);
+            public static void* MapTexture2DINTEL(int texture, int level, uint access, int* stride, All* layout) => GLPointers._glMapTexture2DINTEL_fnptr(texture, level, access, stride, (uint*)layout);
             
             /// <summary> <b>[requires: GL_INTEL_parallel_arrays] [glVertexPointervINTEL]</b>  </summary>
-            public static void VertexPointerv(int size, VertexPointerType type, void** pointer) => GLPointers._glVertexPointervINTEL_fnptr(size, (uint)type, pointer);
+            public static void VertexPointervINTEL(int size, VertexPointerType type, void** pointer) => GLPointers._glVertexPointervINTEL_fnptr(size, (uint)type, pointer);
             
             /// <summary> <b>[requires: GL_INTEL_parallel_arrays] [glNormalPointervINTEL]</b>  </summary>
-            public static void NormalPointerv(NormalPointerType type, void** pointer) => GLPointers._glNormalPointervINTEL_fnptr((uint)type, pointer);
+            public static void NormalPointervINTEL(NormalPointerType type, void** pointer) => GLPointers._glNormalPointervINTEL_fnptr((uint)type, pointer);
             
             /// <summary> <b>[requires: GL_INTEL_parallel_arrays] [glColorPointervINTEL]</b>  </summary>
-            public static void ColorPointerv(int size, VertexPointerType type, void** pointer) => GLPointers._glColorPointervINTEL_fnptr(size, (uint)type, pointer);
+            public static void ColorPointervINTEL(int size, VertexPointerType type, void** pointer) => GLPointers._glColorPointervINTEL_fnptr(size, (uint)type, pointer);
             
             /// <summary> <b>[requires: GL_INTEL_parallel_arrays] [glTexCoordPointervINTEL]</b>  </summary>
-            public static void TexCoordPointerv(int size, VertexPointerType type, void** pointer) => GLPointers._glTexCoordPointervINTEL_fnptr(size, (uint)type, pointer);
+            public static void TexCoordPointervINTEL(int size, VertexPointerType type, void** pointer) => GLPointers._glTexCoordPointervINTEL_fnptr(size, (uint)type, pointer);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glBeginPerfQueryINTEL]</b>  </summary>
-            public static void BeginPerfQuery(uint queryHandle) => GLPointers._glBeginPerfQueryINTEL_fnptr(queryHandle);
+            public static void BeginPerfQueryINTEL(uint queryHandle) => GLPointers._glBeginPerfQueryINTEL_fnptr(queryHandle);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glCreatePerfQueryINTEL]</b>  </summary>
-            public static void CreatePerfQuery(uint queryId, uint* queryHandle) => GLPointers._glCreatePerfQueryINTEL_fnptr(queryId, queryHandle);
+            public static void CreatePerfQueryINTEL(uint queryId, uint* queryHandle) => GLPointers._glCreatePerfQueryINTEL_fnptr(queryId, queryHandle);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glDeletePerfQueryINTEL]</b>  </summary>
-            public static void DeletePerfQuery(uint queryHandle) => GLPointers._glDeletePerfQueryINTEL_fnptr(queryHandle);
+            public static void DeletePerfQueryINTEL(uint queryHandle) => GLPointers._glDeletePerfQueryINTEL_fnptr(queryHandle);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glEndPerfQueryINTEL]</b>  </summary>
-            public static void EndPerfQuery(uint queryHandle) => GLPointers._glEndPerfQueryINTEL_fnptr(queryHandle);
+            public static void EndPerfQueryINTEL(uint queryHandle) => GLPointers._glEndPerfQueryINTEL_fnptr(queryHandle);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glGetFirstPerfQueryIdINTEL]</b>  </summary>
-            public static void GetFirstPerfQueryId(uint* queryId) => GLPointers._glGetFirstPerfQueryIdINTEL_fnptr(queryId);
+            public static void GetFirstPerfQueryIdINTEL(uint* queryId) => GLPointers._glGetFirstPerfQueryIdINTEL_fnptr(queryId);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glGetNextPerfQueryIdINTEL]</b>  </summary>
-            public static void GetNextPerfQueryId(uint queryId, uint* nextQueryId) => GLPointers._glGetNextPerfQueryIdINTEL_fnptr(queryId, nextQueryId);
+            public static void GetNextPerfQueryIdINTEL(uint queryId, uint* nextQueryId) => GLPointers._glGetNextPerfQueryIdINTEL_fnptr(queryId, nextQueryId);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glGetPerfCounterInfoINTEL]</b>  </summary>
-            public static void GetPerfCounterInfo(uint queryId, uint counterId, uint counterNameLength, byte* counterName, uint counterDescLength, byte* counterDesc, uint* counterOffset, uint* counterDataSize, uint* counterTypeEnum, uint* counterDataTypeEnum, ulong* rawCounterMaxValue) => GLPointers._glGetPerfCounterInfoINTEL_fnptr(queryId, counterId, counterNameLength, counterName, counterDescLength, counterDesc, counterOffset, counterDataSize, counterTypeEnum, counterDataTypeEnum, rawCounterMaxValue);
+            public static void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, byte* counterName, uint counterDescLength, byte* counterDesc, uint* counterOffset, uint* counterDataSize, uint* counterTypeEnum, uint* counterDataTypeEnum, ulong* rawCounterMaxValue) => GLPointers._glGetPerfCounterInfoINTEL_fnptr(queryId, counterId, counterNameLength, counterName, counterDescLength, counterDesc, counterOffset, counterDataSize, counterTypeEnum, counterDataTypeEnum, rawCounterMaxValue);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glGetPerfQueryDataINTEL]</b>  </summary>
-            public static void GetPerfQueryData(uint queryHandle, uint flags, int dataSize, void* data, uint* bytesWritten) => GLPointers._glGetPerfQueryDataINTEL_fnptr(queryHandle, flags, dataSize, data, bytesWritten);
+            public static void GetPerfQueryDataINTEL(uint queryHandle, uint flags, int dataSize, void* data, uint* bytesWritten) => GLPointers._glGetPerfQueryDataINTEL_fnptr(queryHandle, flags, dataSize, data, bytesWritten);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glGetPerfQueryIdByNameINTEL]</b>  </summary>
-            public static void GetPerfQueryIdByName(byte* queryName, uint* queryId) => GLPointers._glGetPerfQueryIdByNameINTEL_fnptr(queryName, queryId);
+            public static void GetPerfQueryIdByNameINTEL(byte* queryName, uint* queryId) => GLPointers._glGetPerfQueryIdByNameINTEL_fnptr(queryName, queryId);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query] [glGetPerfQueryInfoINTEL]</b>  </summary>
-            public static void GetPerfQueryInfo(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, PerformanceQueryCapsMaskINTEL* capsMask) => GLPointers._glGetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, (uint*)capsMask);
+            public static void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, PerformanceQueryCapsMaskINTEL* capsMask) => GLPointers._glGetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, (uint*)capsMask);
             
         }
         /// <summary>KHR extensions.</summary>
         public static unsafe partial class KHR
         {
             /// <summary> <b>[requires: GL_KHR_blend_equation_advanced] [glBlendBarrierKHR]</b>  </summary>
-            public static void BlendBarrier() => GLPointers._glBlendBarrierKHR_fnptr();
+            public static void BlendBarrierKHR() => GLPointers._glBlendBarrierKHR_fnptr();
             
             /// <summary> <b>[requires: v4.3 | GL_KHR_debug] [glDebugMessageControl]</b> Control the reporting of debug messages in a debug context. </summary>
             /// <param name="source"> The source of debug messages to enable or disable. </param>
@@ -12541,7 +12541,7 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetObjectPtrLabelKHR(void* ptr, int bufSize, int* length, byte* label) => GLPointers._glGetObjectPtrLabelKHR_fnptr(ptr, bufSize, length, label);
             
             /// <summary> <b>[requires: GL_KHR_debug] [glGetPointervKHR]</b>  </summary>
-            public static void GetPointerv(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
+            public static void GetPointervKHR(All pname, void** parameters) => GLPointers._glGetPointervKHR_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: v4.5 | GL_KHR_robustness] [glGetGraphicsResetStatus]</b> Check if the rendering context has not been lost due to software or hardware issues. </summary>
             /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glGetGraphicsResetStatus.xhtml" /></remarks>
@@ -12599,445 +12599,445 @@ namespace OpenTK.Graphics.OpenGL
             public static void GetnUniformuivKHR(int program, int location, int bufSize, uint* parameters) => GLPointers._glGetnUniformuivKHR_fnptr(program, location, bufSize, parameters);
             
             /// <summary> <b>[requires: GL_KHR_parallel_shader_compile] [glMaxShaderCompilerThreadsKHR]</b>  </summary>
-            public static void MaxShaderCompilerThreads(uint count) => GLPointers._glMaxShaderCompilerThreadsKHR_fnptr(count);
+            public static void MaxShaderCompilerThreadsKHR(uint count) => GLPointers._glMaxShaderCompilerThreadsKHR_fnptr(count);
             
         }
         /// <summary>MESA extensions.</summary>
         public static unsafe partial class MESA
         {
             /// <summary> <b>[requires: GL_MESA_framebuffer_flip_y] [glFramebufferParameteriMESA]</b>  </summary>
-            public static void FramebufferParameteri(FramebufferTarget target, FramebufferParameterName pname, int param) => GLPointers._glFramebufferParameteriMESA_fnptr((uint)target, (uint)pname, param);
+            public static void FramebufferParameteriMESA(FramebufferTarget target, FramebufferParameterName pname, int param) => GLPointers._glFramebufferParameteriMESA_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_MESA_framebuffer_flip_y] [glGetFramebufferParameterivMESA]</b>  </summary>
-            public static void GetFramebufferParameteriv(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferParameterivMESA_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetFramebufferParameterivMESA(FramebufferTarget target, FramebufferAttachmentParameterName pname, int* parameters) => GLPointers._glGetFramebufferParameterivMESA_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_MESA_resize_buffers] [glResizeBuffersMESA]</b>  </summary>
-            public static void ResizeBuffers() => GLPointers._glResizeBuffersMESA_fnptr();
+            public static void ResizeBuffersMESA() => GLPointers._glResizeBuffersMESA_fnptr();
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2dMESA]</b>  </summary>
-            public static void WindowPos2d(double x, double y) => GLPointers._glWindowPos2dMESA_fnptr(x, y);
+            public static void WindowPos2dMESA(double x, double y) => GLPointers._glWindowPos2dMESA_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2dvMESA]</b>  </summary>
-            public static void WindowPos2dv(double* v) => GLPointers._glWindowPos2dvMESA_fnptr(v);
+            public static void WindowPos2dvMESA(double* v) => GLPointers._glWindowPos2dvMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2fMESA]</b>  </summary>
-            public static void WindowPos2f(float x, float y) => GLPointers._glWindowPos2fMESA_fnptr(x, y);
+            public static void WindowPos2fMESA(float x, float y) => GLPointers._glWindowPos2fMESA_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2fvMESA]</b>  </summary>
-            public static void WindowPos2fv(float* v) => GLPointers._glWindowPos2fvMESA_fnptr(v);
+            public static void WindowPos2fvMESA(float* v) => GLPointers._glWindowPos2fvMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2iMESA]</b>  </summary>
-            public static void WindowPos2i(int x, int y) => GLPointers._glWindowPos2iMESA_fnptr(x, y);
+            public static void WindowPos2iMESA(int x, int y) => GLPointers._glWindowPos2iMESA_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2ivMESA]</b>  </summary>
-            public static void WindowPos2iv(int* v) => GLPointers._glWindowPos2ivMESA_fnptr(v);
+            public static void WindowPos2ivMESA(int* v) => GLPointers._glWindowPos2ivMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2sMESA]</b>  </summary>
-            public static void WindowPos2s(short x, short y) => GLPointers._glWindowPos2sMESA_fnptr(x, y);
+            public static void WindowPos2sMESA(short x, short y) => GLPointers._glWindowPos2sMESA_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos2svMESA]</b>  </summary>
-            public static void WindowPos2sv(short* v) => GLPointers._glWindowPos2svMESA_fnptr(v);
+            public static void WindowPos2svMESA(short* v) => GLPointers._glWindowPos2svMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3dMESA]</b>  </summary>
-            public static void WindowPos3d(double x, double y, double z) => GLPointers._glWindowPos3dMESA_fnptr(x, y, z);
+            public static void WindowPos3dMESA(double x, double y, double z) => GLPointers._glWindowPos3dMESA_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3dvMESA]</b>  </summary>
-            public static void WindowPos3dv(double* v) => GLPointers._glWindowPos3dvMESA_fnptr(v);
+            public static void WindowPos3dvMESA(double* v) => GLPointers._glWindowPos3dvMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3fMESA]</b>  </summary>
-            public static void WindowPos3f(float x, float y, float z) => GLPointers._glWindowPos3fMESA_fnptr(x, y, z);
+            public static void WindowPos3fMESA(float x, float y, float z) => GLPointers._glWindowPos3fMESA_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3fvMESA]</b>  </summary>
-            public static void WindowPos3fv(float* v) => GLPointers._glWindowPos3fvMESA_fnptr(v);
+            public static void WindowPos3fvMESA(float* v) => GLPointers._glWindowPos3fvMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3iMESA]</b>  </summary>
-            public static void WindowPos3i(int x, int y, int z) => GLPointers._glWindowPos3iMESA_fnptr(x, y, z);
+            public static void WindowPos3iMESA(int x, int y, int z) => GLPointers._glWindowPos3iMESA_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3ivMESA]</b>  </summary>
-            public static void WindowPos3iv(int* v) => GLPointers._glWindowPos3ivMESA_fnptr(v);
+            public static void WindowPos3ivMESA(int* v) => GLPointers._glWindowPos3ivMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3sMESA]</b>  </summary>
-            public static void WindowPos3s(short x, short y, short z) => GLPointers._glWindowPos3sMESA_fnptr(x, y, z);
+            public static void WindowPos3sMESA(short x, short y, short z) => GLPointers._glWindowPos3sMESA_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos3svMESA]</b>  </summary>
-            public static void WindowPos3sv(short* v) => GLPointers._glWindowPos3svMESA_fnptr(v);
+            public static void WindowPos3svMESA(short* v) => GLPointers._glWindowPos3svMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4dMESA]</b>  </summary>
-            public static void WindowPos4d(double x, double y, double z, double w) => GLPointers._glWindowPos4dMESA_fnptr(x, y, z, w);
+            public static void WindowPos4dMESA(double x, double y, double z, double w) => GLPointers._glWindowPos4dMESA_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4dvMESA]</b>  </summary>
-            public static void WindowPos4dv(double* v) => GLPointers._glWindowPos4dvMESA_fnptr(v);
+            public static void WindowPos4dvMESA(double* v) => GLPointers._glWindowPos4dvMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4fMESA]</b>  </summary>
-            public static void WindowPos4f(float x, float y, float z, float w) => GLPointers._glWindowPos4fMESA_fnptr(x, y, z, w);
+            public static void WindowPos4fMESA(float x, float y, float z, float w) => GLPointers._glWindowPos4fMESA_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4fvMESA]</b>  </summary>
-            public static void WindowPos4fv(float* v) => GLPointers._glWindowPos4fvMESA_fnptr(v);
+            public static void WindowPos4fvMESA(float* v) => GLPointers._glWindowPos4fvMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4iMESA]</b>  </summary>
-            public static void WindowPos4i(int x, int y, int z, int w) => GLPointers._glWindowPos4iMESA_fnptr(x, y, z, w);
+            public static void WindowPos4iMESA(int x, int y, int z, int w) => GLPointers._glWindowPos4iMESA_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4ivMESA]</b>  </summary>
-            public static void WindowPos4iv(int* v) => GLPointers._glWindowPos4ivMESA_fnptr(v);
+            public static void WindowPos4ivMESA(int* v) => GLPointers._glWindowPos4ivMESA_fnptr(v);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4sMESA]</b>  </summary>
-            public static void WindowPos4s(short x, short y, short z, short w) => GLPointers._glWindowPos4sMESA_fnptr(x, y, z, w);
+            public static void WindowPos4sMESA(short x, short y, short z, short w) => GLPointers._glWindowPos4sMESA_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_MESA_window_pos] [glWindowPos4svMESA]</b>  </summary>
-            public static void WindowPos4sv(short* v) => GLPointers._glWindowPos4svMESA_fnptr(v);
+            public static void WindowPos4svMESA(short* v) => GLPointers._glWindowPos4svMESA_fnptr(v);
             
         }
         /// <summary>NVX extensions.</summary>
         public static unsafe partial class NVX
         {
             /// <summary> <b>[requires: GL_NVX_conditional_render] [glBeginConditionalRenderNVX]</b>  </summary>
-            public static void BeginConditionalRender(uint id) => GLPointers._glBeginConditionalRenderNVX_fnptr(id);
+            public static void BeginConditionalRenderNVX(uint id) => GLPointers._glBeginConditionalRenderNVX_fnptr(id);
             
             /// <summary> <b>[requires: GL_NVX_conditional_render] [glEndConditionalRenderNVX]</b>  </summary>
-            public static void EndConditionalRender() => GLPointers._glEndConditionalRenderNVX_fnptr();
+            public static void EndConditionalRenderNVX() => GLPointers._glEndConditionalRenderNVX_fnptr();
             
             /// <summary> <b>[requires: GL_NVX_linked_gpu_multicast] [glLGPUNamedBufferSubDataNVX]</b>  </summary>
-            public static void LGPUNamedBufferSubData(uint gpuMask, int buffer, IntPtr offset, nint size, void* data) => GLPointers._glLGPUNamedBufferSubDataNVX_fnptr(gpuMask, buffer, offset, size, data);
+            public static void LGPUNamedBufferSubDataNVX(uint gpuMask, int buffer, IntPtr offset, nint size, void* data) => GLPointers._glLGPUNamedBufferSubDataNVX_fnptr(gpuMask, buffer, offset, size, data);
             
             /// <summary> <b>[requires: GL_NVX_linked_gpu_multicast] [glLGPUCopyImageSubDataNVX]</b>  </summary>
-            public static void LGPUCopyImageSubData(uint sourceGpu, uint destinationGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srxY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth) => GLPointers._glLGPUCopyImageSubDataNVX_fnptr(sourceGpu, destinationGpuMask, srcName, (uint)srcTarget, srcLevel, srcX, srxY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+            public static void LGPUCopyImageSubDataNVX(uint sourceGpu, uint destinationGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srxY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth) => GLPointers._glLGPUCopyImageSubDataNVX_fnptr(sourceGpu, destinationGpuMask, srcName, (uint)srcTarget, srcLevel, srcX, srxY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
             
             /// <summary> <b>[requires: GL_NVX_linked_gpu_multicast] [glLGPUInterlockNVX]</b>  </summary>
-            public static void LGPUInterlock() => GLPointers._glLGPUInterlockNVX_fnptr();
+            public static void LGPUInterlockNVX() => GLPointers._glLGPUInterlockNVX_fnptr();
             
             /// <summary> <b>[requires: GL_NVX_gpu_multicast2] [glUploadGpuMaskNVX]</b>  </summary>
-            public static void UploadGpuMask(uint mask) => GLPointers._glUploadGpuMaskNVX_fnptr(mask);
+            public static void UploadGpuMaskNVX(uint mask) => GLPointers._glUploadGpuMaskNVX_fnptr(mask);
             
             /// <summary> <b>[requires: GL_NVX_gpu_multicast2] [glMulticastViewportArrayvNVX]</b>  </summary>
-            public static void MulticastViewportArrayv(uint gpu, uint first, int count, float* v) => GLPointers._glMulticastViewportArrayvNVX_fnptr(gpu, first, count, v);
+            public static void MulticastViewportArrayvNVX(uint gpu, uint first, int count, float* v) => GLPointers._glMulticastViewportArrayvNVX_fnptr(gpu, first, count, v);
             
             /// <summary> <b>[requires: GL_NVX_gpu_multicast2] [glMulticastViewportPositionWScaleNVX]</b>  </summary>
-            public static void MulticastViewportPositionWScale(uint gpu, uint index, float xcoeff, float ycoeff) => GLPointers._glMulticastViewportPositionWScaleNVX_fnptr(gpu, index, xcoeff, ycoeff);
+            public static void MulticastViewportPositionWScaleNVX(uint gpu, uint index, float xcoeff, float ycoeff) => GLPointers._glMulticastViewportPositionWScaleNVX_fnptr(gpu, index, xcoeff, ycoeff);
             
             /// <summary> <b>[requires: GL_NVX_gpu_multicast2] [glMulticastScissorArrayvNVX]</b>  </summary>
-            public static void MulticastScissorArrayv(uint gpu, uint first, int count, int* v) => GLPointers._glMulticastScissorArrayvNVX_fnptr(gpu, first, count, v);
+            public static void MulticastScissorArrayvNVX(uint gpu, uint first, int count, int* v) => GLPointers._glMulticastScissorArrayvNVX_fnptr(gpu, first, count, v);
             
             /// <summary> <b>[requires: GL_NVX_gpu_multicast2] [glAsyncCopyBufferSubDataNVX]</b>  </summary>
-            public static uint AsyncCopyBufferSubData(int waitSemaphoreCount, uint* waitSemaphoreArray, ulong* fenceValueArray, uint readGpu, uint writeGpuMask, int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size, int signalSemaphoreCount, uint* signalSemaphoreArray, ulong* signalValueArray) => GLPointers._glAsyncCopyBufferSubDataNVX_fnptr(waitSemaphoreCount, waitSemaphoreArray, fenceValueArray, readGpu, writeGpuMask, readBuffer, writeBuffer, readOffset, writeOffset, size, signalSemaphoreCount, signalSemaphoreArray, signalValueArray);
+            public static uint AsyncCopyBufferSubDataNVX(int waitSemaphoreCount, uint* waitSemaphoreArray, ulong* fenceValueArray, uint readGpu, uint writeGpuMask, int readBuffer, int writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size, int signalSemaphoreCount, uint* signalSemaphoreArray, ulong* signalValueArray) => GLPointers._glAsyncCopyBufferSubDataNVX_fnptr(waitSemaphoreCount, waitSemaphoreArray, fenceValueArray, readGpu, writeGpuMask, readBuffer, writeBuffer, readOffset, writeOffset, size, signalSemaphoreCount, signalSemaphoreArray, signalValueArray);
             
             /// <summary> <b>[requires: GL_NVX_gpu_multicast2] [glAsyncCopyImageSubDataNVX]</b>  </summary>
-            public static uint AsyncCopyImageSubData(int waitSemaphoreCount, uint* waitSemaphoreArray, ulong* waitValueArray, uint srcGpu, uint dstGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth, int signalSemaphoreCount, uint* signalSemaphoreArray, ulong* signalValueArray) => GLPointers._glAsyncCopyImageSubDataNVX_fnptr(waitSemaphoreCount, waitSemaphoreArray, waitValueArray, srcGpu, dstGpuMask, srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth, signalSemaphoreCount, signalSemaphoreArray, signalValueArray);
+            public static uint AsyncCopyImageSubDataNVX(int waitSemaphoreCount, uint* waitSemaphoreArray, ulong* waitValueArray, uint srcGpu, uint dstGpuMask, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth, int signalSemaphoreCount, uint* signalSemaphoreArray, ulong* signalValueArray) => GLPointers._glAsyncCopyImageSubDataNVX_fnptr(waitSemaphoreCount, waitSemaphoreArray, waitValueArray, srcGpu, dstGpuMask, srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, srcWidth, srcHeight, srcDepth, signalSemaphoreCount, signalSemaphoreArray, signalValueArray);
             
             /// <summary> <b>[requires: GL_NVX_progress_fence] [glCreateProgressFenceNVX]</b>  </summary>
-            public static uint CreateProgressFence() => GLPointers._glCreateProgressFenceNVX_fnptr();
+            public static uint CreateProgressFenceNVX() => GLPointers._glCreateProgressFenceNVX_fnptr();
             
             /// <summary> <b>[requires: GL_NVX_progress_fence] [glSignalSemaphoreui64NVX]</b>  </summary>
-            public static void SignalSemaphoreui64(uint signalGpu, int fenceObjectCount, uint* semaphoreArray, ulong* fenceValueArray) => GLPointers._glSignalSemaphoreui64NVX_fnptr(signalGpu, fenceObjectCount, semaphoreArray, fenceValueArray);
+            public static void SignalSemaphoreui64NVX(uint signalGpu, int fenceObjectCount, uint* semaphoreArray, ulong* fenceValueArray) => GLPointers._glSignalSemaphoreui64NVX_fnptr(signalGpu, fenceObjectCount, semaphoreArray, fenceValueArray);
             
             /// <summary> <b>[requires: GL_NVX_progress_fence] [glWaitSemaphoreui64NVX]</b>  </summary>
-            public static void WaitSemaphoreui64(uint waitGpu, int fenceObjectCount, uint* semaphoreArray, ulong* fenceValueArray) => GLPointers._glWaitSemaphoreui64NVX_fnptr(waitGpu, fenceObjectCount, semaphoreArray, fenceValueArray);
+            public static void WaitSemaphoreui64NVX(uint waitGpu, int fenceObjectCount, uint* semaphoreArray, ulong* fenceValueArray) => GLPointers._glWaitSemaphoreui64NVX_fnptr(waitGpu, fenceObjectCount, semaphoreArray, fenceValueArray);
             
             /// <summary> <b>[requires: GL_NVX_progress_fence] [glClientWaitSemaphoreui64NVX]</b>  </summary>
-            public static void ClientWaitSemaphoreui64(int fenceObjectCount, uint* semaphoreArray, ulong* fenceValueArray) => GLPointers._glClientWaitSemaphoreui64NVX_fnptr(fenceObjectCount, semaphoreArray, fenceValueArray);
+            public static void ClientWaitSemaphoreui64NVX(int fenceObjectCount, uint* semaphoreArray, ulong* fenceValueArray) => GLPointers._glClientWaitSemaphoreui64NVX_fnptr(fenceObjectCount, semaphoreArray, fenceValueArray);
             
         }
         /// <summary>OES extensions.</summary>
         public static unsafe partial class OES
         {
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord1bOES]</b>  </summary>
-            public static void MultiTexCoord1b(TextureUnit texture, sbyte s) => GLPointers._glMultiTexCoord1bOES_fnptr((uint)texture, s);
+            public static void MultiTexCoord1bOES(TextureUnit texture, sbyte s) => GLPointers._glMultiTexCoord1bOES_fnptr((uint)texture, s);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord1bvOES]</b>  </summary>
-            public static void MultiTexCoord1bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord1bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord1bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord1bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord2bOES]</b>  </summary>
-            public static void MultiTexCoord2b(TextureUnit texture, sbyte s, sbyte t) => GLPointers._glMultiTexCoord2bOES_fnptr((uint)texture, s, t);
+            public static void MultiTexCoord2bOES(TextureUnit texture, sbyte s, sbyte t) => GLPointers._glMultiTexCoord2bOES_fnptr((uint)texture, s, t);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord2bvOES]</b>  </summary>
-            public static void MultiTexCoord2bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord2bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord2bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord2bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord3bOES]</b>  </summary>
-            public static void MultiTexCoord3b(TextureUnit texture, sbyte s, sbyte t, sbyte r) => GLPointers._glMultiTexCoord3bOES_fnptr((uint)texture, s, t, r);
+            public static void MultiTexCoord3bOES(TextureUnit texture, sbyte s, sbyte t, sbyte r) => GLPointers._glMultiTexCoord3bOES_fnptr((uint)texture, s, t, r);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord3bvOES]</b>  </summary>
-            public static void MultiTexCoord3bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord3bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord3bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord3bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord4bOES]</b>  </summary>
-            public static void MultiTexCoord4b(TextureUnit texture, sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glMultiTexCoord4bOES_fnptr((uint)texture, s, t, r, q);
+            public static void MultiTexCoord4bOES(TextureUnit texture, sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glMultiTexCoord4bOES_fnptr((uint)texture, s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glMultiTexCoord4bvOES]</b>  </summary>
-            public static void MultiTexCoord4bv(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord4bvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord4bvOES(TextureUnit texture, sbyte* coords) => GLPointers._glMultiTexCoord4bvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord1bOES]</b>  </summary>
-            public static void TexCoord1b(sbyte s) => GLPointers._glTexCoord1bOES_fnptr(s);
+            public static void TexCoord1bOES(sbyte s) => GLPointers._glTexCoord1bOES_fnptr(s);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord1bvOES]</b>  </summary>
-            public static void TexCoord1bv(sbyte* coords) => GLPointers._glTexCoord1bvOES_fnptr(coords);
+            public static void TexCoord1bvOES(sbyte* coords) => GLPointers._glTexCoord1bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord2bOES]</b>  </summary>
-            public static void TexCoord2b(sbyte s, sbyte t) => GLPointers._glTexCoord2bOES_fnptr(s, t);
+            public static void TexCoord2bOES(sbyte s, sbyte t) => GLPointers._glTexCoord2bOES_fnptr(s, t);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord2bvOES]</b>  </summary>
-            public static void TexCoord2bv(sbyte* coords) => GLPointers._glTexCoord2bvOES_fnptr(coords);
+            public static void TexCoord2bvOES(sbyte* coords) => GLPointers._glTexCoord2bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord3bOES]</b>  </summary>
-            public static void TexCoord3b(sbyte s, sbyte t, sbyte r) => GLPointers._glTexCoord3bOES_fnptr(s, t, r);
+            public static void TexCoord3bOES(sbyte s, sbyte t, sbyte r) => GLPointers._glTexCoord3bOES_fnptr(s, t, r);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord3bvOES]</b>  </summary>
-            public static void TexCoord3bv(sbyte* coords) => GLPointers._glTexCoord3bvOES_fnptr(coords);
+            public static void TexCoord3bvOES(sbyte* coords) => GLPointers._glTexCoord3bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord4bOES]</b>  </summary>
-            public static void TexCoord4b(sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glTexCoord4bOES_fnptr(s, t, r, q);
+            public static void TexCoord4bOES(sbyte s, sbyte t, sbyte r, sbyte q) => GLPointers._glTexCoord4bOES_fnptr(s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glTexCoord4bvOES]</b>  </summary>
-            public static void TexCoord4bv(sbyte* coords) => GLPointers._glTexCoord4bvOES_fnptr(coords);
+            public static void TexCoord4bvOES(sbyte* coords) => GLPointers._glTexCoord4bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex2bOES]</b>  </summary>
-            public static void Vertex2b(sbyte x, sbyte y) => GLPointers._glVertex2bOES_fnptr(x, y);
+            public static void Vertex2bOES(sbyte x, sbyte y) => GLPointers._glVertex2bOES_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex2bvOES]</b>  </summary>
-            public static void Vertex2bv(sbyte* coords) => GLPointers._glVertex2bvOES_fnptr(coords);
+            public static void Vertex2bvOES(sbyte* coords) => GLPointers._glVertex2bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex3bOES]</b>  </summary>
-            public static void Vertex3b(sbyte x, sbyte y, sbyte z) => GLPointers._glVertex3bOES_fnptr(x, y, z);
+            public static void Vertex3bOES(sbyte x, sbyte y, sbyte z) => GLPointers._glVertex3bOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex3bvOES]</b>  </summary>
-            public static void Vertex3bv(sbyte* coords) => GLPointers._glVertex3bvOES_fnptr(coords);
+            public static void Vertex3bvOES(sbyte* coords) => GLPointers._glVertex3bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex4bOES]</b>  </summary>
-            public static void Vertex4b(sbyte x, sbyte y, sbyte z, sbyte w) => GLPointers._glVertex4bOES_fnptr(x, y, z, w);
+            public static void Vertex4bOES(sbyte x, sbyte y, sbyte z, sbyte w) => GLPointers._glVertex4bOES_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_OES_byte_coordinates] [glVertex4bvOES]</b>  </summary>
-            public static void Vertex4bv(sbyte* coords) => GLPointers._glVertex4bvOES_fnptr(coords);
+            public static void Vertex4bvOES(sbyte* coords) => GLPointers._glVertex4bvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glAlphaFuncxOES]</b>  </summary>
-            public static void AlphaFuncx(AlphaFunction func, int reference) => GLPointers._glAlphaFuncxOES_fnptr((uint)func, reference);
+            public static void AlphaFuncxOES(AlphaFunction func, int reference) => GLPointers._glAlphaFuncxOES_fnptr((uint)func, reference);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClearColorxOES]</b>  </summary>
-            public static void ClearColorx(int red, int green, int blue, int alpha) => GLPointers._glClearColorxOES_fnptr(red, green, blue, alpha);
+            public static void ClearColorxOES(int red, int green, int blue, int alpha) => GLPointers._glClearColorxOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClearDepthxOES]</b>  </summary>
-            public static void ClearDepthx(int depth) => GLPointers._glClearDepthxOES_fnptr(depth);
+            public static void ClearDepthxOES(int depth) => GLPointers._glClearDepthxOES_fnptr(depth);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClipPlanexOES]</b>  </summary>
-            public static void ClipPlanex(ClipPlaneName plane, int* equation) => GLPointers._glClipPlanexOES_fnptr((uint)plane, equation);
+            public static void ClipPlanexOES(ClipPlaneName plane, int* equation) => GLPointers._glClipPlanexOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor4xOES]</b>  </summary>
-            public static void Color4x(int red, int green, int blue, int alpha) => GLPointers._glColor4xOES_fnptr(red, green, blue, alpha);
+            public static void Color4xOES(int red, int green, int blue, int alpha) => GLPointers._glColor4xOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glDepthRangexOES]</b>  </summary>
-            public static void DepthRangex(int n, int f) => GLPointers._glDepthRangexOES_fnptr(n, f);
+            public static void DepthRangexOES(int n, int f) => GLPointers._glDepthRangexOES_fnptr(n, f);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFogxOES]</b>  </summary>
-            public static void Fogx(FogPName pname, int param) => GLPointers._glFogxOES_fnptr((uint)pname, param);
+            public static void FogxOES(FogPName pname, int param) => GLPointers._glFogxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFogxvOES]</b>  </summary>
-            public static void Fogxv(FogPName pname, int* param) => GLPointers._glFogxvOES_fnptr((uint)pname, param);
+            public static void FogxvOES(FogPName pname, int* param) => GLPointers._glFogxvOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFrustumxOES]</b>  </summary>
-            public static void Frustumx(int l, int r, int b, int t, int n, int f) => GLPointers._glFrustumxOES_fnptr(l, r, b, t, n, f);
+            public static void FrustumxOES(int l, int r, int b, int t, int n, int f) => GLPointers._glFrustumxOES_fnptr(l, r, b, t, n, f);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetClipPlanexOES]</b>  </summary>
-            public static void GetClipPlanex(ClipPlaneName plane, int* equation) => GLPointers._glGetClipPlanexOES_fnptr((uint)plane, equation);
+            public static void GetClipPlanexOES(ClipPlaneName plane, int* equation) => GLPointers._glGetClipPlanexOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetFixedvOES]</b>  </summary>
-            public static void GetFixedv(GetPName pname, int* parameters) => GLPointers._glGetFixedvOES_fnptr((uint)pname, parameters);
+            public static void GetFixedvOES(GetPName pname, int* parameters) => GLPointers._glGetFixedvOES_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetTexEnvxvOES]</b>  </summary>
-            public static void GetTexEnvxv(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glGetTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glGetTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetTexParameterxvOES]</b>  </summary>
-            public static void GetTexParameterxv(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightModelxOES]</b>  </summary>
-            public static void LightModelx(LightModelParameter pname, int param) => GLPointers._glLightModelxOES_fnptr((uint)pname, param);
+            public static void LightModelxOES(LightModelParameter pname, int param) => GLPointers._glLightModelxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightModelxvOES]</b>  </summary>
-            public static void LightModelxv(LightModelParameter pname, int* param) => GLPointers._glLightModelxvOES_fnptr((uint)pname, param);
+            public static void LightModelxvOES(LightModelParameter pname, int* param) => GLPointers._glLightModelxvOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightxOES]</b>  </summary>
-            public static void Lightx(LightName light, LightParameter pname, int param) => GLPointers._glLightxOES_fnptr((uint)light, (uint)pname, param);
+            public static void LightxOES(LightName light, LightParameter pname, int param) => GLPointers._glLightxOES_fnptr((uint)light, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLightxvOES]</b>  </summary>
-            public static void Lightxv(LightName light, LightParameter pname, int* parameters) => GLPointers._glLightxvOES_fnptr((uint)light, (uint)pname, parameters);
+            public static void LightxvOES(LightName light, LightParameter pname, int* parameters) => GLPointers._glLightxvOES_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLineWidthxOES]</b>  </summary>
-            public static void LineWidthx(int width) => GLPointers._glLineWidthxOES_fnptr(width);
+            public static void LineWidthxOES(int width) => GLPointers._glLineWidthxOES_fnptr(width);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLoadMatrixxOES]</b>  </summary>
-            public static void LoadMatrixx(int* m) => GLPointers._glLoadMatrixxOES_fnptr(m);
+            public static void LoadMatrixxOES(int* m) => GLPointers._glLoadMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMaterialxOES]</b>  </summary>
-            public static void Materialx(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glMaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glMaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMaterialxvOES]</b>  </summary>
-            public static void Materialxv(TriangleFace face, MaterialParameter pname, int* param) => GLPointers._glMaterialxvOES_fnptr((uint)face, (uint)pname, param);
+            public static void MaterialxvOES(TriangleFace face, MaterialParameter pname, int* param) => GLPointers._glMaterialxvOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultMatrixxOES]</b>  </summary>
-            public static void MultMatrixx(int* m) => GLPointers._glMultMatrixxOES_fnptr(m);
+            public static void MultMatrixxOES(int* m) => GLPointers._glMultMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord4xOES]</b>  </summary>
-            public static void MultiTexCoord4x(TextureUnit texture, int s, int t, int r, int q) => GLPointers._glMultiTexCoord4xOES_fnptr((uint)texture, s, t, r, q);
+            public static void MultiTexCoord4xOES(TextureUnit texture, int s, int t, int r, int q) => GLPointers._glMultiTexCoord4xOES_fnptr((uint)texture, s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glNormal3xOES]</b>  </summary>
-            public static void Normal3x(int nx, int ny, int nz) => GLPointers._glNormal3xOES_fnptr(nx, ny, nz);
+            public static void Normal3xOES(int nx, int ny, int nz) => GLPointers._glNormal3xOES_fnptr(nx, ny, nz);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glOrthoxOES]</b>  </summary>
-            public static void Orthox(int l, int r, int b, int t, int n, int f) => GLPointers._glOrthoxOES_fnptr(l, r, b, t, n, f);
+            public static void OrthoxOES(int l, int r, int b, int t, int n, int f) => GLPointers._glOrthoxOES_fnptr(l, r, b, t, n, f);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPointParameterxvOES]</b>  </summary>
-            public static void PointParameterxv(PointParameterNameARB pname, int* parameters) => GLPointers._glPointParameterxvOES_fnptr((uint)pname, parameters);
+            public static void PointParameterxvOES(PointParameterNameARB pname, int* parameters) => GLPointers._glPointParameterxvOES_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPointSizexOES]</b>  </summary>
-            public static void PointSizex(int size) => GLPointers._glPointSizexOES_fnptr(size);
+            public static void PointSizexOES(int size) => GLPointers._glPointSizexOES_fnptr(size);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPolygonOffsetxOES]</b>  </summary>
-            public static void PolygonOffsetx(int factor, int units) => GLPointers._glPolygonOffsetxOES_fnptr(factor, units);
+            public static void PolygonOffsetxOES(int factor, int units) => GLPointers._glPolygonOffsetxOES_fnptr(factor, units);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRotatexOES]</b>  </summary>
-            public static void Rotatex(int angle, int x, int y, int z) => GLPointers._glRotatexOES_fnptr(angle, x, y, z);
+            public static void RotatexOES(int angle, int x, int y, int z) => GLPointers._glRotatexOES_fnptr(angle, x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glScalexOES]</b>  </summary>
-            public static void Scalex(int x, int y, int z) => GLPointers._glScalexOES_fnptr(x, y, z);
+            public static void ScalexOES(int x, int y, int z) => GLPointers._glScalexOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexEnvxOES]</b>  </summary>
-            public static void TexEnvx(TextureEnvTarget target, TextureEnvParameter pname, int param) => GLPointers._glTexEnvxOES_fnptr((uint)target, (uint)pname, param);
+            public static void TexEnvxOES(TextureEnvTarget target, TextureEnvParameter pname, int param) => GLPointers._glTexEnvxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexEnvxvOES]</b>  </summary>
-            public static void TexEnvxv(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void TexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, int* parameters) => GLPointers._glTexEnvxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexParameterxOES]</b>  </summary>
-            public static void TexParameterx(TextureTarget target, GetTextureParameter pname, int param) => GLPointers._glTexParameterxOES_fnptr((uint)target, (uint)pname, param);
+            public static void TexParameterxOES(TextureTarget target, GetTextureParameter pname, int param) => GLPointers._glTexParameterxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexParameterxvOES]</b>  </summary>
-            public static void TexParameterxv(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void TexParameterxvOES(TextureTarget target, GetTextureParameter pname, int* parameters) => GLPointers._glTexParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTranslatexOES]</b>  </summary>
-            public static void Translatex(int x, int y, int z) => GLPointers._glTranslatexOES_fnptr(x, y, z);
+            public static void TranslatexOES(int x, int y, int z) => GLPointers._glTranslatexOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetLightxvOES]</b>  </summary>
-            public static void GetLightxv(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxvOES_fnptr((uint)light, (uint)pname, parameters);
+            public static void GetLightxvOES(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxvOES_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetMaterialxvOES]</b>  </summary>
-            public static void GetMaterialxv(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glGetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glGetMaterialxvOES_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPointParameterxOES]</b>  </summary>
-            public static void PointParameterx(PointParameterNameARB pname, int param) => GLPointers._glPointParameterxOES_fnptr((uint)pname, param);
+            public static void PointParameterxOES(PointParameterNameARB pname, int param) => GLPointers._glPointParameterxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glSampleCoveragexOES]</b>  </summary>
-            public static void SampleCoveragex(int value, bool invert) => GLPointers._glSampleCoveragexOES_fnptr(value, (byte)(invert ? 1 : 0));
+            public static void SampleCoveragexOES(int value, bool invert) => GLPointers._glSampleCoveragexOES_fnptr(value, (byte)(invert ? 1 : 0));
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glAccumxOES]</b>  </summary>
-            public static void Accumx(All op, int value) => GLPointers._glAccumxOES_fnptr((uint)op, value);
+            public static void AccumxOES(All op, int value) => GLPointers._glAccumxOES_fnptr((uint)op, value);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glBitmapxOES]</b>  </summary>
-            public static void Bitmapx(int width, int height, int xorig, int yorig, int xmove, int ymove, byte* bitmap) => GLPointers._glBitmapxOES_fnptr(width, height, xorig, yorig, xmove, ymove, bitmap);
+            public static void BitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, byte* bitmap) => GLPointers._glBitmapxOES_fnptr(width, height, xorig, yorig, xmove, ymove, bitmap);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glBlendColorxOES]</b>  </summary>
-            public static void BlendColorx(int red, int green, int blue, int alpha) => GLPointers._glBlendColorxOES_fnptr(red, green, blue, alpha);
+            public static void BlendColorxOES(int red, int green, int blue, int alpha) => GLPointers._glBlendColorxOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glClearAccumxOES]</b>  </summary>
-            public static void ClearAccumx(int red, int green, int blue, int alpha) => GLPointers._glClearAccumxOES_fnptr(red, green, blue, alpha);
+            public static void ClearAccumxOES(int red, int green, int blue, int alpha) => GLPointers._glClearAccumxOES_fnptr(red, green, blue, alpha);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor3xOES]</b>  </summary>
-            public static void Color3x(int red, int green, int blue) => GLPointers._glColor3xOES_fnptr(red, green, blue);
+            public static void Color3xOES(int red, int green, int blue) => GLPointers._glColor3xOES_fnptr(red, green, blue);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor3xvOES]</b>  </summary>
-            public static void Color3xv(int* components) => GLPointers._glColor3xvOES_fnptr(components);
+            public static void Color3xvOES(int* components) => GLPointers._glColor3xvOES_fnptr(components);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glColor4xvOES]</b>  </summary>
-            public static void Color4xv(int* components) => GLPointers._glColor4xvOES_fnptr(components);
+            public static void Color4xvOES(int* components) => GLPointers._glColor4xvOES_fnptr(components);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glConvolutionParameterxOES]</b>  </summary>
-            public static void ConvolutionParameterx(ConvolutionTargetEXT target, ConvolutionParameter pname, int param) => GLPointers._glConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
+            public static void ConvolutionParameterxOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int param) => GLPointers._glConvolutionParameterxOES_fnptr((uint)target, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glConvolutionParameterxvOES]</b>  </summary>
-            public static void ConvolutionParameterxv(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void ConvolutionParameterxvOES(ConvolutionTargetEXT target, ConvolutionParameter pname, int* parameters) => GLPointers._glConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord1xOES]</b>  </summary>
-            public static void EvalCoord1x(int u) => GLPointers._glEvalCoord1xOES_fnptr(u);
+            public static void EvalCoord1xOES(int u) => GLPointers._glEvalCoord1xOES_fnptr(u);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord1xvOES]</b>  </summary>
-            public static void EvalCoord1xv(int* coords) => GLPointers._glEvalCoord1xvOES_fnptr(coords);
+            public static void EvalCoord1xvOES(int* coords) => GLPointers._glEvalCoord1xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord2xOES]</b>  </summary>
-            public static void EvalCoord2x(int u, int v) => GLPointers._glEvalCoord2xOES_fnptr(u, v);
+            public static void EvalCoord2xOES(int u, int v) => GLPointers._glEvalCoord2xOES_fnptr(u, v);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glEvalCoord2xvOES]</b>  </summary>
-            public static void EvalCoord2xv(int* coords) => GLPointers._glEvalCoord2xvOES_fnptr(coords);
+            public static void EvalCoord2xvOES(int* coords) => GLPointers._glEvalCoord2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glFeedbackBufferxOES]</b>  </summary>
-            public static void FeedbackBufferx(int n, All type, int* buffer) => GLPointers._glFeedbackBufferxOES_fnptr(n, (uint)type, buffer);
+            public static void FeedbackBufferxOES(int n, All type, int* buffer) => GLPointers._glFeedbackBufferxOES_fnptr(n, (uint)type, buffer);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetConvolutionParameterxvOES]</b>  </summary>
-            public static void GetConvolutionParameterxv(All target, All pname, int* parameters) => GLPointers._glGetConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetConvolutionParameterxvOES(All target, All pname, int* parameters) => GLPointers._glGetConvolutionParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetHistogramParameterxvOES]</b>  </summary>
-            public static void GetHistogramParameterxv(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int* parameters) => GLPointers._glGetHistogramParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, int* parameters) => GLPointers._glGetHistogramParameterxvOES_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetLightxOES]</b>  </summary>
-            public static void GetLightx(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxOES_fnptr((uint)light, (uint)pname, parameters);
+            public static void GetLightxOES(LightName light, LightParameter pname, int* parameters) => GLPointers._glGetLightxOES_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetMapxvOES]</b>  </summary>
-            public static void GetMapxv(MapTarget target, GetMapQuery query, int* v) => GLPointers._glGetMapxvOES_fnptr((uint)target, (uint)query, v);
+            public static void GetMapxvOES(MapTarget target, GetMapQuery query, int* v) => GLPointers._glGetMapxvOES_fnptr((uint)target, (uint)query, v);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetMaterialxOES]</b>  </summary>
-            public static void GetMaterialx(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glGetMaterialxOES_fnptr((uint)face, (uint)pname, param);
+            public static void GetMaterialxOES(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glGetMaterialxOES_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetPixelMapxv]</b>  </summary>
             public static void GetPixelMapxv(PixelMap map, int size, int* values) => GLPointers._glGetPixelMapxv_fnptr((uint)map, size, values);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetTexGenxvOES]</b>  </summary>
-            public static void GetTexGenxv(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glGetTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glGetTexLevelParameterxvOES]</b>  </summary>
-            public static void GetTexLevelParameterxv(TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexLevelParameterxvOES_fnptr((uint)target, level, (uint)pname, parameters);
+            public static void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, int* parameters) => GLPointers._glGetTexLevelParameterxvOES_fnptr((uint)target, level, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glIndexxOES]</b>  </summary>
-            public static void Indexx(int component) => GLPointers._glIndexxOES_fnptr(component);
+            public static void IndexxOES(int component) => GLPointers._glIndexxOES_fnptr(component);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glIndexxvOES]</b>  </summary>
-            public static void Indexxv(int* component) => GLPointers._glIndexxvOES_fnptr(component);
+            public static void IndexxvOES(int* component) => GLPointers._glIndexxvOES_fnptr(component);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glLoadTransposeMatrixxOES]</b>  </summary>
-            public static void LoadTransposeMatrixx(int* m) => GLPointers._glLoadTransposeMatrixxOES_fnptr(m);
+            public static void LoadTransposeMatrixxOES(int* m) => GLPointers._glLoadTransposeMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMap1xOES]</b>  </summary>
-            public static void Map1x(MapTarget target, int u1, int u2, int stride, int order, int points) => GLPointers._glMap1xOES_fnptr((uint)target, u1, u2, stride, order, points);
+            public static void Map1xOES(MapTarget target, int u1, int u2, int stride, int order, int points) => GLPointers._glMap1xOES_fnptr((uint)target, u1, u2, stride, order, points);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMap2xOES]</b>  </summary>
-            public static void Map2x(MapTarget target, int u1, int u2, int ustride, int uorder, int v1, int v2, int vstride, int vorder, int points) => GLPointers._glMap2xOES_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+            public static void Map2xOES(MapTarget target, int u1, int u2, int ustride, int uorder, int v1, int v2, int vstride, int vorder, int points) => GLPointers._glMap2xOES_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMapGrid1xOES]</b>  </summary>
-            public static void MapGrid1x(int n, int u1, int u2) => GLPointers._glMapGrid1xOES_fnptr(n, u1, u2);
+            public static void MapGrid1xOES(int n, int u1, int u2) => GLPointers._glMapGrid1xOES_fnptr(n, u1, u2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMapGrid2xOES]</b>  </summary>
-            public static void MapGrid2x(int n, int u1, int u2, int v1, int v2) => GLPointers._glMapGrid2xOES_fnptr(n, u1, u2, v1, v2);
+            public static void MapGrid2xOES(int n, int u1, int u2, int v1, int v2) => GLPointers._glMapGrid2xOES_fnptr(n, u1, u2, v1, v2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultTransposeMatrixxOES]</b>  </summary>
-            public static void MultTransposeMatrixx(int* m) => GLPointers._glMultTransposeMatrixxOES_fnptr(m);
+            public static void MultTransposeMatrixxOES(int* m) => GLPointers._glMultTransposeMatrixxOES_fnptr(m);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord1xOES]</b>  </summary>
-            public static void MultiTexCoord1x(TextureUnit texture, int s) => GLPointers._glMultiTexCoord1xOES_fnptr((uint)texture, s);
+            public static void MultiTexCoord1xOES(TextureUnit texture, int s) => GLPointers._glMultiTexCoord1xOES_fnptr((uint)texture, s);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord1xvOES]</b>  </summary>
-            public static void MultiTexCoord1xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord1xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord1xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord1xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord2xOES]</b>  </summary>
-            public static void MultiTexCoord2x(TextureUnit texture, int s, int t) => GLPointers._glMultiTexCoord2xOES_fnptr((uint)texture, s, t);
+            public static void MultiTexCoord2xOES(TextureUnit texture, int s, int t) => GLPointers._glMultiTexCoord2xOES_fnptr((uint)texture, s, t);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord2xvOES]</b>  </summary>
-            public static void MultiTexCoord2xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord2xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord2xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord2xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord3xOES]</b>  </summary>
-            public static void MultiTexCoord3x(TextureUnit texture, int s, int t, int r) => GLPointers._glMultiTexCoord3xOES_fnptr((uint)texture, s, t, r);
+            public static void MultiTexCoord3xOES(TextureUnit texture, int s, int t, int r) => GLPointers._glMultiTexCoord3xOES_fnptr((uint)texture, s, t, r);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord3xvOES]</b>  </summary>
-            public static void MultiTexCoord3xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord3xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord3xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord3xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glMultiTexCoord4xvOES]</b>  </summary>
-            public static void MultiTexCoord4xv(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord4xvOES_fnptr((uint)texture, coords);
+            public static void MultiTexCoord4xvOES(TextureUnit texture, int* coords) => GLPointers._glMultiTexCoord4xvOES_fnptr((uint)texture, coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glNormal3xvOES]</b>  </summary>
-            public static void Normal3xv(int* coords) => GLPointers._glNormal3xvOES_fnptr(coords);
+            public static void Normal3xvOES(int* coords) => GLPointers._glNormal3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPassThroughxOES]</b>  </summary>
-            public static void PassThroughx(int token) => GLPointers._glPassThroughxOES_fnptr(token);
+            public static void PassThroughxOES(int token) => GLPointers._glPassThroughxOES_fnptr(token);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPixelMapx]</b>  </summary>
             public static void PixelMapx(PixelMap map, int size, int* values) => GLPointers._glPixelMapx_fnptr((uint)map, size, values);
@@ -13046,545 +13046,545 @@ namespace OpenTK.Graphics.OpenGL
             public static void PixelStorex(PixelStoreParameter pname, int param) => GLPointers._glPixelStorex_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPixelTransferxOES]</b>  </summary>
-            public static void PixelTransferx(PixelTransferParameter pname, int param) => GLPointers._glPixelTransferxOES_fnptr((uint)pname, param);
+            public static void PixelTransferxOES(PixelTransferParameter pname, int param) => GLPointers._glPixelTransferxOES_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPixelZoomxOES]</b>  </summary>
-            public static void PixelZoomx(int xfactor, int yfactor) => GLPointers._glPixelZoomxOES_fnptr(xfactor, yfactor);
+            public static void PixelZoomxOES(int xfactor, int yfactor) => GLPointers._glPixelZoomxOES_fnptr(xfactor, yfactor);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glPrioritizeTexturesxOES]</b>  </summary>
-            public static void PrioritizeTexturesx(int n, int* textures, int* priorities) => GLPointers._glPrioritizeTexturesxOES_fnptr(n, textures, priorities);
+            public static void PrioritizeTexturesxOES(int n, int* textures, int* priorities) => GLPointers._glPrioritizeTexturesxOES_fnptr(n, textures, priorities);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos2xOES]</b>  </summary>
-            public static void RasterPos2x(int x, int y) => GLPointers._glRasterPos2xOES_fnptr(x, y);
+            public static void RasterPos2xOES(int x, int y) => GLPointers._glRasterPos2xOES_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos2xvOES]</b>  </summary>
-            public static void RasterPos2xv(int* coords) => GLPointers._glRasterPos2xvOES_fnptr(coords);
+            public static void RasterPos2xvOES(int* coords) => GLPointers._glRasterPos2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos3xOES]</b>  </summary>
-            public static void RasterPos3x(int x, int y, int z) => GLPointers._glRasterPos3xOES_fnptr(x, y, z);
+            public static void RasterPos3xOES(int x, int y, int z) => GLPointers._glRasterPos3xOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos3xvOES]</b>  </summary>
-            public static void RasterPos3xv(int* coords) => GLPointers._glRasterPos3xvOES_fnptr(coords);
+            public static void RasterPos3xvOES(int* coords) => GLPointers._glRasterPos3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos4xOES]</b>  </summary>
-            public static void RasterPos4x(int x, int y, int z, int w) => GLPointers._glRasterPos4xOES_fnptr(x, y, z, w);
+            public static void RasterPos4xOES(int x, int y, int z, int w) => GLPointers._glRasterPos4xOES_fnptr(x, y, z, w);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRasterPos4xvOES]</b>  </summary>
-            public static void RasterPos4xv(int* coords) => GLPointers._glRasterPos4xvOES_fnptr(coords);
+            public static void RasterPos4xvOES(int* coords) => GLPointers._glRasterPos4xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRectxOES]</b>  </summary>
-            public static void Rectx(int x1, int y1, int x2, int y2) => GLPointers._glRectxOES_fnptr(x1, y1, x2, y2);
+            public static void RectxOES(int x1, int y1, int x2, int y2) => GLPointers._glRectxOES_fnptr(x1, y1, x2, y2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glRectxvOES]</b>  </summary>
-            public static void Rectxv(int* v1, int* v2) => GLPointers._glRectxvOES_fnptr(v1, v2);
+            public static void RectxvOES(int* v1, int* v2) => GLPointers._glRectxvOES_fnptr(v1, v2);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord1xOES]</b>  </summary>
-            public static void TexCoord1x(int s) => GLPointers._glTexCoord1xOES_fnptr(s);
+            public static void TexCoord1xOES(int s) => GLPointers._glTexCoord1xOES_fnptr(s);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord1xvOES]</b>  </summary>
-            public static void TexCoord1xv(int* coords) => GLPointers._glTexCoord1xvOES_fnptr(coords);
+            public static void TexCoord1xvOES(int* coords) => GLPointers._glTexCoord1xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord2xOES]</b>  </summary>
-            public static void TexCoord2x(int s, int t) => GLPointers._glTexCoord2xOES_fnptr(s, t);
+            public static void TexCoord2xOES(int s, int t) => GLPointers._glTexCoord2xOES_fnptr(s, t);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord2xvOES]</b>  </summary>
-            public static void TexCoord2xv(int* coords) => GLPointers._glTexCoord2xvOES_fnptr(coords);
+            public static void TexCoord2xvOES(int* coords) => GLPointers._glTexCoord2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord3xOES]</b>  </summary>
-            public static void TexCoord3x(int s, int t, int r) => GLPointers._glTexCoord3xOES_fnptr(s, t, r);
+            public static void TexCoord3xOES(int s, int t, int r) => GLPointers._glTexCoord3xOES_fnptr(s, t, r);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord3xvOES]</b>  </summary>
-            public static void TexCoord3xv(int* coords) => GLPointers._glTexCoord3xvOES_fnptr(coords);
+            public static void TexCoord3xvOES(int* coords) => GLPointers._glTexCoord3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord4xOES]</b>  </summary>
-            public static void TexCoord4x(int s, int t, int r, int q) => GLPointers._glTexCoord4xOES_fnptr(s, t, r, q);
+            public static void TexCoord4xOES(int s, int t, int r, int q) => GLPointers._glTexCoord4xOES_fnptr(s, t, r, q);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexCoord4xvOES]</b>  </summary>
-            public static void TexCoord4xv(int* coords) => GLPointers._glTexCoord4xvOES_fnptr(coords);
+            public static void TexCoord4xvOES(int* coords) => GLPointers._glTexCoord4xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexGenxOES]</b>  </summary>
-            public static void TexGenx(TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glTexGenxOES_fnptr((uint)coord, (uint)pname, param);
+            public static void TexGenxOES(TextureCoordName coord, TextureGenParameter pname, int param) => GLPointers._glTexGenxOES_fnptr((uint)coord, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glTexGenxvOES]</b>  </summary>
-            public static void TexGenxv(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
+            public static void TexGenxvOES(TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glTexGenxvOES_fnptr((uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex2xOES]</b>  </summary>
-            public static void Vertex2x(int x) => GLPointers._glVertex2xOES_fnptr(x);
+            public static void Vertex2xOES(int x) => GLPointers._glVertex2xOES_fnptr(x);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex2xvOES]</b>  </summary>
-            public static void Vertex2xv(int* coords) => GLPointers._glVertex2xvOES_fnptr(coords);
+            public static void Vertex2xvOES(int* coords) => GLPointers._glVertex2xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex3xOES]</b>  </summary>
-            public static void Vertex3x(int x, int y) => GLPointers._glVertex3xOES_fnptr(x, y);
+            public static void Vertex3xOES(int x, int y) => GLPointers._glVertex3xOES_fnptr(x, y);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex3xvOES]</b>  </summary>
-            public static void Vertex3xv(int* coords) => GLPointers._glVertex3xvOES_fnptr(coords);
+            public static void Vertex3xvOES(int* coords) => GLPointers._glVertex3xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex4xOES]</b>  </summary>
-            public static void Vertex4x(int x, int y, int z) => GLPointers._glVertex4xOES_fnptr(x, y, z);
+            public static void Vertex4xOES(int x, int y, int z) => GLPointers._glVertex4xOES_fnptr(x, y, z);
             
             /// <summary> <b>[requires: GL_OES_fixed_point] [glVertex4xvOES]</b>  </summary>
-            public static void Vertex4xv(int* coords) => GLPointers._glVertex4xvOES_fnptr(coords);
+            public static void Vertex4xvOES(int* coords) => GLPointers._glVertex4xvOES_fnptr(coords);
             
             /// <summary> <b>[requires: GL_OES_query_matrix] [glQueryMatrixxOES]</b>  </summary>
-            public static uint QueryMatrixx(int* mantissa, int* exponent) => GLPointers._glQueryMatrixxOES_fnptr(mantissa, exponent);
+            public static uint QueryMatrixxOES(int* mantissa, int* exponent) => GLPointers._glQueryMatrixxOES_fnptr(mantissa, exponent);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glClearDepthfOES]</b>  </summary>
-            public static void ClearDepthf(float depth) => GLPointers._glClearDepthfOES_fnptr(depth);
+            public static void ClearDepthfOES(float depth) => GLPointers._glClearDepthfOES_fnptr(depth);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glClipPlanefOES]</b>  </summary>
-            public static void ClipPlanef(ClipPlaneName plane, float* equation) => GLPointers._glClipPlanefOES_fnptr((uint)plane, equation);
+            public static void ClipPlanefOES(ClipPlaneName plane, float* equation) => GLPointers._glClipPlanefOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glDepthRangefOES]</b>  </summary>
-            public static void DepthRangef(float n, float f) => GLPointers._glDepthRangefOES_fnptr(n, f);
+            public static void DepthRangefOES(float n, float f) => GLPointers._glDepthRangefOES_fnptr(n, f);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glFrustumfOES]</b>  </summary>
-            public static void Frustumf(float l, float r, float b, float t, float n, float f) => GLPointers._glFrustumfOES_fnptr(l, r, b, t, n, f);
+            public static void FrustumfOES(float l, float r, float b, float t, float n, float f) => GLPointers._glFrustumfOES_fnptr(l, r, b, t, n, f);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glGetClipPlanefOES]</b>  </summary>
-            public static void GetClipPlanef(ClipPlaneName plane, float* equation) => GLPointers._glGetClipPlanefOES_fnptr((uint)plane, equation);
+            public static void GetClipPlanefOES(ClipPlaneName plane, float* equation) => GLPointers._glGetClipPlanefOES_fnptr((uint)plane, equation);
             
             /// <summary> <b>[requires: GL_OES_single_precision] [glOrthofOES]</b>  </summary>
-            public static void Orthof(float l, float r, float b, float t, float n, float f) => GLPointers._glOrthofOES_fnptr(l, r, b, t, n, f);
+            public static void OrthofOES(float l, float r, float b, float t, float n, float f) => GLPointers._glOrthofOES_fnptr(l, r, b, t, n, f);
             
         }
         /// <summary>OVR extensions.</summary>
         public static unsafe partial class OVR
         {
             /// <summary> <b>[requires: GL_OVR_multiview] [glFramebufferTextureMultiviewOVR]</b>  </summary>
-            public static void FramebufferTextureMultiview(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glFramebufferTextureMultiviewOVR_fnptr((uint)target, (uint)attachment, texture, level, baseViewIndex, numViews);
+            public static void FramebufferTextureMultiviewOVR(FramebufferTarget target, FramebufferAttachment attachment, int texture, int level, int baseViewIndex, int numViews) => GLPointers._glFramebufferTextureMultiviewOVR_fnptr((uint)target, (uint)attachment, texture, level, baseViewIndex, numViews);
             
         }
         /// <summary>PGI extensions.</summary>
         public static unsafe partial class PGI
         {
             /// <summary> <b>[requires: GL_PGI_misc_hints] [glHintPGI]</b>  </summary>
-            public static void Hint(HintTargetPGI target, VertexHintsMaskPGI mode) => GLPointers._glHintPGI_fnptr((uint)target, (int)mode);
+            public static void HintPGI(HintTargetPGI target, VertexHintsMaskPGI mode) => GLPointers._glHintPGI_fnptr((uint)target, (int)mode);
             
         }
         /// <summary>SGIS extensions.</summary>
         public static unsafe partial class SGIS
         {
             /// <summary> <b>[requires: GL_SGIS_detail_texture] [glDetailTexFuncSGIS]</b>  </summary>
-            public static void DetailTexFunc(TextureTarget target, int n, float* points) => GLPointers._glDetailTexFuncSGIS_fnptr((uint)target, n, points);
+            public static void DetailTexFuncSGIS(TextureTarget target, int n, float* points) => GLPointers._glDetailTexFuncSGIS_fnptr((uint)target, n, points);
             
             /// <summary> <b>[requires: GL_SGIS_detail_texture] [glGetDetailTexFuncSGIS]</b>  </summary>
-            public static void GetDetailTexFunc(TextureTarget target, float* points) => GLPointers._glGetDetailTexFuncSGIS_fnptr((uint)target, points);
+            public static void GetDetailTexFuncSGIS(TextureTarget target, float* points) => GLPointers._glGetDetailTexFuncSGIS_fnptr((uint)target, points);
             
             /// <summary> <b>[requires: GL_SGIS_fog_function] [glFogFuncSGIS]</b>  </summary>
-            public static void FogFunc(int n, float* points) => GLPointers._glFogFuncSGIS_fnptr(n, points);
+            public static void FogFuncSGIS(int n, float* points) => GLPointers._glFogFuncSGIS_fnptr(n, points);
             
             /// <summary> <b>[requires: GL_SGIS_fog_function] [glGetFogFuncSGIS]</b>  </summary>
-            public static void GetFogFunc(float* points) => GLPointers._glGetFogFuncSGIS_fnptr(points);
+            public static void GetFogFuncSGIS(float* points) => GLPointers._glGetFogFuncSGIS_fnptr(points);
             
             /// <summary> <b>[requires: GL_SGIS_multisample] [glSampleMaskSGIS]</b>  </summary>
-            public static void SampleMask(float value, bool invert) => GLPointers._glSampleMaskSGIS_fnptr(value, (byte)(invert ? 1 : 0));
+            public static void SampleMaskSGIS(float value, bool invert) => GLPointers._glSampleMaskSGIS_fnptr(value, (byte)(invert ? 1 : 0));
             
             /// <summary> <b>[requires: GL_SGIS_multisample] [glSamplePatternSGIS]</b>  </summary>
-            public static void SamplePattern(SamplePatternSGIS pattern) => GLPointers._glSamplePatternSGIS_fnptr((uint)pattern);
+            public static void SamplePatternSGIS(SamplePatternSGIS pattern) => GLPointers._glSamplePatternSGIS_fnptr((uint)pattern);
             
             /// <summary> <b>[requires: GL_SGIS_pixel_texture] [glPixelTexGenParameteriSGIS]</b>  </summary>
-            public static void PixelTexGenParameteri(PixelTexGenParameterNameSGIS pname, int param) => GLPointers._glPixelTexGenParameteriSGIS_fnptr((uint)pname, param);
+            public static void PixelTexGenParameteriSGIS(PixelTexGenParameterNameSGIS pname, int param) => GLPointers._glPixelTexGenParameteriSGIS_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIS_pixel_texture] [glPixelTexGenParameterivSGIS]</b>  </summary>
-            public static void PixelTexGenParameteriv(PixelTexGenParameterNameSGIS pname, int* parameters) => GLPointers._glPixelTexGenParameterivSGIS_fnptr((uint)pname, parameters);
+            public static void PixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, int* parameters) => GLPointers._glPixelTexGenParameterivSGIS_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIS_pixel_texture] [glPixelTexGenParameterfSGIS]</b>  </summary>
-            public static void PixelTexGenParameterf(PixelTexGenParameterNameSGIS pname, float param) => GLPointers._glPixelTexGenParameterfSGIS_fnptr((uint)pname, param);
+            public static void PixelTexGenParameterfSGIS(PixelTexGenParameterNameSGIS pname, float param) => GLPointers._glPixelTexGenParameterfSGIS_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIS_pixel_texture] [glPixelTexGenParameterfvSGIS]</b>  </summary>
-            public static void PixelTexGenParameterfv(PixelTexGenParameterNameSGIS pname, float* parameters) => GLPointers._glPixelTexGenParameterfvSGIS_fnptr((uint)pname, parameters);
+            public static void PixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, float* parameters) => GLPointers._glPixelTexGenParameterfvSGIS_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIS_pixel_texture] [glGetPixelTexGenParameterivSGIS]</b>  </summary>
-            public static void GetPixelTexGenParameteriv(PixelTexGenParameterNameSGIS pname, int* parameters) => GLPointers._glGetPixelTexGenParameterivSGIS_fnptr((uint)pname, parameters);
+            public static void GetPixelTexGenParameterivSGIS(PixelTexGenParameterNameSGIS pname, int* parameters) => GLPointers._glGetPixelTexGenParameterivSGIS_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIS_pixel_texture] [glGetPixelTexGenParameterfvSGIS]</b>  </summary>
-            public static void GetPixelTexGenParameterfv(PixelTexGenParameterNameSGIS pname, float* parameters) => GLPointers._glGetPixelTexGenParameterfvSGIS_fnptr((uint)pname, parameters);
+            public static void GetPixelTexGenParameterfvSGIS(PixelTexGenParameterNameSGIS pname, float* parameters) => GLPointers._glGetPixelTexGenParameterfvSGIS_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIS_point_parameters] [glPointParameterfSGIS]</b>  </summary>
-            public static void PointParameterf(PointParameterNameARB pname, float param) => GLPointers._glPointParameterfSGIS_fnptr((uint)pname, param);
+            public static void PointParameterfSGIS(PointParameterNameARB pname, float param) => GLPointers._glPointParameterfSGIS_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIS_point_parameters] [glPointParameterfvSGIS]</b>  </summary>
-            public static void PointParameterfv(PointParameterNameARB pname, float* parameters) => GLPointers._glPointParameterfvSGIS_fnptr((uint)pname, parameters);
+            public static void PointParameterfvSGIS(PointParameterNameARB pname, float* parameters) => GLPointers._glPointParameterfvSGIS_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIS_sharpen_texture] [glSharpenTexFuncSGIS]</b>  </summary>
-            public static void SharpenTexFunc(TextureTarget target, int n, float* points) => GLPointers._glSharpenTexFuncSGIS_fnptr((uint)target, n, points);
+            public static void SharpenTexFuncSGIS(TextureTarget target, int n, float* points) => GLPointers._glSharpenTexFuncSGIS_fnptr((uint)target, n, points);
             
             /// <summary> <b>[requires: GL_SGIS_sharpen_texture] [glGetSharpenTexFuncSGIS]</b>  </summary>
-            public static void GetSharpenTexFunc(TextureTarget target, float* points) => GLPointers._glGetSharpenTexFuncSGIS_fnptr((uint)target, points);
+            public static void GetSharpenTexFuncSGIS(TextureTarget target, float* points) => GLPointers._glGetSharpenTexFuncSGIS_fnptr((uint)target, points);
             
             /// <summary> <b>[requires: GL_SGIS_texture4D] [glTexImage4DSGIS]</b>  </summary>
-            public static void TexImage4D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int size4d, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage4DSGIS_fnptr((uint)target, level, (uint)internalformat, width, height, depth, size4d, border, (uint)format, (uint)type, pixels);
+            public static void TexImage4DSGIS(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int size4d, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage4DSGIS_fnptr((uint)target, level, (uint)internalformat, width, height, depth, size4d, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_SGIS_texture4D] [glTexSubImage4DSGIS]</b>  </summary>
-            public static void TexSubImage4D(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int woffset, int width, int height, int depth, int size4d, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage4DSGIS_fnptr((uint)target, level, xoffset, yoffset, zoffset, woffset, width, height, depth, size4d, (uint)format, (uint)type, pixels);
+            public static void TexSubImage4DSGIS(TextureTarget target, int level, int xoffset, int yoffset, int zoffset, int woffset, int width, int height, int depth, int size4d, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexSubImage4DSGIS_fnptr((uint)target, level, xoffset, yoffset, zoffset, woffset, width, height, depth, size4d, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_SGIS_texture_color_mask] [glTextureColorMaskSGIS]</b>  </summary>
-            public static void TextureColorMask(bool red, bool green, bool blue, bool alpha) => GLPointers._glTextureColorMaskSGIS_fnptr((byte)(red ? 1 : 0), (byte)(green ? 1 : 0), (byte)(blue ? 1 : 0), (byte)(alpha ? 1 : 0));
+            public static void TextureColorMaskSGIS(bool red, bool green, bool blue, bool alpha) => GLPointers._glTextureColorMaskSGIS_fnptr((byte)(red ? 1 : 0), (byte)(green ? 1 : 0), (byte)(blue ? 1 : 0), (byte)(alpha ? 1 : 0));
             
             /// <summary> <b>[requires: GL_SGIS_texture_filter4] [glGetTexFilterFuncSGIS]</b>  </summary>
-            public static void GetTexFilterFunc(TextureTarget target, TextureFilterSGIS filter, float* weights) => GLPointers._glGetTexFilterFuncSGIS_fnptr((uint)target, (uint)filter, weights);
+            public static void GetTexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, float* weights) => GLPointers._glGetTexFilterFuncSGIS_fnptr((uint)target, (uint)filter, weights);
             
             /// <summary> <b>[requires: GL_SGIS_texture_filter4] [glTexFilterFuncSGIS]</b>  </summary>
-            public static void TexFilterFunc(TextureTarget target, TextureFilterSGIS filter, int n, float* weights) => GLPointers._glTexFilterFuncSGIS_fnptr((uint)target, (uint)filter, n, weights);
+            public static void TexFilterFuncSGIS(TextureTarget target, TextureFilterSGIS filter, int n, float* weights) => GLPointers._glTexFilterFuncSGIS_fnptr((uint)target, (uint)filter, n, weights);
             
         }
         /// <summary>SGIX extensions.</summary>
         public static unsafe partial class SGIX
         {
             /// <summary> <b>[requires: GL_SGIX_async] [glAsyncMarkerSGIX]</b>  </summary>
-            public static void AsyncMarker(uint marker) => GLPointers._glAsyncMarkerSGIX_fnptr(marker);
+            public static void AsyncMarkerSGIX(uint marker) => GLPointers._glAsyncMarkerSGIX_fnptr(marker);
             
             /// <summary> <b>[requires: GL_SGIX_async] [glFinishAsyncSGIX]</b>  </summary>
-            public static int FinishAsync(uint* markerp) => GLPointers._glFinishAsyncSGIX_fnptr(markerp);
+            public static int FinishAsyncSGIX(uint* markerp) => GLPointers._glFinishAsyncSGIX_fnptr(markerp);
             
             /// <summary> <b>[requires: GL_SGIX_async] [glPollAsyncSGIX]</b>  </summary>
-            public static int PollAsync(uint* markerp) => GLPointers._glPollAsyncSGIX_fnptr(markerp);
+            public static int PollAsyncSGIX(uint* markerp) => GLPointers._glPollAsyncSGIX_fnptr(markerp);
             
             /// <summary> <b>[requires: GL_SGIX_async] [glGenAsyncMarkersSGIX]</b>  </summary>
-            public static uint GenAsyncMarkers(int range) => GLPointers._glGenAsyncMarkersSGIX_fnptr(range);
+            public static uint GenAsyncMarkersSGIX(int range) => GLPointers._glGenAsyncMarkersSGIX_fnptr(range);
             
             /// <summary> <b>[requires: GL_SGIX_async] [glDeleteAsyncMarkersSGIX]</b>  </summary>
-            public static void DeleteAsyncMarkers(uint marker, int range) => GLPointers._glDeleteAsyncMarkersSGIX_fnptr(marker, range);
+            public static void DeleteAsyncMarkersSGIX(uint marker, int range) => GLPointers._glDeleteAsyncMarkersSGIX_fnptr(marker, range);
             
             /// <summary> <b>[requires: GL_SGIX_async] [glIsAsyncMarkerSGIX]</b>  </summary>
-            public static bool IsAsyncMarker(uint marker) => GLPointers._glIsAsyncMarkerSGIX_fnptr(marker) != 0;
+            public static bool IsAsyncMarkerSGIX(uint marker) => GLPointers._glIsAsyncMarkerSGIX_fnptr(marker) != 0;
             
             /// <summary> <b>[requires: GL_SGIX_flush_raster] [glFlushRasterSGIX]</b>  </summary>
-            public static void FlushRaster() => GLPointers._glFlushRasterSGIX_fnptr();
+            public static void FlushRasterSGIX() => GLPointers._glFlushRasterSGIX_fnptr();
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentColorMaterialSGIX]</b>  </summary>
-            public static void FragmentColorMaterial(TriangleFace face, MaterialParameter mode) => GLPointers._glFragmentColorMaterialSGIX_fnptr((uint)face, (uint)mode);
+            public static void FragmentColorMaterialSGIX(TriangleFace face, MaterialParameter mode) => GLPointers._glFragmentColorMaterialSGIX_fnptr((uint)face, (uint)mode);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightfSGIX]</b>  </summary>
-            public static void FragmentLightf(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, float param) => GLPointers._glFragmentLightfSGIX_fnptr((uint)light, (uint)pname, param);
+            public static void FragmentLightfSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, float param) => GLPointers._glFragmentLightfSGIX_fnptr((uint)light, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightfvSGIX]</b>  </summary>
-            public static void FragmentLightfv(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, float* parameters) => GLPointers._glFragmentLightfvSGIX_fnptr((uint)light, (uint)pname, parameters);
+            public static void FragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, float* parameters) => GLPointers._glFragmentLightfvSGIX_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightiSGIX]</b>  </summary>
-            public static void FragmentLighti(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, int param) => GLPointers._glFragmentLightiSGIX_fnptr((uint)light, (uint)pname, param);
+            public static void FragmentLightiSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, int param) => GLPointers._glFragmentLightiSGIX_fnptr((uint)light, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightivSGIX]</b>  </summary>
-            public static void FragmentLightiv(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, int* parameters) => GLPointers._glFragmentLightivSGIX_fnptr((uint)light, (uint)pname, parameters);
+            public static void FragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, int* parameters) => GLPointers._glFragmentLightivSGIX_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightModelfSGIX]</b>  </summary>
-            public static void FragmentLightModelf(FragmentLightModelParameterSGIX pname, float param) => GLPointers._glFragmentLightModelfSGIX_fnptr((uint)pname, param);
+            public static void FragmentLightModelfSGIX(FragmentLightModelParameterSGIX pname, float param) => GLPointers._glFragmentLightModelfSGIX_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightModelfvSGIX]</b>  </summary>
-            public static void FragmentLightModelfv(FragmentLightModelParameterSGIX pname, float* parameters) => GLPointers._glFragmentLightModelfvSGIX_fnptr((uint)pname, parameters);
+            public static void FragmentLightModelfvSGIX(FragmentLightModelParameterSGIX pname, float* parameters) => GLPointers._glFragmentLightModelfvSGIX_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightModeliSGIX]</b>  </summary>
-            public static void FragmentLightModeli(FragmentLightModelParameterSGIX pname, int param) => GLPointers._glFragmentLightModeliSGIX_fnptr((uint)pname, param);
+            public static void FragmentLightModeliSGIX(FragmentLightModelParameterSGIX pname, int param) => GLPointers._glFragmentLightModeliSGIX_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentLightModelivSGIX]</b>  </summary>
-            public static void FragmentLightModeliv(FragmentLightModelParameterSGIX pname, int* parameters) => GLPointers._glFragmentLightModelivSGIX_fnptr((uint)pname, parameters);
+            public static void FragmentLightModelivSGIX(FragmentLightModelParameterSGIX pname, int* parameters) => GLPointers._glFragmentLightModelivSGIX_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentMaterialfSGIX]</b>  </summary>
-            public static void FragmentMaterialf(TriangleFace face, MaterialParameter pname, float param) => GLPointers._glFragmentMaterialfSGIX_fnptr((uint)face, (uint)pname, param);
+            public static void FragmentMaterialfSGIX(TriangleFace face, MaterialParameter pname, float param) => GLPointers._glFragmentMaterialfSGIX_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentMaterialfvSGIX]</b>  </summary>
-            public static void FragmentMaterialfv(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._glFragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void FragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._glFragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentMaterialiSGIX]</b>  </summary>
-            public static void FragmentMateriali(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glFragmentMaterialiSGIX_fnptr((uint)face, (uint)pname, param);
+            public static void FragmentMaterialiSGIX(TriangleFace face, MaterialParameter pname, int param) => GLPointers._glFragmentMaterialiSGIX_fnptr((uint)face, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glFragmentMaterialivSGIX]</b>  </summary>
-            public static void FragmentMaterialiv(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glFragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void FragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glFragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glGetFragmentLightfvSGIX]</b>  </summary>
-            public static void GetFragmentLightfv(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, float* parameters) => GLPointers._glGetFragmentLightfvSGIX_fnptr((uint)light, (uint)pname, parameters);
+            public static void GetFragmentLightfvSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, float* parameters) => GLPointers._glGetFragmentLightfvSGIX_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glGetFragmentLightivSGIX]</b>  </summary>
-            public static void GetFragmentLightiv(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, int* parameters) => GLPointers._glGetFragmentLightivSGIX_fnptr((uint)light, (uint)pname, parameters);
+            public static void GetFragmentLightivSGIX(FragmentLightNameSGIX light, FragmentLightParameterSGIX pname, int* parameters) => GLPointers._glGetFragmentLightivSGIX_fnptr((uint)light, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glGetFragmentMaterialfvSGIX]</b>  </summary>
-            public static void GetFragmentMaterialfv(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._glGetFragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetFragmentMaterialfvSGIX(TriangleFace face, MaterialParameter pname, float* parameters) => GLPointers._glGetFragmentMaterialfvSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glGetFragmentMaterialivSGIX]</b>  </summary>
-            public static void GetFragmentMaterialiv(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glGetFragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
+            public static void GetFragmentMaterialivSGIX(TriangleFace face, MaterialParameter pname, int* parameters) => GLPointers._glGetFragmentMaterialivSGIX_fnptr((uint)face, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting] [glLightEnviSGIX]</b>  </summary>
-            public static void LightEnvi(LightEnvParameterSGIX pname, LightEnvModeSGIX param) => GLPointers._glLightEnviSGIX_fnptr((uint)pname, (int)param);
+            public static void LightEnviSGIX(LightEnvParameterSGIX pname, LightEnvModeSGIX param) => GLPointers._glLightEnviSGIX_fnptr((uint)pname, (int)param);
             
             /// <summary> <b>[requires: GL_SGIX_framezoom] [glFrameZoomSGIX]</b>  </summary>
-            public static void FrameZoom(int factor) => GLPointers._glFrameZoomSGIX_fnptr(factor);
+            public static void FrameZoomSGIX(int factor) => GLPointers._glFrameZoomSGIX_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SGIX_igloo_interface] [glIglooInterfaceSGIX]</b>  </summary>
-            public static void IglooInterface(All pname, void* parameters) => GLPointers._glIglooInterfaceSGIX_fnptr((uint)pname, parameters);
+            public static void IglooInterfaceSGIX(All pname, void* parameters) => GLPointers._glIglooInterfaceSGIX_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_instruments] [glGetInstrumentsSGIX]</b>  </summary>
-            public static int GetInstruments() => GLPointers._glGetInstrumentsSGIX_fnptr();
+            public static int GetInstrumentsSGIX() => GLPointers._glGetInstrumentsSGIX_fnptr();
             
             /// <summary> <b>[requires: GL_SGIX_instruments] [glInstrumentsBufferSGIX]</b>  </summary>
-            public static void InstrumentsBuffer(int size, int* buffer) => GLPointers._glInstrumentsBufferSGIX_fnptr(size, buffer);
+            public static void InstrumentsBufferSGIX(int size, int* buffer) => GLPointers._glInstrumentsBufferSGIX_fnptr(size, buffer);
             
             /// <summary> <b>[requires: GL_SGIX_instruments] [glPollInstrumentsSGIX]</b>  </summary>
-            public static int PollInstruments(int* marker_p) => GLPointers._glPollInstrumentsSGIX_fnptr(marker_p);
+            public static int PollInstrumentsSGIX(int* marker_p) => GLPointers._glPollInstrumentsSGIX_fnptr(marker_p);
             
             /// <summary> <b>[requires: GL_SGIX_instruments] [glReadInstrumentsSGIX]</b>  </summary>
-            public static void ReadInstruments(int marker) => GLPointers._glReadInstrumentsSGIX_fnptr(marker);
+            public static void ReadInstrumentsSGIX(int marker) => GLPointers._glReadInstrumentsSGIX_fnptr(marker);
             
             /// <summary> <b>[requires: GL_SGIX_instruments] [glStartInstrumentsSGIX]</b>  </summary>
-            public static void StartInstruments() => GLPointers._glStartInstrumentsSGIX_fnptr();
+            public static void StartInstrumentsSGIX() => GLPointers._glStartInstrumentsSGIX_fnptr();
             
             /// <summary> <b>[requires: GL_SGIX_instruments] [glStopInstrumentsSGIX]</b>  </summary>
-            public static void StopInstruments(int marker) => GLPointers._glStopInstrumentsSGIX_fnptr(marker);
+            public static void StopInstrumentsSGIX(int marker) => GLPointers._glStopInstrumentsSGIX_fnptr(marker);
             
             /// <summary> <b>[requires: GL_SGIX_list_priority] [glGetListParameterfvSGIX]</b>  </summary>
-            public static void GetListParameterfv(int list, ListParameterName pname, float* parameters) => GLPointers._glGetListParameterfvSGIX_fnptr(list, (uint)pname, parameters);
+            public static void GetListParameterfvSGIX(int list, ListParameterName pname, float* parameters) => GLPointers._glGetListParameterfvSGIX_fnptr(list, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_list_priority] [glGetListParameterivSGIX]</b>  </summary>
-            public static void GetListParameteriv(int list, ListParameterName pname, int* parameters) => GLPointers._glGetListParameterivSGIX_fnptr(list, (uint)pname, parameters);
+            public static void GetListParameterivSGIX(int list, ListParameterName pname, int* parameters) => GLPointers._glGetListParameterivSGIX_fnptr(list, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_list_priority] [glListParameterfSGIX]</b>  </summary>
-            public static void ListParameterf(int list, ListParameterName pname, float param) => GLPointers._glListParameterfSGIX_fnptr(list, (uint)pname, param);
+            public static void ListParameterfSGIX(int list, ListParameterName pname, float param) => GLPointers._glListParameterfSGIX_fnptr(list, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_list_priority] [glListParameterfvSGIX]</b>  </summary>
-            public static void ListParameterfv(int list, ListParameterName pname, float* parameters) => GLPointers._glListParameterfvSGIX_fnptr(list, (uint)pname, parameters);
+            public static void ListParameterfvSGIX(int list, ListParameterName pname, float* parameters) => GLPointers._glListParameterfvSGIX_fnptr(list, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_list_priority] [glListParameteriSGIX]</b>  </summary>
-            public static void ListParameteri(int list, ListParameterName pname, int param) => GLPointers._glListParameteriSGIX_fnptr(list, (uint)pname, param);
+            public static void ListParameteriSGIX(int list, ListParameterName pname, int param) => GLPointers._glListParameteriSGIX_fnptr(list, (uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_list_priority] [glListParameterivSGIX]</b>  </summary>
-            public static void ListParameteriv(int list, ListParameterName pname, int* parameters) => GLPointers._glListParameterivSGIX_fnptr(list, (uint)pname, parameters);
+            public static void ListParameterivSGIX(int list, ListParameterName pname, int* parameters) => GLPointers._glListParameterivSGIX_fnptr(list, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_pixel_texture] [glPixelTexGenSGIX]</b>  </summary>
-            public static void PixelTexGen(PixelTexGenModeSGIX mode) => GLPointers._glPixelTexGenSGIX_fnptr((uint)mode);
+            public static void PixelTexGenSGIX(PixelTexGenModeSGIX mode) => GLPointers._glPixelTexGenSGIX_fnptr((uint)mode);
             
             /// <summary> <b>[requires: GL_SGIX_polynomial_ffd] [glDeformationMap3dSGIX]</b>  </summary>
-            public static void DeformationMap3d(FfdTargetSGIX target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double w1, double w2, int wstride, int worder, double* points) => GLPointers._glDeformationMap3dSGIX_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, w1, w2, wstride, worder, points);
+            public static void DeformationMap3dSGIX(FfdTargetSGIX target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double w1, double w2, int wstride, int worder, double* points) => GLPointers._glDeformationMap3dSGIX_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, w1, w2, wstride, worder, points);
             
             /// <summary> <b>[requires: GL_SGIX_polynomial_ffd] [glDeformationMap3fSGIX]</b>  </summary>
-            public static void DeformationMap3f(FfdTargetSGIX target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float w1, float w2, int wstride, int worder, float* points) => GLPointers._glDeformationMap3fSGIX_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, w1, w2, wstride, worder, points);
+            public static void DeformationMap3fSGIX(FfdTargetSGIX target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float w1, float w2, int wstride, int worder, float* points) => GLPointers._glDeformationMap3fSGIX_fnptr((uint)target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, w1, w2, wstride, worder, points);
             
             /// <summary> <b>[requires: GL_SGIX_polynomial_ffd] [glDeformSGIX]</b>  </summary>
-            public static void Deform(FfdMaskSGIX mask) => GLPointers._glDeformSGIX_fnptr((uint)mask);
+            public static void DeformSGIX(FfdMaskSGIX mask) => GLPointers._glDeformSGIX_fnptr((uint)mask);
             
             /// <summary> <b>[requires: GL_SGIX_polynomial_ffd] [glLoadIdentityDeformationMapSGIX]</b>  </summary>
-            public static void LoadIdentityDeformationMap(FfdMaskSGIX mask) => GLPointers._glLoadIdentityDeformationMapSGIX_fnptr((uint)mask);
+            public static void LoadIdentityDeformationMapSGIX(FfdMaskSGIX mask) => GLPointers._glLoadIdentityDeformationMapSGIX_fnptr((uint)mask);
             
             /// <summary> <b>[requires: GL_SGIX_reference_plane] [glReferencePlaneSGIX]</b>  </summary>
-            public static void ReferencePlane(double* equation) => GLPointers._glReferencePlaneSGIX_fnptr(equation);
+            public static void ReferencePlaneSGIX(double* equation) => GLPointers._glReferencePlaneSGIX_fnptr(equation);
             
             /// <summary> <b>[requires: GL_SGIX_sprite] [glSpriteParameterfSGIX]</b>  </summary>
-            public static void SpriteParameterf(SpriteParameterNameSGIX pname, float param) => GLPointers._glSpriteParameterfSGIX_fnptr((uint)pname, param);
+            public static void SpriteParameterfSGIX(SpriteParameterNameSGIX pname, float param) => GLPointers._glSpriteParameterfSGIX_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_SGIX_sprite] [glSpriteParameterfvSGIX]</b>  </summary>
-            public static void SpriteParameterfv(SpriteParameterNameSGIX pname, float* parameters) => GLPointers._glSpriteParameterfvSGIX_fnptr((uint)pname, parameters);
+            public static void SpriteParameterfvSGIX(SpriteParameterNameSGIX pname, float* parameters) => GLPointers._glSpriteParameterfvSGIX_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_sprite] [glSpriteParameteriSGIX]</b>  </summary>
-            public static void SpriteParameteri(SpriteParameterNameSGIX pname, SpriteModeSGIX param) => GLPointers._glSpriteParameteriSGIX_fnptr((uint)pname, (int)param);
+            public static void SpriteParameteriSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX param) => GLPointers._glSpriteParameteriSGIX_fnptr((uint)pname, (int)param);
             
             /// <summary> <b>[requires: GL_SGIX_sprite] [glSpriteParameterivSGIX]</b>  </summary>
-            public static void SpriteParameteriv(SpriteParameterNameSGIX pname, SpriteModeSGIX* parameters) => GLPointers._glSpriteParameterivSGIX_fnptr((uint)pname, (int*)parameters);
+            public static void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX* parameters) => GLPointers._glSpriteParameterivSGIX_fnptr((uint)pname, (int*)parameters);
             
             /// <summary> <b>[requires: GL_SGIX_tag_sample_buffer] [glTagSampleBufferSGIX]</b>  </summary>
-            public static void TagSampleBuffer() => GLPointers._glTagSampleBufferSGIX_fnptr();
+            public static void TagSampleBufferSGIX() => GLPointers._glTagSampleBufferSGIX_fnptr();
             
         }
         /// <summary>SGI extensions.</summary>
         public static unsafe partial class SGI
         {
             /// <summary> <b>[requires: GL_SGI_color_table] [glColorTableSGI]</b>  </summary>
-            public static void ColorTable(ColorTableTargetSGI target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, void* table) => GLPointers._glColorTableSGI_fnptr((uint)target, (uint)internalformat, width, (uint)format, (uint)type, table);
+            public static void ColorTableSGI(ColorTableTargetSGI target, InternalFormat internalformat, int width, PixelFormat format, PixelType type, void* table) => GLPointers._glColorTableSGI_fnptr((uint)target, (uint)internalformat, width, (uint)format, (uint)type, table);
             
             /// <summary> <b>[requires: GL_SGI_color_table] [glColorTableParameterfvSGI]</b>  </summary>
-            public static void ColorTableParameterfv(ColorTableTargetSGI target, ColorTableParameterPName pname, float* parameters) => GLPointers._glColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void ColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, float* parameters) => GLPointers._glColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGI_color_table] [glColorTableParameterivSGI]</b>  </summary>
-            public static void ColorTableParameteriv(ColorTableTargetSGI target, ColorTableParameterPName pname, int* parameters) => GLPointers._glColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void ColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, int* parameters) => GLPointers._glColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGI_color_table] [glCopyColorTableSGI]</b>  </summary>
-            public static void CopyColorTable(ColorTableTargetSGI target, InternalFormat internalformat, int x, int y, int width) => GLPointers._glCopyColorTableSGI_fnptr((uint)target, (uint)internalformat, x, y, width);
+            public static void CopyColorTableSGI(ColorTableTargetSGI target, InternalFormat internalformat, int x, int y, int width) => GLPointers._glCopyColorTableSGI_fnptr((uint)target, (uint)internalformat, x, y, width);
             
             /// <summary> <b>[requires: GL_SGI_color_table] [glGetColorTableSGI]</b>  </summary>
-            public static void GetColorTable(ColorTableTargetSGI target, PixelFormat format, PixelType type, void* table) => GLPointers._glGetColorTableSGI_fnptr((uint)target, (uint)format, (uint)type, table);
+            public static void GetColorTableSGI(ColorTableTargetSGI target, PixelFormat format, PixelType type, void* table) => GLPointers._glGetColorTableSGI_fnptr((uint)target, (uint)format, (uint)type, table);
             
             /// <summary> <b>[requires: GL_SGI_color_table] [glGetColorTableParameterfvSGI]</b>  </summary>
-            public static void GetColorTableParameterfv(ColorTableTargetSGI target, ColorTableParameterPName pname, float* parameters) => GLPointers._glGetColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterfvSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, float* parameters) => GLPointers._glGetColorTableParameterfvSGI_fnptr((uint)target, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGI_color_table] [glGetColorTableParameterivSGI]</b>  </summary>
-            public static void GetColorTableParameteriv(ColorTableTargetSGI target, ColorTableParameterPName pname, int* parameters) => GLPointers._glGetColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
+            public static void GetColorTableParameterivSGI(ColorTableTargetSGI target, ColorTableParameterPName pname, int* parameters) => GLPointers._glGetColorTableParameterivSGI_fnptr((uint)target, (uint)pname, parameters);
             
         }
         /// <summary>SUNX extensions.</summary>
         public static unsafe partial class SUNX
         {
             /// <summary> <b>[requires: GL_SUNX_constant_data] [glFinishTextureSUNX]</b>  </summary>
-            public static void FinishTexture() => GLPointers._glFinishTextureSUNX_fnptr();
+            public static void FinishTextureSUNX() => GLPointers._glFinishTextureSUNX_fnptr();
             
         }
         /// <summary>SUN extensions.</summary>
         public static unsafe partial class SUN
         {
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactorbSUN]</b>  </summary>
-            public static void GlobalAlphaFactorb(sbyte factor) => GLPointers._glGlobalAlphaFactorbSUN_fnptr(factor);
+            public static void GlobalAlphaFactorbSUN(sbyte factor) => GLPointers._glGlobalAlphaFactorbSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactorsSUN]</b>  </summary>
-            public static void GlobalAlphaFactors(short factor) => GLPointers._glGlobalAlphaFactorsSUN_fnptr(factor);
+            public static void GlobalAlphaFactorsSUN(short factor) => GLPointers._glGlobalAlphaFactorsSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactoriSUN]</b>  </summary>
-            public static void GlobalAlphaFactori(int factor) => GLPointers._glGlobalAlphaFactoriSUN_fnptr(factor);
+            public static void GlobalAlphaFactoriSUN(int factor) => GLPointers._glGlobalAlphaFactoriSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactorfSUN]</b>  </summary>
-            public static void GlobalAlphaFactorf(float factor) => GLPointers._glGlobalAlphaFactorfSUN_fnptr(factor);
+            public static void GlobalAlphaFactorfSUN(float factor) => GLPointers._glGlobalAlphaFactorfSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactordSUN]</b>  </summary>
-            public static void GlobalAlphaFactord(double factor) => GLPointers._glGlobalAlphaFactordSUN_fnptr(factor);
+            public static void GlobalAlphaFactordSUN(double factor) => GLPointers._glGlobalAlphaFactordSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactorubSUN]</b>  </summary>
-            public static void GlobalAlphaFactorub(byte factor) => GLPointers._glGlobalAlphaFactorubSUN_fnptr(factor);
+            public static void GlobalAlphaFactorubSUN(byte factor) => GLPointers._glGlobalAlphaFactorubSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactorusSUN]</b>  </summary>
-            public static void GlobalAlphaFactorus(ushort factor) => GLPointers._glGlobalAlphaFactorusSUN_fnptr(factor);
+            public static void GlobalAlphaFactorusSUN(ushort factor) => GLPointers._glGlobalAlphaFactorusSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_global_alpha] [glGlobalAlphaFactoruiSUN]</b>  </summary>
-            public static void GlobalAlphaFactorui(uint factor) => GLPointers._glGlobalAlphaFactoruiSUN_fnptr(factor);
+            public static void GlobalAlphaFactoruiSUN(uint factor) => GLPointers._glGlobalAlphaFactoruiSUN_fnptr(factor);
             
             /// <summary> <b>[requires: GL_SUN_mesh_array] [glDrawMeshArraysSUN]</b>  </summary>
-            public static void DrawMeshArrays(PrimitiveType mode, int first, int count, int width) => GLPointers._glDrawMeshArraysSUN_fnptr((uint)mode, first, count, width);
+            public static void DrawMeshArraysSUN(PrimitiveType mode, int first, int count, int width) => GLPointers._glDrawMeshArraysSUN_fnptr((uint)mode, first, count, width);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list] [glReplacementCodeuiSUN]</b>  </summary>
-            public static void ReplacementCodeui(TriangleListSUN code) => GLPointers._glReplacementCodeuiSUN_fnptr((uint)code);
+            public static void ReplacementCodeuiSUN(TriangleListSUN code) => GLPointers._glReplacementCodeuiSUN_fnptr((uint)code);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list] [glReplacementCodeusSUN]</b>  </summary>
-            public static void ReplacementCodeus(ushort code) => GLPointers._glReplacementCodeusSUN_fnptr(code);
+            public static void ReplacementCodeusSUN(ushort code) => GLPointers._glReplacementCodeusSUN_fnptr(code);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list] [glReplacementCodeubSUN]</b>  </summary>
-            public static void ReplacementCodeub(byte code) => GLPointers._glReplacementCodeubSUN_fnptr(code);
+            public static void ReplacementCodeubSUN(byte code) => GLPointers._glReplacementCodeubSUN_fnptr(code);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list] [glReplacementCodeuivSUN]</b>  </summary>
-            public static void ReplacementCodeuiv(TriangleListSUN* code) => GLPointers._glReplacementCodeuivSUN_fnptr((uint*)code);
+            public static void ReplacementCodeuivSUN(TriangleListSUN* code) => GLPointers._glReplacementCodeuivSUN_fnptr((uint*)code);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list] [glReplacementCodeusvSUN]</b>  </summary>
-            public static void ReplacementCodeusv(ushort* code) => GLPointers._glReplacementCodeusvSUN_fnptr(code);
+            public static void ReplacementCodeusvSUN(ushort* code) => GLPointers._glReplacementCodeusvSUN_fnptr(code);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list] [glReplacementCodeubvSUN]</b>  </summary>
-            public static void ReplacementCodeubv(byte* code) => GLPointers._glReplacementCodeubvSUN_fnptr(code);
+            public static void ReplacementCodeubvSUN(byte* code) => GLPointers._glReplacementCodeubvSUN_fnptr(code);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list] [glReplacementCodePointerSUN]</b>  </summary>
-            public static void ReplacementCodePointer(ReplacementCodeTypeSUN type, int stride, void** pointer) => GLPointers._glReplacementCodePointerSUN_fnptr((uint)type, stride, pointer);
+            public static void ReplacementCodePointerSUN(ReplacementCodeTypeSUN type, int stride, void** pointer) => GLPointers._glReplacementCodePointerSUN_fnptr((uint)type, stride, pointer);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor4ubVertex2fSUN]</b>  </summary>
-            public static void Color4ubVertex2f(byte r, byte g, byte b, byte a, float x, float y) => GLPointers._glColor4ubVertex2fSUN_fnptr(r, g, b, a, x, y);
+            public static void Color4ubVertex2fSUN(byte r, byte g, byte b, byte a, float x, float y) => GLPointers._glColor4ubVertex2fSUN_fnptr(r, g, b, a, x, y);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor4ubVertex2fvSUN]</b>  </summary>
-            public static void Color4ubVertex2fv(byte* c, float* v) => GLPointers._glColor4ubVertex2fvSUN_fnptr(c, v);
+            public static void Color4ubVertex2fvSUN(byte* c, float* v) => GLPointers._glColor4ubVertex2fvSUN_fnptr(c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor4ubVertex3fSUN]</b>  </summary>
-            public static void Color4ubVertex3f(byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glColor4ubVertex3fSUN_fnptr(r, g, b, a, x, y, z);
+            public static void Color4ubVertex3fSUN(byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glColor4ubVertex3fSUN_fnptr(r, g, b, a, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor4ubVertex3fvSUN]</b>  </summary>
-            public static void Color4ubVertex3fv(byte* c, float* v) => GLPointers._glColor4ubVertex3fvSUN_fnptr(c, v);
+            public static void Color4ubVertex3fvSUN(byte* c, float* v) => GLPointers._glColor4ubVertex3fvSUN_fnptr(c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor3fVertex3fSUN]</b>  </summary>
-            public static void Color3fVertex3f(float r, float g, float b, float x, float y, float z) => GLPointers._glColor3fVertex3fSUN_fnptr(r, g, b, x, y, z);
+            public static void Color3fVertex3fSUN(float r, float g, float b, float x, float y, float z) => GLPointers._glColor3fVertex3fSUN_fnptr(r, g, b, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor3fVertex3fvSUN]</b>  </summary>
-            public static void Color3fVertex3fv(float* c, float* v) => GLPointers._glColor3fVertex3fvSUN_fnptr(c, v);
+            public static void Color3fVertex3fvSUN(float* c, float* v) => GLPointers._glColor3fVertex3fvSUN_fnptr(c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glNormal3fVertex3fSUN]</b>  </summary>
-            public static void Normal3fVertex3f(float nx, float ny, float nz, float x, float y, float z) => GLPointers._glNormal3fVertex3fSUN_fnptr(nx, ny, nz, x, y, z);
+            public static void Normal3fVertex3fSUN(float nx, float ny, float nz, float x, float y, float z) => GLPointers._glNormal3fVertex3fSUN_fnptr(nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glNormal3fVertex3fvSUN]</b>  </summary>
-            public static void Normal3fVertex3fv(float* n, float* v) => GLPointers._glNormal3fVertex3fvSUN_fnptr(n, v);
+            public static void Normal3fVertex3fvSUN(float* n, float* v) => GLPointers._glNormal3fVertex3fvSUN_fnptr(n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor4fNormal3fVertex3fSUN]</b>  </summary>
-            public static void Color4fNormal3fVertex3f(float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glColor4fNormal3fVertex3fSUN_fnptr(r, g, b, a, nx, ny, nz, x, y, z);
+            public static void Color4fNormal3fVertex3fSUN(float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glColor4fNormal3fVertex3fSUN_fnptr(r, g, b, a, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glColor4fNormal3fVertex3fvSUN]</b>  </summary>
-            public static void Color4fNormal3fVertex3fv(float* c, float* n, float* v) => GLPointers._glColor4fNormal3fVertex3fvSUN_fnptr(c, n, v);
+            public static void Color4fNormal3fVertex3fvSUN(float* c, float* n, float* v) => GLPointers._glColor4fNormal3fVertex3fvSUN_fnptr(c, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fVertex3fSUN]</b>  </summary>
-            public static void TexCoord2fVertex3f(float s, float t, float x, float y, float z) => GLPointers._glTexCoord2fVertex3fSUN_fnptr(s, t, x, y, z);
+            public static void TexCoord2fVertex3fSUN(float s, float t, float x, float y, float z) => GLPointers._glTexCoord2fVertex3fSUN_fnptr(s, t, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fVertex3fvSUN]</b>  </summary>
-            public static void TexCoord2fVertex3fv(float* tc, float* v) => GLPointers._glTexCoord2fVertex3fvSUN_fnptr(tc, v);
+            public static void TexCoord2fVertex3fvSUN(float* tc, float* v) => GLPointers._glTexCoord2fVertex3fvSUN_fnptr(tc, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord4fVertex4fSUN]</b>  </summary>
-            public static void TexCoord4fVertex4f(float s, float t, float p, float q, float x, float y, float z, float w) => GLPointers._glTexCoord4fVertex4fSUN_fnptr(s, t, p, q, x, y, z, w);
+            public static void TexCoord4fVertex4fSUN(float s, float t, float p, float q, float x, float y, float z, float w) => GLPointers._glTexCoord4fVertex4fSUN_fnptr(s, t, p, q, x, y, z, w);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord4fVertex4fvSUN]</b>  </summary>
-            public static void TexCoord4fVertex4fv(float* tc, float* v) => GLPointers._glTexCoord4fVertex4fvSUN_fnptr(tc, v);
+            public static void TexCoord4fVertex4fvSUN(float* tc, float* v) => GLPointers._glTexCoord4fVertex4fvSUN_fnptr(tc, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fColor4ubVertex3fSUN]</b>  </summary>
-            public static void TexCoord2fColor4ubVertex3f(float s, float t, byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glTexCoord2fColor4ubVertex3fSUN_fnptr(s, t, r, g, b, a, x, y, z);
+            public static void TexCoord2fColor4ubVertex3fSUN(float s, float t, byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glTexCoord2fColor4ubVertex3fSUN_fnptr(s, t, r, g, b, a, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fColor4ubVertex3fvSUN]</b>  </summary>
-            public static void TexCoord2fColor4ubVertex3fv(float* tc, byte* c, float* v) => GLPointers._glTexCoord2fColor4ubVertex3fvSUN_fnptr(tc, c, v);
+            public static void TexCoord2fColor4ubVertex3fvSUN(float* tc, byte* c, float* v) => GLPointers._glTexCoord2fColor4ubVertex3fvSUN_fnptr(tc, c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fColor3fVertex3fSUN]</b>  </summary>
-            public static void TexCoord2fColor3fVertex3f(float s, float t, float r, float g, float b, float x, float y, float z) => GLPointers._glTexCoord2fColor3fVertex3fSUN_fnptr(s, t, r, g, b, x, y, z);
+            public static void TexCoord2fColor3fVertex3fSUN(float s, float t, float r, float g, float b, float x, float y, float z) => GLPointers._glTexCoord2fColor3fVertex3fSUN_fnptr(s, t, r, g, b, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fColor3fVertex3fvSUN]</b>  </summary>
-            public static void TexCoord2fColor3fVertex3fv(float* tc, float* c, float* v) => GLPointers._glTexCoord2fColor3fVertex3fvSUN_fnptr(tc, c, v);
+            public static void TexCoord2fColor3fVertex3fvSUN(float* tc, float* c, float* v) => GLPointers._glTexCoord2fColor3fVertex3fvSUN_fnptr(tc, c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fNormal3fVertex3fSUN]</b>  </summary>
-            public static void TexCoord2fNormal3fVertex3f(float s, float t, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glTexCoord2fNormal3fVertex3fSUN_fnptr(s, t, nx, ny, nz, x, y, z);
+            public static void TexCoord2fNormal3fVertex3fSUN(float s, float t, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glTexCoord2fNormal3fVertex3fSUN_fnptr(s, t, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fNormal3fVertex3fvSUN]</b>  </summary>
-            public static void TexCoord2fNormal3fVertex3fv(float* tc, float* n, float* v) => GLPointers._glTexCoord2fNormal3fVertex3fvSUN_fnptr(tc, n, v);
+            public static void TexCoord2fNormal3fVertex3fvSUN(float* tc, float* n, float* v) => GLPointers._glTexCoord2fNormal3fVertex3fvSUN_fnptr(tc, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fColor4fNormal3fVertex3fSUN]</b>  </summary>
-            public static void TexCoord2fColor4fNormal3fVertex3f(float s, float t, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glTexCoord2fColor4fNormal3fVertex3fSUN_fnptr(s, t, r, g, b, a, nx, ny, nz, x, y, z);
+            public static void TexCoord2fColor4fNormal3fVertex3fSUN(float s, float t, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glTexCoord2fColor4fNormal3fVertex3fSUN_fnptr(s, t, r, g, b, a, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord2fColor4fNormal3fVertex3fvSUN]</b>  </summary>
-            public static void TexCoord2fColor4fNormal3fVertex3fv(float* tc, float* c, float* n, float* v) => GLPointers._glTexCoord2fColor4fNormal3fVertex3fvSUN_fnptr(tc, c, n, v);
+            public static void TexCoord2fColor4fNormal3fVertex3fvSUN(float* tc, float* c, float* n, float* v) => GLPointers._glTexCoord2fColor4fNormal3fVertex3fvSUN_fnptr(tc, c, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord4fColor4fNormal3fVertex4fSUN]</b>  </summary>
-            public static void TexCoord4fColor4fNormal3fVertex4f(float s, float t, float p, float q, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z, float w) => GLPointers._glTexCoord4fColor4fNormal3fVertex4fSUN_fnptr(s, t, p, q, r, g, b, a, nx, ny, nz, x, y, z, w);
+            public static void TexCoord4fColor4fNormal3fVertex4fSUN(float s, float t, float p, float q, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z, float w) => GLPointers._glTexCoord4fColor4fNormal3fVertex4fSUN_fnptr(s, t, p, q, r, g, b, a, nx, ny, nz, x, y, z, w);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glTexCoord4fColor4fNormal3fVertex4fvSUN]</b>  </summary>
-            public static void TexCoord4fColor4fNormal3fVertex4fv(float* tc, float* c, float* n, float* v) => GLPointers._glTexCoord4fColor4fNormal3fVertex4fvSUN_fnptr(tc, c, n, v);
+            public static void TexCoord4fColor4fNormal3fVertex4fvSUN(float* tc, float* c, float* n, float* v) => GLPointers._glTexCoord4fColor4fNormal3fVertex4fvSUN_fnptr(tc, c, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiVertex3f(TriangleListSUN rc, float x, float y, float z) => GLPointers._glReplacementCodeuiVertex3fSUN_fnptr((uint)rc, x, y, z);
+            public static void ReplacementCodeuiVertex3fSUN(TriangleListSUN rc, float x, float y, float z) => GLPointers._glReplacementCodeuiVertex3fSUN_fnptr((uint)rc, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiVertex3fv(TriangleListSUN* rc, float* v) => GLPointers._glReplacementCodeuiVertex3fvSUN_fnptr((uint*)rc, v);
+            public static void ReplacementCodeuiVertex3fvSUN(TriangleListSUN* rc, float* v) => GLPointers._glReplacementCodeuiVertex3fvSUN_fnptr((uint*)rc, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiColor4ubVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiColor4ubVertex3f(TriangleListSUN rc, byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4ubVertex3fSUN_fnptr((uint)rc, r, g, b, a, x, y, z);
+            public static void ReplacementCodeuiColor4ubVertex3fSUN(TriangleListSUN rc, byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4ubVertex3fSUN_fnptr((uint)rc, r, g, b, a, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiColor4ubVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiColor4ubVertex3fv(TriangleListSUN* rc, byte* c, float* v) => GLPointers._glReplacementCodeuiColor4ubVertex3fvSUN_fnptr((uint*)rc, c, v);
+            public static void ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN* rc, byte* c, float* v) => GLPointers._glReplacementCodeuiColor4ubVertex3fvSUN_fnptr((uint*)rc, c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiColor3fVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiColor3fVertex3f(TriangleListSUN rc, float r, float g, float b, float x, float y, float z) => GLPointers._glReplacementCodeuiColor3fVertex3fSUN_fnptr((uint)rc, r, g, b, x, y, z);
+            public static void ReplacementCodeuiColor3fVertex3fSUN(TriangleListSUN rc, float r, float g, float b, float x, float y, float z) => GLPointers._glReplacementCodeuiColor3fVertex3fSUN_fnptr((uint)rc, r, g, b, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiColor3fVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiColor3fVertex3fv(TriangleListSUN* rc, float* c, float* v) => GLPointers._glReplacementCodeuiColor3fVertex3fvSUN_fnptr((uint*)rc, c, v);
+            public static void ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN* rc, float* c, float* v) => GLPointers._glReplacementCodeuiColor3fVertex3fvSUN_fnptr((uint*)rc, c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiNormal3fVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiNormal3fVertex3f(TriangleListSUN rc, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiNormal3fVertex3fSUN_fnptr((uint)rc, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiNormal3fVertex3fSUN(TriangleListSUN rc, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiNormal3fVertex3fSUN_fnptr((uint)rc, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiNormal3fVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiNormal3fVertex3fv(TriangleListSUN* rc, float* n, float* v) => GLPointers._glReplacementCodeuiNormal3fVertex3fvSUN_fnptr((uint*)rc, n, v);
+            public static void ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN* rc, float* n, float* v) => GLPointers._glReplacementCodeuiNormal3fVertex3fvSUN_fnptr((uint*)rc, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiColor4fNormal3fVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiColor4fNormal3fVertex3f(TriangleListSUN rc, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fSUN_fnptr((uint)rc, r, g, b, a, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiColor4fNormal3fVertex3fSUN(TriangleListSUN rc, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fSUN_fnptr((uint)rc, r, g, b, a, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiColor4fNormal3fVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiColor4fNormal3fVertex3fv(TriangleListSUN* rc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fvSUN_fnptr((uint*)rc, c, n, v);
+            public static void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN* rc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fvSUN_fnptr((uint*)rc, c, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiTexCoord2fVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiTexCoord2fVertex3f(TriangleListSUN rc, float s, float t, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fSUN_fnptr((uint)rc, s, t, x, y, z);
+            public static void ReplacementCodeuiTexCoord2fVertex3fSUN(TriangleListSUN rc, float s, float t, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fSUN_fnptr((uint)rc, s, t, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiTexCoord2fVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiTexCoord2fVertex3fv(TriangleListSUN* rc, float* tc, float* v) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fvSUN_fnptr((uint*)rc, tc, v);
+            public static void ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN* rc, float* tc, float* v) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fvSUN_fnptr((uint*)rc, tc, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3f(TriangleListSUN rc, float s, float t, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN_fnptr((uint)rc, s, t, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3fSUN(TriangleListSUN rc, float s, float t, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN_fnptr((uint)rc, s, t, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3fv(TriangleListSUN* rc, float* tc, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN_fnptr((uint*)rc, tc, n, v);
+            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN* rc, float* tc, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN_fnptr((uint*)rc, tc, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN]</b>  </summary>
-            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3f(TriangleListSUN rc, float s, float t, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN_fnptr((uint)rc, s, t, r, g, b, a, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN(TriangleListSUN rc, float s, float t, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN_fnptr((uint)rc, s, t, r, g, b, a, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex] [glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN]</b>  </summary>
-            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fv(TriangleListSUN* rc, float* tc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN_fnptr((uint*)rc, tc, c, n, v);
+            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN* rc, float* tc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN_fnptr((uint*)rc, tc, c, n, v);
             
         }
     }
