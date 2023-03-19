@@ -2072,423 +2072,423 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
         public static unsafe void Uniform1f(int location, int count, in float value)
         {
-            fixed (float* tmp_vecPtr = &value)
+            fixed (float* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform1fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
         public static unsafe void Uniform1f(int location, int count, ReadOnlySpan<float> value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (float* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform1fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
         public static unsafe void Uniform1f(int location, int count, float[] value)
         {
-            fixed (float* tmp_vecPtr = value)
+            fixed (float* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform1fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
         public static unsafe void Uniform2f(int location, int count, in Vector2 value)
         {
-            fixed (Vector2* tmp_vecPtr = &value)
+            fixed (Vector2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform2fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
         public static unsafe void Uniform2f(int location, int count, ReadOnlySpan<Vector2> value)
         {
-            fixed (Vector2* tmp_vecPtr = value)
+            fixed (Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform2fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
         public static unsafe void Uniform2f(int location, int count, Vector2[] value)
         {
-            fixed (Vector2* tmp_vecPtr = value)
+            fixed (Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform2fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
         public static unsafe void Uniform2f(int location, int count, in System.Numerics.Vector2 value)
         {
-            fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
+            fixed (System.Numerics.Vector2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform2fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
         public static unsafe void Uniform2f(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
         {
-            fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform2fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
         public static unsafe void Uniform2f(int location, int count, System.Numerics.Vector2[] value)
         {
-            fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform2fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
         public static unsafe void Uniform3f(int location, int count, in Vector3 value)
         {
-            fixed (Vector3* tmp_vecPtr = &value)
+            fixed (Vector3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform3fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
         public static unsafe void Uniform3f(int location, int count, ReadOnlySpan<Vector3> value)
         {
-            fixed (Vector3* tmp_vecPtr = value)
+            fixed (Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform3fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
         public static unsafe void Uniform3f(int location, int count, Vector3[] value)
         {
-            fixed (Vector3* tmp_vecPtr = value)
+            fixed (Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform3fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
         public static unsafe void Uniform3f(int location, int count, in System.Numerics.Vector3 value)
         {
-            fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
+            fixed (System.Numerics.Vector3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform3fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
         public static unsafe void Uniform3f(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
         {
-            fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform3fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
         public static unsafe void Uniform3f(int location, int count, System.Numerics.Vector3[] value)
         {
-            fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform3fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
         public static unsafe void Uniform4f(int location, int count, in Vector4 value)
         {
-            fixed (Vector4* tmp_vecPtr = &value)
+            fixed (Vector4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform4fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
         public static unsafe void Uniform4f(int location, int count, ReadOnlySpan<Vector4> value)
         {
-            fixed (Vector4* tmp_vecPtr = value)
+            fixed (Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform4fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
         public static unsafe void Uniform4f(int location, int count, Vector4[] value)
         {
-            fixed (Vector4* tmp_vecPtr = value)
+            fixed (Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform4fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
         public static unsafe void Uniform4f(int location, int count, in System.Numerics.Vector4 value)
         {
-            fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
+            fixed (System.Numerics.Vector4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform4fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
         public static unsafe void Uniform4f(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
         {
-            fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform4fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
         public static unsafe void Uniform4f(int location, int count, System.Numerics.Vector4[] value)
         {
-            fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 Uniform4fv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
         public static unsafe void Uniform1i(int location, int count, in int value)
         {
-            fixed (int* tmp_vecPtr = &value)
+            fixed (int* tmp_value = &value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform1iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
         public static unsafe void Uniform1i(int location, int count, ReadOnlySpan<int> value)
         {
-            fixed (int* tmp_vecPtr = value)
+            fixed (int* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform1iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
         public static unsafe void Uniform1i(int location, int count, int[] value)
         {
-            fixed (int* tmp_vecPtr = value)
+            fixed (int* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform1iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2iv(int, int, int*)"/>
         public static unsafe void Uniform2i(int location, int count, in Vector2i value)
         {
-            fixed (Vector2i* tmp_vecPtr = &value)
+            fixed (Vector2i* tmp_value = &value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform2iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2iv(int, int, int*)"/>
         public static unsafe void Uniform2i(int location, int count, ReadOnlySpan<Vector2i> value)
         {
-            fixed (Vector2i* tmp_vecPtr = value)
+            fixed (Vector2i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform2iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2iv(int, int, int*)"/>
         public static unsafe void Uniform2i(int location, int count, Vector2i[] value)
         {
-            fixed (Vector2i* tmp_vecPtr = value)
+            fixed (Vector2i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform2iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3iv(int, int, int*)"/>
         public static unsafe void Uniform3i(int location, int count, in Vector3i value)
         {
-            fixed (Vector3i* tmp_vecPtr = &value)
+            fixed (Vector3i* tmp_value = &value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform3iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3iv(int, int, int*)"/>
         public static unsafe void Uniform3i(int location, int count, ReadOnlySpan<Vector3i> value)
         {
-            fixed (Vector3i* tmp_vecPtr = value)
+            fixed (Vector3i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform3iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3iv(int, int, int*)"/>
         public static unsafe void Uniform3i(int location, int count, Vector3i[] value)
         {
-            fixed (Vector3i* tmp_vecPtr = value)
+            fixed (Vector3i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform3iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4iv(int, int, int*)"/>
         public static unsafe void Uniform4i(int location, int count, in Vector4i value)
         {
-            fixed (Vector4i* tmp_vecPtr = &value)
+            fixed (Vector4i* tmp_value = &value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform4iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4iv(int, int, int*)"/>
         public static unsafe void Uniform4i(int location, int count, ReadOnlySpan<Vector4i> value)
         {
-            fixed (Vector4i* tmp_vecPtr = value)
+            fixed (Vector4i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform4iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4iv(int, int, int*)"/>
         public static unsafe void Uniform4i(int location, int count, Vector4i[] value)
         {
-            fixed (Vector4i* tmp_vecPtr = value)
+            fixed (Vector4i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 Uniform4iv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2f(int location, int count, bool transpose, in Matrix2 value)
         {
-            fixed (Matrix2* tmp_vecPtr = &value)
+            fixed (Matrix2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2f(int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
         {
-            fixed (Matrix2* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2f(int location, int count, bool transpose, Matrix2[] value)
         {
-            fixed (Matrix2* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3f(int location, int count, bool transpose, in Matrix3 value)
         {
-            fixed (Matrix3* tmp_vecPtr = &value)
+            fixed (Matrix3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3f(int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
         {
-            fixed (Matrix3* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3f(int location, int count, bool transpose, Matrix3[] value)
         {
-            fixed (Matrix3* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4f(int location, int count, bool transpose, in Matrix4 value)
         {
-            fixed (Matrix4* tmp_vecPtr = &value)
+            fixed (Matrix4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4f(int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
         {
-            fixed (Matrix4* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4f(int location, int count, bool transpose, Matrix4[] value)
         {
-            fixed (Matrix4* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4f(int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
         {
-            fixed (System.Numerics.Matrix4x4* tmp_vecPtr = &value)
+            fixed (System.Numerics.Matrix4x4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4f(int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix4x4> value)
         {
-            fixed (System.Numerics.Matrix4x4* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix4x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4f(int location, int count, bool transpose, System.Numerics.Matrix4x4[] value)
         {
-            fixed (System.Numerics.Matrix4x4* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix4x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib1dv(uint, double*)"/>
         public static unsafe void VertexAttrib1d(uint index, in double v)
         {
-            fixed (double* tmp_vecPtr = &v)
+            fixed (double* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttrib1dv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib1fv(uint, float*)"/>
         public static unsafe void VertexAttrib1f(uint index, in float v)
         {
-            fixed (float* tmp_vecPtr = &v)
+            fixed (float* tmp_v = &v)
             {
-                float* v_ptr = (float*)tmp_vecPtr;
+                float* v_ptr = (float*)tmp_v;
                 VertexAttrib1fv(index, v_ptr);
             }
         }
@@ -2524,27 +2524,45 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="VertexAttrib2dv(uint, double*)"/>
         public static unsafe void VertexAttrib2d(uint index, in Vector2d v)
         {
-            fixed (Vector2d* tmp_vecPtr = &v)
+            fixed (Vector2d* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttrib2dv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib2fv(uint, float*)"/>
         public static unsafe void VertexAttrib2f(uint index, in Vector2 v)
         {
-            fixed (Vector2* tmp_vecPtr = &v)
+            fixed (Vector2* tmp_v = &v)
             {
-                float* v_ptr = (float*)tmp_vecPtr;
+                float* v_ptr = (float*)tmp_v;
                 VertexAttrib2fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib2fv(uint, float*)"/>
         public static unsafe void VertexAttrib2f(uint index, in System.Numerics.Vector2 v)
         {
-            fixed (System.Numerics.Vector2* tmp_vecPtr = &v)
+            fixed (System.Numerics.Vector2* tmp_v = &v)
             {
-                float* v_ptr = (float*)tmp_vecPtr;
+                float* v_ptr = (float*)tmp_v;
+                VertexAttrib2fv(index, v_ptr);
+            }
+        }
+        /// <inheritdoc cref="VertexAttrib2fv(uint, float*)"/>
+        public static unsafe void VertexAttrib2f(uint index, ReadOnlySpan<System.Numerics.Vector2> v)
+        {
+            fixed (System.Numerics.Vector2* tmp_v = v)
+            {
+                float* v_ptr = (float*)tmp_v;
+                VertexAttrib2fv(index, v_ptr);
+            }
+        }
+        /// <inheritdoc cref="VertexAttrib2fv(uint, float*)"/>
+        public static unsafe void VertexAttrib2f(uint index, System.Numerics.Vector2[] v)
+        {
+            fixed (System.Numerics.Vector2* tmp_v = v)
+            {
+                float* v_ptr = (float*)tmp_v;
                 VertexAttrib2fv(index, v_ptr);
             }
         }
@@ -2580,27 +2598,45 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="VertexAttrib3dv(uint, double*)"/>
         public static unsafe void VertexAttrib3d(uint index, in Vector3d v)
         {
-            fixed (Vector3d* tmp_vecPtr = &v)
+            fixed (Vector3d* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttrib3dv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib3fv(uint, float*)"/>
         public static unsafe void VertexAttrib3f(uint index, in Vector3 v)
         {
-            fixed (Vector3* tmp_vecPtr = &v)
+            fixed (Vector3* tmp_v = &v)
             {
-                float* v_ptr = (float*)tmp_vecPtr;
+                float* v_ptr = (float*)tmp_v;
                 VertexAttrib3fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib3fv(uint, float*)"/>
         public static unsafe void VertexAttrib3f(uint index, in System.Numerics.Vector3 v)
         {
-            fixed (System.Numerics.Vector3* tmp_vecPtr = &v)
+            fixed (System.Numerics.Vector3* tmp_v = &v)
             {
-                float* v_ptr = (float*)tmp_vecPtr;
+                float* v_ptr = (float*)tmp_v;
+                VertexAttrib3fv(index, v_ptr);
+            }
+        }
+        /// <inheritdoc cref="VertexAttrib3fv(uint, float*)"/>
+        public static unsafe void VertexAttrib3f(uint index, ReadOnlySpan<System.Numerics.Vector3> v)
+        {
+            fixed (System.Numerics.Vector3* tmp_v = v)
+            {
+                float* v_ptr = (float*)tmp_v;
+                VertexAttrib3fv(index, v_ptr);
+            }
+        }
+        /// <inheritdoc cref="VertexAttrib3fv(uint, float*)"/>
+        public static unsafe void VertexAttrib3f(uint index, System.Numerics.Vector3[] v)
+        {
+            fixed (System.Numerics.Vector3* tmp_v = v)
+            {
+                float* v_ptr = (float*)tmp_v;
                 VertexAttrib3fv(index, v_ptr);
             }
         }
@@ -2809,36 +2845,54 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="VertexAttrib4dv(uint, double*)"/>
         public static unsafe void VertexAttrib4d(uint index, in Vector4d v)
         {
-            fixed (Vector4d* tmp_vecPtr = &v)
+            fixed (Vector4d* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttrib4dv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib4fv(uint, float*)"/>
         public static unsafe void VertexAttrib4f(uint index, in Vector4 v)
         {
-            fixed (Vector4* tmp_vecPtr = &v)
+            fixed (Vector4* tmp_v = &v)
             {
-                float* v_ptr = (float*)tmp_vecPtr;
+                float* v_ptr = (float*)tmp_v;
                 VertexAttrib4fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib4fv(uint, float*)"/>
         public static unsafe void VertexAttrib4f(uint index, in System.Numerics.Vector4 v)
         {
-            fixed (System.Numerics.Vector4* tmp_vecPtr = &v)
+            fixed (System.Numerics.Vector4* tmp_v = &v)
             {
-                float* v_ptr = (float*)tmp_vecPtr;
+                float* v_ptr = (float*)tmp_v;
+                VertexAttrib4fv(index, v_ptr);
+            }
+        }
+        /// <inheritdoc cref="VertexAttrib4fv(uint, float*)"/>
+        public static unsafe void VertexAttrib4f(uint index, ReadOnlySpan<System.Numerics.Vector4> v)
+        {
+            fixed (System.Numerics.Vector4* tmp_v = v)
+            {
+                float* v_ptr = (float*)tmp_v;
+                VertexAttrib4fv(index, v_ptr);
+            }
+        }
+        /// <inheritdoc cref="VertexAttrib4fv(uint, float*)"/>
+        public static unsafe void VertexAttrib4f(uint index, System.Numerics.Vector4[] v)
+        {
+            fixed (System.Numerics.Vector4* tmp_v = v)
+            {
+                float* v_ptr = (float*)tmp_v;
                 VertexAttrib4fv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttrib4iv(uint, int*)"/>
         public static unsafe void VertexAttrib4i(uint index, in Vector4i v)
         {
-            fixed (Vector4i* tmp_vecPtr = &v)
+            fixed (Vector4i* tmp_v = &v)
             {
-                int* v_ptr = (int*)tmp_vecPtr;
+                int* v_ptr = (int*)tmp_v;
                 VertexAttrib4iv(index, v_ptr);
             }
         }
@@ -2952,189 +3006,189 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="UniformMatrix2x3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, in Matrix2x3 value)
         {
-            fixed (Matrix2x3* tmp_vecPtr = &value)
+            fixed (Matrix2x3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, ReadOnlySpan<Matrix2x3> value)
         {
-            fixed (Matrix2x3* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2x3f(int location, int count, bool transpose, Matrix2x3[] value)
         {
-            fixed (Matrix2x3* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, in Matrix3x2 value)
         {
-            fixed (Matrix3x2* tmp_vecPtr = &value)
+            fixed (Matrix3x2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, ReadOnlySpan<Matrix3x2> value)
         {
-            fixed (Matrix3x2* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, Matrix3x2[] value)
         {
-            fixed (Matrix3x2* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
         {
-            fixed (System.Numerics.Matrix3x2* tmp_vecPtr = &value)
+            fixed (System.Numerics.Matrix3x2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix3x2> value)
         {
-            fixed (System.Numerics.Matrix3x2* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x2f(int location, int count, bool transpose, System.Numerics.Matrix3x2[] value)
         {
-            fixed (System.Numerics.Matrix3x2* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, in Matrix2x4 value)
         {
-            fixed (Matrix2x4* tmp_vecPtr = &value)
+            fixed (Matrix2x4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, ReadOnlySpan<Matrix2x4> value)
         {
-            fixed (Matrix2x4* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix2x4f(int location, int count, bool transpose, Matrix2x4[] value)
         {
-            fixed (Matrix2x4* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix2x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, in Matrix4x2 value)
         {
-            fixed (Matrix4x2* tmp_vecPtr = &value)
+            fixed (Matrix4x2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, ReadOnlySpan<Matrix4x2> value)
         {
-            fixed (Matrix4x2* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4x2f(int location, int count, bool transpose, Matrix4x2[] value)
         {
-            fixed (Matrix4x2* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4x2fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, in Matrix3x4 value)
         {
-            fixed (Matrix3x4* tmp_vecPtr = &value)
+            fixed (Matrix3x4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, ReadOnlySpan<Matrix3x4> value)
         {
-            fixed (Matrix3x4* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix3x4f(int location, int count, bool transpose, Matrix3x4[] value)
         {
-            fixed (Matrix3x4* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix3x4fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, in Matrix4x3 value)
         {
-            fixed (Matrix4x3* tmp_vecPtr = &value)
+            fixed (Matrix4x3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, ReadOnlySpan<Matrix4x3> value)
         {
-            fixed (Matrix4x3* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3fv(int, int, bool, float*)"/>
         public static unsafe void UniformMatrix4x3f(int location, int count, bool transpose, Matrix4x3[] value)
         {
-            fixed (Matrix4x3* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 UniformMatrix4x3fv(location, count, transpose, value_ptr);
             }
         }
@@ -3343,36 +3397,36 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="VertexAttribI1iv(uint, int*)"/>
         public static unsafe void VertexAttribI1i(uint index, in int v)
         {
-            fixed (int* tmp_vecPtr = &v)
+            fixed (int* tmp_v = &v)
             {
-                int* v_ptr = (int*)tmp_vecPtr;
+                int* v_ptr = (int*)tmp_v;
                 VertexAttribI1iv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribI2iv(uint, int*)"/>
         public static unsafe void VertexAttribI2i(uint index, in Vector2i v)
         {
-            fixed (Vector2i* tmp_vecPtr = &v)
+            fixed (Vector2i* tmp_v = &v)
             {
-                int* v_ptr = (int*)tmp_vecPtr;
+                int* v_ptr = (int*)tmp_v;
                 VertexAttribI2iv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribI3iv(uint, int*)"/>
         public static unsafe void VertexAttribI3i(uint index, in Vector3i v)
         {
-            fixed (Vector3i* tmp_vecPtr = &v)
+            fixed (Vector3i* tmp_v = &v)
             {
-                int* v_ptr = (int*)tmp_vecPtr;
+                int* v_ptr = (int*)tmp_v;
                 VertexAttribI3iv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribI4iv(uint, int*)"/>
         public static unsafe void VertexAttribI4i(uint index, in Vector4i v)
         {
-            fixed (Vector4i* tmp_vecPtr = &v)
+            fixed (Vector4i* tmp_v = &v)
             {
-                int* v_ptr = (int*)tmp_vecPtr;
+                int* v_ptr = (int*)tmp_v;
                 VertexAttribI4iv(index, v_ptr);
             }
         }
@@ -3609,106 +3663,110 @@ namespace OpenTK.Graphics.OpenGL
             return returnValue;
         }
         /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
-        public static unsafe void Uniform1ui(int location, ReadOnlySpan<uint> value)
-        {
-            int count = (int)(value.Length / 1);
-            fixed (uint* value_ptr = value)
-            {
-                Uniform1uiv(location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
-        public static unsafe void Uniform1ui(int location, uint[] value)
-        {
-            int count = (int)(value.Length / 1);
-            fixed (uint* value_ptr = value)
-            {
-                Uniform1uiv(location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
         public static unsafe void Uniform1ui(int location, int count, in uint value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (uint* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
+                Uniform1uiv(location, count, value_ptr);
+            }
+        }
+        /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
+        public static unsafe void Uniform1ui(int location, int count, ReadOnlySpan<uint> value)
+        {
+            fixed (uint* tmp_value = value)
+            {
+                uint* value_ptr = (uint*)tmp_value;
+                Uniform1uiv(location, count, value_ptr);
+            }
+        }
+        /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
+        public static unsafe void Uniform1ui(int location, int count, uint[] value)
+        {
+            fixed (uint* tmp_value = value)
+            {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform1uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2uiv(int, int, uint*)"/>
-        public static unsafe void Uniform2ui(int location, ReadOnlySpan<uint> value)
+        public static unsafe void Uniform2ui(int location, int count, in Vector2i value)
         {
-            int count = (int)(value.Length / 2);
-            fixed (uint* value_ptr = value)
+            fixed (Vector2i* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform2uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2uiv(int, int, uint*)"/>
-        public static unsafe void Uniform2ui(int location, uint[] value)
+        public static unsafe void Uniform2ui(int location, int count, ReadOnlySpan<Vector2i> value)
         {
-            int count = (int)(value.Length / 2);
-            fixed (uint* value_ptr = value)
+            fixed (Vector2i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform2uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2uiv(int, int, uint*)"/>
-        public static unsafe void Uniform2ui(int location, int count, in uint value)
+        public static unsafe void Uniform2ui(int location, int count, Vector2i[] value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (Vector2i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform2uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3uiv(int, int, uint*)"/>
-        public static unsafe void Uniform3ui(int location, ReadOnlySpan<uint> value)
+        public static unsafe void Uniform3ui(int location, int count, in Vector3i value)
         {
-            int count = (int)(value.Length / 3);
-            fixed (uint* value_ptr = value)
+            fixed (Vector3i* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform3uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3uiv(int, int, uint*)"/>
-        public static unsafe void Uniform3ui(int location, uint[] value)
+        public static unsafe void Uniform3ui(int location, int count, ReadOnlySpan<Vector3i> value)
         {
-            int count = (int)(value.Length / 3);
-            fixed (uint* value_ptr = value)
+            fixed (Vector3i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform3uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3uiv(int, int, uint*)"/>
-        public static unsafe void Uniform3ui(int location, int count, in uint value)
+        public static unsafe void Uniform3ui(int location, int count, Vector3i[] value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (Vector3i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform3uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4uiv(int, int, uint*)"/>
-        public static unsafe void Uniform4ui(int location, ReadOnlySpan<uint> value)
+        public static unsafe void Uniform4ui(int location, int count, in Vector4i value)
         {
-            int count = (int)(value.Length / 4);
-            fixed (uint* value_ptr = value)
+            fixed (Vector4i* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform4uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4uiv(int, int, uint*)"/>
-        public static unsafe void Uniform4ui(int location, uint[] value)
+        public static unsafe void Uniform4ui(int location, int count, ReadOnlySpan<Vector4i> value)
         {
-            int count = (int)(value.Length / 4);
-            fixed (uint* value_ptr = value)
+            fixed (Vector4i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform4uiv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4uiv(int, int, uint*)"/>
-        public static unsafe void Uniform4ui(int location, int count, in uint value)
+        public static unsafe void Uniform4ui(int location, int count, Vector4i[] value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (Vector4i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 Uniform4uiv(location, count, value_ptr);
             }
         }
@@ -5125,351 +5183,351 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
         public static unsafe void Uniform1d(int location, int count, in double value)
         {
-            fixed (double* tmp_vecPtr = &value)
+            fixed (double* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform1dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
         public static unsafe void Uniform1d(int location, int count, ReadOnlySpan<double> value)
         {
-            fixed (double* tmp_vecPtr = value)
+            fixed (double* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform1dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
         public static unsafe void Uniform1d(int location, int count, double[] value)
         {
-            fixed (double* tmp_vecPtr = value)
+            fixed (double* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform1dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
         public static unsafe void Uniform2d(int location, int count, in Vector2d value)
         {
-            fixed (Vector2d* tmp_vecPtr = &value)
+            fixed (Vector2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform2dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
         public static unsafe void Uniform2d(int location, int count, ReadOnlySpan<Vector2d> value)
         {
-            fixed (Vector2d* tmp_vecPtr = value)
+            fixed (Vector2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform2dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
         public static unsafe void Uniform2d(int location, int count, Vector2d[] value)
         {
-            fixed (Vector2d* tmp_vecPtr = value)
+            fixed (Vector2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform2dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
         public static unsafe void Uniform3d(int location, int count, in Vector3d value)
         {
-            fixed (Vector3d* tmp_vecPtr = &value)
+            fixed (Vector3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform3dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
         public static unsafe void Uniform3d(int location, int count, ReadOnlySpan<Vector3d> value)
         {
-            fixed (Vector3d* tmp_vecPtr = value)
+            fixed (Vector3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform3dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
         public static unsafe void Uniform3d(int location, int count, Vector3d[] value)
         {
-            fixed (Vector3d* tmp_vecPtr = value)
+            fixed (Vector3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform3dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
         public static unsafe void Uniform4d(int location, int count, in Vector4d value)
         {
-            fixed (Vector4d* tmp_vecPtr = &value)
+            fixed (Vector4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform4dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
         public static unsafe void Uniform4d(int location, int count, ReadOnlySpan<Vector4d> value)
         {
-            fixed (Vector4d* tmp_vecPtr = value)
+            fixed (Vector4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform4dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
         public static unsafe void Uniform4d(int location, int count, Vector4d[] value)
         {
-            fixed (Vector4d* tmp_vecPtr = value)
+            fixed (Vector4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 Uniform4dv(location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2d(int location, int count, bool transpose, in Matrix2d value)
         {
-            fixed (Matrix2d* tmp_vecPtr = &value)
+            fixed (Matrix2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2d(int location, int count, bool transpose, ReadOnlySpan<Matrix2d> value)
         {
-            fixed (Matrix2d* tmp_vecPtr = value)
+            fixed (Matrix2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2d(int location, int count, bool transpose, Matrix2d[] value)
         {
-            fixed (Matrix2d* tmp_vecPtr = value)
+            fixed (Matrix2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3d(int location, int count, bool transpose, in Matrix3d value)
         {
-            fixed (Matrix3d* tmp_vecPtr = &value)
+            fixed (Matrix3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3d(int location, int count, bool transpose, ReadOnlySpan<Matrix3d> value)
         {
-            fixed (Matrix3d* tmp_vecPtr = value)
+            fixed (Matrix3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3d(int location, int count, bool transpose, Matrix3d[] value)
         {
-            fixed (Matrix3d* tmp_vecPtr = value)
+            fixed (Matrix3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4d(int location, int count, bool transpose, in Matrix4d value)
         {
-            fixed (Matrix4d* tmp_vecPtr = &value)
+            fixed (Matrix4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4d(int location, int count, bool transpose, ReadOnlySpan<Matrix4d> value)
         {
-            fixed (Matrix4d* tmp_vecPtr = value)
+            fixed (Matrix4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4d(int location, int count, bool transpose, Matrix4d[] value)
         {
-            fixed (Matrix4d* tmp_vecPtr = value)
+            fixed (Matrix4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, in Matrix2x3d value)
         {
-            fixed (Matrix2x3d* tmp_vecPtr = &value)
+            fixed (Matrix2x3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, ReadOnlySpan<Matrix2x3d> value)
         {
-            fixed (Matrix2x3d* tmp_vecPtr = value)
+            fixed (Matrix2x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, Matrix2x3d[] value)
         {
-            fixed (Matrix2x3d* tmp_vecPtr = value)
+            fixed (Matrix2x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, in Matrix2x4d value)
         {
-            fixed (Matrix2x4d* tmp_vecPtr = &value)
+            fixed (Matrix2x4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, ReadOnlySpan<Matrix2x4d> value)
         {
-            fixed (Matrix2x4d* tmp_vecPtr = value)
+            fixed (Matrix2x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, Matrix2x4d[] value)
         {
-            fixed (Matrix2x4d* tmp_vecPtr = value)
+            fixed (Matrix2x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix2x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, in Matrix3x2d value)
         {
-            fixed (Matrix3x2d* tmp_vecPtr = &value)
+            fixed (Matrix3x2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, ReadOnlySpan<Matrix3x2d> value)
         {
-            fixed (Matrix3x2d* tmp_vecPtr = value)
+            fixed (Matrix3x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, Matrix3x2d[] value)
         {
-            fixed (Matrix3x2d* tmp_vecPtr = value)
+            fixed (Matrix3x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, in Matrix3x4d value)
         {
-            fixed (Matrix3x4d* tmp_vecPtr = &value)
+            fixed (Matrix3x4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, ReadOnlySpan<Matrix3x4d> value)
         {
-            fixed (Matrix3x4d* tmp_vecPtr = value)
+            fixed (Matrix3x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, Matrix3x4d[] value)
         {
-            fixed (Matrix3x4d* tmp_vecPtr = value)
+            fixed (Matrix3x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix3x4dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, in Matrix4x2d value)
         {
-            fixed (Matrix4x2d* tmp_vecPtr = &value)
+            fixed (Matrix4x2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, ReadOnlySpan<Matrix4x2d> value)
         {
-            fixed (Matrix4x2d* tmp_vecPtr = value)
+            fixed (Matrix4x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, Matrix4x2d[] value)
         {
-            fixed (Matrix4x2d* tmp_vecPtr = value)
+            fixed (Matrix4x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4x2dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, in Matrix4x3d value)
         {
-            fixed (Matrix4x3d* tmp_vecPtr = &value)
+            fixed (Matrix4x3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, ReadOnlySpan<Matrix4x3d> value)
         {
-            fixed (Matrix4x3d* tmp_vecPtr = value)
+            fixed (Matrix4x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4x3dv(location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
         public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, Matrix4x3d[] value)
         {
-            fixed (Matrix4x3d* tmp_vecPtr = value)
+            fixed (Matrix4x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 UniformMatrix4x3dv(location, count, transpose, value_ptr);
             }
         }
@@ -6237,1048 +6295,983 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-        public static unsafe void ProgramUniform1iv(int program, int location, ReadOnlySpan<int> value)
+        public static unsafe void ProgramUniform1i(int program, int location, int count, in int value)
         {
-            int count = (int)(value.Length);
-            fixed (int* value_ptr = value)
+            fixed (int* tmp_value = &value)
             {
-                ProgramUniform1iv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-        public static unsafe void ProgramUniform1iv(int program, int location, int[] value)
-        {
-            int count = (int)(value.Length);
-            fixed (int* value_ptr = value)
-            {
-                ProgramUniform1iv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-        public static unsafe void ProgramUniform1iv(int program, int location, int count, in int value)
-        {
-            fixed (int* value_ptr = &value)
-            {
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform1iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform1fv(int program, int location, ReadOnlySpan<float> value)
+        public static unsafe void ProgramUniform1f(int program, int location, int count, in float value)
         {
-            int count = (int)(value.Length);
-            fixed (float* value_ptr = value)
+            fixed (float* tmp_value = &value)
             {
-                ProgramUniform1fv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform1fv(int program, int location, float[] value)
-        {
-            int count = (int)(value.Length);
-            fixed (float* value_ptr = value)
-            {
-                ProgramUniform1fv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-        public static unsafe void ProgramUniform1fv(int program, int location, int count, in float value)
-        {
-            fixed (float* value_ptr = &value)
-            {
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform1fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-        public static unsafe void ProgramUniform1dv(int program, int location, ReadOnlySpan<double> value)
+        public static unsafe void ProgramUniform1d(int program, int location, int count, in double value)
         {
-            int count = (int)(value.Length);
-            fixed (double* value_ptr = value)
+            fixed (double* tmp_value = &value)
             {
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform1dv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-        public static unsafe void ProgramUniform1dv(int program, int location, double[] value)
-        {
-            int count = (int)(value.Length);
-            fixed (double* value_ptr = value)
-            {
-                ProgramUniform1dv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-        public static unsafe void ProgramUniform1dv(int program, int location, int count, in double value)
-        {
-            fixed (double* value_ptr = &value)
-            {
-                ProgramUniform1dv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform1ui(int program, int location, ReadOnlySpan<uint> value)
-        {
-            int count = (int)(value.Length);
-            fixed (uint* value_ptr = value)
-            {
-                ProgramUniform1uiv(program, location, count, value_ptr);
-            }
-        }
-        /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform1ui(int program, int location, uint[] value)
-        {
-            int count = (int)(value.Length);
-            fixed (uint* value_ptr = value)
-            {
-                ProgramUniform1uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
         public static unsafe void ProgramUniform1ui(int program, int location, int count, in uint value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (uint* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform1uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform2i(int program, int location, int count, in Vector2i value)
         {
-            fixed (Vector2i* tmp_vecPtr = &value)
+            fixed (Vector2i* tmp_value = &value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform2iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform2i(int program, int location, int count, ReadOnlySpan<Vector2i> value)
         {
-            fixed (Vector2i* tmp_vecPtr = value)
+            fixed (Vector2i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform2iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform2i(int program, int location, int count, Vector2i[] value)
         {
-            fixed (Vector2i* tmp_vecPtr = value)
+            fixed (Vector2i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform2iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform2f(int program, int location, int count, in Vector2 value)
         {
-            fixed (Vector2* tmp_vecPtr = &value)
+            fixed (Vector2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform2fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform2f(int program, int location, int count, ReadOnlySpan<Vector2> value)
         {
-            fixed (Vector2* tmp_vecPtr = value)
+            fixed (Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform2fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform2f(int program, int location, int count, Vector2[] value)
         {
-            fixed (Vector2* tmp_vecPtr = value)
+            fixed (Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform2fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform2f(int program, int location, int count, in System.Numerics.Vector2 value)
         {
-            fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
+            fixed (System.Numerics.Vector2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform2fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform2f(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
         {
-            fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform2fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform2f(int program, int location, int count, System.Numerics.Vector2[] value)
         {
-            fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform2fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform2d(int program, int location, int count, in Vector2d value)
         {
-            fixed (Vector2d* tmp_vecPtr = &value)
+            fixed (Vector2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform2dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform2d(int program, int location, int count, ReadOnlySpan<Vector2d> value)
         {
-            fixed (Vector2d* tmp_vecPtr = value)
+            fixed (Vector2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform2dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform2d(int program, int location, int count, Vector2d[] value)
         {
-            fixed (Vector2d* tmp_vecPtr = value)
+            fixed (Vector2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform2dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform2ui(int program, int location, ReadOnlySpan<uint> value)
+        public static unsafe void ProgramUniform2ui(int program, int location, int count, in Vector2i value)
         {
-            int count = (int)(value.Length / 2);
-            fixed (uint* value_ptr = value)
+            fixed (Vector2i* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform2uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform2ui(int program, int location, uint[] value)
+        public static unsafe void ProgramUniform2ui(int program, int location, int count, ReadOnlySpan<Vector2i> value)
         {
-            int count = (int)(value.Length / 2);
-            fixed (uint* value_ptr = value)
+            fixed (Vector2i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform2uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform2ui(int program, int location, int count, in uint value)
+        public static unsafe void ProgramUniform2ui(int program, int location, int count, Vector2i[] value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (Vector2i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform2uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform3i(int program, int location, int count, in Vector3i value)
         {
-            fixed (Vector3i* tmp_vecPtr = &value)
+            fixed (Vector3i* tmp_value = &value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform3iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform3i(int program, int location, int count, ReadOnlySpan<Vector3i> value)
         {
-            fixed (Vector3i* tmp_vecPtr = value)
+            fixed (Vector3i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform3iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform3i(int program, int location, int count, Vector3i[] value)
         {
-            fixed (Vector3i* tmp_vecPtr = value)
+            fixed (Vector3i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform3iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform3f(int program, int location, int count, in Vector3 value)
         {
-            fixed (Vector3* tmp_vecPtr = &value)
+            fixed (Vector3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform3fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform3f(int program, int location, int count, ReadOnlySpan<Vector3> value)
         {
-            fixed (Vector3* tmp_vecPtr = value)
+            fixed (Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform3fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform3f(int program, int location, int count, Vector3[] value)
         {
-            fixed (Vector3* tmp_vecPtr = value)
+            fixed (Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform3fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform3f(int program, int location, int count, in System.Numerics.Vector3 value)
         {
-            fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
+            fixed (System.Numerics.Vector3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform3fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform3f(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
         {
-            fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform3fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform3f(int program, int location, int count, System.Numerics.Vector3[] value)
         {
-            fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform3fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform3d(int program, int location, int count, in Vector3d value)
         {
-            fixed (Vector3d* tmp_vecPtr = &value)
+            fixed (Vector3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform3dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform3d(int program, int location, int count, ReadOnlySpan<Vector3d> value)
         {
-            fixed (Vector3d* tmp_vecPtr = value)
+            fixed (Vector3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform3dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform3d(int program, int location, int count, Vector3d[] value)
         {
-            fixed (Vector3d* tmp_vecPtr = value)
+            fixed (Vector3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform3dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform3ui(int program, int location, ReadOnlySpan<uint> value)
+        public static unsafe void ProgramUniform3ui(int program, int location, int count, in Vector3i value)
         {
-            int count = (int)(value.Length / 3);
-            fixed (uint* value_ptr = value)
+            fixed (Vector3i* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform3uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform3ui(int program, int location, uint[] value)
+        public static unsafe void ProgramUniform3ui(int program, int location, int count, ReadOnlySpan<Vector3i> value)
         {
-            int count = (int)(value.Length / 3);
-            fixed (uint* value_ptr = value)
+            fixed (Vector3i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform3uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform3ui(int program, int location, int count, in uint value)
+        public static unsafe void ProgramUniform3ui(int program, int location, int count, Vector3i[] value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (Vector3i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform3uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform4i(int program, int location, int count, in Vector4i value)
         {
-            fixed (Vector4i* tmp_vecPtr = &value)
+            fixed (Vector4i* tmp_value = &value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform4iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform4i(int program, int location, int count, ReadOnlySpan<Vector4i> value)
         {
-            fixed (Vector4i* tmp_vecPtr = value)
+            fixed (Vector4i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform4iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
         public static unsafe void ProgramUniform4i(int program, int location, int count, Vector4i[] value)
         {
-            fixed (Vector4i* tmp_vecPtr = value)
+            fixed (Vector4i* tmp_value = value)
             {
-                int* value_ptr = (int*)tmp_vecPtr;
+                int* value_ptr = (int*)tmp_value;
                 ProgramUniform4iv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform4f(int program, int location, int count, in Vector4 value)
         {
-            fixed (Vector4* tmp_vecPtr = &value)
+            fixed (Vector4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform4fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform4f(int program, int location, int count, ReadOnlySpan<Vector4> value)
         {
-            fixed (Vector4* tmp_vecPtr = value)
+            fixed (Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform4fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform4f(int program, int location, int count, Vector4[] value)
         {
-            fixed (Vector4* tmp_vecPtr = value)
+            fixed (Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform4fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform4f(int program, int location, int count, in System.Numerics.Vector4 value)
         {
-            fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
+            fixed (System.Numerics.Vector4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform4fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform4f(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
         {
-            fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform4fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
         public static unsafe void ProgramUniform4f(int program, int location, int count, System.Numerics.Vector4[] value)
         {
-            fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+            fixed (System.Numerics.Vector4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniform4fv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform4d(int program, int location, int count, in Vector4d value)
         {
-            fixed (Vector4d* tmp_vecPtr = &value)
+            fixed (Vector4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform4dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform4d(int program, int location, int count, ReadOnlySpan<Vector4d> value)
         {
-            fixed (Vector4d* tmp_vecPtr = value)
+            fixed (Vector4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform4dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
         public static unsafe void ProgramUniform4d(int program, int location, int count, Vector4d[] value)
         {
-            fixed (Vector4d* tmp_vecPtr = value)
+            fixed (Vector4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniform4dv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform4ui(int program, int location, ReadOnlySpan<uint> value)
+        public static unsafe void ProgramUniform4ui(int program, int location, int count, in Vector4i value)
         {
-            int count = (int)(value.Length / 4);
-            fixed (uint* value_ptr = value)
+            fixed (Vector4i* tmp_value = &value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform4uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform4ui(int program, int location, uint[] value)
+        public static unsafe void ProgramUniform4ui(int program, int location, int count, ReadOnlySpan<Vector4i> value)
         {
-            int count = (int)(value.Length / 4);
-            fixed (uint* value_ptr = value)
+            fixed (Vector4i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform4uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-        public static unsafe void ProgramUniform4ui(int program, int location, int count, in uint value)
+        public static unsafe void ProgramUniform4ui(int program, int location, int count, Vector4i[] value)
         {
-            fixed (uint* value_ptr = &value)
+            fixed (Vector4i* tmp_value = value)
             {
+                uint* value_ptr = (uint*)tmp_value;
                 ProgramUniform4uiv(program, location, count, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, in Matrix2 value)
         {
-            fixed (Matrix2* tmp_vecPtr = &value)
+            fixed (Matrix2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
         {
-            fixed (Matrix2* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, Matrix2[] value)
         {
-            fixed (Matrix2* tmp_vecPtr = value)
+            fixed (Matrix2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, in Matrix3 value)
         {
-            fixed (Matrix3* tmp_vecPtr = &value)
+            fixed (Matrix3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
         {
-            fixed (Matrix3* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, Matrix3[] value)
         {
-            fixed (Matrix3* tmp_vecPtr = value)
+            fixed (Matrix3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in Matrix4 value)
         {
-            fixed (Matrix4* tmp_vecPtr = &value)
+            fixed (Matrix4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
         {
-            fixed (Matrix4* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, Matrix4[] value)
         {
-            fixed (Matrix4* tmp_vecPtr = value)
+            fixed (Matrix4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
         {
-            fixed (System.Numerics.Matrix4x4* tmp_vecPtr = &value)
+            fixed (System.Numerics.Matrix4x4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix4x4> value)
         {
-            fixed (System.Numerics.Matrix4x4* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix4x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, System.Numerics.Matrix4x4[] value)
         {
-            fixed (System.Numerics.Matrix4x4* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix4x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, in Matrix2d value)
         {
-            fixed (Matrix2d* tmp_vecPtr = &value)
+            fixed (Matrix2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2d> value)
         {
-            fixed (Matrix2d* tmp_vecPtr = value)
+            fixed (Matrix2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, Matrix2d[] value)
         {
-            fixed (Matrix2d* tmp_vecPtr = value)
+            fixed (Matrix2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, in Matrix3d value)
         {
-            fixed (Matrix3d* tmp_vecPtr = &value)
+            fixed (Matrix3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3d> value)
         {
-            fixed (Matrix3d* tmp_vecPtr = value)
+            fixed (Matrix3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, Matrix3d[] value)
         {
-            fixed (Matrix3d* tmp_vecPtr = value)
+            fixed (Matrix3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, in Matrix4d value)
         {
-            fixed (Matrix4d* tmp_vecPtr = &value)
+            fixed (Matrix4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4d> value)
         {
-            fixed (Matrix4d* tmp_vecPtr = value)
+            fixed (Matrix4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, Matrix4d[] value)
         {
-            fixed (Matrix4d* tmp_vecPtr = value)
+            fixed (Matrix4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, in Matrix2x3 value)
         {
-            fixed (Matrix2x3* tmp_vecPtr = &value)
+            fixed (Matrix2x3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3> value)
         {
-            fixed (Matrix2x3* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, Matrix2x3[] value)
         {
-            fixed (Matrix2x3* tmp_vecPtr = value)
+            fixed (Matrix2x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in Matrix3x2 value)
         {
-            fixed (Matrix3x2* tmp_vecPtr = &value)
+            fixed (Matrix3x2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2> value)
         {
-            fixed (Matrix3x2* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, Matrix3x2[] value)
         {
-            fixed (Matrix3x2* tmp_vecPtr = value)
+            fixed (Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
         {
-            fixed (System.Numerics.Matrix3x2* tmp_vecPtr = &value)
+            fixed (System.Numerics.Matrix3x2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix3x2> value)
         {
-            fixed (System.Numerics.Matrix3x2* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, System.Numerics.Matrix3x2[] value)
         {
-            fixed (System.Numerics.Matrix3x2* tmp_vecPtr = value)
+            fixed (System.Numerics.Matrix3x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, in Matrix2x4 value)
         {
-            fixed (Matrix2x4* tmp_vecPtr = &value)
+            fixed (Matrix2x4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4> value)
         {
-            fixed (Matrix2x4* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, Matrix2x4[] value)
         {
-            fixed (Matrix2x4* tmp_vecPtr = value)
+            fixed (Matrix2x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, in Matrix4x2 value)
         {
-            fixed (Matrix4x2* tmp_vecPtr = &value)
+            fixed (Matrix4x2* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2> value)
         {
-            fixed (Matrix4x2* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, Matrix4x2[] value)
         {
-            fixed (Matrix4x2* tmp_vecPtr = value)
+            fixed (Matrix4x2* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, in Matrix3x4 value)
         {
-            fixed (Matrix3x4* tmp_vecPtr = &value)
+            fixed (Matrix3x4* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4> value)
         {
-            fixed (Matrix3x4* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, Matrix3x4[] value)
         {
-            fixed (Matrix3x4* tmp_vecPtr = value)
+            fixed (Matrix3x4* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, in Matrix4x3 value)
         {
-            fixed (Matrix4x3* tmp_vecPtr = &value)
+            fixed (Matrix4x3* tmp_value = &value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3> value)
         {
-            fixed (Matrix4x3* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
         public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, Matrix4x3[] value)
         {
-            fixed (Matrix4x3* tmp_vecPtr = value)
+            fixed (Matrix4x3* tmp_value = value)
             {
-                float* value_ptr = (float*)tmp_vecPtr;
+                float* value_ptr = (float*)tmp_value;
                 ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, in Matrix2x3d value)
         {
-            fixed (Matrix2x3d* tmp_vecPtr = &value)
+            fixed (Matrix2x3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3d> value)
         {
-            fixed (Matrix2x3d* tmp_vecPtr = value)
+            fixed (Matrix2x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, Matrix2x3d[] value)
         {
-            fixed (Matrix2x3d* tmp_vecPtr = value)
+            fixed (Matrix2x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, in Matrix3x2d value)
         {
-            fixed (Matrix3x2d* tmp_vecPtr = &value)
+            fixed (Matrix3x2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2d> value)
         {
-            fixed (Matrix3x2d* tmp_vecPtr = value)
+            fixed (Matrix3x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, Matrix3x2d[] value)
         {
-            fixed (Matrix3x2d* tmp_vecPtr = value)
+            fixed (Matrix3x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, in Matrix2x4d value)
         {
-            fixed (Matrix2x4d* tmp_vecPtr = &value)
+            fixed (Matrix2x4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4d> value)
         {
-            fixed (Matrix2x4d* tmp_vecPtr = value)
+            fixed (Matrix2x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, Matrix2x4d[] value)
         {
-            fixed (Matrix2x4d* tmp_vecPtr = value)
+            fixed (Matrix2x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, in Matrix4x2d value)
         {
-            fixed (Matrix4x2d* tmp_vecPtr = &value)
+            fixed (Matrix4x2d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2d> value)
         {
-            fixed (Matrix4x2d* tmp_vecPtr = value)
+            fixed (Matrix4x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, Matrix4x2d[] value)
         {
-            fixed (Matrix4x2d* tmp_vecPtr = value)
+            fixed (Matrix4x2d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, in Matrix3x4d value)
         {
-            fixed (Matrix3x4d* tmp_vecPtr = &value)
+            fixed (Matrix3x4d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4d> value)
         {
-            fixed (Matrix3x4d* tmp_vecPtr = value)
+            fixed (Matrix3x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, Matrix3x4d[] value)
         {
-            fixed (Matrix3x4d* tmp_vecPtr = value)
+            fixed (Matrix3x4d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, in Matrix4x3d value)
         {
-            fixed (Matrix4x3d* tmp_vecPtr = &value)
+            fixed (Matrix4x3d* tmp_value = &value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3d> value)
         {
-            fixed (Matrix4x3d* tmp_vecPtr = value)
+            fixed (Matrix4x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
             }
         }
         /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
         public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, Matrix4x3d[] value)
         {
-            fixed (Matrix4x3d* tmp_vecPtr = value)
+            fixed (Matrix4x3d* tmp_value = value)
             {
-                double* value_ptr = (double*)tmp_vecPtr;
+                double* value_ptr = (double*)tmp_value;
                 ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
             }
         }
@@ -7357,36 +7350,36 @@ namespace OpenTK.Graphics.OpenGL
         /// <inheritdoc cref="VertexAttribL1dv(uint, double*)"/>
         public static unsafe void VertexAttribL1d(uint index, in double v)
         {
-            fixed (double* tmp_vecPtr = &v)
+            fixed (double* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttribL1dv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribL2dv(uint, double*)"/>
         public static unsafe void VertexAttribL2d(uint index, in Vector2d v)
         {
-            fixed (Vector2d* tmp_vecPtr = &v)
+            fixed (Vector2d* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttribL2dv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribL3dv(uint, double*)"/>
         public static unsafe void VertexAttribL3d(uint index, in Vector3d v)
         {
-            fixed (Vector3d* tmp_vecPtr = &v)
+            fixed (Vector3d* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttribL3dv(index, v_ptr);
             }
         }
         /// <inheritdoc cref="VertexAttribL4dv(uint, double*)"/>
         public static unsafe void VertexAttribL4d(uint index, in Vector4d v)
         {
-            fixed (Vector4d* tmp_vecPtr = &v)
+            fixed (Vector4d* tmp_v = &v)
             {
-                double* v_ptr = (double*)tmp_vecPtr;
+                double* v_ptr = (double*)tmp_v;
                 VertexAttribL4dv(index, v_ptr);
             }
         }
@@ -9931,10 +9924,11 @@ namespace OpenTK.Graphics.OpenGL
             }
         }
         /// <inheritdoc cref="GetVertexArrayIndexed64iv(int, uint, VertexArrayPName, long*)"/>
-        public static unsafe void GetVertexArrayIndexed64iv(int vaobj, uint index, VertexArrayPName pname, ref long param)
+        public static unsafe void GetVertexArrayIndexed64i(int vaobj, uint index, VertexArrayPName pname, ref Vector4i param)
         {
-            fixed (long* param_ptr = &param)
+            fixed (Vector4i* tmp_param = &param)
             {
+                long* param_ptr = (long*)tmp_param;
                 GetVertexArrayIndexed64iv(vaobj, index, pname, param_ptr);
             }
         }
@@ -10632,210 +10626,380 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="Uniform1i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform1i64vNV(int location, ReadOnlySpan<long> value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (long* value_ptr = value)
-                {
-                    Uniform1i64vNV(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform1i64vNV(int location, long[] value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (long* value_ptr = value)
-                {
-                    Uniform1i64vNV(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1i64vNV(int, int, long*)"/>
             public static unsafe void Uniform1i64vNV(int location, int count, in long value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (long* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform1i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform1i64vNV(int location, int count, ReadOnlySpan<long> value)
+            {
+                fixed (long* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform1i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform1i64vNV(int location, int count, long[] value)
+            {
+                fixed (long* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform1i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform2i64vNV(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform2i64vNV(int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform2i64vNV(int location, long[] value)
+            public static unsafe void Uniform2i64vNV(int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform2i64vNV(int location, int count, in long value)
+            public static unsafe void Uniform2i64vNV(int location, int count, Vector2[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform2i64vNV(int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform2i64vNV(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform2i64vNV(int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform3i64vNV(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform3i64vNV(int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform3i64vNV(int location, long[] value)
+            public static unsafe void Uniform3i64vNV(int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform3i64vNV(int location, int count, in long value)
+            public static unsafe void Uniform3i64vNV(int location, int count, Vector3[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform3i64vNV(int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform3i64vNV(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform3i64vNV(int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform4i64vNV(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform4i64vNV(int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform4i64vNV(int location, long[] value)
+            public static unsafe void Uniform4i64vNV(int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
-            public static unsafe void Uniform4i64vNV(int location, int count, in long value)
+            public static unsafe void Uniform4i64vNV(int location, int count, Vector4[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64vNV(location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="Uniform1ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64vNV(int location, ReadOnlySpan<ulong> value)
+            /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform4i64vNV(int location, int count, in System.Numerics.Vector4 value)
             {
-                int count = (int)(value.Length / 1);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    Uniform1ui64vNV(location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64vNV(location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="Uniform1ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64vNV(int location, ulong[] value)
+            /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform4i64vNV(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                int count = (int)(value.Length / 1);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    Uniform1ui64vNV(location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4i64vNV(int, int, long*)"/>
+            public static unsafe void Uniform4i64vNV(int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform1ui64vNV(int, int, ulong*)"/>
             public static unsafe void Uniform1ui64vNV(int location, int count, in ulong value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (ulong* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform1ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform1ui64vNV(int location, int count, ReadOnlySpan<ulong> value)
+            {
+                fixed (ulong* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform1ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform1ui64vNV(int location, int count, ulong[] value)
+            {
+                fixed (ulong* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform1ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vNV(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform2ui64vNV(int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vNV(int location, ulong[] value)
+            public static unsafe void Uniform2ui64vNV(int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64vNV(int location, int count, in ulong value)
+            public static unsafe void Uniform2ui64vNV(int location, int count, Vector2[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64vNV(int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64vNV(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64vNV(int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vNV(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform3ui64vNV(int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vNV(int location, ulong[] value)
+            public static unsafe void Uniform3ui64vNV(int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64vNV(int location, int count, in ulong value)
+            public static unsafe void Uniform3ui64vNV(int location, int count, Vector3[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64vNV(int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64vNV(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64vNV(int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vNV(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform4ui64vNV(int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vNV(int location, ulong[] value)
+            public static unsafe void Uniform4ui64vNV(int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64vNV(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64vNV(int location, int count, in ulong value)
+            public static unsafe void Uniform4ui64vNV(int location, int count, Vector4[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64vNV(int location, int count, in System.Numerics.Vector4 value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64vNV(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64vNV(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64vNV(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64vNV(int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64vNV(location, count, value_ptr);
                 }
             }
@@ -10888,210 +11052,344 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ProgramUniform1i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64vNV(int program, int location, ReadOnlySpan<long> value)
-            {
-                int count = (int)(value.Length);
-                fixed (long* value_ptr = value)
-                {
-                    ProgramUniform1i64vNV(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64vNV(int program, int location, long[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (long* value_ptr = value)
-                {
-                    ProgramUniform1i64vNV(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1i64vNV(int, int, int, long*)"/>
             public static unsafe void ProgramUniform1i64vNV(int program, int location, int count, in long value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (long* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform1i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vNV(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vNV(int program, int location, long[] value)
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, Vector2[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64vNV(int program, int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vNV(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vNV(int program, int location, long[] value)
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, Vector3[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64vNV(int program, int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vNV(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vNV(int program, int location, long[] value)
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, Vector4[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64vNV(program, location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="ProgramUniform1ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64vNV(int program, int location, ReadOnlySpan<ulong> value)
+            /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, in System.Numerics.Vector4 value)
             {
-                int count = (int)(value.Length);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    ProgramUniform1ui64vNV(program, location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64vNV(program, location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="ProgramUniform1ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64vNV(int program, int location, ulong[] value)
+            /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                int count = (int)(value.Length);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    ProgramUniform1ui64vNV(program, location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4i64vNV(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64vNV(int program, int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1ui64vNV(int, int, int, ulong*)"/>
             public static unsafe void ProgramUniform1ui64vNV(int program, int location, int count, in ulong value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (ulong* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform1ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vNV(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vNV(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, Vector2[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64vNV(int program, int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vNV(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vNV(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, Vector3[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64vNV(int program, int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vNV(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vNV(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64vNV(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, Vector4[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, in System.Numerics.Vector4 value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64vNV(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64vNV(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64vNV(int program, int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64vNV(program, location, count, value_ptr);
                 }
             }
@@ -13746,10 +14044,11 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="GetVertexArrayIndexed64iv(int, uint, VertexArrayPName, long*)"/>
-            public static unsafe void GetVertexArrayIndexed64iv(int vaobj, uint index, VertexArrayPName pname, ref long param)
+            public static unsafe void GetVertexArrayIndexed64i(int vaobj, uint index, VertexArrayPName pname, ref Vector4i param)
             {
-                fixed (long* param_ptr = &param)
+                fixed (Vector4i* tmp_param = &param)
                 {
+                    long* param_ptr = (long*)tmp_param;
                     GetVertexArrayIndexed64iv(vaobj, index, pname, param_ptr);
                 }
             }
@@ -14858,351 +15157,351 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
             public static unsafe void Uniform1d(int location, int count, in double value)
             {
-                fixed (double* tmp_vecPtr = &value)
+                fixed (double* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform1dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
             public static unsafe void Uniform1d(int location, int count, ReadOnlySpan<double> value)
             {
-                fixed (double* tmp_vecPtr = value)
+                fixed (double* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform1dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform1dv(int, int, double*)"/>
             public static unsafe void Uniform1d(int location, int count, double[] value)
             {
-                fixed (double* tmp_vecPtr = value)
+                fixed (double* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform1dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
             public static unsafe void Uniform2d(int location, int count, in Vector2d value)
             {
-                fixed (Vector2d* tmp_vecPtr = &value)
+                fixed (Vector2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform2dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
             public static unsafe void Uniform2d(int location, int count, ReadOnlySpan<Vector2d> value)
             {
-                fixed (Vector2d* tmp_vecPtr = value)
+                fixed (Vector2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform2dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2dv(int, int, double*)"/>
             public static unsafe void Uniform2d(int location, int count, Vector2d[] value)
             {
-                fixed (Vector2d* tmp_vecPtr = value)
+                fixed (Vector2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform2dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
             public static unsafe void Uniform3d(int location, int count, in Vector3d value)
             {
-                fixed (Vector3d* tmp_vecPtr = &value)
+                fixed (Vector3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform3dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
             public static unsafe void Uniform3d(int location, int count, ReadOnlySpan<Vector3d> value)
             {
-                fixed (Vector3d* tmp_vecPtr = value)
+                fixed (Vector3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform3dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3dv(int, int, double*)"/>
             public static unsafe void Uniform3d(int location, int count, Vector3d[] value)
             {
-                fixed (Vector3d* tmp_vecPtr = value)
+                fixed (Vector3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform3dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
             public static unsafe void Uniform4d(int location, int count, in Vector4d value)
             {
-                fixed (Vector4d* tmp_vecPtr = &value)
+                fixed (Vector4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform4dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
             public static unsafe void Uniform4d(int location, int count, ReadOnlySpan<Vector4d> value)
             {
-                fixed (Vector4d* tmp_vecPtr = value)
+                fixed (Vector4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform4dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4dv(int, int, double*)"/>
             public static unsafe void Uniform4d(int location, int count, Vector4d[] value)
             {
-                fixed (Vector4d* tmp_vecPtr = value)
+                fixed (Vector4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     Uniform4dv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2d(int location, int count, bool transpose, in Matrix2d value)
             {
-                fixed (Matrix2d* tmp_vecPtr = &value)
+                fixed (Matrix2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2d(int location, int count, bool transpose, ReadOnlySpan<Matrix2d> value)
             {
-                fixed (Matrix2d* tmp_vecPtr = value)
+                fixed (Matrix2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2d(int location, int count, bool transpose, Matrix2d[] value)
             {
-                fixed (Matrix2d* tmp_vecPtr = value)
+                fixed (Matrix2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3d(int location, int count, bool transpose, in Matrix3d value)
             {
-                fixed (Matrix3d* tmp_vecPtr = &value)
+                fixed (Matrix3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3d(int location, int count, bool transpose, ReadOnlySpan<Matrix3d> value)
             {
-                fixed (Matrix3d* tmp_vecPtr = value)
+                fixed (Matrix3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3d(int location, int count, bool transpose, Matrix3d[] value)
             {
-                fixed (Matrix3d* tmp_vecPtr = value)
+                fixed (Matrix3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4d(int location, int count, bool transpose, in Matrix4d value)
             {
-                fixed (Matrix4d* tmp_vecPtr = &value)
+                fixed (Matrix4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4d(int location, int count, bool transpose, ReadOnlySpan<Matrix4d> value)
             {
-                fixed (Matrix4d* tmp_vecPtr = value)
+                fixed (Matrix4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4d(int location, int count, bool transpose, Matrix4d[] value)
             {
-                fixed (Matrix4d* tmp_vecPtr = value)
+                fixed (Matrix4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, in Matrix2x3d value)
             {
-                fixed (Matrix2x3d* tmp_vecPtr = &value)
+                fixed (Matrix2x3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, ReadOnlySpan<Matrix2x3d> value)
             {
-                fixed (Matrix2x3d* tmp_vecPtr = value)
+                fixed (Matrix2x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2x3d(int location, int count, bool transpose, Matrix2x3d[] value)
             {
-                fixed (Matrix2x3d* tmp_vecPtr = value)
+                fixed (Matrix2x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, in Matrix2x4d value)
             {
-                fixed (Matrix2x4d* tmp_vecPtr = &value)
+                fixed (Matrix2x4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, ReadOnlySpan<Matrix2x4d> value)
             {
-                fixed (Matrix2x4d* tmp_vecPtr = value)
+                fixed (Matrix2x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2x4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix2x4d(int location, int count, bool transpose, Matrix2x4d[] value)
             {
-                fixed (Matrix2x4d* tmp_vecPtr = value)
+                fixed (Matrix2x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix2x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, in Matrix3x2d value)
             {
-                fixed (Matrix3x2d* tmp_vecPtr = &value)
+                fixed (Matrix3x2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, ReadOnlySpan<Matrix3x2d> value)
             {
-                fixed (Matrix3x2d* tmp_vecPtr = value)
+                fixed (Matrix3x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3x2d(int location, int count, bool transpose, Matrix3x2d[] value)
             {
-                fixed (Matrix3x2d* tmp_vecPtr = value)
+                fixed (Matrix3x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, in Matrix3x4d value)
             {
-                fixed (Matrix3x4d* tmp_vecPtr = &value)
+                fixed (Matrix3x4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, ReadOnlySpan<Matrix3x4d> value)
             {
-                fixed (Matrix3x4d* tmp_vecPtr = value)
+                fixed (Matrix3x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3x4dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix3x4d(int location, int count, bool transpose, Matrix3x4d[] value)
             {
-                fixed (Matrix3x4d* tmp_vecPtr = value)
+                fixed (Matrix3x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix3x4dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, in Matrix4x2d value)
             {
-                fixed (Matrix4x2d* tmp_vecPtr = &value)
+                fixed (Matrix4x2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, ReadOnlySpan<Matrix4x2d> value)
             {
-                fixed (Matrix4x2d* tmp_vecPtr = value)
+                fixed (Matrix4x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x2dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4x2d(int location, int count, bool transpose, Matrix4x2d[] value)
             {
-                fixed (Matrix4x2d* tmp_vecPtr = value)
+                fixed (Matrix4x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4x2dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, in Matrix4x3d value)
             {
-                fixed (Matrix4x3d* tmp_vecPtr = &value)
+                fixed (Matrix4x3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, ReadOnlySpan<Matrix4x3d> value)
             {
-                fixed (Matrix4x3d* tmp_vecPtr = value)
+                fixed (Matrix4x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4x3dv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4x3dv(int, int, bool, double*)"/>
             public static unsafe void UniformMatrix4x3d(int location, int count, bool transpose, Matrix4x3d[] value)
             {
-                fixed (Matrix4x3d* tmp_vecPtr = value)
+                fixed (Matrix4x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     UniformMatrix4x3dv(location, count, transpose, value_ptr);
                 }
             }
@@ -15231,210 +15530,380 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
-            public static unsafe void Uniform1i64v(int location, ReadOnlySpan<long> value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (long* value_ptr = value)
-                {
-                    Uniform1i64v(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
-            public static unsafe void Uniform1i64v(int location, long[] value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (long* value_ptr = value)
-                {
-                    Uniform1i64v(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
             public static unsafe void Uniform1i64v(int location, int count, in long value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (long* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform1i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
+            public static unsafe void Uniform1i64v(int location, int count, ReadOnlySpan<long> value)
+            {
+                fixed (long* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform1i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
+            public static unsafe void Uniform1i64v(int location, int count, long[] value)
+            {
+                fixed (long* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform1i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
-            public static unsafe void Uniform2i64v(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform2i64v(int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
-            public static unsafe void Uniform2i64v(int location, long[] value)
+            public static unsafe void Uniform2i64v(int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
-            public static unsafe void Uniform2i64v(int location, int count, in long value)
+            public static unsafe void Uniform2i64v(int location, int count, Vector2[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
+            public static unsafe void Uniform2i64v(int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
+            public static unsafe void Uniform2i64v(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
+            public static unsafe void Uniform2i64v(int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
-            public static unsafe void Uniform3i64v(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform3i64v(int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
-            public static unsafe void Uniform3i64v(int location, long[] value)
+            public static unsafe void Uniform3i64v(int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
-            public static unsafe void Uniform3i64v(int location, int count, in long value)
+            public static unsafe void Uniform3i64v(int location, int count, Vector3[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
+            public static unsafe void Uniform3i64v(int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
+            public static unsafe void Uniform3i64v(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
+            public static unsafe void Uniform3i64v(int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
-            public static unsafe void Uniform4i64v(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform4i64v(int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
-            public static unsafe void Uniform4i64v(int location, long[] value)
+            public static unsafe void Uniform4i64v(int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
-            public static unsafe void Uniform4i64v(int location, int count, in long value)
+            public static unsafe void Uniform4i64v(int location, int count, Vector4[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64v(location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64v(int location, ReadOnlySpan<ulong> value)
+            /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
+            public static unsafe void Uniform4i64v(int location, int count, in System.Numerics.Vector4 value)
             {
-                int count = (int)(value.Length / 1);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    Uniform1ui64v(location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64v(location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64v(int location, ulong[] value)
+            /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
+            public static unsafe void Uniform4i64v(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                int count = (int)(value.Length / 1);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    Uniform1ui64v(location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
+            public static unsafe void Uniform4i64v(int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
             public static unsafe void Uniform1ui64v(int location, int count, in ulong value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (ulong* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform1ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform1ui64v(int location, int count, ReadOnlySpan<ulong> value)
+            {
+                fixed (ulong* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform1ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform1ui64v(int location, int count, ulong[] value)
+            {
+                fixed (ulong* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform1ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64v(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform2ui64v(int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64v(int location, ulong[] value)
+            public static unsafe void Uniform2ui64v(int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64v(int location, int count, in ulong value)
+            public static unsafe void Uniform2ui64v(int location, int count, Vector2[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64v(int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64v(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64v(int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64v(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform3ui64v(int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64v(int location, ulong[] value)
+            public static unsafe void Uniform3ui64v(int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64v(int location, int count, in ulong value)
+            public static unsafe void Uniform3ui64v(int location, int count, Vector3[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64v(int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64v(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64v(int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64v(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform4ui64v(int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64v(int location, ulong[] value)
+            public static unsafe void Uniform4ui64v(int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64v(int location, int count, in ulong value)
+            public static unsafe void Uniform4ui64v(int location, int count, Vector4[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64v(int location, int count, in System.Numerics.Vector4 value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64v(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64v(int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64v(location, count, value_ptr);
                 }
             }
@@ -15539,210 +16008,344 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ProgramUniform1i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64v(int program, int location, ReadOnlySpan<long> value)
-            {
-                int count = (int)(value.Length);
-                fixed (long* value_ptr = value)
-                {
-                    ProgramUniform1i64v(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64v(int program, int location, long[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (long* value_ptr = value)
-                {
-                    ProgramUniform1i64v(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1i64v(int, int, int, long*)"/>
             public static unsafe void ProgramUniform1i64v(int program, int location, int count, in long value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (long* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform1i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64v(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64v(int program, int location, long[] value)
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64v(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, Vector2[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64v(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64v(int program, int location, long[] value)
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64v(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, Vector3[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64v(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64v(int program, int location, long[] value)
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64v(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, Vector4[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="ProgramUniform1ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, in System.Numerics.Vector4 value)
             {
-                int count = (int)(value.Length);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    ProgramUniform1ui64v(program, location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="ProgramUniform1ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64v(int program, int location, ulong[] value)
+            /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                int count = (int)(value.Length);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    ProgramUniform1ui64v(program, location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1ui64v(int, int, int, ulong*)"/>
             public static unsafe void ProgramUniform1ui64v(int program, int location, int count, in ulong value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (ulong* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform1ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64v(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, Vector2[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64v(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, Vector3[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64v(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, Vector4[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, in System.Numerics.Vector4 value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64v(program, location, count, value_ptr);
                 }
             }
@@ -17573,1048 +18176,983 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform1iv(int program, int location, ReadOnlySpan<int> value)
+            public static unsafe void ProgramUniform1i(int program, int location, int count, in int value)
             {
-                int count = (int)(value.Length);
-                fixed (int* value_ptr = value)
+                fixed (int* tmp_value = &value)
                 {
-                    ProgramUniform1iv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform1iv(int program, int location, int[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (int* value_ptr = value)
-                {
-                    ProgramUniform1iv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform1iv(int program, int location, int count, in int value)
-            {
-                fixed (int* value_ptr = &value)
-                {
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform1iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform1fv(int program, int location, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniform1f(int program, int location, int count, in float value)
             {
-                int count = (int)(value.Length);
-                fixed (float* value_ptr = value)
+                fixed (float* tmp_value = &value)
                 {
-                    ProgramUniform1fv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform1fv(int program, int location, float[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (float* value_ptr = value)
-                {
-                    ProgramUniform1fv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform1fv(int program, int location, int count, in float value)
-            {
-                fixed (float* value_ptr = &value)
-                {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform1fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform1dv(int program, int location, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniform1d(int program, int location, int count, in double value)
             {
-                int count = (int)(value.Length);
-                fixed (double* value_ptr = value)
+                fixed (double* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform1dv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform1dv(int program, int location, double[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (double* value_ptr = value)
-                {
-                    ProgramUniform1dv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform1dv(int program, int location, int count, in double value)
-            {
-                fixed (double* value_ptr = &value)
-                {
-                    ProgramUniform1dv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform1ui(int program, int location, ReadOnlySpan<uint> value)
-            {
-                int count = (int)(value.Length);
-                fixed (uint* value_ptr = value)
-                {
-                    ProgramUniform1uiv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform1ui(int program, int location, uint[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (uint* value_ptr = value)
-                {
-                    ProgramUniform1uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
             public static unsafe void ProgramUniform1ui(int program, int location, int count, in uint value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (uint* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform1uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform2i(int program, int location, int count, in Vector2i value)
             {
-                fixed (Vector2i* tmp_vecPtr = &value)
+                fixed (Vector2i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform2iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform2i(int program, int location, int count, ReadOnlySpan<Vector2i> value)
             {
-                fixed (Vector2i* tmp_vecPtr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform2iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform2i(int program, int location, int count, Vector2i[] value)
             {
-                fixed (Vector2i* tmp_vecPtr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform2iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2f(int program, int location, int count, in Vector2 value)
             {
-                fixed (Vector2* tmp_vecPtr = &value)
+                fixed (Vector2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2f(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                fixed (Vector2* tmp_vecPtr = value)
+                fixed (Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2f(int program, int location, int count, Vector2[] value)
             {
-                fixed (Vector2* tmp_vecPtr = value)
+                fixed (Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2f(int program, int location, int count, in System.Numerics.Vector2 value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2f(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2f(int program, int location, int count, System.Numerics.Vector2[] value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform2d(int program, int location, int count, in Vector2d value)
             {
-                fixed (Vector2d* tmp_vecPtr = &value)
+                fixed (Vector2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform2dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform2d(int program, int location, int count, ReadOnlySpan<Vector2d> value)
             {
-                fixed (Vector2d* tmp_vecPtr = value)
+                fixed (Vector2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform2dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform2d(int program, int location, int count, Vector2d[] value)
             {
-                fixed (Vector2d* tmp_vecPtr = value)
+                fixed (Vector2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform2dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2ui(int program, int location, ReadOnlySpan<uint> value)
+            public static unsafe void ProgramUniform2ui(int program, int location, int count, in Vector2i value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (uint* value_ptr = value)
+                fixed (Vector2i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform2uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2ui(int program, int location, uint[] value)
+            public static unsafe void ProgramUniform2ui(int program, int location, int count, ReadOnlySpan<Vector2i> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (uint* value_ptr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform2uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2ui(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform2ui(int program, int location, int count, Vector2i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector2i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform2uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform3i(int program, int location, int count, in Vector3i value)
             {
-                fixed (Vector3i* tmp_vecPtr = &value)
+                fixed (Vector3i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform3iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform3i(int program, int location, int count, ReadOnlySpan<Vector3i> value)
             {
-                fixed (Vector3i* tmp_vecPtr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform3iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform3i(int program, int location, int count, Vector3i[] value)
             {
-                fixed (Vector3i* tmp_vecPtr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform3iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3f(int program, int location, int count, in Vector3 value)
             {
-                fixed (Vector3* tmp_vecPtr = &value)
+                fixed (Vector3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3f(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                fixed (Vector3* tmp_vecPtr = value)
+                fixed (Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3f(int program, int location, int count, Vector3[] value)
             {
-                fixed (Vector3* tmp_vecPtr = value)
+                fixed (Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3f(int program, int location, int count, in System.Numerics.Vector3 value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3f(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3f(int program, int location, int count, System.Numerics.Vector3[] value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform3d(int program, int location, int count, in Vector3d value)
             {
-                fixed (Vector3d* tmp_vecPtr = &value)
+                fixed (Vector3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform3dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform3d(int program, int location, int count, ReadOnlySpan<Vector3d> value)
             {
-                fixed (Vector3d* tmp_vecPtr = value)
+                fixed (Vector3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform3dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform3d(int program, int location, int count, Vector3d[] value)
             {
-                fixed (Vector3d* tmp_vecPtr = value)
+                fixed (Vector3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform3dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3ui(int program, int location, ReadOnlySpan<uint> value)
+            public static unsafe void ProgramUniform3ui(int program, int location, int count, in Vector3i value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (uint* value_ptr = value)
+                fixed (Vector3i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform3uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3ui(int program, int location, uint[] value)
+            public static unsafe void ProgramUniform3ui(int program, int location, int count, ReadOnlySpan<Vector3i> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (uint* value_ptr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform3uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3ui(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform3ui(int program, int location, int count, Vector3i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector3i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform3uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform4i(int program, int location, int count, in Vector4i value)
             {
-                fixed (Vector4i* tmp_vecPtr = &value)
+                fixed (Vector4i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform4iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform4i(int program, int location, int count, ReadOnlySpan<Vector4i> value)
             {
-                fixed (Vector4i* tmp_vecPtr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform4iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform4i(int program, int location, int count, Vector4i[] value)
             {
-                fixed (Vector4i* tmp_vecPtr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform4iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4f(int program, int location, int count, in Vector4 value)
             {
-                fixed (Vector4* tmp_vecPtr = &value)
+                fixed (Vector4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4f(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                fixed (Vector4* tmp_vecPtr = value)
+                fixed (Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4f(int program, int location, int count, Vector4[] value)
             {
-                fixed (Vector4* tmp_vecPtr = value)
+                fixed (Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4f(int program, int location, int count, in System.Numerics.Vector4 value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4f(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4f(int program, int location, int count, System.Numerics.Vector4[] value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform4d(int program, int location, int count, in Vector4d value)
             {
-                fixed (Vector4d* tmp_vecPtr = &value)
+                fixed (Vector4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform4dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform4d(int program, int location, int count, ReadOnlySpan<Vector4d> value)
             {
-                fixed (Vector4d* tmp_vecPtr = value)
+                fixed (Vector4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform4dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform4d(int program, int location, int count, Vector4d[] value)
             {
-                fixed (Vector4d* tmp_vecPtr = value)
+                fixed (Vector4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform4dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4ui(int program, int location, ReadOnlySpan<uint> value)
+            public static unsafe void ProgramUniform4ui(int program, int location, int count, in Vector4i value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (uint* value_ptr = value)
+                fixed (Vector4i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform4uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4ui(int program, int location, uint[] value)
+            public static unsafe void ProgramUniform4ui(int program, int location, int count, ReadOnlySpan<Vector4i> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (uint* value_ptr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform4uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4ui(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform4ui(int program, int location, int count, Vector4i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector4i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform4uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, in Matrix2 value)
             {
-                fixed (Matrix2* tmp_vecPtr = &value)
+                fixed (Matrix2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
             {
-                fixed (Matrix2* tmp_vecPtr = value)
+                fixed (Matrix2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2f(int program, int location, int count, bool transpose, Matrix2[] value)
             {
-                fixed (Matrix2* tmp_vecPtr = value)
+                fixed (Matrix2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, in Matrix3 value)
             {
-                fixed (Matrix3* tmp_vecPtr = &value)
+                fixed (Matrix3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
             {
-                fixed (Matrix3* tmp_vecPtr = value)
+                fixed (Matrix3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3f(int program, int location, int count, bool transpose, Matrix3[] value)
             {
-                fixed (Matrix3* tmp_vecPtr = value)
+                fixed (Matrix3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in Matrix4 value)
             {
-                fixed (Matrix4* tmp_vecPtr = &value)
+                fixed (Matrix4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
             {
-                fixed (Matrix4* tmp_vecPtr = value)
+                fixed (Matrix4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, Matrix4[] value)
             {
-                fixed (Matrix4* tmp_vecPtr = value)
+                fixed (Matrix4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
             {
-                fixed (System.Numerics.Matrix4x4* tmp_vecPtr = &value)
+                fixed (System.Numerics.Matrix4x4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix4x4> value)
             {
-                fixed (System.Numerics.Matrix4x4* tmp_vecPtr = value)
+                fixed (System.Numerics.Matrix4x4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4f(int program, int location, int count, bool transpose, System.Numerics.Matrix4x4[] value)
             {
-                fixed (System.Numerics.Matrix4x4* tmp_vecPtr = value)
+                fixed (System.Numerics.Matrix4x4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, in Matrix2d value)
             {
-                fixed (Matrix2d* tmp_vecPtr = &value)
+                fixed (Matrix2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2d> value)
             {
-                fixed (Matrix2d* tmp_vecPtr = value)
+                fixed (Matrix2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2d(int program, int location, int count, bool transpose, Matrix2d[] value)
             {
-                fixed (Matrix2d* tmp_vecPtr = value)
+                fixed (Matrix2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, in Matrix3d value)
             {
-                fixed (Matrix3d* tmp_vecPtr = &value)
+                fixed (Matrix3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3d> value)
             {
-                fixed (Matrix3d* tmp_vecPtr = value)
+                fixed (Matrix3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3d(int program, int location, int count, bool transpose, Matrix3d[] value)
             {
-                fixed (Matrix3d* tmp_vecPtr = value)
+                fixed (Matrix3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, in Matrix4d value)
             {
-                fixed (Matrix4d* tmp_vecPtr = &value)
+                fixed (Matrix4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4d> value)
             {
-                fixed (Matrix4d* tmp_vecPtr = value)
+                fixed (Matrix4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4d(int program, int location, int count, bool transpose, Matrix4d[] value)
             {
-                fixed (Matrix4d* tmp_vecPtr = value)
+                fixed (Matrix4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, in Matrix2x3 value)
             {
-                fixed (Matrix2x3* tmp_vecPtr = &value)
+                fixed (Matrix2x3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3> value)
             {
-                fixed (Matrix2x3* tmp_vecPtr = value)
+                fixed (Matrix2x3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2x3f(int program, int location, int count, bool transpose, Matrix2x3[] value)
             {
-                fixed (Matrix2x3* tmp_vecPtr = value)
+                fixed (Matrix2x3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in Matrix3x2 value)
             {
-                fixed (Matrix3x2* tmp_vecPtr = &value)
+                fixed (Matrix3x2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2> value)
             {
-                fixed (Matrix3x2* tmp_vecPtr = value)
+                fixed (Matrix3x2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, Matrix3x2[] value)
             {
-                fixed (Matrix3x2* tmp_vecPtr = value)
+                fixed (Matrix3x2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
             {
-                fixed (System.Numerics.Matrix3x2* tmp_vecPtr = &value)
+                fixed (System.Numerics.Matrix3x2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix3x2> value)
             {
-                fixed (System.Numerics.Matrix3x2* tmp_vecPtr = value)
+                fixed (System.Numerics.Matrix3x2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x2f(int program, int location, int count, bool transpose, System.Numerics.Matrix3x2[] value)
             {
-                fixed (System.Numerics.Matrix3x2* tmp_vecPtr = value)
+                fixed (System.Numerics.Matrix3x2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, in Matrix2x4 value)
             {
-                fixed (Matrix2x4* tmp_vecPtr = &value)
+                fixed (Matrix2x4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4> value)
             {
-                fixed (Matrix2x4* tmp_vecPtr = value)
+                fixed (Matrix2x4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix2x4f(int program, int location, int count, bool transpose, Matrix2x4[] value)
             {
-                fixed (Matrix2x4* tmp_vecPtr = value)
+                fixed (Matrix2x4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, in Matrix4x2 value)
             {
-                fixed (Matrix4x2* tmp_vecPtr = &value)
+                fixed (Matrix4x2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2> value)
             {
-                fixed (Matrix4x2* tmp_vecPtr = value)
+                fixed (Matrix4x2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4x2f(int program, int location, int count, bool transpose, Matrix4x2[] value)
             {
-                fixed (Matrix4x2* tmp_vecPtr = value)
+                fixed (Matrix4x2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, in Matrix3x4 value)
             {
-                fixed (Matrix3x4* tmp_vecPtr = &value)
+                fixed (Matrix3x4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4> value)
             {
-                fixed (Matrix3x4* tmp_vecPtr = value)
+                fixed (Matrix3x4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix3x4f(int program, int location, int count, bool transpose, Matrix3x4[] value)
             {
-                fixed (Matrix3x4* tmp_vecPtr = value)
+                fixed (Matrix3x4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, in Matrix4x3 value)
             {
-                fixed (Matrix4x3* tmp_vecPtr = &value)
+                fixed (Matrix4x3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3> value)
             {
-                fixed (Matrix4x3* tmp_vecPtr = value)
+                fixed (Matrix4x3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
             public static unsafe void ProgramUniformMatrix4x3f(int program, int location, int count, bool transpose, Matrix4x3[] value)
             {
-                fixed (Matrix4x3* tmp_vecPtr = value)
+                fixed (Matrix4x3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, in Matrix2x3d value)
             {
-                fixed (Matrix2x3d* tmp_vecPtr = &value)
+                fixed (Matrix2x3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3d> value)
             {
-                fixed (Matrix2x3d* tmp_vecPtr = value)
+                fixed (Matrix2x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2x3d(int program, int location, int count, bool transpose, Matrix2x3d[] value)
             {
-                fixed (Matrix2x3d* tmp_vecPtr = value)
+                fixed (Matrix2x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, in Matrix3x2d value)
             {
-                fixed (Matrix3x2d* tmp_vecPtr = &value)
+                fixed (Matrix3x2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2d> value)
             {
-                fixed (Matrix3x2d* tmp_vecPtr = value)
+                fixed (Matrix3x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3x2d(int program, int location, int count, bool transpose, Matrix3x2d[] value)
             {
-                fixed (Matrix3x2d* tmp_vecPtr = value)
+                fixed (Matrix3x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, in Matrix2x4d value)
             {
-                fixed (Matrix2x4d* tmp_vecPtr = &value)
+                fixed (Matrix2x4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4d> value)
             {
-                fixed (Matrix2x4d* tmp_vecPtr = value)
+                fixed (Matrix2x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix2x4d(int program, int location, int count, bool transpose, Matrix2x4d[] value)
             {
-                fixed (Matrix2x4d* tmp_vecPtr = value)
+                fixed (Matrix2x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, in Matrix4x2d value)
             {
-                fixed (Matrix4x2d* tmp_vecPtr = &value)
+                fixed (Matrix4x2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2d> value)
             {
-                fixed (Matrix4x2d* tmp_vecPtr = value)
+                fixed (Matrix4x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4x2d(int program, int location, int count, bool transpose, Matrix4x2d[] value)
             {
-                fixed (Matrix4x2d* tmp_vecPtr = value)
+                fixed (Matrix4x2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, in Matrix3x4d value)
             {
-                fixed (Matrix3x4d* tmp_vecPtr = &value)
+                fixed (Matrix3x4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4d> value)
             {
-                fixed (Matrix3x4d* tmp_vecPtr = value)
+                fixed (Matrix3x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix3x4d(int program, int location, int count, bool transpose, Matrix3x4d[] value)
             {
-                fixed (Matrix3x4d* tmp_vecPtr = value)
+                fixed (Matrix3x4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, in Matrix4x3d value)
             {
-                fixed (Matrix4x3d* tmp_vecPtr = &value)
+                fixed (Matrix4x3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3d> value)
             {
-                fixed (Matrix4x3d* tmp_vecPtr = value)
+                fixed (Matrix4x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
             public static unsafe void ProgramUniformMatrix4x3d(int program, int location, int count, bool transpose, Matrix4x3d[] value)
             {
-                fixed (Matrix4x3d* tmp_vecPtr = value)
+                fixed (Matrix4x3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
@@ -18739,375 +19277,407 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
-            public static unsafe void Uniform1fv(int location, ReadOnlySpan<float> value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (float* value_ptr = value)
-                {
-                    Uniform1fv(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
-            public static unsafe void Uniform1fv(int location, float[] value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (float* value_ptr = value)
-                {
-                    Uniform1fv(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
             public static unsafe void Uniform1fv(int location, int count, in float value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (float* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
+                    Uniform1fv(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
+            public static unsafe void Uniform1fv(int location, int count, ReadOnlySpan<float> value)
+            {
+                fixed (float* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
+                    Uniform1fv(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1fv(int, int, float*)"/>
+            public static unsafe void Uniform1fv(int location, int count, float[] value)
+            {
+                fixed (float* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
                     Uniform1fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
             public static unsafe void Uniform2fv(int location, int count, in Vector2 value)
             {
-                fixed (Vector2* tmp_vecPtr = &value)
+                fixed (Vector2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform2fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
             public static unsafe void Uniform2fv(int location, int count, ReadOnlySpan<Vector2> value)
             {
-                fixed (Vector2* tmp_vecPtr = value)
+                fixed (Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform2fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
             public static unsafe void Uniform2fv(int location, int count, Vector2[] value)
             {
-                fixed (Vector2* tmp_vecPtr = value)
+                fixed (Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform2fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
             public static unsafe void Uniform2fv(int location, int count, in System.Numerics.Vector2 value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform2fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
             public static unsafe void Uniform2fv(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform2fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2fv(int, int, float*)"/>
             public static unsafe void Uniform2fv(int location, int count, System.Numerics.Vector2[] value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform2fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
             public static unsafe void Uniform3fv(int location, int count, in Vector3 value)
             {
-                fixed (Vector3* tmp_vecPtr = &value)
+                fixed (Vector3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform3fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
             public static unsafe void Uniform3fv(int location, int count, ReadOnlySpan<Vector3> value)
             {
-                fixed (Vector3* tmp_vecPtr = value)
+                fixed (Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform3fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
             public static unsafe void Uniform3fv(int location, int count, Vector3[] value)
             {
-                fixed (Vector3* tmp_vecPtr = value)
+                fixed (Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform3fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
             public static unsafe void Uniform3fv(int location, int count, in System.Numerics.Vector3 value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform3fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
             public static unsafe void Uniform3fv(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform3fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3fv(int, int, float*)"/>
             public static unsafe void Uniform3fv(int location, int count, System.Numerics.Vector3[] value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform3fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
             public static unsafe void Uniform4fv(int location, int count, in Vector4 value)
             {
-                fixed (Vector4* tmp_vecPtr = &value)
+                fixed (Vector4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform4fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
             public static unsafe void Uniform4fv(int location, int count, ReadOnlySpan<Vector4> value)
             {
-                fixed (Vector4* tmp_vecPtr = value)
+                fixed (Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform4fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
             public static unsafe void Uniform4fv(int location, int count, Vector4[] value)
             {
-                fixed (Vector4* tmp_vecPtr = value)
+                fixed (Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform4fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
             public static unsafe void Uniform4fv(int location, int count, in System.Numerics.Vector4 value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform4fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
             public static unsafe void Uniform4fv(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform4fv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4fv(int, int, float*)"/>
             public static unsafe void Uniform4fv(int location, int count, System.Numerics.Vector4[] value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     Uniform4fv(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
-            public static unsafe void Uniform1iv(int location, ReadOnlySpan<int> value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (int* value_ptr = value)
-                {
-                    Uniform1iv(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
-            public static unsafe void Uniform1iv(int location, int[] value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (int* value_ptr = value)
-                {
-                    Uniform1iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
             public static unsafe void Uniform1iv(int location, int count, in int value)
             {
-                fixed (int* value_ptr = &value)
+                fixed (int* tmp_value = &value)
                 {
+                    int* value_ptr = (int*)tmp_value;
+                    Uniform1iv(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
+            public static unsafe void Uniform1iv(int location, int count, ReadOnlySpan<int> value)
+            {
+                fixed (int* tmp_value = value)
+                {
+                    int* value_ptr = (int*)tmp_value;
+                    Uniform1iv(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1iv(int, int, int*)"/>
+            public static unsafe void Uniform1iv(int location, int count, int[] value)
+            {
+                fixed (int* tmp_value = value)
+                {
+                    int* value_ptr = (int*)tmp_value;
                     Uniform1iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2iv(int, int, int*)"/>
             public static unsafe void Uniform2iv(int location, int count, in Vector2i value)
             {
-                fixed (Vector2i* tmp_vecPtr = &value)
+                fixed (Vector2i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform2iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2iv(int, int, int*)"/>
             public static unsafe void Uniform2iv(int location, int count, ReadOnlySpan<Vector2i> value)
             {
-                fixed (Vector2i* tmp_vecPtr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform2iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2iv(int, int, int*)"/>
             public static unsafe void Uniform2iv(int location, int count, Vector2i[] value)
             {
-                fixed (Vector2i* tmp_vecPtr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform2iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3iv(int, int, int*)"/>
             public static unsafe void Uniform3iv(int location, int count, in Vector3i value)
             {
-                fixed (Vector3i* tmp_vecPtr = &value)
+                fixed (Vector3i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform3iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3iv(int, int, int*)"/>
             public static unsafe void Uniform3iv(int location, int count, ReadOnlySpan<Vector3i> value)
             {
-                fixed (Vector3i* tmp_vecPtr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform3iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3iv(int, int, int*)"/>
             public static unsafe void Uniform3iv(int location, int count, Vector3i[] value)
             {
-                fixed (Vector3i* tmp_vecPtr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform3iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4iv(int, int, int*)"/>
             public static unsafe void Uniform4iv(int location, int count, in Vector4i value)
             {
-                fixed (Vector4i* tmp_vecPtr = &value)
+                fixed (Vector4i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform4iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4iv(int, int, int*)"/>
             public static unsafe void Uniform4iv(int location, int count, ReadOnlySpan<Vector4i> value)
             {
-                fixed (Vector4i* tmp_vecPtr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform4iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4iv(int, int, int*)"/>
             public static unsafe void Uniform4iv(int location, int count, Vector4i[] value)
             {
-                fixed (Vector4i* tmp_vecPtr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     Uniform4iv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix2fv(int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void UniformMatrix2fv(int location, int count, bool transpose, in Matrix2 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix2fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix2fv(int location, bool transpose, float[] value)
+            public static unsafe void UniformMatrix2fv(int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix2fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix2fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix2fv(int location, int count, bool transpose, in float value)
+            public static unsafe void UniformMatrix2fv(int location, int count, bool transpose, Matrix2[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix2fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix3fv(int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void UniformMatrix3fv(int location, int count, bool transpose, in Matrix3 value)
             {
-                int count = (int)(value.Length / 9);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix3fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix3fv(int location, bool transpose, float[] value)
+            public static unsafe void UniformMatrix3fv(int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
             {
-                int count = (int)(value.Length / 9);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix3fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix3fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix3fv(int location, int count, bool transpose, in float value)
+            public static unsafe void UniformMatrix3fv(int location, int count, bool transpose, Matrix3[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix3fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix4fv(int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void UniformMatrix4fv(int location, int count, bool transpose, in Matrix4 value)
             {
-                int count = (int)(value.Length / 16);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix4fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix4fv(int location, bool transpose, float[] value)
+            public static unsafe void UniformMatrix4fv(int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
             {
-                int count = (int)(value.Length / 16);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix4fv(location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
-            public static unsafe void UniformMatrix4fv(int location, int count, bool transpose, in float value)
+            public static unsafe void UniformMatrix4fv(int location, int count, bool transpose, Matrix4[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
+                    UniformMatrix4fv(location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
+            public static unsafe void UniformMatrix4fv(int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
+            {
+                fixed (System.Numerics.Matrix4x4* tmp_value = &value)
+                {
+                    float* value_ptr = (float*)tmp_value;
+                    UniformMatrix4fv(location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
+            public static unsafe void UniformMatrix4fv(int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix4x4> value)
+            {
+                fixed (System.Numerics.Matrix4x4* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
+                    UniformMatrix4fv(location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="UniformMatrix4fv(int, int, bool, float*)"/>
+            public static unsafe void UniformMatrix4fv(int location, int count, bool transpose, System.Numerics.Matrix4x4[] value)
+            {
+                fixed (System.Numerics.Matrix4x4* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
                     UniformMatrix4fv(location, count, transpose, value_ptr);
                 }
             }
@@ -20883,36 +21453,36 @@ namespace OpenTK.Graphics.OpenGL
             /// <inheritdoc cref="VertexAttribL1dv(uint, double*)"/>
             public static unsafe void VertexAttribL1d(uint index, in double v)
             {
-                fixed (double* tmp_vecPtr = &v)
+                fixed (double* tmp_v = &v)
                 {
-                    double* v_ptr = (double*)tmp_vecPtr;
+                    double* v_ptr = (double*)tmp_v;
                     VertexAttribL1dv(index, v_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribL2dv(uint, double*)"/>
             public static unsafe void VertexAttribL2d(uint index, in Vector2d v)
             {
-                fixed (Vector2d* tmp_vecPtr = &v)
+                fixed (Vector2d* tmp_v = &v)
                 {
-                    double* v_ptr = (double*)tmp_vecPtr;
+                    double* v_ptr = (double*)tmp_v;
                     VertexAttribL2dv(index, v_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribL3dv(uint, double*)"/>
             public static unsafe void VertexAttribL3d(uint index, in Vector3d v)
             {
-                fixed (Vector3d* tmp_vecPtr = &v)
+                fixed (Vector3d* tmp_v = &v)
                 {
-                    double* v_ptr = (double*)tmp_vecPtr;
+                    double* v_ptr = (double*)tmp_v;
                     VertexAttribL3dv(index, v_ptr);
                 }
             }
             /// <inheritdoc cref="VertexAttribL4dv(uint, double*)"/>
             public static unsafe void VertexAttribL4d(uint index, in Vector4d v)
             {
-                fixed (Vector4d* tmp_vecPtr = &v)
+                fixed (Vector4d* tmp_v = &v)
                 {
-                    double* v_ptr = (double*)tmp_vecPtr;
+                    double* v_ptr = (double*)tmp_v;
                     VertexAttribL4dv(index, v_ptr);
                 }
             }
@@ -26297,531 +26867,560 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform1fv(int program, int location, ReadOnlySpan<float> value)
-            {
-                int count = (int)(value.Length);
-                fixed (float* value_ptr = value)
-                {
-                    ProgramUniform1fv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
-            public static unsafe void ProgramUniform1fv(int program, int location, float[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (float* value_ptr = value)
-                {
-                    ProgramUniform1fv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform1fv(int program, int location, int count, in float value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (float* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform1fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2fv(int program, int location, int count, in Vector2 value)
             {
-                fixed (Vector2* tmp_vecPtr = &value)
+                fixed (Vector2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2fv(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                fixed (Vector2* tmp_vecPtr = value)
+                fixed (Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2fv(int program, int location, int count, Vector2[] value)
             {
-                fixed (Vector2* tmp_vecPtr = value)
+                fixed (Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2fv(int program, int location, int count, in System.Numerics.Vector2 value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector2* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2fv(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform2fv(int program, int location, int count, System.Numerics.Vector2[] value)
             {
-                fixed (System.Numerics.Vector2* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector2* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform2fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3fv(int program, int location, int count, in Vector3 value)
             {
-                fixed (Vector3* tmp_vecPtr = &value)
+                fixed (Vector3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3fv(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                fixed (Vector3* tmp_vecPtr = value)
+                fixed (Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3fv(int program, int location, int count, Vector3[] value)
             {
-                fixed (Vector3* tmp_vecPtr = value)
+                fixed (Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3fv(int program, int location, int count, in System.Numerics.Vector3 value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector3* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3fv(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform3fv(int program, int location, int count, System.Numerics.Vector3[] value)
             {
-                fixed (System.Numerics.Vector3* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector3* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform3fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4fv(int program, int location, int count, in Vector4 value)
             {
-                fixed (Vector4* tmp_vecPtr = &value)
+                fixed (Vector4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4fv(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                fixed (Vector4* tmp_vecPtr = value)
+                fixed (Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4fv(int program, int location, int count, Vector4[] value)
             {
-                fixed (Vector4* tmp_vecPtr = value)
+                fixed (Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4fv(int program, int location, int count, in System.Numerics.Vector4 value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = &value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4fv(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4fv(int, int, int, float*)"/>
             public static unsafe void ProgramUniform4fv(int program, int location, int count, System.Numerics.Vector4[] value)
             {
-                fixed (System.Numerics.Vector4* tmp_vecPtr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    float* value_ptr = (float*)tmp_vecPtr;
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniform4fv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform1iv(int program, int location, ReadOnlySpan<int> value)
-            {
-                int count = (int)(value.Length);
-                fixed (int* value_ptr = value)
-                {
-                    ProgramUniform1iv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
-            public static unsafe void ProgramUniform1iv(int program, int location, int[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (int* value_ptr = value)
-                {
-                    ProgramUniform1iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform1iv(int program, int location, int count, in int value)
             {
-                fixed (int* value_ptr = &value)
+                fixed (int* tmp_value = &value)
                 {
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform1iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform2iv(int program, int location, int count, in Vector2i value)
             {
-                fixed (Vector2i* tmp_vecPtr = &value)
+                fixed (Vector2i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform2iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform2iv(int program, int location, int count, ReadOnlySpan<Vector2i> value)
             {
-                fixed (Vector2i* tmp_vecPtr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform2iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform2iv(int program, int location, int count, Vector2i[] value)
             {
-                fixed (Vector2i* tmp_vecPtr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform2iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform3iv(int program, int location, int count, in Vector3i value)
             {
-                fixed (Vector3i* tmp_vecPtr = &value)
+                fixed (Vector3i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform3iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform3iv(int program, int location, int count, ReadOnlySpan<Vector3i> value)
             {
-                fixed (Vector3i* tmp_vecPtr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform3iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform3iv(int program, int location, int count, Vector3i[] value)
             {
-                fixed (Vector3i* tmp_vecPtr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform3iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform4iv(int program, int location, int count, in Vector4i value)
             {
-                fixed (Vector4i* tmp_vecPtr = &value)
+                fixed (Vector4i* tmp_value = &value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform4iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform4iv(int program, int location, int count, ReadOnlySpan<Vector4i> value)
             {
-                fixed (Vector4i* tmp_vecPtr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform4iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4iv(int, int, int, int*)"/>
             public static unsafe void ProgramUniform4iv(int program, int location, int count, Vector4i[] value)
             {
-                fixed (Vector4i* tmp_vecPtr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
-                    int* value_ptr = (int*)tmp_vecPtr;
+                    int* value_ptr = (int*)tmp_value;
                     ProgramUniform4iv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix2fv(int program, int location, int count, bool transpose, in Matrix2 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix2fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix2fv(int program, int location, int count, bool transpose, Matrix2[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix3fv(int program, int location, int count, bool transpose, in Matrix3 value)
             {
-                int count = (int)(value.Length / 9);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix3fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3> value)
             {
-                int count = (int)(value.Length / 9);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix3fv(int program, int location, int count, bool transpose, Matrix3[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, in Matrix4 value)
             {
-                int count = (int)(value.Length / 16);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4> value)
             {
-                int count = (int)(value.Length / 16);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, Matrix4[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
+                    ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
+            public static unsafe void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, in System.Numerics.Matrix4x4 value)
+            {
+                fixed (System.Numerics.Matrix4x4* tmp_value = &value)
+                {
+                    float* value_ptr = (float*)tmp_value;
+                    ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
+            public static unsafe void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix4x4> value)
+            {
+                fixed (System.Numerics.Matrix4x4* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
+                    ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniformMatrix4fv(int, int, int, bool, float*)"/>
+            public static unsafe void ProgramUniformMatrix4fv(int program, int location, int count, bool transpose, System.Numerics.Matrix4x4[] value)
+            {
+                fixed (System.Numerics.Matrix4x4* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x3fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix2x3fv(int program, int location, int count, bool transpose, in Matrix2x3 value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2x3* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x3fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix2x3fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3> value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2x3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x3fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix2x3fv(int program, int location, int count, bool transpose, Matrix2x3[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix2x3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, in Matrix3x2 value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3x2* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2> value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3x2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, Matrix3x2[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix3x2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
+                    ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
+            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, in System.Numerics.Matrix3x2 value)
+            {
+                fixed (System.Numerics.Matrix3x2* tmp_value = &value)
+                {
+                    float* value_ptr = (float*)tmp_value;
+                    ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
+            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, ReadOnlySpan<System.Numerics.Matrix3x2> value)
+            {
+                fixed (System.Numerics.Matrix3x2* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
+                    ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniformMatrix3x2fv(int, int, int, bool, float*)"/>
+            public static unsafe void ProgramUniformMatrix3x2fv(int program, int location, int count, bool transpose, System.Numerics.Matrix3x2[] value)
+            {
+                fixed (System.Numerics.Matrix3x2* tmp_value = value)
+                {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x4fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix2x4fv(int program, int location, int count, bool transpose, in Matrix2x4 value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2x4* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x4fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix2x4fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4> value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (float* value_ptr = value)
+                fixed (Matrix2x4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix2x4fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix2x4fv(int program, int location, int count, bool transpose, Matrix2x4[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix2x4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix2x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x2fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix4x2fv(int program, int location, int count, bool transpose, in Matrix4x2 value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4x2* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x2fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix4x2fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2> value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4x2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x2fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix4x2fv(int program, int location, int count, bool transpose, Matrix4x2[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix4x2* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x2fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x4fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix3x4fv(int program, int location, int count, bool transpose, in Matrix3x4 value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3x4* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x4fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix3x4fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4> value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (float* value_ptr = value)
+                fixed (Matrix3x4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix3x4fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix3x4fv(int program, int location, int count, bool transpose, Matrix3x4[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix3x4* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix3x4fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x3fv(int program, int location, bool transpose, ReadOnlySpan<float> value)
+            public static unsafe void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, in Matrix4x3 value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4x3* tmp_value = &value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x3fv(int program, int location, bool transpose, float[] value)
+            public static unsafe void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3> value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (float* value_ptr = value)
+                fixed (Matrix4x3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3fv(int, int, int, bool, float*)"/>
-            public static unsafe void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, in float value)
+            public static unsafe void ProgramUniformMatrix4x3fv(int program, int location, int count, bool transpose, Matrix4x3[] value)
             {
-                fixed (float* value_ptr = &value)
+                fixed (Matrix4x3* tmp_value = value)
                 {
+                    float* value_ptr = (float*)tmp_value;
                     ProgramUniformMatrix4x3fv(program, location, count, transpose, value_ptr);
                 }
             }
@@ -27018,106 +27617,92 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform1uiv(int program, int location, ReadOnlySpan<uint> value)
-            {
-                int count = (int)(value.Length);
-                fixed (uint* value_ptr = value)
-                {
-                    ProgramUniform1uiv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform1uiv(int program, int location, uint[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (uint* value_ptr = value)
-                {
-                    ProgramUniform1uiv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1uiv(int, int, int, uint*)"/>
             public static unsafe void ProgramUniform1uiv(int program, int location, int count, in uint value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (uint* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform1uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2uiv(int program, int location, ReadOnlySpan<uint> value)
+            public static unsafe void ProgramUniform2uiv(int program, int location, int count, in Vector2i value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (uint* value_ptr = value)
+                fixed (Vector2i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform2uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2uiv(int program, int location, uint[] value)
+            public static unsafe void ProgramUniform2uiv(int program, int location, int count, ReadOnlySpan<Vector2i> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (uint* value_ptr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform2uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform2uiv(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform2uiv(int program, int location, int count, Vector2i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector2i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform2uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3uiv(int program, int location, ReadOnlySpan<uint> value)
+            public static unsafe void ProgramUniform3uiv(int program, int location, int count, in Vector3i value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (uint* value_ptr = value)
+                fixed (Vector3i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform3uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3uiv(int program, int location, uint[] value)
+            public static unsafe void ProgramUniform3uiv(int program, int location, int count, ReadOnlySpan<Vector3i> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (uint* value_ptr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform3uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform3uiv(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform3uiv(int program, int location, int count, Vector3i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector3i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform3uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4uiv(int program, int location, ReadOnlySpan<uint> value)
+            public static unsafe void ProgramUniform4uiv(int program, int location, int count, in Vector4i value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (uint* value_ptr = value)
+                fixed (Vector4i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform4uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4uiv(int program, int location, uint[] value)
+            public static unsafe void ProgramUniform4uiv(int program, int location, int count, ReadOnlySpan<Vector4i> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (uint* value_ptr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform4uiv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4uiv(int, int, int, uint*)"/>
-            public static unsafe void ProgramUniform4uiv(int program, int location, int count, in uint value)
+            public static unsafe void ProgramUniform4uiv(int program, int location, int count, Vector4i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector4i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     ProgramUniform4uiv(program, location, count, value_ptr);
                 }
             }
@@ -27771,343 +28356,335 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform1dv(int program, int location, ReadOnlySpan<double> value)
-            {
-                int count = (int)(value.Length);
-                fixed (double* value_ptr = value)
-                {
-                    ProgramUniform1dv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
-            public static unsafe void ProgramUniform1dv(int program, int location, double[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (double* value_ptr = value)
-                {
-                    ProgramUniform1dv(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform1dv(int program, int location, int count, in double value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (double* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform1dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform2dv(int program, int location, int count, in Vector2d value)
             {
-                fixed (Vector2d* tmp_vecPtr = &value)
+                fixed (Vector2d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform2dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform2dv(int program, int location, int count, ReadOnlySpan<Vector2d> value)
             {
-                fixed (Vector2d* tmp_vecPtr = value)
+                fixed (Vector2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform2dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform2dv(int program, int location, int count, Vector2d[] value)
             {
-                fixed (Vector2d* tmp_vecPtr = value)
+                fixed (Vector2d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform2dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform3dv(int program, int location, int count, in Vector3d value)
             {
-                fixed (Vector3d* tmp_vecPtr = &value)
+                fixed (Vector3d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform3dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform3dv(int program, int location, int count, ReadOnlySpan<Vector3d> value)
             {
-                fixed (Vector3d* tmp_vecPtr = value)
+                fixed (Vector3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform3dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform3dv(int program, int location, int count, Vector3d[] value)
             {
-                fixed (Vector3d* tmp_vecPtr = value)
+                fixed (Vector3d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform3dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform4dv(int program, int location, int count, in Vector4d value)
             {
-                fixed (Vector4d* tmp_vecPtr = &value)
+                fixed (Vector4d* tmp_value = &value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform4dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform4dv(int program, int location, int count, ReadOnlySpan<Vector4d> value)
             {
-                fixed (Vector4d* tmp_vecPtr = value)
+                fixed (Vector4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform4dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4dv(int, int, int, double*)"/>
             public static unsafe void ProgramUniform4dv(int program, int location, int count, Vector4d[] value)
             {
-                fixed (Vector4d* tmp_vecPtr = value)
+                fixed (Vector4d* tmp_value = value)
                 {
-                    double* value_ptr = (double*)tmp_vecPtr;
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniform4dv(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix2dv(int program, int location, int count, bool transpose, in Matrix2d value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (double* value_ptr = value)
+                fixed (Matrix2d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix2dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2d> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (double* value_ptr = value)
+                fixed (Matrix2d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix2dv(int program, int location, int count, bool transpose, Matrix2d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix2d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix3dv(int program, int location, int count, bool transpose, in Matrix3d value)
             {
-                int count = (int)(value.Length / 9);
-                fixed (double* value_ptr = value)
+                fixed (Matrix3d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix3dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3d> value)
             {
-                int count = (int)(value.Length / 9);
-                fixed (double* value_ptr = value)
+                fixed (Matrix3d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix3dv(int program, int location, int count, bool transpose, Matrix3d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix3d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix4dv(int program, int location, int count, bool transpose, in Matrix4d value)
             {
-                int count = (int)(value.Length / 16);
-                fixed (double* value_ptr = value)
+                fixed (Matrix4d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix4dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4d> value)
             {
-                int count = (int)(value.Length / 16);
-                fixed (double* value_ptr = value)
+                fixed (Matrix4d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix4dv(int program, int location, int count, bool transpose, Matrix4d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix4d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x3dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix2x3dv(int program, int location, int count, bool transpose, in Matrix2x3d value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (double* value_ptr = value)
+                fixed (Matrix2x3d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x3dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix2x3dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x3d> value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (double* value_ptr = value)
+                fixed (Matrix2x3d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x3dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix2x3dv(int program, int location, int count, bool transpose, Matrix2x3d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix2x3d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x4dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix2x4dv(int program, int location, int count, bool transpose, in Matrix2x4d value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (double* value_ptr = value)
+                fixed (Matrix2x4d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x4dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix2x4dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix2x4d> value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (double* value_ptr = value)
+                fixed (Matrix2x4d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix2x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix2x4dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix2x4dv(int program, int location, int count, bool transpose, Matrix2x4d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix2x4d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix2x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x2dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix3x2dv(int program, int location, int count, bool transpose, in Matrix3x2d value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (double* value_ptr = value)
+                fixed (Matrix3x2d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x2dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix3x2dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x2d> value)
             {
-                int count = (int)(value.Length / 6);
-                fixed (double* value_ptr = value)
+                fixed (Matrix3x2d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x2dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix3x2dv(int program, int location, int count, bool transpose, Matrix3x2d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix3x2d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x4dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix3x4dv(int program, int location, int count, bool transpose, in Matrix3x4d value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (double* value_ptr = value)
+                fixed (Matrix3x4d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x4dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix3x4dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix3x4d> value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (double* value_ptr = value)
+                fixed (Matrix3x4d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix3x4dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix3x4dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix3x4dv(int program, int location, int count, bool transpose, Matrix3x4d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix3x4d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix3x4dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x2dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix4x2dv(int program, int location, int count, bool transpose, in Matrix4x2d value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (double* value_ptr = value)
+                fixed (Matrix4x2d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x2dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix4x2dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x2d> value)
             {
-                int count = (int)(value.Length / 8);
-                fixed (double* value_ptr = value)
+                fixed (Matrix4x2d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x2dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x2dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix4x2dv(int program, int location, int count, bool transpose, Matrix4x2d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix4x2d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x2dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x3dv(int program, int location, bool transpose, ReadOnlySpan<double> value)
+            public static unsafe void ProgramUniformMatrix4x3dv(int program, int location, int count, bool transpose, in Matrix4x3d value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (double* value_ptr = value)
+                fixed (Matrix4x3d* tmp_value = &value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x3dv(int program, int location, bool transpose, double[] value)
+            public static unsafe void ProgramUniformMatrix4x3dv(int program, int location, int count, bool transpose, ReadOnlySpan<Matrix4x3d> value)
             {
-                int count = (int)(value.Length / 12);
-                fixed (double* value_ptr = value)
+                fixed (Matrix4x3d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniformMatrix4x3dv(int, int, int, bool, double*)"/>
-            public static unsafe void ProgramUniformMatrix4x3dv(int program, int location, int count, bool transpose, in double value)
+            public static unsafe void ProgramUniformMatrix4x3dv(int program, int location, int count, bool transpose, Matrix4x3d[] value)
             {
-                fixed (double* value_ptr = &value)
+                fixed (Matrix4x3d* tmp_value = value)
                 {
+                    double* value_ptr = (double*)tmp_value;
                     ProgramUniformMatrix4x3dv(program, location, count, transpose, value_ptr);
                 }
             }
@@ -28479,106 +29056,110 @@ namespace OpenTK.Graphics.OpenGL
                 return returnValue;
             }
             /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
-            public static unsafe void Uniform1uiv(int location, ReadOnlySpan<uint> value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (uint* value_ptr = value)
-                {
-                    Uniform1uiv(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
-            public static unsafe void Uniform1uiv(int location, uint[] value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (uint* value_ptr = value)
-                {
-                    Uniform1uiv(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
             public static unsafe void Uniform1uiv(int location, int count, in uint value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (uint* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
+                    Uniform1uiv(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
+            public static unsafe void Uniform1uiv(int location, int count, ReadOnlySpan<uint> value)
+            {
+                fixed (uint* tmp_value = value)
+                {
+                    uint* value_ptr = (uint*)tmp_value;
+                    Uniform1uiv(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1uiv(int, int, uint*)"/>
+            public static unsafe void Uniform1uiv(int location, int count, uint[] value)
+            {
+                fixed (uint* tmp_value = value)
+                {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform1uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2uiv(int, int, uint*)"/>
-            public static unsafe void Uniform2uiv(int location, ReadOnlySpan<uint> value)
+            public static unsafe void Uniform2uiv(int location, int count, in Vector2i value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (uint* value_ptr = value)
+                fixed (Vector2i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform2uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2uiv(int, int, uint*)"/>
-            public static unsafe void Uniform2uiv(int location, uint[] value)
+            public static unsafe void Uniform2uiv(int location, int count, ReadOnlySpan<Vector2i> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (uint* value_ptr = value)
+                fixed (Vector2i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform2uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2uiv(int, int, uint*)"/>
-            public static unsafe void Uniform2uiv(int location, int count, in uint value)
+            public static unsafe void Uniform2uiv(int location, int count, Vector2i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector2i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform2uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3uiv(int, int, uint*)"/>
-            public static unsafe void Uniform3uiv(int location, ReadOnlySpan<uint> value)
+            public static unsafe void Uniform3uiv(int location, int count, in Vector3i value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (uint* value_ptr = value)
+                fixed (Vector3i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform3uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3uiv(int, int, uint*)"/>
-            public static unsafe void Uniform3uiv(int location, uint[] value)
+            public static unsafe void Uniform3uiv(int location, int count, ReadOnlySpan<Vector3i> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (uint* value_ptr = value)
+                fixed (Vector3i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform3uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3uiv(int, int, uint*)"/>
-            public static unsafe void Uniform3uiv(int location, int count, in uint value)
+            public static unsafe void Uniform3uiv(int location, int count, Vector3i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector3i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform3uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4uiv(int, int, uint*)"/>
-            public static unsafe void Uniform4uiv(int location, ReadOnlySpan<uint> value)
+            public static unsafe void Uniform4uiv(int location, int count, in Vector4i value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (uint* value_ptr = value)
+                fixed (Vector4i* tmp_value = &value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform4uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4uiv(int, int, uint*)"/>
-            public static unsafe void Uniform4uiv(int location, uint[] value)
+            public static unsafe void Uniform4uiv(int location, int count, ReadOnlySpan<Vector4i> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (uint* value_ptr = value)
+                fixed (Vector4i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform4uiv(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4uiv(int, int, uint*)"/>
-            public static unsafe void Uniform4uiv(int location, int count, in uint value)
+            public static unsafe void Uniform4uiv(int location, int count, Vector4i[] value)
             {
-                fixed (uint* value_ptr = &value)
+                fixed (Vector4i* tmp_value = value)
                 {
+                    uint* value_ptr = (uint*)tmp_value;
                     Uniform4uiv(location, count, value_ptr);
                 }
             }
@@ -32694,210 +33275,380 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
-            public static unsafe void Uniform1i64v(int location, ReadOnlySpan<long> value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (long* value_ptr = value)
-                {
-                    Uniform1i64v(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
-            public static unsafe void Uniform1i64v(int location, long[] value)
-            {
-                int count = (int)(value.Length / 1);
-                fixed (long* value_ptr = value)
-                {
-                    Uniform1i64v(location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
             public static unsafe void Uniform1i64v(int location, int count, in long value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (long* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform1i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
+            public static unsafe void Uniform1i64v(int location, int count, ReadOnlySpan<long> value)
+            {
+                fixed (long* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform1i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1i64v(int, int, long*)"/>
+            public static unsafe void Uniform1i64v(int location, int count, long[] value)
+            {
+                fixed (long* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform1i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
-            public static unsafe void Uniform2i64v(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform2i64v(int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
-            public static unsafe void Uniform2i64v(int location, long[] value)
+            public static unsafe void Uniform2i64v(int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
-            public static unsafe void Uniform2i64v(int location, int count, in long value)
+            public static unsafe void Uniform2i64v(int location, int count, Vector2[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
+            public static unsafe void Uniform2i64v(int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
+            public static unsafe void Uniform2i64v(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform2i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2i64v(int, int, long*)"/>
+            public static unsafe void Uniform2i64v(int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform2i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
-            public static unsafe void Uniform3i64v(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform3i64v(int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
-            public static unsafe void Uniform3i64v(int location, long[] value)
+            public static unsafe void Uniform3i64v(int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
-            public static unsafe void Uniform3i64v(int location, int count, in long value)
+            public static unsafe void Uniform3i64v(int location, int count, Vector3[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
+            public static unsafe void Uniform3i64v(int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
+            public static unsafe void Uniform3i64v(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform3i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3i64v(int, int, long*)"/>
+            public static unsafe void Uniform3i64v(int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform3i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
-            public static unsafe void Uniform4i64v(int location, ReadOnlySpan<long> value)
+            public static unsafe void Uniform4i64v(int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
-            public static unsafe void Uniform4i64v(int location, long[] value)
+            public static unsafe void Uniform4i64v(int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
-            public static unsafe void Uniform4i64v(int location, int count, in long value)
+            public static unsafe void Uniform4i64v(int location, int count, Vector4[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     Uniform4i64v(location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64v(int location, ReadOnlySpan<ulong> value)
+            /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
+            public static unsafe void Uniform4i64v(int location, int count, in System.Numerics.Vector4 value)
             {
-                int count = (int)(value.Length / 1);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    Uniform1ui64v(location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64v(location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform1ui64v(int location, ulong[] value)
+            /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
+            public static unsafe void Uniform4i64v(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                int count = (int)(value.Length / 1);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    Uniform1ui64v(location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4i64v(int, int, long*)"/>
+            public static unsafe void Uniform4i64v(int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    Uniform4i64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
             public static unsafe void Uniform1ui64v(int location, int count, in ulong value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (ulong* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform1ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform1ui64v(int location, int count, ReadOnlySpan<ulong> value)
+            {
+                fixed (ulong* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform1ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform1ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform1ui64v(int location, int count, ulong[] value)
+            {
+                fixed (ulong* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform1ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64v(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform2ui64v(int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64v(int location, ulong[] value)
+            public static unsafe void Uniform2ui64v(int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform2ui64v(int location, int count, in ulong value)
+            public static unsafe void Uniform2ui64v(int location, int count, Vector2[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64v(int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64v(int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform2ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform2ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform2ui64v(int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform2ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64v(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform3ui64v(int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64v(int location, ulong[] value)
+            public static unsafe void Uniform3ui64v(int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform3ui64v(int location, int count, in ulong value)
+            public static unsafe void Uniform3ui64v(int location, int count, Vector3[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64v(int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64v(int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform3ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform3ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform3ui64v(int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform3ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64v(int location, ReadOnlySpan<ulong> value)
+            public static unsafe void Uniform4ui64v(int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64v(int location, ulong[] value)
+            public static unsafe void Uniform4ui64v(int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64v(location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
-            public static unsafe void Uniform4ui64v(int location, int count, in ulong value)
+            public static unsafe void Uniform4ui64v(int location, int count, Vector4[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64v(int location, int count, in System.Numerics.Vector4 value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64v(int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    Uniform4ui64v(location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="Uniform4ui64v(int, int, ulong*)"/>
+            public static unsafe void Uniform4ui64v(int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     Uniform4ui64v(location, count, value_ptr);
                 }
             }
@@ -32926,210 +33677,344 @@ namespace OpenTK.Graphics.OpenGL
                 }
             }
             /// <inheritdoc cref="ProgramUniform1i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64v(int program, int location, ReadOnlySpan<long> value)
-            {
-                int count = (int)(value.Length);
-                fixed (long* value_ptr = value)
-                {
-                    ProgramUniform1i64v(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform1i64v(int program, int location, long[] value)
-            {
-                int count = (int)(value.Length);
-                fixed (long* value_ptr = value)
-                {
-                    ProgramUniform1i64v(program, location, count, value_ptr);
-                }
-            }
-            /// <inheritdoc cref="ProgramUniform1i64v(int, int, int, long*)"/>
             public static unsafe void ProgramUniform1i64v(int program, int location, int count, in long value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (long* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform1i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64v(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64v(int program, int location, long[] value)
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (long* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform2i64v(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, Vector2[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform2i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform2i64v(int program, int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform2i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64v(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64v(int program, int location, long[] value)
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (long* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform3i64v(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, Vector3[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform3i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform3i64v(int program, int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform3i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64v(int program, int location, ReadOnlySpan<long> value)
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64v(int program, int location, long[] value)
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (long* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
-            public static unsafe void ProgramUniform4i64v(int program, int location, int count, in long value)
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, Vector4[] value)
             {
-                fixed (long* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    long* value_ptr = (long*)tmp_value;
                     ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="ProgramUniform1ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, in System.Numerics.Vector4 value)
             {
-                int count = (int)(value.Length);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = &value)
                 {
-                    ProgramUniform1ui64v(program, location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
-            /// <inheritdoc cref="ProgramUniform1ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform1ui64v(int program, int location, ulong[] value)
+            /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
             {
-                int count = (int)(value.Length);
-                fixed (ulong* value_ptr = value)
+                fixed (System.Numerics.Vector4* tmp_value = value)
                 {
-                    ProgramUniform1ui64v(program, location, count, value_ptr);
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4i64v(int, int, int, long*)"/>
+            public static unsafe void ProgramUniform4i64v(int program, int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    long* value_ptr = (long*)tmp_value;
+                    ProgramUniform4i64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform1ui64v(int, int, int, ulong*)"/>
             public static unsafe void ProgramUniform1ui64v(int program, int location, int count, in ulong value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (ulong* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform1ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, in Vector2 value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64v(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, ReadOnlySpan<Vector2> value)
             {
-                int count = (int)(value.Length / 2);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, Vector2[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector2* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, in System.Numerics.Vector2 value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector2> value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform2ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform2ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform2ui64v(int program, int location, int count, System.Numerics.Vector2[] value)
+            {
+                fixed (System.Numerics.Vector2* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform2ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, in Vector3 value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64v(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, ReadOnlySpan<Vector3> value)
             {
-                int count = (int)(value.Length / 3);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, Vector3[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector3* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, in System.Numerics.Vector3 value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector3> value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform3ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform3ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform3ui64v(int program, int location, int count, System.Numerics.Vector3[] value)
+            {
+                fixed (System.Numerics.Vector3* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform3ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64v(int program, int location, ReadOnlySpan<ulong> value)
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, in Vector4 value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = &value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64v(int program, int location, ulong[] value)
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, ReadOnlySpan<Vector4> value)
             {
-                int count = (int)(value.Length / 4);
-                fixed (ulong* value_ptr = value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64v(program, location, count, value_ptr);
                 }
             }
             /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
-            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, in ulong value)
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, Vector4[] value)
             {
-                fixed (ulong* value_ptr = &value)
+                fixed (Vector4* tmp_value = value)
                 {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, in System.Numerics.Vector4 value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = &value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, ReadOnlySpan<System.Numerics.Vector4> value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
+                    ProgramUniform4ui64v(program, location, count, value_ptr);
+                }
+            }
+            /// <inheritdoc cref="ProgramUniform4ui64v(int, int, int, ulong*)"/>
+            public static unsafe void ProgramUniform4ui64v(int program, int location, int count, System.Numerics.Vector4[] value)
+            {
+                fixed (System.Numerics.Vector4* tmp_value = value)
+                {
+                    ulong* value_ptr = (ulong*)tmp_value;
                     ProgramUniform4ui64v(program, location, count, value_ptr);
                 }
             }
