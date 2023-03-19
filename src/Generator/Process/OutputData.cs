@@ -20,7 +20,7 @@ namespace Generator.Writing
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
-        string RefPagesLink,
+        string? RefPagesLink,
         List<string> AddedIn,
         List<string>? RemovedIn
         );
@@ -88,6 +88,15 @@ namespace Generator.Writing
         public bool Constant { get; }
     }
 
+    public interface IBaseTypeCSType
+    {
+        public BaseCSType BaseType { get; }
+
+        public bool TakeAddressInFixedStatement { get; }
+
+        public BaseCSType CreateWithNewType(BaseCSType type);
+    }
+
     public record CSVoid(bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString() => "void";
@@ -149,9 +158,13 @@ namespace Generator.Writing
         }
     }
 
-    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType
+    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType, IBaseTypeCSType
     {
         public enum Type { Ref, Out, In }
+
+        public BaseCSType BaseType => ReferencedType;
+
+        public bool TakeAddressInFixedStatement => true;
 
         public override string ToCSString()
         {
@@ -164,18 +177,32 @@ namespace Generator.Writing
             };
             return $"{modifier} {ReferencedType.ToCSString()}";
         }
+
+        public BaseCSType CreateWithNewType(BaseCSType type)
+        {
+            return new CSRef(RefType, type);
+        }
     }
 
-    public record CSArray(BaseCSType BaseType) : BaseCSType
+    public record CSArray(BaseCSType BaseType) : BaseCSType, IBaseTypeCSType
     {
+        public bool TakeAddressInFixedStatement => false;
+
         public override string ToCSString()
         {
             return $"{BaseType.ToCSString()}[]";
         }
+
+        public BaseCSType CreateWithNewType(BaseCSType type)
+        {
+            return new CSArray(type);
+        }
     }
 
-    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType
+    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType, IBaseTypeCSType
     {
+        public bool TakeAddressInFixedStatement => false;
+
         public override string ToCSString()
         {
             if (Readonly)
@@ -186,6 +213,11 @@ namespace Generator.Writing
             {
                 return $"Span<{BaseType.ToCSString()}>";
             }
+        }
+
+        public BaseCSType CreateWithNewType(BaseCSType type)
+        {
+            return new CSSpan(type, Readonly);
         }
     }
 
@@ -265,6 +297,6 @@ namespace Generator.Writing
         GL,
         GLCompat,
         GLES1,
-        GLES3
+        GLES2
     }
 }

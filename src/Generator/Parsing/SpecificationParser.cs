@@ -264,7 +264,7 @@ namespace Generator.Parsing
                     "void" => PrimitiveType.Void,
                     "GLenum" => PrimitiveType.Enum,
                     "GLboolean" => PrimitiveType.Bool8,
-                    "GLbitfield" => PrimitiveType.Enum,
+                    "GLbitfield" => PrimitiveType.Uint,
                     "GLvoid" => PrimitiveType.Void,
                     "GLbyte" => PrimitiveType.Sbyte,
                     "GLubyte" => PrimitiveType.Byte,

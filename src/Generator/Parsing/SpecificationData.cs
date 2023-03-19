@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Generator.Writing;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Dynamic;
+using System.IO.Compression;
 
 namespace Generator.Parsing
 {
@@ -153,6 +157,28 @@ namespace Generator.Parsing
             BinaryOperator.Division => '/',
             _ => throw new Exception("Invalid binary operator, there is no char associated."),
         };
+
+        public bool TryDecomposeIntoParameterRefAndConstant([NotNullWhen(true)] out Constant? constant, [NotNullWhen(true)] out ParameterReference? reference)
+        {
+            if (Left is ParameterReference leftRef && Right is Constant rightConst)
+            {
+                reference = leftRef;
+                constant = rightConst;
+                return true;
+            }
+            else if (Right is ParameterReference rightRef && Left is Constant leftConst)
+            {
+                reference = rightRef;
+                constant = leftConst;
+                return true;
+            }
+            else
+            {
+                constant = default;
+                reference = default;
+                return false;
+            }
+        }
     }
 
     public record ParameterReference(string ParameterName) : Expression;
