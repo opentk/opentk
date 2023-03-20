@@ -338,7 +338,7 @@ namespace Generator.Process
                             throw new Exception($"{function.NativeFunction.EntryPoint} has no \"added in\" data.");
                         }
 
-                        // FIXME: Added and removed information.
+                        // FIXME: Removed in information.
                         documentation[function.NativeFunction] = new FunctionDocumentation(
                             commandDocumentation.Name,
                             commandDocumentation.Purpose,
@@ -389,23 +389,70 @@ namespace Generator.Process
                 }
             }
 
-            // Go through all functions and build up a Dictionary from enum groups to functions using them
-            Dictionary<string, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<(string Vendor, NativeFunction Function)>>();
-            foreach (var (vendor, functions) in functionsByVendor)
+            Dictionary<string, GLVendorFunctions> vendors = new Dictionary<string, GLVendorFunctions>();
+            foreach ((string vendor, HashSet<OverloadedFunction> overloadedFunctions) in functionsByVendor)
             {
-                foreach (var function in functions)
+                HashSet<string> functionNames = new HashSet<string>();
+                foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
                 {
-                    foreach (var group in function.NativeFunction.ReferencedEnumGroups)
+                    functionNames.Add(overloadedFunction.NativeFunction.FunctionName);
+                }
+
+                foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
+                {
+                    bool canRemoveVendorName = false;
+                    if (vendor != "" && overloadedFunction.NativeFunction.FunctionName.EndsWith(vendor))
+                    {
+                        canRemoveVendorName = true;
+
+                        string functionNameWithoutVendor = NameMangler.RemoveEnd(overloadedFunction.NativeFunction.FunctionName, vendor);
+
+                        // This leaves out the case where a namespace contains two functions from different vendors with identical names...
+                        if (functionNames.Contains(functionNameWithoutVendor))
+                        {
+                            canRemoveVendorName = false;
+                        }
+                    }
+
+                    if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
+                    {
+                        group = new GLVendorFunctions(new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>(), new HashSet<NativeFunction>());
+                        vendors.Add(vendor, group);
+                    }
+                    group.NativeFunctions.Add(overloadedFunction.NativeFunction);
+                    group.OverloadsGroupedByNativeFunctions.Add(overloadedFunction.Overloads);
+
+                    if (overloadedFunction.ChangeNativeName)
+                    {
+                        group.NativeFunctionsWithPostfix.Add(overloadedFunction.NativeFunction);
+                    }
+
+                    if (canRemoveVendorName)
+                    {
+                        group.NativeFunctionWithRemovableVendorPostfix.Add(overloadedFunction.NativeFunction);
+                    }
+                }
+            }
+
+            // Go through all functions and build up a Dictionary from enum groups to functions using them
+            Dictionary<string, List<(string Vendor, bool RemoveVendorPostfix, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<(string Vendor, bool RemoveVendorPostfix, NativeFunction Function)>>();
+            foreach (var (vendor, functions) in vendors)
+            {
+                foreach (NativeFunction function in functions.NativeFunctions)
+                {
+                    foreach (string group in function.ReferencedEnumGroups)
                     {
                         if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var listOfFunctions) == false)
                         {
-                            listOfFunctions = new List<(string Vendor, NativeFunction Function)>();
+                            listOfFunctions = new List<(string Vendor, bool RemoveVendorPostfix, NativeFunction Function)>();
                             enumGroupToNativeFunctionsUsingThatEnumGroup.Add(group, listOfFunctions);
                         }
 
-                        if (listOfFunctions.Contains((vendor, function.NativeFunction)) == false)
+                        bool removeVendorPostfix = functions.NativeFunctionWithRemovableVendorPostfix.Contains(function);
+
+                        if (listOfFunctions.Contains((vendor, removeVendorPostfix, function)) == false)
                         {
-                            listOfFunctions.Add((vendor, function.NativeFunction));
+                            listOfFunctions.Add((vendor, removeVendorPostfix, function));
                         }
                     }
                 }
@@ -452,26 +499,6 @@ namespace Generator.Process
                     });
 
                 finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));
-            }
-
-            Dictionary<string, GLVendorFunctions> vendors = new Dictionary<string, GLVendorFunctions>();
-            foreach ((string vendor, HashSet<OverloadedFunction> overloadedFunctions) in functionsByVendor)
-            {
-                foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
-                {
-                    if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
-                    {
-                        group = new GLVendorFunctions(new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>());
-                        vendors.Add(vendor, group);
-                    }
-                    group.NativeFunctions.Add(overloadedFunction.NativeFunction);
-                    group.OverloadsGroupedByNativeFunctions.Add(overloadedFunction.Overloads);
-
-                    if (overloadedFunction.ChangeNativeName)
-                    {
-                        group.NativeFunctionsWithPostfix.Add(overloadedFunction.NativeFunction);
-                    }
-                }
             }
 
             return new GLOutputApi(api, vendors, finalGroups, documentation);
