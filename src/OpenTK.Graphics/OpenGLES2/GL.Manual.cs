@@ -63,11 +63,12 @@ namespace OpenTK.Graphics.OpenGLES2
         }
 
         /// <inheritdoc cref="CreateShaderProgramv(ShaderType, int, byte**)"/>
-        public static void CreateShaderProgram(ShaderType shaderType, string shaderText)
+        public static int CreateShaderProgram(ShaderType shaderType, string shaderText)
         {
             var shaderTextPtr = Marshal.StringToCoTaskMemAnsi(shaderText);
-            GL.CreateShaderProgramv(shaderType, 1, (byte**)&shaderTextPtr);
+            int program = GL.CreateShaderProgramv(shaderType, 1, (byte**)&shaderTextPtr);
             Marshal.FreeCoTaskMem(shaderTextPtr);
+            return program;
         }
     }
 }
