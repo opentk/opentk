@@ -39,7 +39,7 @@ namespace Generator
     {
         private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
-        public static FileStream ReadSpecFromGithub()
+        public static FileStream ReadGLSpecFromGithub()
         {
             string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml";
             string filePath = Path.Combine(TempDirectory, "gl.xml");
@@ -53,6 +53,30 @@ namespace Generator
             else
             {
                 Logger.Info($"Didn't find cache file for gl.xml, downloading from {url}. (looked for gl.xml in this directory: {Path.GetFullPath(filePath)})");
+                if (!Directory.Exists(TempDirectory))
+                {
+                    Directory.CreateDirectory(TempDirectory);
+                }
+                stream = CreateCache(url, filePath);
+            }
+
+            return stream;
+        }
+
+        public static FileStream ReadWGLSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/wgl.xml";
+            string filePath = Path.Combine(TempDirectory, "wgl.xml");
+
+            FileStream stream;
+            if (File.Exists(filePath))
+            {
+                Logger.Info($"Found cache file for wgl.xml, using that.");
+                stream = File.OpenRead(filePath);
+            }
+            else
+            {
+                Logger.Info($"Didn't find cache file for wgl.xml, downloading from {url}. (looked for wgl.xml in this directory: {Path.GetFullPath(filePath)})");
                 if (!Directory.Exists(TempDirectory))
                 {
                     Directory.CreateDirectory(TempDirectory);

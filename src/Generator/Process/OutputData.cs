@@ -134,6 +134,14 @@ namespace Generator.Writing
         }
     }
 
+    public record CSBool32(bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return "int";
+        }
+    }
+
     public record CSChar8(bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
@@ -297,6 +305,7 @@ namespace Generator.Writing
         GL,
         GLCompat,
         GLES1,
-        GLES2
+        GLES2,
+        WGL,
     }
 }

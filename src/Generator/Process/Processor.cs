@@ -69,7 +69,14 @@ namespace Generator.Process
                 allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
             }
 
-            Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
+            Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>()
+            {
+                { OutputApi.GLES1, new Dictionary<string, EnumGroupMember>() },
+                { OutputApi.GLES2, new Dictionary<string, EnumGroupMember>() },
+                { OutputApi.GL, new Dictionary<string, EnumGroupMember>() },
+                { OutputApi.GLCompat, new Dictionary<string, EnumGroupMember>() },
+                { OutputApi.WGL, new Dictionary<string, EnumGroupMember>() },
+            };
             HashSet<EnumGroupInfo> allEnumGroups = new HashSet<EnumGroupInfo>();
             foreach (Enums enumsEntry in spec.Enums)
             {
@@ -116,6 +123,11 @@ namespace Generator.Process
                             allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
                             allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
                             break;
+                        case GLAPI.WGL:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.WGL, @enum.Name, data);
+                            break;
+                        default:
+                            throw new Exception();
                     }
                 }
             }
@@ -126,13 +138,13 @@ namespace Generator.Process
             // Filter the features we actually want to output.
             List<Feature> features = spec.Features.FindAll(feature => feature.Api switch
             {
-                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 => true,
+                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 or GLAPI.WGL => true,
                 GLAPI.GLSC2 or GLAPI.GLCore => false,
                 _ or GLAPI.Invalid or GLAPI.None => throw new Exception($"Feature '{feature.Name}' doesn't have a proper api tag."),
             });
             List<Extension> extensions = spec.Extensions.FindAll(extension => extension.SupportedApis.Any(api => api switch
             {
-                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 => true,
+                GLAPI.GL or GLAPI.GLES1 or GLAPI.GLES2 or GLAPI.WGL => true,
                 GLAPI.GLSC2 or GLAPI.GLCore or GLAPI.None => false,
                 _ => throw new Exception($"Extension '{extension.Name}' doesn't have a proper api tag."),
             }));
@@ -140,10 +152,12 @@ namespace Generator.Process
             List<RequireEntryInfo> glRequires = GetRequireEntries(features, extensions, GLAPI.GL);
             List<RequireEntryInfo> gles1Requires = GetRequireEntries(features, extensions, GLAPI.GLES1);
             List<RequireEntryInfo> gles2Requires = GetRequireEntries(features, extensions, GLAPI.GLES2);
+            List<RequireEntryInfo> wglRequires = GetRequireEntries(features, extensions, GLAPI.WGL);
             List<RemoveEntryInfo> glRemoves = GetRemoveEntries(features, GLAPI.GL);
             // OpenGL ES doesn't have any remove tags as of yet, we are just doing this in case it gets added later.
             // - Noggin_bops 2023-01-26
             List<RemoveEntryInfo> gles2Removes = GetRemoveEntries(features, GLAPI.GLES2);
+            List<RemoveEntryInfo> wglRemoves = GetRemoveEntries(features, GLAPI.WGL);
 
             ProcessedGLInformation info = new ProcessedGLInformation(allFunctions, allEnumsPerAPI, allEnumGroups.ToList());
 
@@ -151,11 +165,12 @@ namespace Generator.Process
             GLOutputApi glCompat = GetOutputApiFromRequireTags(OutputApi.GLCompat, glRequires, new List<RemoveEntryInfo>(), info);
             GLOutputApi gles1 = GetOutputApiFromRequireTags(OutputApi.GLES1, gles1Requires, new List<RemoveEntryInfo>(), info);
             GLOutputApi gles2 = GetOutputApiFromRequireTags(OutputApi.GLES2, gles2Requires, gles2Removes, info);
+            GLOutputApi wgl = GetOutputApiFromRequireTags(OutputApi.WGL, wglRequires, wglRemoves, info);
 
             return new OutputData(allFunctions.Select(kvp => kvp.Value.NativeFunction).ToList(),
                 new List<GLOutputApi>()
                 {
-                    gl, glCompat, gles1, gles2
+                    gl, glCompat, gles1, gles2, wgl
                 });
         }
 
@@ -560,7 +575,9 @@ namespace Generator.Process
 
                             // C interop types
                             PrimitiveType.Bool8 => new CSBool8(bt.Constant),
+                            PrimitiveType.Bool32 => new CSBool32(bt.Constant),
                             PrimitiveType.Char8 => new CSChar8(bt.Constant),
+
 
                             // Enum
                             PrimitiveType.Enum => new CSEnum(group ?? "All", new CSPrimitive("uint", bt.Constant), bt.Constant),

@@ -18,42 +18,44 @@ namespace Generator.Writing
         private const string LoaderClass = "GLLoader";
         private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
 
-        public static void Write(OutputData data)
+        public static void Write(OutputData data, string apiName)
         {
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
-            WriteFunctionPointers(outputProjectPath, data.AllNativeFunctions);
+            WriteFunctionPointers(outputProjectPath, apiName, data.AllNativeFunctions);
             // This should create folders to put the versions in
             foreach (var api in data.Apis)
             {
+                // FIXME: Add more output apis?
                 string apiNamespace = api.Api switch
                 {
                     OutputApi.GL => "OpenGL",
                     OutputApi.GLCompat => "OpenGL.Compatibility",
                     OutputApi.GLES1 => "OpenGLES1",
                     OutputApi.GLES2 => "OpenGLES2",
+                    OutputApi.WGL => "Wgl",
                     _ => throw new Exception($"This is not a valid output API ({api.Api})"),
                 };
                 string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
                 if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
                 var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
-                foreach (var file in files.Where(file => Path.GetFileName(file) != "GL.Manual.cs"))
+                foreach (var file in files.Where(file => Path.GetFileName(file) != $"{apiName}.Manual.cs"))
                 {
                     File.Delete(file);
                 }
 
-                WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors, api.Documentation);
-                WriteOverloads(directoryPath, apiNamespace, api.Vendors);
+                WriteNativeFunctions(directoryPath, apiName, apiNamespace, api.Vendors, api.Documentation);
+                WriteOverloads(directoryPath, apiName, apiNamespace, api.Vendors);
 
                 WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, List<NativeFunction> nativeFunctions)
+        private static void WriteFunctionPointers(string directoryPath, string apiName, List<NativeFunction> nativeFunctions)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Pointers.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
 
             writer.WriteLine("// This file is auto generated, do not edit.");
@@ -195,11 +197,12 @@ namespace Generator.Writing
 
         private static void WriteNativeFunctions(
             string directoryPath,
+            string apiName,
             string glNamespace,
             Dictionary<string, GLVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
@@ -281,10 +284,11 @@ namespace Generator.Writing
 
         private static void WriteOverloads(
             string directoryPath,
-            string glNamespace,
+            string apiName,
+            string apiNamespace,
             Dictionary<string, GLVendorFunctions> groups)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Overloads.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
@@ -293,7 +297,7 @@ namespace Generator.Writing
             writer.WriteLine("using OpenTK.Mathematics;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (writer.CsScope())
             {
                 // FIXME: Maybe we want to fix this?

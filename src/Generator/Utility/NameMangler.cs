@@ -66,6 +66,45 @@ namespace Generator.Utility
             return str[0..^end.Length];
         }
 
+        public static string RemoveFunctionPrefix(string function)
+        {
+            // FIXME: Get the settings from a more direct source
+            if (GeneratorSettings.Settings.FunctionsWithoutPrefix.Contains(function))
+                return function;
+
+            string prefix = GeneratorSettings.Settings.FunctionPrefix;
+
+            if (!function.StartsWith(prefix))
+                throw new System.Exception($"'{function}' dosen't start with '{prefix}'");
+
+            return function[prefix.Length..];
+        }
+
+        public static string RemoveEnumPrefix(string @enum)
+        {
+            // FIXME: Get the settings from a more direct source
+            if (GeneratorSettings.Settings.EnumsWithoutPrefix.Contains(@enum))
+                return @enum;
+
+            string prefix = GeneratorSettings.Settings.EnumPrefix;
+
+            if (!@enum.StartsWith(prefix))
+                throw new System.Exception($"'{@enum}' dosen't start with '{prefix}'");
+
+            return @enum[prefix.Length..];
+        }
+
+        public static string RemoveExtensionPrefix(string extension)
+        {
+            // FIXME: Get the settings from a more direct source
+            string prefix = GeneratorSettings.Settings.ExtensionPrefix;
+
+            if (!extension.StartsWith(prefix))
+                throw new System.Exception($"'{extension}' dosen't start with '{prefix}'");
+
+            return extension[prefix.Length..];
+        }
+
         public static string RemoveVendorPostfix(string str)
         {
             foreach (var vendor in VendorNames)
@@ -86,13 +125,13 @@ namespace Generator.Utility
         public static string MangleFunctionName(string name)
         {
             // Remove the "gl" prefix.
-            return RemoveStart(name, "gl");
+            return RemoveFunctionPrefix(name);
         }
 
         public static string MangleEnumName(string name)
         {
             // Remove the "GL_" prefix.
-            var mangledName = RemoveStart(name, "GL_");
+            var mangledName = RemoveEnumPrefix(name);
             return MangleMemberName(mangledName);
         }
 
@@ -211,7 +250,7 @@ namespace Generator.Utility
 
         /// <summary>
         /// Escapes all "'<>& characters.
-        /// This function will not detect already escaped strings.
+        /// This extension will not detect already escaped strings.
         /// </summary>
         public static string XmlEscapeCharacters(string str)
         {

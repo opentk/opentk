@@ -312,6 +312,57 @@ namespace Generator.Parsing
                     // But we leave it here as a primitive type so we have the information if we need it later.
                     // - 2021-06-23
                     "GLVULKANPROCNV" => PrimitiveType.GLVulkanProcNV,
+
+                    // WGL.xml types
+                    "BOOL" => PrimitiveType.Bool32,
+                    "CHAR" => PrimitiveType.Char8,
+                    "DWORD" => PrimitiveType.Uint,
+                    "FLOAT" => PrimitiveType.Float,
+                    "HANDLE" => PrimitiveType.IntPtr,
+                    "HDC" => PrimitiveType.IntPtr,
+                    "HGLRC" => PrimitiveType.IntPtr,
+                    "INT" => PrimitiveType.Int,
+                    "INT32" => PrimitiveType.Int,
+                    "INT64" => PrimitiveType.Long,
+                    // FIXME?
+                    "PROC" => PrimitiveType.IntPtr,
+                    // FIXME
+                    "RECT" => PrimitiveType.Void,
+                    // FIXME: String
+                    "LPCSTR" => PrimitiveType.Void,
+                    "LPVOID" => PrimitiveType.IntPtr,
+                    "UINT" => PrimitiveType.Uint,
+                    "USHORT" => PrimitiveType.Ushort,
+                    "VOID" => PrimitiveType.Void,
+                    // FIXME: COLOREF
+                    "COLORREF" => PrimitiveType.Void,
+                    "HENHMETAFILE" => PrimitiveType.IntPtr,
+                    // FIXME:
+                    "LAYERPLANEDESCRIPTOR" => PrimitiveType.Void,
+                    // FIXME?
+                    "LPGLYPHMETRICSFLOAT" => PrimitiveType.IntPtr,
+                    // FIXME!!
+                    "PIXELFORMATDESCRIPTOR" => PrimitiveType.Void,
+                    "HPBUFFERARB" => PrimitiveType.IntPtr,
+                    "HPBUFFEREXT" => PrimitiveType.IntPtr,
+                    "HVIDEOOUTPUTDEVICENV" => PrimitiveType.IntPtr,
+                    "HPVIDEODEV" => PrimitiveType.IntPtr,
+                    "HPGPUNV" => PrimitiveType.IntPtr,
+                    "HGPUNV" => PrimitiveType.IntPtr,
+                    "HVIDEOINPUTDEVICENV" => PrimitiveType.IntPtr,
+                    // FIXME
+                    "GPU_DEVICE" => PrimitiveType.Void,
+                    // FIXME? _GPU_DEVICE*
+                    "PGPU_DEVICE" => PrimitiveType.IntPtr,
+
+                    "int" => PrimitiveType.Int,
+                    "unsigned int" => PrimitiveType.Uint,
+                    "char" => PrimitiveType.Char8,
+                    "float" => PrimitiveType.Float,
+                    "long" => PrimitiveType.Long,
+                    "unsigned long" => PrimitiveType.Ulong,
+
+
                     _ => PrimitiveType.Invalid,
                 };
 
@@ -478,7 +529,7 @@ namespace Generator.Parsing
 
                 // Remove "GL_" and get the vendor name from the first part of the extension name
                 // Extension name convention: "GL_VENDOR_EXTENSION_NAME"
-                string? extNameWithoutGLPrefix = NameMangler.RemoveStart(extName, "GL_");
+                string? extNameWithoutGLPrefix = NameMangler.RemoveExtensionPrefix(extName);
                 string? vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
                 if (string.IsNullOrEmpty(vendor))
                 {
@@ -585,6 +636,8 @@ namespace Generator.Parsing
             "gles2" => GLAPI.GLES2,
             "glsc2" => GLAPI.GLSC2,
             "glcore" => GLAPI.GLCore,
+
+            "wgl" => GLAPI.WGL,
 
             _ => GLAPI.Invalid,
         };

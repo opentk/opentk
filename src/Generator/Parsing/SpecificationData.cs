@@ -194,6 +194,9 @@ namespace Generator.Parsing
         GLES2,
         GLSC2,
         GLCore,
+
+        WGL,
+        GLX,
     }
 
     public enum GLProfile
@@ -226,6 +229,7 @@ namespace Generator.Parsing
         Nint,
         Enum,
         Bool8,
+        Bool32,
         Char8,
         VoidPtr,
 
