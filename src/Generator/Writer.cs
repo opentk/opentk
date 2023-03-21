@@ -199,7 +199,7 @@ namespace Generator.Writing
             string directoryPath,
             string apiName,
             string glNamespace,
-            Dictionary<string, GLVendorFunctions> groups,
+            SortedDictionary<string, GLVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Native.cs"));
@@ -225,11 +225,11 @@ namespace Generator.Writing
                             scope = writer.CsScope();
                         }
 
-                        foreach (var function in group.NativeFunctions)
+                        foreach (var function in group.Functions)
                         {
-                            bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
-                            documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
-                            WriteNativeFunction(writer, function, postfixName, functionDocumentation);
+                            bool postfixName = group.NativeFunctionsWithPostfix.Contains(function.NativeFunction);
+                            documentation.TryGetValue(function.NativeFunction, out FunctionDocumentation? functionDocumentation);
+                            WriteNativeFunction(writer, function.NativeFunction, postfixName, functionDocumentation);
                         }
 
                         scope?.Dispose();
@@ -286,7 +286,7 @@ namespace Generator.Writing
             string directoryPath,
             string apiName,
             string apiNamespace,
-            Dictionary<string, GLVendorFunctions> groups)
+            SortedDictionary<string, GLVendorFunctions> groups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -301,8 +301,6 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 // FIXME: Maybe we want to fix this?
-                writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
-
                 writer.WriteLine($"public static unsafe partial class GL");
                 using (writer.CsScope())
                 {
@@ -315,9 +313,9 @@ namespace Generator.Writing
                             scope = writer.CsScope();
                         }
 
-                        foreach (var nativeFunctionOverloads in group.OverloadsGroupedByNativeFunctions)
+                        foreach (var function in group.Functions)
                         {
-                            foreach (var overload in nativeFunctionOverloads)
+                            foreach (var overload in function.Overloads)
                             {
                                 bool postfixNativeCall = group.NativeFunctionsWithPostfix.Contains(overload.NativeFunction);
                                 WriteOverloadMethod(writer, overload, postfixNativeCall);
@@ -327,8 +325,6 @@ namespace Generator.Writing
                         scope?.Dispose();
                     }
                 }
-
-                writer.WriteLineNoTabs("#pragma warning restore CS0419 // Ambiguous reference in cref attribute");
             }
         }
 

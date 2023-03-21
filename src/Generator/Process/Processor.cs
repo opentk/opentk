@@ -5,6 +5,8 @@ using Generator.Utility.Extensions;
 using Generator.Utility;
 using Generator.Writing;
 using Generator.Parsing;
+using System.Net.Http.Headers;
+using System.Collections.Immutable;
 
 namespace Generator.Process
 {
@@ -34,7 +36,7 @@ namespace Generator.Process
             // PathFontStyle uses GL_NONE which is not marked as bitmask
             // but other entries such as GL_BOLD_BIT_NV is marked as bitmask.
             //
-            // When this case happens we want to consider the entire group as a bitmask.
+            // When this case happens we want to consider the entire groupName as a bitmask.
             //
             // In the current spec this case only happens for PathFontStyle.
             // - 2021-07-04
@@ -58,7 +60,7 @@ namespace Generator.Process
 
         public static OutputData ProcessSpec(Specification spec, Documentation docs)
         {
-            // The first thing we do is process all of the functions defined into a dictionary of NativeFunctions.
+            // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
             foreach (Command command in spec.Commands)
             {
@@ -85,8 +87,8 @@ namespace Generator.Process
                 {
                     foreach (string group in @enum.Groups)
                     {
-                        // If the first enums tag wasn't flagged as a bitmask, but later ones in the same group are.
-                        // Then we want the group to be considered a bitmask.
+                        // If the first groupNameToEnumGroup tag wasn't flagged as a bitmask, but later ones in the same groupName are.
+                        // Then we want the groupName to be considered a bitmask.
                         if (allEnumGroups.TryGetValue(new EnumGroupInfo(group, isFlag), out EnumGroupInfo? actual))
                         {
                             // In the current spec this case never happens, but it could.
@@ -132,7 +134,7 @@ namespace Generator.Process
                 }
             }
 
-            // Now that we have all of the functions and enums ready in dictionaries
+            // Now that we have all of the vendorFunctions and groupNameToEnumGroup ready in dictionaries
             // we can start building all of the API versions.
 
             // Filter the features we actually want to output.
@@ -172,6 +174,429 @@ namespace Generator.Process
                 {
                     gl, glCompat, gles1, gles2, wgl
                 });
+        }
+
+        public static OutputData ProcessSpec2(Specification2 spec, Documentation docs)
+        {
+            HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
+
+            // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
+            List<NativeFunction> allEntryPoints = new List<NativeFunction>();
+            Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
+            foreach (Command command in spec.Commands)
+            {
+                NativeFunction nativeFunction = MakeNativeFunction(command);
+                Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
+                OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
+
+                allEntryPoints.Add(nativeFunction);
+                allFunctions.Add(nativeFunction.EntryPoint, overloadedFunction);
+            }
+
+            Dictionary<OutputApi, Dictionary<string, EnumGroupMember>> allEnumsPerAPI = new Dictionary<OutputApi, Dictionary<string, EnumGroupMember>>();
+
+            // Add all of the relevant APIs to the dictionary
+            foreach (var api in spec.APIs)
+            {
+                OutputApi outputApi = api.Name switch
+                {
+                    InputAPI.GL => OutputApi.GL,
+                    // FIXME ? 
+                    //InputAPI.GLCompat => OutputApi.GLCompat,
+                    InputAPI.GLES1 => OutputApi.GLES1,
+                    InputAPI.GLES2 => OutputApi.GLES2,
+                    InputAPI.WGL => OutputApi.WGL,
+                    InputAPI.GLX => OutputApi.GLX,
+
+                    _ => throw new Exception(),
+                };
+
+                allEnumsPerAPI.Add(outputApi, new Dictionary<string, EnumGroupMember>());
+            }
+
+            HashSet<EnumGroupInfo> allEnumGroups = new HashSet<EnumGroupInfo>();
+            foreach (Enums enumsEntry in spec.Enums)
+            {
+                bool isFlag = enumsEntry.Type == EnumType.Bitmask;
+                foreach (EnumEntry @enum in enumsEntry.Entries)
+                {
+                    foreach (string group in @enum.Groups)
+                    {
+                        // If the first groupNameToEnumGroup tag wasn't flagged as a bitmask, but later ones in the same groupName are.
+                        // Then we want the groupName to be considered a bitmask.
+                        if (allEnumGroups.TryGetValue(new EnumGroupInfo(group, isFlag), out EnumGroupInfo? actual))
+                        {
+                            // In the current spec this case never happens, but it could.
+                            // - 2021-07-04
+                            if (isFlag == true && actual.IsFlags == false)
+                            {
+                                allEnumGroups.Remove(actual);
+                                allEnumGroups.Add(actual with { IsFlags = true });
+                            }
+                        }
+                        else
+                        {
+                            allEnumGroups.Add(new EnumGroupInfo(group, isFlag));
+                        }
+                    }
+
+                    EnumGroupMember data = new EnumGroupMember(NameMangler.MangleEnumName(@enum.Name), @enum.Value, @enum.Groups, isFlag);
+
+                    switch (@enum.Api)
+                    {
+                        case GLAPI.None:
+                            // If this enumName is not marked with a specific api, add it to all relevant apis.
+                            foreach (var api in allEnumsPerAPI.Keys)
+                            {
+                                allEnumsPerAPI.AddToNestedDict(api, @enum.Name, data);
+                            }
+                            break;
+                        case GLAPI.GLES1:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
+                            break;
+                        case GLAPI.GLES2:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLES2, @enum.Name, data);
+                            break;
+                        case GLAPI.GL:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
+                            break;
+                        case GLAPI.WGL:
+                            allEnumsPerAPI.AddToNestedDict(OutputApi.WGL, @enum.Name, data);
+                            break;
+                        default:
+                            throw new Exception();
+                    }
+                }
+            }
+
+            List<GLOutputApi> outputAPIs = new List<GLOutputApi>();
+
+            foreach (var (api, functions, enums) in spec.APIs)
+            {
+                // FIXME: Probably make these the same enum!
+                OutputApi outAPI = api switch
+                {
+                    InputAPI.GL => OutputApi.GL,
+                    // FIXME?
+                    //InputAPI.GLCompat => OutputApi.GLCompat,
+                    InputAPI.GLES1 => OutputApi.GLES1,
+                    InputAPI.GLES2 => OutputApi.GLES2,
+                    InputAPI.WGL => OutputApi.WGL,
+                    InputAPI.GLX => OutputApi.GLX,
+
+                    _ => throw new Exception(),
+                };
+
+                outputAPIs.Add(CreateOutputAPI(outAPI));
+
+                if (outAPI == OutputApi.GL)
+                {
+                    outputAPIs.Add(CreateOutputAPI(OutputApi.GLCompat));
+                }
+
+                GLOutputApi CreateOutputAPI(OutputApi outAPI)
+                {
+                    bool removeFunctions = outAPI switch
+                    {
+                        OutputApi.GL => true,
+                        OutputApi.GLES2 => true,
+                        _ => false,
+                    };
+
+                    Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
+
+                    // FIXME: Make api an OutputAPI
+
+                    Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
+
+                    HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
+
+                    foreach (var functionRef in functions)
+                    {
+                        if (allFunctions.TryGetValue(functionRef.EntryPoint, out OverloadedFunction? overloadedFunction))
+                        {
+                            groupsReferencedByFunctions.UnionWith(overloadedFunction.NativeFunction.ReferencedEnumGroups);
+
+                            if (functionRef.AddedIn != null)
+                            {
+                                if (removeFunctions && (functionRef.RemovedIn != null || functionRef.Profile == GLProfile.Compatibility))
+                                {
+                                    // Do not add this function
+                                }
+                                else
+                                {
+                                    functionsByVendor.AddToNestedHashSet("", overloadedFunction);
+                                }
+                            }
+
+                            foreach (var extension in functionRef.PartOfExtensions)
+                            {
+                                functionsByVendor.AddToNestedHashSet(extension.Vendor, overloadedFunction);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"Could not find function '{functionRef.EntryPoint}'!");
+                        }
+                    }
+
+                    Dictionary<string, List<EnumGroupMember>> groupNameToEnumGroup = new Dictionary<string, List<EnumGroupMember>>();
+
+                    foreach (var enumRef in enums)
+                    {
+                        if (enumRef.RemovedIn != null && enumRef.PartOfExtensions.Count == 0)
+                            continue;
+
+                        if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
+                        {
+                            foreach (string group in @enum.Groups)
+                            {
+                                if (groupNameToEnumGroup.TryGetValue(group, out List<EnumGroupMember>? groupMembers) == false)
+                                {
+                                    groupMembers = new List<EnumGroupMember>();
+                                    groupNameToEnumGroup.Add(group, groupMembers);
+                                }
+
+                                if (groupMembers.Find(g => g.Name == @enum.Name) == null)
+                                {
+                                    groupMembers.Add(@enum);
+                                }
+                            }
+
+                            if (@enum.Value <= uint.MaxValue)
+                            {
+                                theAllEnumGroup.Add(@enum);
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"Could not find any enum called '{enumRef.EnumName}'.");
+                        }
+                    }
+
+                    // Go through all vendorFunctions and build up a Dictionary from enumName groups to function using them
+                    Dictionary<string, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<(string Vendor, NativeFunction Function)>>();
+                    foreach (var (vendor, vendorFunctions) in functionsByVendor)
+                    {
+                        foreach (var function in vendorFunctions)
+                        {
+                            foreach (var group in function.NativeFunction.ReferencedEnumGroups)
+                            {
+                                if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(group, out var listOfFunctions) == false)
+                                {
+                                    listOfFunctions = new List<(string Vendor, NativeFunction Function)>();
+                                    enumGroupToNativeFunctionsUsingThatEnumGroup.Add(group, listOfFunctions);
+                                }
+
+                                if (listOfFunctions.Contains((vendor, function.NativeFunction)) == false)
+                                {
+                                    listOfFunctions.Add((vendor, function.NativeFunction));
+                                }
+                            }
+                        }
+                    }
+
+                    // Go through all of the groupNameToEnumGroup and put them into their groups
+
+                    // Add keys + lists for all enumName names
+                    List<EnumGroup> finalGroups = new List<EnumGroup>();
+
+                    // Add the All enumName groupName
+                    finalGroups.Add(new EnumGroup("All", false, theAllEnumGroup.ToList(), null));
+
+                    foreach ((string groupName, bool isFlags) in allEnumGroups)
+                    {
+                        groupNameToEnumGroup.TryGetValue(groupName, out List<EnumGroupMember>? members);
+                        members ??= new List<EnumGroupMember>();
+
+                        // SpecialNumbers is not an enumName groupName that we want to output.
+                        // We handle these entries differently as some of the entries don't fit in an int.
+                        if (groupName == "SpecialNumbers")
+                            continue;
+
+                        // Remove all empty enumName groups, except the empty groups referenced by included vendorFunctions.
+                        // In GL 4.1 to 4.5 there are vendorFunctions that use the groupName "ShaderBinaryFormat"
+                        // while not including any members for that enumName groupName.
+                        // This is needed to solve that case.
+                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
+                            continue;
+
+                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(groupName, out var functionsUsingEnumGroup) == false)
+                        {
+                            functionsUsingEnumGroup = null;
+                        }
+
+                        // If there is a list, sort it by name
+                        if (functionsUsingEnumGroup != null)
+                            functionsUsingEnumGroup.Sort((f1, f2) => {
+                                // We want to prioritize "core" vendorFunctions before extensions.
+                                if (f1.Vendor == "" && f2.Vendor != "") return -1;
+                                if (f1.Vendor != "" && f2.Vendor == "") return 1;
+
+                                return f1.Function.FunctionName.CompareTo(f2.Function.FunctionName);
+                            });
+
+                        finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));
+                    }
+
+                    // Group vendors
+                    // Group groupNameToEnumGroup
+                    // Lookup documentation
+                    Dictionary<string, GLVendorFunctions> vendors = new Dictionary<string, GLVendorFunctions>();
+                    foreach ((string vendor, HashSet<OverloadedFunction> overloadedFunctions) in functionsByVendor)
+                    {
+                        foreach (OverloadedFunction overloadedFunction in overloadedFunctions)
+                        {
+                            if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
+                            {
+                                group = new GLVendorFunctions(new List<Writing.OverloadedFunction>(), new HashSet<NativeFunction>());
+                                vendors.Add(vendor, group);
+                            }
+
+                            group.Functions.Add(new Writing.OverloadedFunction(overloadedFunction.NativeFunction, overloadedFunction.Overloads));
+
+                            if (overloadedFunction.ChangeNativeName)
+                            {
+                                group.NativeFunctionsWithPostfix.Add(overloadedFunction.NativeFunction);
+                            }
+                        }
+                    }
+
+                    SortedDictionary<string, GLVendorFunctions> sortedVendors = new SortedDictionary<string, GLVendorFunctions>(vendors);
+
+                    foreach (var (vendor, vendorFunctions) in sortedVendors)
+                    {
+                        vendorFunctions.Functions.Sort();
+                    }
+
+                    Dictionary<NativeFunction, FunctionDocumentation> documentation = new Dictionary<NativeFunction, FunctionDocumentation>();
+                    foreach (var (vendor, vendorFunctions) in functionsByVendor)
+                    {
+                        foreach (var function in vendorFunctions)
+                        {
+                            if (function.Documentation.TryGetValue(outAPI, out CommandDocumentation? commandDocumentation))
+                            {
+                                var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
+
+                                if (func == null)
+                                {
+                                    throw new Exception($"Could not find function {func.EntryPoint}!");
+                                }
+
+                                List<string> addedIn = new List<string>();
+                                if (func.AddedIn != null)
+                                {
+                                    addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
+                                }
+
+                                foreach (var extension in func.PartOfExtensions)
+                                {
+                                    addedIn.Add(extension.Name);
+                                }
+
+                                List<string> removedIn = new List<string>();
+                                if (func.RemovedIn != null)
+                                {
+                                    removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
+                                }
+
+                                // FIXME: Added and removed information.
+                                documentation[function.NativeFunction] = new FunctionDocumentation(
+                                    commandDocumentation.Name,
+                                    commandDocumentation.Purpose,
+                                    commandDocumentation.Parameters,
+                                    commandDocumentation.RefPagesLink,
+                                    addedIn,
+                                    removedIn
+                                    );
+                            }
+                            else
+                            {
+                                if (vendor == "")
+                                {
+                                    Logger.Warning($"{function.NativeFunction.EntryPoint} doesn't have any documentation for {api}");
+
+                                    var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
+
+                                    if (func == null)
+                                    {
+                                        throw new Exception($"Could not find function {func.EntryPoint}!");
+                                    }
+
+                                    List<string> addedIn = new List<string>();
+                                    if (func.AddedIn != null)
+                                    {
+                                        addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
+                                    }
+
+                                    foreach (var extension in func.PartOfExtensions)
+                                    {
+                                        addedIn.Add(extension.Name);
+                                    }
+
+                                    List<string> removedIn = new List<string>();
+                                    if (func.RemovedIn != null)
+                                    {
+                                        removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
+                                    }
+
+                                    documentation[function.NativeFunction] = new FunctionDocumentation(
+                                        function.NativeFunction.EntryPoint,
+                                        "",
+                                        Array.Empty<ParameterDocumentation>(),
+                                        // TODO: Is it possible to get the functionRef spec file and link to it here?
+                                        null,
+                                        addedIn,
+                                        removedIn);
+                                }
+                                else
+                                {
+                                    var func = functions.Find(f => f.EntryPoint == function.NativeFunction.EntryPoint);
+
+                                    if (func == null)
+                                    {
+                                        throw new Exception($"Could not find function {func.EntryPoint}!");
+                                    }
+
+                                    List<string> addedIn = new List<string>();
+                                    if (func.AddedIn != null)
+                                    {
+                                        addedIn.Add($"v{func.AddedIn.Major}.{func.AddedIn.Minor}");
+                                    }
+
+                                    foreach (var extension in func.PartOfExtensions)
+                                    {
+                                        addedIn.Add(extension.Name);
+                                    }
+
+                                    List<string> removedIn = new List<string>();
+                                    if (func.RemovedIn != null)
+                                    {
+                                        removedIn.Add($"v{func.RemovedIn.Major}.{func.RemovedIn.Minor}");
+                                    }
+
+                                    documentation[function.NativeFunction] = new FunctionDocumentation(
+                                        function.NativeFunction.EntryPoint,
+                                        "",
+                                        Array.Empty<ParameterDocumentation>(),
+                                        // TODO: Is it possible to get the extension spec file and link to it here?
+                                        null,
+                                        addedIn,
+                                        removedIn);
+                                    // Extensions don't have documentation (yet?)
+                                }
+                            }
+                        }
+                    }
+
+                    return new GLOutputApi(outAPI, sortedVendors, finalGroups, new Dictionary<NativeFunction, FunctionDocumentation>());
+                }
+
+                
+            }
+
+            return new OutputData(allEntryPoints, outputAPIs);
         }
 
         private static List<RequireEntryInfo> GetRequireEntries(List<Feature> features, List<Extension> extensions, GLAPI api)
@@ -228,10 +653,10 @@ namespace Generator.Process
             ProcessedGLInformation glInformation)
         {
             HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
-            // A list of functions contained in this version.
+            // A list of vendorFunctions contained in this version.
             Dictionary<string, HashSet<OverloadedFunction>> functionsByVendor = new Dictionary<string, HashSet<OverloadedFunction>>();
-            //HashSet<EnumGroupMember> enums = new HashSet<EnumGroupMember>();
-            Dictionary<string, List<EnumGroupMember>> enums = new Dictionary<string, List<EnumGroupMember>>();
+            //HashSet<EnumGroupMember> groupNameToEnumGroup = new HashSet<EnumGroupMember>();
+            Dictionary<string, List<EnumGroupMember>> groupNameToEnumGroup = new Dictionary<string, List<EnumGroupMember>>();
 
             HashSet<EnumGroupMember> theAllEnumGroup = new HashSet<EnumGroupMember>();
 
@@ -242,10 +667,10 @@ namespace Generator.Process
 
             Dictionary<NativeFunction, List<string>> functionsAddedIn = new Dictionary<NativeFunction, List<string>>();
             // FIXME: Fill this with actual information...
-            // This will need us to pass a list of remove entries to this function even for compatibility.
+            // This will need us to pass a list of remove entries to this functionRef even for compatibility.
             Dictionary<NativeFunction, List<string>> functionsRemovedIn = new Dictionary<NativeFunction, List<string>>();
 
-            // Go through all the functions that are required for this version and add them here.
+            // Go through all the vendorFunctions that are required for this version and add them here.
             foreach ((string vendor, Version? introducedInVersion, string? introducedInExtension, RequireEntry requireEntry) in requireEntries)
             {
                 if (introducedInVersion != null && introducedInExtension != null)
@@ -304,12 +729,12 @@ namespace Generator.Process
                     Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[api];
                     if (enumsDict.TryGetValue(enumName, out EnumGroupMember? @enum))
                     {
-                        foreach (string group in @enum.Groups)
+                        foreach (string groupName in @enum.Groups)
                         {
-                            if (enums.TryGetValue(group, out List<EnumGroupMember>? groupMembers) == false)
+                            if (groupNameToEnumGroup.TryGetValue(groupName, out List<EnumGroupMember>? groupMembers) == false)
                             {
                                 groupMembers = new List<EnumGroupMember>();
-                                enums.Add(group, groupMembers);
+                                groupNameToEnumGroup.Add(groupName, groupMembers);
                             }
 
                             if (groupMembers.Find(g => g.Name == @enum.Name) == null)
@@ -378,7 +803,7 @@ namespace Generator.Process
                                 function.NativeFunction.EntryPoint,
                                 "",
                                 Array.Empty<ParameterDocumentation>(),
-                                // TODO: Is it possible to get the function spec file and link to it here?
+                                // TODO: Is it possible to get the functionRef spec file and link to it here?
                                 null,
                                 addedIn,
                                 null);
@@ -404,7 +829,7 @@ namespace Generator.Process
                 }
             }
 
-            // Go through all functions and build up a Dictionary from enum groups to functions using them
+            // Go through all vendorFunctions and build up a Dictionary from enumName groups to vendorFunctions using them
             Dictionary<string, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<(string Vendor, NativeFunction Function)>>();
             foreach (var (vendor, functions) in functionsByVendor)
             {
@@ -426,27 +851,27 @@ namespace Generator.Process
                 }
             }
 
-            // Go through all of the enums and put them into their groups
+            // Go through all of the groupNameToEnumGroup and put them into their groups
 
-            // Add keys + lists for all enum names
+            // Add keys + lists for all enumName names
             List<EnumGroup> finalGroups = new List<EnumGroup>();
 
-            // Add the All enum group
+            // Add the All enumName groupName
             finalGroups.Add(new EnumGroup("All", false, theAllEnumGroup.ToList(), null));
 
             foreach ((string groupName, bool isFlags) in allEnumGroups)
             {
-                enums.TryGetValue(groupName, out List<EnumGroupMember>? members);
+                groupNameToEnumGroup.TryGetValue(groupName, out List<EnumGroupMember>? members);
                 members ??= new List<EnumGroupMember>();
 
-                // SpecialNumbers is not an enum group that we want to output.
+                // SpecialNumbers is not an enumName groupName that we want to output.
                 // We handle these entries differently as some of the entries don't fit in an int.
                 if (groupName == "SpecialNumbers")
                     continue;
 
-                // Remove all empty enum groups, except the empty groups referenced by included functions.
-                // In GL 4.1 to 4.5 there are functions that use the group "ShaderBinaryFormat"
-                // while not including any members for that enum group.
+                // Remove all empty enumName groups, except the empty groups referenced by included vendorFunctions.
+                // In GL 4.1 to 4.5 there are vendorFunctions that use the groupName "ShaderBinaryFormat"
+                // while not including any members for that enumName groupName.
                 // This is needed to solve that case.
                 if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
                     continue;
@@ -459,7 +884,7 @@ namespace Generator.Process
                 // If there is a list, sort it by name
                 if (functionsUsingEnumGroup != null)
                     functionsUsingEnumGroup.Sort((f1, f2) => {
-                        // We want to prioritize "core" functions before extensions.
+                        // We want to prioritize "core" vendorFunctions before extensions.
                         if (f1.Vendor == "" && f2.Vendor != "") return -1;
                         if (f1.Vendor != "" && f2.Vendor == "") return 1;
 
@@ -476,11 +901,11 @@ namespace Generator.Process
                 {
                     if (!vendors.TryGetValue(vendor, out GLVendorFunctions? group))
                     {
-                        group = new GLVendorFunctions(new List<NativeFunction>(), new List<Overload[]>(), new HashSet<NativeFunction>());
+                        group = new GLVendorFunctions(new List<Writing.OverloadedFunction>(), new HashSet<NativeFunction>());
                         vendors.Add(vendor, group);
                     }
-                    group.NativeFunctions.Add(overloadedFunction.NativeFunction);
-                    group.OverloadsGroupedByNativeFunctions.Add(overloadedFunction.Overloads);
+
+                    group.Functions.Add(new Writing.OverloadedFunction(overloadedFunction.NativeFunction, overloadedFunction.Overloads));
 
                     if (overloadedFunction.ChangeNativeName)
                     {
@@ -489,7 +914,9 @@ namespace Generator.Process
                 }
             }
 
-            return new GLOutputApi(api, vendors, finalGroups, documentation);
+            SortedDictionary<string, GLVendorFunctions> sortedVendors = new SortedDictionary<string, GLVendorFunctions>(vendors);
+
+            return new GLOutputApi(api, sortedVendors, finalGroups, documentation);
         }
 
         public static NativeFunction MakeNativeFunction(Command command)
@@ -539,10 +966,10 @@ namespace Generator.Process
                             return new CSPrimitive("int", bt.Constant);
                         }
 
-                        // For now we only expect int and uint to be able to be turned into enums.
+                        // For now we only expect int and uint to be able to be turned into groupNameToEnumGroup.
                         // - 2022-08-09
-                        // FIXME: We might want to make sure that the underlying type for the enum group is the same as the parameter group.
-                        //   Right now we blindly substituting the type for the enum.
+                        // FIXME: We might want to make sure that the underlying type for the enumName groupName is the same as the parameter groupName.
+                        //   Right now we blindly substituting the type for the enumName.
                         if (group != null && (bt.Type == PrimitiveType.Int || bt.Type == PrimitiveType.Uint))
                         {
                             Console.WriteLine($"Making {bt} into group {group}");

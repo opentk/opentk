@@ -17,7 +17,7 @@ namespace Generator
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
-                if (false){
+                {
                     GeneratorSettings.Settings = new GeneratorSettings()
                     {
                         FunctionPrefix = "gl",
@@ -27,20 +27,21 @@ namespace Generator
 
                     // Reading the gl.xml file and parsing it into data structures.
                     using FileStream specificationStream = Reader.ReadGLSpecFromGithub();
-                    Specification specification = SpecificationParser.Parse(specificationStream);
-
+                    Specification2 specification = SpecificationParser.Parse(specificationStream);
+                    
                     // Read the documentation folders and parse it into data structures.
                     using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
                     Documentation documentation = DocumentationParser.Parse(documentationSource);
-
+                    
                     // Processer/overloading
-                    OutputData outputSpec = Processor.ProcessSpec(specification, documentation);
+                    OutputData outputSpec = Processor.ProcessSpec2(specification, documentation);
 
                     // Writing cs files.
                     Writer.Write(outputSpec, "GL");
 
                     st.Stop();
                     Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");
+                    /**/
                 }
 
                 {
@@ -72,8 +73,8 @@ namespace Generator
 
                     // Reading the gl.xml file and parsing it into data structures.
                     using FileStream specificationStream = Reader.ReadWGLSpecFromGithub();
-                    Specification specification = SpecificationParser.Parse(specificationStream);
-
+                    Specification2 specification = SpecificationParser.Parse(specificationStream);
+                    /*
                     // FIXME: Does there exist wgl documentation?
                     // Read the documentation folders and parse it into data structures.
                     //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
@@ -86,7 +87,7 @@ namespace Generator
                     Writer.Write(outputSpec, "WGL");
 
                     st.Stop();
-                    Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");
+                    Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");*/
                 }
             }
         }

@@ -1,8 +1,10 @@
 using Generator.Utility;
 using Generator.Utility.Extensions;
+using Generator.Writing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,7 +14,19 @@ namespace Generator.Parsing
 {
     public class SpecificationParser
     {
-        public static Specification Parse(Stream input)
+        class APIData
+        {
+            public GLAPI API;
+            public List<Feature> Features = new List<Feature>();
+            public List<Extension> Extensions = new List<Extension>();
+
+            public APIData(GLAPI api)
+            {
+                API = api;
+            }
+        }
+
+        public static Specification2 Parse(Stream input)
         {
             XDocument? xdocument = XDocument.Load(input);
 
@@ -25,11 +39,233 @@ namespace Generator.Parsing
             List<Feature>? features = ParseFeatures(xdocument.Root);
             List<Extension>? extensions = ParseExtensions(xdocument.Root);
 
-            return new Specification(commands, enums, features, extensions);
+            List<API> APIs = MakeAPIs(features, extensions);
+
+            return new Specification2(commands, enums, APIs);
         }
 
+        private static List<API> MakeAPIs(List<Feature> features, List<Extension> extensions)
+        {
+            Dictionary<GLAPI, List<Feature>> FeaturesPerAPI = new Dictionary<GLAPI, List<Feature>>();
+            foreach (var feature in features)
+            {
+                FeaturesPerAPI.AddToNestedList(feature.Api, feature);
+            }
 
-        public static List<Command> ParseCommands(XElement input)
+            Dictionary<GLAPI, List<Extension>> ExtensionsPerAPI = new Dictionary<GLAPI, List<Extension>>();
+            foreach (var extension in extensions)
+            {
+                foreach (var supportedAPI in extension.SupportedApis)
+                {
+                    ExtensionsPerAPI.AddToNestedList(supportedAPI, extension);
+                }
+            }
+
+            List<API> APIs = new List<API>();
+            foreach (var api in FeaturesPerAPI.Keys.Union(ExtensionsPerAPI.Keys))
+            {
+                // FIXME: Better way of filtering things.
+                // We don't case about GLSC2.
+                // Ignore GLAPI-None, there is only one disabled extension that doesn't have an API.
+                // - 2023-03-21 NogginBops
+                // Only extensions are marked with GLCore and they always
+                // support normal GL.
+                // - 2023-03-21 NogginBops
+                if (api == GLAPI.GLSC2 ||
+                    api == GLAPI.None ||
+                    api == GLAPI.GLCore)
+                    continue;
+
+                List<FunctionReference> functions = MakeFunctionReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
+                List<EnumReference> enums = MakeEnumReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
+
+                InputAPI inAPI = api switch
+                {
+                    GLAPI.GL => InputAPI.GL,
+                    GLAPI.GLES1 => InputAPI.GLES1,
+                    GLAPI.GLES2 => InputAPI.GLES2,
+                    GLAPI.WGL => InputAPI.WGL,
+                    GLAPI.GLX => InputAPI.GLX,
+
+                    _ => throw new Exception(),
+                };
+
+                APIs.Add(new API(inAPI, functions, enums));
+            }
+
+            return APIs;
+
+            static List<FunctionReference> MakeFunctionReferences(List<Feature> features, List<Extension> extensions, GLAPI api)
+            {
+                //List<FunctionReference> functions = new List<FunctionReference>();
+                Dictionary<string, FunctionReference> entryPointToReference = new Dictionary<string, FunctionReference>();
+
+                // FIXME: If we want to generate the compatibility thing we want to remove all of the 
+                foreach (var feature in features)
+                {
+                    foreach (var requires in feature.Requires)
+                    {
+                        Debug.Assert(requires.Api != feature.Api);
+
+                        foreach (var entryPoint in requires.Commands)
+                        {
+                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            {
+                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint, value);
+                            }
+
+                            // FIXME: This isn't strictly needed... they are already going to be in order.
+                            if (feature.Version < value.AddedIn)
+                            {
+                                value = value with { AddedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = requires.Profile };
+
+                            entryPointToReference[entryPoint] = value;
+                        }
+                    }
+
+                    foreach (var removes in feature.Removes)
+                    {
+                        bool isCompatibility = removes.Profile == GLProfile.Compatibility;
+
+                        foreach (var entryPoint in removes.Commands)
+                        {
+                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            {
+                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint, value);
+                            }
+
+                            // If we should, update the removed in.
+                            if (value.RemovedIn == null || feature.Version < value.RemovedIn)
+                            {
+                                value = value with { RemovedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = removes.Profile };
+
+                            entryPointToReference[entryPoint] = value;
+                        }
+                    }
+                }
+
+                foreach (var extension in extensions)
+                {
+                    Debug.Assert(extension.SupportedApis.Contains(api));
+
+                    foreach (var requires in extension.Requires)
+                    {
+                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == GLAPI.None);
+
+                        foreach (var entryPoint in requires.Commands)
+                        {
+                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            {
+                                value = new FunctionReference(entryPoint, null, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint, value);
+                            }
+
+                            value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
+
+                            // FIXME: Should we do this?
+                            value = value with { Profile = requires.Profile };
+
+                            entryPointToReference[entryPoint] = value;
+                        }
+                    }
+                }
+
+                return entryPointToReference.Values.ToList();
+            }
+
+            static List<EnumReference> MakeEnumReferences(List<Feature> features, List<Extension> extensions, GLAPI api)
+            {
+                Dictionary<string, EnumReference> enumNameToReference = new Dictionary<string, EnumReference>();
+
+                // FIXME: If we want to generate the compatibility thing we want to remove all of the 
+                foreach (var feature in features)
+                {
+                    foreach (var requires in feature.Requires)
+                    {
+                        Debug.Assert(requires.Api != feature.Api);
+
+                        foreach (var enumName in requires.Enums)
+                        {
+                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            {
+                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                enumNameToReference.Add(enumName, value);
+                            }
+
+                            // FIXME: This isn't strictly needed... they are already going to be in order.
+                            if (feature.Version < value.AddedIn)
+                            {
+                                value = value with { AddedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = requires.Profile };
+
+                            enumNameToReference[enumName] = value;
+                        }
+                    }
+
+                    foreach (var removes in feature.Removes)
+                    {
+                        foreach (var enumName in removes.Enums)
+                        {
+                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            {
+                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                enumNameToReference.Add(enumName, value);
+                            }
+
+                            // If we should, update the removed in.
+                            if (value.RemovedIn == null || feature.Version < value.RemovedIn)
+                            {
+                                value = value with { RemovedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = removes.Profile };
+
+                            enumNameToReference[enumName] = value;
+                        }
+                    }
+                }
+
+                foreach (var extension in extensions)
+                {
+                    Debug.Assert(extension.SupportedApis.Contains(api));
+
+                    foreach (var requires in extension.Requires)
+                    {
+                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == GLAPI.None);
+
+                        foreach (var enumName in requires.Enums)
+                        {
+                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            {
+                                value = new EnumReference(enumName, null, null, new List<ExtensionReference>(), GLProfile.None);
+                                enumNameToReference.Add(enumName, value);
+                            }
+
+                            value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
+
+                            // FIXME: Should we do this?
+                            value = value with { Profile = requires.Profile };
+
+                            enumNameToReference[enumName] = value;
+                        }
+                    }
+                }
+
+                return enumNameToReference.Values.ToList();
+            }
+        }
+
+        private static List<Command> ParseCommands(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
             XElement? xelement = input.Element("commands")!;

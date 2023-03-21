@@ -7,12 +7,23 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
+    // FIXME: Add the needed properties for apis here...
+    //public record API(string name, APIVersion[] APIVersions);
 
+    //public record APIVersion(Version Version, Function[] Functions /* something enums */);
+
+    //public record Extension(string name, Function[] Functions /* something enums */);
+
+    //public record Function(NativeFunction Native, Overload[] Overloads);
+
+
+
+
+    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
 
     public record GLOutputApi(
         OutputApi Api,
-        Dictionary<string, GLVendorFunctions> Vendors,
+        SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
@@ -26,9 +37,18 @@ namespace Generator.Writing
         );
 
     public record GLVendorFunctions(
-        List<NativeFunction> NativeFunctions,
-        List<Overload[]> OverloadsGroupedByNativeFunctions,
+        List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
+
+    public record OverloadedFunction(
+        NativeFunction NativeFunction,
+        Overload[] Overloads) : IComparable<OverloadedFunction>
+    {
+        public int CompareTo(OverloadedFunction? other)
+        {
+            return NativeFunction.FunctionName.CompareTo(other?.NativeFunction.FunctionName);
+        }
+    }
 
     public record NativeFunction(
         string EntryPoint,
@@ -307,5 +327,6 @@ namespace Generator.Writing
         GLES1,
         GLES2,
         WGL,
+        GLX,
     }
 }

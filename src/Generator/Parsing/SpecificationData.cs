@@ -7,6 +7,52 @@ using System.IO.Compression;
 
 namespace Generator.Parsing
 {
+    public enum InputAPI
+    {
+        GL,
+        GLES1,
+        GLES2,
+        WGL,
+        GLX,
+    }
+
+    public record Specification2(
+        List<Command> Commands,
+        List<Enums> Enums,
+        List<API> APIs);
+
+    public record API(
+        InputAPI Name,
+        List<FunctionReference> Functions,
+        List<EnumReference> Enums);
+
+    public record FunctionReference(
+        string EntryPoint,
+        Version? AddedIn,
+        Version? RemovedIn,
+        List<ExtensionReference> PartOfExtensions,
+        GLProfile Profile);
+
+    public record EnumReference(
+        string EnumName,
+        Version? AddedIn,
+        Version? RemovedIn,
+        List<ExtensionReference> PartOfExtensions,
+        // FIXME! there can be multiple profiles??
+        GLProfile Profile);
+
+    public record APIVersion(
+        Version Name,
+        List<string> EntryPoints,
+        List<string> EnumValues);
+
+    public record ExtensionReference(
+        string Name,
+        string Vendor);
+        //List<string> EntryPoints,
+        //List<string> EnumValues);
+
+
     public record Specification(
         List<Command> Commands,
         List<Enums> Enums,
@@ -19,7 +65,7 @@ namespace Generator.Parsing
         PType ReturnType,
         GLParameter[] Parameters);
 
-
+    // FIXME: Maybe flatten the list of enums?
     public record Enums(
         string Namespace,
         string[] Groups,

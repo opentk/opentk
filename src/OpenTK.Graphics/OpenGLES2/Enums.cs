@@ -1625,6 +1625,7 @@ namespace OpenTK.Graphics.OpenGLES2
         ContextFlagDebugBitKhr = 2,
         StackOverflowKhr = 1283,
         StackUnderflowKhr = 1284,
+        DisplayList = 33511,
         ContextFlagNoErrorBitKhr = 8,
         ContextRobustAccess = 37107,
         ContextRobustAccessKhr = 37107,
@@ -2055,6 +2056,17 @@ namespace OpenTK.Graphics.OpenGLES2
         RelativeConicCurveToNv = 27,
         FontNumGlyphIndicesBitNv = 536870912,
         StandardFontFormatNv = 37740,
+        _2BytesNv = 5127,
+        _3BytesNv = 5128,
+        _4BytesNv = 5129,
+        EyeLinearNv = 9216,
+        ObjectLinearNv = 9217,
+        ConstantNv = 34166,
+        PathFogGenModeNv = 37036,
+        PrimaryColor = 34167,
+        PrimaryColorNv = 34092,
+        SecondaryColorNv = 34093,
+        PathGenColorFormatNv = 37042,
         PathProjectionNv = 5889,
         PathModelviewNv = 5888,
         PathModelviewStackDepthNv = 2979,
@@ -2440,6 +2452,10 @@ namespace OpenTK.Graphics.OpenGLES2
         MapWriteBitExt = 2,
     }
     [Flags]
+    public enum ClientAttribMask : uint
+    {
+    }
+    [Flags]
     public enum ContextFlagMask : uint
     {
         ContextFlagDebugBit = 2,
@@ -2487,6 +2503,10 @@ namespace OpenTK.Graphics.OpenGLES2
         ShaderStorageBarrierBit = 8192,
         ClientMappedBufferBarrierBitExt = 16384,
     }
+    [Flags]
+    public enum OcclusionQueryEventMaskAMD : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.ClientWaitSync" />, <see cref="GL.APPLE.ClientWaitSyncAPPLE" /></summary>
     [Flags]
     public enum SyncObjectMask : uint
@@ -2531,6 +2551,10 @@ namespace OpenTK.Graphics.OpenGLES2
         SubgroupFeaturePartitionedBitNv = 256,
     }
     [Flags]
+    public enum TextureStorageMaskAMD : uint
+    {
+    }
+    [Flags]
     public enum FragmentShaderDestMaskATI : uint
     {
         None = 0,
@@ -2539,6 +2563,10 @@ namespace OpenTK.Graphics.OpenGLES2
     public enum FragmentShaderDestModMaskATI : uint
     {
         None = 0,
+    }
+    [Flags]
+    public enum FragmentShaderColorModMaskATI : uint
+    {
     }
     ///<summary>Used in <see cref="GL.NV.PathGlyphIndexArrayNV" />, <see cref="GL.NV.PathGlyphIndexRangeNV" />, <see cref="GL.NV.PathGlyphRangeNV" />, ...</summary>
     [Flags]
@@ -2583,6 +2611,10 @@ namespace OpenTK.Graphics.OpenGLES2
         PerfquerySingleContextIntel = 0,
         PerfqueryGlobalContextIntel = 1,
     }
+    [Flags]
+    public enum VertexHintsMaskPGI : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.QCOM.EndTilingQCOM" />, <see cref="GL.QCOM.StartTilingQCOM" /></summary>
     [Flags]
     public enum BufferBitQCOM : uint
@@ -2626,6 +2658,13 @@ namespace OpenTK.Graphics.OpenGLES2
         FoveationEnableBitQcom = 1,
         FoveationScaledBinMethodBitQcom = 2,
         FoveationSubsampledLayoutMethodBitQcom = 4,
+    }
+    [Flags]
+    public enum FfdMaskSGIX : uint
+    {
+    }
+    public enum CommandOpcodesNV : uint
+    {
     }
     ///<summary>Used in <see cref="GL.NV.GetPathCommandsNV" />, <see cref="GL.NV.PathCommandsNV" />, <see cref="GL.NV.PathCoordsNV" />, ...</summary>
     public enum PathCoordType : uint
@@ -2675,6 +2714,12 @@ namespace OpenTK.Graphics.OpenGLES2
         RelativeRectNv = 247,
         ConicCurveToNv = 26,
         RelativeConicCurveToNv = 27,
+    }
+    public enum TransformFeedbackTokenNV : uint
+    {
+    }
+    public enum TriangleListSUN : uint
+    {
     }
     public enum Boolean : uint
     {
@@ -2755,6 +2800,7 @@ namespace OpenTK.Graphics.OpenGLES2
     {
         Zero = 0,
         One = 1,
+        PrimaryColor = 34167,
     }
     public enum FragmentShaderValueRepATI : uint
     {
@@ -2774,6 +2820,7 @@ namespace OpenTK.Graphics.OpenGLES2
         None = 0,
         CompareRefToTexture = 34894,
     }
+    ///<summary>Used in <see cref="GL.NV.PathColorGenNV" /></summary>
     public enum PathColorFormat : uint
     {
         Alpha = 6406,
@@ -2916,6 +2963,7 @@ namespace OpenTK.Graphics.OpenGLES2
         ColorAttachment30 = 36094,
         ColorAttachment31 = 36095,
     }
+    ///<summary>Used in <see cref="GL.NV.GetPathColorGenfvNV" />, <see cref="GL.NV.GetPathColorGenivNV" />, <see cref="GL.NV.GetPathTexGenfvNV" />, ...</summary>
     public enum PathGenMode : uint
     {
         None = 0,
@@ -2956,6 +3004,9 @@ namespace OpenTK.Graphics.OpenGLES2
         TriangleStripAdjacencyExt = 13,
         PatchesExt = 14,
         QuadsExt = 7,
+    }
+    public enum AccumOp : uint
+    {
     }
     public enum TextureEnvMode : uint
     {
@@ -3019,6 +3070,9 @@ namespace OpenTK.Graphics.OpenGLES2
         Back = 1029,
         FrontAndBack = 1032,
     }
+    public enum FeedbackType : uint
+    {
+    }
     public enum FogMode : uint
     {
         Linear = 9729,
@@ -3028,6 +3082,12 @@ namespace OpenTK.Graphics.OpenGLES2
     {
         Cw = 2304,
         Ccw = 2305,
+    }
+    public enum MapQuery : uint
+    {
+    }
+    public enum GetMapQuery : uint
+    {
     }
     ///<summary>Used in <see cref="GL.GetBooleanv" />, <see cref="GL.GetFloatv" />, <see cref="GL.GetInteger64i_v" />, ...</summary>
     public enum GetPName : uint
@@ -3270,6 +3330,9 @@ namespace OpenTK.Graphics.OpenGLES2
         FramebufferFetchNoncoherentQcom = 38562,
         ShadingRateQcom = 38564,
     }
+    public enum VertexShaderTextureUnitParameter : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.Disable" />, <see cref="GL.Disablei" />, <see cref="GL.Enable" />, ...</summary>
     public enum EnableCap : uint
     {
@@ -3296,6 +3359,15 @@ namespace OpenTK.Graphics.OpenGLES2
         FramebufferFetchNoncoherentQcom = 38562,
         ShadingRatePreserveAspectRatioQcom = 38565,
     }
+    public enum LightModelParameter : uint
+    {
+    }
+    public enum FogPName : uint
+    {
+    }
+    public enum FogParameter : uint
+    {
+    }
     public enum GetFramebufferParameter : uint
     {
         SampleBuffers = 32936,
@@ -3317,6 +3389,9 @@ namespace OpenTK.Graphics.OpenGLES2
         FragmentShaderDerivativeHintOes = 35723,
         BinningControlHintQcom = 36784,
     }
+    public enum PixelMap : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.PixelStorei" /></summary>
     public enum PixelStoreParameter : uint
     {
@@ -3337,9 +3412,20 @@ namespace OpenTK.Graphics.OpenGLES2
         PackSkipRowsNv = 3331,
         PackSkipPixelsNv = 3332,
     }
+    public enum PixelTransferParameter : uint
+    {
+    }
+    public enum IndexMaterialParameterEXT : uint
+    {
+    }
     public enum TextureEnvParameter : uint
     {
         Src1AlphaExt = 34185,
+        ConstantNv = 34166,
+        PrimaryColor = 34167,
+    }
+    public enum MapTarget : uint
+    {
     }
     ///<summary>Used in <see cref="GL.CopyImageSubData" /></summary>
     public enum CopyImageSubDataTarget : uint
@@ -3481,6 +3567,21 @@ namespace OpenTK.Graphics.OpenGLES2
         DebugTypeMarker = 33384,
         DebugTypePushGroup = 33385,
         DebugTypePopGroup = 33386,
+    }
+    public enum MaterialParameter : uint
+    {
+    }
+    public enum FragmentLightParameterSGIX : uint
+    {
+    }
+    public enum ColorMaterialParameter : uint
+    {
+    }
+    public enum LightParameter : uint
+    {
+    }
+    public enum ListMode : uint
+    {
     }
     ///<summary>Used in <see cref="GL.VertexAttribIFormat" />, <see cref="GL.VertexAttribIPointer" /></summary>
     public enum VertexAttribIType : uint
@@ -3844,6 +3945,9 @@ namespace OpenTK.Graphics.OpenGLES2
     public enum FogPointerTypeIBM : uint
     {
         Float = 5126,
+    }
+    public enum VertexAttribLType : uint
+    {
     }
     public enum LogicOp : uint
     {
@@ -4212,9 +4316,21 @@ namespace OpenTK.Graphics.OpenGLES2
     public enum PolygonMode : uint
     {
     }
+    public enum MeshMode1 : uint
+    {
+    }
+    public enum MeshMode2 : uint
+    {
+    }
     public enum EvalMapsModeNV : uint
     {
         FillNv = 6914,
+    }
+    public enum RenderingMode : uint
+    {
+    }
+    public enum ShadingModel : uint
+    {
     }
     ///<summary>Used in <see cref="GL.GetString" />, <see cref="GL.GetStringi" /></summary>
     public enum StringName : uint
@@ -4224,6 +4340,15 @@ namespace OpenTK.Graphics.OpenGLES2
         Renderer = 7937,
         Version = 7938,
         Extensions = 7939,
+    }
+    public enum TextureCoordName : uint
+    {
+    }
+    public enum TextureEnvTarget : uint
+    {
+    }
+    public enum TextureGenParameter : uint
+    {
     }
     ///<summary>Used in <see cref="GL.BlitFramebuffer" />, <see cref="GL.ANGLE.BlitFramebufferANGLE" />, <see cref="GL.EXT.BlitFramebufferLayerEXT" />, ...</summary>
     public enum BlitFramebufferFilter : uint
@@ -4477,6 +4602,15 @@ namespace OpenTK.Graphics.OpenGLES2
         CompressedSrgb8Alpha8Astc6x6x6Oes = 37865,
         StencilIndex8Oes = 36168,
     }
+    public enum InterleavedArrayFormat : uint
+    {
+    }
+    public enum ClipPlaneName : uint
+    {
+    }
+    public enum LightName : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.BlendEquation" />, <see cref="GL.BlendEquationi" />, <see cref="GL.BlendEquationSeparate" />, ...</summary>
     public enum BlendEquationModeEXT : uint
     {
@@ -4489,6 +4623,45 @@ namespace OpenTK.Graphics.OpenGLES2
         MaxExt = 32776,
         FuncAddExt = 32774,
     }
+    public enum ConvolutionTarget : uint
+    {
+    }
+    public enum ConvolutionTargetEXT : uint
+    {
+    }
+    public enum SeparableTarget : uint
+    {
+    }
+    public enum SeparableTargetEXT : uint
+    {
+    }
+    public enum ConvolutionParameter : uint
+    {
+    }
+    public enum HistogramTarget : uint
+    {
+    }
+    public enum HistogramTargetEXT : uint
+    {
+    }
+    public enum GetHistogramParameterPNameEXT : uint
+    {
+    }
+    public enum MinmaxTarget : uint
+    {
+    }
+    public enum MinmaxTargetEXT : uint
+    {
+    }
+    public enum GetMinmaxParameterPNameEXT : uint
+    {
+    }
+    public enum SamplePatternSGIS : uint
+    {
+    }
+    public enum SamplePatternEXT : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.GetInternalformativ" />, <see cref="GL.NV.GetInternalformatSampleivNV" /></summary>
     public enum InternalFormatPName : uint
     {
@@ -4497,6 +4670,15 @@ namespace OpenTK.Graphics.OpenGLES2
         ImageFormatCompatibilityType = 37063,
         TextureCompressed = 34465,
         NumSurfaceCompressionFixedRatesExt = 36718,
+    }
+    public enum ColorTableTargetSGI : uint
+    {
+    }
+    public enum ColorTableTarget : uint
+    {
+    }
+    public enum ColorTableParameterPName : uint
+    {
     }
     ///<summary>Used in <see cref="GL.BindBuffer" />, <see cref="GL.BindBufferBase" />, <see cref="GL.BindBufferRange" />, ...</summary>
     public enum BufferTargetARB : uint
@@ -4514,6 +4696,36 @@ namespace OpenTK.Graphics.OpenGLES2
         AtomicCounterBuffer = 37568,
         ShaderStorageBuffer = 37074,
         TextureBuffer = 35882,
+    }
+    public enum PointParameterNameARB : uint
+    {
+    }
+    public enum TextureFilterSGIS : uint
+    {
+    }
+    public enum SpriteParameterNameSGIX : uint
+    {
+    }
+    public enum SpriteModeSGIX : uint
+    {
+    }
+    public enum ImageTransformPNameHP : uint
+    {
+    }
+    public enum ImageTransformTargetHP : uint
+    {
+    }
+    public enum ListParameterName : uint
+    {
+    }
+    public enum FfdTargetSGIX : uint
+    {
+    }
+    public enum CullParameterEXT : uint
+    {
+    }
+    public enum ProgramTarget : uint
+    {
     }
     ///<summary>Used in <see cref="GL.GetFramebufferAttachmentParameteriv" />, <see cref="GL.GetFramebufferParameteriv" />, <see cref="GL.MESA.GetFramebufferParameterivMESA" /></summary>
     public enum FramebufferAttachmentParameterName : uint
@@ -4684,7 +4896,31 @@ namespace OpenTK.Graphics.OpenGLES2
         AnySamplesPassedConservative = 36202,
         PrimitivesGenerated = 35975,
     }
-    ///<summary>Used in <see cref="GL.ActiveTexture" /></summary>
+    public enum PixelTransformTargetEXT : uint
+    {
+    }
+    public enum PixelTransformPNameEXT : uint
+    {
+    }
+    public enum LightTextureModeEXT : uint
+    {
+    }
+    public enum LightTexturePNameEXT : uint
+    {
+    }
+    public enum PixelTexGenParameterNameSGIS : uint
+    {
+    }
+    public enum LightEnvParameterSGIX : uint
+    {
+    }
+    public enum FragmentLightModelParameterSGIX : uint
+    {
+    }
+    public enum FragmentLightNameSGIX : uint
+    {
+    }
+    ///<summary>Used in <see cref="GL.ActiveTexture" />, <see cref="GL.NV.GetPathTexGenfvNV" />, <see cref="GL.NV.GetPathTexGenivNV" /></summary>
     public enum TextureUnit : uint
     {
         Texture0 = 33984,
@@ -4755,6 +4991,11 @@ namespace OpenTK.Graphics.OpenGLES2
         Texture30 = 34014,
         Texture31 = 34015,
     }
+    public enum CombinerRegisterNV : uint
+    {
+        PrimaryColorNv = 34092,
+        SecondaryColorNv = 34093,
+    }
     ///<summary>Used in <see cref="GL.GetActiveUniformBlockiv" /></summary>
     public enum UniformBlockPName : uint
     {
@@ -4777,6 +5018,31 @@ namespace OpenTK.Graphics.OpenGLES2
         FenceStatusNv = 34035,
         FenceConditionNv = 34036,
     }
+    public enum CombinerVariableNV : uint
+    {
+    }
+    ///<summary>Used in <see cref="GL.NV.GetPathColorGenfvNV" />, <see cref="GL.NV.GetPathColorGenivNV" />, <see cref="GL.NV.PathColorGenNV" />, ...</summary>
+    public enum PathColor : uint
+    {
+        PrimaryColor = 34167,
+        PrimaryColorNv = 34092,
+        SecondaryColorNv = 34093,
+    }
+    public enum CombinerMappingNV : uint
+    {
+    }
+    public enum CombinerParameterNV : uint
+    {
+    }
+    public enum CombinerStageNV : uint
+    {
+    }
+    public enum TextureNormalModeEXT : uint
+    {
+    }
+    public enum VertexArrayPNameAPPLE : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.GetVertexAttribIiv" />, <see cref="GL.GetVertexAttribIuiv" /></summary>
     public enum VertexAttribEnum : uint
     {
@@ -4790,15 +5056,84 @@ namespace OpenTK.Graphics.OpenGLES2
         VertexAttribArrayInteger = 35069,
         VertexAttribArrayDivisor = 35070,
     }
+    public enum ProgramStringProperty : uint
+    {
+    }
+    public enum VertexAttribEnumNV : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.GetVertexAttribPointerv" /></summary>
     public enum VertexAttribPointerPropertyARB : uint
     {
         VertexAttribArrayPointer = 34373,
     }
+    public enum EvalTargetNV : uint
+    {
+    }
+    public enum MapParameterNV : uint
+    {
+    }
+    public enum MapAttribParameterNV : uint
+    {
+    }
+    public enum ArrayObjectUsageATI : uint
+    {
+    }
+    public enum PreserveModeATI : uint
+    {
+    }
+    public enum ArrayObjectPNameATI : uint
+    {
+    }
+    public enum VertexStreamATI : uint
+    {
+    }
+    public enum GetTexBumpParameterATI : uint
+    {
+    }
+    public enum TexBumpParameterATI : uint
+    {
+    }
+    public enum VertexShaderOpEXT : uint
+    {
+    }
+    public enum DataTypeEXT : uint
+    {
+    }
+    public enum VertexShaderStorageTypeEXT : uint
+    {
+    }
+    public enum VertexShaderCoordOutEXT : uint
+    {
+    }
+    public enum ParameterRangeEXT : uint
+    {
+    }
+    public enum VertexShaderParameterEXT : uint
+    {
+    }
+    public enum GetVariantValueEXT : uint
+    {
+    }
+    public enum VariantCapEXT : uint
+    {
+    }
+    public enum PNTrianglesPNameATI : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.GetQueryiv" />, <see cref="GL.EXT.GetQueryivEXT" /></summary>
     public enum QueryParameterName : uint
     {
         CurrentQuery = 34917,
+    }
+    public enum OcclusionQueryParameterNameNV : uint
+    {
+    }
+    public enum ProgramFormat : uint
+    {
+    }
+    public enum PixelDataRangeTargetNV : uint
+    {
     }
     ///<summary>Used in <see cref="GL.CopyBufferSubData" />, <see cref="GL.NV.CopyBufferSubDataNV" />, <see cref="GL.EXT.CopyImageSubDataEXT" />, ...</summary>
     public enum CopyBufferSubDataTarget : uint
@@ -4870,6 +5205,30 @@ namespace OpenTK.Graphics.OpenGLES2
         StaticCopy = 35046,
         DynamicRead = 35049,
         DynamicCopy = 35050,
+    }
+    public enum ClampColorTargetARB : uint
+    {
+    }
+    public enum FragmentShaderRegATI : uint
+    {
+    }
+    public enum FragmentShaderConATI : uint
+    {
+    }
+    public enum FragmentOp1ATI : uint
+    {
+    }
+    public enum FragmentOp2ATI : uint
+    {
+    }
+    public enum FragmentOp3ATI : uint
+    {
+    }
+    public enum SwizzleOpATI : uint
+    {
+    }
+    public enum ObjectTypeAPPLE : uint
+    {
     }
     ///<summary>Used in <see cref="GL.GetActiveUniformsiv" /></summary>
     public enum UniformPName : uint
@@ -4946,6 +5305,9 @@ namespace OpenTK.Graphics.OpenGLES2
         ShaderStorageBlock = 37606,
         TransformFeedbackVarying = 37620,
     }
+    public enum ClipControlOrigin : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.BindFramebuffer" />, <see cref="GL.CheckFramebufferStatus" />, <see cref="GL.FramebufferParameteri" />, ...</summary>
     public enum FramebufferTarget : uint
     {
@@ -4977,6 +5339,9 @@ namespace OpenTK.Graphics.OpenGLES2
     public enum RenderbufferTarget : uint
     {
         Renderbuffer = 36161,
+    }
+    public enum ProgramStagePName : uint
+    {
     }
     ///<summary>Used in <see cref="GL.GetShaderPrecisionFormat" /></summary>
     public enum PrecisionType : uint
@@ -5161,6 +5526,9 @@ namespace OpenTK.Graphics.OpenGLES2
         FramebufferDefaultFixedSampleLocations = 37652,
         FramebufferDefaultLayers = 37650,
     }
+    public enum ClipControlDepth : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.EXT.SignalSemaphoreEXT" />, <see cref="GL.EXT.WaitSemaphoreEXT" /></summary>
     public enum TextureLayout : uint
     {
@@ -5251,6 +5619,9 @@ namespace OpenTK.Graphics.OpenGLES2
         FragmentShadingRateCombinerOpMinExt = 38612,
         FragmentShadingRateCombinerOpMaxExt = 38613,
         FragmentShadingRateCombinerOpMulExt = 38614,
+    }
+    public enum HintTargetPGI : uint
+    {
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
