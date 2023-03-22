@@ -178,8 +178,6 @@ namespace Generator.Process
 
         public static OutputData ProcessSpec2(Specification2 spec, Documentation docs)
         {
-            HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
-
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
             List<NativeFunction> allEntryPoints = new List<NativeFunction>();
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
@@ -212,6 +210,11 @@ namespace Generator.Process
                 };
 
                 allEnumsPerAPI.Add(outputApi, new Dictionary<string, EnumGroupMember>());
+
+                if (outputApi == OutputApi.GL)
+                {
+                    allEnumsPerAPI.Add(OutputApi.GLCompat, new Dictionary<string, EnumGroupMember>());
+                }
             }
 
             HashSet<EnumGroupInfo> allEnumGroups = new HashSet<EnumGroupInfo>();
@@ -304,6 +307,8 @@ namespace Generator.Process
                         _ => false,
                     };
 
+                    HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
+
                     Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
 
                     // FIXME: Make api an OutputAPI
@@ -316,7 +321,7 @@ namespace Generator.Process
                     {
                         if (allFunctions.TryGetValue(functionRef.EntryPoint, out OverloadedFunction? overloadedFunction))
                         {
-                            groupsReferencedByFunctions.UnionWith(overloadedFunction.NativeFunction.ReferencedEnumGroups);
+                            bool referenced = false;
 
                             if (functionRef.AddedIn != null)
                             {
@@ -327,12 +332,21 @@ namespace Generator.Process
                                 else
                                 {
                                     functionsByVendor.AddToNestedHashSet("", overloadedFunction);
+
+                                    referenced = true;
                                 }
                             }
 
                             foreach (var extension in functionRef.PartOfExtensions)
                             {
                                 functionsByVendor.AddToNestedHashSet(extension.Vendor, overloadedFunction);
+
+                                referenced = true;
+                            }
+
+                            if (referenced)
+                            {
+                                groupsReferencedByFunctions.UnionWith(overloadedFunction.NativeFunction.ReferencedEnumGroups);
                             }
                         }
                         else
@@ -345,8 +359,17 @@ namespace Generator.Process
 
                     foreach (var enumRef in enums)
                     {
-                        if (enumRef.RemovedIn != null && enumRef.PartOfExtensions.Count == 0)
-                            continue;
+                        if (removeFunctions)
+                        {
+                            // FIXME: Should we check the profile of the extension??
+                            if (enumRef.RemovedIn != null || enumRef.Profile == GLProfile.Compatibility)
+                            {
+                                // FIXME: Add the enum if an extension uses it??
+                                continue;
+                            }
+                        }
+
+                        
 
                         if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
                         {
@@ -402,8 +425,22 @@ namespace Generator.Process
                     // Add keys + lists for all enumName names
                     List<EnumGroup> finalGroups = new List<EnumGroup>();
 
+                    List<EnumGroupMember> allEnumGroup = theAllEnumGroup.ToList();
+                    allEnumGroup.Sort((e1, e2) =>
+                    {
+                        int comp = e1.Value.CompareTo(e2.Value);
+                        if (comp == 0)
+                        {
+                            return e1.Name.CompareTo(e2.Name);
+                        }
+                        else
+                        {
+                            return comp;
+                        }
+                    });
+
                     // Add the All enumName groupName
-                    finalGroups.Add(new EnumGroup("All", false, theAllEnumGroup.ToList(), null));
+                    finalGroups.Add(new EnumGroup("All", false, allEnumGroup, null));
 
                     foreach ((string groupName, bool isFlags) in allEnumGroups)
                     {
@@ -436,6 +473,19 @@ namespace Generator.Process
 
                                 return f1.Function.FunctionName.CompareTo(f2.Function.FunctionName);
                             });
+
+                        members.Sort((m1, m2) =>
+                        {
+                            int comp = m1.Value.CompareTo(m2.Value);
+                            if (comp == 0)
+                            {
+                                return m1.Name.CompareTo(m2.Name);
+                            }
+                            else
+                            {
+                                return comp;
+                            }
+                        });
 
                         finalGroups.Add(new EnumGroup(groupName, isFlags, members, functionsUsingEnumGroup));
                     }
@@ -590,7 +640,7 @@ namespace Generator.Process
                         }
                     }
 
-                    return new GLOutputApi(outAPI, sortedVendors, finalGroups, new Dictionary<NativeFunction, FunctionDocumentation>());
+                    return new GLOutputApi(outAPI, sortedVendors, finalGroups, documentation);
                 }
 
                 

@@ -406,7 +406,11 @@ namespace Generator.Writing
 
         private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation, string entryPoint)
         {
-            writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}] [{entryPoint}]</b> {documentation.Purpose} </summary>");
+            writer.Write("/// <summary> ");
+            writer.Write($"<b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> ");
+            if (documentation.RemovedIn?.Count > 0)
+                writer.Write($"<b>[removed in: {string.Join(" | ", documentation.RemovedIn)}]</b> ");
+            writer.WriteLine($" {documentation.Purpose} </summary>");
 
             foreach (ParameterDocumentation parameter in documentation.Parameters)
             {
