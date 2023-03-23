@@ -474,14 +474,6 @@ namespace OpenTK.Audio.OpenAL
         public static extern void Source(int sid, ALSourceb param, bool value);
         // FIXME: Double check that the mashaling here works!!
 
-        /// <summary>(Helper) Binds a Buffer to a Source handle.</summary>
-        /// <param name="source">Source name to attach the Buffer to.</param>
-        /// <param name="buffer">Buffer name which is attached to the Source.</param>
-        public static void BindBufferToSource(int source, int buffer)
-        {
-            Source(source, ALSourcei.Buffer, buffer);
-        }
-
         /// <summary>This function sets 3 integer properties of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: EfxAuxiliarySendFilter..</param>
