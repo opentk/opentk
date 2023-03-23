@@ -290,6 +290,16 @@ namespace Generator.Parsing
         GLDebugProcAMD,
         GLDebugProcNV,
         GLVulkanProcNV,
+
+        // WGL Types
+        WGL_Proc,
+        WGL_Rect,
+        WGL_LPString,
+        WGL_COLORREF,
+        WGL_LAYERPLANEDESCRIPTOR,
+        WGL_PIXELFORMATDESCRIPTOR,
+        WGL_GPU_DEVICE,
+        WGL_PGPU_DEVICE,
     }
 
     public enum HandleType

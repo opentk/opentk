@@ -15,6 +15,8 @@ namespace Generator.Writing
     {
         private const string BaseNamespace = "OpenTK";
         private const string GraphicsNamespace = BaseNamespace + ".Graphics";
+
+        // FIXME: This needs to change for WGL and GLX!
         private const string LoaderClass = "GLLoader";
         private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
 
@@ -67,7 +69,7 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenGL entry points.</summary>");
-                writer.WriteLine($"public static unsafe partial class GLPointers");
+                writer.WriteLine($"public static unsafe partial class {apiName}Pointers");
                 using (writer.CsScope())
                 {
                     foreach (NativeFunction function in nativeFunctions)
@@ -185,7 +187,7 @@ namespace Generator.Writing
 
                 string underlyingType = type switch
                 {
-                    CSStruct csstruct => csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type."),
+                    CSStructPrimitive csstruct => csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type."),
                     CSEnum csenum => csenum.PrimitiveType.ToCSString(),
                     CSBool8 => "byte",
                     _ => type.ToCSString()
@@ -212,7 +214,7 @@ namespace Generator.Writing
             writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
             using (writer.CsScope())
             {
-                writer.WriteLine($"public static unsafe partial class GL");
+                writer.WriteLine($"public static unsafe partial class {apiName}");
                 using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
@@ -229,7 +231,7 @@ namespace Generator.Writing
                         {
                             bool postfixName = group.NativeFunctionsWithPostfix.Contains(function.NativeFunction);
                             documentation.TryGetValue(function.NativeFunction, out FunctionDocumentation? functionDocumentation);
-                            WriteNativeFunction(writer, function.NativeFunction, postfixName, functionDocumentation);
+                            WriteNativeFunction(writer, function.NativeFunction, postfixName, functionDocumentation, apiName);
                         }
 
                         scope?.Dispose();
@@ -240,7 +242,7 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
+        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation, string apiName)
         {
             GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: false,
                 out string name,
@@ -267,16 +269,16 @@ namespace Generator.Writing
                 if (function.ReturnType is CSBool8)
                 {
                     // HACK: We can't cast byte to bool, sigh...
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => GLPointers._{entryPoint}_fnptr({paramNames}) != 0;");
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames}) != 0;");
                 }
                 else
                 {
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLPointers._{entryPoint}_fnptr({paramNames});");
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
                 }
             }
             else
             {
-                writer.WriteLine($"public static {returnType} {name}({signature}) => GLPointers._{entryPoint}_fnptr({paramNames});");
+                writer.WriteLine($"public static {returnType} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
             }
 
             writer.WriteLine();
@@ -301,7 +303,7 @@ namespace Generator.Writing
             using (writer.CsScope())
             {
                 // FIXME: Maybe we want to fix this?
-                writer.WriteLine($"public static unsafe partial class GL");
+                writer.WriteLine($"public static unsafe partial class {apiName}");
                 using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
@@ -336,13 +338,10 @@ namespace Generator.Writing
 
             writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
 
-            string parameterString =
-                string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
+            string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
-            string genericTypes =
-                overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
-            writer.WriteLine(
-                $"public static unsafe {overload.ReturnType.ToCSString()} {overload.OverloadName}{genericTypes}({parameterString})");
+            string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
+            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.OverloadName}{genericTypes}({parameterString})");
             using (writer.Indent())
             {
                 foreach (var type in overload.GenericTypes)
@@ -451,6 +450,7 @@ namespace Generator.Writing
             {
                 if (group.FunctionsUsingEnumGroup != null)
                 {
+                    // FIXME: We can't assume functions are contained in the GL. class here
                     if (group.FunctionsUsingEnumGroup.Count > 3)
                     {
                         writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");

@@ -138,7 +138,15 @@ namespace Generator.Writing
         }
     }
 
-    public record CSStruct(string TypeName, bool Constant, CSPrimitive? UnderlyingType) : BaseCSType, IConstantCSType
+    public record CSStructPrimitive(string StructName, bool Constant, CSPrimitive UnderlyingType) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return StructName;
+        }
+    }
+
+    public record CSStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -162,11 +170,21 @@ namespace Generator.Writing
         }
     }
 
-    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType
+    public interface ICSCharType : IConstantCSType { }
+
+    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
     {
         public override string ToCSString()
         {
             return "byte";
+        }
+    }
+
+    public record CSChar16(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
+    {
+        public override string ToCSString()
+        {
+            return "char";
         }
     }
 

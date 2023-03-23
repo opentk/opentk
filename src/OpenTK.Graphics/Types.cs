@@ -605,4 +605,93 @@ namespace OpenTK.Graphics
         public static explicit operator DisplayListHandle(int DisplayList) => new DisplayListHandle(DisplayList);
         public static explicit operator int(DisplayListHandle displayListHandle) => displayListHandle.Handle;
     }
+
+    // WGL Types
+    // FIXME: Maybe add to it's own namespace?
+
+    public struct Rect
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 4)]
+    public struct ColorRef
+    {
+        [FieldOffset(0)]
+        public byte Red;
+        [FieldOffset(1)]
+        public byte Green;
+        [FieldOffset(2)]
+        public byte Blue;
+    }
+
+    public struct LayerPlaneDescriptor
+    {
+        public ushort nSize;
+        public ushort nVersion;
+        public uint dwFlags;
+        public byte iPixelType;
+        public byte cColorBits;
+        public byte cRedBits;
+        public byte cRedShift;
+        public byte cGreenBits;
+        public byte cGreenShift;
+        public byte cBlueBits;
+        public byte cBlueShift;
+        public byte cAlphaBits;
+        public byte cAlphaShift;
+        public byte cAccumBits;
+        public byte cAccumRedBits;
+        public byte cAccumGreenBits;
+        public byte cAccumBlueBits;
+        public byte cAccumAlphaBits;
+        public byte cDepthBits;
+        public byte cStencilBits;
+        public byte cAuxBuffers;
+        public byte iLayerPlane;
+        public byte bReserved;
+        public ColorRef crTransparent;
+    }
+
+    public struct PixelFormatDescriptor
+    {
+        public ushort nSize;
+        public ushort nVersion;
+        public uint dwFlags;
+        public byte iPixelType;
+        public byte cColorBits;
+        public byte cRedBits;
+        public byte cRedShift;
+        public byte cGreenBits;
+        public byte cGreenShift;
+        public byte cBlueBits;
+        public byte cBlueShift;
+        public byte cAlphaBits;
+        public byte cAlphaShift;
+        public byte cAccumBits;
+        public byte cAccumRedBits;
+        public byte cAccumGreenBits;
+        public byte cAccumBlueBits;
+        public byte cAccumAlphaBits;
+        public byte cDepthBits;
+        public byte cStencilBits;
+        public byte cAuxBuffers;
+        public byte iLayerType;
+        public byte bReserved;
+        public uint dwLayerMask;
+        public uint dwVisibleMask;
+        public uint dwDamageMask;
+    }
+
+    public unsafe struct _GPU_DEVICE
+    {
+        public uint cb;
+        public fixed byte DeviceName[32];
+        public fixed byte DeviceString[128];
+        public uint Flags; // FIXME: Enum
+        public Rect rcVirtualScreen;
+    }
 }

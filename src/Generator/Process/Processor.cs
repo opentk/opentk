@@ -531,7 +531,7 @@ namespace Generator.Process
 
                                 if (func == null)
                                 {
-                                    throw new Exception($"Could not find function {func.EntryPoint}!");
+                                    throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
                                 }
 
                                 List<string> addedIn = new List<string>();
@@ -571,7 +571,7 @@ namespace Generator.Process
 
                                     if (func == null)
                                     {
-                                        throw new Exception($"Could not find function {func.EntryPoint}!");
+                                        throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
                                     }
 
                                     List<string> addedIn = new List<string>();
@@ -606,7 +606,7 @@ namespace Generator.Process
 
                                     if (func == null)
                                     {
-                                        throw new Exception($"Could not find function {func.EntryPoint}!");
+                                        throw new Exception($"Could not find function {function.NativeFunction.EntryPoint}!");
                                     }
 
                                     List<string> addedIn = new List<string>();
@@ -1007,7 +1007,7 @@ namespace Generator.Process
                     {
                         if (Options.UseTypesafeGLHandles && handle != null)
                         {
-                            return new CSStruct(handle.Value.ToString(), bt.Constant, new CSPrimitive("int", bt.Constant));
+                            return new CSStructPrimitive(handle.Value.ToString(), bt.Constant, new CSPrimitive("int", bt.Constant));
                         }
 
                         // To make OpenTK 5 more like OpenTK 4 we want handles to be int instead of uint
@@ -1046,7 +1046,7 @@ namespace Generator.Process
                             PrimitiveType.Ulong => new CSPrimitive("ulong", bt.Constant),
                             // This might need an include, but the spec doesn't use this type
                             // so we don't really need to do anything...
-                            PrimitiveType.Half => new CSStruct("Half", bt.Constant, new CSPrimitive("ushort", bt.Constant)),
+                            PrimitiveType.Half => new CSStructPrimitive("Half", bt.Constant, new CSPrimitive("ushort", bt.Constant)),
                             PrimitiveType.Float => new CSPrimitive("float", bt.Constant),
                             PrimitiveType.Double => new CSPrimitive("double", bt.Constant),
 
@@ -1065,13 +1065,13 @@ namespace Generator.Process
                             PrimitiveType.VoidPtr => new CSPointer(new CSVoid(false), bt.Constant),
 
                             // FIXME: Output the GLHandleARB again...
-                            PrimitiveType.GLHandleARB => new CSStruct("GLHandleARB", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                            PrimitiveType.GLHandleARB => new CSStructPrimitive("GLHandleARB", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
-                            PrimitiveType.GLSync => new CSStruct("GLSync", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                            PrimitiveType.GLSync => new CSStructPrimitive("GLSync", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
                             // OpenCL structs
-                            PrimitiveType.CLContext => new CSStruct("CLContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
-                            PrimitiveType.CLEvent => new CSStruct("CLEvent", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                            PrimitiveType.CLContext => new CSStructPrimitive("CLContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                            PrimitiveType.CLEvent => new CSStructPrimitive("CLEvent", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
 
                             // Function pointer types
                             PrimitiveType.GLDebugProc => new CSFunctionPointer("GLDebugProc", bt.Constant),
@@ -1080,6 +1080,18 @@ namespace Generator.Process
                             PrimitiveType.GLDebugProcAMD => new CSFunctionPointer("GLDebugProcAMD", bt.Constant),
                             PrimitiveType.GLDebugProcNV => new CSFunctionPointer("GLDebugProcNV", bt.Constant),
                             PrimitiveType.GLVulkanProcNV => new CSFunctionPointer("GLVulkanProcNV", bt.Constant),
+
+
+                            // WGL
+                            PrimitiveType.WGL_Proc => new CSFunctionPointer("???", bt.Constant),
+                            
+                            PrimitiveType.WGL_Rect => new CSStruct("Rect", bt.Constant),
+                            PrimitiveType.WGL_LPString => new CSPointer(new CSChar16(true), bt.Constant),
+                            PrimitiveType.WGL_COLORREF => new CSStructPrimitive("ColorRef", bt.Constant, new CSPrimitive("uint", false)),
+                            PrimitiveType.WGL_LAYERPLANEDESCRIPTOR => new CSStruct("LayerPlaneDescriptor", bt.Constant),
+                            PrimitiveType.WGL_PIXELFORMATDESCRIPTOR => new CSStruct("PixelFormatDescriptor", bt.Constant),
+                            PrimitiveType.WGL_GPU_DEVICE => new CSStruct("_GPU_DEVICE", bt.Constant),
+                            PrimitiveType.WGL_PGPU_DEVICE => new CSPointer(new CSStruct("_GPU_DEVICE", false), bt.Constant),
 
                             PrimitiveType.Invalid => throw new Exception(),
                             _ => throw new Exception(),

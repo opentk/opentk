@@ -44,6 +44,7 @@ namespace Generator
                     /**/
                 }
 
+                st.Restart();
                 {
                     GeneratorSettings.Settings = new GeneratorSettings()
                     {
@@ -74,20 +75,20 @@ namespace Generator
                     // Reading the gl.xml file and parsing it into data structures.
                     using FileStream specificationStream = Reader.ReadWGLSpecFromGithub();
                     Specification2 specification = SpecificationParser.Parse(specificationStream);
-                    /*
+                    
                     // FIXME: Does there exist wgl documentation?
                     // Read the documentation folders and parse it into data structures.
                     //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
-                    Documentation documentation = new Documentation(new Dictionary<OutputApi, VersionDocumentation>()); //DocumentationParser.Parse(documentationSource);
+                    Documentation documentation = new Documentation(new Dictionary<OutputApi, VersionDocumentation>());
 
                     // Processer/overloading
-                    OutputData outputSpec = Processor.ProcessSpec(specification, documentation);
+                    OutputData outputSpec = Processor.ProcessSpec2(specification, documentation);
 
                     // Writing cs files.
                     Writer.Write(outputSpec, "WGL");
 
                     st.Stop();
-                    Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");*/
+                    Logger.Info($"Generated WGL bindings in {st.ElapsedMilliseconds} ms");
                 }
             }
         }

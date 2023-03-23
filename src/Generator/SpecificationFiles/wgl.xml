@@ -913,7 +913,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iLayerPlane</name></param>
             <param>int <name>iStart</name></param>
             <param>int <name>cEntries</name></param>
-            <param><ptype>COLORREF</ptype> *<name>pcr</name></param>
+            <param len="cEntries"><ptype>COLORREF</ptype> *<name>pcr</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetMscRateOML</name></proto>

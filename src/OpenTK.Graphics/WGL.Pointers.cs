@@ -6,21 +6,21 @@ using OpenTK.Graphics;
 namespace OpenTK.Graphics
 {
     /// <summary>A collection of all function pointers to all OpenGL entry points.</summary>
-    public static unsafe partial class GLPointers
+    public static unsafe partial class WGLPointers
     {
-        internal static delegate* unmanaged<IntPtr, void*, int> _ChoosePixelFormat_fnptr = &ChoosePixelFormat_Lazy;
+        internal static delegate* unmanaged<IntPtr, PixelFormatDescriptor*, int> _ChoosePixelFormat_fnptr = &ChoosePixelFormat_Lazy;
         [UnmanagedCallersOnly]
-        private static int ChoosePixelFormat_Lazy(IntPtr hDc, void* pPfd)
+        private static int ChoosePixelFormat_Lazy(IntPtr hDc, PixelFormatDescriptor* pPfd)
         {
-            _ChoosePixelFormat_fnptr = (delegate* unmanaged<IntPtr, void*, int>)GLLoader.BindingsContext.GetProcAddress("ChoosePixelFormat");
+            _ChoosePixelFormat_fnptr = (delegate* unmanaged<IntPtr, PixelFormatDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("ChoosePixelFormat");
             return _ChoosePixelFormat_fnptr(hDc, pPfd);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, uint, void*, int> _DescribePixelFormat_fnptr = &DescribePixelFormat_Lazy;
+        internal static delegate* unmanaged<IntPtr, int, uint, PixelFormatDescriptor*, int> _DescribePixelFormat_fnptr = &DescribePixelFormat_Lazy;
         [UnmanagedCallersOnly]
-        private static int DescribePixelFormat_Lazy(IntPtr hdc, int ipfd, uint cjpfd, void* ppfd)
+        private static int DescribePixelFormat_Lazy(IntPtr hdc, int ipfd, uint cjpfd, PixelFormatDescriptor* ppfd)
         {
-            _DescribePixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, uint, void*, int>)GLLoader.BindingsContext.GetProcAddress("DescribePixelFormat");
+            _DescribePixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, uint, PixelFormatDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("DescribePixelFormat");
             return _DescribePixelFormat_fnptr(hdc, ipfd, cjpfd, ppfd);
         }
         
@@ -32,11 +32,11 @@ namespace OpenTK.Graphics
             return _GetPixelFormat_fnptr(hdc);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, void*, int> _SetPixelFormat_fnptr = &SetPixelFormat_Lazy;
+        internal static delegate* unmanaged<IntPtr, int, PixelFormatDescriptor*, int> _SetPixelFormat_fnptr = &SetPixelFormat_Lazy;
         [UnmanagedCallersOnly]
-        private static int SetPixelFormat_Lazy(IntPtr hdc, int ipfd, void* ppfd)
+        private static int SetPixelFormat_Lazy(IntPtr hdc, int ipfd, PixelFormatDescriptor* ppfd)
         {
-            _SetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, void*, int>)GLLoader.BindingsContext.GetProcAddress("SetPixelFormat");
+            _SetPixelFormat_fnptr = (delegate* unmanaged<IntPtr, int, PixelFormatDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("SetPixelFormat");
             return _SetPixelFormat_fnptr(hdc, ipfd, ppfd);
         }
         
@@ -288,11 +288,11 @@ namespace OpenTK.Graphics
             return _wglDeleteDCNV_fnptr(hdc);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, uint, void*, int> _wglDescribeLayerPlane_fnptr = &wglDescribeLayerPlane_Lazy;
+        internal static delegate* unmanaged<IntPtr, int, int, uint, LayerPlaneDescriptor*, int> _wglDescribeLayerPlane_fnptr = &wglDescribeLayerPlane_Lazy;
         [UnmanagedCallersOnly]
-        private static int wglDescribeLayerPlane_Lazy(IntPtr hDc, int pixelFormat, int layerPlane, uint nBytes, void* plpd)
+        private static int wglDescribeLayerPlane_Lazy(IntPtr hDc, int pixelFormat, int layerPlane, uint nBytes, LayerPlaneDescriptor* plpd)
         {
-            _wglDescribeLayerPlane_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, void*, int>)GLLoader.BindingsContext.GetProcAddress("wglDescribeLayerPlane");
+            _wglDescribeLayerPlane_fnptr = (delegate* unmanaged<IntPtr, int, int, uint, LayerPlaneDescriptor*, int>)GLLoader.BindingsContext.GetProcAddress("wglDescribeLayerPlane");
             return _wglDescribeLayerPlane_fnptr(hDc, pixelFormat, layerPlane, nBytes, plpd);
         }
         
@@ -448,11 +448,11 @@ namespace OpenTK.Graphics
             return _wglEnumerateVideoDevicesNV_fnptr(hDc, phDeviceList);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, IntPtr, int> _wglEnumGpuDevicesNV_fnptr = &wglEnumGpuDevicesNV_Lazy;
+        internal static delegate* unmanaged<IntPtr, uint, _GPU_DEVICE*, int> _wglEnumGpuDevicesNV_fnptr = &wglEnumGpuDevicesNV_Lazy;
         [UnmanagedCallersOnly]
-        private static int wglEnumGpuDevicesNV_Lazy(IntPtr hGpu, uint iDeviceIndex, IntPtr lpGpuDevice)
+        private static int wglEnumGpuDevicesNV_Lazy(IntPtr hGpu, uint iDeviceIndex, _GPU_DEVICE* lpGpuDevice)
         {
-            _wglEnumGpuDevicesNV_fnptr = (delegate* unmanaged<IntPtr, uint, IntPtr, int>)GLLoader.BindingsContext.GetProcAddress("wglEnumGpuDevicesNV");
+            _wglEnumGpuDevicesNV_fnptr = (delegate* unmanaged<IntPtr, uint, _GPU_DEVICE*, int>)GLLoader.BindingsContext.GetProcAddress("wglEnumGpuDevicesNV");
             return _wglEnumGpuDevicesNV_fnptr(hGpu, iDeviceIndex, lpGpuDevice);
         }
         
@@ -560,11 +560,11 @@ namespace OpenTK.Graphics
             return _wglGetCurrentReadDCEXT_fnptr();
         }
         
-        internal static delegate* unmanaged<void, IntPtr> _wglGetDefaultProcAddress_fnptr = &wglGetDefaultProcAddress_Lazy;
+        internal static delegate* unmanaged<char*, IntPtr> _wglGetDefaultProcAddress_fnptr = &wglGetDefaultProcAddress_Lazy;
         [UnmanagedCallersOnly]
-        private static IntPtr wglGetDefaultProcAddress_Lazy(void lpszProc)
+        private static IntPtr wglGetDefaultProcAddress_Lazy(char* lpszProc)
         {
-            _wglGetDefaultProcAddress_fnptr = (delegate* unmanaged<void, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetDefaultProcAddress");
+            _wglGetDefaultProcAddress_fnptr = (delegate* unmanaged<char*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetDefaultProcAddress");
             return _wglGetDefaultProcAddress_fnptr(lpszProc);
         }
         
@@ -576,11 +576,11 @@ namespace OpenTK.Graphics
             return _wglGetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, void*, uint> _GetEnhMetaFilePixelFormat_fnptr = &GetEnhMetaFilePixelFormat_Lazy;
+        internal static delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint> _GetEnhMetaFilePixelFormat_fnptr = &GetEnhMetaFilePixelFormat_Lazy;
         [UnmanagedCallersOnly]
-        private static uint GetEnhMetaFilePixelFormat_Lazy(IntPtr hemf, uint cbBuffer, void* ppfd)
+        private static uint GetEnhMetaFilePixelFormat_Lazy(IntPtr hemf, uint cbBuffer, PixelFormatDescriptor* ppfd)
         {
-            _GetEnhMetaFilePixelFormat_fnptr = (delegate* unmanaged<IntPtr, uint, void*, uint>)GLLoader.BindingsContext.GetProcAddress("GetEnhMetaFilePixelFormat");
+            _GetEnhMetaFilePixelFormat_fnptr = (delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint>)GLLoader.BindingsContext.GetProcAddress("GetEnhMetaFilePixelFormat");
             return _GetEnhMetaFilePixelFormat_fnptr(hemf, cbBuffer, ppfd);
         }
         
@@ -672,11 +672,11 @@ namespace OpenTK.Graphics
             return _wglGetGPUInfoAMD_fnptr(id, property, dataType, size, data);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, void*, int> _wglGetLayerPaletteEntries_fnptr = &wglGetLayerPaletteEntries_Lazy;
+        internal static delegate* unmanaged<IntPtr, int, int, int, uint*, int> _wglGetLayerPaletteEntries_fnptr = &wglGetLayerPaletteEntries_Lazy;
         [UnmanagedCallersOnly]
-        private static int wglGetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, void* pcr)
+        private static int wglGetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
-            _wglGetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, void*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetLayerPaletteEntries");
+            _wglGetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetLayerPaletteEntries");
             return _wglGetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         
@@ -736,11 +736,11 @@ namespace OpenTK.Graphics
             return _wglGetPixelFormatAttribivEXT_fnptr(hdc, iPixelFormat, iLayerPlane, nAttributes, piAttributes, piValues);
         }
         
-        internal static delegate* unmanaged<void, IntPtr> _wglGetProcAddress_fnptr = &wglGetProcAddress_Lazy;
+        internal static delegate* unmanaged<char*, IntPtr> _wglGetProcAddress_fnptr = &wglGetProcAddress_Lazy;
         [UnmanagedCallersOnly]
-        private static IntPtr wglGetProcAddress_Lazy(void lpszProc)
+        private static IntPtr wglGetProcAddress_Lazy(char* lpszProc)
         {
-            _wglGetProcAddress_fnptr = (delegate* unmanaged<void, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetProcAddress");
+            _wglGetProcAddress_fnptr = (delegate* unmanaged<char*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetProcAddress");
             return _wglGetProcAddress_fnptr(lpszProc);
         }
         
@@ -1048,11 +1048,11 @@ namespace OpenTK.Graphics
             return _wglSetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
         }
         
-        internal static delegate* unmanaged<IntPtr, int, int, int, void*, int> _wglSetLayerPaletteEntries_fnptr = &wglSetLayerPaletteEntries_Lazy;
+        internal static delegate* unmanaged<IntPtr, int, int, int, uint*, int> _wglSetLayerPaletteEntries_fnptr = &wglSetLayerPaletteEntries_Lazy;
         [UnmanagedCallersOnly]
-        private static int wglSetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, void* pcr)
+        private static int wglSetLayerPaletteEntries_Lazy(IntPtr hdc, int iLayerPlane, int iStart, int cEntries, uint* pcr)
         {
-            _wglSetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, void*, int>)GLLoader.BindingsContext.GetProcAddress("wglSetLayerPaletteEntries");
+            _wglSetLayerPaletteEntries_fnptr = (delegate* unmanaged<IntPtr, int, int, int, uint*, int>)GLLoader.BindingsContext.GetProcAddress("wglSetLayerPaletteEntries");
             return _wglSetLayerPaletteEntries_fnptr(hdc, iLayerPlane, iStart, cEntries, pcr);
         }
         

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Generator.Parsing;
 using Generator.Utility;
@@ -48,7 +49,7 @@ namespace Generator.Process
 
         private static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
-            "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
+            "|Attrib|Address|Access|Boolean|Bitmaps|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
             "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v)$",
             RegexOptions.Compiled);
@@ -122,8 +123,27 @@ namespace Generator.Process
                 {
                     overload with
                     {
-                        NestedOverload = overload, MarshalLayerToNested = layer, ReturnType = returnType,
+                        NestedOverload = overload,
+                        MarshalLayerToNested = layer,
+                        ReturnType = returnType,
                         ReturnVariableName = newReturnName
+                    }
+                };
+                return true;
+            }
+            else if (overload.ReturnType is CSPointer pt && pt.BaseType is ICSCharType bt)
+            {
+                var newReturnName = $"{overload.ReturnVariableName}_str";
+                var layer = new StringReturnLayer(newReturnName);
+                var returnType = new CSString(Nullable: true);
+                newOverloads = new List<Overload>()
+                {
+                    overload with
+                    {
+                        NestedOverload = overload,
+                        MarshalLayerToNested = layer,
+                        ReturnType = returnType,
+                        ReturnVariableName = newReturnName,
                     }
                 };
                 return true;
@@ -379,7 +399,7 @@ namespace Generator.Process
                             _ => $"{mathKind}{typePostfix}",
                         };
 
-                        CSStruct mathType = new CSStruct(name, baseType.Constant, null);
+                        CSStruct mathType = new CSStruct(name, baseType.Constant);
 
                         Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, mathType), Length = null };
                         Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
@@ -422,7 +442,7 @@ namespace Generator.Process
 
                             pointerParameters.Add(parameter);
 
-                            CSStruct mathType = new CSStruct(typeName, baseType.Constant, null);
+                            CSStruct mathType = new CSStruct(typeName, baseType.Constant);
 
                             Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, mathType), Length = null };
                             Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
@@ -524,7 +544,7 @@ namespace Generator.Process
                         _toSystemNumerics.TryGetValue(mathType.TypeName, out string? numericsTypeName))
                     {
                         // Create new object with the same mathType as pointerType
-                        Parameter numericsParam = parameter with { Type = pointerType.CreateWithNewType(new CSStruct(numericsTypeName, mathType.Constant, mathType.UnderlyingType)) };
+                        Parameter numericsParam = parameter with { Type = pointerType.CreateWithNewType(new CSStruct(numericsTypeName, mathType.Constant)) };
 
                         parameters[i] = numericsParam;
 
@@ -1009,7 +1029,7 @@ namespace Generator.Process
             {
                 // FIXME: We want to handle sized strings different!!!
                 var param = newParams[i];
-                if (param.Type is CSPointer pt && pt.BaseType is CSChar8 bt)
+                if (param.Type is CSPointer pt && pt.BaseType is ICSCharType bt)
                 {
                     var pointerParam = newParams[i];
                     var nameTable = newOverload.NameTable.New();
@@ -1017,10 +1037,16 @@ namespace Generator.Process
 
                     if (bt.Constant)
                     {
+                        StringLayer.StringType stringType = bt switch
+                        {
+                            CSChar8 => StringLayer.StringType.Char8,
+                            CSChar16 => StringLayer.StringType.Char16,
+                        };
+
                         // FIXME: Can we know if the string is nullable or not?
                         newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
                         var stringParams = newParams.ToArray();
-                        var stringLayer = new StringLayer(pointerParam, newParams[i]);
+                        var stringLayer = new StringLayer(pointerParam, newParams[i], stringType);
 
                         newOverload = newOverload with
                         {
@@ -1039,8 +1065,7 @@ namespace Generator.Process
                             string? paramName = Expression.InvertExpressionAndGetReferencedName(param.Length, out var expr);
                             if (paramName == null)
                             {
-                                Logger.Info(
-                                    $"{overload.NativeFunction.EntryPoint} has a COMPSIZE string length for parameter '{param.Name}'!");
+                                Logger.Info($"{overload.NativeFunction.EntryPoint} has a COMPSIZE string length for parameter '{param.Name}'!");
                                 continue;
                             }
 
@@ -1050,8 +1075,7 @@ namespace Generator.Process
 
                         if (lenParam == null)
                         {
-                            Logger.Info(
-                                $"{overload.NativeFunction.EntryPoint} is missing a len attribute for parameter '{param.Name}'");
+                            Logger.Info($"{overload.NativeFunction.EntryPoint} is missing a len attribute for parameter '{param.Name}'");
                             continue;
                         }
 
@@ -1062,6 +1086,13 @@ namespace Generator.Process
                             Length = null
                         };
                         newParams[stringParamIndex] = stringParam;
+
+                        // As wgl doesn't output any 16-bit strings we don't handle this case for now
+                        // - 2023-03-23 NogginBops
+                        if (bt is CSChar16)
+                        {
+                            throw new Exception("We don't support out 16-bit strings atm.");
+                        }
 
                         var stringParams = newParams.ToArray();
                         var stringLayer = new OutStringLayer(pointerParam, lenParam, stringParam);
@@ -1093,12 +1124,27 @@ namespace Generator.Process
             }
         }
 
-        private record StringLayer(Parameter PointerParameter, Parameter StringParameter) : IOverloadLayer
+        private record StringLayer(Parameter PointerParameter, Parameter StringParameter, StringLayer.StringType Type) : IOverloadLayer
         {
+            public enum StringType
+            {
+                Char8,
+                Char16,
+            }
+
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine(
-                    $"byte* {nameTable[PointerParameter]} = (byte*)Marshal.StringToCoTaskMemUTF8({nameTable[StringParameter]});");
+                switch (Type)
+                {
+                    case StringType.Char8:
+                        writer.WriteLine($"byte* {nameTable[PointerParameter]} = (byte*)Marshal.StringToCoTaskMemUTF8({nameTable[StringParameter]});");
+                        break;
+                    case StringType.Char16:
+                        writer.WriteLine($"char* {nameTable[PointerParameter]} = (char*)Marshal.StringToCoTaskMemAuto({nameTable[StringParameter]});");
+                        break;
+                    default:
+                        throw new Exception($"Unknown string type '{Type}'.");
+                }
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -1152,8 +1198,7 @@ namespace Generator.Process
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                writer.WriteLine(
-                    $"{nameTable[StringParameter]} = Marshal.PtrToStringUTF8((IntPtr){nameTable[PointerParameter]})!;");
+                writer.WriteLine($"{nameTable[StringParameter]} = Marshal.PtrToStringUTF8((IntPtr){nameTable[PointerParameter]})!;");
                 writer.WriteLine($"Marshal.FreeCoTaskMem((IntPtr){nameTable[PointerParameter]});");
                 return returnName;
             }
@@ -1366,6 +1411,10 @@ namespace Generator.Process
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
+                        case CSStructPrimitive bt:
+                            baseType = pt.BaseType;
+                            constant = bt.Constant;
+                            break;
                         case CSStruct bt:
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
@@ -1374,11 +1423,18 @@ namespace Generator.Process
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
+                        case CSBool32 bt:
+                            baseType = pt.BaseType;
+                            constant |= bt.Constant;
+                            break;
+
                         case CSPointer:
+                        case CSChar8:
+                        case CSChar16:
                             continue;
+
                         default:
-                            Logger.Warning($"{pt} is not supported by the ref overloader.");
-                            continue;
+                            throw new InvalidOperationException($"{pt} is not supported by the ref overloader.");
                     }
                     // FIXME: When do we know it's an out ref mathType?
                     CSRef.Type refType = constant ? CSRef.Type.In : CSRef.Type.Ref;

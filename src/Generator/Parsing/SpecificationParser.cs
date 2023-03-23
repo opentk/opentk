@@ -560,25 +560,19 @@ namespace Generator.Parsing
                     "INT" => PrimitiveType.Int,
                     "INT32" => PrimitiveType.Int,
                     "INT64" => PrimitiveType.Long,
-                    // FIXME?
-                    "PROC" => PrimitiveType.IntPtr,
-                    // FIXME
-                    "RECT" => PrimitiveType.Void,
-                    // FIXME: String
-                    "LPCSTR" => PrimitiveType.Void,
+                    "PROC" => PrimitiveType.WGL_Proc,
+                    "RECT" => PrimitiveType.WGL_Rect,
+                    "LPCSTR" => PrimitiveType.WGL_LPString,
                     "LPVOID" => PrimitiveType.IntPtr,
                     "UINT" => PrimitiveType.Uint,
                     "USHORT" => PrimitiveType.Ushort,
                     "VOID" => PrimitiveType.Void,
-                    // FIXME: COLOREF
-                    "COLORREF" => PrimitiveType.Void,
+                    "COLORREF" => PrimitiveType.WGL_COLORREF,
                     "HENHMETAFILE" => PrimitiveType.IntPtr,
-                    // FIXME:
-                    "LAYERPLANEDESCRIPTOR" => PrimitiveType.Void,
+                    "LAYERPLANEDESCRIPTOR" => PrimitiveType.WGL_LAYERPLANEDESCRIPTOR,
                     // FIXME?
                     "LPGLYPHMETRICSFLOAT" => PrimitiveType.IntPtr,
-                    // FIXME!!
-                    "PIXELFORMATDESCRIPTOR" => PrimitiveType.Void,
+                    "PIXELFORMATDESCRIPTOR" => PrimitiveType.WGL_PIXELFORMATDESCRIPTOR,
                     "HPBUFFERARB" => PrimitiveType.IntPtr,
                     "HPBUFFEREXT" => PrimitiveType.IntPtr,
                     "HVIDEOOUTPUTDEVICENV" => PrimitiveType.IntPtr,
@@ -586,10 +580,9 @@ namespace Generator.Parsing
                     "HPGPUNV" => PrimitiveType.IntPtr,
                     "HGPUNV" => PrimitiveType.IntPtr,
                     "HVIDEOINPUTDEVICENV" => PrimitiveType.IntPtr,
-                    // FIXME
-                    "GPU_DEVICE" => PrimitiveType.Void,
+                    "GPU_DEVICE" => PrimitiveType.WGL_GPU_DEVICE,
                     // FIXME? _GPU_DEVICE*
-                    "PGPU_DEVICE" => PrimitiveType.IntPtr,
+                    "PGPU_DEVICE" => PrimitiveType.WGL_PGPU_DEVICE,
 
                     "int" => PrimitiveType.Int,
                     "unsigned int" => PrimitiveType.Uint,
