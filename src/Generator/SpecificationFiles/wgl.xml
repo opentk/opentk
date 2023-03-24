@@ -106,10 +106,10 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     </enums>
 
     <enums namespace="WGLColorBufferMask" type="bitmask" vendor="ARB">
-        <enum value="0x00000001"    name="WGL_FRONT_COLOR_BUFFER_BIT_ARB"/>
-        <enum value="0x00000002"    name="WGL_BACK_COLOR_BUFFER_BIT_ARB"/>
-        <enum value="0x00000004"    name="WGL_DEPTH_BUFFER_BIT_ARB"/>
-        <enum value="0x00000008"    name="WGL_STENCIL_BUFFER_BIT_ARB"/>
+        <enum value="0x00000001"    name="WGL_FRONT_COLOR_BUFFER_BIT_ARB" group="BufferRegionType"/>
+        <enum value="0x00000002"    name="WGL_BACK_COLOR_BUFFER_BIT_ARB" group="BufferRegionType"/>
+        <enum value="0x00000004"    name="WGL_DEPTH_BUFFER_BIT_ARB" group="BufferRegionType"/>
+        <enum value="0x00000008"    name="WGL_STENCIL_BUFFER_BIT_ARB" group="BufferRegionType"/>
     </enums>
 
     <enums namespace="WGLContextFlagsMask" type="bitmask" vendor="ARB">
@@ -127,14 +127,14 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     </enums>
 
     <enums namespace="WGLImageBufferMaskI3D" type="bitmask" vendor="I3D">
-        <enum value="0x00000001"    name="WGL_IMAGE_BUFFER_MIN_ACCESS_I3D"/>
-        <enum value="0x00000002"    name="WGL_IMAGE_BUFFER_LOCK_I3D"/>
+        <enum value="0x00000001"    name="WGL_IMAGE_BUFFER_MIN_ACCESS_I3D" group="ImageBufferFlags"/>
+        <enum value="0x00000002"    name="WGL_IMAGE_BUFFER_LOCK_I3D" group="ImageBufferFlags"/>
     </enums>
 
     <enums namespace="WGLDXInteropMaskNV" type="bitmask" vendor="NV">
-        <enum value="0x00000000"    name="WGL_ACCESS_READ_ONLY_NV"/>
-        <enum value="0x00000001"    name="WGL_ACCESS_READ_WRITE_NV"/>
-        <enum value="0x00000002"    name="WGL_ACCESS_WRITE_DISCARD_NV"/>
+        <enum value="0x00000000"    name="WGL_ACCESS_READ_ONLY_NV" group="DXInteropAccessMask"/>
+        <enum value="0x00000001"    name="WGL_ACCESS_READ_WRITE_NV" group="DXInteropAccessMask"/>
+        <enum value="0x00000002"    name="WGL_ACCESS_WRITE_DISCARD_NV" group="DXInteropAccessMask"/>
     </enums>
 
     <!-- The default ("API") enum namespace starts here. While some
@@ -152,103 +152,103 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     </enums>
 
     <enums namespace="WGL" start="0x1F00" end="0x1F02" vendor="ARB" comment="Unclear why AMD used values in this range">
-        <enum value="0x1F00"        name="WGL_GPU_VENDOR_AMD"/>
-        <enum value="0x1F01"        name="WGL_GPU_RENDERER_STRING_AMD"/>
-        <enum value="0x1F02"        name="WGL_GPU_OPENGL_VERSION_STRING_AMD"/>
+        <enum value="0x1F00"        name="WGL_GPU_VENDOR_AMD" group="GPUProperty"/>
+        <enum value="0x1F01"        name="WGL_GPU_RENDERER_STRING_AMD" group="GPUProperty"/>
+        <enum value="0x1F02"        name="WGL_GPU_OPENGL_VERSION_STRING_AMD" group="GPUProperty"/>
     </enums>
 
     <enums namespace="WGL" start="0x2000" end="0x203F" vendor="ARB">
-        <enum value="0x2000"        name="WGL_NUMBER_PIXEL_FORMATS_ARB"/>
-        <enum value="0x2000"        name="WGL_NUMBER_PIXEL_FORMATS_EXT"/>
-        <enum value="0x2001"        name="WGL_DRAW_TO_WINDOW_ARB"/>
-        <enum value="0x2001"        name="WGL_DRAW_TO_WINDOW_EXT"/>
-        <enum value="0x2002"        name="WGL_DRAW_TO_BITMAP_ARB"/>
-        <enum value="0x2002"        name="WGL_DRAW_TO_BITMAP_EXT"/>
-        <enum value="0x2003"        name="WGL_ACCELERATION_ARB"/>
-        <enum value="0x2003"        name="WGL_ACCELERATION_EXT"/>
-        <enum value="0x2004"        name="WGL_NEED_PALETTE_ARB"/>
-        <enum value="0x2004"        name="WGL_NEED_PALETTE_EXT"/>
-        <enum value="0x2005"        name="WGL_NEED_SYSTEM_PALETTE_ARB"/>
-        <enum value="0x2005"        name="WGL_NEED_SYSTEM_PALETTE_EXT"/>
-        <enum value="0x2006"        name="WGL_SWAP_LAYER_BUFFERS_ARB"/>
-        <enum value="0x2006"        name="WGL_SWAP_LAYER_BUFFERS_EXT"/>
-        <enum value="0x2007"        name="WGL_SWAP_METHOD_ARB"/>
-        <enum value="0x2007"        name="WGL_SWAP_METHOD_EXT"/>
-        <enum value="0x2008"        name="WGL_NUMBER_OVERLAYS_ARB"/>
-        <enum value="0x2008"        name="WGL_NUMBER_OVERLAYS_EXT"/>
-        <enum value="0x2009"        name="WGL_NUMBER_UNDERLAYS_ARB"/>
-        <enum value="0x2009"        name="WGL_NUMBER_UNDERLAYS_EXT"/>
-        <enum value="0x200A"        name="WGL_TRANSPARENT_ARB"/>
-        <enum value="0x200A"        name="WGL_TRANSPARENT_EXT"/>
+        <enum value="0x2000"        name="WGL_NUMBER_PIXEL_FORMATS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2000"        name="WGL_NUMBER_PIXEL_FORMATS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2001"        name="WGL_DRAW_TO_WINDOW_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2001"        name="WGL_DRAW_TO_WINDOW_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2002"        name="WGL_DRAW_TO_BITMAP_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2002"        name="WGL_DRAW_TO_BITMAP_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2003"        name="WGL_ACCELERATION_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2003"        name="WGL_ACCELERATION_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2004"        name="WGL_NEED_PALETTE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2004"        name="WGL_NEED_PALETTE_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2005"        name="WGL_NEED_SYSTEM_PALETTE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2005"        name="WGL_NEED_SYSTEM_PALETTE_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2006"        name="WGL_SWAP_LAYER_BUFFERS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2006"        name="WGL_SWAP_LAYER_BUFFERS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2007"        name="WGL_SWAP_METHOD_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2007"        name="WGL_SWAP_METHOD_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2008"        name="WGL_NUMBER_OVERLAYS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2008"        name="WGL_NUMBER_OVERLAYS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2009"        name="WGL_NUMBER_UNDERLAYS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2009"        name="WGL_NUMBER_UNDERLAYS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x200A"        name="WGL_TRANSPARENT_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x200A"        name="WGL_TRANSPARENT_EXT" group="PixelFormatAttribute"/>
         <enum value="0x200B"        name="WGL_TRANSPARENT_VALUE_EXT"/>
-        <enum value="0x200C"        name="WGL_SHARE_DEPTH_ARB"/>
-        <enum value="0x200C"        name="WGL_SHARE_DEPTH_EXT"/>
-        <enum value="0x200D"        name="WGL_SHARE_STENCIL_ARB"/>
-        <enum value="0x200D"        name="WGL_SHARE_STENCIL_EXT"/>
-        <enum value="0x200E"        name="WGL_SHARE_ACCUM_ARB"/>
-        <enum value="0x200E"        name="WGL_SHARE_ACCUM_EXT"/>
-        <enum value="0x200F"        name="WGL_SUPPORT_GDI_ARB"/>
-        <enum value="0x200F"        name="WGL_SUPPORT_GDI_EXT"/>
-        <enum value="0x2010"        name="WGL_SUPPORT_OPENGL_ARB"/>
-        <enum value="0x2010"        name="WGL_SUPPORT_OPENGL_EXT"/>
-        <enum value="0x2011"        name="WGL_DOUBLE_BUFFER_ARB"/>
-        <enum value="0x2011"        name="WGL_DOUBLE_BUFFER_EXT"/>
-        <enum value="0x2012"        name="WGL_STEREO_ARB"/>
-        <enum value="0x2012"        name="WGL_STEREO_EXT"/>
-        <enum value="0x2013"        name="WGL_PIXEL_TYPE_ARB"/>
-        <enum value="0x2013"        name="WGL_PIXEL_TYPE_EXT"/>
-        <enum value="0x2014"        name="WGL_COLOR_BITS_ARB"/>
-        <enum value="0x2014"        name="WGL_COLOR_BITS_EXT"/>
-        <enum value="0x2015"        name="WGL_RED_BITS_ARB"/>
-        <enum value="0x2015"        name="WGL_RED_BITS_EXT"/>
-        <enum value="0x2016"        name="WGL_RED_SHIFT_ARB"/>
-        <enum value="0x2016"        name="WGL_RED_SHIFT_EXT"/>
-        <enum value="0x2017"        name="WGL_GREEN_BITS_ARB"/>
-        <enum value="0x2017"        name="WGL_GREEN_BITS_EXT"/>
-        <enum value="0x2018"        name="WGL_GREEN_SHIFT_ARB"/>
-        <enum value="0x2018"        name="WGL_GREEN_SHIFT_EXT"/>
-        <enum value="0x2019"        name="WGL_BLUE_BITS_ARB"/>
-        <enum value="0x2019"        name="WGL_BLUE_BITS_EXT"/>
-        <enum value="0x201A"        name="WGL_BLUE_SHIFT_ARB"/>
-        <enum value="0x201A"        name="WGL_BLUE_SHIFT_EXT"/>
-        <enum value="0x201B"        name="WGL_ALPHA_BITS_ARB"/>
-        <enum value="0x201B"        name="WGL_ALPHA_BITS_EXT"/>
-        <enum value="0x201C"        name="WGL_ALPHA_SHIFT_ARB"/>
-        <enum value="0x201C"        name="WGL_ALPHA_SHIFT_EXT"/>
-        <enum value="0x201D"        name="WGL_ACCUM_BITS_ARB"/>
-        <enum value="0x201D"        name="WGL_ACCUM_BITS_EXT"/>
-        <enum value="0x201E"        name="WGL_ACCUM_RED_BITS_ARB"/>
-        <enum value="0x201E"        name="WGL_ACCUM_RED_BITS_EXT"/>
-        <enum value="0x201F"        name="WGL_ACCUM_GREEN_BITS_ARB"/>
-        <enum value="0x201F"        name="WGL_ACCUM_GREEN_BITS_EXT"/>
-        <enum value="0x2020"        name="WGL_ACCUM_BLUE_BITS_ARB"/>
-        <enum value="0x2020"        name="WGL_ACCUM_BLUE_BITS_EXT"/>
-        <enum value="0x2021"        name="WGL_ACCUM_ALPHA_BITS_ARB"/>
-        <enum value="0x2021"        name="WGL_ACCUM_ALPHA_BITS_EXT"/>
-        <enum value="0x2022"        name="WGL_DEPTH_BITS_ARB"/>
-        <enum value="0x2022"        name="WGL_DEPTH_BITS_EXT"/>
-        <enum value="0x2023"        name="WGL_STENCIL_BITS_ARB"/>
-        <enum value="0x2023"        name="WGL_STENCIL_BITS_EXT"/>
-        <enum value="0x2024"        name="WGL_AUX_BUFFERS_ARB"/>
-        <enum value="0x2024"        name="WGL_AUX_BUFFERS_EXT"/>
-        <enum value="0x2025"        name="WGL_NO_ACCELERATION_ARB"/>
-        <enum value="0x2025"        name="WGL_NO_ACCELERATION_EXT"/>
-        <enum value="0x2026"        name="WGL_GENERIC_ACCELERATION_ARB"/>
-        <enum value="0x2026"        name="WGL_GENERIC_ACCELERATION_EXT"/>
-        <enum value="0x2027"        name="WGL_FULL_ACCELERATION_ARB"/>
-        <enum value="0x2027"        name="WGL_FULL_ACCELERATION_EXT"/>
-        <enum value="0x2028"        name="WGL_SWAP_EXCHANGE_ARB"/>
-        <enum value="0x2028"        name="WGL_SWAP_EXCHANGE_EXT"/>
-        <enum value="0x2029"        name="WGL_SWAP_COPY_ARB"/>
-        <enum value="0x2029"        name="WGL_SWAP_COPY_EXT"/>
-        <enum value="0x202A"        name="WGL_SWAP_UNDEFINED_ARB"/>
-        <enum value="0x202A"        name="WGL_SWAP_UNDEFINED_EXT"/>
-        <enum value="0x202B"        name="WGL_TYPE_RGBA_ARB"/>
-        <enum value="0x202B"        name="WGL_TYPE_RGBA_EXT"/>
-        <enum value="0x202C"        name="WGL_TYPE_COLORINDEX_ARB"/>
-        <enum value="0x202C"        name="WGL_TYPE_COLORINDEX_EXT"/>
-        <enum value="0x202D"        name="WGL_DRAW_TO_PBUFFER_ARB"/>
-        <enum value="0x202D"        name="WGL_DRAW_TO_PBUFFER_EXT"/>
+        <enum value="0x200C"        name="WGL_SHARE_DEPTH_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x200C"        name="WGL_SHARE_DEPTH_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x200D"        name="WGL_SHARE_STENCIL_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x200D"        name="WGL_SHARE_STENCIL_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x200E"        name="WGL_SHARE_ACCUM_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x200E"        name="WGL_SHARE_ACCUM_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x200F"        name="WGL_SUPPORT_GDI_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x200F"        name="WGL_SUPPORT_GDI_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2010"        name="WGL_SUPPORT_OPENGL_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2010"        name="WGL_SUPPORT_OPENGL_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2011"        name="WGL_DOUBLE_BUFFER_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2011"        name="WGL_DOUBLE_BUFFER_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2012"        name="WGL_STEREO_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2012"        name="WGL_STEREO_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2013"        name="WGL_PIXEL_TYPE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2013"        name="WGL_PIXEL_TYPE_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2014"        name="WGL_COLOR_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2014"        name="WGL_COLOR_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2015"        name="WGL_RED_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2015"        name="WGL_RED_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2016"        name="WGL_RED_SHIFT_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2016"        name="WGL_RED_SHIFT_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2017"        name="WGL_GREEN_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2017"        name="WGL_GREEN_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2018"        name="WGL_GREEN_SHIFT_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2018"        name="WGL_GREEN_SHIFT_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2019"        name="WGL_BLUE_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2019"        name="WGL_BLUE_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x201A"        name="WGL_BLUE_SHIFT_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x201A"        name="WGL_BLUE_SHIFT_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x201B"        name="WGL_ALPHA_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x201B"        name="WGL_ALPHA_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x201C"        name="WGL_ALPHA_SHIFT_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x201C"        name="WGL_ALPHA_SHIFT_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x201D"        name="WGL_ACCUM_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x201D"        name="WGL_ACCUM_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x201E"        name="WGL_ACCUM_RED_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x201E"        name="WGL_ACCUM_RED_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x201F"        name="WGL_ACCUM_GREEN_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x201F"        name="WGL_ACCUM_GREEN_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2020"        name="WGL_ACCUM_BLUE_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2020"        name="WGL_ACCUM_BLUE_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2021"        name="WGL_ACCUM_ALPHA_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2021"        name="WGL_ACCUM_ALPHA_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2022"        name="WGL_DEPTH_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2022"        name="WGL_DEPTH_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2023"        name="WGL_STENCIL_BITS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2023"        name="WGL_STENCIL_BITS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2024"        name="WGL_AUX_BUFFERS_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2024"        name="WGL_AUX_BUFFERS_EXT" group="PixelFormatAttribute"/>
+        <enum value="0x2025"        name="WGL_NO_ACCELERATION_ARB" group="AccelerationType"/>
+        <enum value="0x2025"        name="WGL_NO_ACCELERATION_EXT" group="AccelerationType"/>
+        <enum value="0x2026"        name="WGL_GENERIC_ACCELERATION_ARB" group="AccelerationType"/>
+        <enum value="0x2026"        name="WGL_GENERIC_ACCELERATION_EXT" group="AccelerationType"/>
+        <enum value="0x2027"        name="WGL_FULL_ACCELERATION_ARB" group="AccelerationType"/>
+        <enum value="0x2027"        name="WGL_FULL_ACCELERATION_EXT" group="AccelerationType"/>
+        <enum value="0x2028"        name="WGL_SWAP_EXCHANGE_ARB" group="SwapMethod"/>
+        <enum value="0x2028"        name="WGL_SWAP_EXCHANGE_EXT" group="SwapMethod"/>
+        <enum value="0x2029"        name="WGL_SWAP_COPY_ARB" group="SwapMethod"/>
+        <enum value="0x2029"        name="WGL_SWAP_COPY_EXT" group="SwapMethod"/>
+        <enum value="0x202A"        name="WGL_SWAP_UNDEFINED_ARB" group="SwapMethod"/>
+        <enum value="0x202A"        name="WGL_SWAP_UNDEFINED_EXT" group="SwapMethod"/>
+        <enum value="0x202B"        name="WGL_TYPE_RGBA_ARB" group="PixelType"/>
+        <enum value="0x202B"        name="WGL_TYPE_RGBA_EXT" group="PixelType"/>
+        <enum value="0x202C"        name="WGL_TYPE_COLORINDEX_ARB" group="PixelType"/>
+        <enum value="0x202C"        name="WGL_TYPE_COLORINDEX_EXT" group="PixelType"/>
+        <enum value="0x202D"        name="WGL_DRAW_TO_PBUFFER_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x202D"        name="WGL_DRAW_TO_PBUFFER_EXT" group="PixelFormatAttribute"/>
         <enum value="0x202E"        name="WGL_MAX_PBUFFER_PIXELS_ARB"/>
         <enum value="0x202E"        name="WGL_MAX_PBUFFER_PIXELS_EXT"/>
         <enum value="0x202F"        name="WGL_MAX_PBUFFER_WIDTH_ARB"/>
@@ -259,16 +259,16 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x2032"        name="WGL_OPTIMAL_PBUFFER_HEIGHT_EXT"/>
         <enum value="0x2033"        name="WGL_PBUFFER_LARGEST_ARB"/>
         <enum value="0x2033"        name="WGL_PBUFFER_LARGEST_EXT"/>
-        <enum value="0x2034"        name="WGL_PBUFFER_WIDTH_ARB"/>
-        <enum value="0x2034"        name="WGL_PBUFFER_WIDTH_EXT"/>
-        <enum value="0x2035"        name="WGL_PBUFFER_HEIGHT_ARB"/>
-        <enum value="0x2035"        name="WGL_PBUFFER_HEIGHT_EXT"/>
-        <enum value="0x2036"        name="WGL_PBUFFER_LOST_ARB"/>
-        <enum value="0x2037"        name="WGL_TRANSPARENT_RED_VALUE_ARB"/>
-        <enum value="0x2038"        name="WGL_TRANSPARENT_GREEN_VALUE_ARB"/>
-        <enum value="0x2039"        name="WGL_TRANSPARENT_BLUE_VALUE_ARB"/>
-        <enum value="0x203A"        name="WGL_TRANSPARENT_ALPHA_VALUE_ARB"/>
-        <enum value="0x203B"        name="WGL_TRANSPARENT_INDEX_VALUE_ARB"/>
+        <enum value="0x2034"        name="WGL_PBUFFER_WIDTH_ARB" group="PBufferAttribute"/>
+        <enum value="0x2034"        name="WGL_PBUFFER_WIDTH_EXT" group="PBufferAttribute"/>
+        <enum value="0x2035"        name="WGL_PBUFFER_HEIGHT_ARB" group="PBufferAttribute"/>
+        <enum value="0x2035"        name="WGL_PBUFFER_HEIGHT_EXT" group="PBufferAttribute"/>
+        <enum value="0x2036"        name="WGL_PBUFFER_LOST_ARB" group="PBufferAttribute"/>
+        <enum value="0x2037"        name="WGL_TRANSPARENT_RED_VALUE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2038"        name="WGL_TRANSPARENT_GREEN_VALUE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x2039"        name="WGL_TRANSPARENT_BLUE_VALUE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x203A"        name="WGL_TRANSPARENT_ALPHA_VALUE_ARB" group="PixelFormatAttribute"/>
+        <enum value="0x203B"        name="WGL_TRANSPARENT_INDEX_VALUE_ARB" group="PixelFormatAttribute"/>
             <unused start="0x203C" end="0x203F"/>
     </enums>
 
@@ -291,17 +291,17 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x204B"        name="WGL_GENLOCK_SOURCE_EDGE_RISING_I3D"/>
         <enum value="0x204C"        name="WGL_GENLOCK_SOURCE_EDGE_BOTH_I3D"/>
             <unused start="0x204D"/>
-        <enum value="0x204E"        name="WGL_GAMMA_TABLE_SIZE_I3D"/>
-        <enum value="0x204F"        name="WGL_GAMMA_EXCLUDE_DESKTOP_I3D"/>
-        <enum value="0x2050"        name="WGL_DIGITAL_VIDEO_CURSOR_ALPHA_FRAMEBUFFER_I3D"/>
-        <enum value="0x2051"        name="WGL_DIGITAL_VIDEO_CURSOR_ALPHA_VALUE_I3D"/>
-        <enum value="0x2052"        name="WGL_DIGITAL_VIDEO_CURSOR_INCLUDED_I3D"/>
-        <enum value="0x2053"        name="WGL_DIGITAL_VIDEO_GAMMA_CORRECTED_I3D"/>
+        <enum value="0x204E"        name="WGL_GAMMA_TABLE_SIZE_I3D" group="GammaTableAttrbiute"/>
+        <enum value="0x204F"        name="WGL_GAMMA_EXCLUDE_DESKTOP_I3D" group="GammaTableAttrbiute"/>
+        <enum value="0x2050"        name="WGL_DIGITAL_VIDEO_CURSOR_ALPHA_FRAMEBUFFER_I3D" group="DigitalVideoAttribute"/>
+        <enum value="0x2051"        name="WGL_DIGITAL_VIDEO_CURSOR_ALPHA_VALUE_I3D" group="DigitalVideoAttribute"/>
+        <enum value="0x2052"        name="WGL_DIGITAL_VIDEO_CURSOR_INCLUDED_I3D" group="DigitalVideoAttribute"/>
+        <enum value="0x2053"        name="WGL_DIGITAL_VIDEO_GAMMA_CORRECTED_I3D" group="DigitalVideoAttribute"/>
         <enum value="0x2054"        name="ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB"/>
-        <enum value="0x2055"        name="WGL_STEREO_EMITTER_ENABLE_3DL"/>
-        <enum value="0x2056"        name="WGL_STEREO_EMITTER_DISABLE_3DL"/>
-        <enum value="0x2057"        name="WGL_STEREO_POLARITY_NORMAL_3DL"/>
-        <enum value="0x2058"        name="WGL_STEREO_POLARITY_INVERT_3DL"/>
+        <enum value="0x2055"        name="WGL_STEREO_EMITTER_ENABLE_3DL" group="StereoEmitterState"/>
+        <enum value="0x2056"        name="WGL_STEREO_EMITTER_DISABLE_3DL" group="StereoEmitterState"/>
+        <enum value="0x2057"        name="WGL_STEREO_POLARITY_NORMAL_3DL" group="StereoEmitterState"/>
+        <enum value="0x2058"        name="WGL_STEREO_POLARITY_INVERT_3DL" group="StereoEmitterState"/>
             <unused start="0x2059" end="0x205F"/>
     </enums>
 
@@ -314,37 +314,37 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x2061"        name="WGL_SAMPLES_3DFX"/>
         <enum value="0x2070"        name="WGL_BIND_TO_TEXTURE_RGB_ARB"/>
         <enum value="0x2071"        name="WGL_BIND_TO_TEXTURE_RGBA_ARB"/>
-        <enum value="0x2072"        name="WGL_TEXTURE_FORMAT_ARB"/>
-        <enum value="0x2073"        name="WGL_TEXTURE_TARGET_ARB"/>
-        <enum value="0x2074"        name="WGL_MIPMAP_TEXTURE_ARB"/>
-        <enum value="0x2075"        name="WGL_TEXTURE_RGB_ARB"/>
-        <enum value="0x2076"        name="WGL_TEXTURE_RGBA_ARB"/>
-        <enum value="0x2077"        name="WGL_NO_TEXTURE_ARB"/>
-        <enum value="0x2078"        name="WGL_TEXTURE_CUBE_MAP_ARB"/>
-        <enum value="0x2079"        name="WGL_TEXTURE_1D_ARB"/>
-        <enum value="0x207A"        name="WGL_TEXTURE_2D_ARB"/>
-        <enum value="0x207B"        name="WGL_MIPMAP_LEVEL_ARB"/>
-        <enum value="0x207C"        name="WGL_CUBE_MAP_FACE_ARB"/>
-        <enum value="0x207D"        name="WGL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB"/>
-        <enum value="0x207E"        name="WGL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB"/>
-        <enum value="0x207F"        name="WGL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB"/>
-        <enum value="0x2080"        name="WGL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB"/>
-        <enum value="0x2081"        name="WGL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB"/>
-        <enum value="0x2082"        name="WGL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB"/>
-        <enum value="0x2083"        name="WGL_FRONT_LEFT_ARB"/>
-        <enum value="0x2084"        name="WGL_FRONT_RIGHT_ARB"/>
-        <enum value="0x2085"        name="WGL_BACK_LEFT_ARB"/>
-        <enum value="0x2086"        name="WGL_BACK_RIGHT_ARB"/>
-        <enum value="0x2087"        name="WGL_AUX0_ARB"/>
-        <enum value="0x2088"        name="WGL_AUX1_ARB"/>
-        <enum value="0x2089"        name="WGL_AUX2_ARB"/>
-        <enum value="0x208A"        name="WGL_AUX3_ARB"/>
-        <enum value="0x208B"        name="WGL_AUX4_ARB"/>
-        <enum value="0x208C"        name="WGL_AUX5_ARB"/>
-        <enum value="0x208D"        name="WGL_AUX6_ARB"/>
-        <enum value="0x208E"        name="WGL_AUX7_ARB"/>
-        <enum value="0x208F"        name="WGL_AUX8_ARB"/>
-        <enum value="0x2090"        name="WGL_AUX9_ARB"/>
+        <enum value="0x2072"        name="WGL_TEXTURE_FORMAT_ARB" group="PBufferAttribute"/>
+        <enum value="0x2073"        name="WGL_TEXTURE_TARGET_ARB" group="PBufferAttribute"/>
+        <enum value="0x2074"        name="WGL_MIPMAP_TEXTURE_ARB" group="PBufferAttribute"/>
+        <enum value="0x2075"        name="WGL_TEXTURE_RGB_ARB" group="PBufferTextureFormat"/>
+        <enum value="0x2076"        name="WGL_TEXTURE_RGBA_ARB" group="PBufferTextureFormat"/>
+        <enum value="0x2077"        name="WGL_NO_TEXTURE_ARB" group="PBufferTextureFormat,PBufferTextureTarget"/>
+        <enum value="0x2078"        name="WGL_TEXTURE_CUBE_MAP_ARB" group="PBufferTextureTarget"/>
+        <enum value="0x2079"        name="WGL_TEXTURE_1D_ARB" group="PBufferTextureTarget"/>
+        <enum value="0x207A"        name="WGL_TEXTURE_2D_ARB" group="PBufferTextureTarget"/>
+        <enum value="0x207B"        name="WGL_MIPMAP_LEVEL_ARB" group="PBufferAttribute"/>
+        <enum value="0x207C"        name="WGL_CUBE_MAP_FACE_ARB" group="PBufferAttribute"/>
+        <enum value="0x207D"        name="WGL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB" group="PBufferCubeMapFace"/>
+        <enum value="0x207E"        name="WGL_TEXTURE_CUBE_MAP_NEGATIVE_X_ARB" group="PBufferCubeMapFace"/>
+        <enum value="0x207F"        name="WGL_TEXTURE_CUBE_MAP_POSITIVE_Y_ARB" group="PBufferCubeMapFace"/>
+        <enum value="0x2080"        name="WGL_TEXTURE_CUBE_MAP_NEGATIVE_Y_ARB" group="PBufferCubeMapFace"/>
+        <enum value="0x2081"        name="WGL_TEXTURE_CUBE_MAP_POSITIVE_Z_ARB" group="PBufferCubeMapFace"/>
+        <enum value="0x2082"        name="WGL_TEXTURE_CUBE_MAP_NEGATIVE_Z_ARB" group="PBufferCubeMapFace"/>
+        <enum value="0x2083"        name="WGL_FRONT_LEFT_ARB" group="ColorBuffer"/>
+        <enum value="0x2084"        name="WGL_FRONT_RIGHT_ARB" group="ColorBuffer"/>
+        <enum value="0x2085"        name="WGL_BACK_LEFT_ARB" group="ColorBuffer"/>
+        <enum value="0x2086"        name="WGL_BACK_RIGHT_ARB" group="ColorBuffer"/>
+        <enum value="0x2087"        name="WGL_AUX0_ARB" group="ColorBuffer"/>
+        <enum value="0x2088"        name="WGL_AUX1_ARB" group="ColorBuffer"/>
+        <enum value="0x2089"        name="WGL_AUX2_ARB" group="ColorBuffer"/>
+        <enum value="0x208A"        name="WGL_AUX3_ARB" group="ColorBuffer"/>
+        <enum value="0x208B"        name="WGL_AUX4_ARB" group="ColorBuffer"/>
+        <enum value="0x208C"        name="WGL_AUX5_ARB" group="ColorBuffer"/>
+        <enum value="0x208D"        name="WGL_AUX6_ARB" group="ColorBuffer"/>
+        <enum value="0x208E"        name="WGL_AUX7_ARB" group="ColorBuffer"/>
+        <enum value="0x208F"        name="WGL_AUX8_ARB" group="ColorBuffer"/>
+        <enum value="0x2090"        name="WGL_AUX9_ARB" group="ColorBuffer"/>
         <enum value="0x2091"        name="WGL_CONTEXT_MAJOR_VERSION_ARB"/>
         <enum value="0x2092"        name="WGL_CONTEXT_MINOR_VERSION_ARB"/>
         <enum value="0x2093"        name="WGL_CONTEXT_LAYER_PLANE_ARB"/>
@@ -388,19 +388,19 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x20C0"        name="WGL_BIND_TO_VIDEO_RGB_NV"/>
         <enum value="0x20C1"        name="WGL_BIND_TO_VIDEO_RGBA_NV"/>
         <enum value="0x20C2"        name="WGL_BIND_TO_VIDEO_RGB_AND_DEPTH_NV"/>
-        <enum value="0x20C3"        name="WGL_VIDEO_OUT_COLOR_NV"/>
-        <enum value="0x20C4"        name="WGL_VIDEO_OUT_ALPHA_NV"/>
-        <enum value="0x20C5"        name="WGL_VIDEO_OUT_DEPTH_NV"/>
-        <enum value="0x20C6"        name="WGL_VIDEO_OUT_COLOR_AND_ALPHA_NV"/>
-        <enum value="0x20C7"        name="WGL_VIDEO_OUT_COLOR_AND_DEPTH_NV"/>
-        <enum value="0x20C8"        name="WGL_VIDEO_OUT_FRAME"/>
-        <enum value="0x20C9"        name="WGL_VIDEO_OUT_FIELD_1"/>
-        <enum value="0x20CA"        name="WGL_VIDEO_OUT_FIELD_2"/>
-        <enum value="0x20CB"        name="WGL_VIDEO_OUT_STACKED_FIELDS_1_2"/>
-        <enum value="0x20CC"        name="WGL_VIDEO_OUT_STACKED_FIELDS_2_1"/>
+        <enum value="0x20C3"        name="WGL_VIDEO_OUT_COLOR_NV" group="VideoOutputBuffer"/>
+        <enum value="0x20C4"        name="WGL_VIDEO_OUT_ALPHA_NV" group="VideoOutputBuffer"/>
+        <enum value="0x20C5"        name="WGL_VIDEO_OUT_DEPTH_NV" group="VideoOutputBuffer"/>
+        <enum value="0x20C6"        name="WGL_VIDEO_OUT_COLOR_AND_ALPHA_NV" group="VideoOutputBuffer"/>
+        <enum value="0x20C7"        name="WGL_VIDEO_OUT_COLOR_AND_DEPTH_NV" group="VideoOutputBuffer"/>
+        <enum value="0x20C8"        name="WGL_VIDEO_OUT_FRAME" group="VideoOutputBufferType"/>
+        <enum value="0x20C9"        name="WGL_VIDEO_OUT_FIELD_1" group="VideoOutputBufferType"/>
+        <enum value="0x20CA"        name="WGL_VIDEO_OUT_FIELD_2" group="VideoOutputBufferType"/>
+        <enum value="0x20CB"        name="WGL_VIDEO_OUT_STACKED_FIELDS_1_2" group="VideoOutputBufferType"/>
+        <enum value="0x20CC"        name="WGL_VIDEO_OUT_STACKED_FIELDS_2_1" group="VideoOutputBufferType"/>
             <unused start="0x20CD" comment="reserved for GLX_DEVICE_ID_NV (not present in WGL interface)"/>
-        <enum value="0x20CE"        name="WGL_UNIQUE_ID_NV"/>
-        <enum value="0x20CF"        name="WGL_NUM_VIDEO_CAPTURE_SLOTS_NV"/>
+        <enum value="0x20CE"        name="WGL_UNIQUE_ID_NV" group="VideoCaptureDeviceAttribute"/>
+        <enum value="0x20CF"        name="WGL_NUM_VIDEO_CAPTURE_SLOTS_NV" group="ContextAttribute"/>
         <enum value="0x20D0"        name="ERROR_INCOMPATIBLE_AFFINITY_MASKS_NV"/>
         <enum value="0x20D1"        name="ERROR_MISSING_AFFINITY_MASK_NV"/>
             <unused start="0x20D2" end="0x20EF"/>
@@ -413,13 +413,13 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x21A0"        name="WGL_TYPE_RGBA_FLOAT_ATI"/>
             <unused start="0x21A1"/>
         <enum value="0x21A2"        name="WGL_GPU_FASTEST_TARGET_GPUS_AMD"/>
-        <enum value="0x21A3"        name="WGL_GPU_RAM_AMD"/>
-        <enum value="0x21A4"        name="WGL_GPU_CLOCK_AMD"/>
-        <enum value="0x21A5"        name="WGL_GPU_NUM_PIPES_AMD"/>
+        <enum value="0x21A3"        name="WGL_GPU_RAM_AMD" group="GPUProperty"/>
+        <enum value="0x21A4"        name="WGL_GPU_CLOCK_AMD" group="GPUProperty"/>
+        <enum value="0x21A5"        name="WGL_GPU_NUM_PIPES_AMD" group="GPUProperty"/>
         <enum value="0x21A5"        name="WGL_TEXTURE_RECTANGLE_ATI" comment="Duplicates unrelated WGL_GPU_NUM_PIPES_AMD"/>
-        <enum value="0x21A6"        name="WGL_GPU_NUM_SIMD_AMD"/>
-        <enum value="0x21A7"        name="WGL_GPU_NUM_RB_AMD"/>
-        <enum value="0x21A8"        name="WGL_GPU_NUM_SPI_AMD"/>
+        <enum value="0x21A6"        name="WGL_GPU_NUM_SIMD_AMD" group="GPUProperty"/>
+        <enum value="0x21A7"        name="WGL_GPU_NUM_RB_AMD" group="GPUProperty"/>
+        <enum value="0x21A8"        name="WGL_GPU_NUM_SPI_AMD" group="GPUProperty"/>
             <unused start="0x21A9" end="0x21AF"/>
     </enums>
 
@@ -465,14 +465,14 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto>int <name>ChoosePixelFormat</name></proto>
             <param><ptype>HDC</ptype> <name>hDc</name></param>
-            <param>const <ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>pPfd</name></param>
+            <param len="1">const <ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>pPfd</name></param>
         </command>
         <command>
             <proto>int <name>DescribePixelFormat</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
             <param>int <name>ipfd</name></param>
             <param><ptype>UINT</ptype> <name>cjpfd</name></param>
-            <param><ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>ppfd</name></param>
+            <param len="1"><ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>ppfd</name></param>
         </command>
         <command>
             <proto>int <name>GetPixelFormat</name></proto>
@@ -482,7 +482,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>BOOL</ptype> <name>SetPixelFormat</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
             <param>int <name>ipfd</name></param>
-            <param>const <ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>ppfd</name></param>
+            <param len="1">const <ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>ppfd</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>SwapBuffers</name></proto>
@@ -498,9 +498,9 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglAssociateImageBufferEventsI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param>const <ptype>HANDLE</ptype> *<name>pEvent</name></param>
-            <param>const <ptype>LPVOID</ptype> *<name>pAddress</name></param>
-            <param>const <ptype>DWORD</ptype> *<name>pSize</name></param>
+            <param len="count">const <ptype>HANDLE</ptype> *<name>pEvent</name></param>
+            <param len="count">const <ptype>LPVOID</ptype> *<name>pAddress</name></param>
+            <param len="count">const <ptype>DWORD</ptype> *<name>pSize</name></param>
             <param><ptype>UINT</ptype> <name>count</name></param>
         </command>
         <command>
@@ -518,7 +518,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglBindTexImageARB</name></proto>
             <param><ptype>HPBUFFERARB</ptype> <name>hPbuffer</name></param>
-            <param>int <name>iBuffer</name></param>
+            <param group="ColorBuffer">int <name>iBuffer</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglBindVideoCaptureDeviceNV</name></proto>
@@ -536,7 +536,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>BOOL</ptype> <name>wglBindVideoImageNV</name></proto>
             <param><ptype>HPVIDEODEV</ptype> <name>hVideoDevice</name></param>
             <param><ptype>HPBUFFERARB</ptype> <name>hPbuffer</name></param>
-            <param>int <name>iVideoBuffer</name></param>
+            <param group="VideoOutputBuffer">int <name>iVideoBuffer</name></param>
         </command>
         <command>
             <proto><ptype>VOID</ptype> <name>wglBlitContextFramebufferAMD</name></proto>
@@ -549,6 +549,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param><ptype>GLint</ptype> <name>dstY0</name></param>
             <param><ptype>GLint</ptype> <name>dstX1</name></param>
             <param><ptype>GLint</ptype> <name>dstY1</name></param>
+            <!-- FIXME: Refer to GL enums/enum groups -->
             <param><ptype>GLbitfield</ptype> <name>mask</name></param>
             <param><ptype>GLenum</ptype> <name>filter</name></param>
         </command>
@@ -558,8 +559,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>const int *<name>piAttribIList</name></param>
             <param>const <ptype>FLOAT</ptype> *<name>pfAttribFList</name></param>
             <param><ptype>UINT</ptype> <name>nMaxFormats</name></param>
-            <param>int *<name>piFormats</name></param>
-            <param><ptype>UINT</ptype> *<name>nNumFormats</name></param>
+            <param len="nMaxFormats">int *<name>piFormats</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>nNumFormats</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglChoosePixelFormatEXT</name></proto>
@@ -567,13 +568,14 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>const int *<name>piAttribIList</name></param>
             <param>const <ptype>FLOAT</ptype> *<name>pfAttribFList</name></param>
             <param><ptype>UINT</ptype> <name>nMaxFormats</name></param>
-            <param>int *<name>piFormats</name></param>
-            <param><ptype>UINT</ptype> *<name>nNumFormats</name></param>
+            <param len="nMaxFormats">int *<name>piFormats</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>nNumFormats</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglCopyContext</name></proto>
             <param><ptype>HGLRC</ptype> <name>hglrcSrc</name></param>
             <param><ptype>HGLRC</ptype> <name>hglrcDst</name></param>
+            <!-- FIXME: Reference GL enums/enum groups -->
             <param><ptype>UINT</ptype> <name>mask</name></param>
         </command>
         <command>
@@ -614,7 +616,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>HANDLE</ptype> <name>wglCreateBufferRegionARB</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param>int <name>iLayerPlane</name></param>
-            <param><ptype>UINT</ptype> <name>uType</name></param>
+            <param group="BufferRegionType"><ptype>UINT</ptype> <name>uType</name></param>
         </command>
         <command>
             <proto><ptype>HGLRC</ptype> <name>wglCreateContext</name></proto>
@@ -634,7 +636,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>LPVOID</ptype> <name>wglCreateImageBufferI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param><ptype>DWORD</ptype> <name>dwSize</name></param>
-            <param><ptype>UINT</ptype> <name>uFlags</name></param>
+            <param group="ImageBufferFlags"><ptype>UINT</ptype> <name>uFlags</name></param>
         </command>
         <command>
             <proto><ptype>HGLRC</ptype> <name>wglCreateLayerContext</name></proto>
@@ -684,7 +686,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>pixelFormat</name></param>
             <param>int <name>layerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nBytes</name></param>
-            <param><ptype>LAYERPLANEDESCRIPTOR</ptype> *<name>plpd</name></param>
+            <param len="1"><ptype>LAYERPLANEDESCRIPTOR</ptype> *<name>plpd</name></param>
         </command>
         <command>
             <proto><ptype>VOID</ptype> <name>wglDestroyDisplayColorTableEXT</name></proto>
@@ -718,35 +720,36 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>BOOL</ptype> <name>wglDXLockObjectsNV</name></proto>
             <param><ptype>HANDLE</ptype> <name>hDevice</name></param>
             <param><ptype>GLint</ptype> <name>count</name></param>
-            <param><ptype>HANDLE</ptype> *<name>hObjects</name></param>
+            <param len="count"><ptype>HANDLE</ptype> *<name>hObjects</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglDXObjectAccessNV</name></proto>
             <param><ptype>HANDLE</ptype> <name>hObject</name></param>
-            <param><ptype>GLenum</ptype> <name>access</name></param>
+            <param group="DXInteropAccessMask"><ptype>GLenum</ptype> <name>access</name></param>
         </command>
         <command>
             <proto><ptype>HANDLE</ptype> <name>wglDXOpenDeviceNV</name></proto>
-            <param>void *<name>dxDevice</name></param>
+            <param len="1">void *<name>dxDevice</name></param>
         </command>
         <command>
             <proto><ptype>HANDLE</ptype> <name>wglDXRegisterObjectNV</name></proto>
             <param><ptype>HANDLE</ptype> <name>hDevice</name></param>
-            <param>void *<name>dxObject</name></param>
+            <param len="1">void *<name>dxObject</name></param>
             <param><ptype>GLuint</ptype> <name>name</name></param>
-            <param><ptype>GLenum</ptype> <name>type</name></param>
-            <param><ptype>GLenum</ptype> <name>access</name></param>
+            <!-- FIXME: reference GL enums? -->
+            <param ><ptype>GLenum</ptype> <name>type</name></param>
+            <param group="DXInteropAccessMask"><ptype>GLenum</ptype> <name>access</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglDXSetResourceShareHandleNV</name></proto>
-            <param>void *<name>dxObject</name></param>
+            <param len="1">void *<name>dxObject</name></param>
             <param><ptype>HANDLE</ptype> <name>shareHandle</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglDXUnlockObjectsNV</name></proto>
             <param><ptype>HANDLE</ptype> <name>hDevice</name></param>
             <param><ptype>GLint</ptype> <name>count</name></param>
-            <param><ptype>HANDLE</ptype> *<name>hObjects</name></param>
+            <param len="count"><ptype>HANDLE</ptype> *<name>hObjects</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglDXUnregisterObjectNV</name></proto>
@@ -766,6 +769,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>UINT</ptype> <name>wglEnumerateVideoCaptureDevicesNV</name></proto>
             <param><ptype>HDC</ptype> <name>hDc</name></param>
+            <!-- FIXME: Some way for len="" to refer to the return value. Maybe len="RETURN()"? -->
             <param><ptype>HVIDEOINPUTDEVICENV</ptype> *<name>phDeviceList</name></param>
         </command>
         <command>
@@ -783,12 +787,12 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <proto><ptype>BOOL</ptype> <name>wglEnumGpusFromAffinityDCNV</name></proto>
             <param><ptype>HDC</ptype> <name>hAffinityDC</name></param>
             <param><ptype>UINT</ptype> <name>iGpuIndex</name></param>
-            <param><ptype>HGPUNV</ptype> *<name>hGpu</name></param>
+            <param len="1"><ptype>HGPUNV</ptype> *<name>hGpu</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglEnumGpusNV</name></proto>
             <param><ptype>UINT</ptype> <name>iGpuIndex</name></param>
-            <param><ptype>HGPUNV</ptype> *<name>phGpu</name></param>
+            <param len="1"><ptype>HGPUNV</ptype> *<name>phGpu</name></param>
         </command>
         <command>
             <proto>void <name>wglFreeMemoryNV</name></proto>
@@ -840,14 +844,14 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetDigitalVideoParametersI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param>int <name>iAttribute</name></param>
-            <param>int *<name>piValue</name></param>
+            <param group="DigitalVideoAttribute">int <name>iAttribute</name></param>
+            <param len="1">int *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>UINT</ptype> <name>GetEnhMetaFilePixelFormat</name></proto>
             <param><ptype>HENHMETAFILE</ptype> <name>hemf</name></param>
             <param><ptype>UINT</ptype> <name>cbBuffer</name></param>
-            <param><ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>ppfd</name></param>
+            <param len="1"><ptype>PIXELFORMATDESCRIPTOR</ptype> *<name>ppfd</name></param>
         </command>
         <command>
             <proto>const char *<name>wglGetExtensionsStringARB</name></proto>
@@ -858,54 +862,55 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetFrameUsageI3D</name></proto>
-            <param>float *<name>pUsage</name></param>
+            <param len="1">float *<name>pUsage</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetGammaTableI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param>int <name>iEntries</name></param>
-            <param><ptype>USHORT</ptype> *<name>puRed</name></param>
-            <param><ptype>USHORT</ptype> *<name>puGreen</name></param>
-            <param><ptype>USHORT</ptype> *<name>puBlue</name></param>
+            <param len="iEntries"><ptype>USHORT</ptype> *<name>puRed</name></param>
+            <param len="iEntries"><ptype>USHORT</ptype> *<name>puGreen</name></param>
+            <param len="iEntries"><ptype>USHORT</ptype> *<name>puBlue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetGammaTableParametersI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param>int <name>iAttribute</name></param>
-            <param>int *<name>piValue</name></param>
+            <param group="GammaTableAttribute">int <name>iAttribute</name></param>
+            <param len="1">int *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetGenlockSampleRateI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>UINT</ptype> *<name>uRate</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>uRate</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetGenlockSourceDelayI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>UINT</ptype> *<name>uDelay</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>uDelay</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetGenlockSourceEdgeI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>UINT</ptype> *<name>uEdge</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>uEdge</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetGenlockSourceI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>UINT</ptype> *<name>uSource</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>uSource</name></param>
         </command>
         <command>
             <proto><ptype>UINT</ptype> <name>wglGetGPUIDsAMD</name></proto>
             <param><ptype>UINT</ptype> <name>maxCount</name></param>
-            <param><ptype>UINT</ptype> *<name>ids</name></param>
+            <param len="maxCount"><ptype>UINT</ptype> *<name>ids</name></param>
         </command>
         <command>
             <proto><ptype>INT</ptype> <name>wglGetGPUInfoAMD</name></proto>
             <param><ptype>UINT</ptype> <name>id</name></param>
-            <param><ptype>INT</ptype> <name>property</name></param>
+            <param group="GPUProperty"><ptype>INT</ptype> <name>property</name></param>
+            <!-- FIXME: Reference to GL enum/enum group -->
             <param><ptype>GLenum</ptype> <name>dataType</name></param>
             <param><ptype>UINT</ptype> <name>size</name></param>
-            <param>void *<name>data</name></param>
+            <param len="COMPSIZE(property, dataType, size)">void *<name>data</name></param>
         </command>
         <command>
             <proto>int <name>wglGetLayerPaletteEntries</name></proto>
@@ -918,8 +923,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetMscRateOML</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
-            <param><ptype>INT32</ptype> *<name>numerator</name></param>
-            <param><ptype>INT32</ptype> *<name>denominator</name></param>
+            <param len="1"><ptype>INT32</ptype> *<name>numerator</name></param>
+            <param len="1"><ptype>INT32</ptype> *<name>denominator</name></param>
         </command>
         <command>
             <proto><ptype>HDC</ptype> <name>wglGetPbufferDCARB</name></proto>
@@ -935,8 +940,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param>const int *<name>piAttributes</name></param>
-            <param><ptype>FLOAT</ptype> *<name>pfValues</name></param>
+            <param len="nAttributes">const int *<name>piAttributes</name></param>
+            <param len="nAttributes"><ptype>FLOAT</ptype> *<name>pfValues</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetPixelFormatAttribfvEXT</name></proto>
@@ -944,8 +949,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param>int *<name>piAttributes</name></param>
-            <param><ptype>FLOAT</ptype> *<name>pfValues</name></param>
+            <param len="nAttributes">int *<name>piAttributes</name></param>
+            <param len="nAttributes"><ptype>FLOAT</ptype> *<name>pfValues</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetPixelFormatAttribivARB</name></proto>
@@ -953,8 +958,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param>const int *<name>piAttributes</name></param>
-            <param>int *<name>piValues</name></param>
+            <param len="nAttributes">const int *<name>piAttributes</name></param>
+            <param len="nAttributes">int *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetPixelFormatAttribivEXT</name></proto>
@@ -962,8 +967,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iPixelFormat</name></param>
             <param>int <name>iLayerPlane</name></param>
             <param><ptype>UINT</ptype> <name>nAttributes</name></param>
-            <param>int *<name>piAttributes</name></param>
-            <param>int *<name>piValues</name></param>
+            <param len="nAttributes">int *<name>piAttributes</name></param>
+            <param len="nAttributes">int *<name>piValues</name></param>
         </command>
         <command>
             <proto><ptype>PROC</ptype> <name>wglGetProcAddress</name></proto>
@@ -975,30 +980,30 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetSyncValuesOML</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
-            <param><ptype>INT64</ptype> *<name>ust</name></param>
-            <param><ptype>INT64</ptype> *<name>msc</name></param>
-            <param><ptype>INT64</ptype> *<name>sbc</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>ust</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>msc</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>sbc</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetVideoDeviceNV</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param>int <name>numDevices</name></param>
-            <param><ptype>HPVIDEODEV</ptype> *<name>hVideoDevice</name></param>
+            <param len="numDevices"><ptype>HPVIDEODEV</ptype> *<name>hVideoDevice</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglGetVideoInfoNV</name></proto>
             <param><ptype>HPVIDEODEV</ptype> <name>hpVideoDevice</name></param>
-            <param>unsigned long *<name>pulCounterOutputPbuffer</name></param>
-            <param>unsigned long *<name>pulCounterOutputVideo</name></param>
+            <param len="1">unsigned long *<name>pulCounterOutputPbuffer</name></param>
+            <param len="1">unsigned long *<name>pulCounterOutputVideo</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglIsEnabledFrameLockI3D</name></proto>
-            <param><ptype>BOOL</ptype> *<name>pFlag</name></param>
+            <param len="1"><ptype>BOOL</ptype> *<name>pFlag</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglIsEnabledGenlockI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>BOOL</ptype> *<name>pFlag</name></param>
+            <param len="1"><ptype>BOOL</ptype> *<name>pFlag</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglJoinSwapGroupNV</name></proto>
@@ -1007,7 +1012,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         </command>
         <command>
             <proto><ptype>GLboolean</ptype> <name>wglLoadDisplayColorTableEXT</name></proto>
-            <param>const <ptype>GLushort</ptype> *<name>table</name></param>
+            <param len="length*3">const <ptype>GLushort</ptype> *<name>table</name></param>
             <param><ptype>GLuint</ptype> <name>length</name></param>
         </command>
         <command>
@@ -1038,60 +1043,60 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryCurrentContextNV</name></proto>
-            <param>int <name>iAttribute</name></param>
-            <param>int *<name>piValue</name></param>
+            <param group="ContextAttribute">int <name>iAttribute</name></param>
+            <param len="1">int *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryFrameCountNV</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>GLuint</ptype> *<name>count</name></param>
+            <param len="1"><ptype>GLuint</ptype> *<name>count</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryFrameLockMasterI3D</name></proto>
-            <param><ptype>BOOL</ptype> *<name>pFlag</name></param>
+            <param len="1"><ptype>BOOL</ptype> *<name>pFlag</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryFrameTrackingI3D</name></proto>
-            <param><ptype>DWORD</ptype> *<name>pFrameCount</name></param>
-            <param><ptype>DWORD</ptype> *<name>pMissedFrames</name></param>
-            <param>float *<name>pLastMissedUsage</name></param>
+            <param len="1"><ptype>DWORD</ptype> *<name>pFrameCount</name></param>
+            <param len="1"><ptype>DWORD</ptype> *<name>pMissedFrames</name></param>
+            <param len="1">float *<name>pLastMissedUsage</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryGenlockMaxSourceDelayI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>UINT</ptype> *<name>uMaxLineDelay</name></param>
-            <param><ptype>UINT</ptype> *<name>uMaxPixelDelay</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>uMaxLineDelay</name></param>
+            <param len="1"><ptype>UINT</ptype> *<name>uMaxPixelDelay</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryMaxSwapGroupsNV</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>GLuint</ptype> *<name>maxGroups</name></param>
-            <param><ptype>GLuint</ptype> *<name>maxBarriers</name></param>
+            <param len="1"><ptype>GLuint</ptype> *<name>maxGroups</name></param>
+            <param len="1"><ptype>GLuint</ptype> *<name>maxBarriers</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryPbufferARB</name></proto>
             <param><ptype>HPBUFFERARB</ptype> <name>hPbuffer</name></param>
-            <param>int <name>iAttribute</name></param>
-            <param>int *<name>piValue</name></param>
+            <param group="PBufferAttribute">int <name>iAttribute</name></param>
+            <param len="1">int *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryPbufferEXT</name></proto>
             <param><ptype>HPBUFFEREXT</ptype> <name>hPbuffer</name></param>
-            <param>int <name>iAttribute</name></param>
-            <param>int *<name>piValue</name></param>
+            <param group="PBufferAttribute">int <name>iAttribute</name></param>
+            <param len="1">int *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQuerySwapGroupNV</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>GLuint</ptype> *<name>group</name></param>
-            <param><ptype>GLuint</ptype> *<name>barrier</name></param>
+            <param len="1"><ptype>GLuint</ptype> *<name>group</name></param>
+            <param len="1"><ptype>GLuint</ptype> *<name>barrier</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglQueryVideoCaptureDeviceNV</name></proto>
             <param><ptype>HDC</ptype> <name>hDc</name></param>
             <param><ptype>HVIDEOINPUTDEVICENV</ptype> <name>hDevice</name></param>
-            <param>int <name>iAttribute</name></param>
-            <param>int *<name>piValue</name></param>
+            <param group="VideoCaptureDeviceAttribute">int <name>iAttribute</name></param>
+            <param len="1">int *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglRealizeLayerPalette</name></proto>
@@ -1102,7 +1107,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglReleaseImageBufferEventsI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param>const <ptype>LPVOID</ptype> *<name>pAddress</name></param>
+            <param len="count">const <ptype>LPVOID</ptype> *<name>pAddress</name></param>
             <param><ptype>UINT</ptype> <name>count</name></param>
         </command>
         <command>
@@ -1118,7 +1123,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglReleaseTexImageARB</name></proto>
             <param><ptype>HPBUFFERARB</ptype> <name>hPbuffer</name></param>
-            <param>int <name>iBuffer</name></param>
+            <param group="ColorBuffer">int <name>iBuffer</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglReleaseVideoCaptureDeviceNV</name></proto>
@@ -1132,7 +1137,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglReleaseVideoImageNV</name></proto>
             <param><ptype>HPBUFFERARB</ptype> <name>hPbuffer</name></param>
-            <param>int <name>iVideoBuffer</name></param>
+            <param group="VideoOutputBuffer">int <name>iVideoBuffer</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglResetFrameCountNV</name></proto>
@@ -1159,29 +1164,29 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSendPbufferToVideoNV</name></proto>
             <param><ptype>HPBUFFERARB</ptype> <name>hPbuffer</name></param>
-            <param>int <name>iBufferType</name></param>
-            <param>unsigned long *<name>pulCounterPbuffer</name></param>
+            <param group="VideoOutputBufferType">int <name>iBufferType</name></param>
+            <param len="1">unsigned long *<name>pulCounterPbuffer</name></param>
             <param><ptype>BOOL</ptype> <name>bBlock</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSetDigitalVideoParametersI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param>int <name>iAttribute</name></param>
-            <param>const int *<name>piValue</name></param>
+            <param group="DigitalVideoAttribute">int <name>iAttribute</name></param>
+            <param len="1">const int *<name>piValue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSetGammaTableI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
             <param>int <name>iEntries</name></param>
-            <param>const <ptype>USHORT</ptype> *<name>puRed</name></param>
-            <param>const <ptype>USHORT</ptype> *<name>puGreen</name></param>
-            <param>const <ptype>USHORT</ptype> *<name>puBlue</name></param>
+            <param len="iEntries">const <ptype>USHORT</ptype> *<name>puRed</name></param>
+            <param len="iEntries">const <ptype>USHORT</ptype> *<name>puGreen</name></param>
+            <param len="iEntries">const <ptype>USHORT</ptype> *<name>puBlue</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSetGammaTableParametersI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param>int <name>iAttribute</name></param>
-            <param>const int *<name>piValue</name></param>
+            <param group="GammaTableAttrbiute">int <name>iAttribute</name></param>
+            <param len="1">const int *<name>piValue</name></param>
         </command>
         <command>
             <proto>int <name>wglSetLayerPaletteEntries</name></proto>
@@ -1189,7 +1194,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param>int <name>iLayerPlane</name></param>
             <param>int <name>iStart</name></param>
             <param>int <name>cEntries</name></param>
-            <param>const <ptype>COLORREF</ptype> *<name>pcr</name></param>
+            <param len="cEntries">const <ptype>COLORREF</ptype> *<name>pcr</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSetPbufferAttribARB</name></proto>
@@ -1199,7 +1204,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSetStereoEmitterState3DL</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param><ptype>UINT</ptype> <name>uState</name></param>
+            <param group="StereoEmitterState"><ptype>UINT</ptype> <name>uState</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglShareLists</name></proto>
@@ -1216,7 +1221,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSwapLayerBuffers</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
-            <param><ptype>UINT</ptype> <name>fuFlags</name></param>
+            <param group="Plane"><ptype>UINT</ptype> <name>fuFlags</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSwapIntervalEXT</name></proto>
@@ -1225,7 +1230,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>INT64</ptype> <name>wglSwapLayerBuffersMscOML</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
-            <param><ptype>INT</ptype> <name>fuPlanes</name></param>
+            <param group="Plane"><ptype>INT</ptype> <name>fuPlanes</name></param>
             <param><ptype>INT64</ptype> <name>target_msc</name></param>
             <param><ptype>INT64</ptype> <name>divisor</name></param>
             <param><ptype>INT64</ptype> <name>remainder</name></param>
@@ -1259,7 +1264,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param><ptype>DWORD</ptype> <name>listBase</name></param>
             <param><ptype>FLOAT</ptype> <name>deviation</name></param>
             <param><ptype>FLOAT</ptype> <name>extrusion</name></param>
-            <param>int <name>format</name></param>
+            <param group="FontFormat">int <name>format</name></param>
             <param><ptype>LPGLYPHMETRICSFLOAT</ptype> <name>lpgmf</name></param>
         </command>
         <command>
@@ -1270,7 +1275,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param><ptype>DWORD</ptype> <name>listBase</name></param>
             <param><ptype>FLOAT</ptype> <name>deviation</name></param>
             <param><ptype>FLOAT</ptype> <name>extrusion</name></param>
-            <param>int <name>format</name></param>
+            <param group="FontFormat">int <name>format</name></param>
             <param><ptype>LPGLYPHMETRICSFLOAT</ptype> <name>lpgmf</name></param>
         </command>
         <command>
@@ -1281,7 +1286,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param><ptype>DWORD</ptype> <name>listBase</name></param>
             <param><ptype>FLOAT</ptype> <name>deviation</name></param>
             <param><ptype>FLOAT</ptype> <name>extrusion</name></param>
-            <param>int <name>format</name></param>
+            <param group="FontFormat">int <name>format</name></param>
             <param><ptype>LPGLYPHMETRICSFLOAT</ptype> <name>lpgmf</name></param>
         </command>
         <command>
@@ -1290,56 +1295,56 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
             <param><ptype>INT64</ptype> <name>target_msc</name></param>
             <param><ptype>INT64</ptype> <name>divisor</name></param>
             <param><ptype>INT64</ptype> <name>remainder</name></param>
-            <param><ptype>INT64</ptype> *<name>ust</name></param>
-            <param><ptype>INT64</ptype> *<name>msc</name></param>
-            <param><ptype>INT64</ptype> *<name>sbc</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>ust</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>msc</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>sbc</name></param>
         </command>
         <command>
             <proto><ptype>BOOL</ptype> <name>wglWaitForSbcOML</name></proto>
             <param><ptype>HDC</ptype> <name>hdc</name></param>
             <param><ptype>INT64</ptype> <name>target_sbc</name></param>
-            <param><ptype>INT64</ptype> *<name>ust</name></param>
-            <param><ptype>INT64</ptype> *<name>msc</name></param>
-            <param><ptype>INT64</ptype> *<name>sbc</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>ust</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>msc</name></param>
+            <param len="1"><ptype>INT64</ptype> *<name>sbc</name></param>
         </command>
     </commands>
 
     <!-- SECTION: WGL API interface definitions. -->
     <feature api="wgl" name="WGL_VERSION_1_0" number="1.0">
         <require>
-            <enum name="WGL_FONT_LINES"/>
-            <enum name="WGL_FONT_POLYGONS"/>
-            <enum name="WGL_SWAP_MAIN_PLANE"/>
-            <enum name="WGL_SWAP_OVERLAY1"/>
-            <enum name="WGL_SWAP_OVERLAY2"/>
-            <enum name="WGL_SWAP_OVERLAY3"/>
-            <enum name="WGL_SWAP_OVERLAY4"/>
-            <enum name="WGL_SWAP_OVERLAY5"/>
-            <enum name="WGL_SWAP_OVERLAY6"/>
-            <enum name="WGL_SWAP_OVERLAY7"/>
-            <enum name="WGL_SWAP_OVERLAY8"/>
-            <enum name="WGL_SWAP_OVERLAY9"/>
-            <enum name="WGL_SWAP_OVERLAY10"/>
-            <enum name="WGL_SWAP_OVERLAY11"/>
-            <enum name="WGL_SWAP_OVERLAY12"/>
-            <enum name="WGL_SWAP_OVERLAY13"/>
-            <enum name="WGL_SWAP_OVERLAY14"/>
-            <enum name="WGL_SWAP_OVERLAY15"/>
-            <enum name="WGL_SWAP_UNDERLAY1"/>
-            <enum name="WGL_SWAP_UNDERLAY2"/>
-            <enum name="WGL_SWAP_UNDERLAY3"/>
-            <enum name="WGL_SWAP_UNDERLAY4"/>
-            <enum name="WGL_SWAP_UNDERLAY5"/>
-            <enum name="WGL_SWAP_UNDERLAY6"/>
-            <enum name="WGL_SWAP_UNDERLAY7"/>
-            <enum name="WGL_SWAP_UNDERLAY8"/>
-            <enum name="WGL_SWAP_UNDERLAY9"/>
-            <enum name="WGL_SWAP_UNDERLAY10"/>
-            <enum name="WGL_SWAP_UNDERLAY11"/>
-            <enum name="WGL_SWAP_UNDERLAY12"/>
-            <enum name="WGL_SWAP_UNDERLAY13"/>
-            <enum name="WGL_SWAP_UNDERLAY14"/>
-            <enum name="WGL_SWAP_UNDERLAY15"/>
+            <enum name="WGL_FONT_LINES" group="FontFormat"/>
+            <enum name="WGL_FONT_POLYGONS" group="FontFormat"/>
+            <enum name="WGL_SWAP_MAIN_PLANE" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY1" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY2" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY3" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY4" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY5" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY6" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY7" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY8" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY9" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY10" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY11" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY12" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY13" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY14" group="Plane"/>
+            <enum name="WGL_SWAP_OVERLAY15" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY1" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY2" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY3" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY4" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY5" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY6" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY7" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY8" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY9" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY10" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY11" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY12" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY13" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY14" group="Plane"/>
+            <enum name="WGL_SWAP_UNDERLAY15" group="Plane"/>
             <command name="ChoosePixelFormat"/>
             <command name="DescribePixelFormat"/>
             <command name="GetEnhMetaFilePixelFormat"/>
@@ -1893,7 +1898,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         </extension>
         <extension name="WGL_NV_present_video" supported="wgl">
             <require>
-                <enum name="WGL_NUM_VIDEO_SLOTS_NV"/>
+                <enum name="WGL_NUM_VIDEO_SLOTS_NV" group="ContextAttribute"/>
                 <command name="wglEnumerateVideoDevicesNV"/>
                 <command name="wglBindVideoDeviceNV"/>
                 <command name="wglQueryCurrentContextNV"/>

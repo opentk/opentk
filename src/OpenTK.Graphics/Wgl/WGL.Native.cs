@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.Wgl
         public static int SwapBuffers(IntPtr hdc) => WGLPointers._SwapBuffers_fnptr(hdc);
         
         /// <summary> <b>[requires: v1.0]</b>   </summary>
-        public static int SwapLayerBuffers(IntPtr hdc, uint fuFlags) => WGLPointers._wglSwapLayerBuffers_fnptr(hdc, fuFlags);
+        public static int SwapLayerBuffers(IntPtr hdc, Plane fuFlags) => WGLPointers._wglSwapLayerBuffers_fnptr(hdc, (uint)fuFlags);
         
         /// <summary> <b>[requires: v1.0]</b>   </summary>
         public static int UseFontBitmaps(IntPtr hDC, uint first, uint count, uint listBase) => WGLPointers._wglUseFontBitmaps_fnptr(hDC, first, count, listBase);
@@ -77,19 +77,19 @@ namespace OpenTK.Graphics.Wgl
         public static int UseFontBitmapsW(IntPtr hDC, uint first, uint count, uint listBase) => WGLPointers._wglUseFontBitmapsW_fnptr(hDC, first, count, listBase);
         
         /// <summary> <b>[requires: v1.0]</b>   </summary>
-        public static int UseFontOutlines(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf) => WGLPointers._wglUseFontOutlines_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
+        public static int UseFontOutlines(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, FontFormat format, IntPtr lpgmf) => WGLPointers._wglUseFontOutlines_fnptr(hDC, first, count, listBase, deviation, extrusion, (int)format, lpgmf);
         
         /// <summary> <b>[requires: v1.0]</b>   </summary>
-        public static int UseFontOutlinesA(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf) => WGLPointers._wglUseFontOutlinesA_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
+        public static int UseFontOutlinesA(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, FontFormat format, IntPtr lpgmf) => WGLPointers._wglUseFontOutlinesA_fnptr(hDC, first, count, listBase, deviation, extrusion, (int)format, lpgmf);
         
         /// <summary> <b>[requires: v1.0]</b>   </summary>
-        public static int UseFontOutlinesW(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, int format, IntPtr lpgmf) => WGLPointers._wglUseFontOutlinesW_fnptr(hDC, first, count, listBase, deviation, extrusion, format, lpgmf);
+        public static int UseFontOutlinesW(IntPtr hDC, uint first, uint count, uint listBase, float deviation, float extrusion, FontFormat format, IntPtr lpgmf) => WGLPointers._wglUseFontOutlinesW_fnptr(hDC, first, count, listBase, deviation, extrusion, (int)format, lpgmf);
         
         /// <summary>_3DL extensions.</summary>
         public static unsafe partial class _3DL
         {
             /// <summary> <b>[requires: WGL_3DL_stereo_control]</b>   </summary>
-            public static int SetStereoEmitterState3DL(IntPtr hDC, uint uState) => WGLPointers._wglSetStereoEmitterState3DL_fnptr(hDC, uState);
+            public static int SetStereoEmitterState3DL(IntPtr hDC, StereoEmitterState uState) => WGLPointers._wglSetStereoEmitterState3DL_fnptr(hDC, (uint)uState);
             
         }
         /// <summary>AMD extensions.</summary>
@@ -117,7 +117,7 @@ namespace OpenTK.Graphics.Wgl
             public static uint GetGPUIDsAMD(uint maxCount, uint* ids) => WGLPointers._wglGetGPUIDsAMD_fnptr(maxCount, ids);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b>   </summary>
-            public static int GetGPUInfoAMD(uint id, int property, All dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, property, (uint)dataType, size, data);
+            public static int GetGPUInfoAMD(uint id, GPUProperty property, All dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, (int)property, (uint)dataType, size, data);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b>   </summary>
             public static int MakeAssociatedContextCurrentAMD(IntPtr hglrc) => WGLPointers._wglMakeAssociatedContextCurrentAMD_fnptr(hglrc);
@@ -127,13 +127,13 @@ namespace OpenTK.Graphics.Wgl
         public static unsafe partial class ARB
         {
             /// <summary> <b>[requires: WGL_ARB_render_texture]</b>   </summary>
-            public static int BindTexImageARB(IntPtr hPbuffer, int iBuffer) => WGLPointers._wglBindTexImageARB_fnptr(hPbuffer, iBuffer);
+            public static int BindTexImageARB(IntPtr hPbuffer, ColorBuffer iBuffer) => WGLPointers._wglBindTexImageARB_fnptr(hPbuffer, (int)iBuffer);
             
             /// <summary> <b>[requires: WGL_ARB_pixel_format]</b>   </summary>
             public static int ChoosePixelFormatARB(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats) => WGLPointers._wglChoosePixelFormatARB_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
             
             /// <summary> <b>[requires: WGL_ARB_buffer_region]</b>   </summary>
-            public static IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, uint uType) => WGLPointers._wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, uType);
+            public static IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, BufferRegionType uType) => WGLPointers._wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, (uint)uType);
             
             /// <summary> <b>[requires: WGL_ARB_create_context]</b>   </summary>
             public static IntPtr CreateContextAttribsARB(IntPtr hDC, IntPtr hShareContext, int* attribList) => WGLPointers._wglCreateContextAttribsARB_fnptr(hDC, hShareContext, attribList);
@@ -166,13 +166,13 @@ namespace OpenTK.Graphics.Wgl
             public static int MakeContextCurrentARB(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc) => WGLPointers._wglMakeContextCurrentARB_fnptr(hDrawDC, hReadDC, hglrc);
             
             /// <summary> <b>[requires: WGL_ARB_pbuffer]</b>   </summary>
-            public static int QueryPbufferARB(IntPtr hPbuffer, int iAttribute, int* piValue) => WGLPointers._wglQueryPbufferARB_fnptr(hPbuffer, iAttribute, piValue);
+            public static int QueryPbufferARB(IntPtr hPbuffer, PBufferAttribute iAttribute, int* piValue) => WGLPointers._wglQueryPbufferARB_fnptr(hPbuffer, (int)iAttribute, piValue);
             
             /// <summary> <b>[requires: WGL_ARB_pbuffer]</b>   </summary>
             public static int ReleasePbufferDCARB(IntPtr hPbuffer, IntPtr hDC) => WGLPointers._wglReleasePbufferDCARB_fnptr(hPbuffer, hDC);
             
             /// <summary> <b>[requires: WGL_ARB_render_texture]</b>   </summary>
-            public static int ReleaseTexImageARB(IntPtr hPbuffer, int iBuffer) => WGLPointers._wglReleaseTexImageARB_fnptr(hPbuffer, iBuffer);
+            public static int ReleaseTexImageARB(IntPtr hPbuffer, ColorBuffer iBuffer) => WGLPointers._wglReleaseTexImageARB_fnptr(hPbuffer, (int)iBuffer);
             
             /// <summary> <b>[requires: WGL_ARB_buffer_region]</b>   </summary>
             public static int RestoreBufferRegionARB(IntPtr hRegion, int x, int y, int width, int height, int xSrc, int ySrc) => WGLPointers._wglRestoreBufferRegionARB_fnptr(hRegion, x, y, width, height, xSrc, ySrc);
@@ -230,7 +230,7 @@ namespace OpenTK.Graphics.Wgl
             public static int MakeContextCurrentEXT(IntPtr hDrawDC, IntPtr hReadDC, IntPtr hglrc) => WGLPointers._wglMakeContextCurrentEXT_fnptr(hDrawDC, hReadDC, hglrc);
             
             /// <summary> <b>[requires: WGL_EXT_pbuffer]</b>   </summary>
-            public static int QueryPbufferEXT(IntPtr hPbuffer, int iAttribute, int* piValue) => WGLPointers._wglQueryPbufferEXT_fnptr(hPbuffer, iAttribute, piValue);
+            public static int QueryPbufferEXT(IntPtr hPbuffer, PBufferAttribute iAttribute, int* piValue) => WGLPointers._wglQueryPbufferEXT_fnptr(hPbuffer, (int)iAttribute, piValue);
             
             /// <summary> <b>[requires: WGL_EXT_pbuffer]</b>   </summary>
             public static int ReleasePbufferDCEXT(IntPtr hPbuffer, IntPtr hDC) => WGLPointers._wglReleasePbufferDCEXT_fnptr(hPbuffer, hDC);
@@ -249,7 +249,7 @@ namespace OpenTK.Graphics.Wgl
             public static int BeginFrameTrackingI3D() => WGLPointers._wglBeginFrameTrackingI3D_fnptr();
             
             /// <summary> <b>[requires: WGL_I3D_image_buffer]</b>   </summary>
-            public static IntPtr CreateImageBufferI3D(IntPtr hDC, uint dwSize, uint uFlags) => WGLPointers._wglCreateImageBufferI3D_fnptr(hDC, dwSize, uFlags);
+            public static IntPtr CreateImageBufferI3D(IntPtr hDC, uint dwSize, ImageBufferFlags uFlags) => WGLPointers._wglCreateImageBufferI3D_fnptr(hDC, dwSize, (uint)uFlags);
             
             /// <summary> <b>[requires: WGL_I3D_image_buffer]</b>   </summary>
             public static int DestroyImageBufferI3D(IntPtr hDC, IntPtr pAddress) => WGLPointers._wglDestroyImageBufferI3D_fnptr(hDC, pAddress);
@@ -282,7 +282,7 @@ namespace OpenTK.Graphics.Wgl
             public static int GenlockSourceI3D(IntPtr hDC, uint uSource) => WGLPointers._wglGenlockSourceI3D_fnptr(hDC, uSource);
             
             /// <summary> <b>[requires: WGL_I3D_digital_video_control]</b>   </summary>
-            public static int GetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, int* piValue) => WGLPointers._wglGetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
+            public static int GetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, int* piValue) => WGLPointers._wglGetDigitalVideoParametersI3D_fnptr(hDC, (int)iAttribute, piValue);
             
             /// <summary> <b>[requires: WGL_I3D_swap_frame_usage]</b>   </summary>
             public static int GetFrameUsageI3D(float* pUsage) => WGLPointers._wglGetFrameUsageI3D_fnptr(pUsage);
@@ -291,7 +291,7 @@ namespace OpenTK.Graphics.Wgl
             public static int GetGammaTableI3D(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue) => WGLPointers._wglGetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
             
             /// <summary> <b>[requires: WGL_I3D_gamma]</b>   </summary>
-            public static int GetGammaTableParametersI3D(IntPtr hDC, int iAttribute, int* piValue) => WGLPointers._wglGetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
+            public static int GetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, int* piValue) => WGLPointers._wglGetGammaTableParametersI3D_fnptr(hDC, (int)iAttribute, piValue);
             
             /// <summary> <b>[requires: WGL_I3D_genlock]</b>   </summary>
             public static int GetGenlockSampleRateI3D(IntPtr hDC, uint* uRate) => WGLPointers._wglGetGenlockSampleRateI3D_fnptr(hDC, uRate);
@@ -324,13 +324,13 @@ namespace OpenTK.Graphics.Wgl
             public static int ReleaseImageBufferEventsI3D(IntPtr hDC, IntPtr* pAddress, uint count) => WGLPointers._wglReleaseImageBufferEventsI3D_fnptr(hDC, pAddress, count);
             
             /// <summary> <b>[requires: WGL_I3D_digital_video_control]</b>   </summary>
-            public static int SetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, int* piValue) => WGLPointers._wglSetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
+            public static int SetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, int* piValue) => WGLPointers._wglSetDigitalVideoParametersI3D_fnptr(hDC, (int)iAttribute, piValue);
             
             /// <summary> <b>[requires: WGL_I3D_gamma]</b>   </summary>
             public static int SetGammaTableI3D(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue) => WGLPointers._wglSetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
             
             /// <summary> <b>[requires: WGL_I3D_gamma]</b>   </summary>
-            public static int SetGammaTableParametersI3D(IntPtr hDC, int iAttribute, int* piValue) => WGLPointers._wglSetGammaTableParametersI3D_fnptr(hDC, iAttribute, piValue);
+            public static int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttrbiute iAttribute, int* piValue) => WGLPointers._wglSetGammaTableParametersI3D_fnptr(hDC, (int)iAttribute, piValue);
             
         }
         /// <summary>NV extensions.</summary>
@@ -349,7 +349,7 @@ namespace OpenTK.Graphics.Wgl
             public static int BindVideoDeviceNV(IntPtr hDc, uint uVideoSlot, IntPtr hVideoDevice, int* piAttribList) => WGLPointers._wglBindVideoDeviceNV_fnptr(hDc, uVideoSlot, hVideoDevice, piAttribList);
             
             /// <summary> <b>[requires: WGL_NV_video_output]</b>   </summary>
-            public static int BindVideoImageNV(IntPtr hVideoDevice, IntPtr hPbuffer, int iVideoBuffer) => WGLPointers._wglBindVideoImageNV_fnptr(hVideoDevice, hPbuffer, iVideoBuffer);
+            public static int BindVideoImageNV(IntPtr hVideoDevice, IntPtr hPbuffer, VideoOutputBuffer iVideoBuffer) => WGLPointers._wglBindVideoImageNV_fnptr(hVideoDevice, hPbuffer, (int)iVideoBuffer);
             
             /// <summary> <b>[requires: WGL_NV_copy_image]</b>   </summary>
             public static int CopyImageSubDataNV(IntPtr hSrcRC, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr hDstRC, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth) => WGLPointers._wglCopyImageSubDataNV_fnptr(hSrcRC, srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
@@ -370,13 +370,13 @@ namespace OpenTK.Graphics.Wgl
             public static int DXLockObjectsNV(IntPtr hDevice, int count, IntPtr* hObjects) => WGLPointers._wglDXLockObjectsNV_fnptr(hDevice, count, hObjects);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
-            public static int DXObjectAccessNV(IntPtr hObject, All access) => WGLPointers._wglDXObjectAccessNV_fnptr(hObject, (uint)access);
+            public static int DXObjectAccessNV(IntPtr hObject, DXInteropAccessMask access) => WGLPointers._wglDXObjectAccessNV_fnptr(hObject, (uint)access);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
             public static IntPtr DXOpenDeviceNV(void* dxDevice) => WGLPointers._wglDXOpenDeviceNV_fnptr(dxDevice);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
-            public static IntPtr DXRegisterObjectNV(IntPtr hDevice, void* dxObject, uint name, All type, All access) => WGLPointers._wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, (uint)type, (uint)access);
+            public static IntPtr DXRegisterObjectNV(IntPtr hDevice, void* dxObject, uint name, All type, DXInteropAccessMask access) => WGLPointers._wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, (uint)type, (uint)access);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
             public static int DXSetResourceShareHandleNV(void* dxObject, IntPtr shareHandle) => WGLPointers._wglDXSetResourceShareHandleNV_fnptr(dxObject, shareHandle);
@@ -418,7 +418,7 @@ namespace OpenTK.Graphics.Wgl
             public static int LockVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice) => WGLPointers._wglLockVideoCaptureDeviceNV_fnptr(hDc, hDevice);
             
             /// <summary> <b>[requires: WGL_NV_present_video]</b>   </summary>
-            public static int QueryCurrentContextNV(int iAttribute, int* piValue) => WGLPointers._wglQueryCurrentContextNV_fnptr(iAttribute, piValue);
+            public static int QueryCurrentContextNV(ContextAttribute iAttribute, int* piValue) => WGLPointers._wglQueryCurrentContextNV_fnptr((int)iAttribute, piValue);
             
             /// <summary> <b>[requires: WGL_NV_swap_group]</b>   </summary>
             public static int QueryFrameCountNV(IntPtr hDC, uint* count) => WGLPointers._wglQueryFrameCountNV_fnptr(hDC, count);
@@ -430,7 +430,7 @@ namespace OpenTK.Graphics.Wgl
             public static int QuerySwapGroupNV(IntPtr hDC, uint* group, uint* barrier) => WGLPointers._wglQuerySwapGroupNV_fnptr(hDC, group, barrier);
             
             /// <summary> <b>[requires: WGL_NV_video_capture]</b>   </summary>
-            public static int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, int iAttribute, int* piValue) => WGLPointers._wglQueryVideoCaptureDeviceNV_fnptr(hDc, hDevice, iAttribute, piValue);
+            public static int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, VideoCaptureDeviceAttribute iAttribute, int* piValue) => WGLPointers._wglQueryVideoCaptureDeviceNV_fnptr(hDc, hDevice, (int)iAttribute, piValue);
             
             /// <summary> <b>[requires: WGL_NV_video_capture]</b>   </summary>
             public static int ReleaseVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice) => WGLPointers._wglReleaseVideoCaptureDeviceNV_fnptr(hDc, hDevice);
@@ -439,13 +439,13 @@ namespace OpenTK.Graphics.Wgl
             public static int ReleaseVideoDeviceNV(IntPtr hVideoDevice) => WGLPointers._wglReleaseVideoDeviceNV_fnptr(hVideoDevice);
             
             /// <summary> <b>[requires: WGL_NV_video_output]</b>   </summary>
-            public static int ReleaseVideoImageNV(IntPtr hPbuffer, int iVideoBuffer) => WGLPointers._wglReleaseVideoImageNV_fnptr(hPbuffer, iVideoBuffer);
+            public static int ReleaseVideoImageNV(IntPtr hPbuffer, VideoOutputBuffer iVideoBuffer) => WGLPointers._wglReleaseVideoImageNV_fnptr(hPbuffer, (int)iVideoBuffer);
             
             /// <summary> <b>[requires: WGL_NV_swap_group]</b>   </summary>
             public static int ResetFrameCountNV(IntPtr hDC) => WGLPointers._wglResetFrameCountNV_fnptr(hDC);
             
             /// <summary> <b>[requires: WGL_NV_video_output]</b>   </summary>
-            public static int SendPbufferToVideoNV(IntPtr hPbuffer, int iBufferType, ulong* pulCounterPbuffer, int bBlock) => WGLPointers._wglSendPbufferToVideoNV_fnptr(hPbuffer, iBufferType, pulCounterPbuffer, bBlock);
+            public static int SendPbufferToVideoNV(IntPtr hPbuffer, VideoOutputBufferType iBufferType, ulong* pulCounterPbuffer, int bBlock) => WGLPointers._wglSendPbufferToVideoNV_fnptr(hPbuffer, (int)iBufferType, pulCounterPbuffer, bBlock);
             
         }
         /// <summary>OML extensions.</summary>
@@ -461,7 +461,7 @@ namespace OpenTK.Graphics.Wgl
             public static long SwapBuffersMscOML(IntPtr hdc, long target_msc, long divisor, long remainder) => WGLPointers._wglSwapBuffersMscOML_fnptr(hdc, target_msc, divisor, remainder);
             
             /// <summary> <b>[requires: WGL_OML_sync_control]</b>   </summary>
-            public static long SwapLayerBuffersMscOML(IntPtr hdc, int fuPlanes, long target_msc, long divisor, long remainder) => WGLPointers._wglSwapLayerBuffersMscOML_fnptr(hdc, fuPlanes, target_msc, divisor, remainder);
+            public static long SwapLayerBuffersMscOML(IntPtr hdc, Plane fuPlanes, long target_msc, long divisor, long remainder) => WGLPointers._wglSwapLayerBuffersMscOML_fnptr(hdc, (int)fuPlanes, target_msc, divisor, remainder);
             
             /// <summary> <b>[requires: WGL_OML_sync_control]</b>   </summary>
             public static int WaitForMscOML(IntPtr hdc, long target_msc, long divisor, long remainder, long* ust, long* msc, long* sbc) => WGLPointers._wglWaitForMscOML_fnptr(hdc, target_msc, divisor, remainder, ust, msc, sbc);

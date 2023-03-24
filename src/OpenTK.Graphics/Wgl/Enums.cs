@@ -307,6 +307,254 @@ namespace OpenTK.Graphics.Wgl
         SwapUnderlay14 = 536870912,
         SwapUnderlay15 = 1073741824,
     }
+    ///<summary>Used in <see cref="GL.ARB.CreateBufferRegionARB" /></summary>
+    [Flags]
+    public enum BufferRegionType : uint
+    {
+        FrontColorBufferBitArb = 1,
+        BackColorBufferBitArb = 2,
+        DepthBufferBitArb = 4,
+        StencilBufferBitArb = 8,
+    }
+    ///<summary>Used in <see cref="GL.I3D.CreateImageBufferI3D" /></summary>
+    [Flags]
+    public enum ImageBufferFlags : uint
+    {
+        ImageBufferMinAccessI3d = 1,
+        ImageBufferLockI3d = 2,
+    }
+    ///<summary>Used in <see cref="GL.NV.DXObjectAccessNV" />, <see cref="GL.NV.DXRegisterObjectNV" /></summary>
+    [Flags]
+    public enum DXInteropAccessMask : uint
+    {
+        AccessReadOnlyNv = 0,
+        AccessReadWriteNv = 1,
+        AccessWriteDiscardNv = 2,
+    }
+    ///<summary>Used in <see cref="GL.AMD.GetGPUInfoAMD" /></summary>
+    public enum GPUProperty : uint
+    {
+        GpuVendorAmd = 7936,
+        GpuRendererStringAmd = 7937,
+        GpuOpenglVersionStringAmd = 7938,
+        GpuRamAmd = 8611,
+        GpuClockAmd = 8612,
+        GpuNumPipesAmd = 8613,
+        GpuNumSimdAmd = 8614,
+        GpuNumRbAmd = 8615,
+        GpuNumSpiAmd = 8616,
+    }
+    public enum PixelFormatAttribute : uint
+    {
+        NumberPixelFormatsArb = 8192,
+        NumberPixelFormatsExt = 8192,
+        DrawToWindowArb = 8193,
+        DrawToWindowExt = 8193,
+        DrawToBitmapArb = 8194,
+        DrawToBitmapExt = 8194,
+        AccelerationArb = 8195,
+        AccelerationExt = 8195,
+        NeedPaletteArb = 8196,
+        NeedPaletteExt = 8196,
+        NeedSystemPaletteArb = 8197,
+        NeedSystemPaletteExt = 8197,
+        SwapLayerBuffersArb = 8198,
+        SwapLayerBuffersExt = 8198,
+        SwapMethodArb = 8199,
+        SwapMethodExt = 8199,
+        NumberOverlaysArb = 8200,
+        NumberOverlaysExt = 8200,
+        NumberUnderlaysArb = 8201,
+        NumberUnderlaysExt = 8201,
+        TransparentArb = 8202,
+        TransparentExt = 8202,
+        ShareDepthArb = 8204,
+        ShareDepthExt = 8204,
+        ShareStencilArb = 8205,
+        ShareStencilExt = 8205,
+        ShareAccumArb = 8206,
+        ShareAccumExt = 8206,
+        SupportGdiArb = 8207,
+        SupportGdiExt = 8207,
+        SupportOpenglArb = 8208,
+        SupportOpenglExt = 8208,
+        DoubleBufferArb = 8209,
+        DoubleBufferExt = 8209,
+        StereoArb = 8210,
+        StereoExt = 8210,
+        PixelTypeArb = 8211,
+        PixelTypeExt = 8211,
+        ColorBitsArb = 8212,
+        ColorBitsExt = 8212,
+        RedBitsArb = 8213,
+        RedBitsExt = 8213,
+        RedShiftArb = 8214,
+        RedShiftExt = 8214,
+        GreenBitsArb = 8215,
+        GreenBitsExt = 8215,
+        GreenShiftArb = 8216,
+        GreenShiftExt = 8216,
+        BlueBitsArb = 8217,
+        BlueBitsExt = 8217,
+        BlueShiftArb = 8218,
+        BlueShiftExt = 8218,
+        AlphaBitsArb = 8219,
+        AlphaBitsExt = 8219,
+        AlphaShiftArb = 8220,
+        AlphaShiftExt = 8220,
+        AccumBitsArb = 8221,
+        AccumBitsExt = 8221,
+        AccumRedBitsArb = 8222,
+        AccumRedBitsExt = 8222,
+        AccumGreenBitsArb = 8223,
+        AccumGreenBitsExt = 8223,
+        AccumBlueBitsArb = 8224,
+        AccumBlueBitsExt = 8224,
+        AccumAlphaBitsArb = 8225,
+        AccumAlphaBitsExt = 8225,
+        DepthBitsArb = 8226,
+        DepthBitsExt = 8226,
+        StencilBitsArb = 8227,
+        StencilBitsExt = 8227,
+        AuxBuffersArb = 8228,
+        AuxBuffersExt = 8228,
+        DrawToPbufferArb = 8237,
+        DrawToPbufferExt = 8237,
+        TransparentRedValueArb = 8247,
+        TransparentGreenValueArb = 8248,
+        TransparentBlueValueArb = 8249,
+        TransparentAlphaValueArb = 8250,
+        TransparentIndexValueArb = 8251,
+    }
+    public enum AccelerationType : uint
+    {
+        NoAccelerationArb = 8229,
+        NoAccelerationExt = 8229,
+        GenericAccelerationArb = 8230,
+        GenericAccelerationExt = 8230,
+        FullAccelerationArb = 8231,
+        FullAccelerationExt = 8231,
+    }
+    public enum SwapMethod : uint
+    {
+        SwapExchangeArb = 8232,
+        SwapExchangeExt = 8232,
+        SwapCopyArb = 8233,
+        SwapCopyExt = 8233,
+        SwapUndefinedArb = 8234,
+        SwapUndefinedExt = 8234,
+    }
+    public enum PixelType : uint
+    {
+        TypeRgbaArb = 8235,
+        TypeRgbaExt = 8235,
+        TypeColorindexArb = 8236,
+        TypeColorindexExt = 8236,
+    }
+    ///<summary>Used in <see cref="GL.ARB.QueryPbufferARB" />, <see cref="GL.EXT.QueryPbufferEXT" /></summary>
+    public enum PBufferAttribute : uint
+    {
+        PbufferWidthArb = 8244,
+        PbufferWidthExt = 8244,
+        PbufferHeightArb = 8245,
+        PbufferHeightExt = 8245,
+        PbufferLostArb = 8246,
+        TextureFormatArb = 8306,
+        TextureTargetArb = 8307,
+        MipmapTextureArb = 8308,
+        MipmapLevelArb = 8315,
+        CubeMapFaceArb = 8316,
+    }
+    ///<summary>Used in <see cref="GL.I3D.SetGammaTableParametersI3D" /></summary>
+    public enum GammaTableAttrbiute : uint
+    {
+        GammaTableSizeI3d = 8270,
+        GammaExcludeDesktopI3d = 8271,
+    }
+    ///<summary>Used in <see cref="GL.I3D.GetDigitalVideoParametersI3D" />, <see cref="GL.I3D.SetDigitalVideoParametersI3D" /></summary>
+    public enum DigitalVideoAttribute : uint
+    {
+        DigitalVideoCursorAlphaFramebufferI3d = 8272,
+        DigitalVideoCursorAlphaValueI3d = 8273,
+        DigitalVideoCursorIncludedI3d = 8274,
+        DigitalVideoGammaCorrectedI3d = 8275,
+    }
+    ///<summary>Used in <see cref="GL._3DL.SetStereoEmitterState3DL" /></summary>
+    public enum StereoEmitterState : uint
+    {
+        StereoEmitterEnable3dl = 8277,
+        StereoEmitterDisable3dl = 8278,
+        StereoPolarityNormal3dl = 8279,
+        StereoPolarityInvert3dl = 8280,
+    }
+    public enum PBufferTextureFormat : uint
+    {
+        TextureRgbArb = 8309,
+        TextureRgbaArb = 8310,
+        NoTextureArb = 8311,
+    }
+    public enum PBufferTextureTarget : uint
+    {
+        NoTextureArb = 8311,
+        TextureCubeMapArb = 8312,
+        Texture1dArb = 8313,
+        Texture2dArb = 8314,
+    }
+    public enum PBufferCubeMapFace : uint
+    {
+        TextureCubeMapPositiveXArb = 8317,
+        TextureCubeMapNegativeXArb = 8318,
+        TextureCubeMapPositiveYArb = 8319,
+        TextureCubeMapNegativeYArb = 8320,
+        TextureCubeMapPositiveZArb = 8321,
+        TextureCubeMapNegativeZArb = 8322,
+    }
+    ///<summary>Used in <see cref="GL.ARB.BindTexImageARB" />, <see cref="GL.ARB.ReleaseTexImageARB" /></summary>
+    public enum ColorBuffer : uint
+    {
+        FrontLeftArb = 8323,
+        FrontRightArb = 8324,
+        BackLeftArb = 8325,
+        BackRightArb = 8326,
+        Aux0Arb = 8327,
+        Aux1Arb = 8328,
+        Aux2Arb = 8329,
+        Aux3Arb = 8330,
+        Aux4Arb = 8331,
+        Aux5Arb = 8332,
+        Aux6Arb = 8333,
+        Aux7Arb = 8334,
+        Aux8Arb = 8335,
+        Aux9Arb = 8336,
+    }
+    ///<summary>Used in <see cref="GL.NV.BindVideoImageNV" />, <see cref="GL.NV.ReleaseVideoImageNV" /></summary>
+    public enum VideoOutputBuffer : uint
+    {
+        VideoOutColorNv = 8387,
+        VideoOutAlphaNv = 8388,
+        VideoOutDepthNv = 8389,
+        VideoOutColorAndAlphaNv = 8390,
+        VideoOutColorAndDepthNv = 8391,
+    }
+    ///<summary>Used in <see cref="GL.NV.SendPbufferToVideoNV" /></summary>
+    public enum VideoOutputBufferType : uint
+    {
+        VideoOutFrame = 8392,
+        VideoOutField1 = 8393,
+        VideoOutField2 = 8394,
+        VideoOutStackedFields12 = 8395,
+        VideoOutStackedFields21 = 8396,
+    }
+    ///<summary>Used in <see cref="GL.NV.QueryVideoCaptureDeviceNV" /></summary>
+    public enum VideoCaptureDeviceAttribute : uint
+    {
+        UniqueIdNv = 8398,
+    }
+    ///<summary>Used in <see cref="GL.NV.QueryCurrentContextNV" /></summary>
+    public enum ContextAttribute : uint
+    {
+        NumVideoCaptureSlotsNv = 8399,
+    }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning restore CS0419 // Ambiguous reference in cref attribute
