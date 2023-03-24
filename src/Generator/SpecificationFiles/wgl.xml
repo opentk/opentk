@@ -72,37 +72,37 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
          sometimes reused for other purposes -->
 
     <enums namespace="WGLLayerPlaneMask" type="bitmask" vendor="MS">
-        <enum value="0x00000001"  name="WGL_SWAP_MAIN_PLANE"/>
-        <enum value="0x00000002"  name="WGL_SWAP_OVERLAY1"/>
-        <enum value="0x00000004"  name="WGL_SWAP_OVERLAY2"/>
-        <enum value="0x00000008"  name="WGL_SWAP_OVERLAY3"/>
-        <enum value="0x00000010"  name="WGL_SWAP_OVERLAY4"/>
-        <enum value="0x00000020"  name="WGL_SWAP_OVERLAY5"/>
-        <enum value="0x00000040"  name="WGL_SWAP_OVERLAY6"/>
-        <enum value="0x00000080"  name="WGL_SWAP_OVERLAY7"/>
-        <enum value="0x00000100"  name="WGL_SWAP_OVERLAY8"/>
-        <enum value="0x00000200"  name="WGL_SWAP_OVERLAY9"/>
-        <enum value="0x00000400"  name="WGL_SWAP_OVERLAY10"/>
-        <enum value="0x00000800"  name="WGL_SWAP_OVERLAY11"/>
-        <enum value="0x00001000"  name="WGL_SWAP_OVERLAY12"/>
-        <enum value="0x00002000"  name="WGL_SWAP_OVERLAY13"/>
-        <enum value="0x00004000"  name="WGL_SWAP_OVERLAY14"/>
-        <enum value="0x00008000"  name="WGL_SWAP_OVERLAY15"/>
-        <enum value="0x00010000"  name="WGL_SWAP_UNDERLAY1"/>
-        <enum value="0x00020000"  name="WGL_SWAP_UNDERLAY2"/>
-        <enum value="0x00040000"  name="WGL_SWAP_UNDERLAY3"/>
-        <enum value="0x00080000"  name="WGL_SWAP_UNDERLAY4"/>
-        <enum value="0x00100000"  name="WGL_SWAP_UNDERLAY5"/>
-        <enum value="0x00200000"  name="WGL_SWAP_UNDERLAY6"/>
-        <enum value="0x00400000"  name="WGL_SWAP_UNDERLAY7"/>
-        <enum value="0x00800000"  name="WGL_SWAP_UNDERLAY8"/>
-        <enum value="0x01000000"  name="WGL_SWAP_UNDERLAY9"/>
-        <enum value="0x02000000"  name="WGL_SWAP_UNDERLAY10"/>
-        <enum value="0x04000000"  name="WGL_SWAP_UNDERLAY11"/>
-        <enum value="0x08000000"  name="WGL_SWAP_UNDERLAY12"/>
-        <enum value="0x10000000"  name="WGL_SWAP_UNDERLAY13"/>
-        <enum value="0x20000000"  name="WGL_SWAP_UNDERLAY14"/>
-        <enum value="0x40000000"  name="WGL_SWAP_UNDERLAY15"/>
+        <enum value="0x00000001"  name="WGL_SWAP_MAIN_PLANE" group="Plane"/>
+        <enum value="0x00000002"  name="WGL_SWAP_OVERLAY1" group="Plane"/>
+        <enum value="0x00000004"  name="WGL_SWAP_OVERLAY2" group="Plane"/>
+        <enum value="0x00000008"  name="WGL_SWAP_OVERLAY3" group="Plane"/>
+        <enum value="0x00000010"  name="WGL_SWAP_OVERLAY4" group="Plane"/>
+        <enum value="0x00000020"  name="WGL_SWAP_OVERLAY5" group="Plane"/>
+        <enum value="0x00000040"  name="WGL_SWAP_OVERLAY6" group="Plane"/>
+        <enum value="0x00000080"  name="WGL_SWAP_OVERLAY7" group="Plane"/>
+        <enum value="0x00000100"  name="WGL_SWAP_OVERLAY8" group="Plane"/>
+        <enum value="0x00000200"  name="WGL_SWAP_OVERLAY9" group="Plane"/>
+        <enum value="0x00000400"  name="WGL_SWAP_OVERLAY10" group="Plane"/>
+        <enum value="0x00000800"  name="WGL_SWAP_OVERLAY11" group="Plane"/>
+        <enum value="0x00001000"  name="WGL_SWAP_OVERLAY12" group="Plane"/>
+        <enum value="0x00002000"  name="WGL_SWAP_OVERLAY13" group="Plane"/>
+        <enum value="0x00004000"  name="WGL_SWAP_OVERLAY14" group="Plane"/>
+        <enum value="0x00008000"  name="WGL_SWAP_OVERLAY15" group="Plane"/>
+        <enum value="0x00010000"  name="WGL_SWAP_UNDERLAY1" group="Plane"/>
+        <enum value="0x00020000"  name="WGL_SWAP_UNDERLAY2" group="Plane"/>
+        <enum value="0x00040000"  name="WGL_SWAP_UNDERLAY3" group="Plane"/>
+        <enum value="0x00080000"  name="WGL_SWAP_UNDERLAY4" group="Plane"/>
+        <enum value="0x00100000"  name="WGL_SWAP_UNDERLAY5" group="Plane"/>
+        <enum value="0x00200000"  name="WGL_SWAP_UNDERLAY6" group="Plane"/>
+        <enum value="0x00400000"  name="WGL_SWAP_UNDERLAY7" group="Plane"/>
+        <enum value="0x00800000"  name="WGL_SWAP_UNDERLAY8" group="Plane"/>
+        <enum value="0x01000000"  name="WGL_SWAP_UNDERLAY9" group="Plane"/>
+        <enum value="0x02000000"  name="WGL_SWAP_UNDERLAY10" group="Plane"/>
+        <enum value="0x04000000"  name="WGL_SWAP_UNDERLAY11" group="Plane"/>
+        <enum value="0x08000000"  name="WGL_SWAP_UNDERLAY12" group="Plane"/>
+        <enum value="0x10000000"  name="WGL_SWAP_UNDERLAY13" group="Plane"/>
+        <enum value="0x20000000"  name="WGL_SWAP_UNDERLAY14" group="Plane"/>
+        <enum value="0x40000000"  name="WGL_SWAP_UNDERLAY15" group="Plane"/>
     </enums>
 
     <enums namespace="WGLColorBufferMask" type="bitmask" vendor="ARB">
@@ -404,7 +404,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x20D0"        name="ERROR_INCOMPATIBLE_AFFINITY_MASKS_NV"/>
         <enum value="0x20D1"        name="ERROR_MISSING_AFFINITY_MASK_NV"/>
             <unused start="0x20D2" end="0x20EF"/>
-        <enum value="0x20F0"        name="WGL_NUM_VIDEO_SLOTS_NV"/>
+        <enum value="0x20F0"        name="WGL_NUM_VIDEO_SLOTS_NV" group="ContextAttribute"/>
             <unused start="0x20F1" end="0x219F"/>
     </enums>
 
@@ -1314,37 +1314,37 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <require>
             <enum name="WGL_FONT_LINES" group="FontFormat"/>
             <enum name="WGL_FONT_POLYGONS" group="FontFormat"/>
-            <enum name="WGL_SWAP_MAIN_PLANE" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY1" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY2" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY3" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY4" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY5" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY6" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY7" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY8" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY9" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY10" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY11" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY12" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY13" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY14" group="Plane"/>
-            <enum name="WGL_SWAP_OVERLAY15" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY1" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY2" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY3" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY4" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY5" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY6" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY7" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY8" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY9" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY10" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY11" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY12" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY13" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY14" group="Plane"/>
-            <enum name="WGL_SWAP_UNDERLAY15" group="Plane"/>
+            <enum name="WGL_SWAP_MAIN_PLANE"/>
+            <enum name="WGL_SWAP_OVERLAY1"/>
+            <enum name="WGL_SWAP_OVERLAY2"/>
+            <enum name="WGL_SWAP_OVERLAY3"/>
+            <enum name="WGL_SWAP_OVERLAY4"/>
+            <enum name="WGL_SWAP_OVERLAY5"/>
+            <enum name="WGL_SWAP_OVERLAY6"/>
+            <enum name="WGL_SWAP_OVERLAY7"/>
+            <enum name="WGL_SWAP_OVERLAY8"/>
+            <enum name="WGL_SWAP_OVERLAY9"/>
+            <enum name="WGL_SWAP_OVERLAY10"/>
+            <enum name="WGL_SWAP_OVERLAY11"/>
+            <enum name="WGL_SWAP_OVERLAY12"/>
+            <enum name="WGL_SWAP_OVERLAY13"/>
+            <enum name="WGL_SWAP_OVERLAY14"/>
+            <enum name="WGL_SWAP_OVERLAY15"/>
+            <enum name="WGL_SWAP_UNDERLAY1"/>
+            <enum name="WGL_SWAP_UNDERLAY2"/>
+            <enum name="WGL_SWAP_UNDERLAY3"/>
+            <enum name="WGL_SWAP_UNDERLAY4"/>
+            <enum name="WGL_SWAP_UNDERLAY5"/>
+            <enum name="WGL_SWAP_UNDERLAY6"/>
+            <enum name="WGL_SWAP_UNDERLAY7"/>
+            <enum name="WGL_SWAP_UNDERLAY8"/>
+            <enum name="WGL_SWAP_UNDERLAY9"/>
+            <enum name="WGL_SWAP_UNDERLAY10"/>
+            <enum name="WGL_SWAP_UNDERLAY11"/>
+            <enum name="WGL_SWAP_UNDERLAY12"/>
+            <enum name="WGL_SWAP_UNDERLAY13"/>
+            <enum name="WGL_SWAP_UNDERLAY14"/>
+            <enum name="WGL_SWAP_UNDERLAY15"/>
             <command name="ChoosePixelFormat"/>
             <command name="DescribePixelFormat"/>
             <command name="GetEnhMetaFilePixelFormat"/>
@@ -1898,7 +1898,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         </extension>
         <extension name="WGL_NV_present_video" supported="wgl">
             <require>
-                <enum name="WGL_NUM_VIDEO_SLOTS_NV" group="ContextAttribute"/>
+                <enum name="WGL_NUM_VIDEO_SLOTS_NV"/>
                 <command name="wglEnumerateVideoDevicesNV"/>
                 <command name="wglBindVideoDeviceNV"/>
                 <command name="wglQueryCurrentContextNV"/>

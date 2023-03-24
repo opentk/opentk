@@ -307,6 +307,42 @@ namespace OpenTK.Graphics.Wgl
         SwapUnderlay14 = 536870912,
         SwapUnderlay15 = 1073741824,
     }
+    ///<summary>Used in <see cref="GL.SwapLayerBuffers" />, <see cref="GL.OML.SwapLayerBuffersMscOML" /></summary>
+    [Flags]
+    public enum Plane : uint
+    {
+        SwapMainPlane = 1,
+        SwapOverlay1 = 2,
+        SwapOverlay2 = 4,
+        SwapOverlay3 = 8,
+        SwapOverlay4 = 16,
+        SwapOverlay5 = 32,
+        SwapOverlay6 = 64,
+        SwapOverlay7 = 128,
+        SwapOverlay8 = 256,
+        SwapOverlay9 = 512,
+        SwapOverlay10 = 1024,
+        SwapOverlay11 = 2048,
+        SwapOverlay12 = 4096,
+        SwapOverlay13 = 8192,
+        SwapOverlay14 = 16384,
+        SwapOverlay15 = 32768,
+        SwapUnderlay1 = 65536,
+        SwapUnderlay2 = 131072,
+        SwapUnderlay3 = 262144,
+        SwapUnderlay4 = 524288,
+        SwapUnderlay5 = 1048576,
+        SwapUnderlay6 = 2097152,
+        SwapUnderlay7 = 4194304,
+        SwapUnderlay8 = 8388608,
+        SwapUnderlay9 = 16777216,
+        SwapUnderlay10 = 33554432,
+        SwapUnderlay11 = 67108864,
+        SwapUnderlay12 = 134217728,
+        SwapUnderlay13 = 268435456,
+        SwapUnderlay14 = 536870912,
+        SwapUnderlay15 = 1073741824,
+    }
     ///<summary>Used in <see cref="GL.ARB.CreateBufferRegionARB" /></summary>
     [Flags]
     public enum BufferRegionType : uint
@@ -554,6 +590,7 @@ namespace OpenTK.Graphics.Wgl
     public enum ContextAttribute : uint
     {
         NumVideoCaptureSlotsNv = 8399,
+        NumVideoSlotsNv = 8432,
     }
 #pragma warning restore CA1069 // Enums values should not be duplicated
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
