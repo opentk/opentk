@@ -367,6 +367,12 @@ namespace OpenTK.Graphics.Wgl
         AccessReadWriteNv = 1,
         AccessWriteDiscardNv = 2,
     }
+    ///<summary>Used in <see cref="GL.UseFontOutlines" />, <see cref="GL.UseFontOutlinesA" />, <see cref="GL.UseFontOutlinesW" /></summary>
+    public enum FontFormat : uint
+    {
+        FontLines = 0,
+        FontPolygons = 1,
+    }
     ///<summary>Used in <see cref="GL.AMD.GetGPUInfoAMD" /></summary>
     public enum GPUProperty : uint
     {

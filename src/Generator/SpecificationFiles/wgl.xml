@@ -147,8 +147,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
 
     <enums namespace="WGL" group="SpecialNumbers" vendor="MS">
         <enum value="0"           name="WGL_CONTEXT_RELEASE_BEHAVIOR_NONE_ARB"/>
-        <enum value="0"           name="WGL_FONT_LINES"/>
-        <enum value="1"           name="WGL_FONT_POLYGONS"/>
+        <enum value="0"           name="WGL_FONT_LINES" group="FontFormat"/>
+        <enum value="1"           name="WGL_FONT_POLYGONS" group="FontFormat"/>
     </enums>
 
     <enums namespace="WGL" start="0x1F00" end="0x1F02" vendor="ARB" comment="Unclear why AMD used values in this range">
@@ -1312,8 +1312,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
     <!-- SECTION: WGL API interface definitions. -->
     <feature api="wgl" name="WGL_VERSION_1_0" number="1.0">
         <require>
-            <enum name="WGL_FONT_LINES" group="FontFormat"/>
-            <enum name="WGL_FONT_POLYGONS" group="FontFormat"/>
+            <enum name="WGL_FONT_LINES"/>
+            <enum name="WGL_FONT_POLYGONS"/>
             <enum name="WGL_SWAP_MAIN_PLANE"/>
             <enum name="WGL_SWAP_OVERLAY1"/>
             <enum name="WGL_SWAP_OVERLAY2"/>
