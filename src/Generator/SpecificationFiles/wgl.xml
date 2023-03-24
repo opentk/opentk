@@ -291,8 +291,8 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <enum value="0x204B"        name="WGL_GENLOCK_SOURCE_EDGE_RISING_I3D"/>
         <enum value="0x204C"        name="WGL_GENLOCK_SOURCE_EDGE_BOTH_I3D"/>
             <unused start="0x204D"/>
-        <enum value="0x204E"        name="WGL_GAMMA_TABLE_SIZE_I3D" group="GammaTableAttrbiute"/>
-        <enum value="0x204F"        name="WGL_GAMMA_EXCLUDE_DESKTOP_I3D" group="GammaTableAttrbiute"/>
+        <enum value="0x204E"        name="WGL_GAMMA_TABLE_SIZE_I3D" group="GammaTableAttribute"/>
+        <enum value="0x204F"        name="WGL_GAMMA_EXCLUDE_DESKTOP_I3D" group="GammaTableAttribute"/>
         <enum value="0x2050"        name="WGL_DIGITAL_VIDEO_CURSOR_ALPHA_FRAMEBUFFER_I3D" group="DigitalVideoAttribute"/>
         <enum value="0x2051"        name="WGL_DIGITAL_VIDEO_CURSOR_ALPHA_VALUE_I3D" group="DigitalVideoAttribute"/>
         <enum value="0x2052"        name="WGL_DIGITAL_VIDEO_CURSOR_INCLUDED_I3D" group="DigitalVideoAttribute"/>
@@ -1185,7 +1185,7 @@ Registry at https://github.com/KhronosGroup/OpenGL-Registry
         <command>
             <proto><ptype>BOOL</ptype> <name>wglSetGammaTableParametersI3D</name></proto>
             <param><ptype>HDC</ptype> <name>hDC</name></param>
-            <param group="GammaTableAttrbiute">int <name>iAttribute</name></param>
+            <param group="GammaTableAttribute">int <name>iAttribute</name></param>
             <param len="1">const int *<name>piValue</name></param>
         </command>
         <command>

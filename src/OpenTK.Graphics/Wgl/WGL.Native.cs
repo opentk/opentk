@@ -330,7 +330,7 @@ namespace OpenTK.Graphics.Wgl
             public static int SetGammaTableI3D(IntPtr hDC, int iEntries, ushort* puRed, ushort* puGreen, ushort* puBlue) => WGLPointers._wglSetGammaTableI3D_fnptr(hDC, iEntries, puRed, puGreen, puBlue);
             
             /// <summary> <b>[requires: WGL_I3D_gamma]</b>   </summary>
-            public static int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttrbiute iAttribute, int* piValue) => WGLPointers._wglSetGammaTableParametersI3D_fnptr(hDC, (int)iAttribute, piValue);
+            public static int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, int* piValue) => WGLPointers._wglSetGammaTableParametersI3D_fnptr(hDC, (int)iAttribute, piValue);
             
         }
         /// <summary>NV extensions.</summary>

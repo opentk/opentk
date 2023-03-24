@@ -1300,8 +1300,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttrbiute, int*)"/>
-            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttrbiute iAttribute, ReadOnlySpan<int> piValue)
+            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, ReadOnlySpan<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1310,8 +1310,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttrbiute, int*)"/>
-            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttrbiute iAttribute, int[] piValue)
+            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1320,8 +1320,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttrbiute, int*)"/>
-            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttrbiute iAttribute, in int piValue)
+            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, in int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)

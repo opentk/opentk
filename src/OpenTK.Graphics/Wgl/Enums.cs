@@ -507,8 +507,8 @@ namespace OpenTK.Graphics.Wgl
         MipmapLevelArb = 8315,
         CubeMapFaceArb = 8316,
     }
-    ///<summary>Used in <see cref="GL.I3D.SetGammaTableParametersI3D" /></summary>
-    public enum GammaTableAttrbiute : uint
+    ///<summary>Used in <see cref="GL.I3D.GetGammaTableParametersI3D" />, <see cref="GL.I3D.SetGammaTableParametersI3D" /></summary>
+    public enum GammaTableAttribute : uint
     {
         GammaTableSizeI3d = 8270,
         GammaExcludeDesktopI3d = 8271,
