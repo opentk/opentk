@@ -65,7 +65,7 @@ namespace OpenTK.Graphics.Wgl
         public static int SwapBuffers(IntPtr hdc) => WGLPointers._SwapBuffers_fnptr(hdc);
         
         /// <summary> <b>[requires: v1.0]</b>   </summary>
-        public static int SwapLayerBuffers(IntPtr hdc, Plane fuFlags) => WGLPointers._wglSwapLayerBuffers_fnptr(hdc, (uint)fuFlags);
+        public static int SwapLayerBuffers(IntPtr hdc, WGLLayerPlaneMask fuFlags) => WGLPointers._wglSwapLayerBuffers_fnptr(hdc, (uint)fuFlags);
         
         /// <summary> <b>[requires: v1.0]</b>   </summary>
         public static int UseFontBitmaps(IntPtr hDC, uint first, uint count, uint listBase) => WGLPointers._wglUseFontBitmaps_fnptr(hDC, first, count, listBase);
@@ -117,7 +117,7 @@ namespace OpenTK.Graphics.Wgl
             public static uint GetGPUIDsAMD(uint maxCount, uint* ids) => WGLPointers._wglGetGPUIDsAMD_fnptr(maxCount, ids);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b>   </summary>
-            public static int GetGPUInfoAMD(uint id, GPUProperty property, All dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, (int)property, (uint)dataType, size, data);
+            public static int GetGPUInfoAMD(uint id, GPUPropertyAMD property, All dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, (int)property, (uint)dataType, size, data);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b>   </summary>
             public static int MakeAssociatedContextCurrentAMD(IntPtr hglrc) => WGLPointers._wglMakeAssociatedContextCurrentAMD_fnptr(hglrc);
@@ -133,7 +133,7 @@ namespace OpenTK.Graphics.Wgl
             public static int ChoosePixelFormatARB(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats) => WGLPointers._wglChoosePixelFormatARB_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
             
             /// <summary> <b>[requires: WGL_ARB_buffer_region]</b>   </summary>
-            public static IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, BufferRegionType uType) => WGLPointers._wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, (uint)uType);
+            public static IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, WGLColorBufferMask uType) => WGLPointers._wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, (uint)uType);
             
             /// <summary> <b>[requires: WGL_ARB_create_context]</b>   </summary>
             public static IntPtr CreateContextAttribsARB(IntPtr hDC, IntPtr hShareContext, int* attribList) => WGLPointers._wglCreateContextAttribsARB_fnptr(hDC, hShareContext, attribList);
@@ -249,7 +249,7 @@ namespace OpenTK.Graphics.Wgl
             public static int BeginFrameTrackingI3D() => WGLPointers._wglBeginFrameTrackingI3D_fnptr();
             
             /// <summary> <b>[requires: WGL_I3D_image_buffer]</b>   </summary>
-            public static IntPtr CreateImageBufferI3D(IntPtr hDC, uint dwSize, ImageBufferFlags uFlags) => WGLPointers._wglCreateImageBufferI3D_fnptr(hDC, dwSize, (uint)uFlags);
+            public static IntPtr CreateImageBufferI3D(IntPtr hDC, uint dwSize, WGLImageBufferMaskI3D uFlags) => WGLPointers._wglCreateImageBufferI3D_fnptr(hDC, dwSize, (uint)uFlags);
             
             /// <summary> <b>[requires: WGL_I3D_image_buffer]</b>   </summary>
             public static int DestroyImageBufferI3D(IntPtr hDC, IntPtr pAddress) => WGLPointers._wglDestroyImageBufferI3D_fnptr(hDC, pAddress);
@@ -370,13 +370,13 @@ namespace OpenTK.Graphics.Wgl
             public static int DXLockObjectsNV(IntPtr hDevice, int count, IntPtr* hObjects) => WGLPointers._wglDXLockObjectsNV_fnptr(hDevice, count, hObjects);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
-            public static int DXObjectAccessNV(IntPtr hObject, DXInteropAccessMask access) => WGLPointers._wglDXObjectAccessNV_fnptr(hObject, (uint)access);
+            public static int DXObjectAccessNV(IntPtr hObject, WGLDXInteropMaskNV access) => WGLPointers._wglDXObjectAccessNV_fnptr(hObject, (uint)access);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
             public static IntPtr DXOpenDeviceNV(void* dxDevice) => WGLPointers._wglDXOpenDeviceNV_fnptr(dxDevice);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
-            public static IntPtr DXRegisterObjectNV(IntPtr hDevice, void* dxObject, uint name, All type, DXInteropAccessMask access) => WGLPointers._wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, (uint)type, (uint)access);
+            public static IntPtr DXRegisterObjectNV(IntPtr hDevice, void* dxObject, uint name, All type, WGLDXInteropMaskNV access) => WGLPointers._wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, (uint)type, (uint)access);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b>   </summary>
             public static int DXSetResourceShareHandleNV(void* dxObject, IntPtr shareHandle) => WGLPointers._wglDXSetResourceShareHandleNV_fnptr(dxObject, shareHandle);
@@ -461,7 +461,7 @@ namespace OpenTK.Graphics.Wgl
             public static long SwapBuffersMscOML(IntPtr hdc, long target_msc, long divisor, long remainder) => WGLPointers._wglSwapBuffersMscOML_fnptr(hdc, target_msc, divisor, remainder);
             
             /// <summary> <b>[requires: WGL_OML_sync_control]</b>   </summary>
-            public static long SwapLayerBuffersMscOML(IntPtr hdc, Plane fuPlanes, long target_msc, long divisor, long remainder) => WGLPointers._wglSwapLayerBuffersMscOML_fnptr(hdc, (int)fuPlanes, target_msc, divisor, remainder);
+            public static long SwapLayerBuffersMscOML(IntPtr hdc, WGLLayerPlaneMask fuPlanes, long target_msc, long divisor, long remainder) => WGLPointers._wglSwapLayerBuffersMscOML_fnptr(hdc, (int)fuPlanes, target_msc, divisor, remainder);
             
             /// <summary> <b>[requires: WGL_OML_sync_control]</b>   </summary>
             public static int WaitForMscOML(IntPtr hdc, long target_msc, long divisor, long remainder, long* ust, long* msc, long* sbc) => WGLPointers._wglWaitForMscOML_fnptr(hdc, target_msc, divisor, remainder, ust, msc, sbc);

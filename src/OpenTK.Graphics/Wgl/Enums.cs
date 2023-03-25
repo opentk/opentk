@@ -309,7 +309,7 @@ namespace OpenTK.Graphics.Wgl
     }
     ///<summary>Used in <see cref="GL.SwapLayerBuffers" />, <see cref="GL.OML.SwapLayerBuffersMscOML" /></summary>
     [Flags]
-    public enum Plane : uint
+    public enum WGLLayerPlaneMask : uint
     {
         SwapMainPlane = 1,
         SwapOverlay1 = 2,
@@ -345,23 +345,39 @@ namespace OpenTK.Graphics.Wgl
     }
     ///<summary>Used in <see cref="GL.ARB.CreateBufferRegionARB" /></summary>
     [Flags]
-    public enum BufferRegionType : uint
+    public enum WGLColorBufferMask : uint
     {
         FrontColorBufferBitArb = 1,
         BackColorBufferBitArb = 2,
         DepthBufferBitArb = 4,
         StencilBufferBitArb = 8,
     }
+    [Flags]
+    public enum WGLContextFlagsMask : uint
+    {
+        ContextDebugBitArb = 1,
+        ContextForwardCompatibleBitArb = 2,
+        ContextRobustAccessBitArb = 4,
+        ContextResetIsolationBitArb = 8,
+    }
+    [Flags]
+    public enum WGLContextProfileMask : uint
+    {
+        ContextCoreProfileBitArb = 1,
+        ContextCompatibilityProfileBitArb = 2,
+        ContextEs2ProfileBitExt = 4,
+        ContextEsProfileBitExt = 4,
+    }
     ///<summary>Used in <see cref="GL.I3D.CreateImageBufferI3D" /></summary>
     [Flags]
-    public enum ImageBufferFlags : uint
+    public enum WGLImageBufferMaskI3D : uint
     {
         ImageBufferMinAccessI3d = 1,
         ImageBufferLockI3d = 2,
     }
     ///<summary>Used in <see cref="GL.NV.DXObjectAccessNV" />, <see cref="GL.NV.DXRegisterObjectNV" /></summary>
     [Flags]
-    public enum DXInteropAccessMask : uint
+    public enum WGLDXInteropMaskNV : uint
     {
         AccessReadOnlyNv = 0,
         AccessReadWriteNv = 1,
@@ -374,7 +390,7 @@ namespace OpenTK.Graphics.Wgl
         FontPolygons = 1,
     }
     ///<summary>Used in <see cref="GL.AMD.GetGPUInfoAMD" /></summary>
-    public enum GPUProperty : uint
+    public enum GPUPropertyAMD : uint
     {
         GpuVendorAmd = 7936,
         GpuRendererStringAmd = 7937,
