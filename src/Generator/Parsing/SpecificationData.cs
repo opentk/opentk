@@ -309,6 +309,7 @@ namespace Generator.Parsing
         GLX_Screen,
         GLX_Status,
         GLX_Window,
+        GLX_EXTFuncPtr,
         GLX_XVisualInfo,
         GLX_DMbuffer,
         GLX_DMparams,

@@ -614,7 +614,7 @@ namespace Generator.Parsing
                     "GLXPixmap" => PrimitiveType.GLX_GLXPixmap,
                     "GLXDrawable" => PrimitiveType.GLX_GLXDrawable,
                     "GLXWindow" => PrimitiveType.GLX_GLXWindow,
-                    "__GLXextFuncPtr" => PrimitiveType.Void, // FIXME!
+                    "__GLXextFuncPtr" => PrimitiveType.GLX_EXTFuncPtr, // FIXME!
                     "GLXPbuffer" => PrimitiveType.GLX_GLXPbuffer,
                     "GLXVideoCaptureDeviceNV" => PrimitiveType.GLX_VideoCaptureDeviceNV,
                     "GLXVideoDeviceNV" => PrimitiveType.GLX_VideoDeviceNV,
