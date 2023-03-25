@@ -21,7 +21,7 @@ namespace Generator
                     GeneratorSettings.Settings = new GeneratorSettings()
                     {
                         FunctionPrefix = "gl",
-                        EnumPrefix = "GL_",
+                        EnumPrefixes = new List<string> { "GL_" },
                         ExtensionPrefix = "GL_",
                     };
 
@@ -49,7 +49,7 @@ namespace Generator
                     GeneratorSettings.Settings = new GeneratorSettings()
                     {
                         FunctionPrefix = "wgl",
-                        EnumPrefix = "WGL_",
+                        EnumPrefixes = new List<string> { "WGL_" },
                         ExtensionPrefix = "WGL_",
                         FunctionsWithoutPrefix = new HashSet<string>()
                         {
@@ -89,6 +89,53 @@ namespace Generator
 
                     st.Stop();
                     Logger.Info($"Generated WGL bindings in {st.ElapsedMilliseconds} ms");
+                }
+
+                st.Restart();
+                {
+                    GeneratorSettings.Settings = new GeneratorSettings()
+                    {
+                        FunctionPrefix = "glX",
+                        EnumPrefixes = new List<string> { "GLX_", "__GLX_" },
+                        ExtensionPrefix = "GLX_",
+                        FunctionsWithoutPrefix = new HashSet<string>()
+                        {
+                            /*"ChoosePixelFormat",
+                            "DescribePixelFormat",
+                            "GetPixelFormat",
+                            "SetPixelFormat",
+                            "SwapBuffers",
+                            "GetEnhMetaFilePixelFormat",*/
+                        },
+                        EnumsWithoutPrefix = new HashSet<string>()
+                        {
+                            /*"ERROR_INVALID_VERSION_ARB",
+                            "ERROR_INVALID_PROFILE_ARB",
+                            "ERROR_INVALID_PIXEL_TYPE_ARB",
+                            "ERROR_INCOMPATIBLE_DEVICE_CONTEXTS_ARB",
+                            "ERROR_INVALID_PIXEL_TYPE_EXT",
+                            "ERROR_INCOMPATIBLE_AFFINITY_MASKS_NV",
+                            "ERROR_MISSING_AFFINITY_MASK_NV",*/
+                        }
+                    };
+
+                    // Reading the gl.xml file and parsing it into data structures.
+                    using FileStream specificationStream = Reader.ReadGLXSpecFromGithub();
+                    Specification2 specification = SpecificationParser.Parse(specificationStream);
+
+                    // FIXME: Does there exist wgl documentation?
+                    // Read the documentation folders and parse it into data structures.
+                    //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
+                    Documentation documentation = new Documentation(new Dictionary<OutputApi, VersionDocumentation>());
+
+                    // Processer/overloading
+                    OutputData outputSpec = Processor.ProcessSpec2(specification, documentation);
+
+                    // Writing cs files.
+                    Writer.Write(outputSpec, "GLX");
+
+                    st.Stop();
+                    Logger.Info($"Generated GLX bindings in {st.ElapsedMilliseconds} ms");
                 }
             }
         }

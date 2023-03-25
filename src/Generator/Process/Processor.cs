@@ -369,7 +369,9 @@ namespace Generator.Process
                             }
                         }
 
-                        
+                        // FIXME! This is a big hack!
+                        // We don't want to process this "enum" as it is a string.
+                        if (enumRef.EnumName == "GLX_EXTENSION_NAME") continue;
 
                         if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
                         {
@@ -1092,6 +1094,43 @@ namespace Generator.Process
                             PrimitiveType.WGL_PIXELFORMATDESCRIPTOR => new CSStruct("PixelFormatDescriptor", bt.Constant),
                             PrimitiveType.WGL_GPU_DEVICE => new CSStruct("_GPU_DEVICE", bt.Constant),
                             PrimitiveType.WGL_PGPU_DEVICE => new CSPointer(new CSStruct("_GPU_DEVICE", false), bt.Constant),
+
+                            PrimitiveType.GLX_Colormap => new CSStructPrimitive("GLXColormap", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
+                            PrimitiveType.GLX_Display => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_Font => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_Pixmap => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_Screen => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_Status => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_Window => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_XVisualInfo => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_DMbuffer => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_DMparams => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_VLNode => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_VLPath => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_VLServer => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_FBConfigID => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_FBConfig => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_ContextID => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_Context => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXPixmap => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXDrawable => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXWindow => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXPbuffer => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_VideoCaptureDeviceNV => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_VideoDeviceNV => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_VideoSourceSGIX => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_FBConfigIDSGIX => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_FBConfigSGIX => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXPbufferSGIX => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXPbufferClobberEvent => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXBufferSwapComplete => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXEvent => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXStereoNotifyEventEXT => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXBufferClobberEventSGIX => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXHyperpipeNetworkSGIX => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXHyperpipeConfigSGIX => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXPipeRect => new CSVoid(bt.Constant),
+                            PrimitiveType.GLX_GLXPipeRectLimits => new CSVoid(bt.Constant),
 
                             PrimitiveType.Invalid => throw new Exception(),
                             _ => throw new Exception(),

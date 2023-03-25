@@ -591,6 +591,49 @@ namespace Generator.Parsing
                     "long" => PrimitiveType.Long,
                     "unsigned long" => PrimitiveType.Ulong,
 
+                    // GLX types
+
+                    "Bool" => PrimitiveType.Bool8,
+                    "Colormap" => PrimitiveType.GLX_Colormap,
+                    "Display" => PrimitiveType.GLX_Display,
+                    "Font" => PrimitiveType.GLX_Font,
+                    "Pixmap" => PrimitiveType.GLX_Pixmap,
+                    "Screen" => PrimitiveType.GLX_Screen,
+                    "Status" => PrimitiveType.GLX_Status, // FIXME: Maybe type?
+                    "Window" => PrimitiveType.GLX_Window,
+                    "XVisualInfo" => PrimitiveType.GLX_XVisualInfo,
+                    "DMbuffer" => PrimitiveType.GLX_DMbuffer,
+                    "DMparams" => PrimitiveType.GLX_DMparams,
+                    "VLNode" => PrimitiveType.GLX_VLNode,
+                    "VLPath" => PrimitiveType.GLX_VLPath,
+                    "VLServer" => PrimitiveType.GLX_VLServer,
+                    "GLXFBConfigID" => PrimitiveType.GLX_FBConfigID,
+                    "GLXFBConfig" => PrimitiveType.GLX_FBConfig,
+                    "GLXContextID" => PrimitiveType.GLX_ContextID,
+                    "GLXContext" => PrimitiveType.GLX_Context,
+                    "GLXPixmap" => PrimitiveType.GLX_GLXPixmap,
+                    "GLXDrawable" => PrimitiveType.GLX_GLXDrawable,
+                    "GLXWindow" => PrimitiveType.GLX_GLXWindow,
+                    "__GLXextFuncPtr" => PrimitiveType.Void, // FIXME!
+                    "GLXPbuffer" => PrimitiveType.GLX_GLXPbuffer,
+                    "GLXVideoCaptureDeviceNV" => PrimitiveType.GLX_VideoCaptureDeviceNV,
+                    "GLXVideoDeviceNV" => PrimitiveType.GLX_VideoDeviceNV,
+                    "GLXVideoSourceSGIX" => PrimitiveType.GLX_VideoSourceSGIX,
+                    "GLXFBConfigIDSGIX" => PrimitiveType.GLX_FBConfigIDSGIX,
+                    "GLXFBConfigSGIX" => PrimitiveType.GLX_FBConfigSGIX,
+                    "GLXPbufferSGIX" => PrimitiveType.GLX_GLXPbufferSGIX,
+                    "GLXPbufferClobberEvent" => PrimitiveType.GLX_GLXPbufferClobberEvent,
+                    "GLXBufferSwapComplete" => PrimitiveType.GLX_GLXBufferSwapComplete,
+                    "GLXEvent" => PrimitiveType.GLX_GLXEvent,
+                    "GLXStereoNotifyEventEXT" => PrimitiveType.GLX_GLXStereoNotifyEventEXT,
+                    "GLXBufferClobberEventSGIX" => PrimitiveType.GLX_GLXBufferClobberEventSGIX,
+                    "GLXHyperpipeNetworkSGIX" => PrimitiveType.GLX_GLXHyperpipeNetworkSGIX,
+                    "GLXHyperpipeConfigSGIX" => PrimitiveType.GLX_GLXHyperpipeConfigSGIX,
+                    "GLXPipeRect" => PrimitiveType.GLX_GLXPipeRect,
+                    "GLXPipeRectLimits" => PrimitiveType.GLX_GLXPipeRectLimits,
+
+                    "int32_t" => PrimitiveType.Int,
+                    "int64_t" => PrimitiveType.Long,
 
                     _ => PrimitiveType.Invalid,
                 };
@@ -613,6 +656,12 @@ namespace Generator.Parsing
             {
                 string? @namespace = enums.Attribute("namespace")?.Value;
                 if (@namespace == null) throw new Exception($"Enums entry '{enums}' is missing a namespace attribute.");
+
+                // GLX.xml abuses enum tags to define strings,
+                // to work around this we skip all enums tags marked
+                // with the GLXStrings namespace
+                // - 2023-03-25 NogginBops
+                if (@namespace == "GLXStrings") continue;
 
                 string[] group = enums.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
@@ -867,6 +916,7 @@ namespace Generator.Parsing
             "glcore" => GLAPI.GLCore,
 
             "wgl" => GLAPI.WGL,
+            "glx" => GLAPI.GLX,
 
             _ => GLAPI.Invalid,
         };

@@ -86,12 +86,15 @@ namespace Generator.Utility
             if (GeneratorSettings.Settings.EnumsWithoutPrefix.Contains(@enum))
                 return @enum;
 
-            string prefix = GeneratorSettings.Settings.EnumPrefix;
+            foreach (var prefix in GeneratorSettings.Settings.EnumPrefixes)
+            {
+                if (@enum.StartsWith(prefix))
+                {
+                    return @enum[prefix.Length..];
+                }
+            }
 
-            if (!@enum.StartsWith(prefix))
-                throw new System.Exception($"'{@enum}' dosen't start with '{prefix}'");
-
-            return @enum[prefix.Length..];
+            throw new System.Exception($"'{@enum}' dosen't start with any of the valid prefixes '{string.Join(", ", GeneratorSettings.Settings.EnumPrefixes)}'");
         }
 
         public static string RemoveExtensionPrefix(string extension)

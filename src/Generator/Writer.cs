@@ -38,6 +38,7 @@ namespace Generator.Writing
                     OutputApi.GLES1 => "OpenGLES1",
                     OutputApi.GLES2 => "OpenGLES2",
                     OutputApi.WGL => "Wgl",
+                    OutputApi.GLX => "Glx",
                     _ => throw new Exception($"This is not a valid output API ({api.Api})"),
                 };
                 string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));

@@ -12,7 +12,7 @@ namespace Generator
 
         public string ExtensionPrefix { get; init; }
         public string FunctionPrefix { get; init; }
-        public string EnumPrefix { get; init; }
+        public List<string> EnumPrefixes { get; init; }
         public HashSet<string> FunctionsWithoutPrefix { get; init; }
         public HashSet<string> EnumsWithoutPrefix { get; init; }
 
@@ -20,7 +20,7 @@ namespace Generator
         {
             ExtensionPrefix = "GL_";
             FunctionPrefix = "gl";
-            EnumPrefix = "GL_";
+            EnumPrefixes = new List<string> { "GL_" };
             FunctionsWithoutPrefix = new HashSet<string>();
             EnumsWithoutPrefix = new HashSet<string>();
         }
