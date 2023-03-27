@@ -38,6 +38,8 @@ namespace LocalTestProject
 
         static IShellComponent shellComp = new ShellComponent();
 
+        static JoystickComponent joystickComponent = new JoystickComponent();
+
         static CursorHandle CursorHandle;
         static CursorHandle ImageCursorHandle;
         static CursorHandle FileCursorHandle;
@@ -58,6 +60,7 @@ namespace LocalTestProject
             dispComp.Logger = logger;
             keyboardComp.Logger = logger;
             clipComp.Logger = logger;
+            joystickComponent.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
@@ -72,6 +75,8 @@ namespace LocalTestProject
             clipComp.Initialize(PalComponents.Clipboard);
 
             shellComp.Initialize(PalComponents.Shell);
+
+            joystickComponent.Initialize(PalComponents.Joystick);
 
             Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout()}");
 

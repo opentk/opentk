@@ -832,34 +832,196 @@ namespace OpenTK.Platform.Native.Windows
 
     internal enum CLSCTX : uint
     {
-        CLSCTX_INPROC_SERVER = 0x1,
-        CLSCTX_INPROC_HANDLER = 0x2,
-        CLSCTX_LOCAL_SERVER = 0x4,
-        CLSCTX_INPROC_SERVER16 = 0x8,
-        CLSCTX_REMOTE_SERVER = 0x10,
-        CLSCTX_INPROC_HANDLER16 = 0x20,
-        CLSCTX_RESERVED1 = 0x40,
-        CLSCTX_RESERVED2 = 0x80,
-        CLSCTX_RESERVED3 = 0x100,
-        CLSCTX_RESERVED4 = 0x200,
-        CLSCTX_NO_CODE_DOWNLOAD = 0x400,
-        CLSCTX_RESERVED5 = 0x800,
-        CLSCTX_NO_CUSTOM_MARSHAL = 0x1000,
-        CLSCTX_ENABLE_CODE_DOWNLOAD = 0x2000,
-        CLSCTX_NO_FAILURE_LOG = 0x4000,
-        CLSCTX_DISABLE_AAA = 0x8000,
-        CLSCTX_ENABLE_AAA = 0x10000,
-        CLSCTX_FROM_DEFAULT_CONTEXT = 0x20000,
-        CLSCTX_ACTIVATE_X86_SERVER = 0x40000,
-        CLSCTX_ACTIVATE_32_BIT_SERVER,
-        CLSCTX_ACTIVATE_64_BIT_SERVER = 0x80000,
-        CLSCTX_ENABLE_CLOAKING = 0x100000,
-        CLSCTX_APPCONTAINER = 0x400000,
-        CLSCTX_ACTIVATE_AAA_AS_IU = 0x800000,
-        CLSCTX_RESERVED6 = 0x1000000,
-        CLSCTX_ACTIVATE_ARM32_SERVER = 0x2000000,
-        CLSCTX_ALLOW_LOWER_TRUST_REGISTRATION,
-        CLSCTX_PS_DLL = 0x80000000,
+        INPROC_SERVER = 0x1,
+        INPROC_HANDLER = 0x2,
+        LOCAL_SERVER = 0x4,
+        INPROC_SERVER16 = 0x8,
+        REMOTE_SERVER = 0x10,
+        INPROC_HANDLER16 = 0x20,
+        RESERVED1 = 0x40,
+        RESERVED2 = 0x80,
+        RESERVED3 = 0x100,
+        RESERVED4 = 0x200,
+        NO_CODE_DOWNLOAD = 0x400,
+        RESERVED5 = 0x800,
+        NO_CUSTOM_MARSHAL = 0x1000,
+        ENABLE_CODE_DOWNLOAD = 0x2000,
+        NO_FAILURE_LOG = 0x4000,
+        DISABLE_AAA = 0x8000,
+        ENABLE_AAA = 0x10000,
+        FROM_DEFAULT_CONTEXT = 0x20000,
+        ACTIVATE_X86_SERVER = 0x40000,
+        ACTIVATE_32_BIT_SERVER,
+        ACTIVATE_64_BIT_SERVER = 0x80000,
+        ENABLE_CLOAKING = 0x100000,
+        APPCONTAINER = 0x400000,
+        ACTIVATE_AAA_AS_IU = 0x800000,
+        RESERVED6 = 0x1000000,
+        ACTIVATE_ARM32_SERVER = 0x2000000,
+        ALLOW_LOWER_TRUST_REGISTRATION,
+        PS_DLL = 0x80000000,
+    }
+
+    [Flags]
+    internal enum COINIT : uint
+    {
+        ApartmentThreaded = 0x2,
+        MultiThreaded,
+        DisableOLE1DDE = 0x4,
+        SpeedOverMemory = 0x8,
+    }
+
+    internal enum DevType : uint
+    {
+        ClassAll = 0,
+        ClassDevice = 1,
+        ClassPointer = 2,
+        ClassKeyboard = 3,
+        ClassGameCtrl = 4,
+
+        Device = 0x11,
+        Mouse = 0x12,
+        Keyboard = 0x13,
+        Joystick = 0x14,
+        Gamepad = 0x15,
+        Driving = 0x16,
+        Flight = 0x17,
+        FirstPerson = 0x18,
+        DeviceCTRL = 0x19,
+        ScreenPointer = 0x1A,
+        Remote = 0x1B,
+        Supplemental = 0x1C,
+    }
+
+    internal enum DIEDFL : uint
+    {
+        AllDevices = 0x00000000,
+        AttachedOnly = 0x00000001,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x0500
+        /// </summary>
+        ForceFeedback = 0x00000100,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x050a
+        /// </summary>
+        IncludeAliases = 0x00010000,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x050a
+        /// </summary>
+        IncludePhantoms = 0x00020000,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x0800
+        /// </summary>
+        IncludeHidden = 0x00040000,
+    }
+
+    [Flags]
+    internal enum DIDC : uint
+    {
+        /// <summary>
+        /// The device is physically attached to the user's computer.
+        /// </summary>
+        Attached = 0x00000001,
+
+        /// <summary>
+        /// At least one object on the device is polled, rather than interrupt-driven.
+        /// For these objects, the application must explicitly call the IDirectInputDevice8 Interface method to obtain data.
+        /// HID devices can contain a mixture of polled and nonpolled objects.
+        /// </summary>
+        PolledDevice = 0x00000002,
+
+        /// <summary>
+        /// If this flag is set, the data is coming from a user mode device interface,
+        /// such as a Human Interface Device (human interface device),
+        /// or by some other ring 3 means.
+        /// If it is not set, the data is coming directly from a kernel mode driver.
+        /// </summary>
+        Emulated = 0x00000004,
+
+        /// <summary>
+        /// At least one object in the current data format is polled, rather than interrupt-driven.
+        /// For these objects, the application must explicitly call the IDirectInputDevice8 Interface method to obtain data.
+        /// </summary>
+        PolledDataFormat = 0x00000008,
+
+        /// <summary>
+        /// The device supports force feedback.
+        /// </summary>
+        ForceFeedback = 0x00000100,
+
+        /// <summary>
+        /// The force-feedback system supports the attack parameter for at least one effect.
+        /// If the device does not support attack, the attack level and attack time members of the DIENVELOPE structure are ignored by the device.
+        ///
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual effect sets the DIEFT_FFATTACK flag if attack is supported for that effect.
+        /// </summary>
+        FFAttack = 0x00000200,
+
+        /// <summary>
+        /// The force-feedback system supports the fade parameter for at least one effect.
+        /// If the device does not support fade, the fade level and fade time members of the DIENVELOPE structure are ignored by the device.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual effect sets the DIEFT_FFFADE flag if fade is supported for that effect.
+        /// </summary>
+        FFFade = 0x00000400,
+
+        /// <summary>
+        /// The force-feedback system supports the saturation of condition effects for at least one condition.
+        /// If the device does not support saturation, the force generated by a condition is limited
+        /// only by the maximum force that the device can generate.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual condition sets the
+        /// DIEFT_SATURATION flag if saturation is supported for that condition.
+        /// </summary>
+        Saturation = 0x00000800,
+
+        /// <summary>
+        /// The force-feedback system supports two coefficient values for conditions
+        /// (one for the positive displacement of the axis and one for the negative displacement of the axis) for at least one condition.
+        /// If the device does not support both coefficients, the negative coefficient in the DICONDITION structure is ignored.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual condition sets the
+        /// DIEFT_POSNEGCOEFFICIENTS flag if separate positive and negative coefficients are supported for that condition.
+        /// </summary>
+        PosNegCoefficients = 0x00001000,
+
+        /// <summary>
+        /// The force-feedback system supports a maximum saturation for both positive and negative force output for at least one condition.
+        /// If the device does not support both saturation values, the negative saturation in the DICONDITION structure is ignored.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual condition sets the
+        /// DIEFT_POSNEGSATURATION flag if separate positive and negative saturation are supported for that condition.
+        /// </summary>
+        PosNegSaturation = 0x00002000,
+
+        /// <summary>
+        /// The device supports deadband for at least one force-feedback condition.
+        /// </summary>
+        Deadband = 0x00004000,
+
+        /// <summary>
+        /// The force-feedback system supports the start delay parameter for at least one effect.
+        /// If the device does not support start delays, the dwStartDelay member of the DIEFFECT structure is ignored.
+        /// </summary>
+        StartDelay = 0x00008000,
+
+        /// <summary>
+        /// The device is a duplicate of another DirectInput device.
+        /// Alias devices are by default not enumerated by IDirectInput8::EnumDevices.
+        /// </summary>
+        Alias = 0x00010000,
+
+        /// <summary>
+        /// Placeholder.
+        /// Phantom devices are by default not enumerated by IDirectInput8::EnumDevices.
+        /// </summary>
+        Phanton = 0x00020000,
+
+        /// <summary>
+        /// Fictitious device created by a device driver so that it can generate keyboard and mouse events.
+        /// Such devices are not normally enumerated by IDirectInput8::EnumDevices or configured by IDirectInput8::ConfigureDevices.
+        /// </summary>
+        Hidden = 0x00040000,
     }
 
     [Flags]
@@ -3900,9 +4062,9 @@ namespace OpenTK.Platform.Native.Windows
     internal enum RegValueType : uint
     {
         /* Maybe we want to include these?
-            #define REG_RESOURCE_LIST           ( 8 )   // Resource list in the resource map
-            #define REG_FULL_RESOURCE_DESCRIPTOR ( 9 )  // Resource list in the hardware description
-            #define REG_RESOURCE_REQUIREMENTS_LIST ( 10 )
+#define REG_RESOURCE_LIST           ( 8 )   // Resource list in the resource map
+#define REG_FULL_RESOURCE_DESCRIPTOR ( 9 )  // Resource list in the hardware description
+#define REG_RESOURCE_REQUIREMENTS_LIST ( 10 )
         */
 
         /// <summary>

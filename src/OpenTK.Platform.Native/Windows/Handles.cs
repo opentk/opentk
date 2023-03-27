@@ -138,4 +138,18 @@ namespace OpenTK.Platform.Native.Windows
 
         public int DpiY { get; set; }
     }
+
+    internal class Joystick : JoystickHandle
+    {
+        public DirectInput.IDirectInputDevice8 Device;
+        public Guid InstanceGuid;
+        public string InstanceName;
+
+        public Joystick(DirectInput.IDirectInputDevice8 device, Guid instanceGuid, string instanceName)
+        {
+            Device = device;
+            InstanceGuid = instanceGuid;
+            InstanceName = instanceName;
+        }
+    }
 }

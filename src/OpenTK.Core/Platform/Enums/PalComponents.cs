@@ -92,5 +92,10 @@ namespace OpenTK.Core.Platform
         /// Abstraction layer provides the shell component.
         /// </summary>
         Shell = 1 << 11,
+
+        /// <summary>
+        /// Abstraction layer provides the joystick component.
+        /// </summary>
+        Joystick = 1 << 12,
     }
 }
