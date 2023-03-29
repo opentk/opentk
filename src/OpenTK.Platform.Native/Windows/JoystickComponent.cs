@@ -16,24 +16,34 @@ using static OpenTK.Platform.Native.Windows.XInput;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    /// <summary>
+    /// Win32 implementation of <see cref="IJoystickComponent"/>.
+    /// </summary>
     public class JoystickComponent : IJoystickComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32JoystickComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Joystick;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
         private DirectInput.IDirectInput8 DirectInput8;
 
         private List<Joystick> Joysticks = new List<Joystick>();
 
+        /// <inheritdoc/>
         public float LeftDeadzone => 7849 / 32767.0f;
 
+        /// <inheritdoc/>
         public float RightDeadzone => 8689 / 32767.0f;
 
+        /// <inheritdoc/>
         public float TriggerThreshold => 30 / 255.0f;
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Joystick)
@@ -107,6 +117,7 @@ namespace OpenTK.Platform.Native.Windows
             return result == ERROR_SUCCESS;
         }
 
+        /// <inheritdoc/>
         public JoystickHandle Open(int deviceIndex)
         {
             // FIXME: Reference count??
@@ -114,6 +125,7 @@ namespace OpenTK.Platform.Native.Windows
             return Joysticks[deviceIndex];
         }
 
+        /// <inheritdoc/>
         public void Close(JoystickHandle handle)
         {
             Joystick joystick = handle.As<Joystick>(this);
@@ -138,6 +150,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public Guid GetGuid(JoystickHandle handle)
         {
             Joystick joystick = handle.As<Joystick>(this);
@@ -145,6 +158,7 @@ namespace OpenTK.Platform.Native.Windows
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public unsafe string GetName(JoystickHandle handle)
         {
             Joystick joystick = handle.As<Joystick>(this);
@@ -173,6 +187,7 @@ namespace OpenTK.Platform.Native.Windows
             return capabilities.dwFlags.HasFlag(DIDC.ForceFeedback);
         }
 
+        /// <inheritdoc/>
         public float GetAxis(JoystickHandle handle, JoystickAxis axis)
         {
             Joystick joystick = handle.As<Joystick>(this);
@@ -214,6 +229,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool GetButton(JoystickHandle handle, JoystickButton button)
         {
             Joystick joystick = handle.As<Joystick>(this);
@@ -249,6 +265,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool SetVibration(JoystickHandle handle, float lowFrequenzyIntensity, float highFrequenzyIntensity)
         {
             Joystick joystick = handle.As<Joystick>(this);

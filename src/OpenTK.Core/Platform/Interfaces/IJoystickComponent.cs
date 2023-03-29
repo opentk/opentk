@@ -11,6 +11,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IJoystickComponent : IPalComponent
     {
+        // FIXME: Add some way to query if joysticks are connected or not?
+
         /// <summary>
         /// The recommended deadzone value for the left analog stick.
         /// </summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -1033,16 +1034,31 @@ namespace OpenTK.Platform.Native.Windows
               int /* LCID */ Locale,
               [Out] StringBuilder lpName,
               int cchName,
-              int dwFlags
-            );
+              int dwFlags);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int GetLocaleInfoEx(
               StringBuilder lpLocaleName,
               LCType LCType,
               [Out] StringBuilder? lpLCData,
-              int cchData
-            );
+              int cchData);
+
+        internal struct DEV_BROADCAST_DEVICEINTERFACE
+        {
+            public uint dbcc_size;
+            public DBTDevType dbcc_devicetype;
+            public uint dbcc_reserved;
+            public Guid dbcc_classguid;
+            public fixed char dbcc_name[1];
+        }
+
+        public static readonly Guid GUID_DEVINTERFACE_HID = new Guid(0x4D1E55B2, 0xF16F, 0x11CF, 0x88, 0xCB, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HDEVNOTIFY */ RegisterDeviceNotification(
+              IntPtr /* HANDLE */ hRecipient,
+              DEV_BROADCAST_DEVICEINTERFACE NotificationFilter,
+              DEVICE_NOTIFY Flags);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

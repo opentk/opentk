@@ -105,6 +105,13 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.DispatchMessage(in lpMsg);
             }
 
+            Win32.DEV_BROADCAST_DEVICEINTERFACE dbh = default;
+            dbh.dbcc_size = (uint)Marshal.SizeOf<Win32.DEV_BROADCAST_DEVICEINTERFACE>();
+            dbh.dbcc_devicetype = DBTDevType.DeviceInterface;
+            dbh.dbcc_classguid = Win32.GUID_DEVINTERFACE_HID;
+
+            Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+
             // FIXME: Should we set SetThreadExecutionState?
             // Long cutscenes could make the screensaver to kick in and we probably don't want that.
             // Should this be a user setting? Tools should allow the screensaver while games shouldn't.
@@ -676,7 +683,19 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.DEVICECHANGE:
                     {
-                        Console.WriteLine($"{uMsg} {(DBT)wParam}");
+                        DBT dbt = (DBT)wParam;
+                        switch (dbt)
+                        {
+                            case DBT.DeviceArrival:
+                            case DBT.DeviceRemoveComplete:
+                                // FIXME: Implement joystick events!
+                                // JoystickComponent.UpdateJoysticks();
+                                break;
+                            default:
+                                break;
+                        }
+
+                        Console.WriteLine($"{uMsg} {(DBT)wParam} 0x{wParam.ToUInt64():X16}");
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.DISPLAYCHANGE:
