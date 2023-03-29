@@ -282,7 +282,7 @@ namespace OpenTK.Platform.Native.Windows
             return result == ERROR_SUCCESS;
         }
 
-        public bool TryGetBatteryInfo(JoystickHandle handle, [NotNullWhen(true)] out GamepadBatteryInfo? batteryInfo)
+        public bool TryGetBatteryInfo(JoystickHandle handle, out GamepadBatteryInfo batteryInfo)
         {
             Joystick joystick = handle.As<Joystick>(this);
 

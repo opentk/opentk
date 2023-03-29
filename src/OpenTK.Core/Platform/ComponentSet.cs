@@ -990,6 +990,12 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
+        SystemMemoryInfo IShellComponent.GetSystemMemoryInformation()
+        {
+            return _shellComponent!.GetSystemMemoryInformation();
+        }
+
+        /// <inheritdoc/>
         float IJoystickComponent.LeftDeadzone => _joystickComponent!.LeftDeadzone;
 
         /// <inheritdoc/>
@@ -1041,7 +1047,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        public bool TryGetBatteryInfo(JoystickHandle handle, [NotNullWhen(true)] out GamepadBatteryInfo? batteryInfo)
+        bool IJoystickComponent.TryGetBatteryInfo(JoystickHandle handle, out GamepadBatteryInfo batteryInfo)
         {
             return _joystickComponent!.TryGetBatteryInfo(handle, out batteryInfo);
         }

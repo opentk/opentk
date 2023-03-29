@@ -36,5 +36,11 @@ namespace OpenTK.Core.Platform
         // FIXME: Should we report a theme name?
         // or another function for that?
         ThemeInfo GetPreferredTheme();
+
+        /// <summary>
+        /// Gets information about the memory of the device and the current status.
+        /// </summary>
+        /// <returns>The memory info.</returns>
+        SystemMemoryInfo GetSystemMemoryInformation();
     }
 }

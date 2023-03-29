@@ -110,12 +110,9 @@ namespace OpenTK.Platform.Native.Windows
             dbh.dbcc_devicetype = DBTDevType.DeviceInterface;
             dbh.dbcc_classguid = Win32.GUID_DEVINTERFACE_HID;
 
-            Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
-
-            // FIXME: Should we set SetThreadExecutionState?
-            // Long cutscenes could make the screensaver to kick in and we probably don't want that.
-            // Should this be a user setting? Tools should allow the screensaver while games shouldn't.
-            // Doesn't really fit into any of the current components.
+            // FIXME: Unregister from these when we close the application?
+            IntPtr devNotifHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+            IntPtr resumeSuspendNotifHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
         }
 
         /// <inheritdoc/>
@@ -861,35 +858,37 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WM.POWERBROADCAST:
                     {
-                        PBT power = (PBT)wParam;
-
-                        HWND h = HWndDict[hWnd];
-
-                        Console.WriteLine("WM_POWERBROADCAST");
-
-                        if (power == PBT.APMSuspend)
+                        // We are only interested in the messages sent to the helper window that we registered to get notifications.
+                        // FIXME: Do we really care about only getting one suspend/resume event?
+                        // - 2023-03-29 NogginBops
+                        if (hWnd == HelperHWnd)
                         {
-                            EventQueue.Raise(h, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
+                            PBT power = (PBT)wParam;
+
+                            Console.WriteLine($"WM_POWERBROADCAST {power} {hWnd} {HelperHWnd}");
+
+                            if (power == PBT.APMSuspend)
+                            {
+                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
+                            }
+                            else if (power == PBT.APMResumeAutomatic)
+                            {
+                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
+                            }
+
+                            return (IntPtr)1;
                         }
-                        else if (power == PBT.APMResumeAutomatic)
+                        else
                         {
-                            EventQueue.Raise(h, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                         }
-
-                        return (IntPtr)1;
-                    }
-                case WM.POWER:
-                    {
-                        Console.WriteLine("WN_POWER");
-
-                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.INPUTLANGCHANGE:
                     {
                         // This might not always work
                         // See: http://archives.miloush.net/michkap/archive/2006/05/16/598980.html
                         // For now we don't do anything about this as we assume TSF is not going to
-                        // be activated for our windows
+                        // be activated for our windows.
                         // - Noggin_bops 2023-03-09
 
                         HWND h = HWndDict[hWnd];

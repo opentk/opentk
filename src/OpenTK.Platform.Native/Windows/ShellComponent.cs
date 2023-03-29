@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
+    /// <summary>
+    /// Win32 implementation of <see cref="IShellComponent"/>.
+    /// </summary>
     public class ShellComponent : IShellComponent
     {
         /// <inheritdoc/>
@@ -179,6 +182,30 @@ namespace OpenTK.Platform.Native.Windows
             if (result != 0)
             {
                 Logger?.LogWarning($"Failed to set caption color. DwmSetWindowAttribute(DWMWA_CAPTION_COLOR) failed with HRESULT: 0x{result:X}");
+            }
+        }
+
+        /// <summary>
+        /// Gets information about the memory of the device and the current status.
+        /// </summary>
+        /// <returns>The memory info.</returns>
+        public unsafe SystemMemoryInfo GetSystemMemoryInformation()
+        {
+            Win32.MEMORYSTATUSEX status = default;
+            status.dwLength = (uint)sizeof(Win32.MEMORYSTATUSEX);
+
+            bool success = Win32.GlobalMemoryStatusEx(ref status);
+            if (success)
+            {
+                SystemMemoryInfo info;
+                info.TotalPhysicalMemory = status.ullTotalPhys;
+                info.AvailablePhysicalMemory = status.ullAvailPhys;
+
+                return info;
+            }
+            else
+            {
+                throw new Win32Exception();
             }
         }
 

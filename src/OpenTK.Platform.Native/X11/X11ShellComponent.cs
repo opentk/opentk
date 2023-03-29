@@ -124,5 +124,10 @@ namespace OpenTK.Platform.Native.X11
 
             throw new NotImplementedException();
         }
+
+        public SystemMemoryInfo GetSystemMemoryInformation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

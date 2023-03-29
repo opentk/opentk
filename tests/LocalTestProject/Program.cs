@@ -252,7 +252,7 @@ namespace LocalTestProject
             {
                 var handle = joystickComponent.Open(i);
 
-                if (joystickComponent.TryGetBatteryInfo(handle, out GamepadBatteryInfo? info))
+                if (joystickComponent.TryGetBatteryInfo(handle, out GamepadBatteryInfo info))
                 {
                     Console.WriteLine($"Gamepad {i+1}: {info.BatteryType} {info.ChargeLevel*100}%");
                 }
@@ -624,6 +624,19 @@ namespace LocalTestProject
                 WindowModeChangeEventArgs modeChange = (WindowModeChangeEventArgs)args;
 
                 Console.WriteLine($"Window '{windowComp.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
+            }
+            else if (type == PlatformEventType.PowerStateChange)
+            {
+                PowerStateChangeEventArgs powerStateChange = (PowerStateChangeEventArgs)args;
+
+                if (powerStateChange.GoingToSleep)
+                {
+                    Console.WriteLine("Going to sleep?");
+                }
+                else
+                {
+                    Console.WriteLine("Waking up?");
+                }
             }
         }
 

@@ -65,6 +65,6 @@ namespace OpenTK.Core.Platform
 
         public bool SetVibration(JoystickHandle handle, float lowFreqIntensity, float highFreqIntensity);
 
-        public bool TryGetBatteryInfo(JoystickHandle handle, [NotNullWhen(true)] out GamepadBatteryInfo? batteryInfo);
+        public bool TryGetBatteryInfo(JoystickHandle handle, out GamepadBatteryInfo batteryInfo);
     }
 }
