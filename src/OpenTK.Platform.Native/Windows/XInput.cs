@@ -153,7 +153,7 @@ namespace OpenTK.Platform.Native.Windows
         public static extern uint XInputGetAudioDeviceIds( uint dwUserIndex, ushort* pRenderDeviceId, uint* pRenderCount, ushort* pCaptureDeviceId, uint* pCaptureCount);
 
         [DllImport("xinput1_4")]
-        public static extern uint XInputGetBatteryInformation(uint dwUserIndex, byte devType, XINPUT_BATTERY_INFORMATION* pBatteryInformation);
+        public static extern uint XInputGetBatteryInformation(uint dwUserIndex, DeviceType devType, out XINPUT_BATTERY_INFORMATION pBatteryInformation);
 
         [DllImport("xinput1_4")]
         public static extern uint XInputGetKeystroke(uint dwUserIndex, uint dwReserved, XINPUT_KEYSTROKE* pKeystroke);

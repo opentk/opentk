@@ -5,6 +5,7 @@ using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Runtime.ExceptionServices;
@@ -279,6 +280,51 @@ namespace OpenTK.Platform.Native.Windows
 
             uint result = XInputSetState((uint)joystick.XInputIndex, in vibration);
             return result == ERROR_SUCCESS;
+        }
+
+        public bool TryGetBatteryInfo(JoystickHandle handle, [NotNullWhen(true)] out GamepadBatteryInfo? batteryInfo)
+        {
+            Joystick joystick = handle.As<Joystick>(this);
+
+            uint result = XInputGetBatteryInformation((uint)joystick.XInputIndex, DeviceType.Gamepad, out XINPUT_BATTERY_INFORMATION batteryInformation);
+            if (result == ERROR_SUCCESS)
+            {
+                GamepadBatteryType type;
+                switch (batteryInformation.BatteryType)
+                {
+                    case BatteryType.Wired: type = GamepadBatteryType.Wired; break;
+                    case BatteryType.Alkaline: type = GamepadBatteryType.Alkaline; break;
+                    case BatteryType.NiMH: type = GamepadBatteryType.NiMH; break;
+                    case BatteryType.Unknown: type = GamepadBatteryType.Unknown; break;
+
+                    case BatteryType.Disconnected:
+                        batteryInfo = default;
+                        return false;
+
+                    default:
+                        Logger?.LogWarning($"Got unknown battery type {batteryInformation.BatteryType}");
+                        batteryInfo = default;
+                        return false;
+                }
+
+                float charge;
+                switch (batteryInformation.BatteryLevel)
+                {
+                    case BatteryLevel.Empty:  charge = 0;      break;
+                    case BatteryLevel.Low:    charge = 1/3.0f; break;
+                    case BatteryLevel.Medium: charge = 2/3.0f; break;
+                    case BatteryLevel.Full:   charge = 1;      break;
+                    default: throw new InvalidEnumArgumentException(nameof(batteryInformation.BatteryLevel), (int)batteryInformation.BatteryLevel, typeof(BatteryLevel));
+                }
+
+                batteryInfo = new GamepadBatteryInfo(type, charge);
+                return true;
+            }
+            else
+            {
+                batteryInfo = default;
+                return false;
+            }
         }
     }
 }

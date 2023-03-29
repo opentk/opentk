@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
@@ -988,45 +989,61 @@ namespace OpenTK.Core.Platform
             return _shellComponent!.GetPreferredTheme();
         }
 
+        /// <inheritdoc/>
         float IJoystickComponent.LeftDeadzone => _joystickComponent!.LeftDeadzone;
 
+        /// <inheritdoc/>
         float IJoystickComponent.RightDeadzone => _joystickComponent!.RightDeadzone;
 
+        /// <inheritdoc/>
         float IJoystickComponent.TriggerThreshold => _joystickComponent!.TriggerThreshold;
 
+        /// <inheritdoc/>
         JoystickHandle IJoystickComponent.Open(int index)
         {
             return _joystickComponent!.Open(index);
         }
 
+        /// <inheritdoc/>
         void IJoystickComponent.Close(JoystickHandle handle)
         {
             _joystickComponent!.Close(handle);
         }
 
+        /// <inheritdoc/>
         Guid IJoystickComponent.GetGuid(JoystickHandle handle)
         {
             return _joystickComponent!.GetGuid(handle);
         }
 
+        /// <inheritdoc/>
         string IJoystickComponent.GetName(JoystickHandle handle)
         {
             return _joystickComponent!.GetName(handle);
         }
 
+        /// <inheritdoc/>
         float IJoystickComponent.GetAxis(JoystickHandle handle, JoystickAxis axis)
         {
             return _joystickComponent!.GetAxis(handle, axis);
         }
 
+        /// <inheritdoc/>
         bool IJoystickComponent.GetButton(JoystickHandle handle, JoystickButton button)
         {
             return _joystickComponent!.GetButton(handle, button);
         }
 
+        /// <inheritdoc/>
         bool IJoystickComponent.SetVibration(JoystickHandle handle, float lowFreqIntensity, float highFreqIntensity)
         {
             return _joystickComponent!.SetVibration(handle, lowFreqIntensity, highFreqIntensity);
+        }
+
+        /// <inheritdoc/>
+        public bool TryGetBatteryInfo(JoystickHandle handle, [NotNullWhen(true)] out GamepadBatteryInfo? batteryInfo)
+        {
+            return _joystickComponent!.TryGetBatteryInfo(handle, out batteryInfo);
         }
     }
 }

@@ -248,6 +248,22 @@ namespace LocalTestProject
                 Console.WriteLine($"Width: {curW}, Height: {curH}");
             }
 
+            for (int i = 0; i < 4; i++)
+            {
+                var handle = joystickComponent.Open(i);
+
+                if (joystickComponent.TryGetBatteryInfo(handle, out GamepadBatteryInfo? info))
+                {
+                    Console.WriteLine($"Gamepad {i+1}: {info.BatteryType} {info.ChargeLevel*100}%");
+                }
+                else
+                {
+                    Console.WriteLine($"Could not get battery info for gamepad {i+1}");
+                }
+
+                joystickComponent.Close(handle);
+            }
+
             Init();
             while (true)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,5 +64,7 @@ namespace OpenTK.Core.Platform
         public bool GetButton(JoystickHandle handle, JoystickButton button);
 
         public bool SetVibration(JoystickHandle handle, float lowFreqIntensity, float highFreqIntensity);
+
+        public bool TryGetBatteryInfo(JoystickHandle handle, [NotNullWhen(true)] out GamepadBatteryInfo? batteryInfo);
     }
 }
