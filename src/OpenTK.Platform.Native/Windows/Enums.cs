@@ -1024,6 +1024,53 @@ namespace OpenTK.Platform.Native.Windows
         Hidden = 0x00040000,
     }
 
+    // DIDFT_MAKEINSTANCE(n) = ((WORD)(n) << 8),
+    // DIDFT_GETTYPE(n) = LOBYTE(n),
+    // DIDFT_GETINSTANCE(n) = LOWORD((n) >> 8),
+    // DIDFT_ENUMCOLLECTION(n) = ((WORD)(n) << 8),
+    internal enum DIDFT : uint
+    {
+        All = 0x00000000,
+        RelAxis = 0x00000001,
+        AbsAxis = 0x00000002,
+        Axis = 0x00000003,
+        PshButton = 0x00000004,
+        TglButton = 0x00000008,
+        Button = 0x0000000C,
+        POV = 0x00000010,
+        Collection = 0x00000040,
+        NoData = 0x00000080,
+        AnyInstance = 0x00FFFF00,
+        InstanceMask = AnyInstance,
+        
+        FFActuator = 0x01000000,
+        FFEffectTrigger = 0x02000000,
+        Output = 0x10000000,
+        VendorDefined = 0x04000000,
+        Alias = 0x08000000,
+        Optional = 0x80000000,
+        NoCollection = 0x00FFFF00,
+    }
+
+    internal enum DIDOI : uint
+    {
+        FFActuator = 0x00000001,
+        FFEffectTrigger = 0x00000002,
+        Polled = 0x00008000,
+        AspectPosition = 0x00000100,
+        AspectVelocity = 0x00000200,
+        AspectAccel = 0x00000300,
+        AspectForce = 0x00000400,
+        AspectMask = 0x00000F00,
+        GuidUsage = 0x00010000,
+    }
+
+    internal enum DIDF : uint
+    {
+        AbsAxis = 0x00000001,
+        RelAxis = 0x00000002,
+    }
+
     [Flags]
     internal enum ExecutionState : ulong
     {

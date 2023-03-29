@@ -26,6 +26,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.MouseCursor] = () => new Windows.CursorComponent(),
                 [PalComponents.WindowIcon] = () => new Windows.IconComponent(),
                 [PalComponents.Clipboard] = () => new Windows.ClipboardComponent(),
+                [PalComponents.Joystick] = () => new Windows.JoystickComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> x11Components =
@@ -40,6 +41,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.MouseCursor] = () => new X11.X11CursorComponent(),
                 //[PalComponents.WindowIcon] = () => new X11.X11IconComponent(),
                 //[PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
+                //[PalComponents.Joystick] = () => new X11.X11JoystickComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> macosComponents =
@@ -54,6 +56,7 @@ namespace OpenTK.Platform.Native
                 //[PalComponents.MouseCursor] = () => new Macos.CursorComponent(),
                 //[PalComponents.WindowIcon] = () => new Macos.IconComponent(),
                 //[PalComponents.Clipboard] = () => new Macos.ClipboardComponent(),
+                //[PalComponents.Joystick] = () => new Macos.JoystickComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> GetPlatformComponents()
@@ -152,6 +155,12 @@ namespace OpenTK.Platform.Native
         public static ISurfaceComponent CreateSurfaceComponent()
         {
             return GetPlatformComponent<ISurfaceComponent>(PalComponents.Surface);
+        }
+
+        /// <inheritdoc cref="GetPlatformComponents"/>
+        public static IJoystickComponent CreateJoystickComponent()
+        {
+            return GetPlatformComponent<IJoystickComponent>(PalComponents.Joystick);
         }
     }
 }

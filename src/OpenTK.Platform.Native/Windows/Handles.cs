@@ -141,6 +141,8 @@ namespace OpenTK.Platform.Native.Windows
 
     internal class Joystick : JoystickHandle
     {
+        public int XInputIndex;
+
         public DirectInput.IDirectInputDevice8 Device;
         public Guid InstanceGuid;
         public string InstanceName;

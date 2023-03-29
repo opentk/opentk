@@ -38,7 +38,7 @@ namespace LocalTestProject
 
         static IShellComponent shellComp = new ShellComponent();
 
-        static JoystickComponent joystickComponent = new JoystickComponent();
+        static IJoystickComponent joystickComponent = new JoystickComponent();
 
         static CursorHandle CursorHandle;
         static CursorHandle ImageCursorHandle;
@@ -861,6 +861,72 @@ void main()
         {
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
             watch.Restart();
+
+            for (int i = 0; i < 4; i++)
+            {
+                int player = i + 1;
+                JoystickHandle handle = joystickComponent.Open(i);
+
+                float leftX = joystickComponent.GetAxis(handle, JoystickAxis.LeftXAxis);
+                float leftY = joystickComponent.GetAxis(handle, JoystickAxis.LeftYAxis);
+                float rightX = joystickComponent.GetAxis(handle, JoystickAxis.RightXAxis);
+                float rightY = joystickComponent.GetAxis(handle, JoystickAxis.RightYAxis);
+                float triggerLeft = joystickComponent.GetAxis(handle, JoystickAxis.LeftTrigger);
+                float triggerRight = joystickComponent.GetAxis(handle, JoystickAxis.RightTrigger);
+
+                if (MathF.Abs(leftX) < joystickComponent.LeftDeadzone)
+                    leftX = 0;
+
+                if (MathF.Abs(leftY) < joystickComponent.LeftDeadzone)
+                    leftY = 0;
+
+                if (MathF.Abs(rightX) < joystickComponent.RightDeadzone)
+                    rightX = 0;
+
+                if (MathF.Abs(rightY) < joystickComponent.RightDeadzone)
+                    rightY = 0;
+
+                if (triggerLeft < joystickComponent.TriggerThreshold)
+                    triggerLeft = 0;
+
+                if (triggerRight < joystickComponent.TriggerThreshold)
+                    triggerRight = 0;
+
+                Vector2 left = (leftX, leftY);
+                Vector2 right = (rightX, rightY);
+
+                if (left.Length > 0)
+                {
+                    Console.WriteLine($"Player {player} Left: {left}");
+                }
+
+                if (right.Length > 0)
+                {
+                    Console.WriteLine($"Player {player} Right: {right}");
+                }
+
+                if (triggerLeft > 0)
+                {
+                    Console.WriteLine($"Player {player} Trigger left: {triggerLeft}");
+                }
+
+                if (triggerRight > 0)
+                {
+                    Console.WriteLine($"Player {player} Trigger right: {triggerRight}");
+                }
+
+                foreach (JoystickButton button in Enum.GetValues<JoystickButton>())
+                {
+                    if (joystickComponent.GetButton(handle, button))
+                    {
+                        Console.WriteLine($"Player {player} Button {button}");
+                    }
+                }
+
+                joystickComponent.SetVibration(handle, triggerLeft, triggerRight);
+
+                joystickComponent.Close(handle);
+            }
 
             time += deltaTime;
             frames++;

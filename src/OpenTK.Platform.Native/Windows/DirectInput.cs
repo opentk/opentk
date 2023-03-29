@@ -163,7 +163,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             public uint dwSize;
             public uint dwObjSize;
-            public uint dwFlags;
+            public DIDF dwFlags;
             public uint dwDataSize;
             public uint dwNumObjs;
             public DIOBJECTDATAFORMAT* rgodf;
@@ -172,9 +172,118 @@ namespace OpenTK.Platform.Native.Windows
         internal unsafe struct DIOBJECTDATAFORMAT
         {
             public Guid* pguid;
-            public uint dwOfs;
-            public uint dwType;
-            public uint dwFlags;
+            public int dwOfs;
+            public DIDFT dwType;
+            public DIDOI dwFlags;
+
+            public DIOBJECTDATAFORMAT(Guid* pguid, int dwOfs, DIDFT dwType, DIDOI dwFlags)
+            {
+                this.pguid = pguid;
+                this.dwOfs = dwOfs;
+                this.dwType = dwType;
+                this.dwFlags = dwFlags;
+            }
+        }
+
+        // FIXME: FixedAddressValueType doesn't work with AssemblyLoadContext...
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_XAxis = new Guid(0xA36D02E0,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_YAxis = new Guid(0xA36D02E1,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_ZAxis = new Guid(0xA36D02E2,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_RxAxis = new Guid(0xA36D02F4,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_RyAxis = new Guid(0xA36D02F5,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_RzAxis = new Guid(0xA36D02E3,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_Slider = new Guid(0xA36D02E4,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_Button = new Guid(0xA36D02F0,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_Key = new Guid(0x55728220,0xD33C,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_POV = new Guid(0xA36D02F2,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+        [FixedAddressValueType]
+        internal static readonly Guid GUID_Unknown = new Guid(0xA36D02F3,0xC9F3,0x11CF,0xBF,0xC7,0x44,0x45,0x53,0x54,0x00,0x00);
+
+        [FixedAddressValueType]
+        internal unsafe static readonly DIOBJECTDATAFORMAT[] c_dfDIJoystick_rgodf = new DIOBJECTDATAFORMAT[]
+        {
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_XAxis),   0, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_YAxis),   4, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_ZAxis),   8, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_RxAxis), 12, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_RyAxis), 16, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_RzAxis), 20, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_Slider), 24, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_Slider), 28, DIDFT.Axis|DIDFT.Optional|DIDFT.AnyInstance, DIDOI.AspectPosition),
+
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_POV),    32, DIDFT.POV|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_POV),    36, DIDFT.POV|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_POV),    40, DIDFT.POV|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT((Guid*)Unsafe.AsPointer(ref GUID_POV),    44, DIDFT.POV|DIDFT.Optional|DIDFT.AnyInstance, 0),
+
+            new DIOBJECTDATAFORMAT(null,                                     48, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     49, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     50, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     51, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     52, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     53, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     54, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     55, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     56, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     57, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     58, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     59, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     60, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     61, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     62, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     63, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     64, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     65, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     66, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     67, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     68, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     69, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     70, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     71, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     72, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     73, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     74, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     75, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     76, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     77, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     78, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+            new DIOBJECTDATAFORMAT(null,                                     79, DIDFT.Button|DIDFT.Optional|DIDFT.AnyInstance, 0),
+        };
+
+        [FixedAddressValueType]
+        internal unsafe static DIDATAFORMAT c_dfDIJoystick = new DIDATAFORMAT()
+        {
+            dwSize = (uint)sizeof(DIDATAFORMAT),
+            dwObjSize = (uint)sizeof(DIOBJECTDATAFORMAT),
+            dwFlags = DIDF.AbsAxis,
+            dwDataSize = (uint)sizeof(DIJOYSTATE),
+            dwNumObjs = (uint)c_dfDIJoystick_rgodf.Length,
+            rgodf = (DIOBJECTDATAFORMAT*)Unsafe.AsPointer(ref MemoryMarshal.GetArrayDataReference(c_dfDIJoystick_rgodf)),
+        };
+
+        internal unsafe struct DIJOYSTATE
+        {
+            public int lX;
+            public int lY;
+            public int lZ;
+            public int lRx;
+            public int lRy;
+            public int lRz;
+            public fixed int rglSlider[2];
+            public fixed uint rgdwPOV[4];
+            public fixed byte rgbButtons[32];
         }
 
         internal unsafe struct DIEFFECT
@@ -360,6 +469,29 @@ namespace OpenTK.Platform.Native.Windows
                 CheckHResult(result);
             }
 
+            public void Acquire()
+            {
+                int result = (*VTable)->Acquire(this);
+                CheckHResult(result);
+            }
+
+            public void Unacquire()
+            {
+                int result = (*VTable)->Unacquire(this);
+                CheckHResult(result);
+            }
+
+            public void GetDeviceData(uint cbObjectData, ref DIDEVICEOBJECTDATA rgdod)
+            {
+
+            }
+
+            public unsafe void SetDataFormat(ref DIDATAFORMAT format)
+            {
+                int result = (*VTable)->SetDataFormat(this, (DIDATAFORMAT*)Unsafe.AsPointer(ref format));
+                CheckHResult(result);
+            }
+
             public unsafe void GetDeviceInfo(out DIDEVICEINSTANCE pdidi)
             {
                 pdidi.dwSize = (uint)Unsafe.SizeOf<DIDEVICEINSTANCE>();
@@ -371,11 +503,6 @@ namespace OpenTK.Platform.Native.Windows
                 CheckHResult(result);
             }
 
-            public unsafe void SetDataFormat(DIDATAFORMAT format)
-            {
-                int result = (*VTable)->SetDataFormat(this, &format);
-                CheckHResult(result);
-            }
         }
 
         internal unsafe struct IDirectInputEffect
