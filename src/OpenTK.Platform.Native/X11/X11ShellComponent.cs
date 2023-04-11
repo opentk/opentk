@@ -35,7 +35,7 @@ namespace OpenTK.Platform.Native.X11
         {
             // Seems like we can either use some dbus functions or
             // we can use X11 Screen Saver Extension to turn it off.
-            // https://github.com/libsdl-org/SDL/blob/fde78d12f247a776b52b007479e5274d4bd4e3fe/src/video/x11/SDL_x11events.c#L1730
+            // https://github.com/libsdl-org/SDLLib/blob/fde78d12f247a776b52b007479e5274d4bd4e3fe/src/video/x11/SDL_x11events.c#L1730
 
 
             throw new NotImplementedException();

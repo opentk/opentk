@@ -519,14 +519,14 @@ namespace OpenTK.Platform.Native.Windows
 
             // FIXME: Make number scancodes always map to number keys. AZERTY.
 
-            // FIXME: SDL marks some keys as not remappable and will always correspond to the scancode
-            // https://github.com/libsdl-org/SDL/blob/4187c6c08c2f0a6c84ea274c95c10ac7fdc5147a/include/SDL3/SDL_keycode.h#L47
+            // FIXME: SDLLib marks some keys as not remappable and will always correspond to the scancode
+            // https://github.com/libsdl-org/SDLLib/blob/4187c6c08c2f0a6c84ea274c95c10ac7fdc5147a/include/SDL3/SDL_keycode.h#L47
             // This might be a good solution in the future.
 
             // Because some keypad keys get converted into
             // their functional keys like Keypad7 -> Home we
             // manually convert all keypad scancodes to keypad keys.
-            // FIXME: We probably want to do the non remappable character stuff from SDL.
+            // FIXME: We probably want to do the non remappable character stuff from SDLLib.
             // This is mostly done for the keymap to work correctly
             // - 2023-02-15 NogginBops
             if (extended)

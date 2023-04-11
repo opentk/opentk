@@ -421,8 +421,8 @@ namespace OpenTK.Platform.Native.X11
                             XFocusChangeEvent focusIn = ea.FocusIn;
 
                             // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
-                            // I copied what SDL did:
-                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // I copied what SDLLib did:
+                            // https://github.com/libsdl-org/SDLLib/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
                             // The documentation for these values is very obtuse:
                             // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
                             // - Noggin_bops 2023-01-12
@@ -452,8 +452,8 @@ namespace OpenTK.Platform.Native.X11
                             XFocusChangeEvent focusOut = ea.FocusOut;
 
                             // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
-                            // I copied what SDL did:
-                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // I copied what SDLLib did:
+                            // https://github.com/libsdl-org/SDLLib/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
                             // The documentation for these values is very obtuse:
                             // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
                             // - Noggin_bops 2023-01-12
@@ -1148,7 +1148,7 @@ namespace OpenTK.Platform.Native.X11
                         XMapWindow(X11.Display, xwindow.Window);
 
                         // FIXME: We might need to do something if NET_WM is defined
-                        // See: https://github.com/libsdl-org/SDL/blob/c5c94a6be6bfaccec9c41f6326bd4be6b2db8aea/src/video/x11/SDL_x11window.c#L1161
+                        // See: https://github.com/libsdl-org/SDLLib/blob/c5c94a6be6bfaccec9c41f6326bd4be6b2db8aea/src/video/x11/SDL_x11window.c#L1161
                         break;
                     }
                 case WindowMode.Hidden:
