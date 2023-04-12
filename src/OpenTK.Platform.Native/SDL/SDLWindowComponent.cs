@@ -1,5 +1,6 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using OpenTK.Mathematics;
 using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
@@ -100,15 +101,53 @@ namespace OpenTK.Platform.Native.SDL
 
         public WindowHandle Create(GraphicsApiHints hints)
         {
-            OpenGLGraphicsApiHints openglHints = (OpenGLGraphicsApiHints)hints;
+            OpenGLGraphicsApiHints settings = (OpenGLGraphicsApiHints)hints;
 
-            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION, openglHints.Version.Major);
-            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION, openglHints.Version.Minor);
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION, settings.Version.Major);
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION, settings.Version.Minor);
 
-            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_DOUBLEBUFFER, openglHints.DoubleBuffer ? 1 : 0);
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_DOUBLEBUFFER, settings.DoubleBuffer ? 1 : 0);
+
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_RED_SIZE, settings.RedColorBits);
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_GREEN_SIZE, settings.GreenColorBits);
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_BLUE_SIZE, settings.BlueColorBits);
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_ALPHA_SIZE, settings.AlphaColorBits);
+
+            byte depthBits;
+            switch (settings.DepthBits)
+            {
+                case ContextDepthBits.Depth24: depthBits = 24; break;
+                case ContextDepthBits.Depth32: depthBits = 32; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
+            }
+
+            byte stencilBits;
+            switch (settings.StencilBits)
+            {
+                case ContextStencilBits.Stencil1: stencilBits = 1; break;
+                case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
+            }
+
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_DEPTH_SIZE, depthBits);
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_STENCIL_SIZE, stencilBits);
+
+            if (settings.Multisamples > 0)
+            {
+                SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_MULTISAMPLEBUFFERS, 1);
+                SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_MULTISAMPLESAMPLES, settings.Multisamples);
+            }
+
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, settings.sRGBFramebuffer ? 1 : 0);
+
+            // FIXME: Shared context, should we make the one that we want current and then set the old one again?
+            // GetCurrentContext
+            // SetCurrentContext
+            //SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+            // SetCurrentContext
 
             SDL_GLprofile profile = 0;
-            switch (openglHints.Profile)
+            switch (settings.Profile)
             {
                 case OpenGLProfile.None:
                     profile = 0;
@@ -120,12 +159,14 @@ namespace OpenTK.Platform.Native.SDL
                     profile = SDL_GLprofile.SDL_GL_CONTEXT_PROFILE_COMPATIBILITY;
                     break;
                 default:
+                    throw new InvalidEnumArgumentException(nameof(settings.Profile), (int)settings.Profile, typeof(OpenGLProfile));
                     break;
             }
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)profile);
 
             SDL_GLcontextFlag flags = 0;
-            if (openglHints.DebugFlag) flags |= SDL_GLcontextFlag.SDL_GL_CONTEXT_DEBUG_FLAG;
+            if (settings.DebugFlag) flags |= SDL_GLcontextFlag.SDL_GL_CONTEXT_DEBUG_FLAG;
+            if (settings.ForwardCompatibleFlag) flags |= SDL_GLcontextFlag.SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG;
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)flags);
 
             SDL_WindowPtr window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 400, SDL_WindowFlags.SDL_WINDOW_OPENGL | SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
@@ -331,6 +372,25 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            SDL_WindowFlags flags = SDL_GetWindowFlags(window.Window);
+
+            bool hasBorder = flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_BORDERLESS) == false;
+            bool resizable = flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
+
+            if (hasBorder && resizable)
+            {
+                return WindowStyle.ResizableBorder;
+            }
+            else if (hasBorder && resizable == false)
+            {
+                return WindowStyle.FixedBorder;
+            }
+            else if (hasBorder == false)
+            {
+                return WindowStyle.Borderless;
+            }
+
+            // FIXME: Toolbox windows.
             throw new NotImplementedException();
         }
 
@@ -338,7 +398,26 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            switch (style)
+            {
+                case WindowStyle.Borderless:
+                    SDL_SetWindowBordered(window.Window, 0);
+                    // FIXME: Maybe this borderless should not be resizable?
+                    SDL_SetWindowResizable(window.Window, 1);
+                    break;
+                case WindowStyle.FixedBorder:
+                    SDL_SetWindowBordered(window.Window, 1);
+                    SDL_SetWindowResizable(window.Window, 0);
+                    break;
+                case WindowStyle.ResizableBorder:
+                    SDL_SetWindowBordered(window.Window, 1);
+                    SDL_SetWindowResizable(window.Window, 1);
+                    break;
+                case WindowStyle.ToolBox:
+                    throw new NotImplementedException();
+                default:
+                    throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowStyle));
+            }
         }
 
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
@@ -361,12 +440,58 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            window.HitTest = test;
+            if (test == null)
+            {
+                SDL_SetWindowHitTest(window.Window, null, IntPtr.Zero);
+            }
+            else
+            {
+                SDL_SetWindowHitTest(window.Window, SDL_HitTest, IntPtr.Zero);
+            }
+            
+            static SDL_HitTestResult SDL_HitTest(SDL_WindowPtr win, in SDL_Point pt, IntPtr data)
+            {
+                SDLWindow window = WindowDict[SDL_GetWindowID(win)];
+
+                if (window.HitTest != null)
+                {
+                    HitType result = window.HitTest(window, new Vector2(pt.x, pt.y));
+                    return result switch
+                    {
+                        HitType.Default => throw new NotSupportedException("SDL2 doesn't support HitType.Default. Consider removing the hit test callback to get default behaviour."),
+                        HitType.Normal => SDL_HitTestResult.SDL_HITTEST_NORMAL,
+                        HitType.Draggable => SDL_HitTestResult.SDL_HITTEST_DRAGGABLE,
+                        HitType.ResizeTopLeft => SDL_HitTestResult.SDL_HITTEST_RESIZE_TOPLEFT,
+                        HitType.ResizeTop => SDL_HitTestResult.SDL_HITTEST_RESIZE_TOP,
+                        HitType.ResizeTopRight => SDL_HitTestResult.SDL_HITTEST_RESIZE_TOPRIGHT,
+                        HitType.ResizeRight => SDL_HitTestResult.SDL_HITTEST_RESIZE_RIGHT,
+                        HitType.ResizeBottomRight => SDL_HitTestResult.SDL_HITTEST_RESIZE_BOTTOMRIGHT,
+                        HitType.ResizeBottom => SDL_HitTestResult.SDL_HITTEST_RESIZE_BOTTOM,
+                        HitType.ResizeBottomLeft => SDL_HitTestResult.SDL_HITTEST_RESIZE_BOTTOMLEFT,
+                        HitType.ResizeLeft => SDL_HitTestResult.SDL_HITTEST_RESIZE_LEFT,
+                        _ => throw new InvalidEnumArgumentException("return", (int)result, typeof(HitType)),
+                    };
+                }
+                else
+                {
+                    throw new InvalidOperationException("The window hit-test has been removed.");
+                }
+            }
         }
 
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
+
+            if (cursor == null)
+            {
+                SDL_ShowCursor(0 /* SDL_DISABLE */);
+            }
+            else
+            {
+                SDL_ShowCursor(1 /* SDL_ENABLE */);
+            }
 
             throw new NotImplementedException();
         }
@@ -375,6 +500,19 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            bool grabbed = SDL_GetWindowGrab(window.Window) == 1;
+
+            // FIXME: CursorCaptureMode.Locked!
+
+            if (grabbed)
+            {
+                return CursorCaptureMode.Confined;
+            }
+            else
+            {
+                return CursorCaptureMode.Normal;
+            }
+
             throw new NotImplementedException();
         }
 
@@ -382,7 +520,20 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            switch (mode)
+            {
+                case CursorCaptureMode.Normal:
+                    SDL_SetWindowGrab(window.Window, 0);
+                    break;
+                case CursorCaptureMode.Confined:
+                    SDL_SetWindowGrab(window.Window, 1);
+                    break;
+                case CursorCaptureMode.Locked:
+                    // FIXME: Use SDL_SetRelativeMouseMode in some way...
+                    throw new NotImplementedException();
+                default:
+                    throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(CursorCaptureMode));
+            }
         }
 
         public void FocusWindow(WindowHandle handle)

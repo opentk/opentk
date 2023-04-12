@@ -51,7 +51,9 @@ namespace OpenTK.Platform.Native.SDL
 
             SDL_GLContext context = SDL_GL_CreateContext(window.Window);
 
-            SDLOpenGLContext sdlContext = new SDLOpenGLContext(context, window);
+            SDLOpenGLContext? sharedContext = (window.GraphicsApiHints as OpenGLGraphicsApiHints)?.SharedContext as SDLOpenGLContext;
+
+            SDLOpenGLContext sdlContext = new SDLOpenGLContext(context, window, sharedContext);
 
             ContextDict.Add(context, sdlContext);
 
@@ -111,17 +113,19 @@ namespace OpenTK.Platform.Native.SDL
 
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
-            throw new NotImplementedException();
+            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+
+            return context.SharedContext;
         }
 
         public void SetSwapInterval(int interval)
         {
-            throw new NotImplementedException();
+            SDL_GL_SetSwapInterval(interval);
         }
 
         public int GetSwapInterval()
         {
-            throw new NotImplementedException();
+            return SDL_GL_GetSwapInterval();
         }
     }
 }

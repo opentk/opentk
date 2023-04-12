@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading;
 using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native.SDL;
+using OpenTK.Platform.Native.Windows;
 
 namespace SDLTestProject
 {
@@ -12,6 +14,7 @@ namespace SDLTestProject
     {
         static IWindowComponent WindowComp;
         static IOpenGLComponent OpenGLComponent;
+        static IDisplayComponent DisplayComponent;
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
@@ -50,9 +53,16 @@ void main()
         {
             WindowComp = new SDLWindowComponent();
             OpenGLComponent = new SDLOpenGLComponent();
+            DisplayComponent = new SDLDisplayComponent();
+
+            var logger = new ConsoleLogger();
+            WindowComp.Logger = logger;
+            OpenGLComponent.Logger = logger;
+            DisplayComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);
+            DisplayComponent.Initialize(PalComponents.Display);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
@@ -66,6 +76,36 @@ void main()
             GLLoader.LoadBindings(OpenGLComponent.GetBindingsContext(ContextHandle));
 
             EventQueue.EventRaised += EventQueue_EventRaised;
+
+            int noDisp = DisplayComponent.GetDisplayCount();
+            for (int i = 0; i < noDisp; i++)
+            {
+                DisplayHandle handle = DisplayComponent.Create(i);
+
+                string name = DisplayComponent.GetName(handle);
+                bool isPrimary = DisplayComponent.IsPrimary(handle);
+                DisplayComponent.GetVideoMode(handle, out VideoMode mode);
+                int modeCount = DisplayComponent.GetSupportedVideoModeCount(handle);
+                VideoMode[] modes = new VideoMode[modeCount];
+                DisplayComponent.GetSupportedVideoModes(handle, modes);
+                DisplayComponent.GetVirtualPosition(handle, out int px, out int py);
+                DisplayComponent.GetResolution(handle, out int resx, out int resy);
+                DisplayComponent.GetWorkArea(handle, out Box2i workArea);
+                DisplayComponent.GetRefreshRate(handle, out float refreshRate);
+                DisplayComponent.GetDisplayScale(handle, out float scaleX, out float scaleY);
+
+                Console.WriteLine($"Display {i}: {name}{(isPrimary ? " (primary)" : "")}");
+                Console.WriteLine($"  Current Mode: {mode}");
+                Console.WriteLine($"  Modes: {modeCount}");
+                for (int m = 0; m < modeCount; m++)
+                {
+                    Console.WriteLine($"    Mode {m}: {modes[m]}");
+                }
+                Console.WriteLine($"  Position: {new Vector2i(px, py)}, Resolution: {new Vector2i(resx, resy)}");
+                Console.WriteLine($"  Work Area: {workArea}");
+                Console.WriteLine($"  Refresh rate: {refreshRate}");
+                Console.WriteLine($"  Scale X: {scaleX}, Scale Y: {scaleY}");
+            }
 
             float[] vertices = new float[]
             {

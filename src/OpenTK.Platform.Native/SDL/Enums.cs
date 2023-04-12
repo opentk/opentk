@@ -119,5 +119,18 @@ namespace OpenTK.Platform.Native.SDL
         SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG = 0x0004,
         SDL_GL_CONTEXT_RESET_ISOLATION_FLAG = 0x0008
     }
-    
+
+    enum SDL_HitTestResult
+    {
+        SDL_HITTEST_NORMAL,  /**< Region is normal. No special properties. */
+        SDL_HITTEST_DRAGGABLE,  /**< Region can drag entire window. */
+        SDL_HITTEST_RESIZE_TOPLEFT,
+        SDL_HITTEST_RESIZE_TOP,
+        SDL_HITTEST_RESIZE_TOPRIGHT,
+        SDL_HITTEST_RESIZE_RIGHT,
+        SDL_HITTEST_RESIZE_BOTTOMRIGHT,
+        SDL_HITTEST_RESIZE_BOTTOM,
+        SDL_HITTEST_RESIZE_BOTTOMLEFT,
+        SDL_HITTEST_RESIZE_LEFT
+    }
 }

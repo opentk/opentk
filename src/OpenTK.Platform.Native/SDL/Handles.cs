@@ -16,6 +16,8 @@ namespace OpenTK.Platform.Native.SDL
 
         public bool Destroyed { get; internal set; } = false;
 
+        public HitTest? HitTest { get; internal set; } = null;
+
         public SDLWindow(SDL_WindowPtr window, uint windowID)
         {
             Window = window;
@@ -29,10 +31,24 @@ namespace OpenTK.Platform.Native.SDL
 
         public SDLWindow Window { get; internal set; }
 
-        public SDLOpenGLContext(SDL_GLContext context, SDLWindow window)
+        public SDLOpenGLContext? SharedContext { get; internal set; }
+
+        public SDLOpenGLContext(SDL_GLContext context, SDLWindow window, SDLOpenGLContext? sharedContext)
         {
             Context = context;
             Window = window;
+            SharedContext = sharedContext;
+        }
+    }
+
+    internal class SDLDisplay : DisplayHandle
+    {
+        // FIXME: Some way to identify monitors other than their index??
+        public int Index { get; internal set; }
+
+        public SDLDisplay(int index)
+        {
+            Index = index;
         }
     }
 }

@@ -17,6 +17,8 @@ namespace OpenTK.Platform.Native.SDL
         // FIXME: Make a nuget package for this.
         const string SDLLib = "SDL2-x64";
 
+        // FIXME: The calling convention is likely wrong!
+
         [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
         internal static extern int SDL_Init(SDL_INIT flags);
 
@@ -200,5 +202,91 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
         internal static extern void SDL_GL_SwapWindow(SDL_WindowPtr window);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GL_SetSwapInterval(int interval);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GL_GetSwapInterval();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_SetWindowGrab(SDL_WindowPtr window, int grabbed);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetWindowGrab(SDL_WindowPtr window);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_ShowCursor(int toggle);
+
+        internal struct SDL_Point
+        {
+            public int x;
+            public int y;
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.Winapi)]
+        internal delegate SDL_HitTestResult SDL_HitTest(SDL_WindowPtr win, in SDL_Point area, IntPtr data);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_SetWindowHitTest(SDL_WindowPtr window, SDL_HitTest? callback, IntPtr callback_data);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_SetWindowBordered(SDL_WindowPtr window, int bordered);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_SetWindowResizable(SDL_WindowPtr window, int resizable);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetNumVideoDisplays();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetNumDisplayModes(int displayIndex);
+
+        internal unsafe struct SDL_DisplayMode
+        {
+            /**< pixel format */
+            public uint format;
+            /**< width, in screen coordinates */
+            public int w;
+            /**< height, in screen coordinates */
+            public int h;
+            /**< refresh rate (or zero for unspecified) */
+            public int refresh_rate;
+            /**< driver-specific data, initialize to 0 */
+            public void* driverdata;
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetDisplayMode(int displayIndex, int modeIndex, out SDL_DisplayMode mode);
+
+        [DllImport(SDLLib, EntryPoint = "SDL_GetDisplayName", CallingConvention = CallingConvention.StdCall)]
+        private static unsafe extern char* SDL_GetDisplayName_internal(int displayIndex);
+
+        internal static unsafe string? SDL_GetDisplayName(int displayIndex)
+        {
+            char* ptr = SDL_GetDisplayName_internal(displayIndex);
+            return Marshal.PtrToStringUTF8((IntPtr)ptr);
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetCurrentDisplayMode(int displayIndex, out SDL_DisplayMode mode);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static unsafe extern int SDL_GetDisplayDPI(int displayIndex, out float ddpi, out float hdpi, out float vdpi);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_GL_GetDrawableSize(SDL_WindowPtr window, out int w, out int h);
+
+        internal struct SDL_Rect
+        {
+            public int x, y;
+            public int w, h;
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetDisplayBounds(int displayIndex, out SDL_Rect rect);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetDisplayUsableBounds(int displayIndex, out SDL_Rect rect);
     }
 }
