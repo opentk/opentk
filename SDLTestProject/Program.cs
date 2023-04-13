@@ -16,7 +16,7 @@ namespace SDLTestProject
         static IOpenGLComponent OpenGLComponent;
         static IDisplayComponent DisplayComponent;
         static IMouseComponent MouseComponent;
-
+        static IClipboardComponent ClipboardComponent;
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
@@ -57,17 +57,20 @@ void main()
             OpenGLComponent = new SDLOpenGLComponent();
             DisplayComponent = new SDLDisplayComponent();
             MouseComponent = new SDLMouseComponent();
+            ClipboardComponent = new SDLClipboardComponent();
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
             OpenGLComponent.Logger = logger;
             DisplayComponent.Logger = logger;
             MouseComponent.Logger = logger;
+            ClipboardComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);
             DisplayComponent.Initialize(PalComponents.Display);
             MouseComponent.Initialize(PalComponents.MiceInput);
+            ClipboardComponent.Initialize(PalComponents.Clipboard);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
@@ -155,7 +158,16 @@ void main()
             }
             else if (args is MouseButtonDownEventArgs mouseDown)
             {
-
+                string? text = ClipboardComponent.GetClipboardText();
+                if (text != null)
+                {
+                    Console.WriteLine("Clipboard: ");
+                    Console.WriteLine(text);
+                }
+                else
+                {
+                    Console.WriteLine("No clipboard text!");
+                }
             }
         }
 

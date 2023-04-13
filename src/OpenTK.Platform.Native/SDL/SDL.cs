@@ -300,5 +300,27 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
         internal static extern int SDL_WarpMouseGlobal(int x, int y);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static unsafe extern void SDL_free(void* ptr);
+
+        [DllImport(SDLLib, EntryPoint = "SDL_GetClipboardText", CallingConvention = CallingConvention.Winapi)]
+        private static unsafe extern char* SDL_GetClipboardText_internal();
+
+        internal static unsafe string SDL_GetClipboardText()
+        {
+            char* text = SDL_GetClipboardText_internal();
+            // FIXME: is this going to be utf8??
+            string str = Marshal.PtrToStringUTF8((IntPtr)text)!;
+            SDL_free(text);
+            return str;
+        }
+
+        // FIXME: Do we really want to always marshal as utf8 strings??
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_SetClipboardText([MarshalAs(UnmanagedType.LPUTF8Str)] string text);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_HasClipboardText();
     }
 }
