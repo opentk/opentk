@@ -19,7 +19,13 @@ namespace OpenTK.Platform.Native.SDL
         public SDL_WindowEvent Window;
 
         [FieldOffset(0)]
+        public SDL_MouseMotionEvent MouseMotion;
+
+        [FieldOffset(0)]
         public SDL_MouseButtonEvent MouseButton;
+
+        [FieldOffset(0)]
+        public SDL_MouseWheelEvent MouseWheel;
 
     }
 
@@ -36,18 +42,46 @@ namespace OpenTK.Platform.Native.SDL
         public int data2;       /**< event dependent data */
     }
 
+    internal struct SDL_MouseMotionEvent
+    {
+        public SDL_EventType type; /**< ::SDL_MOUSEMOTION */
+        public uint timestamp;     /**< In milliseconds, populated using SDL_GetTicks() */
+        public uint windowID;      /**< The window with mouse focus, if any */
+        public uint which;         /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
+        public uint state;         /**< The current button state */
+        public int x;              /**< X coordinate, relative to window */
+        public int y;              /**< Y coordinate, relative to window */
+        public int xrel;           /**< The relative motion in the X direction */
+        public int yrel;           /**< The relative motion in the Y direction */
+    }
+
     internal struct SDL_MouseButtonEvent
     {
-        public SDL_EventType type;        /**< ::SDL_MOUSEBUTTONDOWN or ::SDL_MOUSEBUTTONUP */
-        public uint timestamp;   /**< In milliseconds, populated using SDL_GetTicks() */
-        public uint windowID;    /**< The window with mouse focus, if any */
-        public uint which;       /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
-        public SDL_BUTTON button;       /**< The mouse button index */
-        public byte state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
-        public byte clicks;       /**< 1 for single-click, 2 for double-click, etc. */
+        public SDL_EventType type; /**< ::SDL_MOUSEBUTTONDOWN or ::SDL_MOUSEBUTTONUP */
+        public uint timestamp;     /**< In milliseconds, populated using SDL_GetTicks() */
+        public uint windowID;      /**< The window with mouse focus, if any */
+        public uint which;         /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
+        public SDL_BUTTON button;  /**< The mouse button index */
+        public byte state;         /**< ::SDL_PRESSED or ::SDL_RELEASED */
+        public byte clicks;        /**< 1 for single-click, 2 for double-click, etc. */
         public byte padding1;
-        public int x;           /**< X coordinate, relative to window */
-        public int y;           /**< Y coordinate, relative to window */
+        public int x;              /**< X coordinate, relative to window */
+        public int y;              /**< Y coordinate, relative to window */
+    }
+
+    internal struct SDL_MouseWheelEvent
+    {
+        public SDL_EventType type;         /**< ::SDL_MOUSEWHEEL */
+        public uint timestamp;    /**< In milliseconds, populated using SDL_GetTicks() */
+        public uint windowID;     /**< The window with mouse focus, if any */
+        public uint which;        /**< The mouse instance id, or SDL_TOUCH_MOUSEID */
+        public int x;             /**< The amount scrolled horizontally, positive to the right and negative to the left */
+        public int y;             /**< The amount scrolled vertically, positive away from the user and negative toward the user */
+        public uint direction;    /**< Set to one of the SDL_MOUSEWHEEL_* defines. When FLIPPED the values in X and Y will be opposite. Multiply by -1 to change them back */
+        public float preciseX;    /**< The amount scrolled horizontally, positive to the right and negative to the left, with float precision (added in 2.0.18) */
+        public float preciseY;    /**< The amount scrolled vertically, positive away from the user and negative toward the user, with float precision (added in 2.0.18) */
+        public int mouseX;        /**< X coordinate, relative to window (added in 2.26.0) */
+        public int mouseY;        /**< Y coordinate, relative to window (added in 2.26.0) */
     }
 
     internal enum SDL_EventType

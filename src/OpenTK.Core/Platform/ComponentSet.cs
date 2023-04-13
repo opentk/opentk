@@ -753,15 +753,15 @@ namespace OpenTK.Core.Platform
         bool IMouseComponent.CanSetMousePosition => _mouseComponent!.CanSetMousePosition;
 
         /// <inheritdoc/>
-        void IMouseComponent.GetPosition(MouseHandle handle, out int x, out int y)
+        void IMouseComponent.GetPosition(out int x, out int y)
         {
-            _mouseComponent!.GetPosition(handle, out x, out y);
+            _mouseComponent!.GetPosition(out x, out y);
         }
 
         /// <inheritdoc/>
-        void IMouseComponent.SetPosition(MouseHandle handle, int x, int y)
+        void IMouseComponent.SetPosition(int x, int y)
         {
-            _mouseComponent!.SetPosition(handle, x, y);
+            _mouseComponent!.SetPosition(x, y);
         }
 
         /// <inheritdoc/>

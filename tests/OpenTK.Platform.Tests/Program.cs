@@ -276,7 +276,7 @@ namespace OpenTK.Platform.Tests
                 }
                 else if (buttonDown.Button == MouseButton.Button1)
                 {
-                    mouseComp.GetPosition(null, out int x, out int y);
+                    mouseComp.GetPosition(out int x, out int y);
 
                     //windowComp.SetMode(Window, WindowMode.Hidden);
                     if (client)

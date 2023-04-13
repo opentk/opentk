@@ -33,7 +33,7 @@ namespace OpenTK.Platform.Native.X11
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public void GetPosition(MouseHandle handle, out int x, out int y)
+        public void GetPosition(out int x, out int y)
         {
             byte ret = XQueryPointer(X11.Display, X11.DefaultRootWindow, out XWindow root, out XWindow child, out int root_x, out int root_y, out int win_x, out int win_y, out _);
 
@@ -42,7 +42,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc/>
-        public void SetPosition(MouseHandle handle, int x, int y)
+        public void SetPosition(int x, int y)
         {
             XWarpPointer(X11.Display, XWindow.None, X11.DefaultRootWindow, 0, 0, 0, 0, x, y);
         }

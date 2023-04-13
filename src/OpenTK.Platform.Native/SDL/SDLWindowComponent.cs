@@ -42,7 +42,7 @@ namespace OpenTK.Platform.Native.SDL
 
         public bool CanSetIcon => throw new NotImplementedException();
 
-        public bool CanGetDisplay => throw new NotImplementedException();
+        public bool CanGetDisplay => true;
 
         public bool CanSetCursor => throw new NotImplementedException();
 
@@ -61,40 +61,175 @@ namespace OpenTK.Platform.Native.SDL
 
             if (result == 1)
             {
-                Console.WriteLine($"SDL event type: {@event.Type}");
-
-                if (@event.Type == SDL_EventType.SDL_WINDOWEVENT)
+                switch (@event.Type)
                 {
-                    SDL_WindowEvent windowEvent = @event.Window;
+                    case SDL_EventType.SDL_QUIT:
+                        // FIXME: Do we need to do anything here?
+                        break;
+                    case SDL_EventType.SDL_WINDOWEVENT:
+                        {
+                            SDL_WindowEvent windowEvent = @event.Window;
+                            SDLWindow sdlWindow = WindowDict[windowEvent.windowID];
 
-                    Console.WriteLine($"  Window event ID: {windowEvent.@event}");
+                            switch (windowEvent.@event)
+                            {
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_SHOWN:
+                                    {
+                                        // FIXME: What do we do here? Do we check for a change in window mode?
+                                        // Do we just always send a changed event?
+                                    }
+                                    break;
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_HIDDEN:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Hidden));
 
-                    if (windowEvent.@event == SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE)
-                    {
-                        SDLWindow sdlWindow = WindowDict[windowEvent.windowID];
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_EXPOSED:
+                                    break;
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_MOVED:
+                                    {
+                                        Vector2i newPosition = new Vector2i(windowEvent.data1, windowEvent.data2);
 
-                        EventQueue.Raise(sdlWindow, PlatformEventType.Close, new CloseEventArgs(sdlWindow));
-                    }
-                }
-                else if (@event.Type == SDL_EventType.SDL_MOUSEBUTTONDOWN)
-                {
-                    SDL_MouseButtonEvent buttonEvent = @event.MouseButton;
+                                        // FIXME: Client area position!
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(sdlWindow, newPosition, default));
 
-                    SDLWindow sdlWindow = WindowDict[buttonEvent.windowID];
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED:
+                                    {
+                                        Vector2i newSize = new Vector2i(windowEvent.data1, windowEvent.data2);
 
-                    MouseButton button = buttonEvent.button switch
-                    {
-                        SDL_BUTTON.SDL_BUTTON_LEFT => MouseButton.Button1,
-                        SDL_BUTTON.SDL_BUTTON_MIDDLE => MouseButton.Button3,
-                        SDL_BUTTON.SDL_BUTTON_RIGHT => MouseButton.Button2,
-                        SDL_BUTTON.SDL_BUTTON_X1 => MouseButton.Button4,
-                        SDL_BUTTON.SDL_BUTTON_X2 => MouseButton.Button5,
+                                        // FIXME: Client area position!
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(sdlWindow, newSize));
 
-                        // FIXME: Maybe don't throw an error here...
-                        _ => throw new PalException(this, $"Got unknown mouse button: {buttonEvent.which}"),
-                    };
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_MINIMIZED:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Minimized));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_MAXIMIZED:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Maximized));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_RESTORED:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Normal));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(sdlWindow, true));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(sdlWindow, false));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.Focus, new FocusEventArgs(sdlWindow, true));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.Focus, new FocusEventArgs(sdlWindow, false));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_CLOSE:
+                                    {
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.Close, new CloseEventArgs(sdlWindow));
 
-                    EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button));
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_TAKE_FOCUS:
+                                    {
+                                        // FIXME: Might be an interesting event to expose
+                                        // See https://github.com/libsdl-org/SDL/commit/dc532c70e8086030b67794c62bc41922c3d5386c
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_HIT_TEST:
+                                    {
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_ICCPROF_CHANGED:
+                                    {
+                                        // TODO: This would be great event to add to the PAL2 api.
+                                        break;
+                                    }
+                                case SDL_WindowEventID.SDL_WINDOWEVENT_DISPLAY_CHANGED:
+                                    {
+                                        // FIXME: Expose an event like this.
+                                        break;
+                                    }
+                                default:
+                                    break;
+                            }
+                            break;
+                        }
+                    case SDL_EventType.SDL_MOUSEMOTION:
+                        {
+                            SDL_MouseMotionEvent mouseMotion = @event.MouseMotion;
+                            SDLWindow sdlWindow = WindowDict[mouseMotion.windowID];
+
+                            EventQueue.Raise(sdlWindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(sdlWindow, new Vector2(mouseMotion.x, mouseMotion.y)));
+
+                            break;
+                        }
+                    case SDL_EventType.SDL_MOUSEBUTTONDOWN:
+                    case SDL_EventType.SDL_MOUSEBUTTONUP:
+                        {
+                            SDL_MouseButtonEvent buttonEvent = @event.MouseButton;
+
+                            SDLWindow sdlWindow = WindowDict[buttonEvent.windowID];
+
+                            MouseButton button = buttonEvent.button switch
+                            {
+                                SDL_BUTTON.SDL_BUTTON_LEFT => MouseButton.Button1,
+                                SDL_BUTTON.SDL_BUTTON_MIDDLE => MouseButton.Button3,
+                                SDL_BUTTON.SDL_BUTTON_RIGHT => MouseButton.Button2,
+                                SDL_BUTTON.SDL_BUTTON_X1 => MouseButton.Button4,
+                                SDL_BUTTON.SDL_BUTTON_X2 => MouseButton.Button5,
+
+                                // FIXME: Maybe don't throw an error here...
+                                _ => throw new PalException(this, $"Got unknown mouse button: {buttonEvent.which}"),
+                            };
+
+                            if (buttonEvent.type == SDL_EventType.SDL_MOUSEBUTTONDOWN)
+                            {
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(sdlWindow, button));
+                            }
+                            else
+                            {
+                                EventQueue.Raise(sdlWindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(sdlWindow, button));
+                            }
+
+                            break;
+                        }
+                    case SDL_EventType.SDL_MOUSEWHEEL:
+                        {
+                            SDL_MouseWheelEvent mouseWheel = @event.MouseWheel;
+                            SDLWindow sdlWindow = WindowDict[mouseWheel.windowID];
+
+                            // FIXME: Account for SDL_MouseWheelEvent.direction
+                            // we could also not abstract this and provide both scroll and mose wheel values in the event.
+
+                            // FIXME: What are the different directions??
+                            Vector2 scroll = new Vector2(mouseWheel.x, mouseWheel.y);
+                            // FIXME: I don't think this is distance! We want to precisely determine what should be put in the distance field.
+                            Vector2 distance = new Vector2(mouseWheel.preciseX, mouseWheel.preciseY);
+
+                            EventQueue.Raise(sdlWindow, PlatformEventType.Scroll, new ScrollEventArgs(sdlWindow, scroll, distance));
+
+                            break;
+                        }
+                    default:
+                        Console.WriteLine($"SDL event type: {@event.Type}");
+                        break;
                 }
             }
         }
@@ -169,7 +304,7 @@ namespace OpenTK.Platform.Native.SDL
             if (settings.ForwardCompatibleFlag) flags |= SDL_GLcontextFlag.SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG;
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)flags);
 
-            SDL_WindowPtr window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 400, SDL_WindowFlags.SDL_WINDOW_OPENGL | SDL_WindowFlags.SDL_WINDOW_RESIZABLE);
+            SDL_WindowPtr window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WindowFlags.SDL_WINDOW_OPENGL | SDL_WindowFlags.SDL_WINDOW_RESIZABLE | SDL_WindowFlags.SDL_WINDOW_HIDDEN);
 
             uint id = SDL_GetWindowID(window);
 
@@ -237,6 +372,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            // FIXME: This sets the client position!!
             SDL_SetWindowPosition(window.Window, x, y);
         }
 
@@ -244,6 +380,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            // FIXME: This sets the client position!!
             SDL_GetWindowSize(window.Window, out width, out height);
         }
 
@@ -258,14 +395,14 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            SDL_GetWindowPosition(window.Window, out x, out y);
         }
 
         public void SetClientPosition(WindowHandle handle, int x, int y)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            SDL_SetWindowPosition(window.Window, x, y);
         }
 
         public void GetClientSize(WindowHandle handle, out int width, out int height)
@@ -328,7 +465,10 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            int index = SDL_GetWindowDisplayIndex(window.Window);
+
+            // FIXME: We should probably call SDLDisplayComponent.Create or something like that...
+            return new SDLDisplay(index);
         }
 
         public WindowMode GetMode(WindowHandle handle)

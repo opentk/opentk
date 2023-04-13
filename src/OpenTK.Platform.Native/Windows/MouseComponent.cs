@@ -33,7 +33,7 @@ namespace OpenTK.Platform.Native.Windows
         public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public void GetPosition(MouseHandle handle, out int x, out int y)
+        public void GetPosition(out int x, out int y)
         {
             // FIXME: Check the handle!
 
@@ -49,7 +49,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void SetPosition(MouseHandle handle, int x, int y)
+        public void SetPosition(int x, int y)
         {
             // FIXME: Check the handle!
 

@@ -288,5 +288,17 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
         internal static extern int SDL_GetDisplayUsableBounds(int displayIndex, out SDL_Rect rect);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetWindowDisplayIndex(SDL_WindowPtr window);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern uint SDL_GetMouseState(out int x, out int y);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_WarpMouseInWindow(SDL_WindowPtr window, int x, int y);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_WarpMouseGlobal(int x, int y);
     }
 }

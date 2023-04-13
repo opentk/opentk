@@ -13,17 +13,17 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Get the mouse cursor position.
         /// </summary>
-        /// <param name="handle">Handle to a mouse or null for default.</param>
         /// <param name="x">X coordinate of the mouse in desktop space.</param>
         /// <param name="y">Y coordinate of the mouse in desktop space.</param>
-        void GetPosition(MouseHandle handle, out int x, out int y);
+        /// 
+        void GetPosition(out int x, out int y);
 
         /// <summary>
         /// Set the mouse cursor position.
         /// </summary>
-        /// <param name="handle">Handle to a mouse or null for default.</param>
         /// <param name="x">X coordinate of the mouse in desktop space.</param>
         /// <param name="y">Y coordinate of the mouse in desktop space.</param>
-        void SetPosition(MouseHandle handle, int x, int y);
+        /// 
+        void SetPosition(int x, int y);
     }
 }

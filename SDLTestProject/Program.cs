@@ -15,6 +15,8 @@ namespace SDLTestProject
         static IWindowComponent WindowComp;
         static IOpenGLComponent OpenGLComponent;
         static IDisplayComponent DisplayComponent;
+        static IMouseComponent MouseComponent;
+
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
@@ -54,21 +56,27 @@ void main()
             WindowComp = new SDLWindowComponent();
             OpenGLComponent = new SDLOpenGLComponent();
             DisplayComponent = new SDLDisplayComponent();
+            MouseComponent = new SDLMouseComponent();
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
             OpenGLComponent.Logger = logger;
             DisplayComponent.Logger = logger;
+            MouseComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);
             DisplayComponent.Initialize(PalComponents.Display);
+            MouseComponent.Initialize(PalComponents.MiceInput);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
+            WindowComp.SetSize(WindowHandle, 800, 600);
 
             WindowComp.SetMaxClientSize(WindowHandle, 1000, 1000);
             WindowComp.SetMinClientSize(WindowHandle, 100, 100);
+
+            WindowComp.SetMode(WindowHandle, WindowMode.Normal);
 
             ContextHandle = OpenGLComponent.CreateFromWindow(WindowHandle);
             OpenGLComponent.SetCurrentContext(ContextHandle);
@@ -139,7 +147,7 @@ void main()
             }
         }
 
-        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, System.EventArgs args)
+        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             if (args is CloseEventArgs close)
             {
