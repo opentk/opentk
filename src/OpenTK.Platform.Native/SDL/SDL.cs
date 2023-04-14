@@ -409,5 +409,8 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
         internal static extern void SDL_SetWindowIcon(SDL_WindowPtr window, SDL_Surface* icon);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_FreeSurface(SDL_Surface* surface);
     }
 }

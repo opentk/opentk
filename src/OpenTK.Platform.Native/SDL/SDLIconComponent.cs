@@ -40,11 +40,11 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void Destroy(IconHandle handle)
+        public unsafe void Destroy(IconHandle handle)
         {
             SDLIcon icon = handle.As<SDLIcon>(this);
 
-            // FIXME: free the surface
+            SDL_FreeSurface(icon.Surface);
         }
 
         /// <inheritdoc/>
