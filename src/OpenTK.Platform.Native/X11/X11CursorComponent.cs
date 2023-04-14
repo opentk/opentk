@@ -215,16 +215,6 @@ namespace OpenTK.Platform.Native.X11
             XFreePixmap(X11.Display, pixmap);
         }
 
-        public void Load(CursorHandle handle, string file)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(CursorHandle handle, Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetHotspot(CursorHandle handle, int x, int y)
         {
             throw new NotImplementedException();

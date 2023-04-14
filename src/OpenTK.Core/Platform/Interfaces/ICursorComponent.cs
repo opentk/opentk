@@ -112,30 +112,6 @@ namespace OpenTK.Core.Platform
         void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData);
 
         /// <summary>
-        /// Load a cursor from a file.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="file">Path to cursor file.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver does not provide this function. See <see cref="CanLoadFromFile"/>.</exception>
-        /// <exception cref="FileNotFoundException">File at path <paramref name="file"/> not found.</exception>
-        /// <exception cref="IOException">Input output error.</exception>
-        /// <exception cref="NotSupportedException">File format not supported or recognized.</exception>
-        void Load(CursorHandle handle, string file);
-
-        /// <summary>
-        /// Load a cursor from a stream.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="stream">Stream containing mouse cursor.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver does not provide this function. See <see cref="CanLoadFromFile"/>.</exception>
-        /// <exception cref="IOException">Input Output Error.</exception>
-        /// <exception cref="NotSupportedException">File format not supported or recognized.</exception>
-        /// <remarks>This function should be implemented using a temporary file if the system does not support reading from a stream.</remarks>
-        void Load(CursorHandle handle, Stream stream);
-
-        /// <summary>
         /// Set the cursor hot spot.
         /// </summary>
         /// <param name="handle">Handle to a cursor object.</param>

@@ -495,8 +495,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
-        /// <inheritdoc/>
-        public void Load(CursorHandle handle, string file)
+        public void LoadCurFile(CursorHandle handle, string file)
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
@@ -521,12 +520,6 @@ namespace OpenTK.Platform.Native.Windows
 
             hcursor.Cursor = cursor;
             hcursor.Mode = HCursor.CursorMode.FileIcon;
-        }
-
-        /// <inheritdoc/>
-        public void Load(CursorHandle handle, Stream stream)
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

@@ -666,18 +666,6 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, string file)
-        {
-            _cursorComponent!.Load(handle, file);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, Stream stream)
-        {
-            _cursorComponent!.Load(handle, stream);
-        }
-
-        /// <inheritdoc/>
         void ICursorComponent.SetHotspot(CursorHandle handle, int x, int y)
         {
             _cursorComponent!.SetHotspot(handle, x, y);

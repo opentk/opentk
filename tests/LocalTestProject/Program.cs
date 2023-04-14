@@ -275,7 +275,7 @@ namespace LocalTestProject
             }
 
             FileCursorHandle = cursorComp.Create();
-            cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");
+            cursorComp.LoadCurFile(FileCursorHandle, "Cute Light Green Normal Select.cur");
             windowComp.SetCursor(WindowHandle, FileCursorHandle);
 
             {
