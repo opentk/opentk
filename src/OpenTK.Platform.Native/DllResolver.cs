@@ -79,6 +79,13 @@ namespace OpenTK.Platform.Native
                 "libXfixes.so.2",
                 "libXfixes.so.1",
             },
+
+            ["SDL2"] = new string[]
+            {
+                "libSDL2-2.0.so",
+                // FIXME: Complete this list with a more comprehensive collection of names.
+                "libSDL2-2.0.so.0.2600.5",
+            }
         };
     }
 }

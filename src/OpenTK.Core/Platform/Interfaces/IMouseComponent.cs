@@ -15,7 +15,6 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="x">X coordinate of the mouse in desktop space.</param>
         /// <param name="y">Y coordinate of the mouse in desktop space.</param>
-        /// 
         void GetPosition(out int x, out int y);
 
         /// <summary>
@@ -23,7 +22,6 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="x">X coordinate of the mouse in desktop space.</param>
         /// <param name="y">Y coordinate of the mouse in desktop space.</param>
-        /// 
         void SetPosition(int x, int y);
     }
 }

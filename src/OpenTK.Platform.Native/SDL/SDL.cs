@@ -13,6 +13,12 @@ namespace OpenTK.Platform.Native.SDL
 {
     internal static unsafe class SDL
     {
+        static SDL()
+        {
+            // Dll loading to resolve SDL .so file on linux.
+            DllResolver.InitLoader();
+        }
+
         // FIXME: Make cross-platform and cross architecture.
         // FIXME: Make a nuget package for this.
         const string SDLLib = "SDL2";
