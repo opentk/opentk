@@ -133,4 +133,99 @@ namespace OpenTK.Platform.Native.SDL
         SDL_HITTEST_RESIZE_BOTTOMLEFT,
         SDL_HITTEST_RESIZE_LEFT
     }
+
+    /** Pixel type. */
+    enum SDL_PixelType
+    {
+        SDL_PIXELTYPE_UNKNOWN,
+        SDL_PIXELTYPE_INDEX1,
+        SDL_PIXELTYPE_INDEX4,
+        SDL_PIXELTYPE_INDEX8,
+        SDL_PIXELTYPE_PACKED8,
+        SDL_PIXELTYPE_PACKED16,
+        SDL_PIXELTYPE_PACKED32,
+        SDL_PIXELTYPE_ARRAYU8,
+        SDL_PIXELTYPE_ARRAYU16,
+        SDL_PIXELTYPE_ARRAYU32,
+        SDL_PIXELTYPE_ARRAYF16,
+        SDL_PIXELTYPE_ARRAYF32
+    }
+
+    /** Bitmap pixel order, high bit -> low bit. */
+    enum SDL_BitmapOrder
+    {
+        SDL_BITMAPORDER_NONE,
+        SDL_BITMAPORDER_4321,
+        SDL_BITMAPORDER_1234
+    }
+
+    /** Packed component order, high bit -> low bit. */
+    enum SDL_PackedOrder
+    {
+        SDL_PACKEDORDER_NONE,
+        SDL_PACKEDORDER_XRGB,
+        SDL_PACKEDORDER_RGBX,
+        SDL_PACKEDORDER_ARGB,
+        SDL_PACKEDORDER_RGBA,
+        SDL_PACKEDORDER_XBGR,
+        SDL_PACKEDORDER_BGRX,
+        SDL_PACKEDORDER_ABGR,
+        SDL_PACKEDORDER_BGRA
+    }
+
+    /** Array component order, low byte -> high byte. */
+    enum SDL_ArrayOrder
+    {
+        SDL_ARRAYORDER_NONE,
+        SDL_ARRAYORDER_RGB,
+        SDL_ARRAYORDER_BGR,
+    }
+
+    /** Packed component layout. */
+    enum SDL_PackedLayout
+    {
+        SDL_PACKEDLAYOUT_NONE,
+        SDL_PACKEDLAYOUT_332,
+        SDL_PACKEDLAYOUT_4444,
+        SDL_PACKEDLAYOUT_1555,
+        SDL_PACKEDLAYOUT_5551,
+        SDL_PACKEDLAYOUT_565,
+        SDL_PACKEDLAYOUT_8888,
+        SDL_PACKEDLAYOUT_2101010,
+        SDL_PACKEDLAYOUT_1010102
+    }
+
+    // Incomplete, porting over all enum constants seemed like a pain.
+    enum SDL_PixelFormatEnum : uint
+    {
+        /*
+        #define SDL_DEFINE_PIXELFORMAT(type, order, layout, bits, bytes) \
+            ((1 << 28) | ((type) << 24) | ((order) << 20) | ((layout) << 16) | \
+            ((bits) << 8) | ((bytes) << 0))
+        */
+
+        SDL_PIXELFORMAT_RGBA8888 =
+            (1 << 28) |
+            (SDL_PixelType.SDL_PIXELTYPE_PACKED32 << 24) |
+            (SDL_PackedOrder.SDL_PACKEDORDER_RGBA << 20) |
+            (SDL_PackedLayout.SDL_PACKEDLAYOUT_8888 << 16) |
+            (32 << 8) |
+            (4 << 0),
+
+        SDL_PIXELFORMAT_ARGB8888 =
+            (1 << 28) |
+            (SDL_PixelType.SDL_PIXELTYPE_PACKED32 << 24) |
+            (SDL_PackedOrder.SDL_PACKEDORDER_ARGB << 20) |
+            (SDL_PackedLayout.SDL_PACKEDLAYOUT_8888 << 16) |
+            (32 << 8) |
+            (4 << 0),
+
+        SDL_PIXELFORMAT_ABGR8888 =
+           (1 << 28) |
+           (SDL_PixelType.SDL_PIXELTYPE_PACKED32 << 24) |
+           (SDL_PackedOrder.SDL_PACKEDORDER_ABGR << 20) |
+           (SDL_PackedLayout.SDL_PACKEDLAYOUT_8888 << 16) |
+           (32 << 8) |
+           (4 << 0),
+    }
 }

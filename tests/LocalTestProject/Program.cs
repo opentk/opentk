@@ -11,6 +11,7 @@ using OpenTK.Core.Utility;
 using OpenTK;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LocalTestProject
 {
@@ -219,10 +220,30 @@ namespace LocalTestProject
                     {
                         int index = (ccy * 16 + ccx) * 4;
 
-                        icon[index + 0] = (byte)(ccx * 16);
-                        icon[index + 1] = (byte)(ccx * 16);
-                        icon[index + 2] = (byte)(ccx * 16);
+                        if (ccx < 5)
+                        {
+                            icon[index + 0] = 255;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 0;
+                        }
+                        else if (ccx < 10)
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 255;
+                            icon[index + 2] = 0;
+                        }
+                        else
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 255;
+                        }
+
+                        //icon[index + 0] = (byte)(ccx * 16);
+                        //icon[index + 1] = (byte)(ccx * 16);
+                        //icon[index + 2] = (byte)(ccx * 16);
                         icon[index + 3] = 255;
+                        if (ccy < 5) icon[index + 3] = 50;
                     }
                 }
 
@@ -230,11 +251,25 @@ namespace LocalTestProject
                 iconComp.Load(IconHandle, 16, 16, icon);
 
                 windowComp.SetIcon(WindowHandle, IconHandle);
+
+                {
+                    iconComp.GetDimensions(IconHandle, out int iw, out int ih);
+
+                    int bytes = iconComp.GetBitmapByteSize(IconHandle);
+                    byte[] data = new byte[bytes];
+
+                    iconComp.GetBitmapData(IconHandle, data);
+
+                    Debug.Assert(iw == 16);
+                    Debug.Assert(ih == 16);
+                    Debug.Assert(bytes == 1024);
+                    Debug.Assert(data.SequenceEqual(icon));
+                }
             }
 
             {
                 IconHandle2 = iconComp.Create();
-                iconComp.Load(IconHandle2, "Wikipedia-Flags-UN-United-Nations-Flag.ico");
+                (iconComp as IconComponent)?.LoadIcoFile(IconHandle2, "Wikipedia-Flags-UN-United-Nations-Flag.ico");
 
                 windowComp.SetIcon(WindowHandle2, IconHandle2);
             }
@@ -713,11 +748,11 @@ void main()
 
         public static int GetIconImage(IconHandle handle)
         {
-            int size = iconComp.GetBitmapSize(handle);
+            int size = iconComp.GetBitmapByteSize(handle);
             byte[] data = new byte[size];
             
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            iconComp.GetBitmap(handle, data);
+            iconComp.GetBitmapData(handle, data);
 
             iconComp.GetDimensions(handle, out int width, out int height);
 

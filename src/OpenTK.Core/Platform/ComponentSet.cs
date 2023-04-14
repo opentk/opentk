@@ -301,13 +301,7 @@ namespace OpenTK.Core.Platform
         bool ICursorComponent.CanSupportAnimatedCursor => _cursorComponent!.CanSupportAnimatedCursor;
 
         /// <inheritdoc/>
-        bool IIconComponent.CanLoadFile => _iconComponent!.CanLoadFile;
-
-        /// <inheritdoc/>
         bool IIconComponent.CanLoadSystemIcon => _iconComponent!.CanLoadSystemIcon;
-
-        /// <inheritdoc/>
-        bool IIconComponent.HasMipmaps => _iconComponent!.HasMipmaps;
 
         /// <inheritdoc/>
         bool IWindowComponent.CanSetIcon => _windowComponent!.CanSetIcon;
@@ -588,69 +582,27 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IIconComponent.GenerateMipmaps(IconHandle handle)
-        {
-            _iconComponent!.GenerateMipmaps(handle);
-        }
-
-        /// <inheritdoc/>
         void IIconComponent.GetDimensions(IconHandle handle, out int width, out int height)
         {
             _iconComponent!.GetDimensions(handle, out width, out height);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.GetDimensions(IconHandle handle, int level, out int width, out int height)
+        void IIconComponent.GetBitmapData(IconHandle handle, Span<byte> data)
         {
-            _iconComponent!.GetDimensions(handle, level, out width, out height);
+            _iconComponent!.GetBitmapData(handle, data);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.GetBitmap(IconHandle handle, Span<byte> data)
+        int IIconComponent.GetBitmapByteSize(IconHandle handle)
         {
-            _iconComponent!.GetBitmap(handle, data);
-        }
-
-        /// <inheritdoc/>
-        void IIconComponent.GetBitmap(IconHandle handle, int level, Span<byte> data)
-        {
-            _iconComponent!.GetBitmap(handle, level, data);
-        }
-
-        /// <inheritdoc/>
-        int IIconComponent.GetBitmapSize(IconHandle handle)
-        {
-            return _iconComponent!.GetBitmapSize(handle);
-        }
-
-        /// <inheritdoc/>
-        int IIconComponent.GetBitmapSize(IconHandle handle, int level)
-        {
-            return _iconComponent!.GetBitmapSize(handle, level);
+            return _iconComponent!.GetBitmapByteSize(handle);
         }
 
         /// <inheritdoc/>
         void IIconComponent.Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
         {
             _iconComponent!.Load(handle, width, height, data);
-        }
-
-        /// <inheritdoc/>
-        void IIconComponent.Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data, int level)
-        {
-            _iconComponent!.Load(handle, width, height, data, level);
-        }
-
-        /// <inheritdoc/>
-        void IIconComponent.Load(IconHandle handle, string file)
-        {
-            _iconComponent!.Load(handle, file);
-        }
-
-        /// <inheritdoc/>
-        void IIconComponent.Load(IconHandle handle, Stream stream)
-        {
-            _iconComponent!.Load(handle, stream);
         }
 
         /// <inheritdoc/>

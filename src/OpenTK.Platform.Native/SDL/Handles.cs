@@ -18,6 +18,8 @@ namespace OpenTK.Platform.Native.SDL
 
         public HitTest? HitTest { get; internal set; } = null;
 
+        public SDLIcon? Icon { get; internal set; } = null;
+
         public SDLWindow(SDL_WindowPtr window, uint windowID)
         {
             Window = window;
@@ -50,5 +52,12 @@ namespace OpenTK.Platform.Native.SDL
         {
             Index = index;
         }
+    }
+
+    internal unsafe class SDLIcon : IconHandle
+    {
+        public SDL_Surface* Surface;
+
+
     }
 }

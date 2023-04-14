@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.SDL
 {
-    internal static class SDL
+    internal static unsafe class SDL
     {
         // FIXME: Make cross-platform and cross architecture.
         // FIXME: Make a nuget package for this.
@@ -322,5 +322,92 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
         internal static extern int SDL_HasClipboardText();
+
+        internal struct SDL_Color
+        {
+            public byte r;
+            public byte g;
+            public byte b;
+            public byte a;
+        }
+
+        internal unsafe struct SDL_Palette
+        {
+            public int ncolors;
+            public SDL_Color* colors;
+            public uint version;
+            public int refcount;
+        }
+
+        internal unsafe struct SDL_PixelFormat
+        {
+            public uint format;
+            public SDL_Palette* palette;
+            public byte BitsPerPixel;
+            public byte BytesPerPixel;
+            public byte padding0;
+            public byte padding1;
+            public uint Rmask;
+            public uint Gmask;
+            public uint Bmask;
+            public uint Amask;
+            public byte Rloss;
+            public byte Gloss;
+            public byte Bloss;
+            public byte Aloss;
+            public byte Rshift;
+            public byte Gshift;
+            public byte Bshift;
+            public byte Ashift;
+            public int refcount;
+            public SDL_PixelFormat *next;
+        }
+
+        internal unsafe struct SDL_Surface
+        {
+            public uint flags;                 /**< Read-only */
+            public SDL_PixelFormat* format;    /**< Read-only */
+            public int w, h;                   /**< Read-only */
+            public int pitch;                  /**< Read-only */
+            public void* pixels;               /**< Read-write */
+
+            /** Application data associated with the surface */
+            public void* userdata;             /**< Read-write */
+
+            /** information needed for surfaces requiring locks */
+            public int locked;                 /**< Read-only */
+
+            /** list of BlitMap that hold a reference to this surface */
+            public void* list_blitmap;         /**< Private */
+
+            /** clipping information */
+            public SDL_Rect clip_rect;         /**< Read-only */
+
+            /** info for fast blit mapping to other surfaces */
+            public void* map;                  /**< Private */
+
+            /** Reference count -- used when freeing surface */
+            public int refcount;               /**< Read-mostly */
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_SetWindowIcon(SDL_WindowPtr window, in SDL_Surface icon);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static unsafe extern SDL_Surface* SDL_CreateRGBSurfaceWithFormat(
+                                                                        uint flags,
+                                                                        int width,
+                                                                        int height,
+                                                                        int depth,
+                                                                        SDL_PixelFormatEnum format);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_LockSurface(SDL_Surface* surface);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_UnlockSurface(SDL_Surface* surface);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_SetWindowIcon(SDL_WindowPtr window, SDL_Surface* icon);
     }
 }

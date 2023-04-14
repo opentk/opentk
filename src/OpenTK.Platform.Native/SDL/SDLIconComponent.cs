@@ -1,0 +1,109 @@
+﻿using OpenTK.Core.Platform;
+using OpenTK.Core.Utility;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static OpenTK.Platform.Native.SDL.SDL;
+
+namespace OpenTK.Platform.Native.SDL
+{
+    public class SDLIconComponent : IIconComponent
+    {
+        /// <inheritdoc/>
+        public string Name => nameof(SDLIconComponent);
+
+        /// <inheritdoc/>
+        public PalComponents Provides => PalComponents.WindowIcon;
+
+        /// <inheritdoc/>
+        public ILogger? Logger { get; set; }
+
+        /// <inheritdoc/>
+        public void Initialize(PalComponents which)
+        {
+            if(which != PalComponents.WindowIcon)
+            {
+                throw new PalException(this, "SDLIconComponent can only initialize the WindowIcon component.");
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool CanLoadSystemIcon => false;
+
+        /// <inheritdoc/>
+        public IconHandle Create()
+        {
+            return new SDLIcon();
+        }
+
+        /// <inheritdoc/>
+        public void Destroy(IconHandle handle)
+        {
+            SDLIcon icon = handle.As<SDLIcon>(this);
+
+            // FIXME: free the surface
+        }
+
+        /// <inheritdoc/>
+        public unsafe void GetDimensions(IconHandle handle, out int width, out int height)
+        {
+            SDLIcon icon = handle.As<SDLIcon>(this);
+
+            width = icon.Surface->w;
+            height = icon.Surface->h;
+        }
+
+        /// <inheritdoc/>
+        public unsafe void GetBitmapData(IconHandle handle, Span<byte> data)
+        {
+            SDLIcon icon = handle.As<SDLIcon>(this);
+
+            SDL_LockSurface(icon.Surface);
+
+            // Here we rely on sdl having the same pixel format as we do.
+            Span<byte> surfaceData = new Span<byte>(icon.Surface->pixels, data.Length);
+            surfaceData.CopyTo(data);
+
+            SDL_UnlockSurface(icon.Surface);
+        }
+
+        /// <inheritdoc/>
+        public unsafe int GetBitmapByteSize(IconHandle handle)
+        {
+            SDLIcon icon = handle.As<SDLIcon>(this);
+
+            return icon.Surface->w * icon.Surface->h * 4;
+        }
+
+        /// <inheritdoc/>
+        public unsafe void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
+        {
+            SDLIcon icon = handle.As<SDLIcon>(this);
+
+            // FIXME: Should we destroy icons internally like this?
+            Destroy(icon);
+
+            SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PixelFormatEnum.SDL_PIXELFORMAT_ABGR8888);
+
+            SDL_LockSurface(surface);
+
+            fixed (byte* ptr = data)
+            {
+                Buffer.MemoryCopy(ptr, surface->pixels, surface->pitch * height, data.Length);
+            }
+
+            SDL_UnlockSurface(surface);
+
+            icon.Surface = surface;
+        }
+
+        /// <inheritdoc/>
+        public void Load(IconHandle handle, SystemIconType name)
+        {
+            throw new NotSupportedException("SDL2 can't load system icons.");
+        }
+    }
+}

@@ -354,11 +354,13 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
-        public void SetIcon(WindowHandle handle, IconHandle icon)
+        public unsafe void SetIcon(WindowHandle handle, IconHandle icon)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
+            SDLIcon sdlIcon = icon.As<SDLIcon>(this);
 
-            throw new NotImplementedException();
+            window.Icon = sdlIcon;
+            SDL_SetWindowIcon(window.Window, sdlIcon.Surface);
         }
 
         public void GetPosition(WindowHandle handle, out int x, out int y)

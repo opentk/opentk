@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
@@ -17,9 +19,11 @@ namespace SDLTestProject
         static IDisplayComponent DisplayComponent;
         static IMouseComponent MouseComponent;
         static IClipboardComponent ClipboardComponent;
+        static IIconComponent IconComponent;
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
+        static IconHandle IconHandle;
 
         const string vertexShaderSource =
     @"#version 330 core
@@ -58,6 +62,7 @@ void main()
             DisplayComponent = new SDLDisplayComponent();
             MouseComponent = new SDLMouseComponent();
             ClipboardComponent = new SDLClipboardComponent();
+            IconComponent = new SDLIconComponent();
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
@@ -65,12 +70,14 @@ void main()
             DisplayComponent.Logger = logger;
             MouseComponent.Logger = logger;
             ClipboardComponent.Logger = logger;
+            IconComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);
             DisplayComponent.Initialize(PalComponents.Display);
             MouseComponent.Initialize(PalComponents.MiceInput);
             ClipboardComponent.Initialize(PalComponents.Clipboard);
+            IconComponent.Initialize(PalComponents.WindowIcon);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
@@ -78,6 +85,59 @@ void main()
 
             WindowComp.SetMaxClientSize(WindowHandle, 1000, 1000);
             WindowComp.SetMinClientSize(WindowHandle, 100, 100);
+
+            // Generate and set window icon 
+            {
+                byte[] icon = new byte[16 * 16 * 4];
+                for (int ccx = 0; ccx < 16; ccx++)
+                {
+                    for (int ccy = 0; ccy < 16; ccy++)
+                    {
+                        int index = (ccy * 16 + ccx) * 4;
+
+                        if (ccx < 5)
+                        {
+                            icon[index + 0] = 255;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 0;
+                        }
+                        else if (ccx < 10)
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 255;
+                            icon[index + 2] = 0;
+                        }
+                        else
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 255;
+                        }
+
+                        icon[index + 3] = 255;
+                        if (ccy < 5) icon[index + 3] = 50;
+                    }
+                }
+
+                IconHandle = IconComponent.Create();
+                IconComponent.Load(IconHandle, 16, 16, icon);
+
+                WindowComp.SetIcon(WindowHandle, IconHandle);
+
+                {
+                    IconComponent.GetDimensions(IconHandle, out int iw, out int ih);
+
+                    int bytes = IconComponent.GetBitmapByteSize(IconHandle);
+                    byte[] data = new byte[bytes];
+
+                    IconComponent.GetBitmapData(IconHandle, data);
+
+                    Debug.Assert(iw == 16);
+                    Debug.Assert(ih == 16);
+                    Debug.Assert(bytes == 1024);
+                    Debug.Assert(data.SequenceEqual(icon));
+                }
+            }
 
             WindowComp.SetMode(WindowHandle, WindowMode.Normal);
 
@@ -158,16 +218,7 @@ void main()
             }
             else if (args is MouseButtonDownEventArgs mouseDown)
             {
-                string? text = ClipboardComponent.GetClipboardText();
-                if (text != null)
-                {
-                    Console.WriteLine("Clipboard: ");
-                    Console.WriteLine(text);
-                }
-                else
-                {
-                    Console.WriteLine("No clipboard text!");
-                }
+
             }
         }
 
