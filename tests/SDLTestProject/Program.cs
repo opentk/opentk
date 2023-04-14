@@ -58,6 +58,13 @@ void main()
 
         static void Main(string[] args)
         {
+            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture);
+            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
+            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSArchitecture);
+            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier);
+            Console.WriteLine($"Is OS 64 bit: {System.Environment.Is64BitOperatingSystem}");
+            Console.WriteLine($"Is process 64 bit: {System.Environment.Is64BitProcess}");
+
             WindowComp = new SDLWindowComponent();
             OpenGLComponent = new SDLOpenGLComponent();
             DisplayComponent = new SDLDisplayComponent();
