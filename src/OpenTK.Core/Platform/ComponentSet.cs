@@ -289,9 +289,6 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        bool ICursorComponent.CanLoadFromFile => _cursorComponent!.CanLoadFromFile;
-
-        /// <inheritdoc/>
         bool ICursorComponent.CanLoadSystemCursor => _cursorComponent!.CanLoadSystemCursor;
 
         /// <inheritdoc/>

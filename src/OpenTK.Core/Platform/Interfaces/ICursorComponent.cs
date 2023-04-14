@@ -9,11 +9,6 @@ namespace OpenTK.Core.Platform
     public interface ICursorComponent : IPalComponent
     {
         /// <summary>
-        /// True if the driver can load from a file.
-        /// </summary>
-        bool CanLoadFromFile { get; }
-
-        /// <summary>
         /// True if the driver can load system cursors.
         /// </summary>
         bool CanLoadSystemCursor { get; }
@@ -26,6 +21,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// True if the driver can create and display custom animated cursors.
         /// </summary>
+        // FIXME: We don't even have API for animated cursors!
         bool CanSupportAnimatedCursor { get; }
 
         /// <summary>

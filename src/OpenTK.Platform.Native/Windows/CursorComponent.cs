@@ -32,9 +32,6 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool CanLoadFromFile => true;
-
-        /// <inheritdoc/>
         public bool CanLoadSystemCursor => true;
 
         /// <inheritdoc/>
@@ -495,6 +492,12 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
+        /// <summary>
+        /// Loads a cursor from a .cur file.
+        /// </summary>
+        /// <param name="handle">Handle to a cursor.</param>
+        /// <param name="file">The .cur file to load.</param>
+        /// <exception cref="FileNotFoundException"></exception>
         public void LoadCurFile(CursorHandle handle, string file)
         {
             HCursor hcursor = handle.As<HCursor>(this);
