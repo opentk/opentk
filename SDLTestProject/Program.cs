@@ -20,6 +20,7 @@ namespace SDLTestProject
         static IMouseComponent MouseComponent;
         static IClipboardComponent ClipboardComponent;
         static IIconComponent IconComponent;
+        static IShellComponent ShellComponent;
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
@@ -63,6 +64,7 @@ void main()
             MouseComponent = new SDLMouseComponent();
             ClipboardComponent = new SDLClipboardComponent();
             IconComponent = new SDLIconComponent();
+            ShellComponent = new SDLShellComponent();
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
@@ -71,6 +73,7 @@ void main()
             MouseComponent.Logger = logger;
             ClipboardComponent.Logger = logger;
             IconComponent.Logger = logger;
+            ShellComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);

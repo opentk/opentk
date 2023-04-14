@@ -228,4 +228,13 @@ namespace OpenTK.Platform.Native.SDL
            (32 << 8) |
            (4 << 0),
     }
+
+    enum SDL_PowerState : int
+    {
+        SDL_POWERSTATE_UNKNOWN,      /**< cannot determine power status */
+        SDL_POWERSTATE_ON_BATTERY,   /**< Not plugged in, running on the battery */
+        SDL_POWERSTATE_NO_BATTERY,   /**< Plugged in, no battery available */
+        SDL_POWERSTATE_CHARGING,     /**< Plugged in, charging battery */
+        SDL_POWERSTATE_CHARGED       /**< Plugged in, battery charged */
+    }
 }

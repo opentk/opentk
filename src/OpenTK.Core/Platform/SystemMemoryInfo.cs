@@ -14,11 +14,11 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// The amount of physical memory in bytes.
         /// </summary>
-        public ulong TotalPhysicalMemory;
+        public long TotalPhysicalMemory;
 
         /// <summary>
         /// The amount of available physical memory in bytes.
         /// </summary>
-        public ulong AvailablePhysicalMemory;
+        public long AvailablePhysicalMemory;
     }
 }

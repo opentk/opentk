@@ -198,8 +198,8 @@ namespace OpenTK.Platform.Native.Windows
             if (success)
             {
                 SystemMemoryInfo info;
-                info.TotalPhysicalMemory = status.ullTotalPhys;
-                info.AvailablePhysicalMemory = status.ullAvailPhys;
+                info.TotalPhysicalMemory = (long)status.ullTotalPhys;
+                info.AvailablePhysicalMemory = (long)status.ullAvailPhys;
 
                 return info;
             }

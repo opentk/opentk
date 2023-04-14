@@ -412,5 +412,20 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
         internal static extern void SDL_FreeSurface(SDL_Surface* surface);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_DisableScreenSaver();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern void SDL_EnableScreenSaver();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_IsScreenSaverEnabled();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern SDL_PowerState SDL_GetPowerInfo(out int seconds, out int percent);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Winapi)]
+        internal static extern int SDL_GetSystemRAM();
     }
 }
