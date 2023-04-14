@@ -23,10 +23,16 @@ namespace X11TestProject
             IWindowComponent windowComp = PlatformComponents.CreateWindowComponent();
             IOpenGLComponent glComp = PlatformComponents.CreateOpenGLComponent();
             IDisplayComponent dispComp = PlatformComponents.CreateDisplayComponent();
+            IShellComponent shellComp = PlatformComponents.CreateShellComponent();
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
             dispComp.Initialize(PalComponents.Display);
+            shellComp.Initialize(PalComponents.Shell);
+
+            var memInfo = shellComp.GetSystemMemoryInformation();
+            Console.WriteLine($"Total RAM: {memInfo.TotalPhysicalMemory}");
+            Console.WriteLine($"Available RAM: {memInfo.AvailablePhysicalMemory}");
 
             ComponentSet layer = new ComponentSet();
 

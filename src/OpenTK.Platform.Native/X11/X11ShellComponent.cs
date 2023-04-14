@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -115,6 +116,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc />
         // FIXME: Maybe add a platform specific API for getting a theme name.
         public ThemeInfo GetPreferredTheme()
         {
@@ -125,9 +127,25 @@ namespace OpenTK.Platform.Native.X11
             throw new NotImplementedException();
         }
 
-        public SystemMemoryInfo GetSystemMemoryInformation()
+        /// <inheritdoc />
+        public unsafe SystemMemoryInfo GetSystemMemoryInformation()
         {
-            throw new NotImplementedException();
+            int result = Sysinfo.sysinfo(out Sysinfo.sysinfo_struct sysInfo);
+            if (result < 0)
+            {
+                int error = Marshal.GetLastPInvokeError();
+                string? errorStr = Marshal.PtrToStringUTF8((IntPtr)Sysinfo.strerror(error));
+
+                Logger?.LogError($"sysinfo() failed: '{errorStr}' (0x{error:X})");
+                return default;
+            }
+
+            SystemMemoryInfo info;
+
+            info.TotalPhysicalMemory = (long)sysInfo.totalram;
+            info.AvailablePhysicalMemory = (long)sysInfo.freeram;
+
+            return info;
         }
     }
 }
