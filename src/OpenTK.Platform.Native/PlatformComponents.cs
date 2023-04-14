@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +13,28 @@ namespace OpenTK.Platform.Native
     /// </summary>
     public static class PlatformComponents
     {
+        /// <summary>
+        /// Set this to true to prefer loading the SDL backend on all platforms.
+        /// We will fall back to platform specifc backends if SDL cannot be loaded.
+        /// </summary>
+        public static bool PreferSDL2 { get; set; } = false;
+
         private delegate IPalComponent ComponentCtor();
+
+        private static Dictionary<PalComponents, ComponentCtor> sdlComponents =
+            new Dictionary<PalComponents, ComponentCtor>
+            {
+                [PalComponents.Window] = () => new SDL.SDLWindowComponent(),
+                [PalComponents.OpenGL] = () => new SDL.SDLOpenGLComponent(),
+                [PalComponents.Display] = () => new SDL.SDLDisplayComponent(),
+                [PalComponents.Shell] = () => new SDL.SDLShellComponent(),
+                [PalComponents.MiceInput] = () => new SDL.SDLMouseComponent(),
+                //[PalComponents.KeyboardInput] = () => new SDL.SDLKeyboardComponent(),
+                //[PalComponents.MouseCursor] = () => new SDL.SDLCursorComponent(),
+                [PalComponents.WindowIcon] = () => new SDL.SDLIconComponent(),
+                [PalComponents.Clipboard] = () => new SDL.SDLClipboardComponent(),
+                //[PalComponents.Joystick] = () => new SDL.SDLJoystickComponent(),
+            };
 
         private static Dictionary<PalComponents, ComponentCtor> win32Components =
             new Dictionary<PalComponents, ComponentCtor>
@@ -61,6 +83,14 @@ namespace OpenTK.Platform.Native
 
         private static Dictionary<PalComponents, ComponentCtor> GetPlatformComponents()
         {
+            if (PreferSDL2)
+            {
+                // We use the DllResolver to get the same loading logic as DllImport.
+                IntPtr handle = DllResolver.DllImportResolver("SDL2", Assembly.GetExecutingAssembly(), null);
+                if (handle != IntPtr.Zero)
+                    return sdlComponents;
+            }
+
             if (OperatingSystem.IsWindows())
             {
                 return win32Components;
@@ -76,7 +106,7 @@ namespace OpenTK.Platform.Native
             }
             else
             {
-                throw new NotSupportedException("Os not supported.");
+                throw new NotSupportedException($"OS not supported. {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
             }
         }
 

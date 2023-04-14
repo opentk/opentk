@@ -7,6 +7,7 @@ using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native;
 using OpenTK.Platform.Native.SDL;
 using OpenTK.Platform.Native.Windows;
 
@@ -61,17 +62,21 @@ void main()
             Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture);
             Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
             Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSArchitecture);
+            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSDescription);
             Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier);
             Console.WriteLine($"Is OS 64 bit: {System.Environment.Is64BitOperatingSystem}");
             Console.WriteLine($"Is process 64 bit: {System.Environment.Is64BitProcess}");
+            
+            PlatformComponents.PreferSDL2 = true;
+            WindowComp = PlatformComponents.CreateWindowComponent();
+            OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
+            DisplayComponent = PlatformComponents.CreateDisplayComponent();
+            MouseComponent = PlatformComponents.CreateMouseComponent();
+            ClipboardComponent = PlatformComponents.CreateClipboardComponent();
+            IconComponent = PlatformComponents.CreateIconComponent();
+            ShellComponent = PlatformComponents.CreateShellComponent();
 
-            WindowComp = new SDLWindowComponent();
-            OpenGLComponent = new SDLOpenGLComponent();
-            DisplayComponent = new SDLDisplayComponent();
-            MouseComponent = new SDLMouseComponent();
-            ClipboardComponent = new SDLClipboardComponent();
-            IconComponent = new SDLIconComponent();
-            ShellComponent = new SDLShellComponent();
+            Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
