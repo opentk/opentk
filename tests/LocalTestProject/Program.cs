@@ -424,7 +424,7 @@ namespace LocalTestProject
             {
                 FileDropEventArgs fileDrop = (FileDropEventArgs)args;
 
-                Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, In Window: {fileDrop.DroppedInWindow}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
+                Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
             }
             else if (type == PlatformEventType.KeyDown)
             {
@@ -672,6 +672,11 @@ namespace LocalTestProject
                 {
                     Console.WriteLine("Waking up?");
                 }
+            }
+            else if (type == PlatformEventType.ClipboardUpdate)
+            {
+                ClipboardUpdateEventArgs clipboardUpdate = (ClipboardUpdateEventArgs)args;
+                Console.WriteLine($"Clipboard update! New format: {clipboardUpdate.NewFormat}");
             }
         }
 
@@ -987,6 +992,11 @@ void main()
                     }
                 }
 
+                if (triggerLeft > 0 || triggerRight > 0)
+                {
+                    Console.WriteLine($"Supports FFB: {(joystickComponent as JoystickComponent)?.SupportsForceFeedback(handle)}");
+                }
+                
                 joystickComponent.SetVibration(handle, triggerLeft, triggerRight);
 
                 joystickComponent.Close(handle);

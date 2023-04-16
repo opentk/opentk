@@ -44,7 +44,11 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLIcon icon = handle.As<SDLIcon>(this);
 
-            SDL_FreeSurface(icon.Surface);
+            if (icon.Surface != null)
+            {
+                SDL_FreeSurface(icon.Surface);
+                icon.Surface = null;
+            }
         }
 
         /// <inheritdoc/>

@@ -12,12 +12,16 @@ namespace OpenTK.Platform.Native.SDL
 {
     public class SDLMouseComponent : IMouseComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(SDLMouseComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MiceInput;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.MiceInput)
@@ -26,13 +30,16 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public bool CanSetMousePosition => true;
 
+        /// <inheritdoc/>
         public void GetPosition(out int x, out int y)
         {
             SDL_GetMouseState(out x, out y);
         }
 
+        /// <inheritdoc/>
         public void SetPosition(int x, int y)
         {
             int result = SDL_WarpMouseGlobal(x, y);

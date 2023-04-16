@@ -56,8 +56,7 @@ namespace OpenTK.Platform.Native.SDL
 
     internal unsafe class SDLIcon : IconHandle
     {
-        public SDL_Surface* Surface;
-
+        public SDL_Surface* Surface { get; internal set; }
 
     }
 }

@@ -386,22 +386,30 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public Vector2i Position { get; private set; }
 
-        // FIXME: Is this windows only??
-
-        /// <summary>
-        /// If the drop point was inside the window client area or not.
-        /// </summary>
-        public bool DroppedInWindow { get; private set; }
-
-        public FileDropEventArgs(WindowHandle window, IReadOnlyList<string> filePaths, Vector2i position, bool droppedInWindow) : base(window)
+        public FileDropEventArgs(WindowHandle window, IReadOnlyList<string> filePaths, Vector2i position) : base(window)
         {
             FilePaths = filePaths;
             Position = position;
-            DroppedInWindow = droppedInWindow;
         }
     }
 
     // FIXME: This is not a window event
+
+    /// <summary>
+    /// This event is triggered when the contents of the clipboard is changed.
+    /// </summary>
+    public class ClipboardUpdateEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The format of the new clipboard contents.
+        /// </summary>
+        public ClipboardFormat NewFormat { get; private set; }
+
+        public ClipboardUpdateEventArgs(ClipboardFormat newFormat)
+        {
+            NewFormat = newFormat;
+        }
+    }
 
     /// <summary>
     /// This event is triggered when a user changes the preferred theme.

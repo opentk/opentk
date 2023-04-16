@@ -12,6 +12,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IShellComponent : IPalComponent
     {
+        // FIXME: Add a way to check if the screensaver is active or not.
+
         /// <summary>
         /// Sets whether or not a screensaver is allowed to draw on top of the window.
         /// For games with long cutscenes it would be appropriate to set this to <c>false</c>,

@@ -11,12 +11,16 @@ namespace OpenTK.Platform.Native.SDL
 {
     public class SDLClipboardComponent : IClipboardComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(SDLClipboardComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Clipboard;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Clipboard)
@@ -29,14 +33,17 @@ namespace OpenTK.Platform.Native.SDL
             ClipboardFormat.Text
         };
 
+        /// <inheritdoc/>
         public IReadOnlyList<ClipboardFormat> SupportedFormats => _supportedFormats;
 
+        /// <inheritdoc/>
         public ClipboardFormat GetClipboardFormat()
         {
             if (SDL_HasClipboardText() == 1) return ClipboardFormat.Text;
             else return ClipboardFormat.None;
         }
 
+        /// <inheritdoc/>
         public void SetClipboardText(string text)
         {
             int result = SDL_SetClipboardText(text);
@@ -47,6 +54,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public string? GetClipboardText()
         {
             if (GetClipboardFormat() == ClipboardFormat.Text)
@@ -67,24 +75,28 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public AudioData? GetClipboardAudio()
         {
-            throw new NotSupportedException();
+            throw new InvalidOperationException("SDL 2 doesn't support audio clipboard data.");
         }
 
+        /// <inheritdoc/>
         public Bitmap? GetClipboardBitmap()
         {
-            throw new NotSupportedException();
+            throw new InvalidOperationException("SDL 2 doesn't support bitmap clipboard data.");
         }
 
+        /// <inheritdoc/>
         public string? GetClipboardHTML()
         {
-            throw new NotSupportedException();
+            throw new InvalidOperationException("SDL 2 doesn't support HTML clipboard data.");
         }
 
+        /// <inheritdoc/>
         public List<string>? GetClipboardFiles()
         {
-            throw new NotSupportedException();
+            throw new InvalidOperationException("SDL 2 doesn't support files clipboard data.");
         }
     }
 }

@@ -13,12 +13,16 @@ namespace OpenTK.Platform.Native.SDL
     {
         internal static readonly Dictionary<SDL_GLContext, SDLOpenGLContext> ContextDict = new Dictionary<SDL_GLContext, SDLOpenGLContext>();
 
+        /// <inheritdoc/>
         public string Name => nameof(SDLOpenGLComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.OpenGL;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.OpenGL)
@@ -34,17 +38,22 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public bool CanShareContexts => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanCreateFromWindow => true;
 
+        /// <inheritdoc/>
         public bool CanCreateFromSurface => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromSurface()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -60,6 +69,7 @@ namespace OpenTK.Platform.Native.SDL
             return sdlContext;
         }
 
+        /// <inheritdoc/>
         public void DestroyContext(OpenGLContextHandle handle)
         {
             SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
@@ -69,11 +79,13 @@ namespace OpenTK.Platform.Native.SDL
             SDL_GL_DeleteContext(context.Context);
         }
 
+        /// <inheritdoc/>
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
             return new Pal2BindingsContext(this, handle);
         }
 
+        /// <inheritdoc/>
         public IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             SDLOpenGLContext sdlContext = handle.As<SDLOpenGLContext>(this);
@@ -81,6 +93,7 @@ namespace OpenTK.Platform.Native.SDL
             return SDL_GL_GetProcAddress(procedureName);
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
             SDL_GLContext context = SDL_GL_GetCurrentContext();
@@ -94,6 +107,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
             SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
@@ -111,6 +125,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
             SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
@@ -118,11 +133,13 @@ namespace OpenTK.Platform.Native.SDL
             return context.SharedContext;
         }
 
+        /// <inheritdoc/>
         public void SetSwapInterval(int interval)
         {
             SDL_GL_SetSwapInterval(interval);
         }
 
+        /// <inheritdoc/>
         public int GetSwapInterval()
         {
             return SDL_GL_GetSwapInterval();

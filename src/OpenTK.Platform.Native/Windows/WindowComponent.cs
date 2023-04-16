@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -113,6 +114,13 @@ namespace OpenTK.Platform.Native.Windows
             // FIXME: Unregister from these when we close the application?
             IntPtr devNotifHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
             IntPtr resumeSuspendNotifHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
+
+            // Register for WM_CLIPBOARDUPDATE
+            bool success = Win32.AddClipboardFormatListener(HelperHWnd);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
         }
 
         /// <inheritdoc/>
@@ -762,13 +770,21 @@ namespace OpenTK.Platform.Native.Windows
 
                         HWND h = HWndDict[hWnd];
 
-                        EventQueue.Raise(h, PlatformEventType.FileDrop, new FileDropEventArgs(h, paths, new Vector2i(point.X, point.Y), inWindow));
+                        EventQueue.Raise(h, PlatformEventType.FileDrop, new FileDropEventArgs(h, paths, new Vector2i(point.X, point.Y)));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
                 case WM.SETTINGCHANGE:
                     {
                         ShellComponent.CheckPreferredThemeChange();
+
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                case WM.CLIPBOARDUPDATE:
+                    {
+                        ClipboardFormat newFormat = ClipboardComponent.GetClipboardFormatInternal(Logger);
+
+                        EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }

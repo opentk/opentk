@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -89,6 +90,10 @@ namespace OpenTK.Platform.Native
                 IntPtr handle = DllResolver.DllImportResolver("SDL2", Assembly.GetExecutingAssembly(), null);
                 if (handle != IntPtr.Zero)
                     return sdlComponents;
+
+                // If we didn't resolve we try to load it here for windows
+                if (NativeLibrary.TryLoad("SDL2.dll", Assembly.GetExecutingAssembly(), null, out _))
+                    return sdlComponents;
             }
 
             if (OperatingSystem.IsWindows())
@@ -106,7 +111,7 @@ namespace OpenTK.Platform.Native
             }
             else
             {
-                throw new NotSupportedException($"OS not supported. {System.Runtime.InteropServices.RuntimeInformation.OSDescription}");
+                throw new NotSupportedException($"OS not supported. {RuntimeInformation.OSDescription}");
             }
         }
 

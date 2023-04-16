@@ -27,6 +27,9 @@ namespace OpenTK.Platform.Native.SDL
         [FieldOffset(0)]
         public SDL_MouseWheelEvent MouseWheel;
 
+        [FieldOffset(0)]
+        public SDL_DropEvent DropEvent;
+
     }
 
     internal struct SDL_WindowEvent
@@ -82,6 +85,14 @@ namespace OpenTK.Platform.Native.SDL
         public float preciseY;    /**< The amount scrolled vertically, positive away from the user and negative toward the user, with float precision (added in 2.0.18) */
         public int mouseX;        /**< X coordinate, relative to window (added in 2.26.0) */
         public int mouseY;        /**< Y coordinate, relative to window (added in 2.26.0) */
+    }
+
+    internal unsafe struct SDL_DropEvent
+    {
+        public uint type;        /**< ::SDL_DROPBEGIN or ::SDL_DROPFILE or ::SDL_DROPTEXT or ::SDL_DROPCOMPLETE */
+        public uint timestamp;   /**< In milliseconds, populated using SDL_GetTicks() */
+        public char* file;         /**< The file name, which should be freed with SDL_free(), is NULL on begin/complete */
+        public uint windowID;    /**< The window that was dropped on, if any */
     }
 
     internal enum SDL_EventType

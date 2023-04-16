@@ -5,6 +5,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public enum PlatformEventType
     {
+        // FIXME: Give all of these numbers!
+
         /// <summary>
         /// A no operation event, for testing purposes.
         /// </summary>
@@ -43,6 +45,11 @@ namespace OpenTK.Core.Platform
         InputLanguageChanged,
 
         FileDrop,
+
+        /// <summary>
+        /// Is raised when the contents of the clipboard is changed.
+        /// </summary>
+        ClipboardUpdate,
 
         ThemeChange,
 

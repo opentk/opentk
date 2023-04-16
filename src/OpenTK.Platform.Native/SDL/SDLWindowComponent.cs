@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.SDL.SDL;
@@ -17,12 +18,16 @@ namespace OpenTK.Platform.Native.SDL
     {
         internal static readonly Dictionary<uint, SDLWindow> WindowDict = new Dictionary<uint, SDLWindow>();
 
+        /// <inheritdoc/>
         public string Name => nameof(SDLWindowComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Window;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Window)
@@ -40,20 +45,30 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
-        public bool CanSetIcon => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanSetIcon => true;
 
+        /// <inheritdoc/>
         public bool CanGetDisplay => true;
 
+        /// <inheritdoc/>
         public bool CanSetCursor => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanCaptureCursor => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowStyle> SupportedStyles => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => throw new NotImplementedException();
 
+        private List<string> drops = new List<string>();
+
+        /// <inheritdoc/>
         public unsafe void ProcessEvents(bool waitForEvents = false)
         {
             SDLEvent @event;
@@ -227,6 +242,43 @@ namespace OpenTK.Platform.Native.SDL
 
                             break;
                         }
+                    case SDL_EventType.SDL_CLIPBOARDUPDATE:
+                        {
+                            //SDLWindow sdlWindow = WindowDict[@event.windowID];
+                            ClipboardFormat newFormat;
+                            if (SDL_HasClipboardText() == 1) newFormat = ClipboardFormat.Text;
+                            else newFormat = ClipboardFormat.None;
+
+                            EventQueue.Raise(null, PlatformEventType.ClipboardUpdate, new ClipboardUpdateEventArgs(newFormat));
+
+                            break;
+                        }
+                    case SDL_EventType.SDL_DROPBEGIN:
+                    case SDL_EventType.SDL_DROPCOMPLETE:
+                    case SDL_EventType.SDL_DROPFILE:
+                        {
+                            SDL_DropEvent dropEvent = @event.DropEvent;
+
+                            if (@event.Type == SDL_EventType.SDL_DROPBEGIN)
+                            {
+                                drops.Clear();
+                            }
+                            else if (@event.Type == SDL_EventType.SDL_DROPFILE)
+                            {
+                                drops.Add(Marshal.PtrToStringUTF8((IntPtr)dropEvent.file)!);
+                            }
+                            else if (@event.Type == SDL_EventType.SDL_DROPCOMPLETE)
+                            {
+                                SDLWindow sdlWindow = WindowDict[dropEvent.windowID];
+
+                                // FIXME: Should we use SDL_GetMouseState here instead and calculate the global position?
+                                // The documentation says SDL_GetGlobalMouseState might be slower than SDL_GetMouseState.
+                                SDL_GetGlobalMouseState(out int mouseX, out int mouseY);
+
+                                EventQueue.Raise(sdlWindow, PlatformEventType.FileDrop, new FileDropEventArgs(sdlWindow, drops.ToList(), new Vector2i(mouseX, mouseY)));
+                            }
+                            break;
+                        }
                     default:
                         Console.WriteLine($"SDL event type: {@event.Type}");
                         break;
@@ -234,6 +286,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
             OpenGLGraphicsApiHints settings = (OpenGLGraphicsApiHints)hints;
@@ -315,6 +368,7 @@ namespace OpenTK.Platform.Native.SDL
             return sdlWindow;
         }
 
+        /// <inheritdoc/>
         public void Destroy(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -326,6 +380,7 @@ namespace OpenTK.Platform.Native.SDL
             window.Destroyed = true;
         }
 
+        /// <inheritdoc/>
         public bool IsWindowDestroyed(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -333,6 +388,7 @@ namespace OpenTK.Platform.Native.SDL
             return window.Destroyed;
         }
 
+        /// <inheritdoc/>
         public string GetTitle(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -340,6 +396,7 @@ namespace OpenTK.Platform.Native.SDL
             return SDL_GetWindowTitle(window.Window);
         }
 
+        /// <inheritdoc/>
         public void SetTitle(WindowHandle handle, string title)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -347,13 +404,22 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowTitle(window.Window, title);
         }
 
+        /// <inheritdoc/>
         public IconHandle GetIcon(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            // FIXME: What is the default icon??
+            if (window.Icon == null)
+            {
+                Logger?.LogWarning("Trying to read the default window icon. SDL 2 doesn't support this.");
+                return new SDLIcon();
+            }
+            
+            return window.Icon;
         }
 
+        /// <inheritdoc/>
         public unsafe void SetIcon(WindowHandle handle, IconHandle icon)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -363,6 +429,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowIcon(window.Window, sdlIcon.Surface);
         }
 
+        /// <inheritdoc/>
         public void GetPosition(WindowHandle handle, out int x, out int y)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -370,6 +437,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_GetWindowPosition(window.Window, out x, out y);
         }
 
+        /// <inheritdoc/>
         public void SetPosition(WindowHandle handle, int x, int y)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -378,6 +446,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowPosition(window.Window, x, y);
         }
 
+        /// <inheritdoc/>
         public void GetSize(WindowHandle handle, out int width, out int height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -386,6 +455,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_GetWindowSize(window.Window, out width, out height);
         }
 
+        /// <inheritdoc/>
         public void SetSize(WindowHandle handle, int width, int height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -393,6 +463,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowSize(window.Window, width, height);
         }
 
+        /// <inheritdoc/>
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -400,6 +471,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_GetWindowPosition(window.Window, out x, out y);
         }
 
+        /// <inheritdoc/>
         public void SetClientPosition(WindowHandle handle, int x, int y)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -407,6 +479,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowPosition(window.Window, x, y);
         }
 
+        /// <inheritdoc/>
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -414,6 +487,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetClientSize(WindowHandle handle, int width, int height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -421,6 +495,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -435,6 +510,7 @@ namespace OpenTK.Platform.Native.SDL
             height = h != 0 ? h : null;
         }
 
+        /// <inheritdoc/>
         public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -444,6 +520,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowMaximumSize(window.Window, width ?? 0, height ?? 0);
         }
 
+        /// <inheritdoc/>
         public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -456,6 +533,7 @@ namespace OpenTK.Platform.Native.SDL
             height = h != 0 ? h : null;
         }
 
+        /// <inheritdoc/>
         public void SetMinClientSize(WindowHandle handle, int? width, int? height)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -463,6 +541,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowMinimumSize(window.Window, width ?? 0, height ?? 0);
         }
 
+        /// <inheritdoc/>
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -473,6 +552,7 @@ namespace OpenTK.Platform.Native.SDL
             return new SDLDisplay(index);
         }
 
+        /// <inheritdoc/>
         public WindowMode GetMode(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -482,6 +562,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -510,6 +591,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public WindowStyle GetBorderStyle(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -536,6 +618,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetBorderStyle(WindowHandle handle, WindowStyle style)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -562,6 +645,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -569,6 +653,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_SetWindowAlwaysOnTop(window.Window, floating ? 1 : 0);
         }
 
+        /// <inheritdoc/>
         public bool IsAlwaysOnTop(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -578,6 +663,7 @@ namespace OpenTK.Platform.Native.SDL
             return flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_ALWAYS_ON_TOP);
         }
 
+        /// <inheritdoc/>
         public void SetHitTestCallback(WindowHandle handle, HitTest? test)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -622,6 +708,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -638,6 +725,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -658,6 +746,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -678,6 +767,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -685,6 +775,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_RaiseWindow(window.Window);
         }
 
+        /// <inheritdoc/>
         public void RequestAttention(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -692,6 +783,7 @@ namespace OpenTK.Platform.Native.SDL
             SDL_FlashWindow(window.Window, SDL_FlashOperation.SDL_FLASH_UNTIL_FOCUSED);
         }
 
+        /// <inheritdoc/>
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -701,6 +793,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
@@ -710,6 +803,7 @@ namespace OpenTK.Platform.Native.SDL
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SwapBuffers(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);

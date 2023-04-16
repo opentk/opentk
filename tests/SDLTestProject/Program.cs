@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using OpenTK.Core.Platform;
@@ -67,7 +68,7 @@ void main()
             Console.WriteLine($"Is OS 64 bit: {System.Environment.Is64BitOperatingSystem}");
             Console.WriteLine($"Is process 64 bit: {System.Environment.Is64BitProcess}");
             
-            PlatformComponents.PreferSDL2 = true;
+            //PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
             DisplayComponent = PlatformComponents.CreateDisplayComponent();
@@ -76,7 +77,7 @@ void main()
             IconComponent = PlatformComponents.CreateIconComponent();
             ShellComponent = PlatformComponents.CreateShellComponent();
 
-            Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
+            //Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
@@ -234,6 +235,19 @@ void main()
             else if (args is MouseButtonDownEventArgs mouseDown)
             {
 
+            }
+            else if (args is FileDropEventArgs fileDrop)
+            {
+                Console.WriteLine($"File drop at: {fileDrop.Position}");
+
+                foreach (var path in fileDrop.FilePaths)
+                {
+                    Console.WriteLine($"  - {path}:");
+                }
+            }
+            else if (args is ClipboardUpdateEventArgs clipboardUpdate)
+            {
+                Console.WriteLine($"Clipboard update! New format: {clipboardUpdate.NewFormat}");
             }
         }
 

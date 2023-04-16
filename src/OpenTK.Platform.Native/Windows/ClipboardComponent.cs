@@ -107,13 +107,13 @@ namespace OpenTK.Platform.Native.Windows
             ClipboardFormat.Audio,
         };
 
-        /// <inheritdoc/>
-        public ClipboardFormat GetClipboardFormat()
+        // FIXME: This should not be needed!
+        public static ClipboardFormat GetClipboardFormatInternal(ILogger? logger)
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
             if (success == false)
             {
-                Logger?.LogInfo("Could not open clipboard to get clipboard format!");
+                logger?.LogInfo("Could not open clipboard to get clipboard format!");
                 return ClipboardFormat.None;
             }
 
@@ -202,6 +202,12 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             return format;
+        }
+
+        /// <inheritdoc/>
+        public ClipboardFormat GetClipboardFormat()
+        {
+            return GetClipboardFormatInternal(Logger);
         }
 
         /// <inheritdoc/>

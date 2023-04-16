@@ -1078,6 +1078,9 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HPOWERNOTIFY */ RegisterSuspendResumeNotification(IntPtr /* HANDLE */ hRecipient, DEVICE_NOTIFY Flags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool AddClipboardFormatListener(IntPtr /* HWND */ hwnd);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

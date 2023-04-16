@@ -12,12 +12,16 @@ namespace OpenTK.Platform.Native.SDL
 {
     public class SDLShellComponent : IShellComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(SDLShellComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Shell;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Shell)
@@ -26,6 +30,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public void AllowScreenSaver(bool allow)
         {
             if (allow)
@@ -38,6 +43,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public BatteryStatus GetBatteryInfo(out BatteryInfo batteryInfo)
         {
             SDL_PowerState state = SDL_GetPowerInfo(out int seconds, out int percent);
@@ -73,6 +79,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public ThemeInfo GetPreferredTheme()
         {
             // FIXME: SDL 3.2.0 adds the function SDL_GetSystemTheme()
@@ -84,6 +91,7 @@ namespace OpenTK.Platform.Native.SDL
             };
         }
 
+        /// <inheritdoc/>
         public SystemMemoryInfo GetSystemMemoryInformation()
         {
             SystemMemoryInfo info;
