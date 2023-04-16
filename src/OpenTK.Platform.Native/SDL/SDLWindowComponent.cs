@@ -5,6 +5,7 @@ using OpenTK.Platform.Native.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -125,8 +126,8 @@ namespace OpenTK.Platform.Native.SDL
                             {
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_SHOWN:
                                     {
-                                        // FIXME: What do we do here? Do we check for a change in window mode?
-                                        // Do we just always send a changed event?
+                                        Debug.Assert(GetMode(sdlWindow) == WindowMode.Normal);
+                                        EventQueue.Raise(sdlWindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(sdlWindow, WindowMode.Normal));
                                     }
                                     break;
                                 case SDL_WindowEventID.SDL_WINDOWEVENT_HIDDEN:
@@ -234,6 +235,14 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_MOUSEBUTTONUP:
                         {
                             SDL_MouseButtonEvent buttonEvent = @event.MouseButton;
+
+                            // FIXME! What window do we send this to?
+                            // or do we send the event without a window?
+                            if (buttonEvent.windowID == 0)
+                            {
+                                Logger?.LogWarning($"Received {@event.Type} with windowID = 0! This event will not be sent to any window.");
+                                break;
+                            }
 
                             SDLWindow sdlWindow = WindowDict[buttonEvent.windowID];
 
@@ -627,9 +636,32 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            // FIXME:
+            SDL_WindowFlags flags = SDL_GetWindowFlags(window.Window);
 
-            throw new NotImplementedException();
+            if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_HIDDEN))
+            {
+                return WindowMode.Hidden;
+            }
+            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_MAXIMIZED))
+            {
+                return WindowMode.Maximized;
+            }
+            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_MINIMIZED))
+            {
+                return WindowMode.Minimized;
+            }
+            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN))
+            {
+                return WindowMode.ExclusiveFullscreen;
+            }
+            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP))
+            {
+                return WindowMode.WindowedFullscreen;
+            }
+            else
+            {
+                return WindowMode.Normal;
+            }
         }
 
         /// <inheritdoc/>
@@ -813,7 +845,7 @@ namespace OpenTK.Platform.Native.SDL
                 return CursorCaptureMode.Normal;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("CursorCaptureMode.Locked");
         }
 
         /// <inheritdoc/>
@@ -831,7 +863,7 @@ namespace OpenTK.Platform.Native.SDL
                     break;
                 case CursorCaptureMode.Locked:
                     // FIXME: Use SDL_SetRelativeMouseMode in some way...
-                    throw new NotImplementedException();
+                    throw new NotImplementedException("CursorCaptureMode.Locked");
                 default:
                     throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(CursorCaptureMode));
             }

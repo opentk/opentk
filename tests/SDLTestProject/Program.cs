@@ -216,9 +216,23 @@ void main()
 
             int shader = CreateShader("", vertexShaderSource, fragmentShaderSource);
 
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
             while (WindowComp.IsWindowDestroyed(WindowHandle) == false)
             {
+                float dt = (float)watch.Elapsed.TotalSeconds;
+                watch.Restart();
+
                 WindowComp.ProcessEvents();
+
+                if (hiddenTimer > 0) hiddenTimer -= dt;
+
+                if (hiddenTimer < 0)
+                {
+                    WindowComp.SetMode(WindowHandle, WindowMode.Normal);
+                    hiddenTimer = 0;
+                }
 
                 GL.ClearColor(Color4.Coral);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit | ClearBufferMask.StencilBufferBit);
@@ -228,10 +242,12 @@ void main()
 
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
 
+                
                 WindowComp.SwapBuffers(WindowHandle);
             }
         }
 
+        static float hiddenTimer = 0f;
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
             if (args is CloseEventArgs close)
@@ -249,6 +265,11 @@ void main()
                 else if (mouseDown.Button == MouseButton.Button2)
                 {
                     KeyboardComponent.EndIme(mouseDown.Window);
+                }
+                else if (mouseDown.Button == MouseButton.Button3)
+                {
+                    WindowComp.SetMode(mouseDown.Window, WindowMode.Hidden);
+                    hiddenTimer = 1f;
                 }
             }
             else if (args is FileDropEventArgs fileDrop)
