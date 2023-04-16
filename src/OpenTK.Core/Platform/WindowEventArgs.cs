@@ -222,10 +222,16 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public int Cursor { get; private set; }
 
-        public TextEditingEventArgs(WindowHandle window, string candidate, int cursor) : base(window)
+        /// <summary>
+        /// The length of the text being edited.
+        /// </summary>
+        public int Length { get; private set; }
+
+        public TextEditingEventArgs(WindowHandle window, string candidate, int cursor, int length) : base(window)
         {
             Candidate = candidate;
             Cursor = cursor;
+            Length = length;
         }
     }
 

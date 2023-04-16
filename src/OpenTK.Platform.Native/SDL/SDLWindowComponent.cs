@@ -66,7 +66,11 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => throw new NotImplementedException();
 
-        private List<string> drops = new List<string>();
+        // Used to store a list of files being dropped into the window.
+        // SDL gives us the list as a sequence of events so we need to use this list
+        // to aggregate the items
+        // - Noggin_bops 2023-04-16
+        private readonly List<string> drops = new List<string>();
 
         /// <inheritdoc/>
         public unsafe void ProcessEvents(bool waitForEvents = false)
@@ -81,6 +85,37 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_QUIT:
                         // FIXME: Do we need to do anything here?
                         break;
+                    case SDL_EventType.SDL_DISPLAYEVENT:
+                        {
+                            SDL_DisplayEvent displayEvent = @event.DisplayEvent;
+
+                            switch (displayEvent.@event)
+                            {
+                                case SDL_DisplayEventID.SDL_DISPLAYEVENT_ORIENTATION:
+                                    // FIXME: Add this event!
+                                    break;
+                                case SDL_DisplayEventID.SDL_DISPLAYEVENT_CONNECTED:
+                                    {
+                                        // FIXME: Don't create a new object here!! Get the object from the SDLDisplayComponent instead!
+                                        SDLDisplay display = new SDLDisplay((int)displayEvent.display);
+                                        EventQueue.Raise(display, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(display, false));
+                                        break;
+                                    }
+                                case SDL_DisplayEventID.SDL_DISPLAYEVENT_DISCONNECTED:
+                                    {
+                                        // FIXME: Don't create a new object here!! Get the object from the SDLDisplayComponent instead!
+                                        SDLDisplay display = new SDLDisplay((int)displayEvent.display);
+                                        EventQueue.Raise(display, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(display, true));
+                                        break;
+                                    }
+                                case SDL_DisplayEventID.SDL_DISPLAYEVENT_MOVED:
+                                    // FIXME: Add this event to PAL2!
+                                    break;
+                                default:
+                                    throw new InvalidEnumArgumentException(nameof(SDL_DisplayEvent.@event), (int)displayEvent.@event, typeof(SDL_DisplayEventID));
+                            }
+                            break;
+                        }
                     case SDL_EventType.SDL_WINDOWEVENT:
                         {
                             SDL_WindowEvent windowEvent = @event.Window;
@@ -266,6 +301,7 @@ namespace OpenTK.Platform.Native.SDL
                             else if (@event.Type == SDL_EventType.SDL_DROPFILE)
                             {
                                 drops.Add(Marshal.PtrToStringUTF8((IntPtr)dropEvent.file)!);
+                                SDL_free(dropEvent.file);
                             }
                             else if (@event.Type == SDL_EventType.SDL_DROPCOMPLETE)
                             {
@@ -277,6 +313,40 @@ namespace OpenTK.Platform.Native.SDL
 
                                 EventQueue.Raise(sdlWindow, PlatformEventType.FileDrop, new FileDropEventArgs(sdlWindow, drops.ToList(), new Vector2i(mouseX, mouseY)));
                             }
+                            break;
+                        }
+                    case SDL_EventType.SDL_TEXTINPUT:
+                        {
+                            SDL_TextInputEvent textInputEvent = @event.TextInputEvent;
+                            SDLWindow sdlWindow = WindowDict[textInputEvent.windowID];
+
+                            // The entire buffer is not used so we find the end of the data
+                            // and only convert that to a string.
+                            ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(textInputEvent.text, SDL_TextInputEvent.SDL_TEXTINPUTEVENT_TEXT_SIZE);
+                            int last = span.IndexOf((byte)0);
+                            span = span.Slice(0, last);
+                            
+                            string input = Encoding.UTF8.GetString(span);
+
+                            EventQueue.Raise(sdlWindow, PlatformEventType.TextInput, new TextInputEventArgs(sdlWindow, input));
+
+                            break;
+                        }
+                    case SDL_EventType.SDL_TEXTEDITING:
+                        {
+                            SDL_TextEditingEvent textEditingEvent = @event.TextEditingEvent;
+                            SDLWindow sdlWindow = WindowDict[textEditingEvent.windowID];
+
+                            // The entire buffer is not used so we find the end of the data
+                            // and only convert that to a string.
+                            ReadOnlySpan<byte> span = new ReadOnlySpan<byte>(textEditingEvent.text, SDL_TextEditingEvent.SDL_TEXTEDITINGEVENT_TEXT_SIZE);
+                            int last = span.IndexOf((byte)0);
+                            span = span.Slice(0, last);
+
+                            string candidate = Encoding.UTF8.GetString(span);
+
+                            EventQueue.Raise(sdlWindow, PlatformEventType.TextEditing, new TextEditingEventArgs(sdlWindow, candidate, textEditingEvent.start, textEditingEvent.length));
+
                             break;
                         }
                     default:

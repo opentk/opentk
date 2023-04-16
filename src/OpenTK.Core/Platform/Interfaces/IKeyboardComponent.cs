@@ -56,6 +56,8 @@ namespace OpenTK.Core.Platform
         /// </returns>
         Key GetKeyFromScancode(Scancode scancode);
 
+        // FIXME: Probably want to rename BeginIme and EndIme to BeginTextEditing or StartTextEdit
+
         /// <summary>
         /// Invoke input method editor.
         /// </summary>

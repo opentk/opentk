@@ -16,6 +16,9 @@ namespace OpenTK.Platform.Native.SDL
         public SDL_EventType Type;
 
         [FieldOffset(0)]
+        public SDL_DisplayEvent DisplayEvent;
+
+        [FieldOffset(0)]
         public SDL_WindowEvent Window;
 
         [FieldOffset(0)]
@@ -30,6 +33,23 @@ namespace OpenTK.Platform.Native.SDL
         [FieldOffset(0)]
         public SDL_DropEvent DropEvent;
 
+        [FieldOffset(0)]
+        public SDL_TextEditingEvent TextEditingEvent;
+
+        [FieldOffset(0)]
+        public SDL_TextInputEvent TextInputEvent;
+    }
+
+    internal struct SDL_DisplayEvent
+    {
+        public SDL_EventType type;        /**< ::SDL_DISPLAYEVENT */
+        public uint timestamp;            /**< In milliseconds, populated using SDL_GetTicks() */
+        public uint display;              /**< The associated display index */
+        public SDL_DisplayEventID @event; /**< ::SDL_DisplayEventID */
+        public byte padding1;
+        public byte padding2;
+        public byte padding3;
+        public int data1;                 /**< event dependent data */
     }
 
     internal struct SDL_WindowEvent
@@ -43,6 +63,28 @@ namespace OpenTK.Platform.Native.SDL
         public byte padding3;
         public int data1;       /**< event dependent data */
         public int data2;       /**< event dependent data */
+    }
+
+    internal unsafe struct SDL_TextEditingEvent
+    {
+        public const int SDL_TEXTEDITINGEVENT_TEXT_SIZE = 32;
+
+        public SDL_EventType type;          /**< ::SDL_TEXTEDITING */
+        public uint timestamp;     /**< In milliseconds, populated using SDL_GetTicks() */
+        public uint windowID;      /**< The window with keyboard focus, if any */
+        public fixed char text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
+        public int start;          /**< The start cursor of selected editing text */
+        public int length;         /**< The length of selected editing text */
+    }
+
+    internal unsafe struct SDL_TextInputEvent
+    {
+        public const int SDL_TEXTINPUTEVENT_TEXT_SIZE = 32;
+
+        public SDL_EventType type;      /**< ::SDL_TEXTINPUT */
+        public uint timestamp; /**< In milliseconds, populated using SDL_GetTicks() */
+        public uint windowID;  /**< The window with keyboard focus, if any */
+        public fixed byte text[SDL_TEXTINPUTEVENT_TEXT_SIZE];  /**< The input text */
     }
 
     internal struct SDL_MouseMotionEvent
@@ -89,7 +131,7 @@ namespace OpenTK.Platform.Native.SDL
 
     internal unsafe struct SDL_DropEvent
     {
-        public uint type;        /**< ::SDL_DROPBEGIN or ::SDL_DROPFILE or ::SDL_DROPTEXT or ::SDL_DROPCOMPLETE */
+        public SDL_EventType type;        /**< ::SDL_DROPBEGIN or ::SDL_DROPFILE or ::SDL_DROPTEXT or ::SDL_DROPCOMPLETE */
         public uint timestamp;   /**< In milliseconds, populated using SDL_GetTicks() */
         public char* file;         /**< The file name, which should be freed with SDL_free(), is NULL on begin/complete */
         public uint windowID;    /**< The window that was dropped on, if any */
@@ -245,5 +287,14 @@ namespace OpenTK.Platform.Native.SDL
         SDL_WINDOWEVENT_HIT_TEST,       /**< Window had a hit test that wasn't SDL_HITTEST_NORMAL. */
         SDL_WINDOWEVENT_ICCPROF_CHANGED,/**< The ICC profile of the window's display has changed. */
         SDL_WINDOWEVENT_DISPLAY_CHANGED /**< Window has been moved to display data1. */
+    }
+
+    internal enum SDL_DisplayEventID : byte
+    {
+        SDL_DISPLAYEVENT_NONE,          /**< Never used */
+        SDL_DISPLAYEVENT_ORIENTATION,   /**< Display orientation has changed to data1 */
+        SDL_DISPLAYEVENT_CONNECTED,     /**< Display has been added to the system */
+        SDL_DISPLAYEVENT_DISCONNECTED,  /**< Display has been removed from the system */
+        SDL_DISPLAYEVENT_MOVED          /**< Display has changed position */
     }
 }

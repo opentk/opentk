@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
@@ -23,6 +24,7 @@ namespace SDLTestProject
         static IClipboardComponent ClipboardComponent;
         static IIconComponent IconComponent;
         static IShellComponent ShellComponent;
+        static IKeyboardComponent KeyboardComponent;
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
@@ -60,13 +62,13 @@ void main()
 
         static void Main(string[] args)
         {
-            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.ProcessArchitecture);
-            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
-            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSArchitecture);
-            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.OSDescription);
-            Console.WriteLine(System.Runtime.InteropServices.RuntimeInformation.RuntimeIdentifier);
-            Console.WriteLine($"Is OS 64 bit: {System.Environment.Is64BitOperatingSystem}");
-            Console.WriteLine($"Is process 64 bit: {System.Environment.Is64BitProcess}");
+            Console.WriteLine(RuntimeInformation.ProcessArchitecture);
+            Console.WriteLine(RuntimeInformation.FrameworkDescription);
+            Console.WriteLine(RuntimeInformation.OSArchitecture);
+            Console.WriteLine(RuntimeInformation.OSDescription);
+            Console.WriteLine(RuntimeInformation.RuntimeIdentifier);
+            Console.WriteLine($"Is OS 64 bit: {Environment.Is64BitOperatingSystem}");
+            Console.WriteLine($"Is process 64 bit: {Environment.Is64BitProcess}");
             
             PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
@@ -76,6 +78,7 @@ void main()
             ClipboardComponent = PlatformComponents.CreateClipboardComponent();
             IconComponent = PlatformComponents.CreateIconComponent();
             ShellComponent = PlatformComponents.CreateShellComponent();
+            KeyboardComponent = PlatformComponents.CreateKeyboardComponent();
 
             Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
 
@@ -87,6 +90,7 @@ void main()
             ClipboardComponent.Logger = logger;
             IconComponent.Logger = logger;
             ShellComponent.Logger = logger;
+            KeyboardComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);
@@ -94,6 +98,8 @@ void main()
             MouseComponent.Initialize(PalComponents.MiceInput);
             ClipboardComponent.Initialize(PalComponents.Clipboard);
             IconComponent.Initialize(PalComponents.WindowIcon);
+            ShellComponent.Initialize(PalComponents.Shell);
+            KeyboardComponent.Initialize(PalComponents.KeyboardInput);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
@@ -167,7 +173,7 @@ void main()
             int noDisp = DisplayComponent.GetDisplayCount();
             for (int i = 0; i < noDisp; i++)
             {
-                DisplayHandle handle = DisplayComponent.Create(i);
+                DisplayHandle handle = DisplayComponent.Open(i);
 
                 string name = DisplayComponent.GetName(handle);
                 bool isPrimary = DisplayComponent.IsPrimary(handle);
@@ -234,7 +240,16 @@ void main()
             }
             else if (args is MouseButtonDownEventArgs mouseDown)
             {
-
+                if (mouseDown.Button == MouseButton.Button1)
+                {
+                    MouseComponent.GetPosition(out int x, out int y);
+                    KeyboardComponent.SetImeRectangle(mouseDown.Window, x, y, 150, 50);
+                    KeyboardComponent.BeginIme(mouseDown.Window);
+                }
+                else if (mouseDown.Button == MouseButton.Button2)
+                {
+                    KeyboardComponent.EndIme(mouseDown.Window);
+                }
             }
             else if (args is FileDropEventArgs fileDrop)
             {
@@ -248,6 +263,10 @@ void main()
             else if (args is ClipboardUpdateEventArgs clipboardUpdate)
             {
                 Console.WriteLine($"Clipboard update! New format: {clipboardUpdate.NewFormat}");
+            }
+            else if (args is TextInputEventArgs textInput)
+            {
+                Console.WriteLine($"Text Input: {textInput.Text}");
             }
         }
 

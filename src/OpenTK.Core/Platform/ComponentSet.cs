@@ -702,21 +702,21 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        DisplayHandle IDisplayComponent.Create(int index)
+        DisplayHandle IDisplayComponent.Open(int index)
         {
-            return _displayComponent!.Create(index);
+            return _displayComponent!.Open(index);
         }
 
         /// <inheritdoc/>
-        DisplayHandle IDisplayComponent.CreatePrimary()
+        DisplayHandle IDisplayComponent.OpenPrimary()
         {
-            return _displayComponent!.CreatePrimary();
+            return _displayComponent!.OpenPrimary();
         }
 
         /// <inheritdoc/>
-        void IDisplayComponent.Destroy(DisplayHandle handle)
+        void IDisplayComponent.Close(DisplayHandle handle)
         {
-            _displayComponent!.Destroy(handle);
+            _displayComponent!.Close(handle);
         }
 
         /// <inheritdoc/>

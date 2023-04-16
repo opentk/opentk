@@ -231,7 +231,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public DisplayHandle Create(int index)
+        public DisplayHandle Open(int index)
         {
             switch (DisplayExtension)
             {
@@ -260,13 +260,13 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public DisplayHandle CreatePrimary()
+        public DisplayHandle OpenPrimary()
         {
-            return Create(0);
+            return Open(0);
         }
 
         /// <inheritdoc />
-        public void Destroy(DisplayHandle handle)
+        public void Close(DisplayHandle handle)
         {
             switch (DisplayExtension)
             {

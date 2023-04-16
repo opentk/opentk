@@ -15,12 +15,16 @@ namespace OpenTK.Platform.Native.SDL
 {
     public class SDLDisplayComponent : IDisplayComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(SDLDisplayComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Display;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Display)
@@ -29,9 +33,11 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public bool CanSetVideoMode => throw new NotImplementedException();
 
-        public bool CanGetVirtualPosition => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanGetVirtualPosition => true;
 
         private void CalculateDisplayDPI(int index, out float dpi, out float scale)
         {
@@ -53,12 +59,14 @@ namespace OpenTK.Platform.Native.SDL
             scale = dpi / 96;
         }
 
+        /// <inheritdoc/>
         public int GetDisplayCount()
         {
             return SDL_GetNumVideoDisplays();
         }
 
-        public DisplayHandle Create(int index)
+        /// <inheritdoc/>
+        public DisplayHandle Open(int index)
         {
             int displayCount = GetDisplayCount();
 
@@ -70,18 +78,21 @@ namespace OpenTK.Platform.Native.SDL
             return new SDLDisplay(index);
         }
 
-        public DisplayHandle CreatePrimary()
+        /// <inheritdoc/>
+        public DisplayHandle OpenPrimary()
         {
             // FIXME: Will 0 always be the primary display?
             return new SDLDisplay(0);
         }
 
-        public void Destroy(DisplayHandle handle)
+        /// <inheritdoc/>
+        public void Close(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
         }
 
+        /// <inheritdoc/>
         public bool IsPrimary(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -90,6 +101,7 @@ namespace OpenTK.Platform.Native.SDL
             return display.Index == 0;
         }
 
+        /// <inheritdoc/>
         public string GetName(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -97,6 +109,7 @@ namespace OpenTK.Platform.Native.SDL
             return SDL_GetDisplayName(display.Index);
         }
 
+        /// <inheritdoc/>
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -113,11 +126,13 @@ namespace OpenTK.Platform.Native.SDL
             mode = new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, scale, dpi);
         }
 
+        /// <inheritdoc/>
         public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public int GetSupportedVideoModeCount(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -125,6 +140,7 @@ namespace OpenTK.Platform.Native.SDL
             return SDL_GetNumDisplayModes(display.Index);
         }
 
+        /// <inheritdoc/>
         public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -139,6 +155,7 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
+        /// <inheritdoc/>
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -154,6 +171,7 @@ namespace OpenTK.Platform.Native.SDL
             y = rect.y;
         }
 
+        /// <inheritdoc/>
         public void GetResolution(DisplayHandle handle, out int width, out int height)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -169,6 +187,7 @@ namespace OpenTK.Platform.Native.SDL
             height = rect.h;
         }
 
+        /// <inheritdoc/>
         public void GetWorkArea(DisplayHandle handle, out Box2i area)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -183,6 +202,7 @@ namespace OpenTK.Platform.Native.SDL
             area = new Box2i(rect.x, rect.y, rect.w, rect.h);
         }
 
+        /// <inheritdoc/>
         public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
@@ -197,6 +217,7 @@ namespace OpenTK.Platform.Native.SDL
             refreshRate = sdlMode.refresh_rate;
         }
 
+        /// <inheritdoc/>
         public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);

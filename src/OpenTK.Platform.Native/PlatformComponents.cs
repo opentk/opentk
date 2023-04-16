@@ -30,7 +30,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.Display] = () => new SDL.SDLDisplayComponent(),
                 [PalComponents.Shell] = () => new SDL.SDLShellComponent(),
                 [PalComponents.MiceInput] = () => new SDL.SDLMouseComponent(),
-                //[PalComponents.KeyboardInput] = () => new SDL.SDLKeyboardComponent(),
+                [PalComponents.KeyboardInput] = () => new SDL.SDLKeyboardComponent(),
                 //[PalComponents.MouseCursor] = () => new SDL.SDLCursorComponent(),
                 [PalComponents.WindowIcon] = () => new SDL.SDLIconComponent(),
                 [PalComponents.Clipboard] = () => new SDL.SDLClipboardComponent(),

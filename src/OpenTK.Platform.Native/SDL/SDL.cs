@@ -436,5 +436,19 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int SDL_GetSystemRAM();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_StartTextInput();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_StopTextInput();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_SetTextInputRect(in SDL_Rect rect);
+
+        internal const string SDL_HINT_IME_SHOW_UI = "SDL_IME_SHOW_UI";
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool SDL_SetHint([MarshalAs(UnmanagedType.LPUTF8Str)] string name, [MarshalAs(UnmanagedType.LPUTF8Str)] string value);
     }
 }

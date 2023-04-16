@@ -833,7 +833,7 @@ namespace OpenTK.Platform.Native.Windows
                                     throw new Win32Exception("IME error");
                                 }
 
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, h.IMECursor));
+                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, h.IMECursor, 0));
                             }
                         }
 

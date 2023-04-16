@@ -305,9 +305,8 @@ namespace OpenTK.Platform.Native.Windows
         // FIXME: Indices for monitors is ill defined.
         // Need to look more into documentation for the monitor API.
 
-        // FIXME: You probably shouldn't "create" a monitor handle.
         /// <inheritdoc/>
-        public DisplayHandle Create(int index)
+        public DisplayHandle Open(int index)
         {
             if (index < 0) throw new ArgumentOutOfRangeException(nameof(index), $"Monitor index cannot be negative. {index}");
             if (index >= _displays.Count) throw new ArgumentOutOfRangeException(nameof(index), $"Monitor index cannot be larger or equal to the number of displays. Index: {index}, Display count: {_displays.Count}");
@@ -316,7 +315,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public DisplayHandle CreatePrimary()
+        public DisplayHandle OpenPrimary()
         {
             for (int i = 0; i < _displays.Count; i++)
             {
@@ -331,7 +330,7 @@ namespace OpenTK.Platform.Native.Windows
 
         // FIXME: You probably also don't Destroy a monitor
         /// <inheritdoc/>
-        public void Destroy(DisplayHandle handle)
+        public void Close(DisplayHandle handle)
         {
             // We basically don't need to do anything here.
             // Just check that we got the right kind of handle back.

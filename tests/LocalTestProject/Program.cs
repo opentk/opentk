@@ -84,7 +84,7 @@ namespace LocalTestProject
             Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", keyboardComp.GetAvailableKeyboardLayouts())}");
 
             {
-                PrimaryDisplayHandle = dispComp.CreatePrimary();
+                PrimaryDisplayHandle = dispComp.OpenPrimary();
                 string name = dispComp.GetName(PrimaryDisplayHandle);
                 dispComp.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
                 dispComp.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
@@ -100,7 +100,7 @@ namespace LocalTestProject
 
                 if (dispComp.GetDisplayCount() > 1)
                 {
-                    var secondaryHandle = dispComp.Create(1);
+                    var secondaryHandle = dispComp.Open(1);
                     modeCount = dispComp.GetSupportedVideoModeCount(secondaryHandle);
                     Console.WriteLine($"Secondary monitor supports {modeCount} video modes.");
                 }
@@ -111,7 +111,7 @@ namespace LocalTestProject
             Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
             for (int i = 0; i < dispComp.GetDisplayCount(); i++)
             {
-                DisplayHandle disp = dispComp.Create(i);
+                DisplayHandle disp = dispComp.Open(i);
 
                 string name = dispComp.GetName(disp);
                 dispComp.GetVideoMode(disp, out VideoMode videoMode);

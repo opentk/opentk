@@ -8,6 +8,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IDisplayComponent : IPalComponent
     {
+        // FIXME: Add API for getting the display orientation!
+
         /// <summary>
         /// True if the driver can set the video mode.
         /// </summary>
@@ -24,26 +26,31 @@ namespace OpenTK.Core.Platform
         /// <returns>Number of displays available.</returns>
         int GetDisplayCount();
 
+        // FIXME: Define the how the indices work?
+        // Will we guarantee that index = 0 is the primary monitor?
+        // Should we sort the displays in some order?
+        // What happens when monitors are added and removed?
+
         /// <summary>
         /// Create a display handle to the indexed display.
         /// </summary>
         /// <param name="index">The display index to create a display handle to.</param>
         /// <returns>Handle to the display.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is out of range.</exception>
-        DisplayHandle Create(int index);
+        DisplayHandle Open(int index);
 
         /// <summary>
         /// Create a display handle to the primary display.
         /// </summary>
         /// <returns>Handle to the primary display.</returns>
-        DisplayHandle CreatePrimary();
+        DisplayHandle OpenPrimary();
 
         /// <summary>
         /// Destroy a display handle.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void Destroy(DisplayHandle handle);
+        void Close(DisplayHandle handle);
 
         /// <summary>
         /// Checks if a display is the primary display or not.
