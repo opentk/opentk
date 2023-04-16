@@ -68,7 +68,7 @@ void main()
             Console.WriteLine($"Is OS 64 bit: {System.Environment.Is64BitOperatingSystem}");
             Console.WriteLine($"Is process 64 bit: {System.Environment.Is64BitProcess}");
             
-            //PlatformComponents.PreferSDL2 = true;
+            PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
             DisplayComponent = PlatformComponents.CreateDisplayComponent();
@@ -77,7 +77,7 @@ void main()
             IconComponent = PlatformComponents.CreateIconComponent();
             ShellComponent = PlatformComponents.CreateShellComponent();
 
-            //Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
+            Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
