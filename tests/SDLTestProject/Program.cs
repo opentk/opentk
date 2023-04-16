@@ -268,8 +268,7 @@ void main()
                 }
                 else if (mouseDown.Button == MouseButton.Button3)
                 {
-                    WindowComp.SetMode(mouseDown.Window, WindowMode.Hidden);
-                    hiddenTimer = 1f;
+                    KeyboardComponent.GetScancodeFromKey(Key.F15);
                 }
             }
             else if (args is FileDropEventArgs fileDrop)

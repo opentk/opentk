@@ -465,10 +465,6 @@ namespace OpenTK.Core.Platform
         /// The 24th function key.
         /// </summary>
         F24,
-        /// <summary>
-        /// The 25th function key.
-        /// </summary>
-        F25,
 
         /// <summary>
         /// The computer sleep key.

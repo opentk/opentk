@@ -1,5 +1,8 @@
 namespace OpenTK.Core.Platform
 {
+
+#nullable enable
+
     /// <summary>
     /// PAL driver for global keyboard information.
     /// </summary>
@@ -24,7 +27,7 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">(optional) Handle to a window to query the layout for. Ignored on systems where keyboard layout is global.</param>
         /// <returns>A string which describes the active keyboard layout.</returns>
         /// <exception cref="PalNotImplementedException">Driver cannot query active keyboard layout.</exception>
-        string GetActiveKeyboardLayout(WindowHandle handle = null);
+        string GetActiveKeyboardLayout(WindowHandle? handle);
 
         /// <summary>
         /// See list of possible keyboard layouts for this system.

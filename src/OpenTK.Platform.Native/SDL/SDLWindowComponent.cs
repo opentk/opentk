@@ -56,7 +56,7 @@ namespace OpenTK.Platform.Native.SDL
         public bool CanSetCursor => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public bool CanCaptureCursor => throw new NotImplementedException();
+        public bool CanCaptureCursor => true;
 
         /// <inheritdoc/>
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();

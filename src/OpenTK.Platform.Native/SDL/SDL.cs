@@ -450,5 +450,11 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool SDL_SetHint([MarshalAs(UnmanagedType.LPUTF8Str)] string name, [MarshalAs(UnmanagedType.LPUTF8Str)] string value);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_Keycode SDL_GetKeyFromScancode(SDL_Scancode scancode);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_Scancode SDL_GetScancodeFromKey(SDL_Keycode key);
     }
 }
