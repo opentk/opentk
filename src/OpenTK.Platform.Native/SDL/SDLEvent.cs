@@ -38,6 +38,9 @@ namespace OpenTK.Platform.Native.SDL
 
         [FieldOffset(0)]
         public SDL_TextInputEvent TextInputEvent;
+
+        [FieldOffset(0)]
+        public SDL_KeyboardEvent KeyboardEvent;
     }
 
     internal struct SDL_DisplayEvent
@@ -63,6 +66,26 @@ namespace OpenTK.Platform.Native.SDL
         public byte padding3;
         public int data1;       /**< event dependent data */
         public int data2;       /**< event dependent data */
+    }
+
+    internal struct SDL_Keysym
+    {
+        public SDL_Scancode scancode;      /**< SDL physical key code - see ::SDL_Scancode for details */
+        public SDL_Keycode sym;            /**< SDL virtual key code - see ::SDL_Keycode for details */
+        public ushort mod;                 /**< current key modifiers */
+        public ushort unused;
+    }
+
+    internal struct SDL_KeyboardEvent
+    {
+        public SDL_EventType type;        /**< ::SDL_KEYDOWN or ::SDL_KEYUP */
+        public uint timestamp;   /**< In milliseconds, populated using SDL_GetTicks() */
+        public uint windowID;    /**< The window with keyboard focus, if any */
+        public byte state;        /**< ::SDL_PRESSED or ::SDL_RELEASED */
+        public byte repeat;       /**< Non-zero if this is a key repeat */
+        public byte padding2;
+        public byte padding3;
+        public SDL_Keysym keysym;  /**< The key that was pressed or released */
     }
 
     internal unsafe struct SDL_TextEditingEvent

@@ -358,6 +358,35 @@ namespace OpenTK.Platform.Native.SDL
 
                             break;
                         }
+                    case SDL_EventType.SDL_KEYDOWN:
+                    case SDL_EventType.SDL_KEYUP:
+                        {
+                            SDL_KeyboardEvent keyboardEvent = @event.KeyboardEvent;
+
+                            if (keyboardEvent.windowID == 0)
+                            {
+                                Logger?.LogWarning($"{keyboardEvent.type} with no window. Can't raise this event! Key: {keyboardEvent.keysym.sym}, Scancode: {keyboardEvent.keysym.scancode}.");
+                                break;
+                            }
+
+                            SDLWindow sdlWindow = WindowDict[keyboardEvent.windowID];
+
+                            Key key = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.sym, Logger);
+                            Scancode scancode = SDLKeyboardComponent.FromSDL(keyboardEvent.keysym.scancode, Logger);
+
+                            bool repeat = keyboardEvent.repeat > 0;
+
+                            if (keyboardEvent.type == SDL_EventType.SDL_KEYDOWN)
+                            {
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyDown, new KeyDownEventArgs(sdlWindow, key, scancode, repeat));
+                            }
+                            else if (keyboardEvent.type == SDL_EventType.SDL_KEYUP)
+                            {
+                                EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode));
+                            }
+
+                            break;
+                        }
                     default:
                         Console.WriteLine($"SDL event type: {@event.Type}");
                         break;

@@ -80,7 +80,10 @@ void main()
             ShellComponent = PlatformComponents.CreateShellComponent();
             KeyboardComponent = PlatformComponents.CreateKeyboardComponent();
 
-            Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
+            if (PlatformComponents.PreferSDL2)
+            {
+                Debug.Assert(WindowComp.GetType() == typeof(SDLWindowComponent));
+            }
 
             var logger = new ConsoleLogger();
             WindowComp.Logger = logger;
@@ -286,7 +289,15 @@ void main()
             }
             else if (args is TextInputEventArgs textInput)
             {
-                Console.WriteLine($"Text Input: {textInput.Text}");
+                //Console.WriteLine($"Text Input: {textInput.Text}");
+            }
+            else if (args is KeyDownEventArgs keyDown)
+            {
+                Console.WriteLine($"Key down! {keyDown.Key} (scancode: {keyDown.Scancode}){(keyDown.IsRepeat ? " repeat!" : "")}");
+            }
+            else if (args is KeyUpEventArgs keyUp)
+            {
+                //Console.WriteLine($"Key up! {keyUp.Key} (scancode: {keyUp.Scancode})");
             }
         }
 

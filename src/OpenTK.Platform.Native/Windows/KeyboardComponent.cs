@@ -269,8 +269,6 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = window.As<HWND>(this);
 
-            if (_imeActive == false) throw new InvalidOperationException("Call BeginIme before calling SetImeRectangle!");
-
             IntPtr hmic = Win32.ImmGetContext(hwnd.HWnd);
             if (hmic != IntPtr.Zero)
             {
@@ -328,9 +326,9 @@ namespace OpenTK.Platform.Native.Windows
             // 0x58 - 0x5F
             Scancode.F12, Scancode.KeypadEquals, 0, 0, Scancode.International6, 0, 0, 0,
             // 0x60 - 0x67
-            0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, Scancode.F13, Scancode.F14, Scancode.F15, Scancode.F16,
             // 0x68 - 0x6F
-            0, 0, 0, 0, 0, 0, 0, 0,
+            Scancode.F17, Scancode.F18, Scancode.F19, Scancode.F20, Scancode.F21, Scancode.F22, Scancode.F23, 0,
             // 0x70 - 0x77
             Scancode.International2, Scancode.LANG2, Scancode.LANG1, Scancode.International1, 0, 0, Scancode.LANG5, Scancode.LANG4,
             // 0x78 - 0x7F
@@ -497,6 +495,26 @@ namespace OpenTK.Platform.Native.Windows
                     return Scancode.VolumeDecrement;
                 case VK.VolumeMute:
                     return Scancode.Mute;
+            }
+
+            // F24 conflicts with LANG5, so we use the VK to
+            // get the correct scancode.
+            // It is not entierly tested if this is necessary
+            // - 2023-04-17 Noggin_bops
+            switch (virtualKey)
+            {
+                case VK.F13: return Scancode.F13;
+                case VK.F14: return Scancode.F14;
+                case VK.F15: return Scancode.F15;
+                case VK.F16: return Scancode.F16;
+                case VK.F17: return Scancode.F17;
+                case VK.F18: return Scancode.F18;
+                case VK.F19: return Scancode.F19;
+                case VK.F20: return Scancode.F20;
+                case VK.F21: return Scancode.F21;
+                case VK.F22: return Scancode.F22;
+                case VK.F23: return Scancode.F23;
+                case VK.F24: return Scancode.F24;
             }
 
             Scancode code;

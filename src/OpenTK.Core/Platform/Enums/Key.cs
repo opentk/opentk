@@ -554,15 +554,12 @@ namespace OpenTK.Core.Platform
         /// Used for various characters, depends on keyboard.
         /// </summary>
         OEM8,
-        // FIXME: What do we do here?
-        // OEM3 = 192,
-        // Tilde = 192,
-        // Ö = 192,
 
         /// <summary>
         /// The &lt;&gt; keys on the US standard keyboard,
         /// or the \\| key on the non-US 102-key keyboard.
         /// </summary>
+        // FIXME: Make a layout table for this key.
         OEM102,
 
         /// <summary>
