@@ -105,6 +105,7 @@ namespace OpenTK.Core.Platform
         /// <param name="maskData">Buffer containing mask data.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
         /// <exception cref="ArgumentException"><paramref name="colorData"/> or <paramref name="maskData"/> is smaller than specified dimensions.</exception>
+        // FIXME: Define the data format for colorData and maskData. Is this a BW or color cursor??
         void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData);
 
         /// <summary>

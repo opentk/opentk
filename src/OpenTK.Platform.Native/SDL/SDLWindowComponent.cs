@@ -53,7 +53,7 @@ namespace OpenTK.Platform.Native.SDL
         public bool CanGetDisplay => true;
 
         /// <inheritdoc/>
-        public bool CanSetCursor => throw new NotImplementedException();
+        public bool CanSetCursor => true;
 
         /// <inheritdoc/>
         public bool CanCaptureCursor => true;
@@ -843,6 +843,7 @@ namespace OpenTK.Platform.Native.SDL
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
+            SDLCursor sdlCursor = cursor.As<SDLCursor>(this);
 
             if (cursor == null)
             {
@@ -851,9 +852,15 @@ namespace OpenTK.Platform.Native.SDL
             else
             {
                 SDL_ShowCursor(1 /* SDL_ENABLE */);
-            }
 
-            throw new NotImplementedException();
+                // FIXME: SDL handles the cursor as a global thing, while
+                // we handle it per window. Is this something we want to change?
+                //   - Do we gain anything by making the cursor per window?
+                //     Aren't you always going to check the position of the cursor and set the
+                //     cursor when needed? Leaving a window with a particular cursor isn't a win.
+                // or do we have to work around this for the SDL backend?
+                SDL_SetCursor(sdlCursor.Cursor);
+            }
         }
 
         /// <inheritdoc/>

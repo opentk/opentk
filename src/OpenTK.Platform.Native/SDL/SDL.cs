@@ -2,6 +2,7 @@
 using OpenTK.Platform.Native.X11;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Reflection.PortableExecutable;
@@ -456,5 +457,62 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDL_Scancode SDL_GetScancodeFromKey(SDL_Keycode key);
+
+        internal struct SDL_CursorPtr : IEquatable<SDL_CursorPtr>
+        {
+            public static SDL_CursorPtr Null => new SDL_CursorPtr(0);
+
+            public nuint Cursor;
+
+            public SDL_CursorPtr(nuint cursor)
+            {
+                Cursor = cursor;
+            }
+
+            public override bool Equals(object? obj)
+            {
+                return obj is SDL_CursorPtr ptr && Equals(ptr);
+            }
+
+            public bool Equals(SDL_CursorPtr other)
+            {
+                return Cursor.Equals(other.Cursor);
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(Cursor);
+            }
+
+            public override string? ToString()
+            {
+                return Cursor.ToString();
+            }
+
+            public static bool operator ==(SDL_CursorPtr left, SDL_CursorPtr right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(SDL_CursorPtr left, SDL_CursorPtr right)
+            {
+                return !(left == right);
+            }
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_CursorPtr SDL_CreateCursor(byte* data, byte* mask, int w, int h, int hot_x, int hot_y);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_CursorPtr SDL_CreateSystemCursor(SDL_SystemCursor id);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_FreeCursor(SDL_CursorPtr cursor);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SDL_SetCursor(SDL_CursorPtr cursor);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_CursorPtr SDL_GetCursor();
     }
 }
