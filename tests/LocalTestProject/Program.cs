@@ -79,7 +79,7 @@ namespace LocalTestProject
 
             joystickComponent.Initialize(PalComponents.Joystick);
 
-            Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout()}");
+            Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout(null)}");
 
             Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", keyboardComp.GetAvailableKeyboardLayouts())}");
 
