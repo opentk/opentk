@@ -1,6 +1,5 @@
 namespace OpenTK.Core.Platform
 {
-
 #nullable enable
 
     /// <summary>
