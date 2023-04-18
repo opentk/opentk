@@ -1,11 +1,11 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,7 +36,7 @@ namespace OpenTK.Platform.Native.X11
         {
             // Seems like we can either use some dbus functions or
             // we can use X11 Screen Saver Extension to turn it off.
-            // https://github.com/libsdl-org/SDL/blob/fde78d12f247a776b52b007479e5274d4bd4e3fe/src/video/x11/SDL_x11events.c#L1730
+            // https://github.com/libsdl-org/SDLLib/blob/fde78d12f247a776b52b007479e5274d4bd4e3fe/src/video/x11/SDL_x11events.c#L1730
 
 
             throw new NotImplementedException();
@@ -71,8 +71,11 @@ namespace OpenTK.Platform.Native.X11
                 {
                     // FIXME: "evergy_now" and "energy_full" might not always be available.
                     // We could also look at using "charge_now" and "charge_full"
-                    bool has_energy_now = int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_now")), out int energy_now);
-                    bool has_energy_full = int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_full")), out int energy_full);
+                    bool has_energy_now = false;//int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_now")), out int energy_now);
+                    bool has_energy_full = false;//int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_full")), out int energy_full);
+
+                    int energy_now = 0;
+                    int energy_full = 0;
 
                     if (has_energy_now && has_energy_full && energy_now != -1 && energy_full != -1)
                     {
@@ -111,6 +114,38 @@ namespace OpenTK.Platform.Native.X11
                 batteryInfo.BatteryTime = batteryTime;
                 return BatteryStatus.HasSystemBattery;
             }
+        }
+
+        /// <inheritdoc />
+        // FIXME: Maybe add a platform specific API for getting a theme name.
+        public ThemeInfo GetPreferredTheme()
+        {
+            // Seems like we might be able to use xsettings to get some kind of data about preferred theme.
+            // https://wiki.archlinux.org/title/Dark_mode_switching
+            // https://specifications.freedesktop.org/xsettings-spec/xsettings-latest.html
+
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public unsafe SystemMemoryInfo GetSystemMemoryInformation()
+        {
+            int result = Sysinfo.sysinfo(out Sysinfo.sysinfo_struct sysInfo);
+            if (result < 0)
+            {
+                int error = Marshal.GetLastPInvokeError();
+                string? errorStr = Marshal.PtrToStringUTF8((IntPtr)Sysinfo.strerror(error));
+
+                Logger?.LogError($"sysinfo() failed: '{errorStr}' (0x{error:X})");
+                return default;
+            }
+
+            SystemMemoryInfo info;
+
+            info.TotalPhysicalMemory = (long)sysInfo.totalram;
+            info.AvailablePhysicalMemory = (long)sysInfo.freeram;
+
+            return info;
         }
     }
 }

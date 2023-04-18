@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace OpenTK.Platform.Native.Windows
 {
     internal enum WindowState
@@ -17,7 +15,7 @@ namespace OpenTK.Platform.Native.Windows
         Minimized,
     }
 
-#pragma warning disable SA1649 // File name should match first type name
+
     internal class HWND : WindowHandle
     {
         public IntPtr HWnd { get; private set; }
@@ -43,7 +41,11 @@ namespace OpenTK.Platform.Native.Windows
 
         public CursorCaptureMode CaptureMode { get; set; } = CursorCaptureMode.Normal;
         public Vector2i LastMousePosition { get; set; }
-        public Vector2 VirtualMousePosition { get; set; }
+        public Vector2 VirtualCursorPosition { get; set; }
+
+        // FIXME: Remove these as they are likely not needed.
+        public string? IMEComposition { get; set; }
+        public int IMECursor { get; set; }
 
         public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {
@@ -136,5 +138,20 @@ namespace OpenTK.Platform.Native.Windows
 
         public int DpiY { get; set; }
     }
-#pragma warning restore SA1649 // File name should match first type name
+
+    internal class Joystick : JoystickHandle
+    {
+        public int XInputIndex;
+
+        public DirectInput.IDirectInputDevice8 Device;
+        public Guid InstanceGuid;
+        public string InstanceName;
+
+        public Joystick(DirectInput.IDirectInputDevice8 device, Guid instanceGuid, string instanceName)
+        {
+            Device = device;
+            InstanceGuid = instanceGuid;
+            InstanceName = instanceName;
+        }
+    }
 }

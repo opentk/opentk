@@ -12,12 +12,16 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class IconComponent : IIconComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32IconComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.WindowIcon;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.WindowIcon)
@@ -26,17 +30,16 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public bool CanLoadFile => true;
-
+        /// <inheritdoc/>
         public bool CanLoadSystemIcon => true;
 
-        public bool HasMipmaps => throw new NotImplementedException();
-
+        /// <inheritdoc/>
         public IconHandle Create()
         {
             return new HIcon();
         }
 
+        /// <inheritdoc/>
         public void Destroy(IconHandle handle)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -78,11 +81,7 @@ namespace OpenTK.Platform.Native.Windows
             hicon.ColorBitmap = default;
         }
 
-        public void GenerateMipmaps(IconHandle handle)
-        {
-            throw new NotImplementedException("mipmaps");
-        }
-
+        /// <inheritdoc/>
         public unsafe void GetDimensions(IconHandle handle, out int width, out int height)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -109,16 +108,12 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public void GetDimensions(IconHandle handle, int level, out int width, out int height)
-        {
-            throw new NotImplementedException("mipmaps");
-        }
-
-        public unsafe void GetBitmap(IconHandle handle, Span<byte> data)
+        /// <inheritdoc/>
+        public unsafe void GetBitmapData(IconHandle handle, Span<byte> data)
         {
             HIcon hicon = handle.As<HIcon>(this);
 
-            // FIXME: If this cursor is one of the standard cursors
+            // FIXME: If this icon is one of the standard icons
             // we want to call CopyIcon so that we can call GetIconInfo properly!
             IntPtr cursor_copy = Win32.CopyIcon(hicon.Icon);
             {
@@ -146,6 +141,9 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         throw new Exception("Image buffer not big enough!");
                     }
+
+                    // Force the bitmap to be top-down.
+                    bmInfo.bmiHeader.biHeight = -Math.Abs(bmInfo.bmiHeader.biHeight);
 
                     bmInfo.bmiHeader.biBitCount = 32;
                     bmInfo.bmiHeader.biPlanes = 1;
@@ -237,12 +235,8 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public void GetBitmap(IconHandle handle, int level, Span<byte> data)
-        {
-            throw new NotImplementedException("mipmaps");
-        }
-
-        public unsafe int GetBitmapSize(IconHandle handle)
+        /// <inheritdoc/>
+        public unsafe int GetBitmapByteSize(IconHandle handle)
         {
             HIcon hicon = handle.As<HIcon>(this);
 
@@ -275,11 +269,7 @@ namespace OpenTK.Platform.Native.Windows
             return size;
         }
 
-        public int GetBitmapSize(IconHandle handle, int level)
-        {
-            throw new NotImplementedException("mipmap");
-        }
-
+        /// <inheritdoc/>
         public unsafe void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
         {
             HIcon hicon = handle.As<HIcon>(this);
@@ -296,10 +286,13 @@ namespace OpenTK.Platform.Native.Windows
             Win32.BITMAPV5HEADER header = default;
             header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
             header.bV5Width = width;
-            header.bV5Height = height;
+            header.bV5Height = -height;
             header.bV5Planes = 1;
             header.bV5BitCount = 32;
             header.bV5Compression = BI.Bitfields;
+            // For some reason setting these masks to a proper ARGB format (or R, G, B, A as individual bytes) doesn't result in alpha.
+            // As such we are going to have to swizzle the data.
+            // - Noggin_Bops 2023-04-14
             header.bV5RedMask = 0x00_FF_00_00;
             header.bV5GreenMask = 0x00_00_FF_00;
             header.bV5BlueMask = 0x00_00_00_FF;
@@ -318,7 +311,14 @@ namespace OpenTK.Platform.Native.Windows
             Span<byte> bitmapData = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
 
             // Copy over image data.
-            data.CopyTo(bitmapData);
+            // R,G,B,A byte order to B,G,R,A byte order.
+            for (int i = 0; i < data.Length; i += 4)
+            {
+                bitmapData[i + 0] = data[i + 2];
+                bitmapData[i + 1] = data[i + 1];
+                bitmapData[i + 2] = data[i + 0];
+                bitmapData[i + 3] = data[i + 3];
+            }
 
             // Create an empty mask.
             IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);
@@ -352,12 +352,12 @@ namespace OpenTK.Platform.Native.Windows
             hicon.Mode = HIcon.IconMode.Icon;
         }
 
-        public void Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data, int level)
-        {
-            throw new NotImplementedException("mipmaps");
-        }
-
-        public void Load(IconHandle handle, string file)
+        /// <summary>
+        /// Loads a windows .ico file.
+        /// </summary>
+        /// <param name="handle">Handle to an icon object.</param>
+        /// <param name="file">The icon file to load.</param>
+        public void LoadIcoFile(IconHandle handle, string file)
         {
             HIcon hicon = handle.As<HIcon>(this);
 
@@ -373,11 +373,7 @@ namespace OpenTK.Platform.Native.Windows
             hicon.Mode = HIcon.IconMode.FileIcon;
         }
 
-        public void Load(IconHandle handle, Stream stream)
-        {
-            throw new NotImplementedException("load from stream");
-        }
-
+        /// <inheritdoc/>
         public void Load(IconHandle handle, SystemIconType systemIcon)
         {
             HIcon hicon = handle.As<HIcon>(this);

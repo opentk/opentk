@@ -1,12 +1,14 @@
 ﻿using OpenTK.Core.Platform;
-using OpenTK.Core.Platform.Interfaces;
 using OpenTK.Core.Utility;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native.X11;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Tests
 {
@@ -17,79 +19,142 @@ namespace OpenTK.Platform.Tests
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
+        //static IKeyboardComponent keyboardComp;
+
+        static IDisplayComponent displayComp;
+
+        static WindowHandle Window;
 
         static CursorHandle cursorHandle;
+
+        static readonly Color4<Rgba> LightModeColor = Color4.Whitesmoke;
+        static readonly Color4<Rgba> DarkModeColor = new Color4<Rgba>(37/255.0f, 37 / 255.0f, 38 / 255.0f, 1);
+
+        static readonly Color4<Rgba> ContrastLightModeColor = new Color4<Rgba>(237 / 255.0f, 81 / 255.0f, 81 / 255.0f, 1);
+        static readonly Color4<Rgba> ContrastDarkModeColor = new Color4<Rgba>(148 / 255.0f, 10 / 255.0f, 10 / 255.0f, 1);
+
+        static Color4<Rgba> BackgroundColor = LightModeColor;
+
+        class CompositeLogger : ILogger
+        {
+            public LogLevel Filter { get; set; }
+
+            public List<ILogger> Loggers = new List<ILogger>();
+
+            void ILogger.LogInternal(string str, LogLevel level, string filePath, int lineNumber, string member)
+            {
+                foreach (var logger in Loggers)
+                {
+                    logger.Log(str, level, filePath, lineNumber, member);
+                }
+            }
+        }
+
+        class DebugThing : TraceListener
+        {
+            readonly TextWriter Writer = new StreamWriter(new FileStream("./log.log", FileMode.Create));
+
+            public override void Write(string? message)
+            {
+                Writer.Write(message);
+                Writer.Flush();
+            }
+
+            public override void WriteLine(string? message)
+            {
+                Writer.WriteLine(message);
+                Writer.Flush();
+            }
+        }
 
         static void Main()
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
-            if (OperatingSystem.IsWindows())
-                windowComp = new Native.Windows.WindowComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                windowComp = new Native.X11.X11WindowComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                glComp = new Native.Windows.OpenGLComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                glComp = new Native.X11.X11OpenGLComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                cursorComp = new Native.Windows.CursorComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                cursorComp = new Native.X11.X11CursorComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                mouseComp = new Native.Windows.MouseComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                mouseComp = new Native.X11.X11MouseComponent();
-            else throw new Exception("OS not supported yet!");
-
-            if (OperatingSystem.IsWindows())
-                shellComp = new Native.Windows.ShellComponent();
-            else if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-                shellComp = new Native.X11.X11ShellComponent();
-            else throw new Exception("OS not supported yet!");
+            windowComp = Native.PlatformComponents.CreateWindowComponent();
+            glComp = Native.PlatformComponents.CreateOpenGLComponent();
+            cursorComp = Native.PlatformComponents.CreateCursorComponent();
+            mouseComp = Native.PlatformComponents.CreateMouseComponent();
+            shellComp = Native.PlatformComponents.CreateShellComponent();
+            displayComp = Native.PlatformComponents.CreateDisplayComponent();
+            //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
             windowComp.Logger = logger;
             glComp.Logger = logger;
+            cursorComp.Logger = logger;
+            mouseComp.Logger = logger;
+            shellComp.Logger = logger;
+            displayComp.Logger = logger;
+            //keyboardComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
-
             glComp.Initialize(PalComponents.OpenGL);
-
             cursorComp.Initialize(PalComponents.MouseCursor);
-
+            mouseComp.Initialize(PalComponents.MiceInput);
             shellComp.Initialize(PalComponents.Shell);
+            displayComp.Initialize(PalComponents.Display);
+            //keyboardComp.Initialize(PalComponents.KeyboardInput);
+
+            /*
+            keyboardComp.Logger.LogDebug($"Available keyboard layouts: {string.Join(", ", keyboardComp.GetAvailableKeyboardLayouts())}");
+            keyboardComp.Logger.LogDebug($"Current keyboard layout: {keyboardComp.GetActiveKeyboardLayout()}");
+
+            Console.WriteLine($"Scancode to Key:");
+            keyboardComp.Logger.LogDebug($"Scancode to Key:");
+            foreach (var scancode in Enum.GetValues<Scancode>())
+            {
+                Key key = keyboardComp.GetKeyFromScancode(scancode);
+                //if (key != Key.Unknown) continue;
+                Console.WriteLine($"{scancode} -> {key}");
+                keyboardComp.Logger.LogDebug($"{scancode} -> {key}");
+            }
+            Console.WriteLine();
+            Console.WriteLine($"Key to Scancode:");
+            keyboardComp.Logger.LogDebug($"");
+            keyboardComp.Logger.LogDebug($"Key to Scancode:");
+            foreach (var key in Enum.GetValues<Key>())
+            {
+                Scancode scancode = keyboardComp.GetScancodeFromKey(key);
+                //if (scancode != Scancode.Unknown) continue;
+                Console.WriteLine($"{key} -> {scancode}");
+                keyboardComp.Logger.LogDebug($"{scancode} -> {key}");
+            }
+            */
 
             if (shellComp.GetBatteryInfo(out BatteryInfo info) == BatteryStatus.HasSystemBattery)
             {
                 Console.WriteLine(info);
             }
 
-            WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
-            OpenGLContextHandle context = glComp.CreateFromWindow(window);
-            glComp.SetCurrentContext(context);
+            Window = windowComp.Create(new OpenGLGraphicsApiHints() { Version = new Version(3, 3) });
+            OpenGLContextHandle context = glComp.CreateFromWindow(Window);
+            if (glComp.SetCurrentContext(context) == false)
+            {
+                Console.WriteLine("Could not set context!");
+            }
             GLLoader.LoadBindings(glComp.GetBindingsContext(context));
 
             glComp.SetSwapInterval(1);
             int swap = glComp.GetSwapInterval();
 
-            windowComp.SetPosition(window, 100, 100);
-            windowComp.SetSize(window, 400, 400);
-            windowComp.SetMinClientSize(window, 300, 300);
-            windowComp.SetMaxClientSize(window, 500, 500);
-            windowComp.SetMode(window, WindowMode.Normal);
-            windowComp.SetAlwaysOnTop(window, true);
+            windowComp.SetPosition(Window, 100, 100);
+            windowComp.SetSize(Window, 400, 400);
+            windowComp.SetMinClientSize(Window, 300, 300);
+            windowComp.SetMaxClientSize(Window, 500, 500);
+            windowComp.SetMode(Window, WindowMode.Normal);
+            //windowComp.SetAlwaysOnTop(window, true);
 
-            Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(window)}");
+            //Console.WriteLine($"Preferred theme: {shellComp.GetPreferredTheme()}");
+
+            Console.WriteLine($"Number of screens: {displayComp.GetDisplayCount()}");
+
+            Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
+
+
 
             {
-                windowComp.GetMinClientSize(window, out int? minWidth, out int? minHeight);
+                windowComp.GetMinClientSize(Window, out int? minWidth, out int? minHeight);
                 Console.WriteLine($"Window min size: ({minWidth}, {minHeight})");
             }
 
@@ -98,7 +163,10 @@ namespace OpenTK.Platform.Tests
             SystemCursorType cursor = SystemCursorType.Default;
             cursorHandle = cursorComp.Create();
 
-            windowComp.SetCursor(window, cursorHandle);
+            cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
+            Console.WriteLine($"Default cursor size: {cWidth}, {cHeight}");
+
+            windowComp.SetCursor(Window, cursorHandle);
 
             cursorHandle = cursorComp.Create();
             byte[] image = new byte[16 * 16 * 3];
@@ -118,20 +186,24 @@ namespace OpenTK.Platform.Tests
             }
             //cursorComp.SetHotspot(cursorHandle, 8, 8);
             cursorComp.Load(cursorHandle, 16, 16, image, mask);
-            cursorComp.SetHotspot(cursorHandle, 7, 7);
-            windowComp.SetCursor(window, cursorHandle);
+            cursorComp.GetSize(cursorHandle, out cWidth, out cHeight);
+            Console.WriteLine($"Custom cursor size: {cWidth}, {cHeight}");
+            //cursorComp.SetHotspot(cursorHandle, 7, 7);
+            windowComp.SetCursor(Window, cursorHandle);
 
-            while (windowComp.IsWindowDestroyed(window) == false)
+            while (windowComp.IsWindowDestroyed(Window) == false)
             {
                 windowComp.ProcessEvents();
 
-                if (windowComp.IsWindowDestroyed(window))
+                if (windowComp.IsWindowDestroyed(Window))
                     break;
 
                 if (watch.ElapsedMilliseconds > 3000)
                 {
                     //windowComp.FocusWindow(window);
-                    //windowComp.RequestAttention(window);
+                    windowComp.RequestAttention(Window);
+
+                    windowComp.SetMode(Window, WindowMode.Normal);
 
                     watch.Restart();
 
@@ -142,20 +214,24 @@ namespace OpenTK.Platform.Tests
                     if (cursor > SystemCursorType.ArrowUp)
                         cursor = SystemCursorType.Default;
                 }
-
-                mouseComp.GetPosition(null, out int x, out int y);
+                
+                //mouseComp.GetPosition(null, out int x, out int y);
                 //windowComp.SetTitle(window,  $"Mouse: ({x}, {y})");
                 
-                GL.ClearColor(Color4.Coral);
+                GL.ClearColor(BackgroundColor);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                windowComp.SwapBuffers(window);
+                windowComp.SwapBuffers(Window);
             }
         }
 
         static CursorCaptureMode captureMode = CursorCaptureMode.Normal;
+        static WindowMode windowMode = WindowMode.Normal;
 
         static Vector2 lastPos;
+
+        static bool fixedBorder = false;
+        static bool client = false;
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
@@ -176,6 +252,51 @@ namespace OpenTK.Platform.Tests
                     //windowComp.CaptureCursor((WindowHandle)handle, captured);
                     windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
                 }
+                else if (buttonDown.Button == MouseButton.Button2)
+                {
+                    windowComp.GetMaxClientSize(Window, out int? bMaxWidth, out int? bMaxHeight);
+                    windowComp.GetMinClientSize(Window, out int? bMinWidth, out int? bMinHeight);
+
+                    if (fixedBorder)
+                    {
+                        windowComp.SetBorderStyle(Window, WindowStyle.ResizableBorder);
+                    }
+                    else
+                    {
+                        windowComp.SetBorderStyle(Window, WindowStyle.FixedBorder);
+                    }
+
+                    fixedBorder = !fixedBorder;
+
+                    windowComp.GetMaxClientSize(Window, out int? aMaxWidth, out int? aMaxHeight);
+                    windowComp.GetMinClientSize(Window, out int? aMinWidth, out int? aMinHeight);
+
+                    System.Console.WriteLine($"Before: Min: ({bMinWidth}, {bMinHeight}), Max: ({bMaxWidth}, {bMaxHeight})");
+                    System.Console.WriteLine($"After: Min: ({aMinWidth}, {aMinHeight}), Max: ({aMaxWidth}, {aMaxHeight})");
+                }
+                else if (buttonDown.Button == MouseButton.Button1)
+                {
+                    mouseComp.GetPosition(out int x, out int y);
+
+                    //windowComp.SetMode(Window, WindowMode.Hidden);
+                    if (client)
+                    {
+                        windowComp.SetClientSize(Window, 400, 400);
+                    }
+                    else
+                    {
+                        windowComp.SetSize(Window, 400, 400);
+                    }
+
+                    windowComp.GetSize(Window, out int wx, out int wy);
+                    windowComp.GetClientSize(Window, out int cx, out int cy);
+                    System.Console.WriteLine($"Size: ({wx}, {wy}), Client size: ({cx}, {cy}), Set client size: {client}");
+
+                    client = !client;
+
+                    //keyboardComp.BeginIme(Window);
+                    //keyboardComp.SetImeRectangle(Window, x, y, 0, 0);
+                }
             }
             else if (args is ScrollEventArgs scroll)
             {
@@ -185,7 +306,7 @@ namespace OpenTK.Platform.Tests
             {
                 windowComp.SetTitle((WindowHandle)handle, $"Mouse: {move.Position}");
 
-                Console.WriteLine($"Delta: {move.Position - lastPos}");
+                //Console.WriteLine($"Delta: {move.Position - lastPos}");
 
                 lastPos = move.Position;
             }
@@ -203,6 +324,40 @@ namespace OpenTK.Platform.Tests
             else if (args is WindowModeChangeEventArgs windowModeChange)
             {
                 Console.WriteLine($"Window mode: {windowModeChange.NewMode}");
+            }
+            else if (args is ThemeChangeEventArgs themeChange)
+            {
+                ThemeInfo newTheme = themeChange.NewTheme;
+                switch (newTheme.Theme)
+                {
+                    case AppTheme.Light:
+                        BackgroundColor = newTheme.HighContrast ? ContrastLightModeColor : LightModeColor;
+                        (shellComp as Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, false);
+                        break;
+                    case AppTheme.Dark:
+                        BackgroundColor = newTheme.HighContrast ? ContrastDarkModeColor : DarkModeColor;
+                        (shellComp as Native.Windows.ShellComponent)?.SetImmersiveDarkMode(Window, true);
+                        break;
+                    case AppTheme.NoPreference:
+                    default:
+                        break;
+                }
+            }
+            else if (args is PowerStateChangeEventArgs powerStateChange)
+            {
+                if (powerStateChange.GoingToSleep)
+                {
+                    Console.WriteLine("Entering sleep!");
+                }
+                else
+                {
+                    Console.WriteLine("Awoken from sleep!");
+                }
+            }
+            else if (args is InputLanguageChangedEventArgs inputLanguageChange)
+            {
+                Console.WriteLine($"New keyboard layout: {inputLanguageChange.KeyboardLayout}");
+                Console.WriteLine($"New input language: {inputLanguageChange.InputLanguage}, {inputLanguageChange.InputLanguageDisplayName}");
             }
         }
     }

@@ -13,12 +13,16 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class CursorComponent : ICursorComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32CursorComponent";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MouseCursor;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.MouseCursor)
@@ -27,19 +31,22 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public bool CanLoadFromFile => true;
-
+        /// <inheritdoc/>
         public bool CanLoadSystemCursor => true;
 
+        /// <inheritdoc/>
         public bool CanScaleCursor => false;
 
+        /// <inheritdoc/>
         public bool CanSupportAnimatedCursor => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public CursorHandle Create()
         {
             return new HCursor();
         }
 
+        /// <inheritdoc/>
         public void Destroy(CursorHandle handle)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -82,6 +89,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Uninitialized;
         }
 
+        /// <inheritdoc/>
         public unsafe void GetSize(CursorHandle handle, out int width, out int height)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -108,6 +116,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetHotspot(CursorHandle handle, out int x, out int y)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -127,6 +136,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public unsafe void GetImage(CursorHandle handle, Span<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -247,6 +257,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -255,6 +266,7 @@ namespace OpenTK.Platform.Native.Windows
             vertical = 1;
         }
 
+        /// <inheritdoc/>
         public void Load(CursorHandle handle, SystemCursorType systemCursor)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -322,6 +334,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -338,7 +351,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.BITMAPV5HEADER header = default;
             header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
             header.bV5Width = width;
-            header.bV5Height = height;
+            header.bV5Height = -height;
             header.bV5Planes = 1;
             header.bV5BitCount = 32;
             header.bV5Compression = BI.Bitfields;
@@ -360,7 +373,14 @@ namespace OpenTK.Platform.Native.Windows
             Span<byte> data = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
 
             // Copy over image data.
-            image.CopyTo(data);
+            // R,G,B,A byte order to B,G,R,A byte order.
+            for (int i = 0; i < data.Length; i += 4)
+            {
+                data[i + 0] = image[i + 2];
+                data[i + 1] = image[i + 1];
+                data[i + 2] = image[i + 0];
+                data[i + 3] = image[i + 3];
+            }
 
             // Create an empty mask.
             IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);
@@ -394,6 +414,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
+        /// <inheritdoc/>
         public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -478,7 +499,13 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.Icon;
         }
 
-        public void Load(CursorHandle handle, string file)
+        /// <summary>
+        /// Loads a cursor from a .cur file.
+        /// </summary>
+        /// <param name="handle">Handle to a cursor.</param>
+        /// <param name="file">The .cur file to load.</param>
+        /// <exception cref="FileNotFoundException"></exception>
+        public void LoadCurFile(CursorHandle handle, string file)
         {
             HCursor hcursor = handle.As<HCursor>(this);
 
@@ -505,11 +532,7 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.Mode = HCursor.CursorMode.FileIcon;
         }
 
-        public void Load(CursorHandle handle, Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <inheritdoc/>
         public void SetHotspot(CursorHandle handle, int x, int y)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -572,6 +595,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public void SetScale(CursorHandle handle, float horizontal, float vertical)
         {
             HCursor hcursor = handle.As<HCursor>(this);

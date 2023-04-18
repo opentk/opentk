@@ -9,11 +9,6 @@ namespace OpenTK.Core.Platform
     public interface ICursorComponent : IPalComponent
     {
         /// <summary>
-        /// True if the driver can load from a file.
-        /// </summary>
-        bool CanLoadFromFile { get; }
-
-        /// <summary>
         /// True if the driver can load system cursors.
         /// </summary>
         bool CanLoadSystemCursor { get; }
@@ -26,6 +21,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// True if the driver can create and display custom animated cursors.
         /// </summary>
+        // FIXME: We don't even have API for animated cursors!
         bool CanSupportAnimatedCursor { get; }
 
         /// <summary>
@@ -57,6 +53,7 @@ namespace OpenTK.Core.Platform
         /// <param name="x">X coordinate of the hotspot.</param>
         /// <param name="y">Y coordinate of the hotspot.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        // FIXME: Do we care about this API? Can we even implement it across platforms.
         void GetHotspot(CursorHandle handle, out int x, out int y);
 
         /// <summary>
@@ -65,6 +62,7 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a cursor object.</param>
         /// <param name="image">Buffer to copy cursor image into.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        // FIXME: Do we care about this API? Can we even implement it across platforms.
         void GetImage(CursorHandle handle, Span<byte> image);
 
         /// <summary>
@@ -109,31 +107,8 @@ namespace OpenTK.Core.Platform
         /// <param name="maskData">Buffer containing mask data.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="width"/> or <paramref name="height"/> is negative.</exception>
         /// <exception cref="ArgumentException"><paramref name="colorData"/> or <paramref name="maskData"/> is smaller than specified dimensions.</exception>
+        // FIXME: Define the data format for colorData and maskData. Is this a BW or color cursor??
         void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData);
-
-        /// <summary>
-        /// Load a cursor from a file.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="file">Path to cursor file.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver does not provide this function. See <see cref="CanLoadFromFile"/>.</exception>
-        /// <exception cref="FileNotFoundException">File at path <paramref name="file"/> not found.</exception>
-        /// <exception cref="IOException">Input output error.</exception>
-        /// <exception cref="NotSupportedException">File format not supported or recognized.</exception>
-        void Load(CursorHandle handle, string file);
-
-        /// <summary>
-        /// Load a cursor from a stream.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor object.</param>
-        /// <param name="stream">Stream containing mouse cursor.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="PalNotImplementedException">Driver does not provide this function. See <see cref="CanLoadFromFile"/>.</exception>
-        /// <exception cref="IOException">Input Output Error.</exception>
-        /// <exception cref="NotSupportedException">File format not supported or recognized.</exception>
-        /// <remarks>This function should be implemented using a temporary file if the system does not support reading from a stream.</remarks>
-        void Load(CursorHandle handle, Stream stream);
 
         /// <summary>
         /// Set the cursor hot spot.

@@ -74,5 +74,10 @@ namespace OpenTK.Core.Platform
             Scale = scale;
             Dpi = dpi;
         }
+
+        public override string ToString()
+        {
+            return $"{HorizontalResolution}x{VerticalResolution}@{RefreshRate} Scale: {Scale}, DPI: {Dpi}";
+        }
     }
 }

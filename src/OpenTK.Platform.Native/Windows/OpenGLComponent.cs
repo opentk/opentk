@@ -11,12 +11,16 @@ namespace OpenTK.Platform.Native.Windows
 {
     public class OpenGLComponent : IOpenGLComponent
     {
+        /// <inheritdoc/>
         public string Name => "Win32OpenGL";
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.OpenGL;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.OpenGL)
@@ -194,17 +198,22 @@ namespace OpenTK.Platform.Native.Windows
 
         #endregion
 
+        /// <inheritdoc/>
         public bool CanShareContexts => true;
 
+        /// <inheritdoc/>
         public bool CanCreateFromWindow => true;
 
+        /// <inheritdoc/>
         public bool CanCreateFromSurface => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromSurface()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
@@ -631,6 +640,7 @@ namespace OpenTK.Platform.Native.Windows
             return hglrc;
         }
 
+        /// <inheritdoc/>
         public void DestroyContext(OpenGLContextHandle handle)
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
@@ -646,11 +656,13 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
             return new Pal2BindingsContext(this, handle);
         }
 
+        /// <inheritdoc/>
         public unsafe IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
@@ -658,6 +670,7 @@ namespace OpenTK.Platform.Native.Windows
             return (IntPtr)Wgl.GetAnyProcAddress(procedureName);
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
             IntPtr hGlrc = Wgl.GetCurrentContext();
@@ -671,6 +684,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
             HGLRC? hglrc = handle?.As<HGLRC>(this);
@@ -698,17 +712,19 @@ namespace OpenTK.Platform.Native.Windows
             return true;
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
             HGLRC hglrc = handle.As<HGLRC>(this);
             return hglrc.SharedContext;
         }
 
+        /// <inheritdoc/>
         public void SetSwapInterval(int interval)
         {
             // FIXME: Maybe implement DWM hack?
             // https://github.com/glfw/glfw/issues/1072
-            // https://github.com/libsdl-org/SDL/issues/5797
+            // https://github.com/libsdl-org/SDLLib/issues/5797
 
             // Relevant glfw source:
             // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L340
@@ -728,6 +744,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public int GetSwapInterval()
         {
             if (EXT_swap_control)

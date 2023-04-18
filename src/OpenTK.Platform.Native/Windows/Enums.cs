@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -73,95 +75,95 @@ namespace OpenTK.Platform.Native.Windows
     internal enum WindowStyles : uint
     {
         /// <summary>The window has a thin-line border.</summary>
-        WS_BORDER = 0x800000,
+        Border = 0x800000,
 
         /// <summary>The window has a title bar (includes the WS_BORDER style).</summary>
-        WS_CAPTION = 0xc00000,
+        Caption = 0xc00000,
 
         /// <summary>The window is a child window. A window with this style cannot have a menu bar. This style cannot be used with the WS_POPUP style.</summary>
-        WS_CHILD = 0x40000000,
+        Child = 0x40000000,
 
         /// <summary>Excludes the area occupied by child windows when drawing occurs within the parent window. This style is used when creating the parent window.</summary>
-        WS_CLIPCHILDREN = 0x2000000,
+        ClipChildren = 0x2000000,
 
         /// <summary>
         /// Clips child windows relative to each other; that is, when a particular child window receives a WM_PAINT message, the WS_CLIPSIBLINGS style clips all other overlapping child windows out of the region of the child window to be updated.
         /// If WS_CLIPSIBLINGS is not specified and child windows overlap, it is possible, when drawing within the client area of a child window, to draw within the client area of a neighboring child window.
         /// </summary>
-        WS_CLIPSIBLINGS = 0x4000000,
+        ClipSiblings = 0x4000000,
 
         /// <summary>The window is initially disabled. A disabled window cannot receive input from the user. To change this after a window has been created, use the EnableWindow function.</summary>
-        WS_DISABLED = 0x8000000,
+        Disabled = 0x8000000,
 
         /// <summary>The window has a border of a style typically used with dialog boxes. A window with this style cannot have a title bar.</summary>
-        WS_DLGFRAME = 0x400000,
+        DLGFrame = 0x400000,
 
         /// <summary>
         /// The window is the first control of a group of controls. The group consists of this first control and all controls defined after it, up to the next control with the WS_GROUP style.
         /// The first control in each group usually has the WS_TABSTOP style so that the user can move from group to group. The user can subsequently change the keyboard focus from one control in the group to the next control in the group by using the direction keys.
         /// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.
         /// </summary>
-        WS_GROUP = 0x20000,
+        Group = 0x20000,
 
         /// <summary>The window has a horizontal scroll bar.</summary>
-        WS_HSCROLL = 0x100000,
+        HScroll = 0x100000,
 
         /// <summary>The window is initially maximized.</summary>
-        WS_MAXIMIZE = 0x1000000,
+        Maximize = 0x1000000,
 
         /// <summary>The window has a maximize button. Cannot be combined with the WS_EX_CONTEXTHELP style. The WS_SYSMENU style must also be specified.</summary>
-        WS_MAXIMIZEBOX = 0x10000,
+        MaximizeBox = 0x10000,
 
         /// <summary>The window is initially minimized.</summary>
-        WS_MINIMIZE = 0x20000000,
+        Minimize = 0x20000000,
 
         /// <summary>The window has a minimize button. Cannot be combined with the WS_EX_CONTEXTHELP style. The WS_SYSMENU style must also be specified.</summary>
-        WS_MINIMIZEBOX = 0x20000,
+        MinimizeBox = 0x20000,
 
         /// <summary>The window is an overlapped window. An overlapped window has a title bar and a border.</summary>
-        WS_OVERLAPPED = 0x0,
+        Overlapped = 0x0,
 
         /// <summary>The window is an overlapped window.</summary>
-        WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+        OverlappedWindow = Overlapped | Caption | SysMenu | ThickFrame | MinimizeBox | MaximizeBox,
 
         /// <summary>The window is a pop-up window. This style cannot be used with the WS_CHILD style.</summary>
-        WS_POPUP = 0x80000000u,
+        Popup = 0x80000000u,
 
         /// <summary>The window is a pop-up window. The WS_CAPTION and WS_POPUPWINDOW styles must be combined to make the window menu visible.</summary>
-        WS_POPUPWINDOW = WS_POPUP | WS_BORDER | WS_SYSMENU,
+        PopupWindow = Popup | Border | SysMenu,
 
         /// <summary>The window has a sizing border.</summary>
-        WS_THICKFRAME = 0x40000,
+        ThickFrame = 0x40000,
 
         /// <summary>The window has a window menu on its title bar. The WS_CAPTION style must also be specified.</summary>
-        WS_SYSMENU = 0x80000,
+        SysMenu = 0x80000,
 
         /// <summary>
         /// The window is a control that can receive the keyboard focus when the user presses the TAB key.
-        /// Pressing the TAB key changes the keyboard focus to the next control with the WS_TABSTOP style.
+        /// Pressing the TAB key changes the keyboard focus to the next control with the <see cref="TabStop"/> style.
         /// You can turn this style on and off to change dialog box navigation. To change this style after a window has been created, use the SetWindowLong function.
         /// For user-created windows and modeless dialogs to work with tab stops, alter the message loop to call the IsDialogMessage function.
         /// </summary>
-        WS_TABSTOP = 0x10000,
+        TabStop = 0x10000,
 
         /// <summary>The window is initially visible. This style can be turned on and off by using the ShowWindow or SetWindowPos function.</summary>
-        WS_VISIBLE = 0x10000000,
+        Visible = 0x10000000,
 
         /// <summary>The window has a vertical scroll bar.</summary>
-        WS_VSCROLL = 0x200000
+        VScroll = 0x200000
     }
 
     [Flags]
     internal enum WindowStylesEx : uint
     {
         /// <summary>Specifies a window that accepts drag-drop files.</summary>
-        WS_EX_ACCEPTFILES = 0x00000010,
+        AcceptFiles = 0x00000010,
 
         /// <summary>Forces a top-level window onto the taskbar when the window is visible.</summary>
-        WS_EX_APPWINDOW = 0x00040000,
+        AppWindow = 0x00040000,
 
         /// <summary>Specifies a window that has a border with a sunken edge.</summary>
-        WS_EX_CLIENTEDGE = 0x00000200,
+        ClientEdge = 0x00000200,
 
         /// <summary>
         /// Specifies a window that paints all descendants in bottom-to-top painting order using double-buffering.
@@ -173,7 +175,7 @@ namespace OpenTK.Platform.Native.Windows
         /// but only if the descendent window also has the WS_EX_TRANSPARENT bit set.
         /// Double-buffering allows the window and its descendents to be painted without flicker.
         /// </remarks>
-        WS_EX_COMPOSITED = 0x02000000,
+        Composited = 0x02000000,
 
         /// <summary>
         /// Specifies a window that includes a question mark in the title bar. When the user clicks the question mark,
@@ -182,48 +184,48 @@ namespace OpenTK.Platform.Native.Windows
         /// The Help application displays a pop-up window that typically contains help for the child window.
         /// WS_EX_CONTEXTHELP cannot be used with the WS_MAXIMIZEBOX or WS_MINIMIZEBOX styles.
         /// </summary>
-        WS_EX_CONTEXTHELP = 0x00000400,
+        ContextHelp = 0x00000400,
 
         /// <summary>
         /// Specifies a window which contains child windows that should take part in dialog box navigation.
         /// If this style is specified, the dialog manager recurses into children of this window when performing navigation operations
         /// such as handling the TAB key, an arrow key, or a keyboard mnemonic.
         /// </summary>
-        WS_EX_CONTROLPARENT = 0x00010000,
+        ControlParent = 0x00010000,
 
         /// <summary>Specifies a window that has a double border.</summary>
-        WS_EX_DLGMODALFRAME = 0x00000001,
+        DLGModalFrame = 0x00000001,
 
         /// <summary>
         /// Specifies a window that is a layered window.
         /// This cannot be used for child windows or if the window has a class style of either CS_OWNDC or CS_CLASSDC.
         /// </summary>
-        WS_EX_LAYERED = 0x00080000,
+        Layered = 0x00080000,
 
         /// <summary>
         /// Specifies a window with the horizontal origin on the right edge. Increasing horizontal values advance to the left.
         /// The shell language must support reading-order alignment for this to take effect.
         /// </summary>
-        WS_EX_LAYOUTRTL = 0x00400000,
+        LayoutRTL = 0x00400000,
 
         /// <summary>Specifies a window that has generic left-aligned properties. This is the default.</summary>
-        WS_EX_LEFT = 0x00000000,
+        Left = 0x00000000,
 
         /// <summary>
         /// Specifies a window with the vertical scroll bar (if present) to the left of the client area.
         /// The shell language must support reading-order alignment for this to take effect.
         /// </summary>
-        WS_EX_LEFTSCROLLBAR = 0x00004000,
+        LeftScrollbar = 0x00004000,
 
         /// <summary>
         /// Specifies a window that displays text using left-to-right reading-order properties. This is the default.
         /// </summary>
-        WS_EX_LTRREADING = 0x00000000,
+        LTRReading = 0x00000000,
 
         /// <summary>
         /// Specifies a multiple-document interface (MDI) child window.
         /// </summary>
-        WS_EX_MDICHILD = 0x00000040,
+        MDIChild = 0x00000040,
 
         /// <summary>
         /// Specifies a top-level window created with this style does not become the foreground window when the user clicks it.
@@ -231,48 +233,48 @@ namespace OpenTK.Platform.Native.Windows
         /// The window does not appear on the taskbar by default. To force the window to appear on the taskbar, use the WS_EX_APPWINDOW style.
         /// To activate the window, use the SetActiveWindow or SetForegroundWindow function.
         /// </summary>
-        WS_EX_NOACTIVATE = 0x08000000,
+        NoActivate = 0x08000000,
 
         /// <summary>
         /// Specifies a window which does not pass its window layout to its child windows.
         /// </summary>
-        WS_EX_NOINHERITLAYOUT = 0x00100000,
+        NoInheritLayout = 0x00100000,
 
         /// <summary>
         /// Specifies that a child window created with this style does not send the WM_PARENTNOTIFY message to its parent window when it is created or destroyed.
         /// </summary>
-        WS_EX_NOPARENTNOTIFY = 0x00000004,
+        NoParentNotify = 0x00000004,
 
         /// <summary>
         /// The window does not render to a redirection surface.
         /// This is for windows that do not have visible content or that use mechanisms other than surfaces to provide their visual.
         /// </summary>
-        WS_EX_NOREDIRECTIONBITMAP = 0x00200000,
+        NoRedirectionBitmap = 0x00200000,
 
         /// <summary>Specifies an overlapped window.</summary>
-        WS_EX_OVERLAPPEDWINDOW = WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE,
+        OverlappedWindow = WindowEdge | ClientEdge,
 
         /// <summary>Specifies a palette window, which is a modeless dialog box that presents an array of commands.</summary>
-        WS_EX_PALETTEWINDOW = WS_EX_WINDOWEDGE | WS_EX_TOOLWINDOW | WS_EX_TOPMOST,
+        PaletteWindow = WindowEdge | ToolWindow | TopMost,
 
         /// <summary>
         /// Specifies a window that has generic "right-aligned" properties. This depends on the window class.
         /// The shell language must support reading-order alignment for this to take effect.
         /// Using the WS_EX_RIGHT style has the same effect as using the SS_RIGHT (static), ES_RIGHT (edit), and BS_RIGHT/BS_RIGHTBUTTON (button) control styles.
         /// </summary>
-        WS_EX_RIGHT = 0x00001000,
+        Right = 0x00001000,
 
         /// <summary>Specifies a window with the vertical scroll bar (if present) to the right of the client area. This is the default.</summary>
-        WS_EX_RIGHTSCROLLBAR = 0x00000000,
+        RightScrollbar = 0x00000000,
 
         /// <summary>
         /// Specifies a window that displays text using right-to-left reading-order properties.
         /// The shell language must support reading-order alignment for this to take effect.
         /// </summary>
-        WS_EX_RTLREADING = 0x00002000,
+        RTLReading = 0x00002000,
 
         /// <summary>Specifies a window with a three-dimensional border style intended to be used for items that do not accept user input.</summary>
-        WS_EX_STATICEDGE = 0x00020000,
+        StaticEdge = 0x00020000,
 
         /// <summary>
         /// Specifies a window that is intended to be used as a floating toolbar.
@@ -281,23 +283,23 @@ namespace OpenTK.Platform.Native.Windows
         /// If a tool window has a system menu, its icon is not displayed on the title bar.
         /// However, you can display the system menu by right-clicking or by typing ALT+SPACE.
         /// </summary>
-        WS_EX_TOOLWINDOW = 0x00000080,
+        ToolWindow = 0x00000080,
 
         /// <summary>
         /// Specifies a window that should be placed above all non-topmost windows and should stay above them, even when the window is deactivated.
         /// To add or remove this style, use the SetWindowPos function.
         /// </summary>
-        WS_EX_TOPMOST = 0x00000008,
+        TopMost = 0x00000008,
 
         /// <summary>
         /// Specifies a window that should not be painted until siblings beneath the window (that were created by the same thread) have been painted.
         /// The window appears transparent because the bits of underlying sibling windows have already been painted.
         /// To achieve transparency without these restrictions, use the SetWindowRgn function.
         /// </summary>
-        WS_EX_TRANSPARENT = 0x00000020,
+        Transparent = 0x00000020,
 
         /// <summary>Specifies a window that has a border with a raised edge.</summary>
-        WS_EX_WINDOWEDGE = 0x00000100
+        WindowEdge = 0x00000100
     }
 
     [Flags]
@@ -365,7 +367,7 @@ namespace OpenTK.Platform.Native.Windows
         /// The retrieved value is of type BOOL.
         /// TRUE if non-client rendering is enabled; otherwise, FALSE.
         /// </summary>
-        NCRenderingEnabled = 1,
+        NCRenderingEnabled = 0,
 
         /// <summary>
         /// Use with DwmSetWindowAttribute.
@@ -828,6 +830,350 @@ namespace OpenTK.Platform.Native.Windows
         Wave = 12,
     }
 
+    internal enum CLSCTX : uint
+    {
+        INPROC_SERVER = 0x1,
+        INPROC_HANDLER = 0x2,
+        LOCAL_SERVER = 0x4,
+        INPROC_SERVER16 = 0x8,
+        REMOTE_SERVER = 0x10,
+        INPROC_HANDLER16 = 0x20,
+        RESERVED1 = 0x40,
+        RESERVED2 = 0x80,
+        RESERVED3 = 0x100,
+        RESERVED4 = 0x200,
+        NO_CODE_DOWNLOAD = 0x400,
+        RESERVED5 = 0x800,
+        NO_CUSTOM_MARSHAL = 0x1000,
+        ENABLE_CODE_DOWNLOAD = 0x2000,
+        NO_FAILURE_LOG = 0x4000,
+        DISABLE_AAA = 0x8000,
+        ENABLE_AAA = 0x10000,
+        FROM_DEFAULT_CONTEXT = 0x20000,
+        ACTIVATE_X86_SERVER = 0x40000,
+        ACTIVATE_32_BIT_SERVER,
+        ACTIVATE_64_BIT_SERVER = 0x80000,
+        ENABLE_CLOAKING = 0x100000,
+        APPCONTAINER = 0x400000,
+        ACTIVATE_AAA_AS_IU = 0x800000,
+        RESERVED6 = 0x1000000,
+        ACTIVATE_ARM32_SERVER = 0x2000000,
+        ALLOW_LOWER_TRUST_REGISTRATION,
+        PS_DLL = 0x80000000,
+    }
+
+    [Flags]
+    internal enum COINIT : uint
+    {
+        ApartmentThreaded = 0x2,
+        MultiThreaded,
+        DisableOLE1DDE = 0x4,
+        SpeedOverMemory = 0x8,
+    }
+
+    internal enum DevType : uint
+    {
+        ClassAll = 0,
+        ClassDevice = 1,
+        ClassPointer = 2,
+        ClassKeyboard = 3,
+        ClassGameCtrl = 4,
+
+        Device = 0x11,
+        Mouse = 0x12,
+        Keyboard = 0x13,
+        Joystick = 0x14,
+        Gamepad = 0x15,
+        Driving = 0x16,
+        Flight = 0x17,
+        FirstPerson = 0x18,
+        DeviceCTRL = 0x19,
+        ScreenPointer = 0x1A,
+        Remote = 0x1B,
+        Supplemental = 0x1C,
+    }
+
+    internal enum DIEDFL : uint
+    {
+        AllDevices = 0x00000000,
+        AttachedOnly = 0x00000001,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x0500
+        /// </summary>
+        ForceFeedback = 0x00000100,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x050a
+        /// </summary>
+        IncludeAliases = 0x00010000,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x050a
+        /// </summary>
+        IncludePhantoms = 0x00020000,
+        /// <summary>
+        /// DIRECTINPUT_VERSION >= 0x0800
+        /// </summary>
+        IncludeHidden = 0x00040000,
+    }
+
+    [Flags]
+    internal enum DIDC : uint
+    {
+        /// <summary>
+        /// The device is physically attached to the user's computer.
+        /// </summary>
+        Attached = 0x00000001,
+
+        /// <summary>
+        /// At least one object on the device is polled, rather than interrupt-driven.
+        /// For these objects, the application must explicitly call the IDirectInputDevice8 Interface method to obtain data.
+        /// HID devices can contain a mixture of polled and nonpolled objects.
+        /// </summary>
+        PolledDevice = 0x00000002,
+
+        /// <summary>
+        /// If this flag is set, the data is coming from a user mode device interface,
+        /// such as a Human Interface Device (human interface device),
+        /// or by some other ring 3 means.
+        /// If it is not set, the data is coming directly from a kernel mode driver.
+        /// </summary>
+        Emulated = 0x00000004,
+
+        /// <summary>
+        /// At least one object in the current data format is polled, rather than interrupt-driven.
+        /// For these objects, the application must explicitly call the IDirectInputDevice8 Interface method to obtain data.
+        /// </summary>
+        PolledDataFormat = 0x00000008,
+
+        /// <summary>
+        /// The device supports force feedback.
+        /// </summary>
+        ForceFeedback = 0x00000100,
+
+        /// <summary>
+        /// The force-feedback system supports the attack parameter for at least one effect.
+        /// If the device does not support attack, the attack level and attack time members of the DIENVELOPE structure are ignored by the device.
+        ///
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual effect sets the DIEFT_FFATTACK flag if attack is supported for that effect.
+        /// </summary>
+        FFAttack = 0x00000200,
+
+        /// <summary>
+        /// The force-feedback system supports the fade parameter for at least one effect.
+        /// If the device does not support fade, the fade level and fade time members of the DIENVELOPE structure are ignored by the device.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual effect sets the DIEFT_FFFADE flag if fade is supported for that effect.
+        /// </summary>
+        FFFade = 0x00000400,
+
+        /// <summary>
+        /// The force-feedback system supports the saturation of condition effects for at least one condition.
+        /// If the device does not support saturation, the force generated by a condition is limited
+        /// only by the maximum force that the device can generate.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual condition sets the
+        /// DIEFT_SATURATION flag if saturation is supported for that condition.
+        /// </summary>
+        Saturation = 0x00000800,
+
+        /// <summary>
+        /// The force-feedback system supports two coefficient values for conditions
+        /// (one for the positive displacement of the axis and one for the negative displacement of the axis) for at least one condition.
+        /// If the device does not support both coefficients, the negative coefficient in the DICONDITION structure is ignored.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual condition sets the
+        /// DIEFT_POSNEGCOEFFICIENTS flag if separate positive and negative coefficients are supported for that condition.
+        /// </summary>
+        PosNegCoefficients = 0x00001000,
+
+        /// <summary>
+        /// The force-feedback system supports a maximum saturation for both positive and negative force output for at least one condition.
+        /// If the device does not support both saturation values, the negative saturation in the DICONDITION structure is ignored.
+        /// 
+        /// After a call to the IDirectInputDevice8::GetEffectInfo method, an individual condition sets the
+        /// DIEFT_POSNEGSATURATION flag if separate positive and negative saturation are supported for that condition.
+        /// </summary>
+        PosNegSaturation = 0x00002000,
+
+        /// <summary>
+        /// The device supports deadband for at least one force-feedback condition.
+        /// </summary>
+        Deadband = 0x00004000,
+
+        /// <summary>
+        /// The force-feedback system supports the start delay parameter for at least one effect.
+        /// If the device does not support start delays, the dwStartDelay member of the DIEFFECT structure is ignored.
+        /// </summary>
+        StartDelay = 0x00008000,
+
+        /// <summary>
+        /// The device is a duplicate of another DirectInput device.
+        /// Alias devices are by default not enumerated by IDirectInput8::EnumDevices.
+        /// </summary>
+        Alias = 0x00010000,
+
+        /// <summary>
+        /// Placeholder.
+        /// Phantom devices are by default not enumerated by IDirectInput8::EnumDevices.
+        /// </summary>
+        Phanton = 0x00020000,
+
+        /// <summary>
+        /// Fictitious device created by a device driver so that it can generate keyboard and mouse events.
+        /// Such devices are not normally enumerated by IDirectInput8::EnumDevices or configured by IDirectInput8::ConfigureDevices.
+        /// </summary>
+        Hidden = 0x00040000,
+    }
+
+    // DIDFT_MAKEINSTANCE(n) = ((WORD)(n) << 8),
+    // DIDFT_GETTYPE(n) = LOBYTE(n),
+    // DIDFT_GETINSTANCE(n) = LOWORD((n) >> 8),
+    // DIDFT_ENUMCOLLECTION(n) = ((WORD)(n) << 8),
+    internal enum DIDFT : uint
+    {
+        All = 0x00000000,
+        RelAxis = 0x00000001,
+        AbsAxis = 0x00000002,
+        Axis = 0x00000003,
+        PshButton = 0x00000004,
+        TglButton = 0x00000008,
+        Button = 0x0000000C,
+        POV = 0x00000010,
+        Collection = 0x00000040,
+        NoData = 0x00000080,
+        AnyInstance = 0x00FFFF00,
+        InstanceMask = AnyInstance,
+        
+        FFActuator = 0x01000000,
+        FFEffectTrigger = 0x02000000,
+        Output = 0x10000000,
+        VendorDefined = 0x04000000,
+        Alias = 0x08000000,
+        Optional = 0x80000000,
+        NoCollection = 0x00FFFF00,
+    }
+
+    internal enum DIDOI : uint
+    {
+        FFActuator = 0x00000001,
+        FFEffectTrigger = 0x00000002,
+        Polled = 0x00008000,
+        AspectPosition = 0x00000100,
+        AspectVelocity = 0x00000200,
+        AspectAccel = 0x00000300,
+        AspectForce = 0x00000400,
+        AspectMask = 0x00000F00,
+        GuidUsage = 0x00010000,
+    }
+
+    internal enum DIDF : uint
+    {
+        AbsAxis = 0x00000001,
+        RelAxis = 0x00000002,
+    }
+
+    internal enum DBT : int
+    {
+        /// <summary>
+        /// A device has been added to or removed from the system.
+        /// </summary>
+        DevNodesChanged = 0x0007,
+
+        /// <summary>
+        /// Permission is requested to change the current configuration (dock or undock).
+        /// </summary>
+        QueryChangeConfig = 0x0017,
+
+        /// <summary>
+        /// The current configuration has changed, due to a dock or undock.
+        /// </summary>
+        ConfigChanged = 0x0018,
+
+        /// <summary>
+        /// A request to change the current configuration (dock or undock) has been canceled.
+        /// </summary>
+        ConfigChangedCanceled = 0x0019,
+
+        /// <summary>
+        /// A device or piece of media has been inserted and is now available.
+        /// </summary>
+        DeviceArrival = 0x8000,
+
+        /// <summary>
+        /// Permission is requested to remove a device or piece of media. Any application can deny this request and cancel the removal.
+        /// </summary>
+        DeviceQueryRemove = 0x8001,
+
+        /// <summary>
+        /// A request to remove a device or piece of media has been canceled.
+        /// </summary>
+        DeviceQueryMoveFailed = 0x8002,
+
+        /// <summary>
+        /// A request to remove a device or piece of media has been canceled.
+        /// </summary>
+        DeviceRemovePending = 0x8003,
+
+        /// <summary>
+        /// A device or piece of media has been removed.
+        /// </summary>
+        DeviceRemoveComplete = 0x8004,
+
+        /// <summary>
+        /// A device-specific event has occurred.
+        /// </summary>
+        DeviceTypeSpecific = 0x8005,
+
+        /// <summary>
+        /// A custom event has occurred.
+        /// </summary>
+        CustomEvent = 0x8006,
+
+        /// <summary>
+        /// The meaning of this message is user-defined.
+        /// </summary>
+        UserDefined = 0xFFFF,
+    }
+
+    internal enum DBTDevType : uint
+    {
+        /// <summary>
+        /// Class of devices. This structure is a DEV_BROADCAST_DEVICEINTERFACE structure.
+        /// </summary>
+        DeviceInterface = 0x00000005,
+        /// <summary>
+        /// File system handle. This structure is a DEV_BROADCAST_HANDLE structure.
+        /// </summary>
+        Handle = 0x00000006,
+
+        /// <summary>
+        /// OEM- or IHV-defined device type. This structure is a DEV_BROADCAST_OEM structure.
+        /// </summary>
+        OEM = 0x00000000,
+
+        /// <summary>
+        /// Port device (serial or parallel). This structure is a DEV_BROADCAST_PORT structure.
+        /// </summary>
+        Port = 0x00000003,
+
+        /// <summary>
+        /// Logical volume. This structure is a DEV_BROADCAST_VOLUME structure.
+        /// </summary>
+        Volume = 0x00000002,
+    }
+
+    internal enum DEVICE_NOTIFY : uint
+    {
+        /// <summary>
+        /// The hRecipient parameter is a window handle.
+        /// </summary>
+        DEVICE_NOTIFY_WINDOW_HANDLE = 0x00000000,
+
+        /// <summary>
+        /// The hRecipient parameter is a service status handle.
+        /// </summary>
+        DEVICE_NOTIFY_SERVICE_HANDLE = 0x00000001,
+    }
+
     [Flags]
     internal enum ExecutionState : ulong
     {
@@ -1181,6 +1527,56 @@ namespace OpenTK.Platform.Native.Windows
         Zoom = 9,
     }
 
+    [Flags]
+    internal enum HCF : uint
+    {
+        /// <summary>
+        /// The high contrast feature is on.
+        /// </summary>
+        HighContrastOn = 0x00000001,
+
+        /// <summary>
+        /// The high contrast feature is available.
+        /// </summary>
+        Available = 0x00000002,
+
+        /// <summary>
+        /// The user can turn the high contrast feature on and off by simultaneously pressing the left ALT, left SHIFT, and PRINT SCREEN keys.
+        /// </summary>
+        HotKeyActive = 0x00000004,
+
+        /// <summary>
+        /// A confirmation dialog appears when the high contrast feature is activated by using the hot key.
+        /// </summary>
+        ConfirmHotKey = 0x00000008,
+
+        /// <summary>
+        /// A siren is played when the user turns the high contrast feature on or off by using the hot key.
+        /// </summary>
+        HotKeySound = 0x00000010,
+
+        /// <summary>
+        /// A visual indicator is displayed when the high contrast feature is on.This value is not currently used and is ignored.
+        /// </summary>
+        Indicator = 0x00000020,
+
+        /// <summary>
+        /// The hot key associated with the high contrast feature can be enabled. An application can retrieve this value, but cannot set it.
+        /// </summary>
+        HotKeyAvailable = 0x00000040,
+
+        /// <summary>
+        /// Passing HIGHCONTRASTSTRUCTURE in calls to SystemParametersInfoW can cause theme change effects even if the theme isn't being changed.
+        /// For example, the WM_THEMECHANGED message is sent to Windows even if the only change is to HCF_HOTKEYSOUND.
+        ///
+        /// To prevent this, include the HCF_OPTION_NOTHEMECHANGE flag in the call to SystemParametersInfo.
+        ///
+        /// Note
+        /// The HCF_OPTION_NOTHEMECHANGE flag should not be used when toggling the high contrast mode (HCF_HIGHCONTRASTON).
+        /// </summary>
+        OptionNoThemeChange = 0x00001000,
+    }
+
     internal enum GCLP : int
     {
         /// <summary>
@@ -1240,6 +1636,87 @@ namespace OpenTK.Platform.Native.Windows
         /// You must use the CallWindowProc function to call the window procedure.
         /// </summary>
         WNDProc = -24,
+    }
+
+    [Flags]
+    internal enum GCS : uint
+    {
+        /// <summary>
+        /// Retrieve or update the attribute of the composition string.
+        /// </summary>
+        CompAttr = 16,
+
+        /// <summary>
+        /// Retrieve or update clause information of the composition string.
+        /// </summary>
+        CompClause = 32,
+
+        /// <summary>
+        /// Retrieve or update the attributes of the reading string of the current composition.
+        /// </summary>
+        CompReadAttr = 2,
+
+        /// <summary>
+        /// Retrieve or update the clause information of the reading string of the composition string.
+        /// </summary>
+        CompReadClause = 4,
+
+        /// <summary>
+        /// Retrieve or update the reading string of the current composition.
+        /// </summary>
+        CompReadStr = 1,
+
+        /// <summary>
+        /// Retrieve or update the current composition string.
+        /// </summary>
+        CompStr = 8,
+
+        /// <summary>
+        /// Retrieve or update the cursor position in composition string.
+        /// </summary>
+        CursorPos = 128,
+
+        /// <summary>
+        /// Retrieve or update the starting position of any changes in composition string.
+        /// </summary>
+        DeltaStart = 256,
+
+        /// <summary>
+        /// Retrieve or update clause information of the result string.
+        /// </summary>
+        ResultClause = 4096,
+
+        /// <summary>
+        /// Retrieve or update clause information of the reading string.
+        /// </summary>
+        ResultReadClause = 1024,
+
+        /// <summary>
+        /// Retrieve or update the reading string.
+        /// </summary>
+        ResultReadStr = 512,
+
+        /// <summary>
+        /// Retrieve or update the string of the composition result.
+        /// </summary>
+        ResultStr = 2048,
+
+        // #### Part of CS, used in WM_IME_COMPOSITON ####
+
+        /// <summary>
+        /// Insert the wParam composition character at the current insertion point.
+        /// An application should display the composition character if it processes this message.
+        /// </summary>
+        InsertChar = 0x2000,
+
+        /// <summary>
+        /// Do not move the caret position as a result of processing the message.
+        /// For example, if an IME specifies a combination of CS_INSERTCHAR and CS_NOMOVECARET,
+        /// the application should insert the specified character at the current caret position
+        /// but should not move the caret to the next position.
+        /// A subsequent WM_IME_COMPOSITION message with GCS_RESULTSTR will replace this character.
+        /// </summary>
+        NoMoveCaret = 0x4000,
     }
 
     // FIXME: There are additional values for when the hWnd is a dialog box.
@@ -1327,6 +1804,46 @@ namespace OpenTK.Platform.Native.Windows
         WndProc = -4,
     }
 
+    internal enum MAPVK : uint
+    {
+        /// <summary>
+        /// The uCode parameter is a virtual-key code and is translated into a scan code.
+        /// If it is a virtual-key code that does not distinguish between left- and right-hand keys,
+        /// the left-hand scan code is returned.
+        /// If there is no translation, the function returns 0.
+        /// </summary>
+        VirtualKeyToScancode = 0,
+        /// <summary>
+        /// The uCode parameter is a scan code and is translated into a virtual-key code
+        /// that does not distinguish between left- and right-hand keys.
+        /// If there is no translation, the function returns 0.
+        /// </summary>
+        ScancodeToVirtualKey = 1,
+        /// <summary>
+        /// The uCode parameter is a virtual-key code and is translated into an unshifted character value
+        /// in the low order word of the return value.
+        /// Dead keys (diacritics) are indicated by setting the top bit of the return value.
+        /// If there is no translation, the function returns 0.
+        /// See Remarks.
+        /// </summary>
+        VirtualKeyToChar = 2,
+        /// <summary>
+        /// The uCode parameter is a scan code and is translated into a virtual-key code that distinguishes
+        /// between left- and right-hand keys.
+        /// If there is no translation, the function returns 0.
+        /// </summary>
+        ScancodeToVirtualKeyEx = 3,
+        /// <summary>
+        /// Windows Vista and later: The uCode parameter is a virtual-key code and is translated into a scan code.
+        /// If it is a virtual-key code that does not distinguish between left- and right-hand keys,
+        /// the left-hand scan code is returned.
+        /// If the scan code is an extended scan code,
+        /// the high byte of the uCode value can contain either 0xe0 or 0xe1 to specify the extended scan code.
+        /// If there is no translation, the function returns 0.
+        /// </summary>
+        VirtualKeyToScancodeEx = 4,
+    }
+
     [Flags]
     internal enum TME : uint
     {
@@ -1397,6 +1914,34 @@ namespace OpenTK.Platform.Native.Windows
         /// The window has been resized, but neither the SIZE_MINIMIZED nor SIZE_MAXIMIZED value applies.
         /// </summary>
         Restored = 0,
+    }
+
+    internal enum PBT : uint
+    {
+        /// <summary>
+        /// Power status has changed.
+        /// </summary>
+        APMPowerStatusChange = 10,
+
+        /// <summary>
+        /// Operation is resuming automatically from a low-power state. This message is sent every time the system resumes.
+        /// </summary>
+        APMResumeAutomatic = 18,
+
+        /// <summary>
+        /// Operation is resuming from a low-power state. This message is sent after PBT_APMRESUMEAUTOMATIC if the resume is triggered by user input, such as pressing a key.
+        /// </summary>
+        APMResultSuspend = 7,
+
+        /// <summary>
+        /// System is suspending operation.
+        /// </summary>
+        APMSuspend = 4,
+
+        /// <summary>
+        /// A power setting change event has been received.
+        /// </summary>
+        PowerSettingChange = 32787,
     }
 
     [Flags]
@@ -1800,6 +2345,35 @@ namespace OpenTK.Platform.Native.Windows
         Icon = 1,
     }
 
+    internal enum LCType : int
+    {
+        // Incomplete, see: https://learn.microsoft.com/en-us/windows/win32/intl/locale-information-constants#constants-used-in-the-lctype-parameter-of-getlocaleinfo-getlocaleinfoex-and-setlocaleinfo
+
+        /// <summary>
+        /// Windows 7 and later:
+        /// Full localized name of the country/region, for example, Deutschland for Germany.
+        /// The maximum number of characters allowed for this string is 80, including a terminating null character.
+        /// Since this name is based on the localization of the product, it changes for each localized version.
+        /// </summary>
+        SLocalizedCountryName = 0x00000006,
+
+        /// <summary>
+        /// Windows 7 and later:
+        /// Full localized name of the locale for the user interface language, for example, Deutsch(Deutschland) for German(Germany)".
+        /// There is no limit on the number of characters allowed for this string.
+        /// Since this name is based on the localization of the product, it changes for each localized version.
+        /// </summary>
+        SLocalizedDisplayName = 0x00000002,
+
+        /// <summary>
+        /// Windows Vista:
+        /// Full localized primary name of the user interface language included in a localized display name,
+        /// for example, Deutsch representing German.
+        /// Since this name is based on the localization of the product, it changes for each localized version.
+        /// </summary>
+        SLocalizedLanguageName = 0x0000006f,
+    }
+
     internal enum DIB
     {
         /// <summary>
@@ -2037,6 +2611,111 @@ namespace OpenTK.Platform.Native.Windows
     }
 
     [Flags]
+    internal enum LoadLibraryFlags : uint
+    {
+        /// <summary>
+        /// If this value is used, and the executable module is a DLL, the system does not call DllMain for process and thread initialization and termination. Also, the system does not load additional executable modules that are referenced by the specified module.
+        /// Note  Do not use this value; it is provided only for backward compatibility. If you are planning to access only data or resources in the DLL, use LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE or LOAD_LIBRARY_AS_IMAGE_RESOURCE or both. Otherwise, load the library as a DLL or executable module using the LoadLibrary function.
+        /// </summary>
+        DONT_RESOLVE_DLL_REFERENCES = 0x00000001,
+
+        /// <summary>
+        /// If this value is used, the system does not check AppLocker rules or apply Software Restriction Policies for the DLL. This action applies only to the DLL being loaded and not to its dependencies. This value is recommended for use in setup programs that must run extracted DLLs during installation.
+        /// Windows Server 2008 R2 and Windows 7:  On systems with KB2532445 installed, the caller must be running as "LocalSystem" or "TrustedInstaller"; otherwise the system ignores this flag.For more information, see "You can circumvent AppLocker rules by using an Office macro on a computer that is running Windows 7 or Windows Server 2008 R2" in the Help and Support Knowledge Base at https://support.microsoft.com/kb/2532445.
+        ///
+        /// Windows Server 2008, Windows Vista, Windows Server 2003 and Windows XP:  AppLocker was introduced in Windows 7 and Windows Server 2008 R2.
+        /// </summary>
+        LOAD_IGNORE_CODE_AUTHZ_LEVEL = 0x00000010,
+
+        /// <summary>
+        /// If this value is used, the system maps the file into the calling process's virtual address space as if it were a data file. Nothing is done to execute or prepare to execute the mapped file. Therefore, you cannot call functions like GetModuleFileName, GetModuleHandle or GetProcAddress with this DLL. Using this value causes writes to read-only memory to raise an access violation. Use this flag when you want to load a DLL only to extract messages or resources from it.
+        /// This value can be used with LOAD_LIBRARY_AS_IMAGE_RESOURCE.For more information, see Remarks.
+        /// </summary>
+        LOAD_LIBRARY_AS_DATAFILE = 0x00000002,
+
+        /// <summary>
+        /// Similar to LOAD_LIBRARY_AS_DATAFILE, except that the DLL file is opened with exclusive write access for the calling process.Other processes cannot open the DLL file for write access while it is in use.However, the DLL can still be opened by other processes.
+        /// This value can be used with LOAD_LIBRARY_AS_IMAGE_RESOURCE.For more information, see Remarks.
+        ///
+        /// Windows Server 2003 and Windows XP:  This value is not supported until Windows Vista.
+        /// </summary>
+        LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE = 0x00000040,
+
+        /// <summary>
+        /// If this value is used, the system maps the file into the process's virtual address space as an image file. However, the loader does not load the static imports or perform the other usual initialization steps. Use this flag when you want to load a DLL only to extract messages or resources from it.
+        /// Unless the application depends on the file having the in-memory layout of an image, this value should be used with either LOAD_LIBRARY_AS_DATAFILE_EXCLUSIVE or LOAD_LIBRARY_AS_DATAFILE.For more information, see the Remarks section.
+        ///
+        /// Windows Server 2003 and Windows XP:  This value is not supported until Windows Vista.
+        /// </summary>
+        LOAD_LIBRARY_AS_IMAGE_RESOURCE = 0x00000020,
+
+        /// <summary>
+        /// If this value is used, the application's installation directory is searched for the DLL and its dependencies. Directories in the standard search path are not searched. This value cannot be combined with LOAD_WITH_ALTERED_SEARCH_PATH.
+        /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  This value requires KB2533623 to be installed.
+        ///
+        /// Windows Server 2003 and Windows XP:  This value is not supported.
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_APPLICATION_DIR = 0x00000200,
+
+        /// <summary>
+        /// This value is a combination of LOAD_LIBRARY_SEARCH_APPLICATION_DIR, LOAD_LIBRARY_SEARCH_SYSTEM32, and LOAD_LIBRARY_SEARCH_USER_DIRS. Directories in the standard search path are not searched.This value cannot be combined with LOAD_WITH_ALTERED_SEARCH_PATH.
+        /// This value represents the recommended maximum number of directories an application should include in its DLL search path.
+        ///
+        /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  This value requires KB2533623 to be installed.
+        ///
+        /// Windows Server 2003 and Windows XP:  This value is not supported.
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_DEFAULT_DIRS = 0x00001000,
+
+        /// <summary>
+        /// If this value is used, the directory that contains the DLL is temporarily added to the beginning of the list of directories that are searched for the DLL's dependencies. Directories in the standard search path are not searched.
+        /// The lpFileName parameter must specify a fully qualified path.This value cannot be combined with LOAD_WITH_ALTERED_SEARCH_PATH.
+        ///
+        /// For example, if Lib2.dll is a dependency of C:\Dir1\Lib1.dll, loading Lib1.dll with this value causes the system to search for Lib2.dll only in C:\Dir1.To search for Lib2.dll in C:\Dir1 and all of the directories in the DLL search path, combine this value with LOAD_LIBRARY_DEFAULT_DIRS.
+        ///
+        /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  This value requires KB2533623 to be installed.
+        ///
+        /// Windows Server 2003 and Windows XP:  This value is not supported.
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_DLL_LOAD_DIR = 0x00000100,
+
+        /// <summary>
+        /// If this value is used, %windows%\system32 is searched for the DLL and its dependencies.Directories in the standard search path are not searched.This value cannot be combined with LOAD_WITH_ALTERED_SEARCH_PATH.
+        /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  This value requires KB2533623 to be installed.
+        ///
+        /// Windows Server 2003 and Windows XP:  This value is not supported.
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_SYSTEM32 = 0x00000800,
+
+        /// <summary>
+        /// If this value is used, directories added using the AddDllDirectory or the SetDllDirectory function are searched for the DLL and its dependencies.If more than one directory has been added, the order in which the directories are searched is unspecified.Directories in the standard search path are not searched.This value cannot be combined with LOAD_WITH_ALTERED_SEARCH_PATH.
+        /// Windows 7, Windows Server 2008 R2, Windows Vista and Windows Server 2008:  This value requires KB2533623 to be installed.
+        ///
+        /// Windows Server 2003 and Windows XP:  This value is not supported.
+        /// </summary>
+        LOAD_LIBRARY_SEARCH_USER_DIRS = 0x00000400,
+
+        /// <summary>
+        /// If this value is used and lpFileName specifies an absolute path, the system uses the alternate file search strategy discussed in the Remarks section to find associated executable modules that the specified module causes to be loaded. If this value is used and lpFileName specifies a relative path, the behavior is undefined.
+        /// NIf this value is not used, or if lpFileName does not specify a path, the system uses the standard search strategy discussed in the Remarks section to find associated executable modules that the specified module causes to be loaded.
+        ///
+        /// This value cannot be combined with any LOAD_LIBRARY_SEARCH flag.
+        /// </summary>
+        LOAD_WITH_ALTERED_SEARCH_PATH = 0x00000008,
+
+        /// <summary>
+        /// Specifies that the digital signature of the binary image must be checked at load time.
+        /// This value requires Windows 8.1, Windows 10 or later.
+        /// </summary>
+        LOAD_LIBRARY_REQUIRE_SIGNED_TARGET = 0x00000080,
+
+        /// <summary>
+        /// If this value is used, loading a DLL for execution from the current directory is only allowed if it is under a directory in the Safe load list.
+        /// </summary>
+        LOAD_LIBRARY_SAFE_CURRENT_DIRS = 0x00002000,
+    }
+
+    [Flags]
     internal enum PM : uint
     {
         /// <summary>
@@ -2093,7 +2772,7 @@ namespace OpenTK.Platform.Native.Windows
         CXCursor = 13,
 
         /// <summary>
-        /// This value is the same as <see cref="CXFIXEDFRAME"/>.
+        /// This value is the same as <see cref="CXFixedFrame"/>.
         /// </summary>
         CXDLGFrame = 7,
 
@@ -2613,6 +3292,14 @@ namespace OpenTK.Platform.Native.Windows
         /// The default value is 3.
         /// </summary>
         GetWheelScrollLines = 0x0068,
+
+        /// <summary>
+        /// Retrieves information about the HighContrast accessibility feature.
+        /// The pvParam parameter must point to a HIGHCONTRAST structure that receives the information.
+        /// Set the cbSize member of this structure and the uiParam parameter to sizeof(HIGHCONTRAST).
+        /// </summary>
+        GetHighContrast = 0x0042
+
     }
 
     [Flags]
@@ -2764,6 +3451,123 @@ namespace OpenTK.Platform.Native.Windows
         /// This flag cannot be combined with the SHGFI_ATTRIBUTES, SHGFI_EXETYPE, or SHGFI_PIDL flags.
         /// </summary>
         UseFileAttributes = 0x000000010,
+    }
+
+    internal enum SortOrderIdentifier : int
+    {
+        // See: https://github.com/tpn/winsdk-10/blob/9b69fd26ac0c7d0b83d378dba01080e93349c2ed/Include/10.0.10240.0/shared/ntdef.h#L2730
+
+        /// <summary>
+        /// Chinese BIG5 order
+        /// zh-TW
+        /// zh-HK
+        /// zh-MO
+        /// </summary>
+        SORT_CHINESE_BIG5 = 0,
+
+        /// <summary>
+        /// Traditional Chinese Bopomofo order
+        /// zh-TW_pronun
+        /// </summary>
+        SORT_CHINESE_BOPOMOFO = 3,
+
+        /// <summary>
+        /// PRC Chinese stroke count order
+        /// zh-CN_stroke
+        /// zh-HK_stroke
+        /// zh-MO_stroke
+        /// zh-SG_stroke
+        /// </summary>
+        SORT_CHINESE_PRC = 2,
+
+        /// <summary>
+        /// PRC Chinese phonetic order
+        /// zh-CN
+        /// zh-SG
+        /// </summary>
+        SORT_CHINESE_PRCP = 0,
+
+        /// <summary>
+        /// Chinese radical/stroke order
+        /// zh-TW
+        /// zh-HK
+        /// zh-MO
+        /// </summary>
+        SORT_CHINESE_RADICALSTROKE = 4,
+
+        /// <summary>
+        /// Chinese Unicode order
+        /// Windows 2000: Not supported.
+        /// </summary>
+        SORT_CHINESE_UNICODE = 1,
+
+        /// <summary>
+        /// Default sort order
+        /// Locale name that is the same as the corresponding language name 
+        /// </summary>
+        SORT_DEFAULT = 0,
+
+        SORT_INVARIANT_MATH = 1,
+
+        /// <summary>
+        /// Georgian modern order
+        /// ka-GE_modern
+        /// </summary>
+        SORT_GEORGIAN_MODERN = 1,
+
+        /// <summary>
+        /// Georgian traditional order
+        /// ka-GE
+        /// </summary>
+        SORT_GEORGIAN_TRADITIONAL = 0,
+
+        /// <summary>
+        /// German phone book order
+        /// de-DE_phoneb
+        /// </summary>
+        SORT_GERMAN_PHONE_BOOK = 1,
+
+        /// <summary>
+        /// Hungarian default order
+        /// hu-HU
+        /// </summary>
+        SORT_HUNGARIAN_DEFAULT = 0,
+
+        /// <summary>
+        /// Hungarian technical order
+        /// hu-HU_technl
+        /// </summary>
+        SORT_HUNGARIAN_TECHNICAL = 1,
+
+        /// <summary>
+        /// Japanese radical/stroke order
+        /// ja-JP
+        /// </summary>
+        SORT_JAPANESE_RADICALSTROKE = 4,
+
+        /// <summary>
+        /// Japanese Unicode order
+        /// Windows 2000: Not supported.
+        /// </summary>
+        SORT_JAPANESE_UNICODE = 1,
+
+        /// <summary>
+        /// Japanese XJIS order
+        /// ja-JP
+        /// </summary>
+        SORT_JAPANESE_XJIS = 0,
+
+        /// <summary>
+        /// Korean KSC order
+        /// ko-KR
+        /// </summary>
+        SORT_KOREAN_KSC = 0,
+
+        /// <summary>
+        /// Korean Unicode order
+        /// Windows 2000: Not supported.
+        /// </summary>
+        SORT_KOREAN_UNICODE = 1,
     }
 
     [Flags]
@@ -2947,69 +3751,6 @@ namespace OpenTK.Platform.Native.Windows
         PerMonitorAware = -3,
         PerMonitorAwareV2 = -4,
         UnawareGDIScaled = -5,
-    }
-
-    internal enum DBT : int
-    {
-        /// <summary>
-        /// A device has been added to or removed from the system.
-        /// </summary>
-        DevNodesChanged = 0x0007,
-
-        /// <summary>
-        /// Permission is requested to change the current configuration (dock or undock).
-        /// </summary>
-        QueryChangeConfig = 0x0017,
-
-        /// <summary>
-        /// The current configuration has changed, due to a dock or undock.
-        /// </summary>
-        ConfigChanged = 0x0018,
-
-        /// <summary>
-        /// A request to change the current configuration (dock or undock) has been canceled.
-        /// </summary>
-        ConfigChangedCanceled = 0x0019,
-
-        /// <summary>
-        /// A device or piece of media has been inserted and is now available.
-        /// </summary>
-        DeviceArrival = 0x8000,
-
-        /// <summary>
-        /// Permission is requested to remove a device or piece of media. Any application can deny this request and cancel the removal.
-        /// </summary>
-        DeviceQueryRemove = 0x8001,
-
-        /// <summary>
-        /// A request to remove a device or piece of media has been canceled.
-        /// </summary>
-        DeviceQueryMoveFailed = 0x8002,
-
-        /// <summary>
-        /// A request to remove a device or piece of media has been canceled.
-        /// </summary>
-        DeviceRemovePending = 0x8003,
-
-        /// <summary>
-        /// A device or piece of media has been removed.
-        /// </summary>
-        DeviceRemoveComplete = 0x8004,
-
-        /// <summary>
-        /// A device-specific event has occurred.
-        /// </summary>
-        DeviceTypeSpecific = 0x8005,
-
-        /// <summary>
-        /// A custom event has occurred.
-        /// </summary>
-        CustomEvent = 0x8006,
-
-        /// <summary>
-        /// The meaning of this message is user-defined.
-        /// </summary>
-        UserDefined = 0xFFFF,
     }
 
     [Flags]
@@ -3513,9 +4254,9 @@ namespace OpenTK.Platform.Native.Windows
     internal enum RegValueType : uint
     {
         /* Maybe we want to include these?
-            #define REG_RESOURCE_LIST           ( 8 )   // Resource list in the resource map
-            #define REG_FULL_RESOURCE_DESCRIPTOR ( 9 )  // Resource list in the hardware description
-            #define REG_RESOURCE_REQUIREMENTS_LIST ( 10 )
+#define REG_RESOURCE_LIST           ( 8 )   // Resource list in the resource map
+#define REG_FULL_RESOURCE_DESCRIPTOR ( 9 )  // Resource list in the hardware description
+#define REG_RESOURCE_REQUIREMENTS_LIST ( 10 )
         */
 
         /// <summary>
@@ -3624,12 +4365,212 @@ namespace OpenTK.Platform.Native.Windows
         Tray = 0x00000002,
     }
 
+    internal enum VK
+    {
+        LeftButton = 0x01,
+        RightButton = 0x02,
+        Cancel = 0x03,
+        MiddleButton = 0x04,
+        ExtraButton1 = 0x05,
+        ExtraButton2 = 0x06,
+        Back = 0x08,
+        Tab = 0x09,
+        Clear = 0x0C,
+        Return = 0x0D,
+        Shift = 0x10,
+        Control = 0x11,
+        Menu = 0x12,
+        Pause = 0x13,
+        CapsLock = 0x14,
+        Kana = 0x15,
+        Hangeul = 0x15,
+        Hangul = 0x15,
+        Junja = 0x17,
+        Final = 0x18,
+        Hanja = 0x19,
+        Kanji = 0x19,
+        Escape = 0x1B,
+        Convert = 0x1C,
+        NonConvert = 0x1D,
+        Accept = 0x1E,
+        ModeChange = 0x1F,
+        Space = 0x20,
+        Prior = 0x21,
+        Next = 0x22,
+        End = 0x23,
+        Home = 0x24,
+        Left = 0x25,
+        Up = 0x26,
+        Right = 0x27,
+        Down = 0x28,
+        Select = 0x29,
+        Print = 0x2A,
+        Execute = 0x2B,
+        Snapshot = 0x2C,
+        Insert = 0x2D,
+        Delete = 0x2E,
+        Help = 0x2F,
+        N0 = 0x30,
+        N1 = 0x31,
+        N2 = 0x32,
+        N3 = 0x33,
+        N4 = 0x34,
+        N5 = 0x35,
+        N6 = 0x36,
+        N7 = 0x37,
+        N8 = 0x38,
+        N9 = 0x39,
+        A = 0x41,
+        B = 0x42,
+        C = 0x43,
+        D = 0x44,
+        E = 0x45,
+        F = 0x46,
+        G = 0x47,
+        H = 0x48,
+        I = 0x49,
+        J = 0x4A,
+        K = 0x4B,
+        L = 0x4C,
+        M = 0x4D,
+        N = 0x4E,
+        O = 0x4F,
+        P = 0x50,
+        Q = 0x51,
+        R = 0x52,
+        S = 0x53,
+        T = 0x54,
+        U = 0x55,
+        V = 0x56,
+        W = 0x57,
+        X = 0x58,
+        Y = 0x59,
+        Z = 0x5A,
+        LeftWindows = 0x5B,
+        RightWindows = 0x5C,
+        Application = 0x5D,
+        Sleep = 0x5F,
+        Numpad0 = 0x60,
+        Numpad1 = 0x61,
+        Numpad2 = 0x62,
+        Numpad3 = 0x63,
+        Numpad4 = 0x64,
+        Numpad5 = 0x65,
+        Numpad6 = 0x66,
+        Numpad7 = 0x67,
+        Numpad8 = 0x68,
+        Numpad9 = 0x69,
+        Multiply = 0x6A,
+        Add = 0x6B,
+        Separator = 0x6C,
+        Subtract = 0x6D,
+        Decimal = 0x6E,
+        Divide = 0x6F,
+        F1 = 0x70,
+        F2 = 0x71,
+        F3 = 0x72,
+        F4 = 0x73,
+        F5 = 0x74,
+        F6 = 0x75,
+        F7 = 0x76,
+        F8 = 0x77,
+        F9 = 0x78,
+        F10 = 0x79,
+        F11 = 0x7A,
+        F12 = 0x7B,
+        F13 = 0x7C,
+        F14 = 0x7D,
+        F15 = 0x7E,
+        F16 = 0x7F,
+        F17 = 0x80,
+        F18 = 0x81,
+        F19 = 0x82,
+        F20 = 0x83,
+        F21 = 0x84,
+        F22 = 0x85,
+        F23 = 0x86,
+        F24 = 0x87,
+        NumLock = 0x90,
+        ScrollLock = 0x91,
+        NEC_Equal = 0x92,
+        Fujitsu_Jisho = 0x92,
+        Fujitsu_Masshou = 0x93,
+        Fujitsu_Touroku = 0x94,
+        Fujitsu_Loya = 0x95,
+        Fujitsu_Roya = 0x96,
+        LeftShift = 0xA0,
+        RightShift = 0xA1,
+        LeftControl = 0xA2,
+        RightControl = 0xA3,
+        LeftMenu = 0xA4,
+        RightMenu = 0xA5,
+        BrowserBack = 0xA6,
+        BrowserForward = 0xA7,
+        BrowserRefresh = 0xA8,
+        BrowserStop = 0xA9,
+        BrowserSearch = 0xAA,
+        BrowserFavorites = 0xAB,
+        BrowserHome = 0xAC,
+        VolumeMute = 0xAD,
+        VolumeDown = 0xAE,
+        VolumeUp = 0xAF,
+        MediaNextTrack = 0xB0,
+        MediaPrevTrack = 0xB1,
+        MediaStop = 0xB2,
+        MediaPlayPause = 0xB3,
+        LaunchMail = 0xB4,
+        LaunchMediaSelect = 0xB5,
+        LaunchApplication1 = 0xB6,
+        LaunchApplication2 = 0xB7,
+        OEM1 = 0xBA,
+        OEMPlus = 0xBB,
+        OEMComma = 0xBC,
+        OEMMinus = 0xBD,
+        OEMPeriod = 0xBE,
+        OEM2 = 0xBF,
+        OEM3 = 0xC0,
+        OEM4 = 0xDB,
+        OEM5 = 0xDC,
+        OEM6 = 0xDD,
+        OEM7 = 0xDE,
+        OEM8 = 0xDF,
+        OEMAX = 0xE1,
+        OEM102 = 0xE2,
+        ICOHelp = 0xE3,
+        ICO00 = 0xE4,
+        ProcessKey = 0xE5,
+        ICOClear = 0xE6,
+        Packet = 0xE7,
+        OEMReset = 0xE9,
+        OEMJump = 0xEA,
+        OEMPA1 = 0xEB,
+        OEMPA2 = 0xEC,
+        OEMPA3 = 0xED,
+        OEMWSCtrl = 0xEE,
+        OEMCUSel = 0xEF,
+        OEMATTN = 0xF0,
+        OEMFinish = 0xF1,
+        OEMCopy = 0xF2,
+        OEMAuto = 0xF3,
+        OEMENLW = 0xF4,
+        OEMBackTab = 0xF5,
+        ATTN = 0xF6,
+        CRSel = 0xF7,
+        EXSel = 0xF8,
+        EREOF = 0xF9,
+        Play = 0xFA,
+        Zoom = 0xFB,
+        Noname = 0xFC,
+        PA1 = 0xFD,
+        OEMClear = 0xFE
+    }
+
     /// <summary>
     /// Windows Messages
     /// Defined in winuser.h from Windows SDK v6.1
     /// Documentation pulled from MSDN.
     /// </summary>
-    public enum WM : uint
+    internal enum WM : uint
     {
         /// <summary>
         /// The WM_NULL message performs no operation. An application sends the WM_NULL message if it wants to post a message that the recipient window will ignore.
@@ -4833,7 +5774,7 @@ namespace OpenTK.Platform.Native.Windows
         HSHELL_WINDOWREPLACED = 13
     }
 
-    public enum WGLPixelFormatAttribute : int
+    internal enum WGLPixelFormatAttribute : int
     {
         /// <summary>
         /// The number of pixel formats for the device context. The
@@ -4899,19 +5840,19 @@ namespace OpenTK.Platform.Native.Windows
         /// copied to the front buffer but the back buffer contents are
         /// undefined after the operation. If the pixel format does not
         /// support a back buffer then this parameter is set to
-        /// WGL_SWAP_UNDEFINED_ARB. The <iLayerPlane> parameter is ignored
+        /// WGL_SWAP_UNDEFINED_ARB. The &lt;iLayerPlane&gt; parameter is ignored
         /// if this attribute is specified.
         /// </summary>
         SWAP_METHOD_ARB = 0x2007,
 
         /// <summary>
-        /// The number of overlay planes. The <iLayerPlane> parameter is
+        /// The number of overlay planes. The &lt;iLayerPlane&gt; parameter is
         /// ignored if this attribute is specified.
         /// </summary>
         NUMBER_OVERLAYS_ARB = 0x2008,
 
         /// <summary>
-        /// The number of underlay planes. The <iLayerPlane> parameter is
+        /// The number of underlay planes. The &lt;iLayerPlane&gt; parameter is
         /// ignored if this attribute is specified.
         /// </summary>
         NUMBER_UNDERLAYS_ARB = 0x2009,
@@ -4957,19 +5898,19 @@ namespace OpenTK.Platform.Native.Windows
 
         /// <summary>
         /// True if the layer plane shares the depth buffer with the main
-        /// planes. If <iLayerPlane> is zero, this is always true.
+        /// planes. If &lt;iLayerPlane&gt; is zero, this is always true.
         /// </summary>
         SHARE_DEPTH_ARB = 0x200C,
 
         /// <summary>
         ///  True if the layer plane shares the stencil buffer with the main
-        /// planes. If <iLayerPlane> is zero, this is always true.
+        /// planes. If &lt;iLayerPlane&gt; is zero, this is always true.
         /// </summary>
         SHARE_STENCIL_ARB = 0x200D,
 
         /// <summary>
         /// True if the layer plane shares the accumulation buffer with the
-        /// main planes. If <iLayerPlane> is zero, this is always true.
+        /// main planes. If &lt;iLayerPlane&gt; is zero, this is always true.
         /// </summary>
         SHARE_ACCUM_ARB = 0x200E,
 
@@ -5098,7 +6039,7 @@ namespace OpenTK.Platform.Native.Windows
     /// <summary>
     /// Indicates whether the pixel format is supported by the driver.
     /// </summary>
-    public enum WGLAcceleration
+    internal enum WGLAcceleration
     {
         /// <summary>
         /// Only the software renderer supports this pixel format.
@@ -5116,7 +6057,7 @@ namespace OpenTK.Platform.Native.Windows
         FULL_ACCELERATION_ARB = 0x2027,
     }
 
-    public enum WGLSwapMethod
+    internal enum WGLSwapMethod
     {
         /// <summary>
         /// Swapping exchanges the front and back buffer contents.
@@ -5138,13 +6079,13 @@ namespace OpenTK.Platform.Native.Windows
         SWAP_UNDEFINED_ARB = 0x202A,
     }
 
-    public enum WGLColorType
+    internal enum WGLColorType
     {
         TYPE_RGBA_ARB = 0x202B,
         TYPE_COLORINDEX_ARB = 0x202C,
     }
 
-    public enum WGLContextAttribs : int
+    internal enum WGLContextAttribs : int
     {
         CONTEXT_MAJOR_VERSION_ARB = 0x2091,
         CONTEXT_MINOR_VERSION_ARB = 0x2092,

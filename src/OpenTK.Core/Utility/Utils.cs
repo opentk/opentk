@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 
 namespace OpenTK.Core
@@ -10,6 +11,20 @@ namespace OpenTK.Core
             T temp = a;
             a = b;
             b = temp;
+        }
+
+        public static unsafe string FromTszString(char* ptr, int max_length)
+        {
+            ReadOnlySpan<char> span = new ReadOnlySpan<char>(ptr, max_length);
+            int index = span.IndexOf('\0');
+            if (index == -1)
+            {
+                return new string(ptr, 0, max_length);
+            }
+            else
+            {
+                return new string(ptr, 0, index);
+            }
         }
     }
 }

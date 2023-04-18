@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.Windows
 {
-    /// <inheritdoc/>
     public class MouseComponent : IMouseComponent
     {
         /// <inheritdoc/>
@@ -31,42 +30,18 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool IsMultiMouse => false;
-
-        private const int MouseCount = 1;
+        public bool CanSetMousePosition => true;
 
         /// <inheritdoc/>
-        public int GetMouseCount()
-        {
-            return MouseCount;
-        }
-
-        /// <inheritdoc/>
-        public MouseHandle Create(int index)
-        {
-            if (index < 0 || index >= MouseCount)
-            {
-                throw new ArgumentOutOfRangeException($"{nameof(index)} is out of bounds [0, {MouseCount}]");
-            }
-
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void Destroy(MouseHandle handle)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void GetPosition(MouseHandle handle, out int x, out int y)
+        public void GetPosition(out int x, out int y)
         {
             // FIXME: Check the handle!
 
+            // FIXME: When hibernating (or going out of hibernate) this function fails with 0x5 Access denied.
             bool success = Win32.GetCursorPos(out Win32.POINT lpPoint);
             if (success == false)
             {
-                throw new Win32Exception("GetCursorPos failed.");
+                //throw new Win32Exception();
             }
 
             x = lpPoint.X;
@@ -74,7 +49,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void SetPosition(MouseHandle handle, int x, int y)
+        public void SetPosition(int x, int y)
         {
             // FIXME: Check the handle!
 

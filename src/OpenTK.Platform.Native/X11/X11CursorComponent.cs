@@ -8,17 +8,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.LibX11;
+using static OpenTK.Platform.Native.X11.XFixes;
 
 namespace OpenTK.Platform.Native.X11
 {
     public class X11CursorComponent : ICursorComponent
     {
+        /// <inheritdoc />
         public string Name => nameof(X11CursorComponent);
 
+        /// <inheritdoc />
         public PalComponents Provides => PalComponents.MouseCursor;
 
+        /// <inheritdoc />
         public ILogger? Logger { get; set; }
 
+        private bool _hasXFixes = false;
+
+        /// <inheritdoc />
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -26,22 +33,40 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
             }
 
+            if (XFixesQueryExtension(X11.Display, out int event_base, out int error_base))
+            {
+                _hasXFixes = true;
 
+                int major = 5;
+                int minor = 0;
+                int status = XFixesQueryVersion(X11.Display, ref major, ref minor);
+
+                if (major < 5)
+                {
+                    Logger?.LogError($"Could not load XFixes. Got version: {major}.{minor} but we require 5.0. Status: {status}");
+                    _hasXFixes = false;
+                }
+
+                Console.WriteLine("Loaded xfixes!");
+            }
         }
 
-        public bool CanLoadFromFile => throw new NotImplementedException();
-
+        /// <inheritdoc />
         public bool CanLoadSystemCursor => true;
 
+        /// <inheritdoc />
         public bool CanScaleCursor => throw new NotImplementedException();
 
+        /// <inheritdoc />
         public bool CanSupportAnimatedCursor => throw new NotImplementedException();
 
+        /// <inheritdoc />
         public CursorHandle Create()
         {
             return new XCursorHandle();
         }
 
+        /// <inheritdoc />
         public void Destroy(CursorHandle handle)
         {
             XCursorHandle xcursor = handle.As<XCursorHandle>(this);
@@ -55,26 +80,50 @@ namespace OpenTK.Platform.Native.X11
             xcursor.Cursor = XCursor.None;
         }
 
-        public void GetSize(CursorHandle handle, out int width, out int height)
+        /// <inheritdoc />
+        public unsafe void GetSize(CursorHandle handle, out int width, out int height)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            if (_hasXFixes)
+            {
+                // FIXME: This only works for the current cursor
+                // So we are likely going to have to temporarily change the cursor,
+                // - Noggin_bops 2023-03-10
+                XFixesCursorImage* cursor = XFixesGetCursorImage(X11.Display);
+
+                width = cursor->width;
+                height = cursor->height;
+
+                XFree(cursor);
+            }
+            else
+            {
+                Logger?.LogError("Can't get cursor size because XFixes is not available!");
+                width = 0;
+                height = 0;
+            }
         }
 
+        /// <inheritdoc />
         public void GetHotspot(CursorHandle handle, out int x, out int y)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void GetImage(CursorHandle handle, Span<byte> image)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void Load(CursorHandle handle, SystemCursorType systemCursor)
         {
             XCursorHandle xcursor = handle.As<XCursorHandle>(this);
@@ -139,11 +188,13 @@ namespace OpenTK.Platform.Native.X11
             xcursor.Cursor = cursor;
         }
 
+        /// <inheritdoc />
         public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
         {
             XCursorHandle xcursor = handle.As<XCursorHandle>(this);
@@ -178,21 +229,13 @@ namespace OpenTK.Platform.Native.X11
             XFreePixmap(X11.Display, pixmap);
         }
 
-        public void Load(CursorHandle handle, string file)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(CursorHandle handle, Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <inheritdoc />
         public void SetHotspot(CursorHandle handle, int x, int y)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         public void SetScale(CursorHandle handle, float horizontal, float vertical)
         {
             throw new NotImplementedException();

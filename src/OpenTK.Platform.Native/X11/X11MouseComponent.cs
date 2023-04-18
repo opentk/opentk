@@ -11,12 +11,16 @@ namespace OpenTK.Platform.Native.X11
 {
     public class X11MouseComponent : IMouseComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(X11MouseComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MiceInput;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -25,24 +29,11 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        public bool IsMultiMouse => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanSetMousePosition => true;
 
-        public int GetMouseCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public MouseHandle Create(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Destroy(MouseHandle handle)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetPosition(MouseHandle handle, out int x, out int y)
+        /// <inheritdoc/>
+        public void GetPosition(out int x, out int y)
         {
             byte ret = XQueryPointer(X11.Display, X11.DefaultRootWindow, out XWindow root, out XWindow child, out int root_x, out int root_y, out int win_x, out int win_y, out _);
 
@@ -50,7 +41,8 @@ namespace OpenTK.Platform.Native.X11
             y = root_y;
         }
 
-        public void SetPosition(MouseHandle handle, int x, int y)
+        /// <inheritdoc/>
+        public void SetPosition(int x, int y)
         {
             XWarpPointer(X11.Display, XWindow.None, X11.DefaultRootWindow, 0, 0, 0, 0, x, y);
         }

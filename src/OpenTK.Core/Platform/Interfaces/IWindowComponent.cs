@@ -320,6 +320,13 @@ namespace OpenTK.Core.Platform
         void SetCursor(WindowHandle handle, CursorHandle? cursor);
 
         /// <summary>
+        /// Gets the current cursor capture mode. See <see cref="SetCursorCaptureMode(WindowHandle, CursorCaptureMode)"/> for more details.
+        /// </summary>
+        /// <param name="handle">Handle to a window.</param>
+        /// <returns>The current cursor capture mode.</returns>
+        CursorCaptureMode GetCursorCaptureMode(WindowHandle handle);
+
+        /// <summary>
         /// Sets the cursor capture mode of the window.
         /// A cursor can be confined to the bounds of the window, or locked to the center of the window.
         /// </summary>

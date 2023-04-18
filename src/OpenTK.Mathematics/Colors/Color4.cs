@@ -45,9 +45,9 @@ namespace OpenTK.Mathematics
     /// Typically these are four-letter abbreviations that indicate the components of the colors, such as <see cref="Rgba"/> or <see cref="Hsva"/>.<br/><br/>
     ///
     /// In any of these cases, letters in the color space correspond to the order of the components in the color vector. For example, color Rgba maps as follows:<br/>
-    /// X -> R
-    /// Y -> G
-    /// Z -> B
+    /// X -> R<br/>
+    /// Y -> G<br/>
+    /// Z -> B<br/>
     /// W -> A.
     /// </summary>
     /// <typeparam name="T">The color space of the given color.</typeparam>

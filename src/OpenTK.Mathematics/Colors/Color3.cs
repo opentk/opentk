@@ -37,9 +37,9 @@ namespace OpenTK
     /// To provide type-safety between different color spaces and allow extension by users to include additional and future color spaces, colors are marked with a special _phantom_ type parameter that indicates their color space.
     /// Typically these are four-letter abbreviations that indicate the components of the colors, such as <see cref="Rgb"/> or <see cref="Hsv"/>.
     ///
-    /// In any of these cases, letters in the color space correspond to the order of the components in the color vector. For example, color<RGB> maps as follows:</br>
-    /// X -> R
-    /// Y -> G
+    /// In any of these cases, letters in the color space correspond to the order of the components in the color vector. For example, color&lt;RGB&gt; maps as follows:<br/>
+    /// X -> R<br/>
+    /// Y -> G<br/>
     /// Z -> B.
     /// </summary>
     /// <typeparam name="T">The color space of the given color.</typeparam>
