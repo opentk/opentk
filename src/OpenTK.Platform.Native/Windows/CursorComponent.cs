@@ -351,7 +351,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.BITMAPV5HEADER header = default;
             header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
             header.bV5Width = width;
-            header.bV5Height = height;
+            header.bV5Height = -height;
             header.bV5Planes = 1;
             header.bV5BitCount = 32;
             header.bV5Compression = BI.Bitfields;
@@ -373,7 +373,14 @@ namespace OpenTK.Platform.Native.Windows
             Span<byte> data = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
 
             // Copy over image data.
-            image.CopyTo(data);
+            // R,G,B,A byte order to B,G,R,A byte order.
+            for (int i = 0; i < data.Length; i += 4)
+            {
+                data[i + 0] = image[i + 2];
+                data[i + 1] = image[i + 1];
+                data[i + 2] = image[i + 0];
+                data[i + 3] = image[i + 3];
+            }
 
             // Create an empty mask.
             IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);

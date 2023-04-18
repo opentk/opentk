@@ -25,10 +25,12 @@ namespace SDLTestProject
         static IIconComponent IconComponent;
         static IShellComponent ShellComponent;
         static IKeyboardComponent KeyboardComponent;
+        static ICursorComponent CursorComponent;
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
         static IconHandle IconHandle;
+        static CursorHandle CursorHandle;
 
         const string vertexShaderSource =
     @"#version 330 core
@@ -70,7 +72,7 @@ void main()
             Console.WriteLine($"Is OS 64 bit: {Environment.Is64BitOperatingSystem}");
             Console.WriteLine($"Is process 64 bit: {Environment.Is64BitProcess}");
             
-            PlatformComponents.PreferSDL2 = true;
+            //PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
             DisplayComponent = PlatformComponents.CreateDisplayComponent();
@@ -79,6 +81,7 @@ void main()
             IconComponent = PlatformComponents.CreateIconComponent();
             ShellComponent = PlatformComponents.CreateShellComponent();
             KeyboardComponent = PlatformComponents.CreateKeyboardComponent();
+            CursorComponent = PlatformComponents.CreateCursorComponent();
 
             if (PlatformComponents.PreferSDL2)
             {
@@ -94,6 +97,7 @@ void main()
             IconComponent.Logger = logger;
             ShellComponent.Logger = logger;
             KeyboardComponent.Logger = logger;
+            CursorComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);
@@ -103,6 +107,7 @@ void main()
             IconComponent.Initialize(PalComponents.WindowIcon);
             ShellComponent.Initialize(PalComponents.Shell);
             KeyboardComponent.Initialize(PalComponents.KeyboardInput);
+            CursorComponent.Initialize(PalComponents.MouseCursor);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
@@ -162,6 +167,11 @@ void main()
                     Debug.Assert(bytes == 1024);
                     Debug.Assert(data.SequenceEqual(icon));
                 }
+
+                CursorHandle = CursorComponent.Create();
+                CursorComponent.Load(CursorHandle, 16, 16, icon);
+
+                WindowComp.SetCursor(WindowHandle, CursorHandle);
             }
 
             WindowComp.SetMode(WindowHandle, WindowMode.Normal);

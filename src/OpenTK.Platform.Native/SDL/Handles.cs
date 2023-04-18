@@ -60,15 +60,19 @@ namespace OpenTK.Platform.Native.SDL
 
     }
 
-    internal class SDLCursor : CursorHandle
+    internal unsafe class SDLCursor : CursorHandle
     {
         public SDL_CursorPtr Cursor { get; internal set; }
+
+        public CursorMode Mode { get; internal set; }
 
         // Might need to keep a copy of the image data so we can reconstruct the cursor when needed.
 
         public byte[]? ColorData { get; internal set; }
 
         public byte[]? MaskData { get; internal set; }
+
+        public SDL_Surface* Surface { get; internal set; }
 
         public int Width { get; internal set; }
 
@@ -77,5 +81,13 @@ namespace OpenTK.Platform.Native.SDL
         public int HotX { get; internal set; }
 
         public int HotY { get; internal set; }
+
+        internal enum CursorMode
+        {
+            Uninitialized,
+            SystemCursor,
+            DataCursor,
+            SurfaceCursor,
+        }
     }
 }

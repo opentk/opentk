@@ -504,6 +504,9 @@ namespace OpenTK.Platform.Native.SDL
         internal static extern SDL_CursorPtr SDL_CreateCursor(byte* data, byte* mask, int w, int h, int hot_x, int hot_y);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_CursorPtr SDL_CreateColorCursor(SDL_Surface* surface, int hot_x, int hot_y);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDL_CursorPtr SDL_CreateSystemCursor(SDL_SystemCursor id);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
