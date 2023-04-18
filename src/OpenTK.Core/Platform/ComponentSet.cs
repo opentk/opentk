@@ -942,6 +942,12 @@ namespace OpenTK.Core.Platform
         float IJoystickComponent.TriggerThreshold => _joystickComponent!.TriggerThreshold;
 
         /// <inheritdoc/>
+        bool IJoystickComponent.IsConnected(int index)
+        {
+            return _joystickComponent!.IsConnected(index);
+        }
+
+        /// <inheritdoc/>
         JoystickHandle IJoystickComponent.Open(int index)
         {
             return _joystickComponent!.Open(index);

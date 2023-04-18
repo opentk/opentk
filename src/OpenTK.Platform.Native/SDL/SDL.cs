@@ -9,6 +9,7 @@ using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
 {
@@ -32,9 +33,15 @@ namespace OpenTK.Platform.Native.SDL
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SDL_Quit();
 
-        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.LPUTF8Str)]
-        internal static extern string SDL_GetError();
+        internal static string SDL_GetError()
+        {
+            byte* error = SDL_GetError();
+            return Marshal.PtrToStringUTF8((IntPtr)error)!;
+
+            [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+            static extern byte* SDL_GetError();
+        }
+        
 
         internal unsafe struct SDL_WindowPtr : IEquatable<SDL_WindowPtr>
         {
@@ -517,5 +524,102 @@ namespace OpenTK.Platform.Native.SDL
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDL_CursorPtr SDL_GetCursor();
+
+
+        internal struct SDL_GameController { }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern bool SDL_IsGameController(int joystick_index);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern SDL_GameController* SDL_GameControllerFromPlayerIndex(int player_index);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern SDL_GameController* SDL_GameControllerOpen(int joystick_index);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void SDL_GameControllerClose(SDL_GameController* gamecontroller);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern SDL_Joystick* SDL_GameControllerGetJoystick(SDL_GameController* gamecontroller);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern char* SDL_GameControllerName(SDL_GameController* gamecontroller);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern short SDL_GameControllerGetAxis(SDL_GameController* gamecontroller, SDL_GameControllerAxis axis);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern byte SDL_GameControllerGetButton(SDL_GameController* gamecontroller, SDL_GameControllerButton button);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int SDL_GameControllerRumble(SDL_GameController* gamecontroller, ushort low_frequency_rumble, ushort high_frequency_rumble, uint duration_ms);
+
+        internal struct SDL_Joystick { }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int SDL_NumJoysticks();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern SDL_Joystick* SDL_JoystickOpen(int device_index);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void SDL_JoystickClose(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern void SDL_JoystickUpdate();
+
+        internal struct SDL_JoystickID : IEquatable<SDL_JoystickID>
+        {
+            public int ID;
+
+            public override bool Equals(object? obj)
+            {
+                return obj is SDL_JoystickID iD && Equals(iD);
+            }
+
+            public bool Equals(SDL_JoystickID other)
+            {
+                return ID == other.ID;
+            }
+
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(ID);
+            }
+
+            public override string? ToString()
+            {
+                return base.ToString();
+            }
+
+            public static bool operator ==(SDL_JoystickID left, SDL_JoystickID right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(SDL_JoystickID left, SDL_JoystickID right)
+            {
+                return !(left == right);
+            }
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern SDL_JoystickID SDL_JoystickInstanceID(SDL_Joystick* joystick);
+
+        internal unsafe struct SDL_JoystickGUID
+        {
+            public fixed byte data[16];
+        }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern SDL_JoystickGUID SDL_JoystickGetGUID(SDL_Joystick* joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern char* SDL_JoystickName(SDL_Joystick * joystick);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern SDL_JoystickPowerLevel SDL_JoystickCurrentPowerLevel(SDL_Joystick* joystick);
+
     }
 }

@@ -37,7 +37,7 @@ namespace OpenTK.Platform.Native.SDL
             }
 
             // Load SDLLib
-            int result = SDL_Init(SDL_INIT.SDL_INIT_VIDEO | SDL_INIT.SDL_INIT_EVENTS);
+            int result = SDL_Init(SDL_INIT.SDL_INIT_VIDEO | SDL_INIT.SDL_INIT_EVENTS | SDL_INIT.SDL_INIT_JOYSTICK | SDL_INIT.SDL_INIT_GAMECONTROLLER);
 
             if (result < 0)
             {
@@ -358,6 +358,13 @@ namespace OpenTK.Platform.Native.SDL
 
                             break;
                         }
+                    case SDL_EventType.SDL_KEYMAPCHANGED:
+                        {
+                            // FIXME: How should we deal with not having the proper information here?
+                            EventQueue.Raise(null, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(null, null, null, null));
+
+                            break;
+                        }
                     case SDL_EventType.SDL_KEYDOWN:
                     case SDL_EventType.SDL_KEYUP:
                         {
@@ -384,6 +391,15 @@ namespace OpenTK.Platform.Native.SDL
                             {
                                 EventQueue.Raise(sdlWindow, PlatformEventType.KeyUp, new KeyUpEventArgs(sdlWindow, key, scancode));
                             }
+
+                            break;
+                        }
+                    case SDL_EventType.SDL_CONTROLLERDEVICEADDED:
+                    case SDL_EventType.SDL_CONTROLLERDEVICEREMOVED:
+                        {
+                            SDL_ControllerDeviceEvent controllerDeviceEvent = @event.ControllerDeviceEvent;
+
+                            // FIXME: Add joystick added/removed events!
 
                             break;
                         }

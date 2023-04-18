@@ -26,6 +26,7 @@ namespace SDLTestProject
         static IShellComponent ShellComponent;
         static IKeyboardComponent KeyboardComponent;
         static ICursorComponent CursorComponent;
+        static IJoystickComponent JoystickComponent;
 
         static WindowHandle WindowHandle;
         static OpenGLContextHandle ContextHandle;
@@ -72,7 +73,7 @@ void main()
             Console.WriteLine($"Is OS 64 bit: {Environment.Is64BitOperatingSystem}");
             Console.WriteLine($"Is process 64 bit: {Environment.Is64BitProcess}");
             
-            //PlatformComponents.PreferSDL2 = true;
+            PlatformComponents.PreferSDL2 = true;
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComponent = PlatformComponents.CreateOpenGLComponent();
             DisplayComponent = PlatformComponents.CreateDisplayComponent();
@@ -82,6 +83,7 @@ void main()
             ShellComponent = PlatformComponents.CreateShellComponent();
             KeyboardComponent = PlatformComponents.CreateKeyboardComponent();
             CursorComponent = PlatformComponents.CreateCursorComponent();
+            JoystickComponent = PlatformComponents.CreateJoystickComponent();
 
             if (PlatformComponents.PreferSDL2)
             {
@@ -98,6 +100,7 @@ void main()
             ShellComponent.Logger = logger;
             KeyboardComponent.Logger = logger;
             CursorComponent.Logger = logger;
+            JoystickComponent.Logger = logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComponent.Initialize(PalComponents.OpenGL);
@@ -108,6 +111,7 @@ void main()
             ShellComponent.Initialize(PalComponents.Shell);
             KeyboardComponent.Initialize(PalComponents.KeyboardInput);
             CursorComponent.Initialize(PalComponents.MouseCursor);
+            JoystickComponent.Initialize(PalComponents.Joystick);
 
             WindowHandle = WindowComp.Create(new OpenGLGraphicsApiHints());
             WindowComp.SetTitle(WindowHandle, "SDL Test Window");
@@ -239,6 +243,11 @@ void main()
 
                 WindowComp.ProcessEvents();
 
+                if (WindowComp.IsWindowDestroyed(WindowHandle))
+                {
+                    break;
+                }
+
                 if (hiddenTimer > 0) hiddenTimer -= dt;
 
                 if (hiddenTimer < 0)
@@ -271,17 +280,28 @@ void main()
             {
                 if (mouseDown.Button == MouseButton.Button1)
                 {
-                    MouseComponent.GetPosition(out int x, out int y);
-                    KeyboardComponent.SetImeRectangle(mouseDown.Window, x, y, 150, 50);
-                    KeyboardComponent.BeginIme(mouseDown.Window);
-                }
-                else if (mouseDown.Button == MouseButton.Button2)
-                {
-                    KeyboardComponent.EndIme(mouseDown.Window);
-                }
-                else if (mouseDown.Button == MouseButton.Button3)
-                {
-                    KeyboardComponent.GetScancodeFromKey(Key.F15);
+                    for (int i = 0; i < 4; i++)
+                    {
+                        if (JoystickComponent.IsConnected(i))
+                        {
+                            var stick = JoystickComponent.Open(i);
+
+                            if (JoystickComponent.TryGetBatteryInfo(stick, out GamepadBatteryInfo info))
+                            {
+                                Console.WriteLine($"Gamepad {i + 1}: {info.BatteryType} {info.ChargeLevel * 100}%");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Could not get battery info for gamepad {i + 1}");
+                            }
+
+                            JoystickComponent.Close(stick);
+                        }
+                        else
+                        {
+                            Console.WriteLine($"No controller connected for player {i + 1}");
+                        }
+                    }
                 }
             }
             else if (args is FileDropEventArgs fileDrop)

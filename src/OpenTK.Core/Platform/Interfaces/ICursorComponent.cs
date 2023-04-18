@@ -53,6 +53,7 @@ namespace OpenTK.Core.Platform
         /// <param name="x">X coordinate of the hotspot.</param>
         /// <param name="y">Y coordinate of the hotspot.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        // FIXME: Do we care about this API? Can we even implement it across platforms.
         void GetHotspot(CursorHandle handle, out int x, out int y);
 
         /// <summary>
@@ -61,6 +62,7 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to a cursor object.</param>
         /// <param name="image">Buffer to copy cursor image into.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        // FIXME: Do we care about this API? Can we even implement it across platforms.
         void GetImage(CursorHandle handle, Span<byte> image);
 
         /// <summary>

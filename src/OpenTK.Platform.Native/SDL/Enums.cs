@@ -254,4 +254,54 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SYSTEM_CURSOR_HAND,      /**< Hand */
         SDL_NUM_SYSTEM_CURSORS
     }
+
+    enum SDL_GameControllerAxis : int
+    {
+        SDL_CONTROLLER_AXIS_INVALID = -1,
+        SDL_CONTROLLER_AXIS_LEFTX,
+        SDL_CONTROLLER_AXIS_LEFTY,
+        SDL_CONTROLLER_AXIS_RIGHTX,
+        SDL_CONTROLLER_AXIS_RIGHTY,
+        SDL_CONTROLLER_AXIS_TRIGGERLEFT,
+        SDL_CONTROLLER_AXIS_TRIGGERRIGHT,
+        SDL_CONTROLLER_AXIS_MAX
+    }
+
+    enum SDL_GameControllerButton : int
+    {
+        SDL_CONTROLLER_BUTTON_INVALID = -1,
+        SDL_CONTROLLER_BUTTON_A,
+        SDL_CONTROLLER_BUTTON_B,
+        SDL_CONTROLLER_BUTTON_X,
+        SDL_CONTROLLER_BUTTON_Y,
+        SDL_CONTROLLER_BUTTON_BACK,
+        SDL_CONTROLLER_BUTTON_GUIDE,
+        SDL_CONTROLLER_BUTTON_START,
+        SDL_CONTROLLER_BUTTON_LEFTSTICK,
+        SDL_CONTROLLER_BUTTON_RIGHTSTICK,
+        SDL_CONTROLLER_BUTTON_LEFTSHOULDER,
+        SDL_CONTROLLER_BUTTON_RIGHTSHOULDER,
+        SDL_CONTROLLER_BUTTON_DPAD_UP,
+        SDL_CONTROLLER_BUTTON_DPAD_DOWN,
+        SDL_CONTROLLER_BUTTON_DPAD_LEFT,
+        SDL_CONTROLLER_BUTTON_DPAD_RIGHT,
+        SDL_CONTROLLER_BUTTON_MISC1,    /* Xbox Series X share button, PS5 microphone button, Nintendo Switch Pro capture button, Amazon Luna microphone button */
+        SDL_CONTROLLER_BUTTON_PADDLE1,  /* Xbox Elite paddle P1 (upper left, facing the back) */
+        SDL_CONTROLLER_BUTTON_PADDLE2,  /* Xbox Elite paddle P3 (upper right, facing the back) */
+        SDL_CONTROLLER_BUTTON_PADDLE3,  /* Xbox Elite paddle P2 (lower left, facing the back) */
+        SDL_CONTROLLER_BUTTON_PADDLE4,  /* Xbox Elite paddle P4 (lower right, facing the back) */
+        SDL_CONTROLLER_BUTTON_TOUCHPAD, /* PS4/PS5 touchpad button */
+        SDL_CONTROLLER_BUTTON_MAX
+    }
+
+    enum SDL_JoystickPowerLevel : int
+    {
+        SDL_JOYSTICK_POWER_UNKNOWN = -1,
+        SDL_JOYSTICK_POWER_EMPTY,   /* <= 5% */
+        SDL_JOYSTICK_POWER_LOW,     /* <= 20% */
+        SDL_JOYSTICK_POWER_MEDIUM,  /* <= 70% */
+        SDL_JOYSTICK_POWER_FULL,    /* <= 100% */
+        SDL_JOYSTICK_POWER_WIRED,
+        SDL_JOYSTICK_POWER_MAX
+    }
 }

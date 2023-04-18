@@ -90,4 +90,14 @@ namespace OpenTK.Platform.Native.SDL
             SurfaceCursor,
         }
     }
+
+    internal unsafe class SDLJoystick : JoystickHandle
+    {
+        public SDL_GameController* GameController { get; internal set; }
+
+        public SDLJoystick(SDL_GameController* gameController)
+        {
+            GameController = gameController;
+        }
+    }
 }

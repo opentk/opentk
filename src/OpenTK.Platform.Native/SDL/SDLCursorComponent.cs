@@ -75,13 +75,33 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLCursor cursor = handle.As<SDLCursor>(this);
 
+            // FIXME: Should we throw if we have a system cursor?
             x = cursor.HotX;
             y = cursor.HotY;
         }
 
         public void GetImage(CursorHandle handle, Span<byte> image)
         {
-            throw new NotImplementedException();
+            SDLCursor cursor = handle.As<SDLCursor>(this);
+
+            // FIXME: What should we do for DataCursor and SurfaceCursor?
+            switch (cursor.Mode)
+            {
+                case SDLCursor.CursorMode.Uninitialized:
+                    image = Span<byte>.Empty;
+                    break;
+                case SDLCursor.CursorMode.SystemCursor:
+                    throw new InvalidOperationException("SDL can't get the image data from a system cursor.");
+                    break;
+                case SDLCursor.CursorMode.DataCursor:
+                    throw new NotImplementedException();
+                    break;
+                case SDLCursor.CursorMode.SurfaceCursor:
+                    throw new NotImplementedException();
+                    break;
+                default:
+                    throw new PalException(this, $"Unknown cursor mode {cursor.Mode}");
+            }
         }
 
         public void GetScale(CursorHandle handle, out float horizontal, out float vertical)

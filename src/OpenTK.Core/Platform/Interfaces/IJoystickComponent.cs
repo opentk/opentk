@@ -12,7 +12,15 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IJoystickComponent : IPalComponent
     {
+        // FIXME: Should we have separate gamepad and joystick components?
+
+        // FIXME: Document the expectations for this API, and what all of the functions are supposed to do.
+
         // FIXME: Add some way to query if joysticks are connected or not?
+
+        // FIXME: Get joystick from player index (and make index different from player index?)
+
+        // FIXME: Way to query/enumerate all of the joysticks currently connected.
 
         /// <summary>
         /// The recommended deadzone value for the left analog stick.
@@ -28,6 +36,13 @@ namespace OpenTK.Core.Platform
         /// The recommended threshold for considering the left or right trigger pressed.
         /// </summary>
         public float TriggerThreshold { get; }
+
+        /// <summary>
+        /// Checks wether a joystick with the specific index is present on the system or not.
+        /// </summary>
+        /// <param name="index">The index of the joystick.</param>
+        /// <returns>If a joystick with the specified index is connected.</returns>
+        public bool IsConnected(int index);
 
         /// <summary>
         /// Opens a handle to a specific joystick.

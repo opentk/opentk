@@ -34,7 +34,7 @@ namespace OpenTK.Platform.Native
                 [PalComponents.MouseCursor] = () => new SDL.SDLCursorComponent(),
                 [PalComponents.WindowIcon] = () => new SDL.SDLIconComponent(),
                 [PalComponents.Clipboard] = () => new SDL.SDLClipboardComponent(),
-                //[PalComponents.Joystick] = () => new SDL.SDLJoystickComponent(),
+                [PalComponents.Joystick] = () => new SDL.SDLJoystickComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> win32Components =
@@ -82,8 +82,10 @@ namespace OpenTK.Platform.Native
                 //[PalComponents.Joystick] = () => new Macos.JoystickComponent(),
             };
 
+        // FIXME: We probably only want to evaluate the platform decision once?
         private static Dictionary<PalComponents, ComponentCtor> GetPlatformComponents()
         {
+            // FIXME: Make SDL a fallback.
             if (PreferSDL2)
             {
                 // We use the DllResolver to get the same loading logic as DllImport.
