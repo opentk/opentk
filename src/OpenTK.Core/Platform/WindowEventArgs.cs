@@ -252,6 +252,11 @@ namespace OpenTK.Core.Platform
         public string KeyboardLayout { get; private set; }
 
         /// <summary>
+        /// The keyboard layout display name. This is the user facing name of the keyboard layout.
+        /// </summary>
+        public string KeyboardLayoutDisplayName { get; private set; }
+
+        /// <summary>
         /// The input language. This is separate from keyboard layout.
         /// This could be used for features such as spell checking.
         ///
@@ -264,9 +269,10 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public string InputLanguageDisplayName { get; private set; }
 
-        public InputLanguageChangedEventArgs(string keyboardLayout, string inputLanguage, string inputLanguageDisplayName)
+        public InputLanguageChangedEventArgs(string keyboardLayout, string keyboardLayoutDisplayName, string inputLanguage, string inputLanguageDisplayName)
         {
             KeyboardLayout = keyboardLayout;
+            KeyboardLayoutDisplayName = keyboardLayoutDisplayName;
             InputLanguage = inputLanguage;
             InputLanguageDisplayName = inputLanguageDisplayName;
         }

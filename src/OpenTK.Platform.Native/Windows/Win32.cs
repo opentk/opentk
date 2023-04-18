@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -48,6 +49,19 @@ namespace OpenTK.Platform.Native.Windows
 
         internal const int LOCALE_NAME_MAX_LENGTH = 85;
 
+        // Usefull extension methods for dealing with span string buffers.
+        internal static Span<char> SliceAtFirstNull(this Span<char> span)
+        {
+            int index = span.IndexOf("\0");
+            return index == -1 ? span : span.Slice(0, index);
+        }
+
+        internal static ReadOnlySpan<char> SliceAtFirstNull(this ReadOnlySpan<char> span)
+        {
+            int index = span.IndexOf("\0");
+            return index == -1 ? span : span.Slice(0, index);
+        }
+
         // LRESULT WNDPROC(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         internal delegate IntPtr WNDPROC(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam);
 
@@ -91,6 +105,15 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPTStr)] string lpLibFileName);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HMODULE */ LoadLibraryEx([MarshalAs(UnmanagedType.LPTStr)] string lpLibFileName, IntPtr /* HANDLE */ hFile, LoadLibraryFlags dwFlags);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HMODULE */ LoadLibraryEx([In, MarshalAs(UnmanagedType.LPTStr)] StringBuilder lpLibFileName, IntPtr /* HANDLE */ hFile, LoadLibraryFlags dwFlags);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool FreeLibrary(IntPtr /* HMODULE */ hLibModule);
 
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern IntPtr GetProcAddress(IntPtr hModule, [MarshalAs(UnmanagedType.LPStr)] string lpProcName);
@@ -853,20 +876,23 @@ namespace OpenTK.Platform.Native.Windows
             byte* pvData,
             ref uint pcbData);
 
-        internal static int /* LSTATUS */ RegGetValue(
+        internal static int /* LSTATUS */ RegGetValue<T>(
             IntPtr /* HKEY */ hkey,
             string? lpSubKey,
             string? lpValue,
             RRF dwFlags,
             out RegValueType pdwType,
-            Span<byte> pvData,
-            ref uint pcbData)
+            Span<T> pvData,
+            ref uint pcbData) where T : unmanaged
         {
-            fixed (byte* data = &MemoryMarshal.GetReference(pvData))
+            fixed (T* data = &MemoryMarshal.GetReference(pvData))
             {
-                return RegGetValue(hkey, lpSubKey, lpValue, dwFlags, out pdwType, data, ref pcbData);
+                return RegGetValue(hkey, lpSubKey, lpValue, dwFlags, out pdwType, (byte*)data, ref pcbData);
             }
         }
+
+        [DllImport("shlwapi.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        internal static unsafe extern uint /* LWSTDAPI */ SHLoadIndirectString(char* pszSource, char* pszOutBuf, uint cchOutBuf, void** ppvReserved);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern int GetKeyboardLayoutList(int nBuff, IntPtr* lpList);

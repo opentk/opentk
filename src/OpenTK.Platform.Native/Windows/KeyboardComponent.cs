@@ -3,12 +3,15 @@ using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.XPath;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -16,6 +19,8 @@ namespace OpenTK.Platform.Native.Windows
     {
         // FIXME: We should change the design
         private static KeyboardComponent? Instance;
+
+        // FIXME: API for disabling native IME window? See what SDL does.
 
         /// <inheritdoc/>
         public string Name => "Win32KeyboardComponent";
@@ -117,10 +122,10 @@ namespace OpenTK.Platform.Native.Windows
                 StringBuilder displayName = new StringBuilder(length);
                 Win32.GetLocaleInfoEx(localeName, LCType.SLocalizedDisplayName, displayName, displayName.Capacity);
 
-                // FIXME: Get a better name
-                string layout = Instance.LayoutNameFromKeyboardLayoutName(Instance.GetHKLLayoutName(hKL));
+                string layoutName = Instance.GetHKLLayoutName(hKL);
+                string layoutDisplayName = Instance.LayoutDisplayNameFromKeyboardLayoutName(layoutName);
 
-                EventQueue.Raise(handle, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(layout, localeName.ToString(), displayName.ToString()));
+                EventQueue.Raise(handle, PlatformEventType.InputLanguageChanged, new InputLanguageChangedEventArgs(layoutName, layoutDisplayName, localeName.ToString(), displayName.ToString()));
             }
         }
 
@@ -130,51 +135,58 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public bool SupportsIme => true;
 
-        // FIXME: Better name!
-        private string LayoutNameFromKeyboardLayoutName(string layoutName)
+        private string LayoutDisplayNameFromKeyboardLayoutName(string layoutName)
         {
-            // FIXME: Read "Layout Display Name" resource instead of "Layout Text".
-
-            const string LAYOUTS_REGISTRY_PATH = @"SYSTEM\ControlSet001\Control\Keyboard Layouts";
+            const string LAYOUTS_REGISTRY_PATH = @"SYSTEM\CurrentControlSet\Control\Keyboard Layouts";
 
             int status;
 
             status = Win32.RegOpenKeyEx((IntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out IntPtr layoutsKey);
             if (status != 0)
             {
-                // FIXME: Good error message
-                throw new Exception();
+                throw new Exception($"RegOpenKeyEx (\"HKEY_LOCAL_MACHINE\\{LAYOUTS_REGISTRY_PATH}\") error: 0x{status:X8}");
             }
 
             status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out IntPtr layoutKey);
             if (status != 0)
             {
-                // FIXME: Good error message
-                throw new Exception();
+                throw new Exception($"RegOpenKeyEx (\"{layoutName}\") error: 0x{status:X8}");
             }
 
             // Read the "Layout Text" to get the layout name
             uint dataSize = 0;
-            status = Win32.RegGetValue(layoutKey, null, "Layout Text", RRF.TypeRegSZ, out RegValueType _, Span<byte>.Empty, ref dataSize);
+            status = Win32.RegGetValue(layoutKey, null, "Layout Display Name", RRF.TypeRegSZ, out RegValueType _, Span<byte>.Empty, ref dataSize);
             if (status != 0)
             {
-                // FIXME: Good error message
-                throw new Exception();
+                throw new Exception($"RegGetValue (\"Layout Display Name\") error: 0x{status:X8}");
             }
 
             // FIXME: Maybe not allocate on the stack if it's too big?
-            Span<byte> data = stackalloc byte[(int)dataSize];
-            status = Win32.RegGetValue(layoutKey, null, "Layout Text", RRF.TypeRegSZ, out RegValueType _, data, ref dataSize);
+            Span<char> data = stackalloc char[(int)(dataSize / sizeof(char))];
+            status = Win32.RegGetValue(layoutKey, null, "Layout Display Name", RRF.TypeRegSZ, out RegValueType _, data, ref dataSize);
             if (status != 0)
             {
-                // FIXME: Good error message
-                throw new Exception();
+                throw new Exception($"RegGetValue (\"Layout Display Name\") error: 0x{status:X8}");
             }
 
-            // Convert to string and trim away the \0 characters at the end.
-            string layoutText = Encoding.Unicode.GetString(data).TrimEnd('\0');
+            // We use the same size as Winforms does and hope that that isn't a problem...
+            // https://github.com/dotnet/winforms/blob/d2160cfd081d5a34be03a2bd9c7ce9cbdcc38c09/src/System.Windows.Forms/src/System/Windows/Forms/InputLanguage.cs#L258
+            // - Noggin_bops 2023-04-18
+            Span<char> buffer = stackalloc char[512];
+            unsafe
+            {
+                fixed (char* source = data)
+                fixed (char* bufferPtr = buffer)
+                {
+                    int result = (int)Win32.SHLoadIndirectString(source, bufferPtr, (uint)buffer.Length, null);
+                    Marshal.ThrowExceptionForHR(result);
+                }
+            }
 
-            return layoutText;
+            buffer = buffer.SliceAtFirstNull();
+            string displayName = new string(buffer);
+
+            return displayName;
         }
 
         private string GetHKLLayoutName(IntPtr hKL)
@@ -202,7 +214,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.GetKeyboardLayoutName(builder);
             string layoutName = builder.ToString();
 
-            return LayoutNameFromKeyboardLayoutName(layoutName);
+            return LayoutDisplayNameFromKeyboardLayoutName(layoutName);
         }
 
         /// <inheritdoc/>
@@ -229,7 +241,7 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.GetKeyboardLayoutName(builder);
                 string layoutName = builder.ToString();
 
-                result[i] = LayoutNameFromKeyboardLayoutName(layoutName);
+                result[i] = LayoutDisplayNameFromKeyboardLayoutName(layoutName);
             }
             Win32.ActivateKeyboardLayout(oldLayout, 0);
 

@@ -7,8 +7,9 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IKeyboardComponent : IPalComponent
     {
-        // FIXME: API for disabling native IME window.
         // FIXME: API for getting the current input language
+
+        // FIXME: Separation for keyboard layout name and keyboard layout display name??
 
         /// <summary>
         /// True if the driver supports keyboard layout functions.
