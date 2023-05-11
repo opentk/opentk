@@ -246,6 +246,11 @@ namespace OpenTK.Windowing.Desktop
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context?.MakeCurrent();
 
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                timeBeginPeriod(1);
+            }
+
             // Send the OnLoad event, to load all user code.
             OnLoad();
 

@@ -31,7 +31,7 @@ namespace OpenTK.Mathematics
     /// Represents a Quaternion.
     /// </summary>
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Quaternion : IEquatable<Quaternion>
+    public struct Quaternion : IEquatable<Quaternion>, IFormattable
     {
         /// <summary>
         /// The X, Y and Z components of this instance.
@@ -828,7 +828,28 @@ namespace OpenTK.Mathematics
         /// <returns>A human-readable representation of the quaternion.</returns>
         public override string ToString()
         {
-            return $"V: {Xyz}{MathHelper.ListSeparator} W: {W}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            var ls = MathHelper.GetListSeparator(formatProvider);
+            var xyz = Xyz.ToString(format, formatProvider);
+            var w = W.ToString(format, formatProvider);
+            return $"V: {xyz}{ls} W: {w}";
         }
     }
 }

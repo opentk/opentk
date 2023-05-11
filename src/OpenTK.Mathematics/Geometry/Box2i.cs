@@ -20,7 +20,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     [Serializable]
-    public struct Box2i : IEquatable<Box2i>
+    public struct Box2i : IEquatable<Box2i>, IFormattable
     {
         /// <summary>
         /// An empty box with Min (0, 0) and Max (0, 0).
@@ -314,6 +314,16 @@ namespace OpenTK.Mathematics
             return !(left == right);
         }
 
+        /// <summary>
+        /// Converts this <see cref="Box2i"/> to a <see cref="System.Drawing.Rectangle"/> using <see cref="Min"/> as the position and <see cref="Size"/> as the size.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        [Pure]
+        public static explicit operator System.Drawing.Rectangle(Box2i box)
+        {
+            return new System.Drawing.Rectangle((System.Drawing.Point)box.Min, (System.Drawing.Size)box.Size);
+        }
+
         /// <inheritdoc/>
         public override bool Equals(object obj)
         {
@@ -336,7 +346,25 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Min} - {Max}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }
     }
 }

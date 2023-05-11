@@ -537,7 +537,19 @@ namespace OpenTK.Mathematics
         /// <returns>The string representation of this instance.</returns>
         public override string ToString()
         {
-            return ToSingle().ToString();
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
         }
 
         /// <summary>
