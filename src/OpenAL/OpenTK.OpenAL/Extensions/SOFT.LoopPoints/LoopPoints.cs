@@ -1,51 +1,52 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace OpenTK.Audio.OpenAL.Extensions.SOFT.LoopPoints
+namespace OpenTK.Audio.OpenAL
 {
-    public class LoopPoints : ALBase
+    public partial class AL
     {
-        public const string ExtensionName = "AL_SOFT_loop_points";
-
-        static LoopPoints()
+        public class LoopPoints : ALBase
         {
-            // We need to register the resolver for OpenAL before we can DllImport functions.
-            ALBase.RegisterOpenALResolver();
-        }
+            public const string ExtensionName = "AL_SOFT_loop_points";
 
-        private LoopPoints()
-        {
-        }
+            static LoopPoints()
+            {
+                // We need to register the resolver for OpenAL before we can DllImport functions.
+                ALBase.RegisterOpenALResolver();
+            }
 
-        /// <summary>
-        /// Checks if this extension is present.
-        /// </summary>
-        /// <returns>Whether the extension was present or not.</returns>
-        public static bool IsExtensionPresent()
-        {
-            return AL.IsExtensionPresent(ExtensionName);
-        }
+            private LoopPoints()
+            {
+            }
 
-        [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
-        public static unsafe extern void Buffer(int buffer, BufferLoopPoint param, int* values);
+            /// <summary>
+            /// Checks if this extension is present.
+            /// </summary>
+            /// <returns>Whether the extension was present or not.</returns>
+            public static bool IsExtensionPresent()
+            {
+                return AL.IsExtensionPresent(ExtensionName);
+            }
 
-        [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
-        public static extern void Buffer(int buffer, BufferLoopPoint param, ref int values);
+            [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
+            public static unsafe extern void Buffer(int buffer, BufferLoopPoint param, int* values);
 
-        public static unsafe void Buffer(int buffer, BufferLoopPoint param, ReadOnlySpan<int> values)
-        {
-            Buffer(buffer, param, ref MemoryMarshal.GetReference(values));
-        }
+            [DllImport(AL.Lib, EntryPoint = "alBufferiv", ExactSpelling = true, CallingConvention = AL.ALCallingConvention)]
+            public static extern void Buffer(int buffer, BufferLoopPoint param, ref int values);
 
-        public static void Buffer(int buffer, BufferLoopPoint param, int start, int end)
-        {
-            Span<int> data = stackalloc int[2];
-            data[0] = start;
-            data[1] = end;
+            public static unsafe void Buffer(int buffer, BufferLoopPoint param, ReadOnlySpan<int> values)
+            {
+                Buffer(buffer, param, ref MemoryMarshal.GetReference(values));
+            }
 
-            Buffer(buffer, param, data);
+            public static void Buffer(int buffer, BufferLoopPoint param, int start, int end)
+            {
+                Span<int> data = stackalloc int[2];
+                data[0] = start;
+                data[1] = end;
+
+                Buffer(buffer, param, data);
+            }
         }
     }
 }

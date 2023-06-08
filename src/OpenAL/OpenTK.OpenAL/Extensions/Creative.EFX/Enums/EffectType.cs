@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Audio.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
     /// Effect type definitions to be used with EfxEffecti.EffectType.
