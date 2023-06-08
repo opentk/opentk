@@ -393,7 +393,6 @@ namespace OpenTK.Windowing.Desktop
                         break;
 
                     case WindowState.Fullscreen:
-                        // Cache the window size so we can reset to it when we go out of fullscreen.
                         _cachedWindowClientSize = ClientSize;
                         _cachedWindowLocation = Location;
                         var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
@@ -806,45 +805,45 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintBool.TransparentFramebuffer, transparent);
             }
 
-            // We do the work to set the hint bits outside of the CreateWindow conditional
-            // so that the window will get the correct fullscreen red/green/blue bits stored
-            // in its hidden fields regardless of how it gets created.  (The extra curly
-            // braces here keep the local `monitor` definition from conflicting with the
-            // _monitorCallback lambda below.)
+            var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+            var modePtr = GLFW.GetVideoMode(monitor);
+            GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
+            GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
+            GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
+            if (settings.AlphaBits.HasValue)
             {
-                var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                var modePtr = GLFW.GetVideoMode(monitor);
-                GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
-                GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
-                GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
-                if (settings.AlphaBits.HasValue)
-                {
-                    GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
-                }
+                GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
+            }
 
-                if (settings.DepthBits.HasValue)
-                {
-                    GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
-                }
+            if (settings.DepthBits.HasValue)
+            {
+                GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
+            }
 
-                if (settings.StencilBits.HasValue)
-                {
-                    GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
-                }
+            if (settings.StencilBits.HasValue)
+            {
+                GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
+            }
 
-                GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
+            GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
-                if (settings.WindowState == WindowState.Fullscreen && _isVisible)
-                {
-                    _windowState = WindowState.Fullscreen;
-                    _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
-                    _cachedWindowClientSize = settings.Size;
-                    WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
-                }
-                else
-                {
-                    WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
-                }
+            _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
+            _cachedWindowClientSize = settings.Size;
+
+            if (settings.WindowState == WindowState.Fullscreen && _isVisible)
+            {
+                // We are going into fullscreen so there will be no previous client size or window location.
+                // We set these so that if we go out of fullscreen we won't pass (0,0) as the new location and size.
+                // - Noggin_bops 2023-06-08
+                ClientSize = _cachedWindowClientSize;
+                _location = _cachedWindowLocation;
+
+                _windowState = WindowState.Fullscreen;
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
+            }
+            else
+            {
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
