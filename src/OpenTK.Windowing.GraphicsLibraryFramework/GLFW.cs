@@ -211,7 +211,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <seealso cref="GetVersion"/>
         public static unsafe string GetVersionString()
         {
-            return PtrToStringUTF8(glfwGetVersionString());
+            return Marshal.PtrToStringUTF8((IntPtr)glfwGetVersionString());
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             byte* desc;
             var code = glfwGetError(&desc);
-            description = PtrToStringUTF8(desc);
+            description = Marshal.PtrToStringUTF8((IntPtr)desc);
             return code;
         }
 
@@ -659,7 +659,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe string GetMonitorName(Monitor* monitor)
         {
-            return PtrToStringUTF8(glfwGetMonitorName(monitor));
+            return Marshal.PtrToStringUTF8((IntPtr)glfwGetMonitorName(monitor));
         }
 
         /// <summary>
@@ -971,7 +971,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe void WindowHint(WindowHintString hint, string value)
         {
-            var ptr = StringToCoTaskMemUTF8(value);
+            var ptr = Marshal.StringToCoTaskMemUTF8(value);
 
             try
             {
@@ -1427,7 +1427,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe string GetKeyName(Keys key, int scanCode)
         {
-            return PtrToStringUTF8(glfwGetKeyName(key, scanCode));
+            return Marshal.PtrToStringUTF8((IntPtr)glfwGetKeyName(key, scanCode));
         }
 
         /// <summary>
@@ -2326,7 +2326,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe string GetJoystickName(int jid)
         {
-            return PtrToStringUTF8(glfwGetJoystickName(jid));
+            return Marshal.PtrToStringUTF8((IntPtr)glfwGetJoystickName(jid));
         }
 
         /// <summary>
@@ -2399,7 +2399,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe string GetJoystickGUID(int jid)
         {
-            return PtrToStringUTF8(glfwGetJoystickGUID(jid));
+            return Marshal.PtrToStringUTF8((IntPtr)glfwGetJoystickGUID(jid));
         }
 
         /// <summary>
@@ -2557,7 +2557,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe bool UpdateGamepadMappings(string newMapping)
         {
-            var ptr = StringToCoTaskMemUTF8(newMapping);
+            var ptr = Marshal.StringToCoTaskMemUTF8(newMapping);
             try
             {
                 return glfwUpdateGamepadMappings((byte*)ptr) == GLFW_TRUE;
@@ -2633,7 +2633,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe string GetGamepadName(int jid)
         {
-            return PtrToStringUTF8(glfwGetGamepadName(jid));
+            return Marshal.PtrToStringUTF8((IntPtr)glfwGetGamepadName(jid));
         }
 
         /// <summary>
@@ -2902,7 +2902,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe bool ExtensionSupported(string extensionName)
         {
-            var ptr = StringToCoTaskMemUTF8(extensionName);
+            var ptr = Marshal.StringToCoTaskMemUTF8(extensionName);
 
             try
             {
@@ -3124,7 +3124,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe Window* CreateWindow(int width, int height, string title, Monitor* monitor, Window* share)
         {
-            var ptr = StringToCoTaskMemUTF8(title);
+            var ptr = Marshal.StringToCoTaskMemUTF8(title);
 
             try
             {
@@ -3345,7 +3345,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <seealso cref="SetClipboardString"/>
         public static unsafe string GetClipboardString(Window* window)
         {
-            return PtrToStringUTF8(glfwGetClipboardString(window));
+            return Marshal.PtrToStringUTF8((IntPtr)glfwGetClipboardString(window));
         }
 
         /// <summary>
@@ -4170,7 +4170,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <seealso cref="GetClipboardString"/>
         public static unsafe void SetClipboardString(Window* window, string data)
         {
-            var ptr = StringToCoTaskMemUTF8(data);
+            var ptr = Marshal.StringToCoTaskMemUTF8(data);
 
             try
             {
@@ -5037,7 +5037,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </remarks>
         public static unsafe void SetWindowTitle(Window* window, string title)
         {
-            var ptr = StringToCoTaskMemUTF8(title);
+            var ptr = Marshal.StringToCoTaskMemUTF8(title);
 
             try
             {
@@ -5626,7 +5626,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             var array = new string[count];
             for (var i = 0; i < count; i++)
             {
-                array[i] = PtrToStringUTF8(ptr[i]);
+                array[i] = Marshal.PtrToStringUTF8((IntPtr)ptr[i]);
             }
 
             return array;
@@ -5672,7 +5672,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// <returns>The address of the function, or <c>null</c> if an error occurred.</returns>
         public static unsafe IntPtr GetInstanceProcAddress(VkHandle instance, string procName)
         {
-            var ptr = StringToCoTaskMemUTF8(procName);
+            var ptr = Marshal.StringToCoTaskMemUTF8(procName);
 
             try
             {
