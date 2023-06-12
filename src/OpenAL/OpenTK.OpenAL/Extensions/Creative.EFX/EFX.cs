@@ -20,6 +20,9 @@ namespace OpenTK.Audio.OpenAL
         /// </summary>
         public class EFX : ALBase
         {
+            // FIXME: Maybe split the EFX extension into the ALC and AL part of the extension.
+            // It would make it more intuitive to use.
+
             /// <summary>
             /// The EFX extension name.
             /// </summary>
