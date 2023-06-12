@@ -951,14 +951,19 @@ namespace OpenTK.Windowing.Desktop
 
             void LoadBindings(string typeNamespace)
             {
-                var type = assembly.GetType($"OpenTK.Graphics.{typeNamespace}.GL");
+                Type type = assembly.GetType($"OpenTK.Graphics.{typeNamespace}.GL");
                 if (type == null)
                 {
                     return;
                 }
 
-                var load = type.GetMethod("LoadBindings");
-                load.Invoke(null, new object[] { provider });
+                MethodInfo load = type.GetMethod("LoadBindings");
+                if (load == null)
+                {
+                    throw new MissingMethodException($"OpenTK tried to auto-load the OpenGL bindings. We found the {$"OpenTK.Graphics.{typeNamespace}.GL"} class, but we could not find the 'LoadBindings' method. " +
+                        $"If you are trying to run a trimmed assembly please add a [DynamicDependency()] attribute to your program, or set NativeWindowSettings.AutoLoadBindings = false and load the OpenGL bindings manually.");
+                }
+                load?.Invoke(null, new object[] { provider });
             }
 
             LoadBindings("ES11");
