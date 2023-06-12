@@ -7,10 +7,10 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Audio.OpenAL.Extensions.Creative.EnumerateAll
+namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
-    /// Defines available parameters for <see cref="EnumerateAll.GetString(ALDevice, GetEnumerateAllContextString)" />.
+    /// Defines available parameters for <see cref="ALC.EnumerateAll.GetString(ALDevice, GetEnumerateAllContextString)" />.
     /// </summary>
     public enum GetEnumerateAllContextString
     {

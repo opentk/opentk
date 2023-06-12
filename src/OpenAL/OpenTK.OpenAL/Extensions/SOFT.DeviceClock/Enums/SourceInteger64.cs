@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Audio.OpenAL.Extensions.SOFT.DeviceClock
+namespace OpenTK.Audio.OpenAL
 {
     public enum SourceInteger64
     {
