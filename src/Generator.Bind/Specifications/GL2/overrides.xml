@@ -1598,6 +1598,18 @@
       </param>
     </function>
 
+    <function name="GetShadingRateImagePalette" extension="NV">
+      <param name="rate">
+        <type>NvShadingRateImage</type>
+      </param>
+    </function>
+
+    <function name="GetShadingRateSampleLocation" extension="NV">
+      <param name="rate">
+        <type>NvShadingRateImage</type>
+      </param>
+    </function>
+
     <function name="GetTrackMatrix" extension="NV">
       <param name="target">
         <type>AssemblyProgramTargetArb</type>
@@ -1634,6 +1646,24 @@
     <function name="ProgramParameters4" extension="NV">
       <param name="target">
         <type>AssemblyProgramTargetArb</type>
+      </param>
+    </function>
+
+    <function name="ShadingRateImagePalette" extension="NV">
+      <param name="rates">
+        <type>NvShadingRateImage</type>
+      </param>
+    </function>
+
+    <function name="ShadingRateSampleOrder" extension="NV">
+      <param name="order">
+        <type>NvShadingRateImage</type>
+      </param>
+    </function>
+
+    <function name="ShadingRateSampleOrderCustom" extension="NV">
+      <param name="rate">
+        <type>NvShadingRateImage</type>
       </param>
     </function>
 
