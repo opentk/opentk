@@ -883,18 +883,15 @@ namespace OpenTK.Windowing.Desktop
 
             if (settings.WindowState == WindowState.Fullscreen && _isVisible)
             {
-                // We are going into fullscreen so there will be no previous client size or window location.
-                // We set these so that if we go out of fullscreen we won't pass (0,0) as the new location and size.
-                // - Noggin_bops 2023-06-08
-                ClientSize = _cachedWindowClientSize;
-                _location = _cachedWindowLocation;
-
                 _windowState = WindowState.Fullscreen;
                 WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
             }
             else
             {
                 WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
+
+                // If we are starting the window maximized or minimized we need to set that here.
+                WindowState = settings.WindowState;
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
@@ -931,14 +928,6 @@ namespace OpenTK.Windowing.Desktop
             if (settings.StartFocused)
             {
                 Focus();
-            }
-
-            // Setting WindowState to e.g. Normal while the
-            // window is hidden will show the window
-            // So if we don't set WindowState when StartVisible is false.
-            if (settings.StartVisible)
-            {
-                WindowState = settings.WindowState;
             }
 
             IsEventDriven = settings.IsEventDriven;
