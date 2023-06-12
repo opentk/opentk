@@ -9,7 +9,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using static OpenTK.Core.MarshalUtility;
 using static OpenTK.Windowing.GraphicsLibraryFramework.GLFWNative;
 
 namespace OpenTK.Windowing.GraphicsLibraryFramework
