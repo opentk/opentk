@@ -1343,7 +1343,7 @@ namespace OpenTK.Windowing.Desktop
 
                 for (var i = 0; i < count; i++)
                 {
-                    arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
+                    arrayOfPaths[i] = Marshal.PtrToStringUTF8((IntPtr)paths[i]);
                 }
 
                 OnFileDrop(new FileDropEventArgs(arrayOfPaths));
