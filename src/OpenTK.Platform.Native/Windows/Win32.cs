@@ -1107,6 +1107,23 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AddClipboardFormatListener(IntPtr /* HWND */ hwnd);
+
+        internal struct WINDOWPLACEMENT
+        {
+            public uint length;
+            public WPF flags;
+            public ShowWindowCommands showCmd;
+            public POINT ptMinPosition;
+            public POINT ptMaxPosition;
+            public RECT rcNormalPosition;
+            public RECT rcDevice;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool SetWindowPlacement(IntPtr /* HWND */ hWnd, in WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetWindowPlacement(IntPtr /* HWND */ hWnd, ref WINDOWPLACEMENT lpwndpl);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

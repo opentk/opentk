@@ -325,15 +325,15 @@ namespace LocalTestProject
             windowComp.SetSize(handle, width, height);
             //windowComp.SetPosition(handle, 100, 100);
 
-            windowComp.SetBorderStyle(handle, WindowStyle.Borderless);
-            WindowStyle border = windowComp.GetBorderStyle(handle);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.Borderless);
+            WindowBorderStyle border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowStyle.FixedBorder);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowStyle.ResizableBorder);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.ResizableBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
         }
@@ -435,7 +435,23 @@ namespace LocalTestProject
                 if (keyDown.IsRepeat == false)
                     vks.Add(keyDown.Scancode);
 
-                if (keyDown.Key == Key.C)
+                if (keyDown.Key == Key.F11)
+                {
+                    if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    {
+                        windowComp.SetMode(keyDown.Window, WindowMode.Normal);
+                    }
+                    else
+                    {
+                        windowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
+                    }
+                }
+                else if (keyDown.Key == Key.M)
+                {
+                    windowComp.GetFullscreenDisplay(keyDown.Window, out var display);
+                    Console.WriteLine($"Current fullscreen display: {(display != null ? dispComp.GetName(display) : "null")}");
+                }
+                else if (keyDown.Key == Key.C)
                 {
                     clipComp.SetClipboardText("Copy");
                 }
@@ -629,7 +645,7 @@ namespace LocalTestProject
                     var style = windowComp.GetBorderStyle(WindowHandle);
                     Console.WriteLine($"Before: {style}");
                     style += 1;
-                    style = (WindowStyle)((int)style % 4);
+                    style = (WindowBorderStyle)((int)style % 4);
 
                     windowComp.SetBorderStyle(WindowHandle, style);
 

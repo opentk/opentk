@@ -62,7 +62,7 @@ namespace OpenTK.Platform.Native.SDL
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public IReadOnlyList<WindowStyle> SupportedStyles => throw new NotImplementedException();
+        public IReadOnlyList<WindowBorderStyle> SupportedStyles => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => throw new NotImplementedException();
@@ -739,7 +739,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public WindowStyle GetBorderStyle(WindowHandle handle)
+        public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
@@ -750,15 +750,15 @@ namespace OpenTK.Platform.Native.SDL
 
             if (hasBorder && resizable)
             {
-                return WindowStyle.ResizableBorder;
+                return WindowBorderStyle.ResizableBorder;
             }
             else if (hasBorder && resizable == false)
             {
-                return WindowStyle.FixedBorder;
+                return WindowBorderStyle.FixedBorder;
             }
             else if (hasBorder == false)
             {
-                return WindowStyle.Borderless;
+                return WindowBorderStyle.Borderless;
             }
 
             // FIXME: Toolbox windows.
@@ -766,29 +766,29 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void SetBorderStyle(WindowHandle handle, WindowStyle style)
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
             switch (style)
             {
-                case WindowStyle.Borderless:
+                case WindowBorderStyle.Borderless:
                     SDL_SetWindowBordered(window.Window, 0);
                     // FIXME: Maybe this borderless should not be resizable?
                     SDL_SetWindowResizable(window.Window, 1);
                     break;
-                case WindowStyle.FixedBorder:
+                case WindowBorderStyle.FixedBorder:
                     SDL_SetWindowBordered(window.Window, 1);
                     SDL_SetWindowResizable(window.Window, 0);
                     break;
-                case WindowStyle.ResizableBorder:
+                case WindowBorderStyle.ResizableBorder:
                     SDL_SetWindowBordered(window.Window, 1);
                     SDL_SetWindowResizable(window.Window, 1);
                     break;
-                case WindowStyle.ToolBox:
+                case WindowBorderStyle.ToolBox:
                     throw new NotImplementedException();
                 default:
-                    throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowStyle));
+                    throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowBorderStyle));
             }
         }
 

@@ -4,6 +4,7 @@ using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -139,7 +140,7 @@ namespace OpenTK.Platform.Native.Windows
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public IReadOnlyList<WindowStyle> SupportedStyles => _SupportedStyles;
+        public IReadOnlyList<WindowBorderStyle> SupportedStyles => _SupportedStyles;
 
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => _SupportedModes;
@@ -634,6 +635,12 @@ namespace OpenTK.Platform.Native.Windows
                             // We don't have the window in our dictionary, we can't do anything.
                             // This message will be sent during the call to CreateWindowEx, and
                             // at that time we don't have the hwnd pointer nor the HWND object setup.
+                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                        }
+
+                        // If the window is (going) fullscreen we don't want to set the a min or max size
+                        if (h.FullscreenMonitor != IntPtr.Zero)
+                        {
                             return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                         }
 
@@ -1344,6 +1351,12 @@ namespace OpenTK.Platform.Native.Windows
             // and ToInt32 is going to throw in that case
             WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
+            // FIXME: Should we check for this while the window is fullscreen?
+            if (hwnd.FullscreenMonitor != IntPtr.Zero)
+            {
+                return WindowMode.WindowedFullscreen;
+            }
+
             if (style.HasFlag(WindowStyles.Visible) == false)
             {
                 return WindowMode.Hidden;
@@ -1375,10 +1388,33 @@ namespace OpenTK.Platform.Native.Windows
         };
 
         /// <inheritdoc/>
+        /// 
+        /// FIXME: Maybe move this remark to the interface documentation?
+        /// <remarks>
+        /// Setting <see cref="WindowMode.WindowedFullscreen"/> or <see cref="WindowMode.ExclusiveFullscreen"/>
+        /// will make the window fullscreen in the nearest monitor to the window location.
+        /// Use <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?, bool)"/> to explicitly set the monitor.
+        /// </remarks>
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             HWND hwnd = handle.As<HWND>(this);
 
+            // FIXME: Restore the window position if we are going out of fullscreen.
+            if (hwnd.FullscreenMonitor != IntPtr.Zero)
+            {
+                if (mode != WindowMode.WindowedFullscreen || mode != WindowMode.ExclusiveFullscreen)
+                {
+                    hwnd.FullscreenMonitor = IntPtr.Zero;
+                    // FIXME: When going from maximized to fullscreen to maximized the max bounds will not be respected by SetWindowPlacement.
+                    // - 2023-06-13 Noggin_bops
+                    Win32.SetWindowPlacement(hwnd.HWnd, hwnd.PreviousPlacement);
+                    hwnd.PreviousPlacement = default;
+
+                    // FIXME: Maybe do this only when the window needs to get it's borders back.
+                    SetBorderStyle(hwnd, hwnd.PreviousBorderStyle);
+                }
+            }
+            
             // FIXME: Handle ShowWindowCommands.ShowMinimized?
             switch (mode)
             {
@@ -1389,14 +1425,40 @@ namespace OpenTK.Platform.Native.Windows
                     Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.Minimize);
                     break;
                 case WindowMode.Normal:
-                    // FIXME: Use ShowWindowCommands.Show?
                     Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.Normal);
                     break;
                 case WindowMode.Maximized:
                     Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.Maximize);
                     break;
                 case WindowMode.WindowedFullscreen:
-                    throw new NotImplementedException("Windowed fullscreen is not implemented yet");
+                    unsafe {
+                        IntPtr monitor = Win32.MonitorFromWindow(hwnd.HWnd, MonitorDefaultTo.Nearest);
+                        Win32.MONITORINFO info = default;
+                        info.cbSize = (uint)sizeof(Win32.MONITORINFO);
+                        bool success = Win32.GetMonitorInfo(monitor, ref info);
+                        if (success == false) throw new Win32Exception();
+
+                        // Save the previous window placement so we can restore it later.
+                        Win32.WINDOWPLACEMENT placement = default;
+                        unsafe { placement.length = (uint)sizeof(Win32.WINDOWPLACEMENT); }
+                        Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
+                        hwnd.PreviousPlacement = placement;
+                        hwnd.FullscreenMonitor = monitor;
+                        hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
+
+                        // FIXME: Maybe we should do this with SetBorderStyle to be consistent with how we restore the style later?
+                        WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
+                        Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr( (int)(style & ~WindowStyles.OverlappedWindow) ));
+
+                        success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero,
+                            info.rcMonitor.left,
+                            info.rcMonitor.top,
+                            info.rcMonitor.right - info.rcMonitor.left,
+                            info.rcMonitor.bottom - info.rcMonitor.top,
+                            SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.FrameChanged);
+                        if (success == false) throw new Win32Exception();
+                    }
+                    break;
                 case WindowMode.ExclusiveFullscreen:
                     throw new NotImplementedException("Exclusive fullscreen is not implemented yet");
                 default:
@@ -1404,8 +1466,74 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display, bool exclusiveFullscreen)
+        {
+            HWND hwnd = window.As<HWND>(this);
+
+            if (exclusiveFullscreen) throw new NotSupportedException("The win32 backend doesn't support exclusive fullscreen yet.");
+
+            Win32.MONITORINFO info = default;
+            unsafe { info.cbSize = (uint)sizeof(Win32.MONITORINFO); }
+
+            IntPtr monitor;
+            if (display != null)
+            {
+                HMonitor hmonitor = display.As<HMonitor>(this);
+                monitor = hmonitor.Monitor;
+            }
+            else
+            {
+                monitor = Win32.MonitorFromWindow(hwnd.HWnd, MonitorDefaultTo.Nearest);
+            }
+
+            if (Win32.GetMonitorInfo(monitor, ref info))
+            {
+                // Save the previous window placement so we can restore it later.
+                Win32.WINDOWPLACEMENT placement = default;
+                unsafe { placement.length = (uint)sizeof(Win32.WINDOWPLACEMENT); }
+                Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
+                hwnd.PreviousPlacement = placement;
+                hwnd.FullscreenMonitor = monitor;
+                hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
+
+                // FIXME: check if we need to remove the window decorations.
+                WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
+                Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));
+
+                bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero,
+                        info.rcMonitor.left,
+                        info.rcMonitor.top,
+                        info.rcMonitor.right - info.rcMonitor.left,
+                        info.rcMonitor.bottom - info.rcMonitor.top,
+                        // FIXME: Only set FrameChanged if we've disabled decorations?
+                        SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.FrameChanged);
+                if (success == false) throw new Win32Exception();
+            }
+            else
+            {
+                // FIXME: Can this even happen?
+                Logger?.LogError($"Could not get monitor info from monitor {monitor} ('{display?.As<HMonitor>(this).Name ?? "nearest monitor"}').");
+            }
+        }
+
+        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        {
+            HWND hwnd = window.As<HWND>(this);
+            if (hwnd.FullscreenMonitor != IntPtr.Zero)
+            {
+                display = DisplayComponent.FindMonitor(hwnd.FullscreenMonitor);
+                if (display == null) Logger?.LogWarning($"Could not find display handle for the windows fullscreen monitor: {hwnd.FullscreenMonitor}");
+                return display != null;
+            }
+            else
+            {
+                display = default;
+                return false;
+            }
+        }
+
         /// <inheritdoc/>
-        public WindowStyle GetBorderStyle(WindowHandle handle)
+        public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -1419,25 +1547,25 @@ namespace OpenTK.Platform.Native.Windows
 
             if (styleEx.HasFlag(WindowStylesEx.ToolWindow))
             {
-                return WindowStyle.ToolBox;
+                return WindowBorderStyle.ToolBox;
             }
 
             // FIXME: Better way of checking these!!
             if (style.HasFlag(WindowStyles.OverlappedWindow & ~WindowStyles.ThickFrame) &&
                 style.HasFlag(WindowStyles.ThickFrame) == false)
             {
-                return WindowStyle.FixedBorder;
+                return WindowBorderStyle.FixedBorder;
             }
             else if (style.HasFlag(WindowStyles.OverlappedWindow & ~(WindowStyles.Caption | WindowStyles.Border | WindowStyles.ThickFrame)) &&
                      style.HasFlag(WindowStyles.Caption) == false &&
                      style.HasFlag(WindowStyles.Border) == false &&
                      style.HasFlag(WindowStyles.ThickFrame) == false)
             {
-                return WindowStyle.Borderless;
+                return WindowBorderStyle.Borderless;
             }
             else if (style.HasFlag(WindowStyles.OverlappedWindow))
             {
-                return WindowStyle.ResizableBorder;
+                return WindowBorderStyle.ResizableBorder;
             }
             else
             {
@@ -1445,16 +1573,16 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        private static readonly WindowStyle[] _SupportedStyles = new[]
+        private static readonly WindowBorderStyle[] _SupportedStyles = new[]
         {
-            WindowStyle.Borderless,
-            WindowStyle.FixedBorder,
-            WindowStyle.ResizableBorder,
-            WindowStyle.ToolBox,
+            WindowBorderStyle.Borderless,
+            WindowBorderStyle.FixedBorder,
+            WindowBorderStyle.ResizableBorder,
+            WindowBorderStyle.ToolBox,
         };
 
         /// <inheritdoc/>
-        public unsafe void SetBorderStyle(WindowHandle handle, WindowStyle style)
+        public unsafe void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             HWND hwnd = handle.As<HWND>(this);
 
@@ -1472,7 +1600,7 @@ namespace OpenTK.Platform.Native.Windows
 
             switch (style)
             {
-                case WindowStyle.Borderless:
+                case WindowBorderStyle.Borderless:
                     // FIXME: Get rid of the wait cursor.
                     windowStyle |= WindowStyles.OverlappedWindow;
                     windowStyle &= ~WindowStyles.Caption;
@@ -1481,18 +1609,18 @@ namespace OpenTK.Platform.Native.Windows
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
-                case WindowStyle.FixedBorder:
+                case WindowBorderStyle.FixedBorder:
                     windowStyle |= WindowStyles.OverlappedWindow;
                     windowStyle &= ~WindowStyles.ThickFrame;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
-                case WindowStyle.ResizableBorder:
+                case WindowBorderStyle.ResizableBorder:
                     windowStyle |= WindowStyles.OverlappedWindow;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.ExStyle, new IntPtr((uint)windowStyleEx));
                     break;
-                case WindowStyle.ToolBox:
+                case WindowBorderStyle.ToolBox:
                     windowStyle |= WindowStyles.OverlappedWindow;
                     windowStyleEx |= WindowStylesEx.ToolWindow;
                     Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((uint)windowStyle));

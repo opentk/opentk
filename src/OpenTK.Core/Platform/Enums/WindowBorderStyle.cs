@@ -5,7 +5,7 @@ namespace OpenTK.Core.Platform
     /// <summary>
     /// The window border style.
     /// </summary>
-    public enum WindowStyle
+    public enum WindowBorderStyle
     {
         /// <summary>
         /// Borderless window.

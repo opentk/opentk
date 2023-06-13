@@ -108,7 +108,7 @@ namespace OpenTK.Platform.Native.Windows
         };
 
         // FIXME: This should not be needed!
-        public static ClipboardFormat GetClipboardFormatInternal(ILogger? logger)
+        internal static ClipboardFormat GetClipboardFormatInternal(ILogger? logger)
         {
             bool success = Win32.OpenClipboard(WindowComponent.HelperHWnd);
             if (success == false)

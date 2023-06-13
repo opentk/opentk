@@ -316,7 +316,7 @@ namespace OpenTK.Core.Platform
         IReadOnlyList<PlatformEventType> IWindowComponent.SupportedEvents => _windowComponent!.SupportedEvents;
 
         /// <inheritdoc/>
-        IReadOnlyList<WindowStyle> IWindowComponent.SupportedStyles => _windowComponent!.SupportedStyles;
+        IReadOnlyList<WindowBorderStyle> IWindowComponent.SupportedStyles => _windowComponent!.SupportedStyles;
 
         /// <inheritdoc/>
         IReadOnlyList<WindowMode> IWindowComponent.SupportedModes => _windowComponent!.SupportedModes;
@@ -460,13 +460,13 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        WindowStyle IWindowComponent.GetBorderStyle(WindowHandle handle)
+        WindowBorderStyle IWindowComponent.GetBorderStyle(WindowHandle handle)
         {
             return _windowComponent!.GetBorderStyle(handle);
         }
 
         /// <inheritdoc/>
-        void IWindowComponent.SetBorderStyle(WindowHandle handle, WindowStyle style)
+        void IWindowComponent.SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             _windowComponent!.SetBorderStyle(handle, style);
         }

@@ -51,7 +51,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Read-only list of window styles the driver supports.
         /// </summary>
-        IReadOnlyList<WindowStyle> SupportedStyles { get; }
+        IReadOnlyList<WindowBorderStyle> SupportedStyles { get; }
 
         /// <summary>
         /// Read-only list of window modes the driver supports.
@@ -266,7 +266,7 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to window.</param>
         /// <returns>The border style of the window.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        WindowStyle GetBorderStyle(WindowHandle handle);
+        WindowBorderStyle GetBorderStyle(WindowHandle handle);
 
         /// <summary>
         /// Set the border style of a window.
@@ -278,7 +278,7 @@ namespace OpenTK.Core.Platform
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support the value set by <paramref name="style"/>. See <see cref="SupportedStyles"/>.
         /// </exception>
-        void SetBorderStyle(WindowHandle handle, WindowStyle style);
+        void SetBorderStyle(WindowHandle handle, WindowBorderStyle style);
 
         /// <summary>
         /// Set if the window is an always on top window or not.

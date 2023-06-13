@@ -259,11 +259,11 @@ namespace OpenTK.Platform.Tests
 
                     if (fixedBorder)
                     {
-                        windowComp.SetBorderStyle(Window, WindowStyle.ResizableBorder);
+                        windowComp.SetBorderStyle(Window, WindowBorderStyle.ResizableBorder);
                     }
                     else
                     {
-                        windowComp.SetBorderStyle(Window, WindowStyle.FixedBorder);
+                        windowComp.SetBorderStyle(Window, WindowBorderStyle.FixedBorder);
                     }
 
                     fixedBorder = !fixedBorder;

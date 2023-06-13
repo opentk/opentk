@@ -184,7 +184,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public bool CanCaptureCursor => true;
 
-        private static List<WindowStyle> s_emptyStyleList = new List<WindowStyle>();
+        private static List<WindowBorderStyle> s_emptyStyleList = new List<WindowBorderStyle>();
 
         private static readonly WindowMode[] _SupportedModes = new[]
         {
@@ -199,7 +199,7 @@ namespace OpenTK.Platform.Native.X11
         public IReadOnlyList<PlatformEventType> SupportedEvents { get => throw new NotImplementedException(); }
 
         /// <inheritdoc />
-        public IReadOnlyList<WindowStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
+        public IReadOnlyList<WindowBorderStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
 
         /// <inheritdoc />
         public IReadOnlyList<WindowMode> SupportedModes { get; private set; } = _SupportedModes;
@@ -1352,19 +1352,19 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public WindowStyle GetBorderStyle(WindowHandle handle)
+        public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
-        public void SetBorderStyle(WindowHandle handle, WindowStyle style)
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             switch (style)
             {
-                case WindowStyle.ResizableBorder:
+                case WindowBorderStyle.ResizableBorder:
                 unsafe {
                     XSizeHints* hints = XAllocSizeHints();
 
@@ -1399,11 +1399,11 @@ namespace OpenTK.Platform.Native.X11
 
                     break;
                 }
-                case WindowStyle.Borderless:
+                case WindowBorderStyle.Borderless:
                 {
                     throw new NotImplementedException();
                 }
-                case WindowStyle.FixedBorder:
+                case WindowBorderStyle.FixedBorder:
                 // Set the max and min height to the same.
                 // FIXME: Figure out if you can still resize the window programatically.
 

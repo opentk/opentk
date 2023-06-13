@@ -47,6 +47,10 @@ namespace OpenTK.Platform.Native.Windows
         public string? IMEComposition { get; set; }
         public int IMECursor { get; set; }
 
+        public IntPtr FullscreenMonitor { get; set; }
+        public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }
+        public WindowBorderStyle PreviousBorderStyle { get; set; } = WindowBorderStyle.ResizableBorder;
+
         public HWND(IntPtr hWnd, GraphicsApiHints hints)
         {
             HWnd = hWnd;

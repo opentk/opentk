@@ -1210,7 +1210,7 @@ namespace OpenTK.Platform.Native.Windows
         UserPresent = 0x00000004,
     }
 
-    internal enum ShowWindowCommands
+    internal enum ShowWindowCommands : int
     {
         /// <summary>
         /// Hides the window and activates another window.
@@ -6092,5 +6092,30 @@ namespace OpenTK.Platform.Native.Windows
         CONTEXT_LAYER_PLANE_ARB = 0x2093,
         CONTEXT_FLAGS_ARB = 0x2094,
         CONTEXT_PROFILE_MASK_ARB = 0x9126,
+    }
+
+    internal enum WPF : uint
+    {
+        /// <summary>
+        /// If the calling thread and the thread that owns the window are attached to different input queues,
+        /// the system posts the request to the thread that owns the window.
+        /// This prevents the calling thread from blocking its execution while other threads process the request.
+        /// </summary>
+        AsyncWindowPlacement = 0x0004,
+
+        /// <summary>
+        /// The restored window will be maximized, regardless of whether it was maximized before it was minimized.
+        /// This setting is only valid the next time the window is restored.
+        /// It does not change the default restoration behavior.
+        /// This flag is only valid when the SW_SHOWMINIMIZED value is specified for the showCmd member.
+        /// </summary>
+        RestoreToMaximized = 0x0002,
+
+        /// <summary>
+        /// The coordinates of the minimized window may be specified.
+        /// This flag must be specified if the coordinates are set in the ptMinPosition member.
+        /// </summary>
+        SetMinPosition = 0x0001
+
     }
 }
