@@ -127,12 +127,6 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public int GetSupportedVideoModeCount(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);

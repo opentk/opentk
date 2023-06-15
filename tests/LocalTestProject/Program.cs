@@ -437,14 +437,17 @@ namespace LocalTestProject
 
                 if (keyDown.Key == Key.F11)
                 {
-                    if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    VideoMode mode = new VideoMode(1920, 1080, 60, 1, 96);
+
+                    windowComp.SetFullscreenDisplay(keyDown.Window, windowComp.GetDisplay(keyDown.Window), mode);
+                    /*if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
                     {
                         windowComp.SetMode(keyDown.Window, WindowMode.Normal);
                     }
                     else
                     {
                         windowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
-                    }
+                    }*/
                 }
                 else if (keyDown.Key == Key.M)
                 {

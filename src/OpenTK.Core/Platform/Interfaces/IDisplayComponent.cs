@@ -76,16 +76,6 @@ namespace OpenTK.Core.Platform
         void GetVideoMode(DisplayHandle handle, out VideoMode mode);
 
         /// <summary>
-        /// Set the active video mode of a display.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <param name="mode">Target video mode.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mode"/> is unsupported by display.</exception>
-        /// <exception cref="PalNotImplementedException">The driver does not support this action. See <see cref="CanSetVideoMode"/>.</exception>
-        void SetVideoMode(DisplayHandle handle, in VideoMode mode);
-
-        /// <summary>
         /// Get the number of video modes the display supports.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>

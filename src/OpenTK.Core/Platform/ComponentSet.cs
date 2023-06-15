@@ -738,12 +738,6 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IDisplayComponent.SetVideoMode(DisplayHandle handle, in VideoMode mode)
-        {
-            _displayComponent!.SetVideoMode(handle, in mode);
-        }
-
-        /// <inheritdoc/>
         int IDisplayComponent.GetSupportedVideoModeCount(DisplayHandle handle)
         {
             return _displayComponent!.GetSupportedVideoModeCount(handle);

@@ -307,12 +307,6 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
         public int GetSupportedVideoModeCount(DisplayHandle handle)
         {
             throw new NotImplementedException();

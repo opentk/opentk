@@ -122,7 +122,7 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr Monitor { get; set; }
 
-        public string Name { get; set; }
+        public string DeviceName { get; set; }
 
         public string AdapterName { get; set; }
 

@@ -147,6 +147,35 @@ namespace OpenTK.Platform.Native.Windows
 
         private IntPtr Win32WindowProc(IntPtr hWnd, WM uMsg, UIntPtr wParam, IntPtr lParam)
         {
+            // Filter out helper window messages early.
+            if (hWnd == HelperHWnd)
+            {
+                switch (uMsg)
+                {
+                    case WM.POWERBROADCAST:
+                    {
+                        // We are only interested in the messages sent to the helper window that we registered to get notifications.
+                        // - 2023-03-29 NogginBops
+                        PBT power = (PBT)wParam;
+
+                        if (power == PBT.APMSuspend)
+                        {
+                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
+                        }
+                        else if (power == PBT.APMResumeAutomatic)
+                        {
+                            EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
+                        }
+
+                        return (IntPtr)1;
+                    }
+                    default:
+                    {
+                        return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
+                    }
+                }
+            }
+
             //Console.WriteLine("WinProc " + message + " " + hWnd);
             switch (uMsg)
             {
@@ -879,33 +908,6 @@ namespace OpenTK.Platform.Native.Windows
 
                         return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                     }
-                case WM.POWERBROADCAST:
-                    {
-                        // We are only interested in the messages sent to the helper window that we registered to get notifications.
-                        // FIXME: Do we really care about only getting one suspend/resume event?
-                        // - 2023-03-29 NogginBops
-                        if (hWnd == HelperHWnd)
-                        {
-                            PBT power = (PBT)wParam;
-
-                            Console.WriteLine($"WM_POWERBROADCAST {power} {hWnd} {HelperHWnd}");
-
-                            if (power == PBT.APMSuspend)
-                            {
-                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(true));
-                            }
-                            else if (power == PBT.APMResumeAutomatic)
-                            {
-                                EventQueue.Raise(null, PlatformEventType.PowerStateChange, new PowerStateChangeEventArgs(false));
-                            }
-
-                            return (IntPtr)1;
-                        }
-                        else
-                        {
-                            return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
-                        }
-                    }
                 case WM.INPUTLANGCHANGE:
                     {
                         // This might not always work
@@ -1384,7 +1386,8 @@ namespace OpenTK.Platform.Native.Windows
             WindowMode.Hidden,
             WindowMode.Minimized,
             WindowMode.Normal,
-            WindowMode.Maximized
+            WindowMode.Maximized,
+            WindowMode.WindowedFullscreen,
         };
 
         /// <inheritdoc/>
@@ -1466,11 +1469,9 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display, bool exclusiveFullscreen)
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
         {
             HWND hwnd = window.As<HWND>(this);
-
-            if (exclusiveFullscreen) throw new NotSupportedException("The win32 backend doesn't support exclusive fullscreen yet.");
 
             Win32.MONITORINFO info = default;
             unsafe { info.cbSize = (uint)sizeof(Win32.MONITORINFO); }
@@ -1512,7 +1513,69 @@ namespace OpenTK.Platform.Native.Windows
             else
             {
                 // FIXME: Can this even happen?
-                Logger?.LogError($"Could not get monitor info from monitor {monitor} ('{display?.As<HMonitor>(this).Name ?? "nearest monitor"}').");
+                Logger?.LogError($"Could not get monitor info from monitor {monitor} ('{display?.As<HMonitor>(this).DeviceName ?? "nearest monitor"}').");
+            }
+        }
+
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        {
+            HWND hwnd = window.As<HWND>(this);
+            HMonitor hmonitor = display.As<HMonitor>(this);
+
+            // Set the video mode!
+            {
+                // FIXME: When the fullscreen window is closed and other windows are still active the video mode doesn't get reset.
+
+                // FIXME: Set bit-depth??
+
+                // FIXME: What should we do with DPI here? Is there a way to change DPI?
+                // Or do we just pretend that the DPI has changed?
+                Win32.DEVMODE devmode = default;
+                devmode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+                devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
+                devmode.dmPelsWidth = (uint)videoMode.HorizontalResolution;
+                devmode.dmPelsHeight = (uint)videoMode.VerticalResolution;
+                devmode.dmDisplayFrequency = (uint)videoMode.RefreshRate;
+                devmode.dmBitsPerPel = 32;
+
+                // FIXME: I think we might want to only be able to change the video mode while we are going fullscreen?
+                DispChange result = Win32.ChangeDisplaySettingsExW(hmonitor.AdapterName, ref devmode, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
+                if (result != DispChange.Successful)
+                {
+                    Logger?.LogError($"Could not set display mode: {result}");
+                }
+            }
+
+            Win32.MONITORINFO info = default;
+            unsafe { info.cbSize = (uint)sizeof(Win32.MONITORINFO); }
+
+            if (Win32.GetMonitorInfo(hmonitor.Monitor, ref info))
+            {
+                // Save the previous window placement so we can restore it later.
+                Win32.WINDOWPLACEMENT placement = default;
+                unsafe { placement.length = (uint)sizeof(Win32.WINDOWPLACEMENT); }
+                Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
+                hwnd.PreviousPlacement = placement;
+                hwnd.FullscreenMonitor = hmonitor.Monitor;
+                hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
+
+                // FIXME: check if we need to remove the window decorations.
+                WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
+                Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));
+
+                bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero,
+                        info.rcMonitor.left,
+                        info.rcMonitor.top,
+                        info.rcMonitor.right - info.rcMonitor.left,
+                        info.rcMonitor.bottom - info.rcMonitor.top,
+                        // FIXME: Only set FrameChanged if we've disabled decorations?
+                        SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.FrameChanged);
+                if (success == false) throw new Win32Exception();
+            }
+            else
+            {
+                // FIXME: Can this even happen?
+                Logger?.LogError($"Could not get monitor info from monitor '{hmonitor.DeviceName}'.");
             }
         }
 

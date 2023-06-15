@@ -2,6 +2,8 @@ using System;
 
 namespace OpenTK.Core.Platform
 {
+    // FIXME: Is there a reason for this struct to be immutable?
+
     /// <summary>
     /// This immutable structure represents display video modes.
     /// </summary>

@@ -136,7 +136,7 @@ namespace OpenTK.Platform.Native.Windows
                     HMonitor? info = null;
                     foreach (HMonitor display in _displays)
                     {
-                        if (monitor.DeviceName == display.Name)
+                        if (monitor.DeviceName == display.DeviceName)
                         {
                             // This monitor already exists.
                             removedDisplays.Remove(display);
@@ -151,7 +151,7 @@ namespace OpenTK.Platform.Native.Windows
                         info = new HMonitor()
                         {
                             Monitor = hMonitor,
-                            Name = monitor.DeviceName,
+                            DeviceName = monitor.DeviceName,
                             AdapterName = adapter.DeviceName,
                             PublicName = monitor.DeviceString,
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
@@ -169,7 +169,7 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         info.Monitor = hMonitor;
 
-                        Debug.Assert(info.Name == monitor.DeviceName);
+                        Debug.Assert(info.DeviceName == monitor.DeviceName);
                         Debug.Assert(info.PublicName == monitor.DeviceString);
 
                         info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
@@ -195,7 +195,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 // FIXME: Add event!
                 EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
-                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
+                Console.WriteLine($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
 
             foreach (HMonitor connected in newDisplays)
@@ -204,7 +204,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 // FIXME: Add event!
                 EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
-                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+                Console.WriteLine($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
             }
 
             HMonitor? primary = null;
@@ -372,7 +372,26 @@ namespace OpenTK.Platform.Native.Windows
         /// <inheritdoc/>
         public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
         {
-            throw new NotImplementedException();
+            HMonitor monitor = handle.As<HMonitor>(this);
+
+            // FIXME: Set bit-depth??
+
+            // FIXME: What should we do with DPI here? Is there a way to change DPI?
+            // Or do we just pretend that the DPI has changed?
+            Win32.DEVMODE devmode = default;
+            devmode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
+            devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
+            devmode.dmPelsWidth = (uint)mode.HorizontalResolution;
+            devmode.dmPelsHeight = (uint)mode.VerticalResolution;
+            devmode.dmDisplayFrequency = (uint)mode.RefreshRate;
+            devmode.dmBitsPerPel = 32;
+
+            // FIXME: I think we might want to only be able to change the video mode while we are going fullscreen?
+            DispChange result = Win32.ChangeDisplaySettingsExW(monitor.AdapterName, ref devmode, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
+            if (result != DispChange.Successful)
+            {
+                Logger?.LogError($"Could not set display mode: {result}");
+            }
         }
 
         /// <inheritdoc/>
