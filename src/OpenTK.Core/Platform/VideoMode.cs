@@ -2,84 +2,56 @@ using System;
 
 namespace OpenTK.Core.Platform
 {
-    // FIXME: Is there a reason for this struct to be immutable?
-
     /// <summary>
-    /// This immutable structure represents display video modes.
+    /// This structure represents a display video mode.
     /// </summary>
     public struct VideoMode
     {
         /// <summary>
-        /// Horizontal resolution of this display mode.
+        /// Width in pixels of the video mode.
         /// </summary>
-        public int HorizontalResolution { get; }
+        public int Width;
 
         /// <summary>
-        /// Vertical resolution of this display mode.
+        /// Height in pixels of the video mode.
         /// </summary>
-        public int VerticalResolution { get; }
+        public int Height;
 
         /// <summary>
-        /// Display refresh rate of this video mode.
+        /// Refresh rate in Hz of the video mode.
         /// </summary>
-        public float RefreshRate { get; }
+        public float RefreshRate;
 
         /// <summary>
-        /// Display scale in this video mode.
+        /// Number of bits used to represent each color in  the video mode.
         /// </summary>
-        public float Scale { get; }
-
-        /// <summary>
-        /// Display pixel density in this video mode.
-        /// </summary>
-        public float Dpi { get; }
+        // FIXME: What practical usage does this have?
+        // Is this something we can reliably use?
+        // Maybe we'll want to change this in favor of a format enum like SDL has..?
+        public int BitsPerPixel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VideoMode"/> struct.
         /// </summary>
-        /// <param name="horizontalResolution">Horizontal resolution in pixels.</param>
-        /// <param name="verticalResolution">Vertical resolution pixels.</param>
-        /// <param name="refreshRate">Refresh Rate in Hz.</param>
-        /// <param name="scale">Display scale.</param>
-        /// <param name="dpi">Display pixel density in DPI.</param>
-        public VideoMode(
-                int horizontalResolution,
-                int verticalResolution,
-                float refreshRate,
-                float scale,
-                float dpi)
+        /// <param name="width">The width of the video mode.</param>
+        /// <param name="height">The height of the video mode.</param>
+        /// <param name="refreshRate">The refresh rate of the video mode.</param>
+        /// <param name="bitsPerPixel">The color depth of the video mode.</param>
+        public VideoMode(int width, int height, float refreshRate, int bitsPerPixel)
         {
-            /**/ if (horizontalResolution <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(horizontalResolution), "Must be greater than zero.");
-            }
-            else if (verticalResolution <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(verticalResolution), "Must be greater than zero.");
-            }
-            else if (refreshRate <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(refreshRate), "Must be greater than zero");
-            }
-            else if (scale <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(scale), "Must be greater than zero.");
-            }
-            else if (dpi <= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(dpi), "Must be greater than zero.");
-            }
-
-            HorizontalResolution = horizontalResolution;
-            VerticalResolution = verticalResolution;
+            Width = width;
+            Height = height;
             RefreshRate = refreshRate;
-            Scale = scale;
-            Dpi = dpi;
+            BitsPerPixel = bitsPerPixel;
         }
 
+        /// <summary>
+        /// Returns the video mode as a string with the format "{Width}x{Height}@{RefreshRate} ({RedBits}:{GreenBits}:{BlueBits})".
+        /// </summary>
+        /// <returns>The string representation of the video mode.</returns>
         public override string ToString()
         {
-            return $"{HorizontalResolution}x{VerticalResolution}@{RefreshRate} Scale: {Scale}, DPI: {Dpi}";
+            return $"{Width}x{Height}@{RefreshRate} ({BitsPerPixel}bpp)";
         }
     }
 }

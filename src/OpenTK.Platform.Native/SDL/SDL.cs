@@ -258,17 +258,23 @@ namespace OpenTK.Platform.Native.SDL
 
         internal unsafe struct SDL_DisplayMode
         {
-            /**< pixel format */
-            public uint format;
-            /**< width, in screen coordinates */
+            /** pixel format */
+            public SDL_PixelFormatEnum format;
+            /** width, in screen coordinates */
             public int w;
-            /**< height, in screen coordinates */
+            /** height, in screen coordinates */
             public int h;
-            /**< refresh rate (or zero for unspecified) */
+            /** refresh rate (or zero for unspecified) */
             public int refresh_rate;
-            /**< driver-specific data, initialize to 0 */
+            /** driver-specific data, initialize to 0 */
             public void* driverdata;
         }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int SDL_SetWindowFullscreen(SDL_WindowPtr window, SDL_FullscreenMode flags);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int SDL_SetWindowDisplayMode(SDL_WindowPtr window, in SDL_DisplayMode mode);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int SDL_GetDisplayMode(int displayIndex, int modeIndex, out SDL_DisplayMode mode);
@@ -281,6 +287,9 @@ namespace OpenTK.Platform.Native.SDL
             char* ptr = SDL_GetDisplayName_internal(displayIndex);
             return Marshal.PtrToStringUTF8((IntPtr)ptr);
         }
+
+        // #define SDL_BITSPERPIXEL(X) (((X) >> 8) & 0xFF)
+        internal static uint SDL_BITSPERPIXEL(SDL_PixelFormatEnum x) => (((uint)x >> 8) & 0xFF);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int SDL_GetCurrentDisplayMode(int displayIndex, out SDL_DisplayMode mode);
@@ -382,29 +391,29 @@ namespace OpenTK.Platform.Native.SDL
 
         internal unsafe struct SDL_Surface
         {
-            public uint flags;                 /**< Read-only */
-            public SDL_PixelFormat* format;    /**< Read-only */
-            public int w, h;                   /**< Read-only */
-            public int pitch;                  /**< Read-only */
-            public void* pixels;               /**< Read-write */
+            public uint flags;                 /** Read-only */
+            public SDL_PixelFormat* format;    /** Read-only */
+            public int w, h;                   /** Read-only */
+            public int pitch;                  /** Read-only */
+            public void* pixels;               /** Read-write */
 
             /** Application data associated with the surface */
-            public void* userdata;             /**< Read-write */
+            public void* userdata;             /** Read-write */
 
             /** information needed for surfaces requiring locks */
-            public int locked;                 /**< Read-only */
+            public int locked;                 /** Read-only */
 
             /** list of BlitMap that hold a reference to this surface */
-            public void* list_blitmap;         /**< Private */
+            public void* list_blitmap;         /** Private */
 
             /** clipping information */
-            public SDL_Rect clip_rect;         /**< Read-only */
+            public SDL_Rect clip_rect;         /** Read-only */
 
             /** info for fast blit mapping to other surfaces */
-            public void* map;                  /**< Private */
+            public void* map;                  /** Private */
 
             /** Reference count -- used when freeing surface */
-            public int refcount;               /**< Read-mostly */
+            public int refcount;               /** Read-mostly */
         }
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
@@ -1349,6 +1350,24 @@ namespace OpenTK.Platform.Native.X11
             }
 
             XFlush(X11.Display);
+        }
+
+        /// <inheritdoc />
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        {
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc />

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 
@@ -96,6 +95,11 @@ namespace OpenTK.Core.Platform
                     names.Add(_shellComponent.Name);
                 }
 
+                if (_joystickComponent is not null)
+                {
+                    names.Add(_joystickComponent.Name);
+                }
+
                 return $"Component Set [{string.Join(", ", names)}]";
             }
         }
@@ -109,7 +113,8 @@ namespace OpenTK.Core.Platform
                                          (_openGLComponent is not null ? PalComponents.OpenGL : 0) |
                                          (_surfaceComponent is not null ? PalComponents.Surface : 0) |
                                          (_windowComponent is not null ? PalComponents.Window : 0) |
-                                         (_shellComponent is not null ? PalComponents.Shell : 0);
+                                         (_shellComponent is not null ? PalComponents.Shell : 0) |
+                                         (_joystickComponent is not null ? PalComponents.Joystick : 0);
 
         private ILogger? _logger;
 
@@ -143,6 +148,8 @@ namespace OpenTK.Core.Platform
 
                 if (_shellComponent != null) _shellComponent.Logger = _logger;
 
+                if (_joystickComponent != null) _joystickComponent.Logger = _logger;
+
 #pragma warning restore SA1503 // Braces should not be omitted
             }
         }
@@ -170,6 +177,7 @@ namespace OpenTK.Core.Platform
                 PalComponents.OpenGL => _openGLComponent,
                 PalComponents.Clipboard => _clipboardComponent,
                 PalComponents.Shell => _shellComponent,
+                PalComponents.Joystick => _joystickComponent,
                 _ => throw new ArgumentException("Components are a bitfield or out of range.", nameof(which))
             };
             set
@@ -218,6 +226,10 @@ namespace OpenTK.Core.Platform
                 if ((which & PalComponents.Shell) != 0)
                 {
                     _shellComponent = value as IShellComponent;
+                }
+                if ((which & PalComponents.Joystick) != 0)
+                {
+                    _joystickComponent = value as IJoystickComponent;
                 }
             }
         }
@@ -457,6 +469,24 @@ namespace OpenTK.Core.Platform
         void IWindowComponent.SetMode(WindowHandle handle, WindowMode mode)
         {
             _windowComponent!.SetMode(handle, mode);
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        {
+            _windowComponent!.SetFullscreenDisplay(window, display);
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        {
+            _windowComponent!.SetFullscreenDisplay(window, display, videoMode);
+        }
+
+        /// <inheritdoc/>
+        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        {
+            return _windowComponent!.GetFullscreenDisplay(window, out display);
         }
 
         /// <inheritdoc/>
@@ -786,7 +816,7 @@ namespace OpenTK.Core.Platform
         bool IKeyboardComponent.SupportsIme => _keyboardComponent!.SupportsIme;
 
         /// <inheritdoc/>
-        string IKeyboardComponent.GetActiveKeyboardLayout(WindowHandle handle)
+        string IKeyboardComponent.GetActiveKeyboardLayout(WindowHandle? handle)
         {
             return _keyboardComponent!.GetActiveKeyboardLayout(handle);
         }

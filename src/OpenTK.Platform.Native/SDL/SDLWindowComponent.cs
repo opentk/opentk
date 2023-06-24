@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -695,13 +697,14 @@ namespace OpenTK.Platform.Native.SDL
             {
                 return WindowMode.Minimized;
             }
-            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN))
-            {
-                return WindowMode.ExclusiveFullscreen;
-            }
+            // We need to check this before SDL_WINDOW_FULLSCREEN because SDL_WINDOW_FULLSCREEN_DESKTOP contains that flag.
             else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP))
             {
                 return WindowMode.WindowedFullscreen;
+            }
+            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN))
+            {
+                return WindowMode.ExclusiveFullscreen;
             }
             else
             {
@@ -713,6 +716,13 @@ namespace OpenTK.Platform.Native.SDL
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
+
+            if ((SDL_GetWindowFlags(window.Window) & SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0 &&
+                (mode != WindowMode.WindowedFullscreen || mode != WindowMode.ExclusiveFullscreen))
+            {
+                // We are going out of fullscreen.
+                SDL_SetWindowFullscreen(window.Window, 0);
+            }
 
             switch (mode)
             {
@@ -730,11 +740,122 @@ namespace OpenTK.Platform.Native.SDL
                     SDL_MaximizeWindow(window.Window);
                     break;
                 case WindowMode.WindowedFullscreen:
-                    throw new NotImplementedException();
+                    SetFullscreenDisplay(window, null);
+                    break;
                 case WindowMode.ExclusiveFullscreen:
-                    throw new NotImplementedException();
+                    {
+                        // FIXME: Can we create the current video mode in a better way?
+                        int result = SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window.Window), out SDL_DisplayMode displayMode);
+                        if (result != 0)
+                        {
+                            string error = SDL_GetError();
+                            throw new PalException(this, $"SDL could not get current display mode: {error}");
+                        }
+                        VideoMode videoMode = new VideoMode(displayMode.w, displayMode.h, displayMode.refresh_rate, (int)SDL_BITSPERPIXEL(displayMode.format));
+                        SetFullscreenDisplay(window, GetDisplay(window), videoMode);
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(WindowMode));
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+
+            SDLDisplay sdlDisplay;
+            if (display != null)
+            {
+                sdlDisplay = display.As<SDLDisplay>(this);
+
+                // We need to move the window to the correct display before making it fullscreen.
+
+                int result = SDL_GetDisplayBounds(sdlDisplay.Index, out SDL_Rect rect);
+                if (result == 0) SDL_SetWindowPosition(sdlWindow.Window, rect.x, rect.y);
+                else Logger?.LogWarning("Could not get display bounds when making window fullscreen. This may cause the window to get fullscreened on the wrong display.");
+                
+                result = SDL_SetWindowFullscreen(sdlWindow.Window, SDL_FullscreenMode.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                if (result != 0)
+                {
+                    string error = SDL_GetError();
+                    throw new PalException(this, $"SDL could not make the window fullscreen: {error}");
+                }
+            }
+            else
+            {
+                // We want to go fullscreen on the current display, so we just do that.
+                int result = SDL_SetWindowFullscreen(sdlWindow.Window, SDL_FullscreenMode.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                if (result != 0)
+                {
+                    string error = SDL_GetError();
+                    throw new PalException(this, $"SDL could not make the window fullscreen: {error}");
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+            SDLDisplay sdlDisplay = display.As<SDLDisplay>(this);
+
+            int result = SDL_GetDisplayBounds(sdlDisplay.Index, out SDL_Rect rect);
+            if (result == 0) SDL_SetWindowPosition(sdlWindow.Window, rect.x, rect.y);
+            else Logger?.LogWarning("Could not get display bounds when making window fullscreen. This may cause the window to get fullscreened on the wrong display.");
+
+            result = SDL_SetWindowFullscreen(sdlWindow.Window, SDL_FullscreenMode.SDL_WINDOW_FULLSCREEN);
+            if (result != 0)
+            {
+                string error = SDL_GetError();
+                throw new PalException(this, $"SDL could not make the window fullscreen: {error}");
+            }
+
+            // FIXME: Go from BitsPerPixel to SDL display mode format enums, how should we do it?
+            // For now we just pick a few arbitrary formats for some color depths in the hope that they are fine.
+            // - 2023-06-24 Noggin_Bops
+            SDL_DisplayMode mode;
+            mode.w = videoMode.Width;
+            mode.h = videoMode.Height;
+            // FIXME: How do we cast the refresh rate to an int?
+            mode.refresh_rate = (int)videoMode.RefreshRate;
+            mode.format = videoMode.BitsPerPixel switch
+            {
+                32 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGBA8888,
+                24 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGB888,
+                16 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGB565,
+                8 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGB332,
+                _ => 0,
+            };
+            if (mode.format == 0)
+            {
+                Logger?.LogWarning($"We only support bit depths of 32, 24, 16, and 8 when running on SDL.");
+                mode.format = SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGBA8888;
+            }
+            unsafe { mode.driverdata = null; }
+            result = SDL_SetWindowDisplayMode(sdlWindow.Window, mode);
+            if (result != 0)
+            {
+                string error = SDL_GetError();
+                throw new PalException(this, $"SDL could not set the display mode: {error}");
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+            SDL_WindowFlags flags = SDL_GetWindowFlags(sdlWindow.Window);
+            if ((flags & SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
+            {
+                display = GetDisplay(window);
+                return true;
+            }
+            else
+            {
+                display = null;
+                return false;
             }
         }
 

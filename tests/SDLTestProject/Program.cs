@@ -276,6 +276,10 @@ void main()
             {
                 WindowComp.Destroy(close.Window);
             }
+            else if (args is WindowResizeEventArgs resize)
+            {
+                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+            }
             else if (args is MouseButtonDownEventArgs mouseDown)
             {
                 if (mouseDown.Button == MouseButton.Button1)
@@ -324,6 +328,21 @@ void main()
             else if (args is KeyDownEventArgs keyDown)
             {
                 Console.WriteLine($"Key down! {keyDown.Key} (scancode: {keyDown.Scancode}){(keyDown.IsRepeat ? " repeat!" : "")}");
+
+                if(keyDown.Key == Key.F11)
+                {
+                    // FIXME: What does bpp=32 compared to bpp=24?
+                    VideoMode mode = new VideoMode(1920, 1080, 144, 32);
+
+                    if (WindowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    {
+                        WindowComp.SetMode(keyDown.Window, WindowMode.Normal);
+                    }
+                    else
+                    {
+                        WindowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
+                    }
+                }
             }
             else if (args is KeyUpEventArgs keyUp)
             {

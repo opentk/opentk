@@ -89,11 +89,8 @@ namespace LocalTestProject
                 dispComp.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
                 dispComp.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
                 Console.WriteLine($"Primary monitor name: {name}");
-                Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
-                Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
-                Console.WriteLine($"  Scale: {videoMode.Scale}");
-                Console.WriteLine($"  Dpi: {videoMode.Dpi}");
-                Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+                Console.WriteLine($"  {videoMode}");
+                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
 
                 int modeCount = dispComp.GetSupportedVideoModeCount(PrimaryDisplayHandle);
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
@@ -117,11 +114,8 @@ namespace LocalTestProject
                 dispComp.GetVideoMode(disp, out VideoMode videoMode);
                 dispComp.GetDisplayScale(disp, out float scaleX, out float scaleY);
                 Console.WriteLine($"Primary monitor name: {name}");
-                Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
-                Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
-                Console.WriteLine($"  Scale: {videoMode.Scale}");
-                Console.WriteLine($"  Dpi: {videoMode.Dpi}");
-                Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+                Console.WriteLine($"  {videoMode}");
+                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -437,17 +431,17 @@ namespace LocalTestProject
 
                 if (keyDown.Key == Key.F11)
                 {
-                    VideoMode mode = new VideoMode(1920, 1080, 60, 1, 96);
+                    // FIXME: What does bpp=32 compared to bpp=24?
+                    VideoMode mode = new VideoMode(1920, 1080, 144, 32);
 
-                    windowComp.SetFullscreenDisplay(keyDown.Window, windowComp.GetDisplay(keyDown.Window), mode);
-                    /*if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
                     {
                         windowComp.SetMode(keyDown.Window, WindowMode.Normal);
                     }
                     else
                     {
                         windowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
-                    }*/
+                    }
                 }
                 else if (keyDown.Key == Key.M)
                 {

@@ -157,6 +157,7 @@ namespace OpenTK.Platform.Native.Windows
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
                             Position = lpDevMode.dmPosition,
                             RefreshRate = (int)lpDevMode.dmDisplayFrequency,
+                            BitsPerPixel = (int)lpDevMode.dmBitsPerPel,
                             Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
                             DpiX = -1,
                             DpiY = -1,
@@ -176,6 +177,7 @@ namespace OpenTK.Platform.Native.Windows
 
                         info.Position = lpDevMode.dmPosition;
                         info.RefreshRate = (int)lpDevMode.dmDisplayFrequency;
+                        info.BitsPerPixel = (int)lpDevMode.dmBitsPerPel;
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
                     }
@@ -358,15 +360,11 @@ namespace OpenTK.Platform.Native.Windows
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            GetDisplayScale(handle, out float scaleX, out float scaleY);
-
-            // FIXME: DPI
             mode = new VideoMode(
                 hmonitor.Resolution.ResolutionX,
                 hmonitor.Resolution.ResolutionY,
                 hmonitor.RefreshRate,
-                scaleX,
-                96);
+                hmonitor.BitsPerPixel);
         }
 
         /// <inheritdoc/>
@@ -381,8 +379,8 @@ namespace OpenTK.Platform.Native.Windows
             Win32.DEVMODE devmode = default;
             devmode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
             devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
-            devmode.dmPelsWidth = (uint)mode.HorizontalResolution;
-            devmode.dmPelsHeight = (uint)mode.VerticalResolution;
+            devmode.dmPelsWidth = (uint)mode.Width;
+            devmode.dmPelsHeight = (uint)mode.Height;
             devmode.dmDisplayFrequency = (uint)mode.RefreshRate;
             devmode.dmBitsPerPel = 32;
 
@@ -417,10 +415,6 @@ namespace OpenTK.Platform.Native.Windows
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            // FIXME: Should the scale really be part of the video mode?
-            // Is it something that can be set independently of video mode?
-            GetDisplayScale(handle, out float scaleX, out float scaleY);
-
             int modeIndex = 0;
             Win32.DEVMODE lpDevMode = default;
             lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
@@ -436,13 +430,11 @@ namespace OpenTK.Platform.Native.Windows
                 if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
                     throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
 
-                // FIXME: Scale and DPI
                 modes[modeIndex - 1] = new VideoMode(
                     (int)lpDevMode.dmPelsWidth,
                     (int)lpDevMode.dmPelsHeight,
                     lpDevMode.dmDisplayFrequency,
-                    scaleX,
-                    96);
+                    (int)lpDevMode.dmBitsPerPel);
             }
         }
 

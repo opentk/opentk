@@ -47,7 +47,7 @@ namespace OpenTK.Platform.Native.Windows
         public string? IMEComposition { get; set; }
         public int IMECursor { get; set; }
 
-        public IntPtr FullscreenMonitor { get; set; }
+        public HMonitor? FullscreenMonitor { get; set; }
         public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }
         public WindowBorderStyle PreviousBorderStyle { get; set; } = WindowBorderStyle.ResizableBorder;
 
@@ -137,6 +137,8 @@ namespace OpenTK.Platform.Native.Windows
         public Win32.RECT WorkArea { get; set; }
 
         public int RefreshRate { get; set; }
+
+        public int BitsPerPixel { get; set; }
 
         public int DpiX { get; set; }
 

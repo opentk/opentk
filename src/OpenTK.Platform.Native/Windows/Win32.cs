@@ -1132,6 +1132,14 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr /* HWND */ hwnd,
             CDS dwflags,
             IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern DispChange ChangeDisplaySettingsExW(
+            [MarshalAs(UnmanagedType.LPWStr)] string? lpszDeviceName,
+            IntPtr lpDevMode,
+            IntPtr /* HWND */ hwnd,
+            CDS dwflags,
+            IntPtr lParam);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

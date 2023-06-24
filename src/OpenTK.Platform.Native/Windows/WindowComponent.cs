@@ -668,7 +668,7 @@ namespace OpenTK.Platform.Native.Windows
                         }
 
                         // If the window is (going) fullscreen we don't want to set the a min or max size
-                        if (h.FullscreenMonitor != IntPtr.Zero)
+                        if (h.FullscreenMonitor != null)
                         {
                             return Win32.DefWindowProc(hWnd, uMsg, wParam, lParam);
                         }
@@ -1005,6 +1005,12 @@ namespace OpenTK.Platform.Native.Windows
                 SetCursorCaptureMode(hwnd, CursorCaptureMode.Normal);
             }
 
+            if (hwnd.FullscreenMonitor != null)
+            {
+                // The window is closing so we want to reset the video mode of the window.
+                Win32.ChangeDisplaySettingsExW(hwnd.FullscreenMonitor.AdapterName, IntPtr.Zero, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
+            }
+
             HWndDict.Remove(hwnd.HWnd);
 
             bool success = Win32.DestroyWindow(hwnd.HWnd);
@@ -1338,6 +1344,8 @@ namespace OpenTK.Platform.Native.Windows
             HMonitor? monitor = DisplayComponent.FindMonitor(hmonitor);
             if (monitor == null)
             {
+                // Throwing an exception here feels a bit brittle? Maybe just return the primary handle?
+                // - 2023-06-24 Noggin_Bops
                 throw new PalException(this, $"Couldn't get monitor from window. (hwnd: {hwnd.HWnd}, hmonitor: {hmonitor})");
             }
 
@@ -1354,8 +1362,9 @@ namespace OpenTK.Platform.Native.Windows
             WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
             // FIXME: Should we check for this while the window is fullscreen?
-            if (hwnd.FullscreenMonitor != IntPtr.Zero)
+            if (hwnd.FullscreenMonitor != null)
             {
+                // FIXME: Exclusive fullscreen?
                 return WindowMode.WindowedFullscreen;
             }
 
@@ -1391,23 +1400,18 @@ namespace OpenTK.Platform.Native.Windows
         };
 
         /// <inheritdoc/>
-        /// 
-        /// FIXME: Maybe move this remark to the interface documentation?
-        /// <remarks>
-        /// Setting <see cref="WindowMode.WindowedFullscreen"/> or <see cref="WindowMode.ExclusiveFullscreen"/>
-        /// will make the window fullscreen in the nearest monitor to the window location.
-        /// Use <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?, bool)"/> to explicitly set the monitor.
-        /// </remarks>
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             HWND hwnd = handle.As<HWND>(this);
 
             // FIXME: Restore the window position if we are going out of fullscreen.
-            if (hwnd.FullscreenMonitor != IntPtr.Zero)
+            if (hwnd.FullscreenMonitor != null)
             {
                 if (mode != WindowMode.WindowedFullscreen || mode != WindowMode.ExclusiveFullscreen)
                 {
-                    hwnd.FullscreenMonitor = IntPtr.Zero;
+                    Win32.ChangeDisplaySettingsExW(hwnd.FullscreenMonitor.AdapterName, IntPtr.Zero, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
+
+                    hwnd.FullscreenMonitor = null;
                     // FIXME: When going from maximized to fullscreen to maximized the max bounds will not be respected by SetWindowPlacement.
                     // - 2023-06-13 Noggin_bops
                     Win32.SetWindowPlacement(hwnd.HWnd, hwnd.PreviousPlacement);
@@ -1434,41 +1438,23 @@ namespace OpenTK.Platform.Native.Windows
                     Win32.ShowWindow(hwnd.HWnd, ShowWindowCommands.Maximize);
                     break;
                 case WindowMode.WindowedFullscreen:
-                    unsafe {
-                        IntPtr monitor = Win32.MonitorFromWindow(hwnd.HWnd, MonitorDefaultTo.Nearest);
-                        Win32.MONITORINFO info = default;
-                        info.cbSize = (uint)sizeof(Win32.MONITORINFO);
-                        bool success = Win32.GetMonitorInfo(monitor, ref info);
-                        if (success == false) throw new Win32Exception();
-
-                        // Save the previous window placement so we can restore it later.
-                        Win32.WINDOWPLACEMENT placement = default;
-                        unsafe { placement.length = (uint)sizeof(Win32.WINDOWPLACEMENT); }
-                        Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
-                        hwnd.PreviousPlacement = placement;
-                        hwnd.FullscreenMonitor = monitor;
-                        hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
-
-                        // FIXME: Maybe we should do this with SetBorderStyle to be consistent with how we restore the style later?
-                        WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
-                        Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr( (int)(style & ~WindowStyles.OverlappedWindow) ));
-
-                        success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero,
-                            info.rcMonitor.left,
-                            info.rcMonitor.top,
-                            info.rcMonitor.right - info.rcMonitor.left,
-                            info.rcMonitor.bottom - info.rcMonitor.top,
-                            SetWindowPosFlags.NoOwnerZOrder | SetWindowPosFlags.FrameChanged);
-                        if (success == false) throw new Win32Exception();
+                    {
+                        SetFullscreenDisplay(handle, null);
+                        break;
                     }
-                    break;
                 case WindowMode.ExclusiveFullscreen:
-                    throw new NotImplementedException("Exclusive fullscreen is not implemented yet");
+                    {
+                        // FIXME: Is this what we want to do here?
+                        HMonitor monitor = (HMonitor)GetDisplay(handle);
+                        SetFullscreenDisplay(handle, monitor, new VideoMode(monitor.Resolution.ResolutionX, monitor.Resolution.ResolutionY, monitor.RefreshRate, monitor.BitsPerPixel));
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException(nameof(mode), (int)mode, mode.GetType());
             }
         }
 
+        /// <inheritdoc/>
         public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
         {
             HWND hwnd = window.As<HWND>(this);
@@ -1476,18 +1462,17 @@ namespace OpenTK.Platform.Native.Windows
             Win32.MONITORINFO info = default;
             unsafe { info.cbSize = (uint)sizeof(Win32.MONITORINFO); }
 
-            IntPtr monitor;
+            HMonitor monitor;
             if (display != null)
             {
-                HMonitor hmonitor = display.As<HMonitor>(this);
-                monitor = hmonitor.Monitor;
+                monitor = display.As<HMonitor>(this);
             }
             else
             {
-                monitor = Win32.MonitorFromWindow(hwnd.HWnd, MonitorDefaultTo.Nearest);
+                monitor = (HMonitor)GetDisplay(hwnd);
             }
 
-            if (Win32.GetMonitorInfo(monitor, ref info))
+            if (Win32.GetMonitorInfo(monitor.Monitor, ref info))
             {
                 // Save the previous window placement so we can restore it later.
                 Win32.WINDOWPLACEMENT placement = default;
@@ -1497,6 +1482,7 @@ namespace OpenTK.Platform.Native.Windows
                 hwnd.FullscreenMonitor = monitor;
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
 
+                // FIXME: Maybe we should do this with SetBorderStyle to be consistent with how we restore the style later?
                 // FIXME: check if we need to remove the window decorations.
                 WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
                 Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));
@@ -1513,10 +1499,11 @@ namespace OpenTK.Platform.Native.Windows
             else
             {
                 // FIXME: Can this even happen?
-                Logger?.LogError($"Could not get monitor info from monitor {monitor} ('{display?.As<HMonitor>(this).DeviceName ?? "nearest monitor"}').");
+                Logger?.LogError($"Could not get monitor info from monitor {monitor} ('{monitor.DeviceName}').");
             }
         }
 
+        /// <inheritdoc/>
         public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
         {
             HWND hwnd = window.As<HWND>(this);
@@ -1526,17 +1513,13 @@ namespace OpenTK.Platform.Native.Windows
             {
                 // FIXME: When the fullscreen window is closed and other windows are still active the video mode doesn't get reset.
 
-                // FIXME: Set bit-depth??
-
-                // FIXME: What should we do with DPI here? Is there a way to change DPI?
-                // Or do we just pretend that the DPI has changed?
                 Win32.DEVMODE devmode = default;
                 devmode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
                 devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
-                devmode.dmPelsWidth = (uint)videoMode.HorizontalResolution;
-                devmode.dmPelsHeight = (uint)videoMode.VerticalResolution;
+                devmode.dmPelsWidth = (uint)videoMode.Width;
+                devmode.dmPelsHeight = (uint)videoMode.Height;
                 devmode.dmDisplayFrequency = (uint)videoMode.RefreshRate;
-                devmode.dmBitsPerPel = 32;
+                devmode.dmBitsPerPel = (uint)videoMode.BitsPerPixel;
 
                 // FIXME: I think we might want to only be able to change the video mode while we are going fullscreen?
                 DispChange result = Win32.ChangeDisplaySettingsExW(hmonitor.AdapterName, ref devmode, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
@@ -1556,7 +1539,8 @@ namespace OpenTK.Platform.Native.Windows
                 unsafe { placement.length = (uint)sizeof(Win32.WINDOWPLACEMENT); }
                 Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
                 hwnd.PreviousPlacement = placement;
-                hwnd.FullscreenMonitor = hmonitor.Monitor;
+                hwnd.FullscreenMonitor = hmonitor;
+                // FIXME: this fails if we are already fullscreen!
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
 
                 // FIXME: check if we need to remove the window decorations.
@@ -1579,20 +1563,12 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
         {
             HWND hwnd = window.As<HWND>(this);
-            if (hwnd.FullscreenMonitor != IntPtr.Zero)
-            {
-                display = DisplayComponent.FindMonitor(hwnd.FullscreenMonitor);
-                if (display == null) Logger?.LogWarning($"Could not find display handle for the windows fullscreen monitor: {hwnd.FullscreenMonitor}");
-                return display != null;
-            }
-            else
-            {
-                display = default;
-                return false;
-            }
+            display = hwnd.FullscreenMonitor;
+            return display != null;
         }
 
         /// <inheritdoc/>
