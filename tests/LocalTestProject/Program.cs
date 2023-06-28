@@ -259,13 +259,13 @@ namespace LocalTestProject
             }
 
             {
-                IconHandle2 = (iconComp as IconComponent)?.LoadIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
+                IconHandle2 = (iconComp as IconComponent)?.CreateFromIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
                                 iconComp.Create(SystemIconType.Default);
                 
                 windowComp.SetIcon(WindowHandle2, IconHandle2);
             }
 
-            FileCursorHandle = (cursorComp as CursorComponent)?.LoadCurFile("Cute Light Green Normal Select.cur") ??
+            FileCursorHandle = (cursorComp as CursorComponent)?.CreateFromCurFile("Cute Light Green Normal Select.cur") ??
                                 cursorComp.Create(SystemCursorType.Default);
             
             windowComp.SetCursor(WindowHandle, FileCursorHandle);

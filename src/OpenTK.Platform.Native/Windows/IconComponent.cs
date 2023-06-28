@@ -166,10 +166,10 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <summary>
-        /// Loads a windows .ico file.
+        /// Creates an icom from a windows .ico file.
         /// </summary>
         /// <param name="file">The icon file to load.</param>
-        public IconHandle LoadIcoFile(string file)
+        public IconHandle CreateFromIcoFile(string file)
         {
             HIcon hicon = new HIcon();
 

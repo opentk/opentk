@@ -276,12 +276,12 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <summary>
-        /// Loads a cursor from a .cur file.
+        /// Creates a cursor from a .cur file.
         /// </summary>
         /// <param name="file">The .cur file to load.</param>
         /// <exception cref="FileNotFoundException"></exception>
         // FIXME: Can you get the hotspot of cursors like this? We should document that.
-        public CursorHandle LoadCurFile(string file)
+        public CursorHandle CreateFromCurFile(string file)
         {
             HCursor hcursor = new HCursor();
 
