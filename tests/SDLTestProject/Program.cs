@@ -153,18 +153,17 @@ void main()
                     }
                 }
 
-                IconHandle = IconComponent.Create();
-                IconComponent.Load(IconHandle, 16, 16, icon);
+                IconHandle = IconComponent.Create(16, 16, icon);
 
                 WindowComp.SetIcon(WindowHandle, IconHandle);
 
                 {
-                    IconComponent.GetDimensions(IconHandle, out int iw, out int ih);
+                    IconComponent.GetSize(IconHandle, out int iw, out int ih);
 
-                    int bytes = IconComponent.GetBitmapByteSize(IconHandle);
+                    int bytes = ((IconComponent)IconComponent).GetBitmapByteSize(IconHandle);
                     byte[] data = new byte[bytes];
 
-                    IconComponent.GetBitmapData(IconHandle, data);
+                    ((IconComponent)IconComponent).GetBitmapData(IconHandle, data);
 
                     Debug.Assert(iw == 16);
                     Debug.Assert(ih == 16);
@@ -172,8 +171,7 @@ void main()
                     Debug.Assert(data.SequenceEqual(icon));
                 }
 
-                CursorHandle = CursorComponent.Create();
-                CursorComponent.Load(CursorHandle, 16, 16, icon);
+                CursorHandle = CursorComponent.Create(16, 16, icon, 0, 0);
 
                 WindowComp.SetCursor(WindowHandle, CursorHandle);
             }

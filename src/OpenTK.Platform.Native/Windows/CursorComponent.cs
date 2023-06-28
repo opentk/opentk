@@ -32,18 +32,279 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool CanLoadSystemCursor => true;
+        public bool CanLoadSystemCursors => true;
 
         /// <inheritdoc/>
-        public bool CanScaleCursor => false;
+        public bool CanInspectSystemCursors => true;
 
         /// <inheritdoc/>
-        public bool CanSupportAnimatedCursor => throw new NotImplementedException();
-
-        /// <inheritdoc/>
-        public CursorHandle Create()
+        public CursorHandle Create(SystemCursorType systemCursor)
         {
-            return new HCursor();
+            HCursor hcursor = new HCursor();
+
+            OCR ocr;
+            switch (systemCursor)
+            {
+                case SystemCursorType.Default:
+                    ocr = OCR.Normal;
+                    break;
+                case SystemCursorType.Loading:
+                    ocr = OCR.Wait;
+                    break;
+                case SystemCursorType.Wait:
+                    ocr = OCR.Wait;
+                    break;
+                case SystemCursorType.Cross:
+                    ocr = OCR.Cross;
+                    break;
+                case SystemCursorType.Hand:
+                    ocr = OCR.Hand;
+                    break;
+                case SystemCursorType.Help:
+                    ocr = OCR.Help;
+                    break;
+                case SystemCursorType.TextBeam:
+                    ocr = OCR.IBeam;
+                    break;
+                case SystemCursorType.Forbidden:
+                    ocr = OCR.No;
+                    break;
+                case SystemCursorType.ArrowFourway:
+                    ocr = OCR.SizeAll;
+                    break;
+                case SystemCursorType.ArrowNS:
+                    ocr = OCR.SizeNS;
+                    break;
+                case SystemCursorType.ArrowEW:
+                    ocr = OCR.SizeWE;
+                    break;
+                case SystemCursorType.ArrowNESW:
+                    ocr = OCR.SizeNESW;
+                    break;
+                case SystemCursorType.ArrowNWSE:
+                    ocr = OCR.SizeNWSE;
+                    break;
+                case SystemCursorType.ArrowUp:
+                    ocr = OCR.Up;
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException(nameof(systemCursor), (int)systemCursor, typeof(SystemCursorType));
+            }
+
+            // FIXME: For now we are sending 0, 0 and DefaultSize for the size of the cursor.
+            // We might want to handle this differently in the future.
+            hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, ocr, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
+            hcursor.Mode = HCursor.CursorMode.SystemCursor;
+
+            if (hcursor.Cursor == IntPtr.Zero)
+            {
+                throw new Win32Exception($"Could not load cursor '{ocr}'");
+            }
+
+            return hcursor;
+        }
+
+        /// <inheritdoc/>
+        public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
+        {
+            HCursor hcursor = new HCursor();
+
+            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
+
+            if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
+
+            // See https://web.archive.org/web/20080205042408/http://support.microsoft.com/kb/318876
+            Win32.BITMAPV5HEADER header = default;
+            header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
+            header.bV5Width = width;
+            header.bV5Height = -height;
+            header.bV5Planes = 1;
+            header.bV5BitCount = 32;
+            header.bV5Compression = BI.Bitfields;
+            header.bV5RedMask = 0x00_FF_00_00;
+            header.bV5GreenMask = 0x00_00_FF_00;
+            header.bV5BlueMask = 0x00_00_00_FF;
+            header.bV5AlphaMask = 0xFF_00_00_00;
+            // FIXME: Determine color space!
+            // header.bV5CSType = LCS_sRGB?
+
+            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+
+            IntPtr colorBitmap = Win32.CreateDIBSection(hDC, in header, DIB.RGBColors, out IntPtr dataPtr, IntPtr.Zero, 0);
+            if (colorBitmap == IntPtr.Zero)
+            {
+                throw new Win32Exception("CreateDIBSection failed.");
+            }
+
+            Span<byte> data = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
+
+            // Copy over image data.
+            // R,G,B,A byte order to B,G,R,A byte order.
+            for (int i = 0; i < data.Length; i += 4)
+            {
+                data[i + 0] = image[i + 2];
+                data[i + 1] = image[i + 1];
+                data[i + 2] = image[i + 0];
+                data[i + 3] = image[i + 3];
+            }
+
+            // Create an empty mask.
+            IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);
+            // FIXME: The value if ERROR_INVALID_BITMAP is impossible to find.
+            // It's not defined in wingdi.h and nothing online mentions it.
+            if (maskBitmap == IntPtr.Zero /*|| maskBitmap == Win32.ERROR_INVALID_BITMAP*/)
+            {
+                throw new Win32Exception("CreateBitmap failed.");
+            }
+
+            // FIXME: Maybe remove these fields?
+            hcursor.HotSpotX = hotspotX;
+            hcursor.HotSpotY = hotspotY;
+
+            Win32.ICONINFO iconinfo = new Win32.ICONINFO()
+            {
+                fIcon = false, // We are creating a cursor
+                xHotspot = hcursor.HotSpotX,
+                yHotspot = hcursor.HotSpotY,
+                hbmMask = maskBitmap,
+                hbmColor = colorBitmap,
+            };
+
+            IntPtr hcursorIcon = Win32.CreateIconIndirect(in iconinfo);
+            if (hcursorIcon == IntPtr.Zero)
+            {
+                throw new Win32Exception("CreateIconIndirect() failed.");
+            }
+
+            Win32.ReleaseDC(IntPtr.Zero, hDC);
+
+            hcursor.Cursor = hcursorIcon;
+            hcursor.MaskBitmap = maskBitmap;
+            hcursor.ColorBitmap = colorBitmap;
+            hcursor.Mode = HCursor.CursorMode.Icon;
+
+            return hcursor;
+        }
+
+        /// <inheritdoc/>
+        public CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
+        {
+            HCursor hcursor = new HCursor();
+
+            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), $"Width cannot be negative. Value: {width}");
+            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), $"Height cannot be negative. Value: {height}");
+
+            if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
+            if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
+
+            // See https://www.codeguru.com/windows/creating-a-color-cursor-from-a-bitmap
+            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
+            IntPtr hAndMaskDC = Win32.CreateCompatibleDC(hDC);
+            if (hAndMaskDC == IntPtr.Zero) throw new Win32Exception("AndMask CreateCompatibleDC() failed.");
+            IntPtr hXorMaskDC = Win32.CreateCompatibleDC(hDC);
+            if (hXorMaskDC == IntPtr.Zero) throw new Win32Exception("XorMask CreateCompatibleDC() failed.");
+
+            // Make sure to call CreateCompatibleBitmap with the window DC as the
+            // newly created DC is initialized with a mono-chromatic 1x1 pixel bitmap by default.
+            // And we don't want to create a bitmap with a monochrome format.
+            // See https://www.codeproject.com/Articles/224754/Guide-to-Win32-Memory-DC#:~:text=Avoid%20a%20Common%20Mistake
+            IntPtr hAndMaskBitmap = Win32.CreateCompatibleBitmap(hDC, width, height);
+            if (hAndMaskBitmap == IntPtr.Zero) throw new Win32Exception("AndMask CreateCompatibleBitmap() failed.");
+            IntPtr hXorMaskBitmap = Win32.CreateCompatibleBitmap(hDC, width, height);
+            if (hXorMaskBitmap == IntPtr.Zero) throw new Win32Exception("XorMask CreateCompatibleBitmap() failed.");
+
+            IntPtr hOldAndMaskBitmap = Win32.SelectObject(hAndMaskDC, hAndMaskBitmap);
+            if (hOldAndMaskBitmap == IntPtr.Zero) throw new Win32Exception("AndMask SelectObject() failed.");
+            IntPtr hOldXorMaskBitmap = Win32.SelectObject(hXorMaskDC, hXorMaskBitmap);
+            if (hOldXorMaskBitmap == IntPtr.Zero) throw new Win32Exception("XorMask SelectObject() failed.");
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    int index = (x + (y * width)) * 3;
+
+                    uint mask = (uint)maskData[x + (y * width)] == 1 ? 0x00_FF_FF_FFu : 0x00_00_00_00u;
+                    uint color = (uint)colorData[index + 0] << 0 | (uint)colorData[index + 1] << 8 | (uint)colorData[index + 2] << 16;
+
+                    int success;
+                    success = Win32.SetPixelV(hAndMaskDC, x, y, mask);
+                    if (success == 0) throw new Win32Exception("AndMask SetPixel() failed.");
+                    success = Win32.SetPixelV(hXorMaskDC, x, y, color);
+                    if (success == 0) throw new Win32Exception("XorMask SetPixel() failed.");
+                }
+            }
+
+            // Select the old objects again, as stated we should in the documentation.
+            Win32.SelectObject(hAndMaskDC, hOldAndMaskBitmap);
+            Win32.SelectObject(hXorMaskDC, hOldXorMaskBitmap);
+
+            bool deleted;
+            deleted = Win32.DeleteDC(hAndMaskDC);
+            if (deleted == false) throw new Win32Exception("AndMask DeleteDC() failed.");
+            deleted = Win32.DeleteDC(hXorMaskDC);
+            if (deleted == false) throw new Win32Exception("XorMask DeleteDC() failed.");
+
+            Win32.ReleaseDC(IntPtr.Zero, hDC);
+
+            // FIXME: Maybe remove these fields?
+            hcursor.HotSpotX = hotspotX;
+            hcursor.HotSpotY = hotspotY;
+
+            Win32.ICONINFO iconinfo = new Win32.ICONINFO()
+            {
+                fIcon = false, // We are creating a cursor
+                xHotspot = hcursor.HotSpotX,
+                yHotspot = hcursor.HotSpotY,
+                hbmMask = hAndMaskBitmap,
+                hbmColor = hXorMaskBitmap,
+            };
+
+            IntPtr hcursorIcon = Win32.CreateIconIndirect(in iconinfo);
+            if (hcursorIcon == IntPtr.Zero)
+            {
+                throw new Win32Exception("CreateIconIndirect() failed.");
+            }
+
+            hcursor.Cursor = hcursorIcon;
+            hcursor.MaskBitmap = hAndMaskBitmap;
+            hcursor.ColorBitmap = hXorMaskBitmap;
+            hcursor.Mode = HCursor.CursorMode.Icon;
+
+            return hcursor;
+        }
+
+        /// <summary>
+        /// Loads a cursor from a .cur file.
+        /// </summary>
+        /// <param name="file">The .cur file to load.</param>
+        /// <exception cref="FileNotFoundException"></exception>
+        // FIXME: Can you get the hotspot of cursors like this? We should document that.
+        public CursorHandle LoadCurFile(string file)
+        {
+            HCursor hcursor = new HCursor();
+
+            // FIXME: Is this a relative path or a absolute path?
+            IntPtr cursor = Win32.LoadCursorFromFile(file);
+            if (cursor == IntPtr.Zero)
+            {
+                // FIXME: Find out if we failed because of the wrong format!
+                Win32Exception ex = new Win32Exception("LoadCursorFromFile failed.");
+                if (ex.NativeErrorCode == Win32.ERROR_FILE_NOT_FOUND)
+                {
+                    throw new FileNotFoundException("Could not load file.", file);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
+
+            hcursor.Cursor = cursor;
+            hcursor.Mode = HCursor.CursorMode.FileIcon;
+
+            return hcursor;
         }
 
         /// <inheritdoc/>
@@ -53,9 +314,13 @@ namespace OpenTK.Platform.Native.Windows
 
             switch (hcursor.Mode)
             {
+                // FIXME: Do we need this enum value anymore?
+                // Maybe change the name to something like, deleted or destroyed?
                 case HCursor.CursorMode.Uninitialized:
-                    // Do nothing.
-                    break;
+                    {
+                        // Do nothing.
+                        break;
+                    }
                 case HCursor.CursorMode.SystemCursor:
                     {
                         // This is a shared cursor, so we shouldn't destroy it.
@@ -87,6 +352,13 @@ namespace OpenTK.Platform.Native.Windows
             hcursor.ColorBitmap = IntPtr.Zero;
             hcursor.MaskBitmap = IntPtr.Zero;
             hcursor.Mode = HCursor.CursorMode.Uninitialized;
+        }
+
+        /// <inheritdoc/>
+        public bool IsSystemCursor(CursorHandle handle)
+        {
+            HCursor hcursor = handle.As<HCursor>(this);
+            return hcursor.Mode == HCursor.CursorMode.SystemCursor;
         }
 
         /// <inheritdoc/>
@@ -132,11 +404,20 @@ namespace OpenTK.Platform.Native.Windows
             }
             else
             {
-                throw new Win32Exception("GetIconInfo failed.");
+                throw new Win32Exception();
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Get the mouse cursor image.
+        /// </summary>
+        /// <remarks>
+        /// This method works for all cursors, even system cursors.
+        /// </remarks>
+        /// <param name="handle">Handle to a cursor object.</param>
+        /// <param name="image">Buffer to copy cursor image into.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
+        // FIXME: Document the format of the return image!
         public unsafe void GetImage(CursorHandle handle, Span<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);
@@ -148,7 +429,7 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.CURSORINFO cinfo = default;
                 cinfo.cbSize = (uint)sizeof(Win32.CURSORINFO);
                 if (Win32.GetCursorInfo(ref cinfo) == false)
-                    throw new Win32Exception("GetCursorInfo failed.");
+                    throw new Win32Exception();
             }
 
             // See https://stackoverflow.com/a/13295280
@@ -162,12 +443,12 @@ namespace OpenTK.Platform.Native.Windows
                     int success = Win32.GetDIBits(hDC, hbm, 0, 0, null, ref bmInfo, DIB.RGBColors);
                     if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                     {
-                        throw new Exception("GetDIBits failed.");
+                        throw new Exception($"GetDIBits failed. (0x{success:X})");
                     }
 
                     if (image.Length < bmInfo.bmiHeader.biSizeImage)
                     {
-                        throw new Exception("Image buffer not big enough!");
+                        throw new Exception($"Image buffer not big enough! Expected: {bmInfo.bmiHeader.biSizeImage} bytes, got {image.Length} bytes");
                     }
 
                     bmInfo.bmiHeader.biBitCount = 32;
@@ -179,7 +460,7 @@ namespace OpenTK.Platform.Native.Windows
                         success = Win32.GetDIBits(hDC, hbm, 0, (uint)bmInfo.bmiHeader.biHeight, (void*)ptr, ref bmInfo, DIB.RGBColors);
                         if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                         {
-                            throw new Exception("GetDIBits failed.");
+                            throw new Exception($"GetDIBits failed. (0x{success:X})");
                         }
                     }
 
@@ -247,360 +528,14 @@ namespace OpenTK.Platform.Native.Windows
             }
             else
             {
-                throw new Win32Exception("GetIconInfo failed.");
+                throw new Win32Exception();
             }
 
             bool successBool = Win32.DestroyIcon(cursor_copy);
             if (successBool == false)
             {
-                throw new Win32Exception("DestroyIcon failed.");
+                throw new Win32Exception();
             }
-        }
-
-        /// <inheritdoc/>
-        public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
-        {
-            HCursor hcursor = handle.As<HCursor>(this);
-
-            horizontal = 1;
-            vertical = 1;
-        }
-
-        /// <inheritdoc/>
-        public void Load(CursorHandle handle, SystemCursorType systemCursor)
-        {
-            HCursor hcursor = handle.As<HCursor>(this);
-
-            // FIXME: Figure out if we should destroy the previous cursor like this.
-            Destroy(handle);
-
-            OCR ocr;
-            switch (systemCursor)
-            {
-                case SystemCursorType.Default:
-                    ocr = OCR.Normal;
-                    break;
-                case SystemCursorType.Loading:
-                    ocr = OCR.Wait;
-                    break;
-                case SystemCursorType.Wait:
-                    ocr = OCR.Wait;
-                    break;
-                case SystemCursorType.Cross:
-                    ocr = OCR.Cross;
-                    break;
-                case SystemCursorType.Hand:
-                    ocr = OCR.Hand;
-                    break;
-                case SystemCursorType.Help:
-                    ocr = OCR.Help;
-                    break;
-                case SystemCursorType.TextBeam:
-                    ocr = OCR.IBeam;
-                    break;
-                case SystemCursorType.Forbidden:
-                    ocr = OCR.No;
-                    break;
-                case SystemCursorType.ArrowFourway:
-                    ocr = OCR.SizeAll;
-                    break;
-                case SystemCursorType.ArrowNS:
-                    ocr = OCR.SizeNS;
-                    break;
-                case SystemCursorType.ArrowEW:
-                    ocr = OCR.SizeWE;
-                    break;
-                case SystemCursorType.ArrowNESW:
-                    ocr = OCR.SizeNESW;
-                    break;
-                case SystemCursorType.ArrowNWSE:
-                    ocr = OCR.SizeNWSE;
-                    break;
-                case SystemCursorType.ArrowUp:
-                    ocr = OCR.Up;
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException(nameof(systemCursor), (int)systemCursor, typeof(SystemCursorType));
-            }
-
-            // FIXME: For now we are sending 0, 0 and DefaultSize for the size of the cursor.
-            // We might want to handle this differently in the future.
-            hcursor.Cursor = Win32.LoadImage(IntPtr.Zero, ocr, ImageType.Cursor, 0, 0, LR.Shared | LR.DefaultSize);
-            hcursor.Mode = HCursor.CursorMode.SystemCursor;
-
-            if (hcursor.Cursor == IntPtr.Zero)
-            {
-                throw new Win32Exception($"Could not load cursor '{ocr}'");
-            }
-        }
-
-        /// <inheritdoc/>
-        public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
-        {
-            HCursor hcursor = handle.As<HCursor>(this);
-
-            if (width < 0) throw new ArgumentOutOfRangeException($"Width cannot be negative. Value: {width}");
-            if (height < 0) throw new ArgumentOutOfRangeException($"Height cannot be negative. Value: {height}");
-
-            if (image.Length < width * height * 4) throw new ArgumentException($"The given span is too small. It must be at least {width * height * 4} long. Was: {image.Length}");
-
-            // FIXME: Figure out if we should destroy the previous cursor like this.
-            Destroy(handle);
-
-            // See https://web.archive.org/web/20080205042408/http://support.microsoft.com/kb/318876
-            Win32.BITMAPV5HEADER header = default;
-            header.bV5Size = (uint)sizeof(Win32.BITMAPV5HEADER);
-            header.bV5Width = width;
-            header.bV5Height = -height;
-            header.bV5Planes = 1;
-            header.bV5BitCount = 32;
-            header.bV5Compression = BI.Bitfields;
-            header.bV5RedMask = 0x00_FF_00_00;
-            header.bV5GreenMask = 0x00_00_FF_00;
-            header.bV5BlueMask = 0x00_00_00_FF;
-            header.bV5AlphaMask = 0xFF_00_00_00;
-            // FIXME: Determine color space!
-            // header.bV5CSType = LCS_sRGB?
-
-            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
-
-            IntPtr colorBitmap = Win32.CreateDIBSection(hDC, in header, DIB.RGBColors, out IntPtr dataPtr, IntPtr.Zero, 0);
-            if (colorBitmap == IntPtr.Zero)
-            {
-                throw new Win32Exception("CreateDIBSection failed.");
-            }
-
-            Span<byte> data = new Span<byte>(dataPtr.ToPointer(), width * height * 4);
-
-            // Copy over image data.
-            // R,G,B,A byte order to B,G,R,A byte order.
-            for (int i = 0; i < data.Length; i += 4)
-            {
-                data[i + 0] = image[i + 2];
-                data[i + 1] = image[i + 1];
-                data[i + 2] = image[i + 0];
-                data[i + 3] = image[i + 3];
-            }
-
-            // Create an empty mask.
-            IntPtr maskBitmap = Win32.CreateBitmap(width, height, 1, 1, IntPtr.Zero);
-            // FIXME: The value if ERROR_INVALID_BITMAP is impossible to find.
-            // It's not defined in wingdi.h and nothing online mentions it.
-            if (maskBitmap == IntPtr.Zero /*|| maskBitmap == Win32.ERROR_INVALID_BITMAP*/)
-            {
-                throw new Win32Exception("CreateBitmap failed.");
-            }
-
-            Win32.ICONINFO iconinfo = new Win32.ICONINFO()
-            {
-                fIcon = false, // We are creating a cursor
-                xHotspot = hcursor.HotSpotX,
-                yHotspot = hcursor.HotSpotY,
-                hbmMask = maskBitmap,
-                hbmColor = colorBitmap,
-            };
-
-            IntPtr hcursorIcon = Win32.CreateIconIndirect(in iconinfo);
-            if (hcursorIcon == IntPtr.Zero)
-            {
-                throw new Win32Exception("CreateIconIndirect() failed.");
-            }
-
-            Win32.ReleaseDC(IntPtr.Zero, hDC);
-
-            hcursor.Cursor = hcursorIcon;
-            hcursor.MaskBitmap = maskBitmap;
-            hcursor.ColorBitmap = colorBitmap;
-            hcursor.Mode = HCursor.CursorMode.Icon;
-        }
-
-        /// <inheritdoc/>
-        public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
-        {
-            HCursor hcursor = handle.As<HCursor>(this);
-
-            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), $"Width cannot be negative. Value: {width}");
-            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), $"Height cannot be negative. Value: {height}");
-
-            if (colorData.Length < width * height * 3) throw new ArgumentException($"The given color data span is too small. It must be at least {width * height * 3} long. Was: {colorData.Length}");
-            if (maskData.Length < width * height * 1) throw new ArgumentException($"The given mask data span is too small. It must be at least {width * height * 1} long. Was: {maskData.Length}");
-
-            // FIXME: Figure out if we should destroy the previous cursor like this.
-            Destroy(handle);
-
-            // See https://www.codeguru.com/windows/creating-a-color-cursor-from-a-bitmap
-            IntPtr hDC = Win32.GetDC(IntPtr.Zero);
-            IntPtr hAndMaskDC = Win32.CreateCompatibleDC(hDC);
-            if (hAndMaskDC == IntPtr.Zero) throw new Win32Exception("AndMask CreateCompatibleDC() failed.");
-            IntPtr hXorMaskDC = Win32.CreateCompatibleDC(hDC);
-            if (hXorMaskDC == IntPtr.Zero) throw new Win32Exception("XorMask CreateCompatibleDC() failed.");
-
-            // Make sure to call CreateCompatibleBitmap with the window DC as the
-            // newly created DC is initialized with a mono-chromatic 1x1 pixel bitmap by default.
-            // And we don't want to create a bitmap with a monochrome format.
-            // See https://www.codeproject.com/Articles/224754/Guide-to-Win32-Memory-DC#:~:text=Avoid%20a%20Common%20Mistake
-            IntPtr hAndMaskBitmap = Win32.CreateCompatibleBitmap(hDC, width, height);
-            if (hAndMaskBitmap == IntPtr.Zero) throw new Win32Exception("AndMask CreateCompatibleBitmap() failed.");
-            IntPtr hXorMaskBitmap = Win32.CreateCompatibleBitmap(hDC, width, height);
-            if (hXorMaskBitmap == IntPtr.Zero) throw new Win32Exception("XorMask CreateCompatibleBitmap() failed.");
-
-            IntPtr hOldAndMaskBitmap = Win32.SelectObject(hAndMaskDC, hAndMaskBitmap);
-            if (hOldAndMaskBitmap == IntPtr.Zero) throw new Win32Exception("AndMask SelectObject() failed.");
-            IntPtr hOldXorMaskBitmap = Win32.SelectObject(hXorMaskDC, hXorMaskBitmap);
-            if (hOldXorMaskBitmap == IntPtr.Zero) throw new Win32Exception("XorMask SelectObject() failed.");
-
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    int index = (x + (y * width)) * 3;
-
-                    uint mask = (uint)maskData[x + (y * width)] == 1 ? 0x00_FF_FF_FFu : 0x00_00_00_00u;
-                    uint color = (uint)colorData[index + 0] << 0 | (uint)colorData[index + 1] << 8 | (uint)colorData[index + 2] << 16;
-
-                    int success;
-                    success = Win32.SetPixelV(hAndMaskDC, x, y, mask);
-                    if (success == 0) throw new Win32Exception("AndMask SetPixel() failed.");
-                    success = Win32.SetPixelV(hXorMaskDC, x, y, color);
-                    if (success == 0) throw new Win32Exception("XorMask SetPixel() failed.");
-                }
-            }
-
-            // Select the old objects again, as stated we should in the documentation.
-            Win32.SelectObject(hAndMaskDC, hOldAndMaskBitmap);
-            Win32.SelectObject(hXorMaskDC, hOldXorMaskBitmap);
-
-            bool deleted;
-            deleted = Win32.DeleteDC(hAndMaskDC);
-            if (deleted == false) throw new Win32Exception("AndMask DeleteDC() failed.");
-            deleted = Win32.DeleteDC(hXorMaskDC);
-            if (deleted == false) throw new Win32Exception("XorMask DeleteDC() failed.");
-
-            Win32.ReleaseDC(IntPtr.Zero, hDC);
-
-            Win32.ICONINFO iconinfo = new Win32.ICONINFO()
-            {
-                fIcon = false, // We are creating a cursor
-                xHotspot = hcursor.HotSpotX,
-                yHotspot = hcursor.HotSpotY,
-                hbmMask = hAndMaskBitmap,
-                hbmColor = hXorMaskBitmap,
-            };
-
-            IntPtr hcursorIcon = Win32.CreateIconIndirect(in iconinfo);
-            if (hcursorIcon == IntPtr.Zero)
-            {
-                throw new Win32Exception("CreateIconIndirect() failed.");
-            }
-
-            hcursor.Cursor = hcursorIcon;
-            hcursor.MaskBitmap = hAndMaskBitmap;
-            hcursor.ColorBitmap = hXorMaskBitmap;
-            hcursor.Mode = HCursor.CursorMode.Icon;
-        }
-
-        /// <summary>
-        /// Loads a cursor from a .cur file.
-        /// </summary>
-        /// <param name="handle">Handle to a cursor.</param>
-        /// <param name="file">The .cur file to load.</param>
-        /// <exception cref="FileNotFoundException"></exception>
-        public void LoadCurFile(CursorHandle handle, string file)
-        {
-            HCursor hcursor = handle.As<HCursor>(this);
-
-            // FIXME: Figure out if we should destroy the previous cursor like this.
-            Destroy(handle);
-
-            // FIXME: Is this a relative path or a absolute path?
-            IntPtr cursor = Win32.LoadCursorFromFile(file);
-            if (cursor == IntPtr.Zero)
-            {
-                // FIXME: Find out if we failed because of the wrong format!
-                Win32Exception ex = new Win32Exception("LoadCursorFromFile failed.");
-                if (ex.NativeErrorCode == Win32.ERROR_FILE_NOT_FOUND)
-                {
-                    throw new FileNotFoundException("Could not load file.", file);
-                }
-                else
-                {
-                    throw ex;
-                }
-            }
-
-            hcursor.Cursor = cursor;
-            hcursor.Mode = HCursor.CursorMode.FileIcon;
-        }
-
-        /// <inheritdoc/>
-        public void SetHotspot(CursorHandle handle, int x, int y)
-        {
-            HCursor hcursor = handle.As<HCursor>(this);
-
-            if (x < 0) throw new ArgumentOutOfRangeException(nameof(x), $"x cannot be negative. x = {x}");
-            if (y < 0) throw new ArgumentOutOfRangeException(nameof(y), $"y cannot be negative. y = {y}");
-
-            // FIXME: This means that we need to check that the hotspot is specified correctly when we load in the cursor later.
-            if (hcursor.Mode != HCursor.CursorMode.Uninitialized)
-            {
-                GetSize(handle, out int width, out int height);
-
-                if (x >= width) throw new ArgumentOutOfRangeException(nameof(x), $"x cannot be larger than the cursor width. cursor width = {width}, x = {x}");
-                if (y >= height) throw new ArgumentOutOfRangeException(nameof(y), $"y cannot be larger than the cursor height. cursor height = {height}, y = {y}");
-            }
-
-            hcursor.HotSpotX = x;
-            hcursor.HotSpotY = y;
-
-            // Here we need to recreate the HCursor with the new hotspot.
-
-            switch (hcursor.Mode)
-            {
-                case HCursor.CursorMode.Uninitialized:
-                    // For an uninitialized cursor we just need to record the hotspot for later use.
-                    break;
-                case HCursor.CursorMode.SystemCursor:
-                    // Here we could get the bitmaps related to this system cursor using Win32.GetIconInfo
-                    // and convert this into a CursorMode.Icon cursor. That way we can set the hotspot to wherever.
-                    throw new NotSupportedException("Cannot change the hotspot of a system cursor.");
-                case HCursor.CursorMode.Icon:
-                    {
-                        // Here we delete the HCursor, and create a new one from the stored bitmaps.
-                        Win32.DestroyIcon(hcursor.Cursor);
-
-                        Win32.ICONINFO info = new Win32.ICONINFO()
-                        {
-                            fIcon = false,
-                            xHotspot = hcursor.HotSpotX,
-                            yHotspot = hcursor.HotSpotY,
-                            hbmMask = hcursor.MaskBitmap,
-                            hbmColor = hcursor.ColorBitmap,
-                        };
-
-                        IntPtr hcursorIcon = Win32.CreateIconIndirect(in info);
-                        if (hcursorIcon == IntPtr.Zero)
-                        {
-                            throw new Win32Exception("CreateIconIndirect() failed.");
-                        }
-
-                        hcursor.Cursor = hcursorIcon;
-                        break;
-                    }
-                case HCursor.CursorMode.FileIcon:
-                    // Should we get the cursor images and create a new CursorMode.Icon cursor from that here?
-                    // See CursorMode.SystemCursor case.
-                    throw new NotSupportedException("Cannot change the hotspot of a cursor loaded from a file.");
-                default:
-                    throw new InvalidOperationException($"Unknown cursor mode: {hcursor.Mode}.");
-            }
-        }
-
-        /// <inheritdoc/>
-        public void SetScale(CursorHandle handle, float horizontal, float vertical)
-        {
-            HCursor hcursor = handle.As<HCursor>(this);
-
-            throw new NotSupportedException("Cannot scale cursor on windows.");
         }
     }
 }

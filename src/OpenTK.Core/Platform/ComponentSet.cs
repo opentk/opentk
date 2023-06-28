@@ -301,13 +301,10 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        bool ICursorComponent.CanLoadSystemCursor => _cursorComponent!.CanLoadSystemCursor;
+        bool ICursorComponent.CanLoadSystemCursors => _cursorComponent!.CanLoadSystemCursors;
 
         /// <inheritdoc/>
-        bool ICursorComponent.CanScaleCursor => _cursorComponent!.CanScaleCursor;
-
-        /// <inheritdoc/>
-        bool ICursorComponent.CanSupportAnimatedCursor => _cursorComponent!.CanSupportAnimatedCursor;
+        bool ICursorComponent.CanInspectSystemCursors => _cursorComponent!.CanInspectSystemCursors;
 
         /// <inheritdoc/>
         bool IIconComponent.CanLoadSystemIcon => _iconComponent!.CanLoadSystemIcon;
@@ -567,9 +564,15 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        IconHandle IIconComponent.Create()
+        IconHandle IIconComponent.Create(SystemIconType systemIcon)
         {
-            return _iconComponent!.Create();
+            return _iconComponent!.Create(systemIcon);
+        }
+
+        /// <inheritdoc/>
+        IconHandle IIconComponent.Create(int width, int height, System.ReadOnlySpan<byte> data)
+        {
+            return _iconComponent!.Create(width, height, data);
         }
 
         /// <inheritdoc/>
@@ -609,39 +612,33 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IIconComponent.GetDimensions(IconHandle handle, out int width, out int height)
+        void IIconComponent.GetSize(IconHandle handle, out int width, out int height)
         {
-            _iconComponent!.GetDimensions(handle, out width, out height);
+            _iconComponent!.GetSize(handle, out width, out height);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.GetBitmapData(IconHandle handle, Span<byte> data)
+        CursorHandle ICursorComponent.Create(SystemCursorType systemCursor)
         {
-            _iconComponent!.GetBitmapData(handle, data);
+            return _cursorComponent!.Create(systemCursor);
         }
 
         /// <inheritdoc/>
-        int IIconComponent.GetBitmapByteSize(IconHandle handle)
+        CursorHandle ICursorComponent.Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
-            return _iconComponent!.GetBitmapByteSize(handle);
+            return _cursorComponent!.Create(width, height, image, hotspotX, hotspotY);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
+        CursorHandle ICursorComponent.Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
-            _iconComponent!.Load(handle, width, height, data);
+            return _cursorComponent!.Create(width, height, colorData, maskData, hotspotX, hotspotY);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.Load(IconHandle handle, SystemIconType name)
+        bool ICursorComponent.IsSystemCursor(CursorHandle handle)
         {
-            _iconComponent!.Load(handle, name);
-        }
-
-        /// <inheritdoc/>
-        CursorHandle ICursorComponent.Create()
-        {
-            return _cursorComponent!.Create();
+            return _cursorComponent!.IsSystemCursor(handle);
         }
 
         /// <inheritdoc/>
@@ -660,48 +657,6 @@ namespace OpenTK.Core.Platform
         void ICursorComponent.GetHotspot(CursorHandle handle, out int x, out int y)
         {
             _cursorComponent!.GetHotspot(handle, out x, out y);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.GetImage(CursorHandle handle, Span<byte> image)
-        {
-            _cursorComponent!.GetImage(handle, image);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.GetScale(CursorHandle handle, out float horizontal, out float vertical)
-        {
-            _cursorComponent!.GetScale(handle, out horizontal, out vertical);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, SystemCursorType systemCursor)
-        {
-            _cursorComponent!.Load(handle, systemCursor);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
-        {
-            _cursorComponent!.Load(handle, width, height, image);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
-        {
-            _cursorComponent!.Load(handle, width, height, colorData, maskData);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.SetHotspot(CursorHandle handle, int x, int y)
-        {
-            _cursorComponent!.SetHotspot(handle, x, y);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.SetScale(CursorHandle handle, float horizontal, float vertical)
-        {
-            _cursorComponent!.SetScale(handle, horizontal, vertical);
         }
 
         /// <inheritdoc/>

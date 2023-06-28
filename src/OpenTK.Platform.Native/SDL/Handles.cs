@@ -66,12 +66,6 @@ namespace OpenTK.Platform.Native.SDL
 
         public CursorMode Mode { get; internal set; }
 
-        // Might need to keep a copy of the image data so we can reconstruct the cursor when needed.
-
-        public byte[]? ColorData { get; internal set; }
-
-        public byte[]? MaskData { get; internal set; }
-
         public SDL_Surface* Surface { get; internal set; }
 
         public int Width { get; internal set; }

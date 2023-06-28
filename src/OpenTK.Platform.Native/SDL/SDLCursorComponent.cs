@@ -11,14 +11,18 @@ using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
 {
-    internal class SDLCursorComponent : ICursorComponent
+    public class SDLCursorComponent : ICursorComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(SDLCursorComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.MouseCursor;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.MouseCursor)
@@ -27,96 +31,16 @@ namespace OpenTK.Platform.Native.SDL
             }
         }
 
-        public bool CanLoadSystemCursor => true;
+        /// <inheritdoc/>
+        public bool CanLoadSystemCursors => true;
 
-        public bool CanScaleCursor => false;
+        /// <inheritdoc/>
+        public bool CanInspectSystemCursors => false;
 
-        public bool CanSupportAnimatedCursor => false;
-
-        public CursorHandle Create()
+        /// <inheritdoc/>
+        public CursorHandle Create(SystemCursorType systemCursor)
         {
-            return new SDLCursor();
-        }
-
-        public void Destroy(CursorHandle handle)
-        {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
-
-            switch (cursor.Mode)
-            {
-                case SDLCursor.CursorMode.Uninitialized:
-                    break;
-                case SDLCursor.CursorMode.SystemCursor:
-                    SDL_FreeCursor(cursor.Cursor);
-                    cursor.Cursor = SDL_CursorPtr.Null;
-                    break;
-                case SDLCursor.CursorMode.DataCursor:
-                    SDL_FreeCursor(cursor.Cursor);
-                    cursor.Cursor = SDL_CursorPtr.Null;
-                    cursor.ColorData = null;
-                    cursor.MaskData = null;
-                    break;
-                case SDLCursor.CursorMode.SurfaceCursor:
-                    throw new NotImplementedException();
-                default:
-                    throw new InvalidOperationException($"Unknown cursor mode: {cursor.Mode}");
-            }
-        }
-
-        public void GetSize(CursorHandle handle, out int width, out int height)
-        {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
-
-            width = cursor.Width;
-            height = cursor.Height;
-        }
-
-        public void GetHotspot(CursorHandle handle, out int x, out int y)
-        {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
-
-            // FIXME: Should we throw if we have a system cursor?
-            x = cursor.HotX;
-            y = cursor.HotY;
-        }
-
-        public void GetImage(CursorHandle handle, Span<byte> image)
-        {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
-
-            // FIXME: What should we do for DataCursor and SurfaceCursor?
-            switch (cursor.Mode)
-            {
-                case SDLCursor.CursorMode.Uninitialized:
-                    image = Span<byte>.Empty;
-                    break;
-                case SDLCursor.CursorMode.SystemCursor:
-                    throw new InvalidOperationException("SDL can't get the image data from a system cursor.");
-                    break;
-                case SDLCursor.CursorMode.DataCursor:
-                    throw new NotImplementedException();
-                    break;
-                case SDLCursor.CursorMode.SurfaceCursor:
-                    throw new NotImplementedException();
-                    break;
-                default:
-                    throw new PalException(this, $"Unknown cursor mode {cursor.Mode}");
-            }
-        }
-
-        public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
-        {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
-
-            horizontal = 1;
-            vertical = 1;
-        }
-
-        public void Load(CursorHandle handle, SystemCursorType systemCursor)
-        {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
-
-            Destroy(cursor);
+            SDLCursor cursor = new SDLCursor();
 
             SDL_SystemCursor sdlCursor;
             switch (systemCursor)
@@ -173,21 +97,20 @@ namespace OpenTK.Platform.Native.SDL
 
             cursor.Cursor = SDL_CreateSystemCursor(sdlCursor);
 
-            // FIXME: Get hotspot and size information!
             cursor.Width = -1;
             cursor.Height = -1;
             cursor.HotX = -1;
             cursor.HotY = -1;
 
             cursor.Mode = SDLCursor.CursorMode.SystemCursor;
+
+            return cursor;
         }
 
-        public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
+        /// <inheritdoc/>
+        public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
-
-            // FIXME: Should we destroy icons internally like this?
-            Destroy(cursor);
+            SDLCursor cursor = new SDLCursor();
 
             SDL_Surface* surface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PixelFormatEnum.SDL_PIXELFORMAT_ABGR8888);
 
@@ -202,83 +125,104 @@ namespace OpenTK.Platform.Native.SDL
 
             cursor.Surface = surface;
 
-            cursor.Cursor = SDL_CreateColorCursor(cursor.Surface, cursor.HotX, cursor.HotY);
+            cursor.Cursor = SDL_CreateColorCursor(cursor.Surface, hotspotX, hotspotY);
+            cursor.HotX = hotspotX;
+            cursor.HotY = hotspotY;
             cursor.Mode = SDLCursor.CursorMode.SurfaceCursor;
+
+            return cursor;
         }
 
-        public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
+        /// <inheritdoc/>
+        public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
-            SDLCursor cursor = handle.As<SDLCursor>(this);
+            SDLCursor cursor = new SDLCursor();
 
             if (width % 8 != 0)
             {
                 Logger?.LogError("SDL cursor width must be a multiple of 8.");
-                return;
+                //return null;
             }
 
-            Destroy(cursor);
-
-            fixed(byte* color = colorData)
+            fixed (byte* color = colorData)
             fixed (byte* mask = maskData)
             {
                 // FIXME: We might always be creating color cursors?? Or should we convert the color to bw?
-                cursor.Cursor = SDL_CreateCursor(color, mask, width, height, cursor.HotX, cursor.HotY);
+                cursor.Cursor = SDL_CreateCursor(color, mask, width, height, hotspotX, hotspotY);
             }
 
-            cursor.ColorData = colorData.ToArray();
-            cursor.MaskData = maskData.ToArray();
+            cursor.HotX = hotspotX;
+            cursor.HotY = hotspotY;
 
             cursor.Mode = SDLCursor.CursorMode.DataCursor;
+
+            return cursor;
         }
 
-        public void SetHotspot(CursorHandle handle, int x, int y)
+        /// <inheritdoc/>
+        public void Destroy(CursorHandle handle)
         {
             SDLCursor cursor = handle.As<SDLCursor>(this);
 
             switch (cursor.Mode)
             {
                 case SDLCursor.CursorMode.Uninitialized:
-                    {
-                        cursor.HotX = x;
-                        cursor.HotY = y;
-                        break;
-                    }
+                    break;
                 case SDLCursor.CursorMode.SystemCursor:
-                    throw new InvalidOperationException("SDL cannot set the hotspot of system cursors.");
+                    SDL_FreeCursor(cursor.Cursor);
+                    cursor.Cursor = SDL_CursorPtr.Null;
+                    break;
                 case SDLCursor.CursorMode.DataCursor:
-                    {
-                        cursor.HotX = x;
-                        cursor.HotY = y;
-
-                        // FIXME: Do we want to call Load like this, or "inline" it?
-                        Load(cursor, cursor.Width, cursor.Height, cursor.ColorData, cursor.MaskData);
-                        break;
-                    }
+                    SDL_FreeCursor(cursor.Cursor);
+                    cursor.Cursor = SDL_CursorPtr.Null;
+                    break;
                 case SDLCursor.CursorMode.SurfaceCursor:
+                    SDL_FreeCursor(cursor.Cursor);
+                    cursor.Cursor = SDL_CursorPtr.Null;
+                    unsafe
                     {
-                        cursor.HotX = x;
-                        cursor.HotY = y;
-
-                        SDL_FreeCursor(cursor.Cursor);
-
-                        unsafe
-                        {
-                            cursor.Cursor = SDL_CreateColorCursor(cursor.Surface, x, y);
-                        }
-                        
-                        break;
+                        SDL_FreeSurface(cursor.Surface);
+                        cursor.Surface = null;
                     }
                     throw new NotImplementedException();
                 default:
-                    throw new PalException(this, $"Unknown cursor mode: {cursor.Mode}");
+                    throw new InvalidOperationException($"Unknown cursor mode: {cursor.Mode}");
             }
         }
 
-        public void SetScale(CursorHandle handle, float horizontal, float vertical)
+        /// <inheritdoc/>
+        public bool IsSystemCursor(CursorHandle handle)
+        {
+            SDLCursor cursor = handle.As<SDLCursor>(this);
+            return cursor.Mode == SDLCursor.CursorMode.SystemCursor;
+        }
+
+        /// <inheritdoc/>
+        public void GetSize(CursorHandle handle, out int width, out int height)
         {
             SDLCursor cursor = handle.As<SDLCursor>(this);
 
-            throw new NotSupportedException("SDL cannot scale cursors.");
+            if (cursor.Mode == SDLCursor.CursorMode.SystemCursor)
+            {
+                throw new InvalidOperationException("SDL backend cannot get the size of a system cursor.");
+            }
+
+            width = cursor.Width;
+            height = cursor.Height;
+        }
+
+        /// <inheritdoc/>
+        public void GetHotspot(CursorHandle handle, out int x, out int y)
+        {
+            SDLCursor cursor = handle.As<SDLCursor>(this);
+
+            if (cursor.Mode == SDLCursor.CursorMode.SystemCursor)
+            {
+                throw new InvalidOperationException("SDL backend cannot get the hotspot of a system cursor.");
+            }
+
+            x = cursor.HotX;
+            y = cursor.HotY;
         }
     }
 }

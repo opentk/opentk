@@ -180,13 +180,11 @@ namespace LocalTestProject
             glComp.SetCurrentContext(WindowContext);
             GLLoader.LoadBindings(glComp.GetBindingsContext(WindowContext));
 
-            CursorHandle = cursorComp.Create();
-            cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+            CursorHandle = cursorComp.Create(SystemCursorType.TextBeam);
             cursorComp.GetSize(CursorHandle, out _, out _);
             windowComp.SetCursor(WindowHandle, CursorHandle);
             windowComp.SetCursor(WindowHandle2, CursorHandle);
 
-            ImageCursorHandle = cursorComp.Create();
             byte[] image = new byte[16 * 16 * 3];
             byte[] mask = new byte[16 * 16 * 1];
             for (int ccx = 0; ccx < 16; ccx++)
@@ -202,9 +200,8 @@ namespace LocalTestProject
                     mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
                 }
             }
-            cursorComp.SetHotspot(ImageCursorHandle, 8, 8);
-            cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
-            windowComp.SetCursor(WindowHandle, ImageCursorHandle);
+            ImageCursorHandle = cursorComp.Create(16, 16, image, mask, 8, 8);
+            windowComp.SetCursor(WindowHandle2, ImageCursorHandle);
 
             {
                 byte[] icon = new byte[16 * 16 * 4];
@@ -241,18 +238,18 @@ namespace LocalTestProject
                     }
                 }
 
-                IconHandle = iconComp.Create();
-                iconComp.Load(IconHandle, 16, 16, icon);
+                IconHandle = iconComp.Create(16, 16, icon);
 
                 windowComp.SetIcon(WindowHandle, IconHandle);
 
+                // FIXME: Make reading icon data backend specific?
                 {
-                    iconComp.GetDimensions(IconHandle, out int iw, out int ih);
+                    iconComp.GetSize(IconHandle, out int iw, out int ih);
 
-                    int bytes = iconComp.GetBitmapByteSize(IconHandle);
+                    int bytes = ((IconComponent)iconComp).GetBitmapByteSize(IconHandle);
                     byte[] data = new byte[bytes];
 
-                    iconComp.GetBitmapData(IconHandle, data);
+                    ((IconComponent)iconComp).GetBitmapData(IconHandle, data);
 
                     Debug.Assert(iw == 16);
                     Debug.Assert(ih == 16);
@@ -262,14 +259,15 @@ namespace LocalTestProject
             }
 
             {
-                IconHandle2 = iconComp.Create();
-                (iconComp as IconComponent)?.LoadIcoFile(IconHandle2, "Wikipedia-Flags-UN-United-Nations-Flag.ico");
-
+                IconHandle2 = (iconComp as IconComponent)?.LoadIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
+                                iconComp.Create(SystemIconType.Default);
+                
                 windowComp.SetIcon(WindowHandle2, IconHandle2);
             }
 
-            FileCursorHandle = cursorComp.Create();
-            (cursorComp as CursorComponent)?.LoadCurFile(FileCursorHandle, "Cute Light Green Normal Select.cur");
+            FileCursorHandle = (cursorComp as CursorComponent)?.LoadCurFile("Cute Light Green Normal Select.cur") ??
+                                cursorComp.Create(SystemCursorType.Default);
+            
             windowComp.SetCursor(WindowHandle, FileCursorHandle);
 
             {
@@ -736,7 +734,7 @@ void main()
             cursorComp.GetSize(handle, out int width, out int height);
             byte[] data = new byte[width * height * 4];
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            cursorComp.GetImage(handle, data);
+            ((CursorComponent)cursorComp).GetImage(handle, data);
 
             for (int i = 0; i < width * height; i++)
             {
@@ -766,13 +764,13 @@ void main()
 
         public static int GetIconImage(IconHandle handle)
         {
-            int size = iconComp.GetBitmapByteSize(handle);
+            int size = ((IconComponent)iconComp).GetBitmapByteSize(handle);
             byte[] data = new byte[size];
             
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            iconComp.GetBitmapData(handle, data);
+            ((IconComponent)iconComp).GetBitmapData(handle, data);
 
-            iconComp.GetDimensions(handle, out int width, out int height);
+            iconComp.GetSize(handle, out int width, out int height);
 
             int tex = GL.GenTexture();
 
