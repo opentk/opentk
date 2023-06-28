@@ -195,7 +195,6 @@ namespace OpenTK.Platform.Native.Windows
             {
                 _displays.Remove(removed);
 
-                // FIXME: Add event!
                 EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
                 Console.WriteLine($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
@@ -204,7 +203,6 @@ namespace OpenTK.Platform.Native.Windows
             {
                 _displays.Add(connected);
 
-                // FIXME: Add event!
                 EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
                 Console.WriteLine($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
             }

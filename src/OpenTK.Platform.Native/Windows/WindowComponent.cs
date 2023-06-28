@@ -112,7 +112,8 @@ namespace OpenTK.Platform.Native.Windows
             dbh.dbcc_devicetype = DBTDevType.DeviceInterface;
             dbh.dbcc_classguid = Win32.GUID_DEVINTERFACE_HID;
 
-            // FIXME: Unregister from these when we close the application?
+            // We assume we are going to need these notification handles for the lifetime of the application, so we do not close them.
+            // - 2023-06-28 Noggin_bops
             IntPtr devNotifHandle = Win32.RegisterDeviceNotification(HelperHWnd, dbh, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
             IntPtr resumeSuspendNotifHandle = Win32.RegisterSuspendResumeNotification(HelperHWnd, DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
 
@@ -351,7 +352,7 @@ namespace OpenTK.Platform.Native.Windows
                         if (ht == Win32.HTCLIENT)
                         {
                             HWND h = HWndDict[hWnd];
-                            // FIXME: Figure out what to do if h.HCursor is null
+                            // FIXME: Make the normal arrow cursor the default cursor, while keeping the ability of hiding the cursor.
                             Win32.SetCursor(h.HCursor?.Cursor ?? IntPtr.Zero);
                             return new IntPtr(1);
                         }
@@ -609,7 +610,6 @@ namespace OpenTK.Platform.Native.Windows
 
                         WindowState prevWindowState = h.WindowState;
 
-                        // FIXME: Decide if we should merge WindowResize with WindowModeChange! if not, what is the order??
                         switch (size)
                         {
                             case SIZE.Maximized:
@@ -860,16 +860,13 @@ namespace OpenTK.Platform.Native.Windows
 
                                 string composition = Encoding.Unicode.GetString(bytes, 0, (int)written);
 
-                                // FIXME: Do we really need to store these?
-                                h.IMEComposition = composition;
-
-                                h.IMECursor = (int)Win32.ImmGetCompositionString(hmic, GCS.CursorPos, (Span<byte>)null, 0);
-                                if (h.IMECursor == IMM_ERROR_NODATA || h.IMECursor == IMM_ERROR_GENERAL)
+                                int IMECursor = (int)Win32.ImmGetCompositionString(hmic, GCS.CursorPos, (Span<byte>)null, 0);
+                                if (IMECursor == IMM_ERROR_NODATA || IMECursor == IMM_ERROR_GENERAL)
                                 {
-                                    throw new Win32Exception("IME error");
+                                    throw new Win32Exception($"IME error: 0x{IMECursor:X}");
                                 }
 
-                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, h.IMECursor, 0));
+                                EventQueue.Raise(h, PlatformEventType.TextEditing, new TextEditingEventArgs(h, composition, IMECursor, 0));
                             }
                         }
 
@@ -878,7 +875,7 @@ namespace OpenTK.Platform.Native.Windows
                             long length = Win32.ImmGetCompositionString(hmic, GCS.ResultStr, (Span<byte>)null, 0);
                             if (length == IMM_ERROR_NODATA || length == IMM_ERROR_GENERAL)
                             {
-                                throw new Win32Exception("IME error");
+                                throw new Win32Exception($"IME error: 0x{length:X}");
                             }
                             else
                             {
@@ -887,17 +884,15 @@ namespace OpenTK.Platform.Native.Windows
                                 long written = Win32.ImmGetCompositionString(hmic, GCS.ResultStr, bytes, (uint)bytes.Length);
                                 if (written == IMM_ERROR_NODATA || written == IMM_ERROR_GENERAL)
                                 {
-                                    throw new Win32Exception("IME error");
+                                    throw new Win32Exception($"IME error: 0x{written:X}");
                                 }
 
                                 string composition = Encoding.Unicode.GetString(bytes, 0, (int)written);
 
-                                h.IMEComposition = composition;
-
-                                h.IMECursor = (int)Win32.ImmGetCompositionString(hmic, GCS.CursorPos, (Span<byte>)null, 0);
-                                if (h.IMECursor == IMM_ERROR_NODATA || h.IMECursor == IMM_ERROR_GENERAL)
+                                int IMECursor = (int)Win32.ImmGetCompositionString(hmic, GCS.CursorPos, (Span<byte>)null, 0);
+                                if (IMECursor == IMM_ERROR_NODATA || IMECursor == IMM_ERROR_GENERAL)
                                 {
-                                    throw new Win32Exception("IME error");
+                                    throw new Win32Exception($"IME error: 0x{IMECursor:X}");
                                 }
 
                                 EventQueue.Raise(h, PlatformEventType.TextEditing, new TextInputEventArgs(h, composition));
@@ -1017,7 +1012,9 @@ namespace OpenTK.Platform.Native.Windows
 
             hwnd.Destroyed = true;
 
-            // FIXME: Do we add back the hwnd to HWndDict?
+            // If we failed to destroy the window we want to know about it.
+            // Atleast for now.
+            // - 2023-06-28 Noggin_bops
             if (success == false)
             {
                 throw new Win32Exception();
@@ -1159,7 +1156,6 @@ namespace OpenTK.Platform.Native.Windows
             HWND hwnd = handle.As<HWND>(this);
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
-            // FIXME: Constant for this SetWindowPosFlags combo?
             bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, x, y, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
 
             if (success == false)
@@ -1190,7 +1186,6 @@ namespace OpenTK.Platform.Native.Windows
             HWND hwnd = handle.As<HWND>(this);
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
-            // FIXME: Constant for this SetWindowPosFlags combo?
             bool success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, width, height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
 
             if (success == false)
@@ -1224,8 +1219,11 @@ namespace OpenTK.Platform.Native.Windows
 
             Win32.RECT rect = new Win32.RECT(x, y, 0, 0);
             WindowStyles currentStyle = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
-            // This doesn't consider potential scroll bars, so if that is ever a thing we would need to add code for that here!
-            // FIXME: Menu
+
+            // This assumes the window doesn't have a menu bar or scroll bars. For now our windows don't have those, but it's possible that could change.
+            // A user could also modify the window manually so that it has a menubar or scrollbar.
+            // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
+            // - 2023-06-28 Noggin_bops
             bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
 
             if (success == false)
@@ -1234,7 +1232,6 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
-            // FIXME: Constant for this SetWindowPosFlags combo?
             success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, rect.left, rect.top, 0, 0, SetWindowPosFlags.NoSize | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
 
             if (success == false)
@@ -1267,8 +1264,11 @@ namespace OpenTK.Platform.Native.Windows
             Win32.RECT rect = new Win32.RECT(0, 0, width, height);
 
             WindowStyles currentStyle = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
-            // This doesn't consider potential scroll bars, so if that is ever a thing we would need to add code for that here!
-            // FIXME: Menu
+
+            // This assumes the window doesn't have a menu bar or scroll bars. For now our windows don't have those, but it's possible that could change.
+            // A user could also modify the window manually so that it has a menubar or scrollbar.
+            // If there is an easy way to detect this we could dynamically change the bool here, but for now we just assume that they aren't there.
+            // - 2023-06-28 Noggin_bops
             bool success = Win32.AdjustWindowRect(ref rect, currentStyle, false);
 
             if (success == false)
@@ -1277,7 +1277,6 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             // FIXME: What do we want to do here with SetWindowPosFlags.NoActivate??
-            // FIXME: Constant for this SetWindowPosFlags combo?
             success = Win32.SetWindowPos(hwnd.HWnd, IntPtr.Zero, 0, 0, rect.Width, rect.Height, SetWindowPosFlags.NoMove | SetWindowPosFlags.NoActivate | SetWindowPosFlags.NoZOrder | SetWindowPosFlags.NoOwnerZOrder);
 
             if (success == false)
@@ -1361,11 +1360,16 @@ namespace OpenTK.Platform.Native.Windows
             // and ToInt32 is going to throw in that case
             WindowStyles style = (WindowStyles)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style).ToInt64();
 
-            // FIXME: Should we check for this while the window is fullscreen?
             if (hwnd.FullscreenMonitor != null)
             {
-                // FIXME: Exclusive fullscreen?
-                return WindowMode.WindowedFullscreen;
+                if (hwnd.ExclusiveFullscreen)
+                {
+                    return WindowMode.ExclusiveFullscreen;
+                }
+                else
+                {
+                    return WindowMode.WindowedFullscreen;
+                }
             }
 
             if (style.HasFlag(WindowStyles.Visible) == false)
@@ -1384,7 +1388,6 @@ namespace OpenTK.Platform.Native.Windows
                 }
                 else
                 {
-                    // FIXME: Figure out how to return the remaining window modes!
                     return WindowMode.Normal;
                 }
             }
@@ -1404,7 +1407,6 @@ namespace OpenTK.Platform.Native.Windows
         {
             HWND hwnd = handle.As<HWND>(this);
 
-            // FIXME: Restore the window position if we are going out of fullscreen.
             if (hwnd.FullscreenMonitor != null)
             {
                 if (mode != WindowMode.WindowedFullscreen || mode != WindowMode.ExclusiveFullscreen)
@@ -1444,7 +1446,6 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 case WindowMode.ExclusiveFullscreen:
                     {
-                        // FIXME: Is this what we want to do here?
                         HMonitor monitor = (HMonitor)GetDisplay(handle);
                         SetFullscreenDisplay(handle, monitor, new VideoMode(monitor.Resolution.ResolutionX, monitor.Resolution.ResolutionY, monitor.RefreshRate, monitor.BitsPerPixel));
                         break;
@@ -1480,6 +1481,7 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
                 hwnd.PreviousPlacement = placement;
                 hwnd.FullscreenMonitor = monitor;
+                hwnd.ExclusiveFullscreen = false;
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
 
                 // FIXME: Maybe we should do this with SetBorderStyle to be consistent with how we restore the style later?
@@ -1511,8 +1513,6 @@ namespace OpenTK.Platform.Native.Windows
 
             // Set the video mode!
             {
-                // FIXME: When the fullscreen window is closed and other windows are still active the video mode doesn't get reset.
-
                 Win32.DEVMODE devmode = default;
                 devmode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
                 devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
@@ -1521,7 +1521,6 @@ namespace OpenTK.Platform.Native.Windows
                 devmode.dmDisplayFrequency = (uint)videoMode.RefreshRate;
                 devmode.dmBitsPerPel = (uint)videoMode.BitsPerPixel;
 
-                // FIXME: I think we might want to only be able to change the video mode while we are going fullscreen?
                 DispChange result = Win32.ChangeDisplaySettingsExW(hmonitor.AdapterName, ref devmode, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
                 if (result != DispChange.Successful)
                 {
@@ -1540,9 +1539,9 @@ namespace OpenTK.Platform.Native.Windows
                 Win32.GetWindowPlacement(hwnd.HWnd, ref placement);
                 hwnd.PreviousPlacement = placement;
                 hwnd.FullscreenMonitor = hmonitor;
-                // FIXME: this fails if we are already fullscreen!
+                hwnd.ExclusiveFullscreen = true;
                 hwnd.PreviousBorderStyle = GetBorderStyle(hwnd);
-
+                
                 // FIXME: check if we need to remove the window decorations.
                 WindowStyles style = (WindowStyles)(uint)Win32.GetWindowLongPtr(hwnd.HWnd, GetGWLPIndex.Style);
                 Win32.SetWindowLongPtr(hwnd.HWnd, SetGWLPIndex.Style, new IntPtr((int)(style & ~WindowStyles.OverlappedWindow)));
@@ -1575,6 +1574,12 @@ namespace OpenTK.Platform.Native.Windows
         public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
             HWND hwnd = handle.As<HWND>(this);
+
+            // If we are fullscreen, just return the previous border style.
+            if (hwnd.FullscreenMonitor != null)
+            {
+                return hwnd.PreviousBorderStyle;
+            }
 
             // We need ToInt64 here as Style is a uint which means that 0x00000000_ffffffff could be returned,
             // and ToInt32 is going to throw in that case
@@ -1640,7 +1645,6 @@ namespace OpenTK.Platform.Native.Windows
             switch (style)
             {
                 case WindowBorderStyle.Borderless:
-                    // FIXME: Get rid of the wait cursor.
                     windowStyle |= WindowStyles.OverlappedWindow;
                     windowStyle &= ~WindowStyles.Caption;
                     windowStyle &= ~WindowStyles.Border;
@@ -1741,9 +1745,9 @@ namespace OpenTK.Platform.Native.Windows
             RecaptureCursor(hwnd, hwnd.CaptureMode);
         }
 
-        // FIXME: Better name?
         /// <summary>
         /// Used to set and unset cursor capture without changing HWND.CaptureMode.
+        /// We use this to release the mouse when we loose focus, and to recapture it again when we regain focus.
         /// </summary>
         internal void RecaptureCursor(HWND hwnd, CursorCaptureMode mode)
         {

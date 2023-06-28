@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -158,15 +159,11 @@ namespace OpenTK.Platform.Native.Windows
                 throw new Win32Exception("CreateBitmap failed.");
             }
 
-            // FIXME: Maybe remove these fields?
-            hcursor.HotSpotX = hotspotX;
-            hcursor.HotSpotY = hotspotY;
-
             Win32.ICONINFO iconinfo = new Win32.ICONINFO()
             {
                 fIcon = false, // We are creating a cursor
-                xHotspot = hcursor.HotSpotX,
-                yHotspot = hcursor.HotSpotY,
+                xHotspot = hotspotX,
+                yHotspot = hotspotY,
                 hbmMask = maskBitmap,
                 hbmColor = colorBitmap,
             };
@@ -248,15 +245,11 @@ namespace OpenTK.Platform.Native.Windows
 
             Win32.ReleaseDC(IntPtr.Zero, hDC);
 
-            // FIXME: Maybe remove these fields?
-            hcursor.HotSpotX = hotspotX;
-            hcursor.HotSpotY = hotspotY;
-
             Win32.ICONINFO iconinfo = new Win32.ICONINFO()
             {
                 fIcon = false, // We are creating a cursor
-                xHotspot = hcursor.HotSpotX,
-                yHotspot = hcursor.HotSpotY,
+                xHotspot = hotspotX,
+                yHotspot = hotspotY,
                 hbmMask = hAndMaskBitmap,
                 hbmColor = hXorMaskBitmap,
             };
@@ -278,26 +271,27 @@ namespace OpenTK.Platform.Native.Windows
         /// <summary>
         /// Creates a cursor from a .cur file.
         /// </summary>
+        /// <remarks>
+        /// Handles created by this method will work in <see cref="GetSize(CursorHandle, out int, out int)"/> and <see cref="GetHotspot(CursorHandle, out int, out int)"/>.
+        /// </remarks>
         /// <param name="file">The .cur file to load.</param>
         /// <exception cref="FileNotFoundException"></exception>
-        // FIXME: Can you get the hotspot of cursors like this? We should document that.
         public CursorHandle CreateFromCurFile(string file)
         {
             HCursor hcursor = new HCursor();
 
-            // FIXME: Is this a relative path or a absolute path?
             IntPtr cursor = Win32.LoadCursorFromFile(file);
             if (cursor == IntPtr.Zero)
             {
                 // FIXME: Find out if we failed because of the wrong format!
-                Win32Exception ex = new Win32Exception("LoadCursorFromFile failed.");
-                if (ex.NativeErrorCode == Win32.ERROR_FILE_NOT_FOUND)
+                int error = Marshal.GetLastWin32Error();
+                if (error == Win32.ERROR_FILE_NOT_FOUND)
                 {
-                    throw new FileNotFoundException("Could not load file.", file);
+                    throw new FileNotFoundException($"Could not find file: '{file}'", file);
                 }
                 else
                 {
-                    throw ex;
+                    throw new Win32Exception(error);
                 }
             }
 

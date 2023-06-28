@@ -43,11 +43,8 @@ namespace OpenTK.Platform.Native.Windows
         public Vector2i LastMousePosition { get; set; }
         public Vector2 VirtualCursorPosition { get; set; }
 
-        // FIXME: Remove these as they are likely not needed.
-        public string? IMEComposition { get; set; }
-        public int IMECursor { get; set; }
-
         public HMonitor? FullscreenMonitor { get; set; }
+        public bool ExclusiveFullscreen { get; set; }
         public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }
         public WindowBorderStyle PreviousBorderStyle { get; set; } = WindowBorderStyle.ResizableBorder;
 
@@ -79,10 +76,6 @@ namespace OpenTK.Platform.Native.Windows
     internal class HCursor : CursorHandle
     {
         public IntPtr Cursor { get; set; }
-
-        public int HotSpotX { get; set; }
-
-        public int HotSpotY { get; set; }
 
         public CursorMode Mode { get; set; } = CursorMode.Uninitialized;
 

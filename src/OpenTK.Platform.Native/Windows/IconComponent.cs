@@ -70,7 +70,6 @@ namespace OpenTK.Platform.Native.Windows
                     oic = OIC.Warning;
                     break;
                 case SystemIconType.OperatingSystem:
-                    // FIXME how do we get this?
                     oic = OIC.WinLogo;
                     break;
                 default:
@@ -278,13 +277,13 @@ namespace OpenTK.Platform.Native.Windows
                     int success = Win32.GetDIBits(hDC, hbm, 0, 0, null, ref bmInfo, DIB.RGBColors);
                     if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                     {
-                        throw new Exception("GetDIBits failed.");
+                        throw new Exception($"GetDIBits failed. (0x{success:X})");
                     }
 
                     // FIXME: biSizeImage can be 0 if biCompression = RGB
                     if (image.Length < bmInfo.bmiHeader.biSizeImage)
                     {
-                        throw new Exception("Image buffer not big enough!");
+                        throw new Exception($"Image buffer not big enough! Expected: {bmInfo.bmiHeader.biSizeImage} bytes, got: {image.Length} bytes");
                     }
 
                     // Force the bitmap to be top-down.
@@ -299,7 +298,7 @@ namespace OpenTK.Platform.Native.Windows
                         success = Win32.GetDIBits(hDC, hbm, 0, (uint)Math.Abs(bmInfo.bmiHeader.biHeight), (void*)ptr, ref bmInfo, DIB.RGBColors);
                         if (success == 0 || success == Win32.ERROR_INVALID_PARAMETER)
                         {
-                            throw new Exception("GetDIBits failed.");
+                            throw new Exception($"GetDIBits failed. (0x{success:X})");
                         }
                     }
 
