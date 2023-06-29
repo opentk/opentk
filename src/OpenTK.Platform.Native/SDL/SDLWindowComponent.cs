@@ -122,7 +122,12 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_WINDOWEVENT:
                         {
                             SDL_WindowEvent windowEvent = @event.Window;
-                            SDLWindow sdlWindow = WindowDict[windowEvent.windowID];
+                            if (WindowDict.TryGetValue(windowEvent.windowID, out SDLWindow? sdlWindow) == false)
+                            {
+                                // If this event is to a window we don't have in our dictionary we ignore it.
+                                Logger?.LogDebug($"{@event.Type} {windowEvent.@event} Unknown window {windowEvent.windowID}");
+                                break;
+                            }
 
                             switch (windowEvent.@event)
                             {
@@ -346,7 +351,12 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_TEXTEDITING:
                         {
                             SDL_TextEditingEvent textEditingEvent = @event.TextEditingEvent;
-                            SDLWindow sdlWindow = WindowDict[textEditingEvent.windowID];
+                            if (WindowDict.TryGetValue(textEditingEvent.windowID, out SDLWindow? sdlWindow) == false)
+                            {
+                                // If this event is to a window we don't have in our dictionary we ignore it.
+                                Logger?.LogDebug($"{@event.Type} Unknown window {textEditingEvent.windowID}");
+                                break;
+                            }
 
                             // The entire buffer is not used so we find the end of the data
                             // and only convert that to a string.
@@ -417,6 +427,24 @@ namespace OpenTK.Platform.Native.SDL
         {
             OpenGLGraphicsApiHints settings = (OpenGLGraphicsApiHints)hints;
 
+            // SDL requires these attributes to be set before creating the window.
+            // SDL doesn't tell us when these attributes will be read so we don't know
+            // which attributes are read during SDL_CreateWindow or SDL_GL_CreateContext.
+            // This could cause issues on different platforms where:
+            //
+            // window1 = SDL_CreateWindow(setting1)
+            // window2 = SDL_CreateWindow(setting2)
+            // context1 = SDL_GL_CreateContext(window1)
+            // context2 = SDL_GL_CreateContext(window2)
+            //
+            // will cause context1 and 2 to have different settings on different platforms.
+            // On windows this will work as expected as the (most) settings are read when creating the context,
+            // but on X11 and Cocoa context1 and 2 will have the settings from setting2.
+            // Context sharing for example is only "read" during SDL_GL_CreateContext for windows, macos, and linux.
+            // The solution is to set all of the attributes when creating the window,
+            // but then also re-set the attributes before creating the OpenGL context.
+            // - 2023-06-29 Noggin_bops
+
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION, settings.Version.Major);
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION, settings.Version.Minor);
 
@@ -454,13 +482,17 @@ namespace OpenTK.Platform.Native.SDL
 
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, settings.sRGBFramebuffer ? 1 : 0);
 
-            // FIXME: Shared context, should we make the one that we want current and then set the old one again?
-            // GetCurrentContext
-            // SetCurrentContext
-            //SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
-            // SetCurrentContext
+            SDL_GLContext prevContext = SDL_GL_GetCurrentContext();
+            SDL_WindowPtr prevWindow = SDL_GL_GetCurrentWindow();
+            if (settings.SharedContext != null)
+            {
+                SDLOpenGLContext sharedContext = settings.SharedContext.As<SDLOpenGLContext>(this);
 
-            SDL_GLprofile profile = 0;
+                SDL_GL_MakeCurrent(sharedContext.Window.Window, sharedContext.Context);
+                SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+            }
+
+            SDL_GLprofile profile;
             switch (settings.Profile)
             {
                 case OpenGLProfile.None:
@@ -474,7 +506,6 @@ namespace OpenTK.Platform.Native.SDL
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(settings.Profile), (int)settings.Profile, typeof(OpenGLProfile));
-                    break;
             }
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)profile);
 
@@ -485,9 +516,15 @@ namespace OpenTK.Platform.Native.SDL
 
             SDL_WindowPtr window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WindowFlags.SDL_WINDOW_OPENGL | SDL_WindowFlags.SDL_WINDOW_RESIZABLE | SDL_WindowFlags.SDL_WINDOW_HIDDEN);
 
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 0);
+            if (prevContext != SDL_GLContext.Null)
+            {
+                SDL_GL_MakeCurrent(prevWindow, prevContext);
+            }
+
             uint id = SDL_GetWindowID(window);
 
-            SDLWindow sdlWindow = new SDLWindow(window, id);
+            SDLWindow sdlWindow = new SDLWindow(window, id, settings);
 
             WindowDict.Add(id, sdlWindow);
 
@@ -610,7 +647,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            SDL_GL_GetDrawableSize(window.Window, out width, out height);
         }
 
         /// <inheritdoc/>

@@ -20,7 +20,7 @@ namespace OpenTK.Platform.Native.SDL
 
         public SDLIcon? Icon { get; internal set; } = null;
 
-        public SDLWindow(SDL_WindowPtr window, uint windowID)
+        public SDLWindow(SDL_WindowPtr window, uint windowID, GraphicsApiHints hints) : base(hints)
         {
             Window = window;
             WindowID = windowID;

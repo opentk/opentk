@@ -9,6 +9,15 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native
 {
+    public enum Backend
+    {
+        None,
+        Win32,
+        Macos,
+        X11,
+        SDL,
+    }
+
     /// <summary>
     /// Used to create platform specific version of components.
     /// </summary>
@@ -81,6 +90,33 @@ namespace OpenTK.Platform.Native
                 //[PalComponents.Clipboard] = () => new Macos.ClipboardComponent(),
                 //[PalComponents.Joystick] = () => new Macos.JoystickComponent(),
             };
+
+        public static Backend GetBackend()
+        {
+            // FIXME: Proper backend selection!
+
+            var test = GetPlatformComponents();
+            if (test == win32Components)
+            {
+                return Backend.Win32;
+            }
+            else if (test == x11Components)
+            {
+                return Backend.X11;
+            }
+            else if (test == macosComponents)
+            {
+                return Backend.Macos;
+            }
+            else if (test == sdlComponents)
+            {
+                return Backend.SDL;
+            }
+            else
+            {
+                return Backend.None;
+            }
+        }
 
         // FIXME: We probably only want to evaluate the platform decision once?
         private static Dictionary<PalComponents, ComponentCtor> GetPlatformComponents()

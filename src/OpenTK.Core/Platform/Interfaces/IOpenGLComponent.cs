@@ -72,6 +72,7 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="handle">Handle to the OpenGL context to make current, or null to make none current.</param>
         /// <returns>True when the OpenGL context is successfully made current.</returns>
+        // FIXME: Rename to MakeCurrent, like all other apis do
         bool SetCurrentContext(OpenGLContextHandle? handle);
 
         /// <summary>

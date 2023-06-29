@@ -215,6 +215,9 @@ namespace OpenTK.Platform.Native.SDL
         internal static extern SDL_GLContext SDL_GL_GetCurrentContext();
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_WindowPtr SDL_GL_GetCurrentWindow();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SDL_GL_SwapWindow(SDL_WindowPtr window);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]

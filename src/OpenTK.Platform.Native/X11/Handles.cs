@@ -82,11 +82,10 @@ namespace OpenTK.Platform.Native.X11
             XWindow window,
             GraphicsApiHints hints,
             GLXFBConfig? fbConfig = null,
-            XColorMap? colorMap = null)
+            XColorMap? colorMap = null) : base(hints)
         {
             Display = display;
             Window = window;
-            GraphicsApiHints = hints;
             FBConfig = fbConfig;
             ColorMap = colorMap;
         }
