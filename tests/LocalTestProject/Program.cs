@@ -92,13 +92,13 @@ namespace LocalTestProject
                 Console.WriteLine($"  {videoMode}");
                 Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
 
-                int modeCount = dispComp.GetSupportedVideoModeCount(PrimaryDisplayHandle);
+                int modeCount = dispComp.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
 
                 if (dispComp.GetDisplayCount() > 1)
                 {
                     var secondaryHandle = dispComp.Open(1);
-                    modeCount = dispComp.GetSupportedVideoModeCount(secondaryHandle);
+                    modeCount = dispComp.GetSupportedVideoModes(secondaryHandle).Length;
                     Console.WriteLine($"Secondary monitor supports {modeCount} video modes.");
                 }
                 

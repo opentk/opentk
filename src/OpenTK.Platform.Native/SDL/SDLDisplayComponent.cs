@@ -133,19 +133,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public int GetSupportedVideoModeCount(DisplayHandle handle)
+        public VideoMode[] GetSupportedVideoModes(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
-            return SDL_GetNumDisplayModes(display.Index);
-        }
-
-        /// <inheritdoc/>
-        public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
-        {
-            SDLDisplay display = handle.As<SDLDisplay>(this);
-
-            int numModes = GetSupportedVideoModeCount(display);
+            int numModes = SDL_GetNumDisplayModes(display.Index);
+            VideoMode[] modes = new VideoMode[numModes];
             for (int i = 0; i < numModes; i++)
             {
                 int result = SDL_GetDisplayMode(display.Index, i, out SDL_DisplayMode sdlMode);
@@ -158,6 +151,8 @@ namespace OpenTK.Platform.Native.SDL
                 int bpp = (int)SDL_BITSPERPIXEL(sdlMode.format);
                 modes[i] = new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, bpp);
             }
+
+            return modes;
         }
 
         /// <inheritdoc/>

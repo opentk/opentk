@@ -723,15 +723,9 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        int IDisplayComponent.GetSupportedVideoModeCount(DisplayHandle handle)
+        VideoMode[] IDisplayComponent.GetSupportedVideoModes(DisplayHandle handle)
         {
-            return _displayComponent!.GetSupportedVideoModeCount(handle);
-        }
-
-        /// <inheritdoc/>
-        void IDisplayComponent.GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
-        {
-            _displayComponent!.GetSupportedVideoModes(handle, modes);
+            return _displayComponent!.GetSupportedVideoModes(handle);
         }
 
         /// <inheritdoc/>

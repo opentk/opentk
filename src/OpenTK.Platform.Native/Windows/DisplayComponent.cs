@@ -328,7 +328,6 @@ namespace OpenTK.Platform.Native.Windows
             throw new PalException(this, "Could not find primary monitor!");
         }
 
-        // FIXME: You probably also don't Destroy a monitor
         /// <inheritdoc/>
         public void Close(DisplayHandle handle)
         {
@@ -366,52 +365,12 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
-        {
-            HMonitor monitor = handle.As<HMonitor>(this);
-
-            // FIXME: Set bit-depth??
-
-            // FIXME: What should we do with DPI here? Is there a way to change DPI?
-            // Or do we just pretend that the DPI has changed?
-            Win32.DEVMODE devmode = default;
-            devmode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
-            devmode.dmFields = DM.PelsWidth | DM.PelsHeight | DM.BitsPerPel | DM.DisplayFrequency;
-            devmode.dmPelsWidth = (uint)mode.Width;
-            devmode.dmPelsHeight = (uint)mode.Height;
-            devmode.dmDisplayFrequency = (uint)mode.RefreshRate;
-            devmode.dmBitsPerPel = 32;
-
-            // FIXME: I think we might want to only be able to change the video mode while we are going fullscreen?
-            DispChange result = Win32.ChangeDisplaySettingsExW(monitor.AdapterName, ref devmode, IntPtr.Zero, CDS.Fullscreen, IntPtr.Zero);
-            if (result != DispChange.Successful)
-            {
-                Logger?.LogError($"Could not set display mode: {result}");
-            }
-        }
-
-        /// <inheritdoc/>
-        public int GetSupportedVideoModeCount(DisplayHandle handle)
+        public VideoMode[] GetSupportedVideoModes(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            // FIXME: Calling this function with 0 rebuilds the cache, which means that between
-            // a call to GetSupportedVideoModeCount and GetSupportedVideoModes the cache could have changed.
-            // This is not great... would be good if we could combine the calls into one.
-            int modeIndex = 0;
-            Win32.DEVMODE lpDevMode = default;
-            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
-            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
-            {
-            }
-
-            return modeIndex - 1;
-        }
-
-        /// <inheritdoc/>
-        public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
-        {
-            HMonitor hmonitor = handle.As<HMonitor>(this);
+            // Unfortunately we don't know the size of the array we are going to create in advance
+            List<VideoMode> modes = new List<VideoMode>(32);
 
             int modeIndex = 0;
             Win32.DEVMODE lpDevMode = default;
@@ -428,12 +387,10 @@ namespace OpenTK.Platform.Native.Windows
                 if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
                     throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
 
-                modes[modeIndex - 1] = new VideoMode(
-                    (int)lpDevMode.dmPelsWidth,
-                    (int)lpDevMode.dmPelsHeight,
-                    lpDevMode.dmDisplayFrequency,
-                    (int)lpDevMode.dmBitsPerPel);
+                modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
             }
+
+            return modes.ToArray();
         }
 
         /// <inheritdoc/>

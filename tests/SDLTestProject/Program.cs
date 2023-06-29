@@ -160,10 +160,10 @@ void main()
                 {
                     IconComponent.GetSize(IconHandle, out int iw, out int ih);
 
-                    int bytes = ((IconComponent)IconComponent).GetBitmapByteSize(IconHandle);
+                    int bytes = ((SDLIconComponent)IconComponent).GetBitmapByteSize(IconHandle);
                     byte[] data = new byte[bytes];
 
-                    ((IconComponent)IconComponent).GetBitmapData(IconHandle, data);
+                    ((SDLIconComponent)IconComponent).GetBitmapData(IconHandle, data);
 
                     Debug.Assert(iw == 16);
                     Debug.Assert(ih == 16);
@@ -193,9 +193,7 @@ void main()
                 string name = DisplayComponent.GetName(handle);
                 bool isPrimary = DisplayComponent.IsPrimary(handle);
                 DisplayComponent.GetVideoMode(handle, out VideoMode mode);
-                int modeCount = DisplayComponent.GetSupportedVideoModeCount(handle);
-                VideoMode[] modes = new VideoMode[modeCount];
-                DisplayComponent.GetSupportedVideoModes(handle, modes);
+                VideoMode[] modes = DisplayComponent.GetSupportedVideoModes(handle);
                 DisplayComponent.GetVirtualPosition(handle, out int px, out int py);
                 DisplayComponent.GetResolution(handle, out int resx, out int resy);
                 DisplayComponent.GetWorkArea(handle, out Box2i workArea);
@@ -204,8 +202,8 @@ void main()
 
                 Console.WriteLine($"Display {i}: {name}{(isPrimary ? " (primary)" : "")}");
                 Console.WriteLine($"  Current Mode: {mode}");
-                Console.WriteLine($"  Modes: {modeCount}");
-                for (int m = 0; m < modeCount; m++)
+                Console.WriteLine($"  Modes: {modes.Length}");
+                for (int m = 0; m < modes.Length; m++)
                 {
                     Console.WriteLine($"    Mode {m}: {modes[m]}");
                 }

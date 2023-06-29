@@ -76,20 +76,12 @@ namespace OpenTK.Core.Platform
         void GetVideoMode(DisplayHandle handle, out VideoMode mode);
 
         /// <summary>
-        /// Get the number of video modes the display supports.
+        /// Get all supported video modes for a specific display.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <returns>Number of supported display modes.</returns>
+        /// <returns>An array of all supported video modes.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        int GetSupportedVideoModeCount(DisplayHandle handle);
-
-        /// <summary>
-        /// Get all supported video modes.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <param name="modes">Span where supported display modes will be written to.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes);
+        VideoMode[] GetSupportedVideoModes(DisplayHandle handle);
 
         /// <summary>
         /// Get the position of the display in the virtual desktop.
