@@ -19,6 +19,7 @@ namespace OpenTK.Platform.Native.X11
         WM_STATE,
         WM_CHANGE_STATE,
         WM_NAME,
+        WM_NORMAL_HINTS,
         #endregion
 
         #region Freedesktop Atoms

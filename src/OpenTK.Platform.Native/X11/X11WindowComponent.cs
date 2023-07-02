@@ -309,6 +309,14 @@ namespace OpenTK.Platform.Native.X11
 
                                     EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
                                 }
+                                else if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
+                                {
+                                    // Ping events to know that we are still responsive.
+                                    XEvent reply = ea;
+                                    reply.ClientMessage.Window = X11.DefaultRootWindow;
+
+                                    XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
+                                }
                             }
 
                             break;
@@ -605,6 +613,17 @@ namespace OpenTK.Platform.Native.X11
 
                                 xwindow.WMState = state;
 
+                                // Check if we've gone fullscreen.
+                                if (changed.HasFlag(WMState.Fullscreen))
+                                {
+                                    if (state.HasFlag(WMState.Fullscreen))
+                                    {
+                                        // FIXME: Differentiate exclusive fullscreen from windowed fullscreen?
+                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.ExclusiveFullscreen));
+                                        break;
+                                    }
+                                }
+
                                 if (changed.HasFlag(WMState.Hidden))
                                 {
                                     if (state.HasFlag(WMState.Hidden))
@@ -632,7 +651,14 @@ namespace OpenTK.Platform.Native.X11
                                     }
                                 }
                             }
-
+                            else
+                            {
+                                if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
+                                    property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME])
+                                {
+                                    Console.WriteLine($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
+                                }
+                            }
                             break;
                         }
                     case XEventType.ConfigureNotify:
@@ -648,6 +674,18 @@ namespace OpenTK.Platform.Native.X11
                                 xwindow.Height = configure.height;
                                 
                                 EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, (xwindow.Width, xwindow.Height)));
+                            }
+
+                            if (configure.x != xwindow.X ||
+                                configure.y != xwindow.Y)
+                            {
+                                xwindow.X = configure.x;
+                                xwindow.Y = configure.y;
+
+                                // FIXME: The coordinates from the event are relative to the parent window. So if we are reparented this will report wrong coordinates.
+
+                                // FIXME: Calculate the proper window location, the coordinates reported are for the client area of the window.
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(xwindow, (xwindow.X, xwindow.Y), (xwindow.X, xwindow.Y)));
                             }
 
                             break;
@@ -779,8 +817,8 @@ namespace OpenTK.Platform.Native.X11
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
 
-            // Register to deletion events
-            XSetWMProtocols(X11.Display, window, new XAtom[] { X11.Atoms[KnownAtoms.WM_DELETE_WINDOW] }, 1);
+            // Register to deletion and ping events
+            XSetWMProtocols(X11.Display, window, new XAtom[] { X11.Atoms[KnownAtoms.WM_DELETE_WINDOW], X11.Atoms[KnownAtoms._NET_WM_PING] }, 2);
 
             // FIXME: Find a place for this:
             XSelectInput(
@@ -1059,7 +1097,6 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             XSizeHints* hints = XAllocSizeHints();
-
             XSizeHintFlags supplied;
             XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
 
@@ -1398,6 +1435,8 @@ namespace OpenTK.Platform.Native.X11
                         }
 
                         int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+                        // FIXME: Disable compositor for this window?
 
                         xwindow.IsFullscreen = true;
 
