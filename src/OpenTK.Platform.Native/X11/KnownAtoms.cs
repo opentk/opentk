@@ -103,6 +103,10 @@ namespace OpenTK.Platform.Native.X11
         _NET_WM_FULL_PLACEMENT,
         #endregion
 
+        #region Motif
+        _MOTIF_WM_HINTS,
+        #endregion
+
         EDID,
 
         /// <summary>

@@ -1503,11 +1503,42 @@ namespace OpenTK.Platform.Native.X11
             {
                 case WindowBorderStyle.ResizableBorder:
                 unsafe {
-                    XSizeHints* hints = XAllocSizeHints();
+                    SetDecorations(xwindow, true);
+                    SetSizeLimits(xwindow, true, -1, -1);
+                    xwindow.FixedSize = (-1, -1);
+                    break;
+                }
+                case WindowBorderStyle.Borderless:
+                unsafe {
+                    // FIXME: Should the client size and location be retained when going borderless?
+                    SetDecorations(xwindow, false);
+                    SetSizeLimits(xwindow, true, -1, -1);
+                    xwindow.FixedSize = (-1, -1);
+                    break;
+                }
+                case WindowBorderStyle.FixedBorder:
+                unsafe {
+                    // Set the max and min height to the same.
+                    // FIXME: Figure out if you can still resize the window programatically.
+                    SetDecorations(xwindow, true);
 
-                    XSizeHintFlags supplied;
-                    XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+                    GetClientSize(xwindow, out int width, out int height);
+                    SetSizeLimits(xwindow, false, width, height);
+                    xwindow.FixedSize = (width, height);
+                    break;
+                }
+                default:
+                    throw new NotImplementedException();
+            }
 
+            static unsafe void SetSizeLimits(XWindowHandle xwindow, bool enableLimits, int fixedWidth, int fixedHeight)
+            {
+                XSizeHints* hints = XAllocSizeHints();
+                XSizeHintFlags supplied;
+                XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
+                if (enableLimits)
+                {
                     // We default these to max values so that leaving one as null
                     // effectively means not having a max.
                     hints->MaxWidth = xwindow.MaxSize.Width ?? int.MaxValue;
@@ -1527,49 +1558,42 @@ namespace OpenTK.Platform.Native.X11
                         hints->Flags |= XSizeHintFlags.MinSize;
                     else
                         hints->Flags &= ~XSizeHintFlags.MinSize;
-
-                    XSetWMNormalHints(X11.Display, xwindow.Window, hints);
-
-                    xwindow.FixedSize = (-1, -1);
-
-                    XFree(hints);
-
-                    break;
                 }
-                case WindowBorderStyle.Borderless:
+                else 
                 {
-                    throw new NotImplementedException();
-                }
-                case WindowBorderStyle.FixedBorder:
-                // Set the max and min height to the same.
-                // FIXME: Figure out if you can still resize the window programatically.
+                    hints->MinWidth = fixedWidth;
+                    hints->MaxWidth = fixedWidth;
 
-                unsafe {
-                    XSizeHints* hints = XAllocSizeHints();
-
-                    XSizeHintFlags supplied;
-                    XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
-
-                    GetClientSize(xwindow, out int width, out int height);
-
-                    hints->MinWidth = width;
-                    hints->MaxWidth = width;
-
-                    hints->MinHeight = height;
-                    hints->MaxHeight = height;
-
-                    xwindow.FixedSize = (width, height);
+                    hints->MinHeight = fixedHeight;
+                    hints->MaxHeight = fixedHeight;
 
                     hints->Flags |= XSizeHintFlags.MinSize | XSizeHintFlags.MaxSize;
-
-                    XSetWMNormalHints(X11.Display, xwindow.Window, hints);
-
-                    XFree(hints);
-
-                    break;
                 }
-                default:
-                    throw new NotImplementedException();
+
+                XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+
+                XFree(hints);
+            }
+
+            static unsafe void SetDecorations(XWindowHandle xwindow, bool enable)
+            {
+                // We use 
+                const int MWM_HINTS_DECORATIONS = 1 << 1;
+
+                const int MWM_DECOR_ALL = 1 << 0;
+
+                MotifWmHints hints = default;
+                hints.flags = MWM_HINTS_DECORATIONS;
+                hints.decorations = enable ? MWM_DECOR_ALL : 0;
+                
+                XChangeProperty(X11.Display, 
+                        xwindow.Window, 
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                        32, 
+                        XPropertyMode.Replace, 
+                        (IntPtr)(void*)&hints, 
+                        sizeof(MotifWmHints) / sizeof(long));
             }
         }
 

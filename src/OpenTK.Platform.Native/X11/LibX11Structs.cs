@@ -373,4 +373,12 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Sibling;
         public int StackMode; // FIXME: Enum
     }
+
+    internal struct MotifWmHints {
+        public long flags;
+        public long functions;
+        public long decorations;
+        public long input_mode;
+        public long status;
+    }
 }

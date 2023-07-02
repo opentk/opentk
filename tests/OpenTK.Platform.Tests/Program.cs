@@ -272,7 +272,7 @@ namespace OpenTK.Platform.Tests
                     }
                     else
                     {
-                        windowComp.SetBorderStyle(Window, WindowBorderStyle.FixedBorder);
+                        windowComp.SetBorderStyle(Window, WindowBorderStyle.Borderless);
                     }
 
                     fixedBorder = !fixedBorder;
