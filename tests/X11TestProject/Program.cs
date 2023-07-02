@@ -11,8 +11,8 @@ namespace X11TestProject
     {
         public static void Main()
         {
-            MultiThreadExample.MultiThreadMain();
-            return;
+            //MultiThreadExample.MultiThreadMain();
+            //return;
 
             IWindowComponent windowComp = PlatformComponents.CreateWindowComponent();
             IOpenGLComponent glComp = PlatformComponents.CreateOpenGLComponent();

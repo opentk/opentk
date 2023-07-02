@@ -147,6 +147,7 @@ namespace OpenTK.Platform.Native.SDL
             fixed (byte* color = colorData)
             fixed (byte* mask = maskData)
             {
+                // FXIME: Convert this into a color cursor!
                 // FIXME: We might always be creating color cursors?? Or should we convert the color to bw?
                 cursor.Cursor = SDL_CreateCursor(color, mask, width, height, hotspotX, hotspotY);
             }

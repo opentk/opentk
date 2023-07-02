@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.LibX11;
 using static OpenTK.Platform.Native.X11.XFixes;
+using static OpenTK.Platform.Native.X11.LibXcursor;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -61,6 +64,8 @@ namespace OpenTK.Platform.Native.X11
         public CursorHandle Create(SystemCursorType systemCursor)
         {
             XCursorHandle xcursor = new XCursorHandle();
+
+            // FIXME: Maybe use Xcursor themes?
 
             XCursorShape shape;
             switch (systemCursor)
@@ -120,6 +125,7 @@ namespace OpenTK.Platform.Native.X11
             XCursor cursor = XCreateFontCursor(X11.Display, shape);
 
             xcursor.Cursor = cursor;
+            xcursor.Mode = XCursorHandle.CursorMode.SystemCursor;
 
             return xcursor;
         }
@@ -128,9 +134,28 @@ namespace OpenTK.Platform.Native.X11
         // FIXME: Separate system and image cursors.
 
         /// <inheritdoc />
-        public CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
+        public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = new XCursorHandle();
+
+            XcursorImage* ximage = XcursorImageCreate(width, height);
+
+            ximage->xhot = (uint)hotspotX;
+            ximage->yhot = (uint)hotspotY;
+
+            // FIXME: Figure out if this copy is correct.
+            Unsafe.CopyBlock(ref Unsafe.AsRef<byte>(ximage->pixels), ref MemoryMarshal.GetReference(image), (uint)image.Length);
+
+            xcursor.Cursor = XcursorImageLoadCursor(X11.Display, ximage);
+            XcursorImageDestroy(ximage);
+
+            xcursor.Mode = XCursorHandle.CursorMode.ImageCursor;
+            xcursor.Width = width;
+            xcursor.Height = height;
+            xcursor.HotspotX = hotspotX;
+            xcursor.HotspotY = hotspotY;
+
+            return xcursor;
         }
 
         /// <inheritdoc />
@@ -153,6 +178,7 @@ namespace OpenTK.Platform.Native.X11
                 pixmap = XCreateBitmapFromData(X11.Display, X11.DefaultRootWindow, maskPtr, width, height);
             }
 
+            // FIXME: Color?
             XColor color;
             color.red = 255;
             color.green = 128;
@@ -160,10 +186,14 @@ namespace OpenTK.Platform.Native.X11
             color.flags = XColorFlags.DoRed | XColorFlags.DoGreen | XColorFlags.DoBlue;
 
             XCursor cursor = XCreatePixmapCursor(X11.Display, pixmap, pixmap, &color, &color, hotspotX, hotspotY);
+            XFreePixmap(X11.Display, pixmap);
 
             xcursor.Cursor = cursor;
-
-            XFreePixmap(X11.Display, pixmap);
+            xcursor.Mode = XCursorHandle.CursorMode.ImageCursor;
+            xcursor.Width = width;
+            xcursor.Height = height;
+            xcursor.HotspotX = hotspotX;
+            xcursor.HotspotY = hotspotY;
 
             return xcursor;
         }
@@ -180,14 +210,15 @@ namespace OpenTK.Platform.Native.X11
             }
 
             xcursor.Cursor = XCursor.None;
+            xcursor.Mode = XCursorHandle.CursorMode.Uninitialized;
         }
 
         /// <inheritdoc />
         public bool IsSystemCursor(CursorHandle handle)
         {
             XCursorHandle xcursor = handle.As<XCursorHandle>(this);
-            // FIXME: For now we only support system cursors.
-            throw new NotImplementedException();
+
+            return xcursor.Mode == XCursorHandle.CursorMode.SystemCursor;
         }
 
         /// <inheritdoc />
@@ -195,29 +226,13 @@ namespace OpenTK.Platform.Native.X11
         {
             XCursorHandle xcursor = handle.As<XCursorHandle>(this);
 
-            // FIXME: Non system cursors.
-            throw new InvalidOperationException("X11 backend cannot get the hotspot of a system cursor.");
-
-            // FIXME: This code is not needed now, because we are not trying to get the size of system cursors.
-            if (_hasXFixes)
+            if (xcursor.Mode == XCursorHandle.CursorMode.SystemCursor)
             {
-                // FIXME: This only works for the current cursor
-                // So we are likely going to have to temporarily change the cursor,
-                // - Noggin_bops 2023-03-10
-                XFixesCursorImage* cursor = XFixesGetCursorImage(X11.Display);
-
-                width = cursor->width;
-                height = cursor->height;
-
-                XFree(cursor);
+                throw new InvalidOperationException("X11 backend cannot get the size of a system cursor.");    
             }
-            else
-            {
-                // FIXME: Return the size of the cursor image if it's not a system cursor...
-                Logger?.LogError("Can't get cursor size because XFixes is not available!");
-                width = 0;
-                height = 0;
-            }
+            
+            width = xcursor.Width;
+            height = xcursor.Height;
         }
 
         /// <inheritdoc />
@@ -225,8 +240,13 @@ namespace OpenTK.Platform.Native.X11
         {
             XCursorHandle xcursor = handle.As<XCursorHandle>(this);
 
-            // FIXME: Non system cursors.
-            throw new InvalidOperationException("X11 backend cannot get the hotspot of a system cursor.");
+            if (xcursor.Mode == XCursorHandle.CursorMode.SystemCursor)
+            {
+                throw new InvalidOperationException("X11 backend cannot get the hotspot of a system cursor.");
+            }
+
+            x = xcursor.HotspotX;
+            y = xcursor.HotspotY;
         }
     }
 }

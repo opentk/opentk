@@ -132,6 +132,8 @@ namespace OpenTK.Platform.Native
                 // If we didn't resolve we try to load it here for windows
                 if (NativeLibrary.TryLoad("SDL2.dll", Assembly.GetExecutingAssembly(), null, out _))
                     return sdlComponents;
+
+                // FIXME: Log that we couldn't find SDL2!
             }
 
             if (OperatingSystem.IsWindows())

@@ -77,6 +77,15 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XResizeWindow(XDisplayPtr display, XWindow w, int width, int height);
+        
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XMoveResizeWindow(XDisplayPtr display, XWindow w, int x, int y, uint width, uint height);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XDisplayWidth(XDisplayPtr display, int screen_number);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XDisplayHeight(XDisplayPtr display, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern void XSetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints);
@@ -217,7 +226,6 @@ namespace OpenTK.Platform.Native.X11
             int propagate,
             XEventMask eventMask,
             in XEvent ea);
-
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XEventsQueued(XDisplayPtr display, XEventsQueuedMode mode);

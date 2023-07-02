@@ -71,6 +71,7 @@ namespace OpenTK.Platform.Tests
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
+            //Native.PlatformComponents.PreferSDL2 = true;
             windowComp = Native.PlatformComponents.CreateWindowComponent();
             glComp = Native.PlatformComponents.CreateOpenGLComponent();
             cursorComp = Native.PlatformComponents.CreateCursorComponent();
@@ -161,32 +162,38 @@ namespace OpenTK.Platform.Tests
             Stopwatch watch = Stopwatch.StartNew();
 
             SystemCursorType cursor = SystemCursorType.Default;
-            cursorHandle = cursorComp.Create();
+            cursorHandle = cursorComp.Create(cursor);
 
-            cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
-            Console.WriteLine($"Default cursor size: {cWidth}, {cHeight}");
+            //cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
+            //Console.WriteLine($"Default cursor size: {cWidth}, {cHeight}");
 
             windowComp.SetCursor(Window, cursorHandle);
 
-            cursorHandle = cursorComp.Create();
             byte[] image = new byte[16 * 16 * 3];
+            image = new byte[16 * 16 * 4];
             byte[] mask = new byte[16 * 16 * 1];
             for (int ccx = 0; ccx < 16; ccx++)
             {
                 for (int ccy = 0; ccy < 16; ccy++)
                 {
-                    int index = (ccy * 16 + ccx) * 3;
+                    //int index = (ccy * 16 + ccx) * 3;
 
+                    //image[index + 0] = (byte)(ccx * 16);
+                    //image[index + 1] = (byte)(ccx * 16);
+                    //image[index + 2] = (byte)(ccx * 16);
+
+                    int index = (ccy * 16 + ccx) * 4;
+                    
                     image[index + 0] = (byte)(ccx * 16);
                     image[index + 1] = (byte)(ccx * 16);
                     image[index + 2] = (byte)(ccx * 16);
+                    image[index + 3] = (byte)((ccy % 2 == 0) ? 255 : 0);
 
-                    mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
+                    //mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
                 }
             }
-            //cursorComp.SetHotspot(cursorHandle, 8, 8);
-            cursorComp.Load(cursorHandle, 16, 16, image, mask);
-            cursorComp.GetSize(cursorHandle, out cWidth, out cHeight);
+            cursorHandle = cursorComp.Create(16, 16, image, 8, 8);
+            cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
             Console.WriteLine($"Custom cursor size: {cWidth}, {cHeight}");
             //cursorComp.SetHotspot(cursorHandle, 7, 7);
             windowComp.SetCursor(Window, cursorHandle);
@@ -247,10 +254,12 @@ namespace OpenTK.Platform.Tests
 
                 if (buttonDown.Button == MouseButton.Button3)
                 {
-                    captureMode++;
-                    captureMode = (CursorCaptureMode)((int)captureMode % 3);
+                    //captureMode++;
+                    //captureMode = (CursorCaptureMode)((int)captureMode % 3);
                     //windowComp.CaptureCursor((WindowHandle)handle, captured);
-                    windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
+                    //windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
+
+                    windowComp.SetMode((WindowHandle)handle, WindowMode.ExclusiveFullscreen);
                 }
                 else if (buttonDown.Button == MouseButton.Button2)
                 {
@@ -297,6 +306,12 @@ namespace OpenTK.Platform.Tests
                     //keyboardComp.BeginIme(Window);
                     //keyboardComp.SetImeRectangle(Window, x, y, 0, 0);
                 }
+            }
+            else if (args is WindowResizeEventArgs resize)
+            {
+                Console.WriteLine($"Resize! {resize.NewSize.X} {resize.NewSize.Y}");
+
+                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
             }
             else if (args is ScrollEventArgs scroll)
             {

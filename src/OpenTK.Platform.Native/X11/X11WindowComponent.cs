@@ -635,6 +635,23 @@ namespace OpenTK.Platform.Native.X11
 
                             break;
                         }
+                    case XEventType.ConfigureNotify:
+                        {
+                            XConfigureEvent configure = ea.Configure;
+
+                            XWindowHandle xwindow = XWindowDict[configure.window];
+
+                            if (configure.width != xwindow.Width ||
+                                configure.height != xwindow.Height)
+                            {
+                                xwindow.Width = configure.width;
+                                xwindow.Height = configure.height;
+                                
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, (xwindow.Width, xwindow.Height)));
+                            }
+
+                            break;
+                        }
                     default:
                         break;
                 }
@@ -1186,6 +1203,68 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
+            if (xwindow.IsFullscreen && mode != WindowMode.WindowedFullscreen && mode != WindowMode.ExclusiveFullscreen)
+            {
+                // Go out of fullscreen!
+
+                // FIXME: Do we need to check these?
+                if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
+                {
+                    Logger?.LogWarning("Can't exit fullscreen. The window manager doesn't support _NET_WM_STATE. This should never happen.");
+                    return;
+                }
+
+                if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
+                {
+                    Logger?.LogWarning("Can't exit fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
+                    return;
+                }
+
+                XEvent e = new XEvent();
+                ref XClientMessageEvent client = ref e.ClientMessage;
+
+                client.Type = XEventType.ClientMessage;
+                client.Serial = 0;
+                client.SendEvent = 1;
+                client.Display = X11.Display;
+                client.Window = xwindow.Window;
+                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                client.Format = 32;
+                unsafe
+                {
+                    client.l[0] = X11._NET_WM_STATE_REMOVE;
+                    client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                    client.l[2] = 0;
+                    client.l[3] = 1;
+                    client.l[4] = 0;
+                }
+
+                int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+                // Re-set the min and max limits that we removed when we went fullscreen.
+                unsafe
+                {
+                    XSizeHints* hints = XAllocSizeHints();
+                    XSizeHintFlags supplied;
+                    XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
+                    hints->MinWidth = xwindow.MinSize.Width ?? 0;
+                    hints->MinHeight = xwindow.MinSize.Height ?? 0;
+                    if (xwindow.MinSize.Width != null || xwindow.MinSize.Height != null)
+                        hints->Flags |= XSizeHintFlags.MinSize;
+
+                    hints->MaxWidth = xwindow.MaxSize.Width ?? 0;
+                    hints->MaxHeight = xwindow.MaxSize.Height ?? 0;
+                    if (xwindow.MaxSize.Width != null || xwindow.MaxSize.Height != null)
+                        hints->Flags |= XSizeHintFlags.MaxSize;
+
+                    XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+                    XFree(hints);
+                }
+
+                xwindow.IsFullscreen = false;
+            }
+
             switch (mode)
             {
                 case WindowMode.Normal:
@@ -1301,28 +1380,7 @@ namespace OpenTK.Platform.Native.X11
                         XEvent e = new XEvent();
 
                         ref XClientMessageEvent client = ref e.ClientMessage;
-
-                        // FIXME: Remove extents or whatever is causing the window to not become "proper" fullscreen.
-                        // FIXME: Make sure that we don't trigger a "maximized" window mode change.
-
-                        client.Type = XEventType.ClientMessage;
-                        client.Serial = 0;
-                        client.SendEvent = 1;
-                        client.Display = X11.Display;
-                        client.Window = xwindow.Window;
-                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                        client.Format = 32;
-                        unsafe
-                        {
-                            client.l[0] = X11._NET_WM_STATE_ADD;
-                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
-                            client.l[2] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
-                            client.l[3] = 0;
-                            client.l[4] = 0;
-                        }
-
-                        int status2 = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
-
+                        
                         client.Type = XEventType.ClientMessage;
                         client.Serial = 0;
                         client.SendEvent = 1;
@@ -1335,11 +1393,32 @@ namespace OpenTK.Platform.Native.X11
                             client.l[0] = X11._NET_WM_STATE_ADD;
                             client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
                             client.l[2] = 0;
-                            client.l[3] = 0;
+                            client.l[3] = 1;
                             client.l[4] = 0;
                         }
 
                         int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+                        xwindow.IsFullscreen = true;
+
+                        // Set the window size to be the full size of the monitor.
+                        // Remove the max and min size from WM_NORMAL_HINTS.
+
+                        unsafe
+                        {
+                            XSizeHints* hints = XAllocSizeHints();
+                            XSizeHintFlags supplied;
+                            XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+                            hints->Flags &= ~XSizeHintFlags.MaxSize;
+                            hints->Flags &= ~XSizeHintFlags.MinSize;
+                            XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+                            XFree(hints);
+                        }
+
+                        // FIXME: Get the correct monitor size and position!
+                        int width = XDisplayWidth(X11.Display, X11.DefaultScreen);
+                        int height = XDisplayHeight(X11.Display, X11.DefaultScreen);
+                        XMoveResizeWindow(X11.Display, xwindow.Window, 0, 0, (uint)width, (uint)height);
 
                         break;
                     }

@@ -13,8 +13,25 @@ namespace OpenTK.Platform.Native.X11
     {
         public XCursor Cursor { get; set; }
 
+        public CursorMode Mode { get; set; }
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
+
+        public int HotspotX { get; set; }
+
+        public int HotspotY { get; set; }
+
         public XCursorHandle()
         {
+        }
+
+        internal enum CursorMode
+        {
+            Uninitialized,
+            SystemCursor,
+            ImageCursor,
         }
     }
 
@@ -56,6 +73,9 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
 
+        public int Width { get; set; }
+        public int Height { get; set; }
+
         /// <summary>This is the size the window had when we fixed the window size.</summary>
         public Vector2i FixedSize { get; set; } = (-1, -1);
 
@@ -76,6 +96,9 @@ namespace OpenTK.Platform.Native.X11
         public CursorCaptureMode CaptureMode { get; set; }
         public Vector2 VirtualCursorPosition { get; set; }
         public Vector2i LastMousePosition { get; set; }
+
+        // FIXME: This will have to change so we know what monitor we are fullscreen on.
+        public bool IsFullscreen { get; set; }
 
         public XWindowHandle(
             XDisplayPtr display,

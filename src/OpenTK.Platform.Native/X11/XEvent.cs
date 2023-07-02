@@ -31,6 +31,9 @@ namespace OpenTK.Platform.Native.X11
         public XConfigureRequestEvent ConfigureRequest;
 
         [FieldOffset(0)]
+        public XConfigureEvent Configure;
+
+        [FieldOffset(0)]
         public XClientMessageEvent ClientMessage;
 
         [FieldOffset(0)]
@@ -115,6 +118,20 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Above;
         public int Detail;          /* Above, Below, TopIf, BottomIf, Opposite */
         public ulong ValueMask;
+    }
+
+    internal struct XConfigureEvent {
+        public XEventType type;	        /* ConfigureNotify */
+        public ulong serial;	/* # of last request processed by server */
+        public byte send_event;	/* true if this came from a SendEvent request */
+        public XDisplayPtr display;	/* Display the event was read from */
+        public XWindow @event;
+        public XWindow window;
+        public int x, y;
+        public int width, height;
+        public int border_width;
+        public XWindow above;
+        public byte override_redirect;
     }
 
     [StructLayout(LayoutKind.Explicit)]
