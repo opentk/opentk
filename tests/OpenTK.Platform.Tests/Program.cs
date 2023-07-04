@@ -272,7 +272,7 @@ namespace OpenTK.Platform.Tests
                     }
                     else
                     {
-                        windowComp.SetBorderStyle(Window, WindowBorderStyle.Borderless);
+                        windowComp.SetBorderStyle(Window, WindowBorderStyle.ToolBox);
                     }
 
                     fixedBorder = !fixedBorder;
@@ -280,8 +280,8 @@ namespace OpenTK.Platform.Tests
                     windowComp.GetMaxClientSize(Window, out int? aMaxWidth, out int? aMaxHeight);
                     windowComp.GetMinClientSize(Window, out int? aMinWidth, out int? aMinHeight);
 
-                    System.Console.WriteLine($"Before: Min: ({bMinWidth}, {bMinHeight}), Max: ({bMaxWidth}, {bMaxHeight})");
-                    System.Console.WriteLine($"After: Min: ({aMinWidth}, {aMinHeight}), Max: ({aMaxWidth}, {aMaxHeight})");
+                    Console.WriteLine($"Before: Min: ({bMinWidth}, {bMinHeight}), Max: ({bMaxWidth}, {bMaxHeight})");
+                    Console.WriteLine($"After: Min: ({aMinWidth}, {aMinHeight}), Max: ({aMaxWidth}, {aMaxHeight})");
                 }
                 else if (buttonDown.Button == MouseButton.Button1)
                 {

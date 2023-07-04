@@ -1503,41 +1503,60 @@ namespace OpenTK.Platform.Native.X11
             {
                 case WindowBorderStyle.ResizableBorder:
                 unsafe {
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
+                    
                     SetDecorations(xwindow, true);
-                    SetSizeLimits(xwindow, true, -1, -1);
+
+                    SetFixedSize(xwindow, false, -1, -1);
                     xwindow.FixedSize = (-1, -1);
                     break;
                 }
                 case WindowBorderStyle.Borderless:
                 unsafe {
                     // FIXME: Should the client size and location be retained when going borderless?
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
+
                     SetDecorations(xwindow, false);
-                    SetSizeLimits(xwindow, true, -1, -1);
+                    
+                    SetFixedSize(xwindow, false, -1, -1);
                     xwindow.FixedSize = (-1, -1);
                     break;
                 }
                 case WindowBorderStyle.FixedBorder:
                 unsafe {
-                    // Set the max and min height to the same.
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
                     // FIXME: Figure out if you can still resize the window programatically.
                     SetDecorations(xwindow, true);
 
+                    // Set the max and min height to the same.
                     GetClientSize(xwindow, out int width, out int height);
-                    SetSizeLimits(xwindow, false, width, height);
+                    SetFixedSize(xwindow, true, width, height);
                     xwindow.FixedSize = (width, height);
+
+                    break;
+                }
+                case WindowBorderStyle.ToolBox:
+                {
+                    // FIXME: Check that the window type atoms are available?
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY]);
+
+                    SetDecorations(xwindow, true);
+
+                    SetFixedSize(xwindow, false, -1, -1);
+                    xwindow.FixedSize = (-1, -1);
                     break;
                 }
                 default:
-                    throw new NotImplementedException();
+                    throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowBorderStyle));
             }
 
-            static unsafe void SetSizeLimits(XWindowHandle xwindow, bool enableLimits, int fixedWidth, int fixedHeight)
+            static unsafe void SetFixedSize(XWindowHandle xwindow, bool fixSize, int fixedWidth, int fixedHeight)
             {
                 XSizeHints* hints = XAllocSizeHints();
                 XSizeHintFlags supplied;
                 XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
 
-                if (enableLimits)
+                if (fixSize == false)
                 {
                     // We default these to max values so that leaving one as null
                     // effectively means not having a max.
@@ -1594,6 +1613,18 @@ namespace OpenTK.Platform.Native.X11
                         XPropertyMode.Replace, 
                         (IntPtr)(void*)&hints, 
                         sizeof(MotifWmHints) / sizeof(long));
+            }
+        
+            static unsafe int SetNetWMWindowType(XWindow window, XAtom type)
+            {
+                return XChangeProperty(
+                        X11.Display, 
+                        window, 
+                        X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE],
+                        X11.Atoms[KnownAtoms.ATOM], 32, 
+                        XPropertyMode.Replace,
+                        (IntPtr)(void*)&type,
+                        1);
             }
         }
 
