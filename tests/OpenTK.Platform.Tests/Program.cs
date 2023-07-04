@@ -237,8 +237,9 @@ namespace OpenTK.Platform.Tests
 
         static Vector2 lastPos;
 
-        static bool fixedBorder = false;
         static bool client = false;
+
+        static WindowBorderStyle borderStyle = WindowBorderStyle.ResizableBorder;
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
@@ -266,16 +267,11 @@ namespace OpenTK.Platform.Tests
                     windowComp.GetMaxClientSize(Window, out int? bMaxWidth, out int? bMaxHeight);
                     windowComp.GetMinClientSize(Window, out int? bMinWidth, out int? bMinHeight);
 
-                    if (fixedBorder)
-                    {
-                        windowComp.SetBorderStyle(Window, WindowBorderStyle.ResizableBorder);
-                    }
-                    else
-                    {
-                        windowComp.SetBorderStyle(Window, WindowBorderStyle.ToolBox);
-                    }
+                    borderStyle++;
+                    borderStyle = (WindowBorderStyle)((int)borderStyle % 4);
 
-                    fixedBorder = !fixedBorder;
+                    windowComp.SetBorderStyle(Window, borderStyle);
+                    Console.WriteLine($"Set border style to: {borderStyle}, GetBorderStyle: {windowComp.GetBorderStyle(Window)}");
 
                     windowComp.GetMaxClientSize(Window, out int? aMaxWidth, out int? aMaxHeight);
                     windowComp.GetMinClientSize(Window, out int? aMinWidth, out int? aMinHeight);

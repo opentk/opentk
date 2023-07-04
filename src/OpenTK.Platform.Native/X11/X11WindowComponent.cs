@@ -656,7 +656,7 @@ namespace OpenTK.Platform.Native.X11
                                 if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
                                     property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME])
                                 {
-                                    Console.WriteLine($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
+                                    //Console.WriteLine($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
                                 }
                             }
                             break;
@@ -1491,7 +1491,67 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // Check for ToolBox
+            {
+                XGetWindowProperty(
+                    X11.Display, 
+                    xwindow.Window, 
+                    X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE], 
+                    0, 1, false, 
+                    X11.Atoms[KnownAtoms.ATOM], 
+                    out _,
+                    out _,
+                    out _,
+                    out _,
+                    out IntPtr content);
+
+                // If window type is UTILITY, assume toolbox.
+                unsafe {
+                    XAtom windowType = *(XAtom*)content;
+                    if (windowType == X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY])
+                    {
+                        return WindowBorderStyle.ToolBox;
+                    }
+                }
+
+                XFree(content);
+            }
+
+            // Check for borderless
+            {
+                XGetWindowProperty(
+                    X11.Display, 
+                    xwindow.Window, 
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                    0, long.MaxValue, false, 
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                    out _,
+                    out _,
+                    out _,
+                    out _,
+                    out IntPtr content);
+
+                // If decorations are turned off, assume borderless.
+                unsafe {
+                    MotifWmHints* motifWmHints = (MotifWmHints*)content;
+                    if (motifWmHints->decorations == 0)
+                    {
+                        return WindowBorderStyle.Borderless;
+                    }
+                }
+
+                XFree(content);
+            }
+
+            // If FixedSize is set, assume FixedBorder.
+            if (xwindow.FixedSize != (-1, -1)) 
+            {
+                return WindowBorderStyle.FixedBorder;
+            }
+
+            return WindowBorderStyle.ResizableBorder;
         }
 
         /// <inheritdoc />
@@ -1504,7 +1564,7 @@ namespace OpenTK.Platform.Native.X11
                 case WindowBorderStyle.ResizableBorder:
                 unsafe {
                     SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
-                    
+
                     SetDecorations(xwindow, true);
 
                     SetFixedSize(xwindow, false, -1, -1);
