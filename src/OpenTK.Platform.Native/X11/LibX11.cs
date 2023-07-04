@@ -19,6 +19,9 @@ namespace OpenTK.Platform.Native.X11
             DllResolver.InitLoader();
         }
 
+        public const int False = 0;
+        public const int True = 1;
+
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal unsafe delegate int XErrorHandler(XDisplayPtr display, XErrorEvent* error_event);
 
@@ -277,6 +280,18 @@ namespace OpenTK.Platform.Native.X11
         );
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XChangeProperty(
+            XDisplayPtr display,
+            XWindow window,
+            XAtom property,
+            XAtom propertyType,
+            int format,
+            XPropertyMode mode,
+            long[] data,
+            int elements
+        );
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XSetInputFocus(XDisplayPtr display, XWindow focus, RevertTo revert_to, XTime time);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -378,5 +393,7 @@ namespace OpenTK.Platform.Native.X11
             static unsafe extern byte** XListExtensions(XDisplayPtr display, out int nextensions_return);
         }
         
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XSync(XDisplayPtr display, int discard);
     }
 }

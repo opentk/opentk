@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace OpenTK.Platform.Tests
 {
@@ -19,6 +20,7 @@ namespace OpenTK.Platform.Tests
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
+        static IIconComponent iconComp;
         //static IKeyboardComponent keyboardComp;
 
         static IDisplayComponent displayComp;
@@ -78,6 +80,7 @@ namespace OpenTK.Platform.Tests
             mouseComp = Native.PlatformComponents.CreateMouseComponent();
             shellComp = Native.PlatformComponents.CreateShellComponent();
             displayComp = Native.PlatformComponents.CreateDisplayComponent();
+            iconComp = Native.PlatformComponents.CreateIconComponent();
             //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
@@ -87,6 +90,7 @@ namespace OpenTK.Platform.Tests
             mouseComp.Logger = logger;
             shellComp.Logger = logger;
             displayComp.Logger = logger;
+            iconComp.Logger = logger;
             //keyboardComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
@@ -95,6 +99,7 @@ namespace OpenTK.Platform.Tests
             mouseComp.Initialize(PalComponents.MiceInput);
             shellComp.Initialize(PalComponents.Shell);
             displayComp.Initialize(PalComponents.Display);
+            iconComp.Initialize(PalComponents.WindowIcon);
             //keyboardComp.Initialize(PalComponents.KeyboardInput);
 
             /*
@@ -198,6 +203,9 @@ namespace OpenTK.Platform.Tests
             //cursorComp.SetHotspot(cursorHandle, 7, 7);
             windowComp.SetCursor(Window, cursorHandle);
 
+            var icon = iconComp.Create(16, 16, image);
+            windowComp.SetIcon(Window, icon);
+
             while (windowComp.IsWindowDestroyed(Window) == false)
             {
                 windowComp.ProcessEvents();
@@ -205,7 +213,12 @@ namespace OpenTK.Platform.Tests
                 if (windowComp.IsWindowDestroyed(Window))
                     break;
 
-                if (watch.ElapsedMilliseconds > 3000)
+                if (windowMode != WindowMode.Hidden)
+                {
+                    watch.Restart();
+                }
+
+                if (watch.ElapsedMilliseconds > 3000 && windowMode == WindowMode.Hidden)
                 {
                     //windowComp.FocusWindow(window);
                     windowComp.RequestAttention(Window);
@@ -260,7 +273,14 @@ namespace OpenTK.Platform.Tests
                     //windowComp.CaptureCursor((WindowHandle)handle, captured);
                     //windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
 
-                    windowComp.SetMode((WindowHandle)handle, WindowMode.ExclusiveFullscreen);
+                    windowMode++;
+                    windowMode = (WindowMode)((int)windowMode % 6);
+                    windowComp.SetMode(Window, windowMode);
+                    Console.WriteLine($"Set window mode to: {windowMode}");
+                    Thread.Sleep(100);
+                    Console.WriteLine($" GetMode: {windowComp.GetMode(Window)}");
+
+                    //windowComp.SetMode((WindowHandle)handle, WindowMode.ExclusiveFullscreen);
                 }
                 else if (buttonDown.Button == MouseButton.Button2)
                 {

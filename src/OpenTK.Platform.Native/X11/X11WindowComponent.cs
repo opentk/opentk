@@ -174,7 +174,7 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public bool CanSetIcon => false;
+        public bool CanSetIcon => true;
 
         /// <inheritdoc />
         public bool CanGetDisplay => false;
@@ -942,13 +942,61 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public IconHandle GetIcon(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: What happens if we haven't set an icon??
+            return xwindow.Icon;
         }
 
         /// <inheritdoc />
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            XIconHandle xicon = icon.As<XIconHandle>(this);
+
+            X11IconComponent.IconImage[]? images = xicon.Images;
+
+            // FIXME: Handle null.
+
+            int longCount = 0;
+            for (int i = 0; i < images.Length; i++)
+            {
+                longCount += 2 + (images[i].Width * images[i].Height);
+            }
+
+            // FIXME: Fill this array without unsafe?
+            long[] data = new long[longCount];
+            unsafe {
+                fixed (long* dataPtr = data)
+                {
+                    long* target = dataPtr;
+                    for (int i = 0; i < images.Length; i++)
+                    {
+                        *target++ = images[i].Width;
+                        *target++ = images[i].Height;
+
+                        for (int j = 0; j < images[i].Width * images[i].Height; j++)
+                        {
+                            // FIXME: Is this the correct color format?
+                            *target++ = ((long)images[i].Data[j * 4 + 0] << 16) |
+                                        ((long)images[i].Data[j * 4 + 1] <<  8) |
+                                        ((long)images[i].Data[j * 4 + 2] <<  0) |
+                                        ((long)images[i].Data[j * 4 + 3] <<  24);
+                        }
+                    }
+                }
+            }
+
+            XChangeProperty(
+                X11.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms._NET_WM_ICON],
+                X11.Atoms[KnownAtoms.CARDINAL], 32,
+                XPropertyMode.Replace,
+                data,
+                longCount);
+
+            xwindow.Icon = xicon;
         }
 
         /// <inheritdoc />
@@ -1229,10 +1277,72 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
+        /// <remarks>
+        /// Calling this in rapid succession after <see cref="SetMode" /> will likely report the wrong mode as the X server hasn't updated the state of the window yet.
+        /// We could add a delay where we wait for the server to change the window, but for now we leave it as it is.
+        /// </remarks>
         public WindowMode GetMode(WindowHandle handle)
         {
-            // FIXME: Read WM_STATE for iconified, read _NET_WM_STATE for the rest.
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (xwindow.IsFullscreen == true)
+            {
+                // FIXME: Differentiate exclusive and windowed fullscreen.
+                return WindowMode.ExclusiveFullscreen;
+            }
+
+            XSync(X11.Display, False);
+
+            int result = XGetWindowProperty(
+                X11.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms.WM_STATE],
+                0, ~0, false,
+                new XAtom(0),
+                out XAtom actualType,
+                out int actualFormat,
+                out long numberOfItems,
+                out long remainingBytes,
+                out IntPtr contents);
+
+            if (result == 0)
+            {
+                const int WithdrawnState = 0;
+                const int NormalState = 1;
+                const int IconicState = 3;
+
+                unsafe
+                {
+                    int state = *(int*)contents;
+                    if (state == IconicState)
+                    {
+                        return WindowMode.Minimized;
+                    }
+                    else if (state == WithdrawnState)
+                    {
+                        return WindowMode.Hidden;
+                    }
+                }
+            }
+
+            if (contents != IntPtr.Zero)
+            {
+                XFree(contents);
+            }
+
+            WMState wmState = GetNETWMState(xwindow.Window);
+
+            if (wmState.HasFlag(WMState.MaximizedHorz | WMState.MaximizedVert))
+            {
+                return WindowMode.Maximized;
+            }
+            
+            if (wmState.HasFlag(WMState.Hidden))
+            {
+                return WindowMode.Hidden;
+            }
+
+            return WindowMode.Normal;
         }
 
         /// <inheritdoc />
@@ -1462,12 +1572,13 @@ namespace OpenTK.Platform.Native.X11
                         break;
                     }
                 case WindowMode.WindowedFullscreen:
-                default:
                     //throw new NotImplementedException();
+                default:
                     break;
             }
 
             XFlush(X11.Display);
+            XSync(X11.Display, False);
         }
 
         /// <inheritdoc />
@@ -1489,6 +1600,10 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
+        /// <remarks>
+        /// Calling this in rapid succession after <see cref="SetBorderStyle" /> will likely report the wrong style as the X server hasn't updated the state of the window yet.
+        /// We could add a delay where we wait for the server to change the window, but for now we leave it as it is.
+        /// </remarks>
         public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
