@@ -48,6 +48,8 @@ namespace OpenTK.Platform.Native.X11
 
         internal static XWindowHandle? CursorCapturingWindow;
 
+        internal static XWindow HelperWindow { get; private set; }
+
         /// <inheritdoc />
         public void Initialize(PalComponents which)
         {
@@ -170,6 +172,20 @@ namespace OpenTK.Platform.Native.X11
                 // TODO: Figure how to extract win32 like window types and modes from the supported atoms list.
 
                 XFree(array);
+            }
+        
+            // Create a helper window to help with clipboard stuff.
+            // FIXME: Will this only be used for clipboard stuff?
+            unsafe 
+            {
+                XSetWindowAttributes wa = default;
+                wa.EventMask = XEventMask.PropertyChange;
+                HelperWindow = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
+                    0, 0, 1, 1, 0, 0,
+                    WindowClass.InputOnly, 
+                    ref Unsafe.AsRef<XVisual>(XDefaultVisual(X11.Display, X11.DefaultScreen)),
+                    XWindowAttributeValueMask.EventMask,
+                    ref wa);
             }
         }
 
@@ -656,7 +672,7 @@ namespace OpenTK.Platform.Native.X11
                                 if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
                                     property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME])
                                 {
-                                    //Console.WriteLine($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
+                                    Console.WriteLine($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
                                 }
                             }
                             break;
@@ -783,7 +799,7 @@ namespace OpenTK.Platform.Native.X11
                         600,
                         0,
                         vi->Depth,
-                        1,
+                        WindowClass.InputOutput,
                         ref *vi->VisualPtr,
                         XWindowAttributeValueMask.BackPixmap | XWindowAttributeValueMask.Colormap | XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                         ref windowAttributes);
@@ -800,9 +816,13 @@ namespace OpenTK.Platform.Native.X11
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
                 attributes.EventMask = XEventMask.Exposure;
 
-                window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 0, 0, 600, 800, 0, 0, 1, ref Unsafe.NullRef<XVisual>(),
+                window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
+                    0, 0, 600, 800, 0, 0, 
+                    WindowClass.InputOutput, 
+                    ref Unsafe.NullRef<XVisual>(),
                     XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
-                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, ref attributes);
+                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
+                    ref attributes);
 
                 throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
@@ -940,11 +960,10 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public IconHandle GetIcon(WindowHandle handle)
+        public IconHandle? GetIcon(WindowHandle handle)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            // FIXME: What happens if we haven't set an icon??
             return xwindow.Icon;
         }
 
@@ -955,8 +974,11 @@ namespace OpenTK.Platform.Native.X11
             XIconHandle xicon = icon.As<XIconHandle>(this);
 
             X11IconComponent.IconImage[]? images = xicon.Images;
-
-            // FIXME: Handle null.
+            if (images == null)
+            {
+                Logger?.LogError($"Icon didn't include any images.");
+                return;
+            }
 
             int longCount = 0;
             for (int i = 0; i < images.Length; i++)

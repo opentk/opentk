@@ -2,6 +2,13 @@ using System;
 
 namespace OpenTK.Platform.Native.X11
 {
+    internal enum WindowClass : uint
+    {
+        CopyFromParent = 0,
+        InputOutput = 1,
+        InputOnly = 2,
+    }
+
     internal enum XEventType : int
     {
         KeyPress = 2,

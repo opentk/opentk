@@ -38,6 +38,9 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int XDefaultScreen(XDisplayPtr display);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern XVisual* XDefaultVisual(XDisplayPtr display, int screen_number);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XScreenCount(XDisplayPtr dispay);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
@@ -67,7 +70,7 @@ namespace OpenTK.Platform.Native.X11
             uint height,
             uint border,
             int depth,
-            uint @class,
+            WindowClass @class,
             ref XVisual visual,
             XWindowAttributeValueMask valueMask,
             ref XSetWindowAttributes attributes);
@@ -395,5 +398,17 @@ namespace OpenTK.Platform.Native.X11
         
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XSync(XDisplayPtr display, int discard);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void XConvertSelection(XDisplayPtr display, XAtom selection, XAtom target, XAtom property, XWindow requestor, XTime time);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool XCheckTypedWindowEvent(XDisplayPtr display, XWindow w, XEventType event_type, out XEvent event_return);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XPending(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XConnectionNumber(XDisplayPtr display);
     }
 }

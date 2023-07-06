@@ -113,7 +113,7 @@ namespace OpenTK.Core.Platform
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support getting the window icon. See <see cref="CanSetIcon"/>.
         /// </exception>
-        IconHandle GetIcon(WindowHandle handle);
+        IconHandle? GetIcon(WindowHandle handle);
 
         /// <summary>
         /// Set window icon object handle.

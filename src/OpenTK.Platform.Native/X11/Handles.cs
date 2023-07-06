@@ -101,7 +101,7 @@ namespace OpenTK.Platform.Native.X11
         public Vector2 VirtualCursorPosition { get; set; }
         public Vector2i LastMousePosition { get; set; }
 
-        public XIconHandle? Icon { get; set; }
+        public XIconHandle? Icon { get; set; } = null;
 
         // FIXME: This will have to change so we know what monitor we are fullscreen on.
         public bool IsFullscreen { get; set; }
@@ -125,10 +125,13 @@ namespace OpenTK.Platform.Native.X11
         public int Width { get; set; }
         public int Height { get; set; }
 
-        public X11IconComponent.IconImage[]? Images { get; set; }
+        public X11IconComponent.IconImage[] Images { get; set; }
         
-        public XIconHandle()
+        public XIconHandle(int width, int height, X11IconComponent.IconImage[] images)
         {
+            Width = width;
+            Height = height;
+            Images = images;
         }
     }
 }

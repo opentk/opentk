@@ -72,7 +72,7 @@ namespace OpenTK.Platform.Native
                 //[PalComponents.KeyboardInput] = () => new X11.X11KeyboardComponent(),
                 [PalComponents.MouseCursor] = () => new X11.X11CursorComponent(),
                 [PalComponents.WindowIcon] = () => new X11.X11IconComponent(),
-                //[PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
+                [PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
                 //[PalComponents.Joystick] = () => new X11.X11JoystickComponent(),
             };
 

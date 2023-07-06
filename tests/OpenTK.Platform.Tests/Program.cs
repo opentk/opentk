@@ -21,6 +21,7 @@ namespace OpenTK.Platform.Tests
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
         static IIconComponent iconComp;
+        static IClipboardComponent clipComp;
         //static IKeyboardComponent keyboardComp;
 
         static IDisplayComponent displayComp;
@@ -81,6 +82,7 @@ namespace OpenTK.Platform.Tests
             shellComp = Native.PlatformComponents.CreateShellComponent();
             displayComp = Native.PlatformComponents.CreateDisplayComponent();
             iconComp = Native.PlatformComponents.CreateIconComponent();
+            clipComp = Native.PlatformComponents.CreateClipboardComponent();
             //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
@@ -91,6 +93,7 @@ namespace OpenTK.Platform.Tests
             shellComp.Logger = logger;
             displayComp.Logger = logger;
             iconComp.Logger = logger;
+            clipComp.Logger = logger;
             //keyboardComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
@@ -100,6 +103,7 @@ namespace OpenTK.Platform.Tests
             shellComp.Initialize(PalComponents.Shell);
             displayComp.Initialize(PalComponents.Display);
             iconComp.Initialize(PalComponents.WindowIcon);
+            clipComp.Initialize(PalComponents.Clipboard);
             //keyboardComp.Initialize(PalComponents.KeyboardInput);
 
             /*
@@ -203,8 +207,9 @@ namespace OpenTK.Platform.Tests
             //cursorComp.SetHotspot(cursorHandle, 7, 7);
             windowComp.SetCursor(Window, cursorHandle);
 
-            var icon = iconComp.Create(16, 16, image);
-            windowComp.SetIcon(Window, icon);
+            //var icon = iconComp.Create(16, 16, image);
+            //windowComp.SetIcon(Window, icon);
+            GenerateAndSetWindowIcon(Window);
 
             while (windowComp.IsWindowDestroyed(Window) == false)
             {
@@ -243,6 +248,56 @@ namespace OpenTK.Platform.Tests
 
                 windowComp.SwapBuffers(Window);
             }
+        }
+
+        static void GenerateAndSetWindowIcon(WindowHandle handle)
+        {
+            byte[] image16 = new byte[16 * 16 * 4];
+            for (int ccx = 0; ccx < 16; ccx++)
+            {
+                for (int ccy = 0; ccy < 16; ccy++)
+                {
+                    int index = (ccy * 16 + ccx) * 4;
+                    
+                    image16[index + 0] = (byte)(ccx * 16);
+                    image16[index + 1] = (byte)(ccx * 16);
+                    image16[index + 2] = (byte)(ccy * 16);
+                    image16[index + 3] = (byte)((ccy % 2 == 0) ? 255 : 0);
+                }
+            }
+
+            byte[] image128 = new byte[128 * 128 * 4];
+            for (int ccx = 0; ccx < 128; ccx++)
+            {
+                for (int ccy = 0; ccy < 128; ccy++)
+                {
+                    int index = (ccy * 128 + ccx) * 4;
+                    
+                    image128[index + 0] = (byte)((ccx / 128f) * 255);
+                    image128[index + 1] = (byte)((ccx / 128f) * 255);
+                    image128[index + 2] = (byte)((ccy / 128f) * 255);
+                    image128[index + 3] = (byte)((ccy % 4 == 0) ? 255 : 0);
+                }
+            }
+
+            X11IconComponent.IconImage[] images = new X11IconComponent.IconImage[]
+            {
+                new X11IconComponent.IconImage()
+                {
+                    Width = 128,
+                    Height = 128,
+                    Data = image128,
+                },
+                new X11IconComponent.IconImage()
+                {
+                    Width = 16,
+                    Height = 16,
+                    Data = image16,
+                },
+            };
+
+            var icon = (iconComp as X11IconComponent)?.Create(128, 128, images);
+            windowComp.SetIcon(handle, icon);
         }
 
         static CursorCaptureMode captureMode = CursorCaptureMode.Normal;
@@ -301,6 +356,7 @@ namespace OpenTK.Platform.Tests
                 }
                 else if (buttonDown.Button == MouseButton.Button1)
                 {
+                    /*
                     mouseComp.GetPosition(out int x, out int y);
 
                     //windowComp.SetMode(Window, WindowMode.Hidden);
@@ -318,6 +374,23 @@ namespace OpenTK.Platform.Tests
                     System.Console.WriteLine($"Size: ({wx}, {wy}), Client size: ({cx}, {cy}), Set client size: {client}");
 
                     client = !client;
+                    */
+
+                    ClipboardFormat format = clipComp.GetClipboardFormat();
+                    Console.WriteLine($"Clipboard format: {format}");
+
+                    if (format == ClipboardFormat.Files)
+                    {
+                        var files = clipComp.GetClipboardFiles();
+                        System.Console.WriteLine("Copied files: ");
+                        for (int i = 0; i < files.Count; i++)
+                        {
+                            System.Console.WriteLine($"  {files[i]}");
+                        }
+                    }
+
+                    //string? clip = clipComp.GetClipboardText();
+                    //Console.WriteLine($"Clipboard text: {clip.Length.ToString() ?? "null"}");
 
                     //keyboardComp.BeginIme(Window);
                     //keyboardComp.SetImeRectangle(Window, x, y, 0, 0);

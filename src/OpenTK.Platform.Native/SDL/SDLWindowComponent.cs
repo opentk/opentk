@@ -568,17 +568,10 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public IconHandle GetIcon(WindowHandle handle)
+        public IconHandle? GetIcon(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            // FIXME: What is the default icon??
-            if (window.Icon == null)
-            {
-                Logger?.LogWarning("Trying to read the default window icon. SDL 2 doesn't support this.");
-                return new SDLIcon();
-            }
-            
             return window.Icon;
         }
 

@@ -11,6 +11,13 @@ namespace OpenTK.Platform.Native.X11
             public int Width;
             public int Height;
             public byte[] Data;
+
+            public IconImage(int width, int height, byte[] data)
+            {
+                Width = width;
+                Height = height;
+                Data = data;
+            }
         }
 
         public string Name => nameof(X11IconComponent);
@@ -37,28 +44,26 @@ namespace OpenTK.Platform.Native.X11
 
         public IconHandle Create(int width, int height, ReadOnlySpan<byte> data)
         {
-            XIconHandle xicon = new XIconHandle();
+            IconImage image = new IconImage(width, height, data.ToArray());
+            IconImage[] images = new IconImage[1] { image };
 
-            IconImage image;
-            image.Width = width;
-            image.Height = height;
-            // FIXME: Is data in the right format?
-            image.Data = data.ToArray();
-
-            xicon.Width = width;
-            xicon.Height = height;
-            xicon.Images = new IconImage[1] { image };
-
+            XIconHandle xicon = new XIconHandle(width, height, images);
+            
             return xicon;
         }
 
+        /// <summary>
+        /// Creates a _NET_WM_ICON from a number of images.
+        /// This is useful for specifying icon images at multiple resolutions.
+        /// </summary>
+        /// <param name="width">The width of the icon to report in <see cref="GetSize"/>.</param>
+        /// <param name="height">The height of the icon to report in <see cref="GetSize"/>.</param>
+        /// <param name="images">The icon images.</param>
+        /// <returns>A handle to the created icon.</returns>
+        // FIXME: Should we pass a width and height or what should we do?
         public IconHandle Create(int width, int height, IconImage[] images)
         {
-            XIconHandle xicon = new XIconHandle();
-
-            xicon.Width = width;
-            xicon.Height = height;
-            xicon.Images = images;
+            XIconHandle xicon = new XIconHandle(width, height, images);
 
             return xicon;
         }

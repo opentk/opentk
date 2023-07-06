@@ -7,6 +7,7 @@ namespace OpenTK.Platform.Native.X11
         #region Common Property Types
         ATOM,
         CARDINAL,
+        STRING,
         UTF8_STRING,
         WINDOW,
         #endregion
@@ -20,6 +21,13 @@ namespace OpenTK.Platform.Native.X11
         WM_CHANGE_STATE,
         WM_NAME,
         WM_NORMAL_HINTS,
+
+        PRIMARY,
+        SECONDARY,
+        CLIPBOARD,
+        INCR,
+        TARGETS,
+        MULTIPLE,
         #endregion
 
         #region Freedesktop Atoms

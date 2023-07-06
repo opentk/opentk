@@ -1074,6 +1074,9 @@ namespace OpenTK.Platform.Native.Windows
 
             IntPtr hicon;
 
+            // FIXME: We should probably just return an icon if it's already been set.
+            // And we want to make sure we return the same reference that was passed in SetIcon.
+
             // https://github.com/MicrosoftDocs/win32/blob/docs/desktop-src/winmsg/wm-geticon.md
             // First we try to get the icon through the WM_GETICON message
             // if that doesn't work we try GetClassLongPtr, and if that doesn't work
