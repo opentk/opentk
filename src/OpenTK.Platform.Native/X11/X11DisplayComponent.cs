@@ -81,6 +81,8 @@ namespace OpenTK.Platform.Native.X11
                                 List<string> list = new List<string>();
                                 foreach (var atom in atoms)
                                 {
+                                    list.Add(XGetAtomName(X11.Display, atom));
+
                                     if (atom == X11.Atoms[KnownAtoms.EDID])
                                     {
                                         int status = XRRGetOutputProperty(
@@ -99,57 +101,13 @@ namespace OpenTK.Platform.Native.X11
                                         {
                                             byte* edid = (byte*)prop;
 
-                                            for (int i2 = 0; i2 < 4; i2++)
-                                            {
-                                                int index = 0x36 + i2 * 18;
+                                            EDID.EDIDInfo info = EDID.Parse(edid);
 
-                                                if (edid[index + 0] == 0 && edid[index + 1] == 0)
-                                                {
-                                                    // This is a descriptor
-                                                    byte* desc = &edid[index];
-
-                                                    if (desc[3] == 0xFC)
-                                                    {
-                                                        Span<byte> nameSpan = new Span<byte>(desc + 5, 13);
-                                                        // Make a copy
-                                                        nameSpan = nameSpan.ToArray();
-
-                                                        for (int j = 0; j < nameSpan.Length; j++)
-                                                        {
-                                                            if (nameSpan[j] == 0) nameSpan[j] = (byte)' ';
-                                                            else if (nameSpan[j] == 0x0a) {
-                                                                nameSpan = nameSpan.Slice(0, j);
-                                                                break;
-                                                            }
-                                                        }
-
-                                                        displayName = Encoding.ASCII.GetString(nameSpan);
-                                                    }
-                                                    else if (desc[3] == 0xFE)
-                                                    {
-                                                        Span<byte> nameSpan = new Span<byte>(desc + 5, 13);
-                                                        // Make a copy
-                                                        nameSpan = nameSpan.ToArray();
-
-                                                        for (int j = 0; j < nameSpan.Length; j++)
-                                                        {
-                                                            if (nameSpan[j] == 0) nameSpan[j] = (byte)' ';
-                                                            else if (nameSpan[j] == 0x0a) {
-                                                                nameSpan = nameSpan.Slice(0, j);
-                                                                break;
-                                                            }
-                                                        }
-
-                                                        Console.WriteLine($"Unspecified: {Encoding.ASCII.GetString(nameSpan)}");
-                                                    }
-                                                }
-                                            }
+                                            displayName = info.DisplayName;
 
                                             XFree(prop);
                                         }
                                     }
-
-                                    list.Add(XGetAtomName(X11.Display, atom));
                                 }
 
                                 XFree(atoms);

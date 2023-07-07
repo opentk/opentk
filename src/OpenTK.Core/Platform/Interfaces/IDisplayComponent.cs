@@ -11,11 +11,6 @@ namespace OpenTK.Core.Platform
         // FIXME: Add API for getting the display orientation!
 
         /// <summary>
-        /// True if the driver can set the video mode.
-        /// </summary>
-        bool CanSetVideoMode { get; }
-
-        /// <summary>
         /// True if the driver can get the virtual position of the display.
         /// </summary>
         bool CanGetVirtualPosition { get; }

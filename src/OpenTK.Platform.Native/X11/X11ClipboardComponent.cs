@@ -316,6 +316,7 @@ namespace OpenTK.Platform.Native.X11
 
         public Bitmap? GetClipboardBitmap()
         {
+            // FIXME: We need to decode a png here, and there is no good way to do this really...
             throw new NotImplementedException();
         }
 

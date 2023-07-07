@@ -660,9 +660,6 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        bool IDisplayComponent.CanSetVideoMode => _displayComponent!.CanSetVideoMode;
-
-        /// <inheritdoc/>
         bool IDisplayComponent.CanGetVirtualPosition => _displayComponent!.CanGetVirtualPosition;
 
         /// <inheritdoc/>
