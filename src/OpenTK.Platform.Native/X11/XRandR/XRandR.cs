@@ -24,7 +24,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
         internal static extern void XRRFreeScreenConfigInfo(XRRScreenConfiguration config);
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void XRRSelectInput(XDisplayPtr display, XWindow window, XEventMask mask);
+        internal static extern void XRRSelectInput(XDisplayPtr display, XWindow window, RRSelectMask mask);
 
         [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XRRUpdateConfiguration(in XEvent @event);

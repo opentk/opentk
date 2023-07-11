@@ -64,6 +64,9 @@ namespace OpenTK.Platform.Native.X11
 
     internal class XRandRDisplayHandle : DisplayHandle
     {
+        public string Name { get; set; }
+
+        
     }
 
     [DebuggerDisplay("XWindowHandle: Display={Display.Value} Window={Window.Id}")]

@@ -132,6 +132,9 @@ namespace OpenTK.Platform.Native.X11
                             }
 
                             XRRFreeScreenResources(resources);
+
+                            // Subscribe to events relating to connecting and disconnecting monitors.
+                            XRRSelectInput(X11.Display, X11.DefaultRootWindow, RRSelectMask.RROutputChangeNotifyMask);
                         }
                     }
                 }
@@ -151,10 +154,22 @@ namespace OpenTK.Platform.Native.X11
                 Logger?.LogInfo($"{DisplayExtension} version {DisplayExtensionVersion}");
         }
 
-        // TODO: Write Xinerama fallback.
+        internal static void HandleXRREvent(XEvent @event)
+        {
+            switch ((RREventType)(@event.Type - X11.XRandREventBase))
+            {
+                case RREventType.RRScreenChangeNotify:
+                    Console.WriteLine("RR Screen change notify.");
+                    break;
+                case RREventType.RRNotify:
+                    Console.WriteLine($"RR Notify (subtype: {@event.RRNotify.SubType})");
+                    break;
+                default:
+                    break;
+            }
+        }
 
-        /// <inheritdoc />
-        public bool CanSetVideoMode { get; } = false;
+        // TODO: Write Xinerama fallback.
 
         /// <inheritdoc />
         public bool CanGetVirtualPosition { get; } = false;
@@ -178,8 +193,6 @@ namespace OpenTK.Platform.Native.X11
             {
             case DisplayExtensionType.XRandR:
             {
-
-
                 return -1;
             }
             default:
@@ -229,6 +242,7 @@ namespace OpenTK.Platform.Native.X11
             switch (DisplayExtension)
             {
             case DisplayExtensionType.XRandR:
+                XRandRDisplayHandle randr = handle.As<XRandRDisplayHandle>(this);
                 throw new NotImplementedException();
             default:
             case DisplayExtensionType.None:
@@ -250,7 +264,8 @@ namespace OpenTK.Platform.Native.X11
             switch (DisplayExtension)
             {
             case DisplayExtensionType.XRandR:
-                throw new NotImplementedException();
+                XRandRDisplayHandle randr = handle.As<XRandRDisplayHandle>(this);
+                return randr.Name;
             default:
             case DisplayExtensionType.None:
                 handle.As<DummyDisplayHandle>(this);

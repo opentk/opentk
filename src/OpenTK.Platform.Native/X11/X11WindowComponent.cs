@@ -14,6 +14,7 @@ using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
+using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -707,7 +708,13 @@ namespace OpenTK.Platform.Native.X11
                             break;
                         }
                     default:
+                    {
+                        if (ea.Type == (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
+                        {
+                            X11DisplayComponent.HandleXRREvent(ea);
+                        }
                         break;
+                    }
                 }
             }
 
