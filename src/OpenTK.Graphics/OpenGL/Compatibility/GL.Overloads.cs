@@ -181,6 +181,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 GetBooleanv(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetBooleanv"/>
+        public static unsafe bool GetBoolean(GetPName pname)
+        {
+            bool data_val = default;
+            bool* data = &data_val;
+            GetBooleanv(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetDoublev"/>
         public static unsafe void GetDouble(GetPName pname, Span<double> data)
         {
@@ -204,6 +212,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 GetDoublev(pname, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetDoublev"/>
+        public static unsafe double GetDouble(GetPName pname)
+        {
+            double data_val = default;
+            double* data = &data_val;
+            GetDoublev(pname, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetFloatv"/>
         public static unsafe void GetFloat(GetPName pname, Span<float> data)
@@ -229,6 +245,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 GetFloatv(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetFloatv"/>
+        public static unsafe float GetFloat(GetPName pname)
+        {
+            float data_val = default;
+            float* data = &data_val;
+            GetFloatv(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetIntegerv"/>
         public static unsafe void GetInteger(GetPName pname, Span<int> data)
         {
@@ -252,6 +276,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 GetIntegerv(pname, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetIntegerv"/>
+        public static unsafe int GetInteger(GetPName pname)
+        {
+            int data_val = default;
+            int* data = &data_val;
+            GetIntegerv(pname, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetString"/>
         public static unsafe string? GetString(StringName name)
@@ -6796,6 +6828,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 GetBooleani_v(target, index, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetBooleani_v"/>
+        public static unsafe bool GetBoolean(BufferTargetARB target, uint index)
+        {
+            bool data_val = default;
+            bool* data = &data_val;
+            GetBooleani_v(target, index, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetIntegeri_v"/>
         public static unsafe void GetInteger(GetPName target, uint index, Span<int> data)
         {
@@ -6819,6 +6859,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 GetIntegeri_v(target, index, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetIntegeri_v"/>
+        public static unsafe int GetInteger(GetPName target, uint index)
+        {
+            int data_val = default;
+            int* data = &data_val;
+            GetIntegeri_v(target, index, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetTransformFeedbackVarying"/>
         public static unsafe string GetTransformFeedbackVarying(int program, uint index, int bufSize, Span<int> length, Span<int> size, Span<AttributeType> type)
@@ -8174,6 +8222,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 GetInteger64v(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetInteger64v"/>
+        public static unsafe long GetInteger64(GetPName pname)
+        {
+            long data_val = default;
+            long* data = &data_val;
+            GetInteger64v(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetSynciv"/>
         public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, Span<int> length, Span<int> values)
         {
@@ -8230,6 +8286,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 GetInteger64i_v(target, index, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetInteger64i_v"/>
+        public static unsafe long GetInteger64(GetPName target, uint index)
+        {
+            long data_val = default;
+            long* data = &data_val;
+            GetInteger64i_v(target, index, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetBufferParameteri64v"/>
         public static unsafe void GetBufferParameteri64(BufferTargetARB target, BufferPNameARB pname, Span<long> parameters)
@@ -11558,6 +11622,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 GetFloati_v(target, index, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetFloati_v"/>
+        public static unsafe float GetFloat(GetPName target, uint index)
+        {
+            float data_val = default;
+            float* data = &data_val;
+            GetFloati_v(target, index, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetDoublei_v"/>
         public static unsafe void GetDouble(GetPName target, uint index, Span<double> data)
         {
@@ -11581,6 +11653,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             {
                 GetDoublei_v(target, index, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetDoublei_v"/>
+        public static unsafe double GetDouble(GetPName target, uint index)
+        {
+            double data_val = default;
+            double* data = &data_val;
+            GetDoublei_v(target, index, data);
+            return data_val;
         }
         /// <inheritdoc cref="DrawElementsInstancedBaseInstance"/>
         public static unsafe void DrawElementsInstancedBaseInstance(PrimitiveType mode, int count, DrawElementsType type, nint offset, int instancecount, uint baseinstance)
@@ -25184,6 +25264,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     GetInteger64v(pname, data_ptr);
                 }
             }
+            /// <inheritdoc cref="GetInteger64v"/>
+            public static unsafe long GetInteger64(GetPName pname)
+            {
+                long data_val = default;
+                long* data = &data_val;
+                GetInteger64v(pname, data);
+                return data_val;
+            }
             /// <inheritdoc cref="GetSynciv"/>
             public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, Span<int> length, Span<int> values)
             {
@@ -26028,6 +26116,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 {
                     GetIntegeri_v(target, index, data_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetIntegeri_v"/>
+            public static unsafe int GetInteger(GetPName target, uint index)
+            {
+                int data_val = default;
+                int* data = &data_val;
+                GetIntegeri_v(target, index, data);
+                return data_val;
             }
             /// <inheritdoc cref="DeleteVertexArrays"/>
             public static unsafe void DeleteVertexArray(in int array)
@@ -27985,6 +28081,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     GetFloati_v(target, index, data_ptr);
                 }
             }
+            /// <inheritdoc cref="GetFloati_v"/>
+            public static unsafe float GetFloat(GetPName target, uint index)
+            {
+                float data_val = default;
+                float* data = &data_val;
+                GetFloati_v(target, index, data);
+                return data_val;
+            }
             /// <inheritdoc cref="GetDoublei_v"/>
             public static unsafe void GetDouble(GetPName target, uint index, Span<double> data)
             {
@@ -28008,6 +28112,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 {
                     GetDoublei_v(target, index, data_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetDoublei_v"/>
+            public static unsafe double GetDouble(GetPName target, uint index)
+            {
+                double data_val = default;
+                double* data = &data_val;
+                GetDoublei_v(target, index, data);
+                return data_val;
             }
             /// <inheritdoc cref="DepthRangeArraydvNV"/>
             public static unsafe void DepthRangeArraydvNV(uint first, int count, in double v)
@@ -31123,6 +31235,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     GetFloatIndexedvEXT(target, index, data_ptr);
                 }
             }
+            /// <inheritdoc cref="GetFloatIndexedvEXT"/>
+            public static unsafe float GetFloatIndexedvEXT(GetPName target, uint index)
+            {
+                float data_val = default;
+                float* data = &data_val;
+                GetFloatIndexedvEXT(target, index, data);
+                return data_val;
+            }
             /// <inheritdoc cref="GetDoubleIndexedvEXT"/>
             public static unsafe void GetDoubleIndexedvEXT(GetPName target, uint index, Span<double> data)
             {
@@ -31146,6 +31266,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 {
                     GetDoubleIndexedvEXT(target, index, data_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetDoubleIndexedvEXT"/>
+            public static unsafe double GetDoubleIndexedvEXT(GetPName target, uint index)
+            {
+                double data_val = default;
+                double* data = &data_val;
+                GetDoubleIndexedvEXT(target, index, data);
+                return data_val;
             }
             /// <inheritdoc cref="GetIntegerIndexedvEXT"/>
             public static unsafe void GetIntegerIndexedvEXT(GetPName target, uint index, Span<int> data)
@@ -31171,6 +31299,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     GetIntegerIndexedvEXT(target, index, data_ptr);
                 }
             }
+            /// <inheritdoc cref="GetIntegerIndexedvEXT"/>
+            public static unsafe int GetIntegerIndexedvEXT(GetPName target, uint index)
+            {
+                int data_val = default;
+                int* data = &data_val;
+                GetIntegerIndexedvEXT(target, index, data);
+                return data_val;
+            }
             /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
             public static unsafe void GetBooleanIndexedvEXT(BufferTargetARB target, uint index, Span<bool> data)
             {
@@ -31194,6 +31330,14 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 {
                     GetBooleanIndexedvEXT(target, index, data_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetBooleanIndexedvEXT"/>
+            public static unsafe bool GetBooleanIndexedvEXT(BufferTargetARB target, uint index)
+            {
+                bool data_val = default;
+                bool* data = &data_val;
+                GetBooleanIndexedvEXT(target, index, data);
+                return data_val;
             }
             /// <inheritdoc cref="CompressedTextureImage3DEXT"/>
             public static unsafe void CompressedTextureImage3DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, int imageSize, IntPtr bits)
