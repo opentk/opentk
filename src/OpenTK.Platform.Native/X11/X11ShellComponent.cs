@@ -69,8 +69,7 @@ namespace OpenTK.Platform.Native.X11
                 string? type = ReadPowerFile(dir, "type");
                 if (type != null && type == "Battery\n")
                 {
-                    // This is a battery!
-                    Console.WriteLine($"{dir} is a battery.");
+                    // This is a battery.
 
                     // We don't care about device batteries.
                     string? scope = ReadPowerFile(dir, "scope");
