@@ -3,6 +3,7 @@ using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Mathematics;
+using OpenTK.Core.Utility;
 
 namespace OpenTK.Platform.Native 
 {
@@ -34,6 +35,8 @@ namespace OpenTK.Platform.Native
             public Vector2 GreenCIE;
             public Vector2 BlueCIE;
             public Vector2 WhiteCIE;
+
+            public byte Checksum;
         }
 
         
@@ -44,14 +47,27 @@ namespace OpenTK.Platform.Native
             HDMIa = 0b0010,
             HDMIb = 0b0011,
             MDDI = 0b0100,
-            DisplayPort = 0b1010,
+            DisplayPort = 0b0101,
         }
 
         // This code assumes little-endian.
         // - 2023-06-07 Noggin_bops
-        public static EDIDInfo Parse(byte* data)
+        public static EDIDInfo Parse(byte* data, ILogger? logger)
         {
             EDIDInfo info;
+
+            byte checksum = 0;
+            byte* checksumPtr = data;
+            for (int i = 0; i < 128; i++)
+            {
+                checksum += *checksumPtr++;
+            }
+            
+            if (checksum != 0)
+            {
+                logger?.LogWarning($"EDID checksum failed! Got {checksum}, should have been equal to 0.");
+            }
+            info.Checksum = checksum;
 
             ReadOnlySpan<byte> header = new byte[]{ 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00 };
             for (int i = 0; i < header.Length; i++)
@@ -131,7 +147,15 @@ namespace OpenTK.Platform.Native
             }
             
             // Supported features bitmap, 1 byte
-            data += 1;
+            byte featuresBitmap = *data++;
+            if (info.IsDigitalInput)
+            {
+                
+            }
+            else
+            {
+
+            }
 
             // Chromaticity coordinates
             byte rglsb = *data++;
@@ -237,9 +261,8 @@ namespace OpenTK.Platform.Native
 
             byte extensions = *data++;
 
-            byte checksum = *data++;
-
-            // FIXME: Check checksum!
+            // Checksum byte
+            data += 1;
 
             return info;
         }

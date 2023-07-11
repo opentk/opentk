@@ -101,7 +101,7 @@ namespace OpenTK.Platform.Native.X11
                                         {
                                             byte* edid = (byte*)prop;
 
-                                            EDID.EDIDInfo info = EDID.Parse(edid);
+                                            EDID.EDIDInfo info = EDID.Parse(edid, Logger);
 
                                             displayName = info.DisplayName;
 

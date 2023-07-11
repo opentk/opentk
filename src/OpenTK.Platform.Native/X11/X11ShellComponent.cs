@@ -49,12 +49,11 @@ namespace OpenTK.Platform.Native.X11
             bool onAC = false;
             foreach (string dir in Directory.EnumerateDirectories("/sys/class/power_supply/"))
             {
-                if (Path.GetFileName(dir)?.StartsWith("AC") ?? false)
+                string? type = ReadPowerFile(dir, "type");
+                if (type == "Mains\n")
                 {
-                    string online = File.ReadAllText(Path.Combine(dir, "online"));
-                    // FIXME: Will this always be "1\n" if we are on AC?
-                    onAC = online == "1\n";
-
+                    string? online = ReadPowerFile(dir, "online");
+                    onAC = (online == "1\n");
                     setAC = true;
                     break;
                 }
@@ -67,36 +66,76 @@ namespace OpenTK.Platform.Native.X11
             float? batteryTime = null;
             foreach (string dir in Directory.EnumerateDirectories("/sys/class/power_supply/"))
             {
-                if (Path.GetFileName(dir)?.StartsWith("BAT") ?? false)
+                string? type = ReadPowerFile(dir, "type");
+                if (type != null && type == "Battery\n")
                 {
-                    // FIXME: "evergy_now" and "energy_full" might not always be available.
-                    // We could also look at using "charge_now" and "charge_full"
-                    bool has_energy_now = false;//int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_now")), out int energy_now);
-                    bool has_energy_full = false;//int.TryParse(File.ReadAllText(Path.Combine(dir, "energy_full")), out int energy_full);
+                    // This is a battery!
+                    Console.WriteLine($"{dir} is a battery.");
 
-                    int energy_now = 0;
-                    int energy_full = 0;
+                    // We don't care about device batteries.
+                    string? scope = ReadPowerFile(dir, "scope");
+                    if (scope != null && scope == "Device\n")
+                        continue;
 
-                    if (has_energy_now && has_energy_full && energy_now != -1 && energy_full != -1)
+                    setBattery = true;
+
+                    string? status = ReadPowerFile(dir, "status");
+                    switch (status)
                     {
-                        batteryPercent = (energy_now / (float)energy_full) * 100;
+                        case "Charging\n":
+                            charging = true;
+                            break;
+                        case "Discharging\n":
+                            break;
+                        case "Not charging\n":
+                            break;
+                        case "Full\n":
+                            break;
+                        default: 
+                            // We couldn't read the status or the status is not one that we recognize.
+                            break;
                     }
-                    else if (int.TryParse(File.ReadAllText(Path.Combine(dir, "capacity")), out int capacity) && capacity != -1)
+
+                    string? capacityStr = ReadPowerFile(dir, "capacity");
+                    if (int.TryParse(capacityStr, out int capacity))
                     {
+                        // FIXME: Maybe clamp to 0% - 100%?
                         batteryPercent = capacity;
                     }
 
-                    // FIXME: For now we don't provide this on linux.
-                    batteryTime = null;
+                    string? energyNowStr = ReadPowerFile(dir, "energy_now");
+                    string? energyFullStr = ReadPowerFile(dir, "energy_full");
+                    if (energyNowStr != null && energyFullStr != null &&
+                        int.TryParse(energyNowStr, out int energyNow) &&
+                        int.TryParse(energyFullStr, out int energyFull))
+                    {
+                        batteryPercent = (energyNow / (float)energyFull) * 100;
+                    }
 
-                    string status = File.ReadAllText(Path.Combine(dir, "status"));
-                    charging = (status == "Charging\n");
+                    string? chargeNowStr = ReadPowerFile(dir, "charge_now");
+                    string? chargeFullStr = ReadPowerFile(dir, "charge_full");
+                    if (chargeNowStr != null && chargeFullStr != null &&
+                        int.TryParse(chargeNowStr, out int chargeNow) &&
+                        int.TryParse(chargeFullStr, out int chargeFull))
+                    {
+                        batteryPercent = (chargeNow / (float)chargeFull) * 100;
+                    }
 
-                    // FIXMe: For now we don't report power saver info on linux.
+                    string? timeToEmptyNowStr = ReadPowerFile(dir, "time_to_empty_now");
+                    if (timeToEmptyNowStr != null && 
+                        int.TryParse(timeToEmptyNowStr, out int timeToEmptyNow))
+                    {
+                        batteryTime = timeToEmptyNow;
+                    }
+
+                    // FIXME: In the case of multiple batteries, pick the highest time to empty
+                    // And highest battery percentage?
+
+                    // FIXME: For now we don't report power saver info on linux.
                     powerSaver = false;
 
+                    // FIXME: Consider the case of multiple batteries.
                     setBattery = true;
-                    break;
                 }
             }
 
@@ -113,6 +152,19 @@ namespace OpenTK.Platform.Native.X11
                 batteryInfo.BatteryPercent = batteryPercent;
                 batteryInfo.BatteryTime = batteryTime;
                 return BatteryStatus.HasSystemBattery;
+            }
+
+            static string? ReadPowerFile(string name, string key)
+            {
+                try 
+                {
+                    return File.ReadAllText(Path.Combine("/sys/class/power_supply/",  name, key));
+                }
+                // FIXME: Are there some exceptions we should let through?
+                catch
+                {
+                    return null;
+                }
             }
         }
 
