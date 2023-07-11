@@ -6,7 +6,7 @@ namespace OpenTK.Platform.Native.X11
 {
     public static class LibXkb
     {
-        const string Xkb = "Xkb"
+        const string Xkb = "Xkb";
 
         [DllImport(Xkb, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool XkbLibraryVersion(ref int lib_major_in_out, ref int lib_minor_in_out);

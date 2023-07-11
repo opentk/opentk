@@ -134,7 +134,7 @@ namespace OpenTK.Platform.Native.X11
                             XRRFreeScreenResources(resources);
 
                             // Subscribe to events relating to connecting and disconnecting monitors.
-                            XRRSelectInput(X11.Display, X11.DefaultRootWindow, RRSelectMask.RROutputChangeNotifyMask);
+                            XRRSelectInput(X11.Display, X11.DefaultRootWindow, RRSelectMask.OutputChangeNotifyMask);
                         }
                     }
                 }
