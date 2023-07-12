@@ -1141,7 +1141,7 @@ namespace Generator.Process
                             PrimitiveType.GLX_VideoSourceSGIX => new CSStructPrimitive("GLXVideoSourceSGIX", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
                             PrimitiveType.GLX_FBConfigIDSGIX => new CSStructPrimitive("GLXFBConfigIDSGIX", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
                             PrimitiveType.GLX_FBConfigSGIX => new CSStructPrimitive("GLXFBConfigSGIX", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
-                            PrimitiveType.GLX_GLXPbufferSGIX => new CSStructPrimitive("GLXPbufferSGIX", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
+                            PrimitiveType.GLX_GLXPbufferSGIX => new CSStructPrimitive("GLXPbufferSGIX", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
                             PrimitiveType.GLX_GLXPbufferClobberEvent => new CSStruct("GLXPbufferClobberEvent", bt.Constant),
                             PrimitiveType.GLX_GLXBufferSwapComplete => new CSStruct("GLXBufferSwapComplete", bt.Constant),
                             PrimitiveType.GLX_GLXEvent => new CSStruct("GLXEvent", bt.Constant),

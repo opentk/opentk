@@ -375,7 +375,7 @@ namespace OpenTK.Graphics.Glx
             public static GLXPixmap CreateGLXPixmapWithConfigSGIX(Display* dpy, GLXFBConfigSGIX config, Pixmap pixmap) => (GLXPixmap) GLXPointers._glXCreateGLXPixmapWithConfigSGIX_fnptr(dpy, (IntPtr)config, (nuint)pixmap);
             
             /// <summary> <b>[requires: GLX_SGIX_pbuffer]</b> <b>[entry point: <c>glXDestroyGLXPbufferSGIX</c>]</b><br/>  </summary>
-            public static void DestroyGLXPbufferSGIX(Display* dpy, GLXPbufferSGIX pbuf) => GLXPointers._glXDestroyGLXPbufferSGIX_fnptr(dpy, (ulong)pbuf);
+            public static void DestroyGLXPbufferSGIX(Display* dpy, GLXPbufferSGIX pbuf) => GLXPointers._glXDestroyGLXPbufferSGIX_fnptr(dpy, (nuint)pbuf);
             
             /// <summary> <b>[requires: GLX_SGIX_hyperpipe]</b> <b>[entry point: <c>glXDestroyHyperpipeConfigSGIX</c>]</b><br/>  </summary>
             public static int DestroyHyperpipeConfigSGIX(Display* dpy, int hpId) => GLXPointers._glXDestroyHyperpipeConfigSGIX_fnptr(dpy, hpId);
@@ -408,7 +408,7 @@ namespace OpenTK.Graphics.Glx
             public static int QueryChannelRectSGIX(Display* display, int screen, int channel, int* dx, int* dy, int* dw, int* dh) => GLXPointers._glXQueryChannelRectSGIX_fnptr(display, screen, channel, dx, dy, dw, dh);
             
             /// <summary> <b>[requires: GLX_SGIX_pbuffer]</b> <b>[entry point: <c>glXQueryGLXPbufferSGIX</c>]</b><br/>  </summary>
-            public static void QueryGLXPbufferSGIX(Display* dpy, GLXPbufferSGIX pbuf, int attribute, uint* value) => GLXPointers._glXQueryGLXPbufferSGIX_fnptr(dpy, (ulong)pbuf, attribute, value);
+            public static void QueryGLXPbufferSGIX(Display* dpy, GLXPbufferSGIX pbuf, int attribute, uint* value) => GLXPointers._glXQueryGLXPbufferSGIX_fnptr(dpy, (nuint)pbuf, attribute, value);
             
             /// <summary> <b>[requires: GLX_SGIX_hyperpipe]</b> <b>[entry point: <c>glXQueryHyperpipeAttribSGIX</c>]</b><br/>  </summary>
             public static int QueryHyperpipeAttribSGIX(Display* dpy, int timeSlice, int attrib, int size, void* returnAttribList) => GLXPointers._glXQueryHyperpipeAttribSGIX_fnptr(dpy, timeSlice, attrib, size, returnAttribList);

@@ -200,11 +200,11 @@ namespace OpenTK.Graphics.Glx
             return _glXCreateContextWithConfigSGIX_fnptr(dpy, config, render_type, share_list, direct);
         }
         
-        internal static delegate* unmanaged<Display*, IntPtr, uint, uint, int*, ulong> _glXCreateGLXPbufferSGIX_fnptr = &glXCreateGLXPbufferSGIX_Lazy;
+        internal static delegate* unmanaged<Display*, IntPtr, uint, uint, int*, nuint> _glXCreateGLXPbufferSGIX_fnptr = &glXCreateGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static ulong glXCreateGLXPbufferSGIX_Lazy(Display* dpy, IntPtr config, uint width, uint height, int* attrib_list)
+        private static nuint glXCreateGLXPbufferSGIX_Lazy(Display* dpy, IntPtr config, uint width, uint height, int* attrib_list)
         {
-            _glXCreateGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, IntPtr, uint, uint, int*, ulong>)GLLoader.BindingsContext.GetProcAddress("glXCreateGLXPbufferSGIX");
+            _glXCreateGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, IntPtr, uint, uint, int*, nuint>)GLLoader.BindingsContext.GetProcAddress("glXCreateGLXPbufferSGIX");
             return _glXCreateGLXPbufferSGIX_fnptr(dpy, config, width, height, attrib_list);
         }
         
@@ -296,11 +296,11 @@ namespace OpenTK.Graphics.Glx
             _glXDestroyContext_fnptr(dpy, ctx);
         }
         
-        internal static delegate* unmanaged<Display*, ulong, void> _glXDestroyGLXPbufferSGIX_fnptr = &glXDestroyGLXPbufferSGIX_Lazy;
+        internal static delegate* unmanaged<Display*, nuint, void> _glXDestroyGLXPbufferSGIX_fnptr = &glXDestroyGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void glXDestroyGLXPbufferSGIX_Lazy(Display* dpy, ulong pbuf)
+        private static void glXDestroyGLXPbufferSGIX_Lazy(Display* dpy, nuint pbuf)
         {
-            _glXDestroyGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, ulong, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyGLXPbufferSGIX");
+            _glXDestroyGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, nuint, void>)GLLoader.BindingsContext.GetProcAddress("glXDestroyGLXPbufferSGIX");
             _glXDestroyGLXPbufferSGIX_fnptr(dpy, pbuf);
         }
         
@@ -784,11 +784,11 @@ namespace OpenTK.Graphics.Glx
             return _glXQueryFrameCountNV_fnptr(dpy, screen, count);
         }
         
-        internal static delegate* unmanaged<Display*, ulong, int, uint*, void> _glXQueryGLXPbufferSGIX_fnptr = &glXQueryGLXPbufferSGIX_Lazy;
+        internal static delegate* unmanaged<Display*, nuint, int, uint*, void> _glXQueryGLXPbufferSGIX_fnptr = &glXQueryGLXPbufferSGIX_Lazy;
         [UnmanagedCallersOnly]
-        private static void glXQueryGLXPbufferSGIX_Lazy(Display* dpy, ulong pbuf, int attribute, uint* value)
+        private static void glXQueryGLXPbufferSGIX_Lazy(Display* dpy, nuint pbuf, int attribute, uint* value)
         {
-            _glXQueryGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, ulong, int, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glXQueryGLXPbufferSGIX");
+            _glXQueryGLXPbufferSGIX_fnptr = (delegate* unmanaged<Display*, nuint, int, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glXQueryGLXPbufferSGIX");
             _glXQueryGLXPbufferSGIX_fnptr(dpy, pbuf, attribute, value);
         }
         
