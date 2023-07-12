@@ -506,7 +506,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <inheritdoc cref="GetBooleanv(GetPName, bool*)"/>
         public static unsafe bool GetBoolean(GetPName pname)
         {
-            bool data_val = default;
+            bool data_val;
             bool* data = &data_val;
             GetBooleanv(pname, data);
             return data_val;
@@ -535,6 +535,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBufferParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <inheritdoc cref="GetBufferParameteriv(BufferTargetARB, BufferPNameARB, int*)"/>
+        public static unsafe int GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetBufferParameteriv(target, pname, parameters);
+            return parameters_val;
+        }
         /// <inheritdoc cref="GetClipPlanef(ClipPlaneName, float*)"/>
         public static unsafe void GetClipPlanef(ClipPlaneName plane, Span<float> equation)
         {
@@ -558,6 +566,14 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetClipPlanef(plane, equation_ptr);
             }
+        }
+        /// <inheritdoc cref="GetClipPlanef(ClipPlaneName, float*)"/>
+        public static unsafe float GetClipPlanef(ClipPlaneName plane)
+        {
+            float equation_val;
+            float* equation = &equation_val;
+            GetClipPlanef(plane, equation);
+            return equation_val;
         }
         /// <inheritdoc cref="GetClipPlanex(ClipPlaneName, int*)"/>
         public static unsafe void GetClipPlanex(ClipPlaneName plane, Span<int> equation)
@@ -583,6 +599,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetClipPlanex(plane, equation_ptr);
             }
         }
+        /// <inheritdoc cref="GetClipPlanex(ClipPlaneName, int*)"/>
+        public static unsafe int GetClipPlanex(ClipPlaneName plane)
+        {
+            int equation_val;
+            int* equation = &equation_val;
+            GetClipPlanex(plane, equation);
+            return equation_val;
+        }
         /// <inheritdoc cref="GetFixedv(GetPName, int*)"/>
         public static unsafe void GetFixed(GetPName pname, ref int parameters)
         {
@@ -590,6 +614,14 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetFixedv(pname, parameters_ptr);
             }
+        }
+        /// <inheritdoc cref="GetFixedv(GetPName, int*)"/>
+        public static unsafe int GetFixed(GetPName pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetFixedv(pname, parameters);
+            return parameters_val;
         }
         /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
         public static unsafe void GetFloat(GetPName pname, Span<float> data)
@@ -618,7 +650,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <inheritdoc cref="GetFloatv(GetPName, float*)"/>
         public static unsafe float GetFloat(GetPName pname)
         {
-            float data_val = default;
+            float data_val;
             float* data = &data_val;
             GetFloatv(pname, data);
             return data_val;
@@ -650,7 +682,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <inheritdoc cref="GetIntegerv(GetPName, int*)"/>
         public static unsafe int GetInteger(GetPName pname)
         {
-            int data_val = default;
+            int data_val;
             int* data = &data_val;
             GetIntegerv(pname, data);
             return data_val;
@@ -679,6 +711,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetLightfv(light, pname, parameters_ptr);
             }
         }
+        /// <inheritdoc cref="GetLightfv(LightName, LightParameter, float*)"/>
+        public static unsafe float GetLightf(LightName light, LightParameter pname)
+        {
+            float parameters_val;
+            float* parameters = &parameters_val;
+            GetLightfv(light, pname, parameters);
+            return parameters_val;
+        }
         /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
         public static unsafe void GetLightx(LightName light, LightParameter pname, Span<int> parameters)
         {
@@ -702,6 +742,14 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetLightxv(light, pname, parameters_ptr);
             }
+        }
+        /// <inheritdoc cref="GetLightxv(LightName, LightParameter, int*)"/>
+        public static unsafe int GetLightx(LightName light, LightParameter pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetLightxv(light, pname, parameters);
+            return parameters_val;
         }
         /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
         public static unsafe void GetMaterialf(TriangleFace face, MaterialParameter pname, Span<float> parameters)
@@ -727,6 +775,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialfv(face, pname, parameters_ptr);
             }
         }
+        /// <inheritdoc cref="GetMaterialfv(TriangleFace, MaterialParameter, float*)"/>
+        public static unsafe float GetMaterialf(TriangleFace face, MaterialParameter pname)
+        {
+            float parameters_val;
+            float* parameters = &parameters_val;
+            GetMaterialfv(face, pname, parameters);
+            return parameters_val;
+        }
         /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
         public static unsafe void GetMaterialx(TriangleFace face, MaterialParameter pname, Span<int> parameters)
         {
@@ -751,10 +807,26 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetMaterialxv(face, pname, parameters_ptr);
             }
         }
+        /// <inheritdoc cref="GetMaterialxv(TriangleFace, MaterialParameter, int*)"/>
+        public static unsafe int GetMaterialx(TriangleFace face, MaterialParameter pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetMaterialxv(face, pname, parameters);
+            return parameters_val;
+        }
         /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
         public static unsafe void GetPointer(GetPointervPName pname, void** parameters)
         {
             GetPointerv(pname, parameters);
+        }
+        /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
+        public static unsafe void* GetPointer(GetPointervPName pname)
+        {
+            void* parameters_val;
+            void** parameters = &parameters_val;
+            GetPointerv(pname, parameters);
+            return parameters_val;
         }
         /// <inheritdoc cref="GetString(StringName)"/>
         public static unsafe string? GetString(StringName name)
@@ -789,6 +861,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvfv(target, pname, parameters_ptr);
             }
         }
+        /// <inheritdoc cref="GetTexEnvfv(TextureEnvTarget, TextureEnvParameter, float*)"/>
+        public static unsafe float GetTexEnvf(TextureEnvTarget target, TextureEnvParameter pname)
+        {
+            float parameters_val;
+            float* parameters = &parameters_val;
+            GetTexEnvfv(target, pname, parameters);
+            return parameters_val;
+        }
         /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
         {
@@ -812,6 +892,14 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetTexEnviv(target, pname, parameters_ptr);
             }
+        }
+        /// <inheritdoc cref="GetTexEnviv(TextureEnvTarget, TextureEnvParameter, int*)"/>
+        public static unsafe int GetTexEnvi(TextureEnvTarget target, TextureEnvParameter pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetTexEnviv(target, pname, parameters);
+            return parameters_val;
         }
         /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
         public static unsafe void GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
@@ -837,6 +925,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexEnvxv(target, pname, parameters_ptr);
             }
         }
+        /// <inheritdoc cref="GetTexEnvxv(TextureEnvTarget, TextureEnvParameter, int*)"/>
+        public static unsafe int GetTexEnvx(TextureEnvTarget target, TextureEnvParameter pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetTexEnvxv(target, pname, parameters);
+            return parameters_val;
+        }
         /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
         public static unsafe void GetTexParameterf(TextureTarget target, GetTextureParameter pname, Span<float> parameters)
         {
@@ -860,6 +956,14 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetTexParameterfv(target, pname, parameters_ptr);
             }
+        }
+        /// <inheritdoc cref="GetTexParameterfv(TextureTarget, GetTextureParameter, float*)"/>
+        public static unsafe float GetTexParameterf(TextureTarget target, GetTextureParameter pname)
+        {
+            float parameters_val;
+            float* parameters = &parameters_val;
+            GetTexParameterfv(target, pname, parameters);
+            return parameters_val;
         }
         /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameteri(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
@@ -885,6 +989,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetTexParameteriv(target, pname, parameters_ptr);
             }
         }
+        /// <inheritdoc cref="GetTexParameteriv(TextureTarget, GetTextureParameter, int*)"/>
+        public static unsafe int GetTexParameteri(TextureTarget target, GetTextureParameter pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetTexParameteriv(target, pname, parameters);
+            return parameters_val;
+        }
         /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
         public static unsafe void GetTexParameterx(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
         {
@@ -908,6 +1020,14 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetTexParameterxv(target, pname, parameters_ptr);
             }
+        }
+        /// <inheritdoc cref="GetTexParameterxv(TextureTarget, GetTextureParameter, int*)"/>
+        public static unsafe int GetTexParameterx(TextureTarget target, GetTextureParameter pname)
+        {
+            int parameters_val;
+            int* parameters = &parameters_val;
+            GetTexParameterxv(target, pname, parameters);
+            return parameters_val;
         }
         /// <inheritdoc cref="Lightfv(LightName, LightParameter, float*)"/>
         public static unsafe void Lightf(LightName light, LightParameter pname, ReadOnlySpan<float> parameters)
@@ -1549,6 +1669,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetInteger64vAPPLE(pname, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetInteger64vAPPLE(GetPName, long*)"/>
+            public static unsafe long GetInteger64vAPPLE(GetPName pname)
+            {
+                long parameters_val;
+                long* parameters = &parameters_val;
+                GetInteger64vAPPLE(pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetSyncivAPPLE(GLSync, SyncParameterName, int, int*, int*)"/>
             public static unsafe void GetSyncivAPPLE(GLSync sync, SyncParameterName pname, ref int length, Span<int> values)
             {
@@ -1581,6 +1709,17 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetSyncivAPPLE(sync, pname, count, length_ptr, values_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetSyncivAPPLE(GLSync, SyncParameterName, int, int*, int*)"/>
+            public static unsafe int GetSyncivAPPLE(GLSync sync, SyncParameterName pname, int count, ref int length)
+            {
+                int values_val;
+                fixed (int* length_ptr = &length)
+                {
+                    int* values = &values_val;
+                    GetSyncivAPPLE(sync, pname, count, length_ptr, values);
+                }
+                return values_val;
             }
         }
         public static unsafe partial class EXT
@@ -1637,6 +1776,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetnUniformfvEXT(program, location, bufSize, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetnUniformfvEXT(int, int, int, float*)"/>
+            public static unsafe float GetnUniformfvEXT(int program, int location, int bufSize)
+            {
+                float parameters_val;
+                float* parameters = &parameters_val;
+                GetnUniformfvEXT(program, location, bufSize, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
             public static unsafe void GetnUniformivEXT(int program, int location, Span<int> parameters)
             {
@@ -1662,6 +1809,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetnUniformivEXT(program, location, bufSize, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetnUniformivEXT(int, int, int, int*)"/>
+            public static unsafe int GetnUniformivEXT(int program, int location, int bufSize)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetnUniformivEXT(program, location, bufSize, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="InsertEventMarkerEXT(int, byte*)"/>
             public static unsafe void InsertEventMarkerEXT(int length, string marker)
@@ -2478,6 +2633,27 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetPointerv(pname, parameters);
             }
+            /// <inheritdoc cref="GetPointerv(GetPointervPName, void**)"/>
+            public static unsafe void* GetPointer(GetPointervPName pname)
+            {
+                void* parameters_val;
+                void** parameters = &parameters_val;
+                GetPointerv(pname, parameters);
+                return parameters_val;
+            }
+            /// <inheritdoc cref="GetPointervKHR(All, void**)"/>
+            public static unsafe void GetPointervKHR(All pname, void** parameters)
+            {
+                GetPointervKHR_(pname, parameters);
+            }
+            /// <inheritdoc cref="GetPointervKHR(All, void**)"/>
+            public static unsafe void* GetPointervKHR(All pname)
+            {
+                void* parameters_val;
+                void** parameters = &parameters_val;
+                GetPointervKHR_(pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="ObjectLabel(ObjectIdentifier, uint, int, byte*)"/>
             public static unsafe void ObjectLabel(ObjectIdentifier identifier, uint name, int length, string label)
             {
@@ -2622,6 +2798,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetFenceivNV(fence, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetFenceivNV(uint, FenceParameterNameNV, int*)"/>
+            public static unsafe int GetFenceivNV(uint fence, FenceParameterNameNV pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetFenceivNV(fence, pname, parameters);
+                return parameters_val;
             }
         }
         public static unsafe partial class OES
@@ -3150,6 +3334,19 @@ namespace OpenTK.Graphics.OpenGLES1
                     GenVertexArraysOES(n, arrays_ptr);
                 }
             }
+            /// <inheritdoc cref="GetBufferPointervOES(BufferTargetARB, BufferPointerNameARB, void**)"/>
+            public static unsafe void GetBufferPointervOES(BufferTargetARB target, BufferPointerNameARB pname, void** parameters)
+            {
+                GetBufferPointervOES_(target, pname, parameters);
+            }
+            /// <inheritdoc cref="GetBufferPointervOES(BufferTargetARB, BufferPointerNameARB, void**)"/>
+            public static unsafe void* GetBufferPointervOES(BufferTargetARB target, BufferPointerNameARB pname)
+            {
+                void* parameters_val;
+                void** parameters = &parameters_val;
+                GetBufferPointervOES_(target, pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetClipPlanefOES(ClipPlaneName, float*)"/>
             public static unsafe void GetClipPlanefOES(ClipPlaneName plane, Span<float> equation)
             {
@@ -3173,6 +3370,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetClipPlanefOES(plane, equation_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetClipPlanefOES(ClipPlaneName, float*)"/>
+            public static unsafe float GetClipPlanefOES(ClipPlaneName plane)
+            {
+                float equation_val;
+                float* equation = &equation_val;
+                GetClipPlanefOES(plane, equation);
+                return equation_val;
             }
             /// <inheritdoc cref="GetClipPlanexOES(ClipPlaneName, int*)"/>
             public static unsafe void GetClipPlanexOES(ClipPlaneName plane, Span<int> equation)
@@ -3198,6 +3403,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetClipPlanexOES(plane, equation_ptr);
                 }
             }
+            /// <inheritdoc cref="GetClipPlanexOES(ClipPlaneName, int*)"/>
+            public static unsafe int GetClipPlanexOES(ClipPlaneName plane)
+            {
+                int equation_val;
+                int* equation = &equation_val;
+                GetClipPlanexOES(plane, equation);
+                return equation_val;
+            }
             /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
             public static unsafe void GetConvolutionParameterxvOES(All target, All pname, Span<int> parameters)
             {
@@ -3221,6 +3434,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetConvolutionParameterxvOES(target, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetConvolutionParameterxvOES(All, All, int*)"/>
+            public static unsafe int GetConvolutionParameterxvOES(All target, All pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetConvolutionParameterxvOES(target, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
             public static unsafe void GetFixedvOES(GetPName pname, Span<int> parameters)
@@ -3246,6 +3467,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetFixedvOES(pname, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetFixedvOES(GetPName, int*)"/>
+            public static unsafe int GetFixedvOES(GetPName pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetFixedvOES(pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
             public static unsafe void GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, Span<int> parameters)
             {
@@ -3269,6 +3498,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetFramebufferAttachmentParameterivOES(FramebufferTarget, FramebufferAttachment, FramebufferAttachmentParameterName, int*)"/>
+            public static unsafe int GetFramebufferAttachmentParameterivOES(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetFramebufferAttachmentParameterivOES(target, attachment, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
             public static unsafe void GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname, Span<int> parameters)
@@ -3294,6 +3531,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetHistogramParameterxvOES(target, pname, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetHistogramParameterxvOES(HistogramTargetEXT, GetHistogramParameterPNameEXT, int*)"/>
+            public static unsafe int GetHistogramParameterxvOES(HistogramTargetEXT target, GetHistogramParameterPNameEXT pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetHistogramParameterxvOES(target, pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxOES(LightName light, LightParameter pname, Span<int> parameters)
             {
@@ -3317,6 +3562,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetLightxOES(light, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetLightxOES(LightName, LightParameter, int*)"/>
+            public static unsafe int GetLightxOES(LightName light, LightParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetLightxOES(light, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
             public static unsafe void GetLightxvOES(LightName light, LightParameter pname, Span<int> parameters)
@@ -3342,6 +3595,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetLightxvOES(light, pname, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetLightxvOES(LightName, LightParameter, int*)"/>
+            public static unsafe int GetLightxvOES(LightName light, LightParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetLightxvOES(light, pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
             public static unsafe void GetMapxvOES(MapTarget target, GetMapQuery query, Span<int> v)
             {
@@ -3366,6 +3627,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetMapxvOES(target, query, v_ptr);
                 }
             }
+            /// <inheritdoc cref="GetMapxvOES(MapTarget, GetMapQuery, int*)"/>
+            public static unsafe int GetMapxvOES(MapTarget target, GetMapQuery query)
+            {
+                int v_val;
+                int* v = &v_val;
+                GetMapxvOES(target, query, v);
+                return v_val;
+            }
             /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
             public static unsafe void GetMaterialxvOES(TriangleFace face, MaterialParameter pname, Span<int> parameters)
             {
@@ -3389,6 +3658,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetMaterialxvOES(face, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetMaterialxvOES(TriangleFace, MaterialParameter, int*)"/>
+            public static unsafe int GetMaterialxvOES(TriangleFace face, MaterialParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetMaterialxvOES(face, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
             public static unsafe void GetPixelMapx(PixelMap map, Span<int> values)
@@ -3416,6 +3693,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetPixelMapxv(map, size, values_ptr);
                 }
             }
+            /// <inheritdoc cref="GetPixelMapxv(PixelMap, int, int*)"/>
+            public static unsafe int GetPixelMapx(PixelMap map, int size)
+            {
+                int values_val;
+                int* values = &values_val;
+                GetPixelMapxv(map, size, values);
+                return values_val;
+            }
             /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
             public static unsafe void GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname, Span<int> parameters)
             {
@@ -3439,6 +3724,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetRenderbufferParameterivOES(target, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetRenderbufferParameterivOES(RenderbufferTarget, RenderbufferParameterName, int*)"/>
+            public static unsafe int GetRenderbufferParameterivOES(RenderbufferTarget target, RenderbufferParameterName pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetRenderbufferParameterivOES(target, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
             public static unsafe void GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname, Span<int> parameters)
@@ -3464,6 +3757,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexEnvxvOES(target, pname, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetTexEnvxvOES(TextureEnvTarget, TextureEnvParameter, int*)"/>
+            public static unsafe int GetTexEnvxvOES(TextureEnvTarget target, TextureEnvParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetTexEnvxvOES(target, pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
             public static unsafe void GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname, Span<float> parameters)
             {
@@ -3487,6 +3788,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetTexGenfvOES(coord, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetTexGenfvOES(TextureCoordName, TextureGenParameter, float*)"/>
+            public static unsafe float GetTexGenfvOES(TextureCoordName coord, TextureGenParameter pname)
+            {
+                float parameters_val;
+                float* parameters = &parameters_val;
+                GetTexGenfvOES(coord, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
@@ -3512,6 +3821,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexGenivOES(coord, pname, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetTexGenivOES(TextureCoordName, TextureGenParameter, int*)"/>
+            public static unsafe int GetTexGenivOES(TextureCoordName coord, TextureGenParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetTexGenivOES(coord, pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
             public static unsafe void GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname, Span<int> parameters)
             {
@@ -3535,6 +3852,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetTexGenxvOES(coord, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetTexGenxvOES(TextureCoordName, TextureGenParameter, int*)"/>
+            public static unsafe int GetTexGenxvOES(TextureCoordName coord, TextureGenParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetTexGenxvOES(coord, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
             public static unsafe void GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname, Span<int> parameters)
@@ -3560,6 +3885,14 @@ namespace OpenTK.Graphics.OpenGLES1
                     GetTexLevelParameterxvOES(target, level, pname, parameters_ptr);
                 }
             }
+            /// <inheritdoc cref="GetTexLevelParameterxvOES(TextureTarget, int, GetTextureParameter, int*)"/>
+            public static unsafe int GetTexLevelParameterxvOES(TextureTarget target, int level, GetTextureParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetTexLevelParameterxvOES(target, level, pname, parameters);
+                return parameters_val;
+            }
             /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
             public static unsafe void GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname, Span<int> parameters)
             {
@@ -3583,6 +3916,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetTexParameterxvOES(target, pname, parameters_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetTexParameterxvOES(TextureTarget, GetTextureParameter, int*)"/>
+            public static unsafe int GetTexParameterxvOES(TextureTarget target, GetTextureParameter pname)
+            {
+                int parameters_val;
+                int* parameters = &parameters_val;
+                GetTexParameterxvOES(target, pname, parameters);
+                return parameters_val;
             }
             /// <inheritdoc cref="IndexxvOES(int*)"/>
             public static unsafe void IndexxvOES(ReadOnlySpan<int> component)
@@ -5024,6 +5365,17 @@ namespace OpenTK.Graphics.OpenGLES1
                 {
                     GetDriverControlsQCOM(num_ptr, size, driverControls_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetDriverControlsQCOM(int*, int, uint*)"/>
+            public static unsafe uint GetDriverControlsQCOM(ref int num, int size)
+            {
+                uint driverControls_val;
+                fixed (int* num_ptr = &num)
+                {
+                    uint* driverControls = &driverControls_val;
+                    GetDriverControlsQCOM(num_ptr, size, driverControls);
+                }
+                return driverControls_val;
             }
             /// <inheritdoc cref="GetDriverControlStringQCOM(uint, int, int*, byte*)"/>
             public static unsafe string GetDriverControlStringQCOM(uint driverControl, int bufSize, ref int length)

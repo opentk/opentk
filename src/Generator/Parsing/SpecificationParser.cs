@@ -455,6 +455,8 @@ namespace Generator.Parsing
                 // We leave it null here to let the "GLSync" handling do this.
                 "sync" => null,
                 "display list" => HandleType.DisplayListHandle,
+                "perf query handle" => HandleType.PerfQueryHandle,
+                "perf query id" => null,
                 _ => throw new Exception(className + " is not a supported handle type yet!"),
             };
 

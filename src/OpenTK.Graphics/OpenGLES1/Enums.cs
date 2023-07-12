@@ -1364,6 +1364,20 @@ namespace OpenTK.Graphics.OpenGLES1
         DebugTypePushGroup = 33385,
         DebugTypePopGroup = 33386,
     }
+    ///<summary>Used in <see cref="GL.GetLightfv" />, <see cref="GL.GetLightxv" />, <see cref="GL.Lightf" />, ...</summary>
+    public enum LightParameter : uint
+    {
+        Ambient = 4608,
+        Diffuse = 4609,
+        Specular = 4610,
+        Position = 4611,
+        SpotDirection = 4612,
+        SpotExponent = 4613,
+        SpotCutoff = 4614,
+        ConstantAttenuation = 4615,
+        LinearAttenuation = 4616,
+        QuadraticAttenuation = 4617,
+    }
     ///<summary>Used in <see cref="GL.GetMaterialfv" />, <see cref="GL.GetMaterialxv" />, <see cref="GL.Materialf" />, ...</summary>
     public enum MaterialParameter : uint
     {
@@ -1394,17 +1408,6 @@ namespace OpenTK.Graphics.OpenGLES1
         Specular = 4610,
         Emission = 5632,
         AmbientAndDiffuse = 5634,
-    }
-    ///<summary>Used in <see cref="GL.GetLightfv" />, <see cref="GL.GetLightxv" />, <see cref="GL.Lightf" />, ...</summary>
-    public enum LightParameter : uint
-    {
-        Position = 4611,
-        SpotDirection = 4612,
-        SpotExponent = 4613,
-        SpotCutoff = 4614,
-        ConstantAttenuation = 4615,
-        LinearAttenuation = 4616,
-        QuadraticAttenuation = 4617,
     }
     public enum VertexAttribIType : uint
     {
@@ -1440,8 +1443,10 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         Byte = 5120,
         UnsignedByte = 5121,
+        Short = 5122,
         UnsignedShort = 5123,
         UnsignedInt = 5125,
+        Float = 5126,
     }
     public enum ListNameType : uint
     {

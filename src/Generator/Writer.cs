@@ -58,7 +58,7 @@ namespace Generator.Writing
                 WriteNativeFunctions(directoryPath, apiName, apiNamespace, api.Vendors, api.Documentation);
                 WriteOverloads(directoryPath, apiName, apiNamespace, api.Vendors);
 
-                WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
+                WriteEnums(directoryPath, apiName, apiNamespace, api.EnumGroups);
             }
         }
 
@@ -373,13 +373,8 @@ namespace Generator.Writing
                 {
                     writer.WriteLine($"{overload.NativeFunction.ReturnType.ToCSString()} returnValue;");
                 }*/
-                if (overload.ReturnType is not CSVoid && overload.NativeFunction.ReturnType is not CSVoid)
+                if (overload.ReturnType is not CSVoid /*&& overload.NativeFunction.ReturnType is not CSVoid*/)
                 {
-                    if (overload.NativeFunction.EntryPoint == "glXGetClientString")
-                    {
-                        ;
-                    }
-
                     writer.WriteLine($"{overload.ReturnType.ToCSString()} {overload.NameTable.ReturnName};");
                 }
 
@@ -435,6 +430,7 @@ namespace Generator.Writing
             writer.Write($"<b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> ");
             if (documentation.RemovedIn?.Count > 0)
                 writer.Write($"<b>[removed in: {string.Join(" | ", documentation.RemovedIn)}]</b> ");
+            writer.Write($"<b>[entry point: <c>{entryPoint}</c>]</b><br/>");
             writer.WriteLine($" {documentation.Purpose} </summary>");
 
             foreach (ParameterDocumentation parameter in documentation.Parameters)
@@ -448,7 +444,7 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)
+        private static void WriteEnums(string directoryPath, string apiName, string apiNamespace, List<EnumGroup> enumGroups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -462,7 +458,7 @@ namespace Generator.Writing
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?
                 writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
-                WriteEnumGroups(writer, enumGroups);
+                WriteEnumGroups(writer, apiName, enumGroups);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?
@@ -470,20 +466,19 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteEnumGroups(IndentedTextWriter writer, List<EnumGroup> enumGroups)
+        private static void WriteEnumGroups(IndentedTextWriter writer, string apiName, List<EnumGroup> enumGroups)
         {
             foreach (var group in enumGroups)
             {
                 if (group.FunctionsUsingEnumGroup != null)
                 {
-                    // FIXME: We can't assume functions are contained in the GL. class here
                     if (group.FunctionsUsingEnumGroup.Count > 3)
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");
                     }
                     else
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}</summary>");
                     }
                 }
 

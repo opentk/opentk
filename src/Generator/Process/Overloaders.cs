@@ -112,14 +112,36 @@ namespace Generator.Process
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            if (overload.NativeFunction.EntryPoint.StartsWith("glGetInteger") ||
+            if (overload.NativeFunction.EntryPoint.StartsWith("glGet")
+                // FIXME: It might be better to be more selective about what
+                // functions we overload like this to reduce the number of
+                // garbage overloads generated.
+                /*
+                overload.NativeFunction.EntryPoint.StartsWith("glGetInteger") ||
                 overload.NativeFunction.EntryPoint.StartsWith("glGetFloat") ||
                 overload.NativeFunction.EntryPoint.StartsWith("glGetDouble") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetBoolean"))
+                overload.NativeFunction.EntryPoint.StartsWith("glGetBoolean") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetFixed") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetShader") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetProgram") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetBuffer") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetFramebuffer") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetTexture") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetSampler") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetVertexArray") ||
+                */
+                )
             {
-                // We are looking for function where the last parameter is a pointer argument called "data" that we are going to convert to a return value.
+                if (overload.InputParameters.Length == 0)
+                {
+                    newOverloads = default;
+                    return false;
+                }
 
-                if (overload.InputParameters[^1].Type is CSPointer pointer && overload.InputParameters[^1].Name == "data")
+                // We are looking for function where the last parameter is a pointer argument called "data" that we are going to convert to a return value.
+                if (overload.InputParameters[^1].Type is CSPointer pointer &&
+                    pointer.BaseType is not CSVoid &&
+                    pointer.BaseType is not CSChar8)
                 {
                     string newReturnName = $"{overload.InputParameters[^1].Name}_val";
                     var layer = new GetReturnLayer(overload.InputParameters[^1], pointer.BaseType, newReturnName);
@@ -127,7 +149,7 @@ namespace Generator.Process
                     var inputParams = overload.InputParameters[0..^1];
 
                     var nameTable = overload.NameTable.New();
-                    nameTable.ReturnName = overload.InputParameters[^1].Name;
+                    nameTable.ReturnName = newReturnName;
 
                     newOverloads = new List<Overload>()
                     {
@@ -153,7 +175,8 @@ namespace Generator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"{BaseType.ToCSString()} {NewReturnName} = default;");
+                // FIXME: Detect if we need to create our own variable!
+                //writer.WriteLine($"{BaseType.ToCSString()} {NewReturnName};");
                 writer.WriteLine($"{ReturnParam.Type.ToCSString()} {nameTable[ReturnParam]} = &{NewReturnName};");
             }
 
@@ -220,15 +243,9 @@ namespace Generator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                //writer.WriteLine($"string? {NewReturnName};");
-
                 // This is weird, here we need to create the variable that the internal layers
                 // are going to consider as the final return variable. So we need access to the
                 // return name of the nested layer.
-
-                // FIXME: Here we want the previous return name, ie the name of the return value from
-                // the nested overload layer.
-                // Maybe we pass that into the ctor of the layer?
                 writer.WriteLine($"{PointerType.ToCSString()} {NestedReturnName};");
             }
 
@@ -355,7 +372,7 @@ namespace Generator.Process
     public sealed class MathTypeOverloader : IOverloader
     {
         // Regex to match names of vector methods.
-        private static readonly Regex VectorNameMatch = new Regex("([1-4])([fdhi])v$", RegexOptions.Compiled);
+        private static readonly Regex VectorNameMatch = new Regex("(?<!6)([1-4])([fdhi])v$", RegexOptions.Compiled);
         
         private static readonly HashSet<string> _mathKinds = new HashSet<string>()
         {
@@ -1111,6 +1128,7 @@ namespace Generator.Process
                         {
                             CSChar8 => StringLayer.StringType.Char8,
                             CSChar16 => StringLayer.StringType.Char16,
+                            _ => throw new Exception("Unknown string type!"),
                         };
 
                         // FIXME: Can we know if the string is nullable or not?
@@ -1608,13 +1626,18 @@ namespace Generator.Process
                 return false;
             }
 
+            var nameTable = overload.NameTable.New();
+            nameTable.ReturnName = outParameter.Name;
+
             newOverloads = new List<Overload>()
             {
                 overload with
                 {
-                    NestedOverload = overload, InputParameters = newParameters,
+                    NestedOverload = overload,
+                    InputParameters = newParameters,
                     ReturnType = outType!.ReferencedType,
-                    MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType)
+                    MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType),
+                    NameTable = nameTable,
                 },
                 overload,
             };
@@ -1625,7 +1648,7 @@ namespace Generator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"{OutType.ReferencedType.ToCSString()} {nameTable[OutParameter]};");
+                //writer.WriteLine($"{OutType.ReferencedType.ToCSString()} {nameTable[OutParameter]};");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)

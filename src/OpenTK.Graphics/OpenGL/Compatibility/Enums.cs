@@ -7288,6 +7288,20 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         DebugTypePushGroup = 33385,
         DebugTypePopGroup = 33386,
     }
+    ///<summary>Used in <see cref="GL.GetLightfv" />, <see cref="GL.GetLightiv" />, <see cref="GL.Lightf" />, ...</summary>
+    public enum LightParameter : uint
+    {
+        Ambient = 4608,
+        Diffuse = 4609,
+        Specular = 4610,
+        Position = 4611,
+        SpotDirection = 4612,
+        SpotExponent = 4613,
+        SpotCutoff = 4614,
+        ConstantAttenuation = 4615,
+        LinearAttenuation = 4616,
+        QuadraticAttenuation = 4617,
+    }
     ///<summary>Used in <see cref="GL.GetMaterialfv" />, <see cref="GL.GetMaterialiv" />, <see cref="GL.Materialf" />, ...</summary>
     public enum MaterialParameter : uint
     {
@@ -7321,17 +7335,6 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         Specular = 4610,
         Emission = 5632,
         AmbientAndDiffuse = 5634,
-    }
-    ///<summary>Used in <see cref="GL.GetLightfv" />, <see cref="GL.GetLightiv" />, <see cref="GL.Lightf" />, ...</summary>
-    public enum LightParameter : uint
-    {
-        Position = 4611,
-        SpotDirection = 4612,
-        SpotExponent = 4613,
-        SpotCutoff = 4614,
-        ConstantAttenuation = 4615,
-        LinearAttenuation = 4616,
-        QuadraticAttenuation = 4617,
     }
     ///<summary>Used in <see cref="GL.NewList" /></summary>
     public enum ListMode : uint
@@ -7384,8 +7387,12 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     {
         Byte = 5120,
         UnsignedByte = 5121,
+        Short = 5122,
         UnsignedShort = 5123,
+        Int = 5124,
         UnsignedInt = 5125,
+        Float = 5126,
+        Double = 5130,
     }
     ///<summary>Used in <see cref="GL.CallLists" /></summary>
     public enum ListNameType : uint
@@ -9352,6 +9359,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
     {
         PixelFragmentRgbSourceSgis = 33620,
         PixelFragmentAlphaSourceSgis = 33621,
+    }
+    ///<summary>Used in <see cref="GL.INTEL.GetPerfQueryDataINTEL" /></summary>
+    public enum PerfQueryDataFlags : uint
+    {
+        PerfqueryDonotFlushIntel = 33785,
+        PerfqueryFlushIntel = 33786,
+        PerfqueryWaitIntel = 33787,
     }
     ///<summary>Used in <see cref="GL.SGIX.LightEnviSGIX" /></summary>
     public enum LightEnvParameterSGIX : uint

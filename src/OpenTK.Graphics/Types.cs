@@ -1128,4 +1128,44 @@ namespace OpenTK.Graphics
         public static explicit operator DisplayListHandle(int DisplayList) => new DisplayListHandle(DisplayList);
         public static explicit operator int(DisplayListHandle displayListHandle) => displayListHandle.Handle;
     }
+
+    public struct PerfQueryHandle
+    {
+        public static readonly PerfQueryHandle Zero = new PerfQueryHandle(0);
+
+        public int Handle;
+
+        public PerfQueryHandle(int handle)
+        {
+            Handle = handle;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PerfQueryHandle device && Equals(device);
+        }
+
+        public bool Equals([AllowNull] PerfQueryHandle other)
+        {
+            return Handle.Equals(other.Handle);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Handle);
+        }
+
+        public static bool operator ==(PerfQueryHandle left, PerfQueryHandle right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(PerfQueryHandle left, PerfQueryHandle right)
+        {
+            return !(left == right);
+        }
+
+        public static explicit operator PerfQueryHandle(int perfQuery) => new PerfQueryHandle(perfQuery);
+        public static explicit operator int(PerfQueryHandle perfQueryHandle) => perfQueryHandle.Handle;
+    }
 }

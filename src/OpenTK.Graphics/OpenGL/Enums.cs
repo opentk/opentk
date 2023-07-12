@@ -6326,16 +6326,16 @@ namespace OpenTK.Graphics.OpenGL
         DebugTypePushGroup = 33385,
         DebugTypePopGroup = 33386,
     }
+    ///<summary>Used in <see cref="GL.EXT.BindLightParameterEXT" />, <see cref="GL.OES.GetLightxOES" />, <see cref="GL.OES.GetLightxvOES" />, ...</summary>
+    public enum LightParameter : uint
+    {
+    }
     ///<summary>Used in <see cref="GL.EXT.BindMaterialParameterEXT" />, <see cref="GL.SGIX.FragmentColorMaterialSGIX" />, <see cref="GL.SGIX.FragmentMaterialfSGIX" />, ...</summary>
     public enum MaterialParameter : uint
     {
     }
     ///<summary>Used in <see cref="GL.SGIX.FragmentLightfSGIX" />, <see cref="GL.SGIX.FragmentLightfvSGIX" />, <see cref="GL.SGIX.FragmentLightiSGIX" />, ...</summary>
     public enum FragmentLightParameterSGIX : uint
-    {
-    }
-    ///<summary>Used in <see cref="GL.EXT.BindLightParameterEXT" />, <see cref="GL.OES.GetLightxOES" />, <see cref="GL.OES.GetLightxvOES" />, ...</summary>
-    public enum LightParameter : uint
     {
     }
     ///<summary>Used in <see cref="GL.VertexArrayAttribIFormat" />, <see cref="GL.VertexAttribIFormat" />, <see cref="GL.VertexAttribIPointer" />, ...</summary>
@@ -6383,8 +6383,12 @@ namespace OpenTK.Graphics.OpenGL
     {
         Byte = 5120,
         UnsignedByte = 5121,
+        Short = 5122,
         UnsignedShort = 5123,
+        Int = 5124,
         UnsignedInt = 5125,
+        Float = 5126,
+        Double = 5130,
     }
     public enum ListNameType : uint
     {
@@ -8168,6 +8172,13 @@ namespace OpenTK.Graphics.OpenGL
     {
         PixelFragmentRgbSourceSgis = 33620,
         PixelFragmentAlphaSourceSgis = 33621,
+    }
+    ///<summary>Used in <see cref="GL.INTEL.GetPerfQueryDataINTEL" /></summary>
+    public enum PerfQueryDataFlags : uint
+    {
+        PerfqueryDonotFlushIntel = 33785,
+        PerfqueryFlushIntel = 33786,
+        PerfqueryWaitIntel = 33787,
     }
     ///<summary>Used in <see cref="GL.SGIX.LightEnviSGIX" /></summary>
     public enum LightEnvParameterSGIX : uint

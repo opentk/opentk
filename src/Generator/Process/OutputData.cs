@@ -16,9 +16,6 @@ namespace Generator.Writing
 
     //public record Function(NativeFunction Native, Overload[] Overloads);
 
-
-
-
     public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
 
     public record GLOutputApi(

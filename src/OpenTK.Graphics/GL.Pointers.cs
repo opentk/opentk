@@ -312,11 +312,11 @@ namespace OpenTK.Graphics
             _glBeginPerfMonitorAMD_fnptr(monitor);
         }
         
-        internal static delegate* unmanaged<uint, void> _glBeginPerfQueryINTEL_fnptr = &glBeginPerfQueryINTEL_Lazy;
+        internal static delegate* unmanaged<int, void> _glBeginPerfQueryINTEL_fnptr = &glBeginPerfQueryINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static void glBeginPerfQueryINTEL_Lazy(uint queryHandle)
+        private static void glBeginPerfQueryINTEL_Lazy(int queryHandle)
         {
-            _glBeginPerfQueryINTEL_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glBeginPerfQueryINTEL");
+            _glBeginPerfQueryINTEL_fnptr = (delegate* unmanaged<int, void>)GLLoader.BindingsContext.GetProcAddress("glBeginPerfQueryINTEL");
             _glBeginPerfQueryINTEL_fnptr(queryHandle);
         }
         
@@ -3384,11 +3384,11 @@ namespace OpenTK.Graphics
             _glCreateMemoryObjectsEXT_fnptr(n, memoryObjects);
         }
         
-        internal static delegate* unmanaged<uint, uint*, void> _glCreatePerfQueryINTEL_fnptr = &glCreatePerfQueryINTEL_Lazy;
+        internal static delegate* unmanaged<uint, int*, void> _glCreatePerfQueryINTEL_fnptr = &glCreatePerfQueryINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static void glCreatePerfQueryINTEL_Lazy(uint queryId, uint* queryHandle)
+        private static void glCreatePerfQueryINTEL_Lazy(uint queryId, int* queryHandle)
         {
-            _glCreatePerfQueryINTEL_fnptr = (delegate* unmanaged<uint, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glCreatePerfQueryINTEL");
+            _glCreatePerfQueryINTEL_fnptr = (delegate* unmanaged<uint, int*, void>)GLLoader.BindingsContext.GetProcAddress("glCreatePerfQueryINTEL");
             _glCreatePerfQueryINTEL_fnptr(queryId, queryHandle);
         }
         
@@ -3840,11 +3840,11 @@ namespace OpenTK.Graphics
             _glDeletePerfMonitorsAMD_fnptr(n, monitors);
         }
         
-        internal static delegate* unmanaged<uint, void> _glDeletePerfQueryINTEL_fnptr = &glDeletePerfQueryINTEL_Lazy;
+        internal static delegate* unmanaged<int, void> _glDeletePerfQueryINTEL_fnptr = &glDeletePerfQueryINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static void glDeletePerfQueryINTEL_Lazy(uint queryHandle)
+        private static void glDeletePerfQueryINTEL_Lazy(int queryHandle)
         {
-            _glDeletePerfQueryINTEL_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glDeletePerfQueryINTEL");
+            _glDeletePerfQueryINTEL_fnptr = (delegate* unmanaged<int, void>)GLLoader.BindingsContext.GetProcAddress("glDeletePerfQueryINTEL");
             _glDeletePerfQueryINTEL_fnptr(queryHandle);
         }
         
@@ -5224,11 +5224,11 @@ namespace OpenTK.Graphics
             _glEndPerfMonitorAMD_fnptr(monitor);
         }
         
-        internal static delegate* unmanaged<uint, void> _glEndPerfQueryINTEL_fnptr = &glEndPerfQueryINTEL_Lazy;
+        internal static delegate* unmanaged<int, void> _glEndPerfQueryINTEL_fnptr = &glEndPerfQueryINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static void glEndPerfQueryINTEL_Lazy(uint queryHandle)
+        private static void glEndPerfQueryINTEL_Lazy(int queryHandle)
         {
-            _glEndPerfQueryINTEL_fnptr = (delegate* unmanaged<uint, void>)GLLoader.BindingsContext.GetProcAddress("glEndPerfQueryINTEL");
+            _glEndPerfQueryINTEL_fnptr = (delegate* unmanaged<int, void>)GLLoader.BindingsContext.GetProcAddress("glEndPerfQueryINTEL");
             _glEndPerfQueryINTEL_fnptr(queryHandle);
         }
         
@@ -8696,11 +8696,11 @@ namespace OpenTK.Graphics
             _glGetPerfMonitorGroupsAMD_fnptr(numGroups, groupsSize, groups);
         }
         
-        internal static delegate* unmanaged<uint, uint, int, void*, uint*, void> _glGetPerfQueryDataINTEL_fnptr = &glGetPerfQueryDataINTEL_Lazy;
+        internal static delegate* unmanaged<int, uint, int, void*, uint*, void> _glGetPerfQueryDataINTEL_fnptr = &glGetPerfQueryDataINTEL_Lazy;
         [UnmanagedCallersOnly]
-        private static void glGetPerfQueryDataINTEL_Lazy(uint queryHandle, uint flags, int dataSize, void* data, uint* bytesWritten)
+        private static void glGetPerfQueryDataINTEL_Lazy(int queryHandle, uint flags, int dataSize, void* data, uint* bytesWritten)
         {
-            _glGetPerfQueryDataINTEL_fnptr = (delegate* unmanaged<uint, uint, int, void*, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glGetPerfQueryDataINTEL");
+            _glGetPerfQueryDataINTEL_fnptr = (delegate* unmanaged<int, uint, int, void*, uint*, void>)GLLoader.BindingsContext.GetProcAddress("glGetPerfQueryDataINTEL");
             _glGetPerfQueryDataINTEL_fnptr(queryHandle, flags, dataSize, data, bytesWritten);
         }
         

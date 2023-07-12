@@ -356,6 +356,7 @@ namespace Generator.Parsing
         TransformFeedbackHandle,
         VertexArrayHandle,
         DisplayListHandle,
+        PerfQueryHandle,
     }
 
 

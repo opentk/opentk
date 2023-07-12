@@ -3522,8 +3522,11 @@ namespace OpenTK.Graphics.OpenGLES2
     {
         Byte = 5120,
         UnsignedByte = 5121,
+        Short = 5122,
         UnsignedShort = 5123,
+        Int = 5124,
         UnsignedInt = 5125,
+        Float = 5126,
     }
     public enum ListNameType : uint
     {
@@ -4685,6 +4688,13 @@ namespace OpenTK.Graphics.OpenGLES2
         PrimitivesGenerated = 35975,
         TransformFeedbackPrimitivesWritten = 35976,
         AnySamplesPassedConservative = 36202,
+    }
+    ///<summary>Used in <see cref="GL.INTEL.GetPerfQueryDataINTEL" /></summary>
+    public enum PerfQueryDataFlags : uint
+    {
+        PerfqueryDonotFlushIntel = 33785,
+        PerfqueryFlushIntel = 33786,
+        PerfqueryWaitIntel = 33787,
     }
     ///<summary>Used in <see cref="GL.ActiveTexture" />, <see cref="GL.NV.GetPathTexGenfvNV" />, <see cref="GL.NV.GetPathTexGenivNV" /></summary>
     public enum TextureUnit : uint
