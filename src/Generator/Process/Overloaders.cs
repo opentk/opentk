@@ -27,6 +27,7 @@ namespace Generator.Process
             new TrimNameOverloader(),
 
             new StringReturnOverloader(),
+            new GetReturnOverloader(),
 
             new ColorTypeOverloader(),
             new MathTypeOverloader(),
@@ -103,6 +104,59 @@ namespace Generator.Process
             {
                 newOverloads = default;
                 return false;
+            }
+        }
+    }
+
+    public class GetReturnOverloader : IOverloader
+    {
+        public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
+        {
+            if (overload.NativeFunction.EntryPoint.StartsWith("glGetInteger") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetFloat") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetDouble") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetBoolean"))
+            {
+                // We are looking for function where the last parameter is a pointer argument called "data" that we are going to convert to a return value.
+
+                if (overload.InputParameters[^1].Type is CSPointer pointer && overload.InputParameters[^1].Name == "data")
+                {
+                    string newReturnName = $"{overload.InputParameters[^1].Name}_val";
+                    var layer = new GetReturnLayer(overload.InputParameters[^1], pointer.BaseType, newReturnName);
+
+                    var inputParams = overload.InputParameters[0..^1];
+
+                    newOverloads = new List<Overload>()
+                    {
+                        overload,
+                        overload with
+                        {
+                            NestedOverload = overload,
+                            MarshalLayerToNested = layer,
+                            InputParameters = inputParams,
+                            ReturnType = pointer.BaseType,
+                            ReturnVariableName = overload.InputParameters[^1].Name,
+                        }
+                    };
+                    return true;
+                }
+            }
+
+            newOverloads = default;
+            return false;
+        }
+
+        private record GetReturnLayer(Parameter ReturnParam, BaseCSType BaseType, string NewReturnName) : IOverloadLayer
+        {
+            public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
+            {
+                writer.WriteLine($"{BaseType.ToCSString()} {NewReturnName} = default;");
+                writer.WriteLine($"{ReturnParam.Type.ToCSString()} {nameTable[ReturnParam]} = &{NewReturnName};");
+            }
+
+            public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
+            {
+                return NewReturnName;
             }
         }
     }
