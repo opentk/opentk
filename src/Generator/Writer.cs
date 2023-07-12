@@ -15,45 +15,56 @@ namespace Generator.Writing
     {
         private const string BaseNamespace = "OpenTK";
         private const string GraphicsNamespace = BaseNamespace + ".Graphics";
+
+        // FIXME: This needs to change for WGL and GLX!
         private const string LoaderClass = "GLLoader";
         private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
 
-        public static void Write(OutputData data)
+        public static void Write(OutputData data, string apiName)
         {
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
-            WriteFunctionPointers(outputProjectPath, data.AllNativeFunctions);
+            // FIXME: We are relying on string constants that live in different files to match for this to work...
+            string? pointersNamespace = null;
+            if (apiName == "WGL") pointersNamespace = "Wgl";
+            if (apiName == "GLX") pointersNamespace = "Glx";
+
+            WriteFunctionPointers(outputProjectPath, apiName, pointersNamespace, data.AllNativeFunctions);
+
             // This should create folders to put the versions in
             foreach (var api in data.Apis)
             {
+                // FIXME: Add more output apis?
                 string apiNamespace = api.Api switch
                 {
                     OutputApi.GL => "OpenGL",
                     OutputApi.GLCompat => "OpenGL.Compatibility",
                     OutputApi.GLES1 => "OpenGLES1",
                     OutputApi.GLES2 => "OpenGLES2",
+                    OutputApi.WGL => "Wgl",
+                    OutputApi.GLX => "Glx",
                     _ => throw new Exception($"This is not a valid output API ({api.Api})"),
                 };
                 string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
                 if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
                 var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
-                foreach (var file in files.Where(file => Path.GetFileName(file) != "GL.Manual.cs"))
+                foreach (var file in files.Where(file => Path.GetFileName(file) != $"{apiName}.Manual.cs"))
                 {
                     File.Delete(file);
                 }
 
-                WriteNativeFunctions(directoryPath, apiNamespace, api.Vendors, api.Documentation);
-                WriteOverloads(directoryPath, apiNamespace, api.Vendors);
+                WriteNativeFunctions(directoryPath, apiName, apiNamespace, api.Vendors, api.Documentation);
+                WriteOverloads(directoryPath, apiName, apiNamespace, api.Vendors);
 
-                WriteEnums(directoryPath, apiNamespace, api.EnumGroups);
+                WriteEnums(directoryPath, apiName, apiNamespace, api.EnumGroups);
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, List<NativeFunction> nativeFunctions)
+        private static void WriteFunctionPointers(string directoryPath, string apiName, string? apiNamespace, List<NativeFunction> nativeFunctions)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Pointers.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
 
             writer.WriteLine("// This file is auto generated, do not edit.");
@@ -61,11 +72,19 @@ namespace Generator.Writing
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}");
+            if (apiNamespace == null)
+            {
+                writer.WriteLine($"namespace {GraphicsNamespace}");
+            }
+            else
+            {
+                writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
+            }
+
             using (writer.CsScope())
             {
                 writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenGL entry points.</summary>");
-                writer.WriteLine($"public static unsafe partial class GLPointers");
+                writer.WriteLine($"public static unsafe partial class {apiName}Pointers");
                 using (writer.CsScope())
                 {
                     foreach (NativeFunction function in nativeFunctions)
@@ -183,7 +202,7 @@ namespace Generator.Writing
 
                 string underlyingType = type switch
                 {
-                    CSStruct csstruct => csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type."),
+                    CSStructPrimitive csstruct => csstruct.UnderlyingType?.ToCSString() ?? throw new Exception("A struct didnt contain an underlying type."),
                     CSEnum csenum => csenum.PrimitiveType.ToCSString(),
                     CSBool8 => "byte",
                     _ => type.ToCSString()
@@ -195,21 +214,22 @@ namespace Generator.Writing
 
         private static void WriteNativeFunctions(
             string directoryPath,
-            string glNamespace,
-            Dictionary<string, GLVendorFunctions> groups,
+            string apiName,
+            string apiNamespace,
+            SortedDictionary<string, GLVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Native.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (writer.CsScope())
             {
-                writer.WriteLine($"public static unsafe partial class GL");
+                writer.WriteLine($"public static unsafe partial class {apiName}");
                 using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
@@ -222,11 +242,11 @@ namespace Generator.Writing
                             scope = writer.CsScope();
                         }
 
-                        foreach (var function in group.NativeFunctions)
+                        foreach (var function in group.Functions)
                         {
-                            bool postfixName = group.NativeFunctionsWithPostfix.Contains(function);
-                            documentation.TryGetValue(function, out FunctionDocumentation? functionDocumentation);
-                            WriteNativeFunction(writer, function, postfixName, functionDocumentation);
+                            bool postfixName = group.NativeFunctionsWithPostfix.Contains(function.NativeFunction);
+                            documentation.TryGetValue(function.NativeFunction, out FunctionDocumentation? functionDocumentation);
+                            WriteNativeFunction(writer, function.NativeFunction, postfixName, functionDocumentation, apiName);
                         }
 
                         scope?.Dispose();
@@ -237,7 +257,7 @@ namespace Generator.Writing
             writer.Flush();
         }
 
-        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation)
+        private static void WriteNativeFunction(IndentedTextWriter writer, NativeFunction function, bool postfixName, FunctionDocumentation? documentation, string apiName)
         {
             GetNativeFunctionSignature(function, postfixName, swapTypesForUnderlyingType: false,
                 out string name,
@@ -264,16 +284,16 @@ namespace Generator.Writing
                 if (function.ReturnType is CSBool8)
                 {
                     // HACK: We can't cast byte to bool, sigh...
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => GLPointers._{entryPoint}_fnptr({paramNames}) != 0;");
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames}) != 0;");
                 }
                 else
                 {
-                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) GLPointers._{entryPoint}_fnptr({paramNames});");
+                    writer.WriteLine($"public static {function.ReturnType.ToCSString()} {name}({signature}) => ({function.ReturnType.ToCSString()}) {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
                 }
             }
             else
             {
-                writer.WriteLine($"public static {returnType} {name}({signature}) => GLPointers._{entryPoint}_fnptr({paramNames});");
+                writer.WriteLine($"public static {returnType} {name}({signature}) => {apiName}Pointers._{entryPoint}_fnptr({paramNames});");
             }
 
             writer.WriteLine();
@@ -281,10 +301,11 @@ namespace Generator.Writing
 
         private static void WriteOverloads(
             string directoryPath,
-            string glNamespace,
-            Dictionary<string, GLVendorFunctions> groups)
+            string apiName,
+            string apiNamespace,
+            SortedDictionary<string, GLVendorFunctions> groups)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "GL.Overloads.cs"));
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
@@ -293,13 +314,11 @@ namespace Generator.Writing
             writer.WriteLine("using OpenTK.Mathematics;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (writer.CsScope())
             {
                 // FIXME: Maybe we want to fix this?
-                writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
-
-                writer.WriteLine($"public static unsafe partial class GL");
+                writer.WriteLine($"public static unsafe partial class {apiName}");
                 using (writer.CsScope())
                 {
                     foreach (var (vendor, group) in groups)
@@ -311,9 +330,9 @@ namespace Generator.Writing
                             scope = writer.CsScope();
                         }
 
-                        foreach (var nativeFunctionOverloads in group.OverloadsGroupedByNativeFunctions)
+                        foreach (var function in group.Functions)
                         {
-                            foreach (var overload in nativeFunctionOverloads)
+                            foreach (var overload in function.Overloads)
                             {
                                 bool postfixNativeCall = group.NativeFunctionsWithPostfix.Contains(overload.NativeFunction);
                                 WriteOverloadMethod(writer, overload, postfixNativeCall);
@@ -323,8 +342,6 @@ namespace Generator.Writing
                         scope?.Dispose();
                     }
                 }
-
-                writer.WriteLineNoTabs("#pragma warning restore CS0419 // Ambiguous reference in cref attribute");
             }
         }
 
@@ -336,13 +353,10 @@ namespace Generator.Writing
 
             writer.WriteLine($"/// <inheritdoc cref=\"{nativeFunctionName}({parameterTypes})\"/>");
 
-            string parameterString =
-                string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
+            string parameterString = string.Join(", ", overload.InputParameters.Select(p => $"{p.Type.ToCSString()} {p.Name}"));
 
-            string genericTypes =
-                overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
-            writer.WriteLine(
-                $"public static unsafe {overload.ReturnType.ToCSString()} {overload.OverloadName}{genericTypes}({parameterString})");
+            string genericTypes = overload.GenericTypes.Length <= 0 ? "" : $"<{string.Join(", ", overload.GenericTypes)}>";
+            writer.WriteLine($"public static unsafe {overload.ReturnType.ToCSString()} {overload.OverloadName}{genericTypes}({parameterString})");
             using (writer.Indent())
             {
                 foreach (var type in overload.GenericTypes)
@@ -353,9 +367,15 @@ namespace Generator.Writing
 
             using (writer.CsScope())
             {
-                if (overload.ReturnType is not CSVoid && overload.NativeFunction.ReturnType is not CSVoid)
+                // FIXME: Shouldn't we create the overloads return type here and let the overload layers
+                // create the intermediate return values?
+                /*if (overload.ReturnType is not CSVoid && overload.NativeFunction.ReturnType is not CSVoid)
                 {
                     writer.WriteLine($"{overload.NativeFunction.ReturnType.ToCSString()} returnValue;");
+                }*/
+                if (overload.ReturnType is not CSVoid /*&& overload.NativeFunction.ReturnType is not CSVoid*/)
+                {
+                    writer.WriteLine($"{overload.ReturnType.ToCSString()} {overload.NameTable.ReturnName};");
                 }
 
                 string? returnName = WriteNestedOverload(writer, overload, new NameTable(), postfixNativeCall);
@@ -406,7 +426,12 @@ namespace Generator.Writing
 
         private static void WriteDocumentation(IndentedTextWriter writer, FunctionDocumentation documentation, string entryPoint)
         {
-            writer.WriteLine($"/// <summary> <b>[requires: {string.Join(" | ", documentation.AddedIn)}] [{entryPoint}]</b> {documentation.Purpose} </summary>");
+            writer.Write("/// <summary> ");
+            writer.Write($"<b>[requires: {string.Join(" | ", documentation.AddedIn)}]</b> ");
+            if (documentation.RemovedIn?.Count > 0)
+                writer.Write($"<b>[removed in: {string.Join(" | ", documentation.RemovedIn)}]</b> ");
+            writer.Write($"<b>[entry point: <c>{entryPoint}</c>]</b><br/>");
+            writer.WriteLine($" {documentation.Purpose} </summary>");
 
             foreach (ParameterDocumentation parameter in documentation.Parameters)
             {
@@ -419,7 +444,7 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteEnums(string directoryPath, string apiNamespace, List<EnumGroup> enumGroups)
+        private static void WriteEnums(string directoryPath, string apiName, string apiNamespace, List<EnumGroup> enumGroups)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -433,7 +458,7 @@ namespace Generator.Writing
                 writer.WriteLineNoTabs("#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?
                 writer.WriteLineNoTabs("#pragma warning disable CS0419 // Ambiguous reference in cref attribute");
-                WriteEnumGroups(writer, enumGroups);
+                WriteEnumGroups(writer, apiName, enumGroups);
                 writer.WriteLineNoTabs("#pragma warning restore CA1069 // Enums values should not be duplicated");
                 writer.WriteLineNoTabs("#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member");
                 // FIXME: Maybe we want to fix this?
@@ -441,7 +466,7 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteEnumGroups(IndentedTextWriter writer, List<EnumGroup> enumGroups)
+        private static void WriteEnumGroups(IndentedTextWriter writer, string apiName, List<EnumGroup> enumGroups)
         {
             foreach (var group in enumGroups)
             {
@@ -449,11 +474,11 @@ namespace Generator.Writing
                 {
                     if (group.FunctionsUsingEnumGroup.Count > 3)
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Take(3).Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}, ...</summary>");
                     }
                     else
                     {
-                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"GL.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}</summary>");
+                        writer.WriteLine($"///<summary>Used in {string.Join(", ", group.FunctionsUsingEnumGroup.Select(f => $"<see cref=\"{apiName}.{(f.Vendor != "" ? $"{f.Vendor}." : "")}{f.Function.FunctionName}\" />"))}</summary>");
                     }
                 }
 

@@ -7,12 +7,20 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
+    // FIXME: Add the needed properties for apis here...
+    //public record API(string name, APIVersion[] APIVersions);
 
+    //public record APIVersion(Version Version, Function[] Functions /* something enums */);
+
+    //public record Extension(string name, Function[] Functions /* something enums */);
+
+    //public record Function(NativeFunction Native, Overload[] Overloads);
+
+    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
 
     public record GLOutputApi(
         OutputApi Api,
-        Dictionary<string, GLVendorFunctions> Vendors,
+        SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
@@ -26,9 +34,18 @@ namespace Generator.Writing
         );
 
     public record GLVendorFunctions(
-        List<NativeFunction> NativeFunctions,
-        List<Overload[]> OverloadsGroupedByNativeFunctions,
+        List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
+
+    public record OverloadedFunction(
+        NativeFunction NativeFunction,
+        Overload[] Overloads) : IComparable<OverloadedFunction>
+    {
+        public int CompareTo(OverloadedFunction? other)
+        {
+            return NativeFunction.FunctionName.CompareTo(other?.NativeFunction.FunctionName);
+        }
+    }
 
     public record NativeFunction(
         string EntryPoint,
@@ -44,7 +61,6 @@ namespace Generator.Writing
         NativeFunction NativeFunction,
         BaseCSType ReturnType,
         NameTable NameTable,
-        string ReturnVariableName,
         string[] GenericTypes,
         string OverloadName);
 
@@ -118,7 +134,15 @@ namespace Generator.Writing
         }
     }
 
-    public record CSStruct(string TypeName, bool Constant, CSPrimitive? UnderlyingType) : BaseCSType, IConstantCSType
+    public record CSStructPrimitive(string StructName, bool Constant, CSPrimitive UnderlyingType) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return StructName;
+        }
+    }
+
+    public record CSStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -134,11 +158,29 @@ namespace Generator.Writing
         }
     }
 
-    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType
+    public record CSBool32(bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return "int";
+        }
+    }
+
+    public interface ICSCharType : IConstantCSType { }
+
+    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
     {
         public override string ToCSString()
         {
             return "byte";
+        }
+    }
+
+    public record CSChar16(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
+    {
+        public override string ToCSString()
+        {
+            return "char";
         }
     }
 
@@ -252,6 +294,8 @@ namespace Generator.Writing
     {
         public Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
 
+        public string? ReturnName = "returnValue";
+
         public NameTable()
         {
         }
@@ -259,6 +303,7 @@ namespace Generator.Writing
         public NameTable(NameTable table)
         {
             Table = new Dictionary<Parameter, string>(table.Table);
+            ReturnName = table.ReturnName;
         }
 
         public NameTable New()
@@ -287,6 +332,9 @@ namespace Generator.Writing
             {
                 Table[param] = name;
             }
+
+            // Replace the return name.
+            ReturnName = table.ReturnName;
         }
     }
 
@@ -297,6 +345,8 @@ namespace Generator.Writing
         GL,
         GLCompat,
         GLES1,
-        GLES2
+        GLES2,
+        WGL,
+        GLX,
     }
 }

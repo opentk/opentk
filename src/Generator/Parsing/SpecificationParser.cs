@@ -1,8 +1,10 @@
 using Generator.Utility;
 using Generator.Utility.Extensions;
+using Generator.Writing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,7 +14,19 @@ namespace Generator.Parsing
 {
     public class SpecificationParser
     {
-        public static Specification Parse(Stream input)
+        class APIData
+        {
+            public GLAPI API;
+            public List<Feature> Features = new List<Feature>();
+            public List<Extension> Extensions = new List<Extension>();
+
+            public APIData(GLAPI api)
+            {
+                API = api;
+            }
+        }
+
+        public static Specification2 Parse(Stream input)
         {
             XDocument? xdocument = XDocument.Load(input);
 
@@ -25,11 +39,233 @@ namespace Generator.Parsing
             List<Feature>? features = ParseFeatures(xdocument.Root);
             List<Extension>? extensions = ParseExtensions(xdocument.Root);
 
-            return new Specification(commands, enums, features, extensions);
+            List<API> APIs = MakeAPIs(features, extensions);
+
+            return new Specification2(commands, enums, APIs);
         }
 
+        private static List<API> MakeAPIs(List<Feature> features, List<Extension> extensions)
+        {
+            Dictionary<GLAPI, List<Feature>> FeaturesPerAPI = new Dictionary<GLAPI, List<Feature>>();
+            foreach (var feature in features)
+            {
+                FeaturesPerAPI.AddToNestedList(feature.Api, feature);
+            }
 
-        public static List<Command> ParseCommands(XElement input)
+            Dictionary<GLAPI, List<Extension>> ExtensionsPerAPI = new Dictionary<GLAPI, List<Extension>>();
+            foreach (var extension in extensions)
+            {
+                foreach (var supportedAPI in extension.SupportedApis)
+                {
+                    ExtensionsPerAPI.AddToNestedList(supportedAPI, extension);
+                }
+            }
+
+            List<API> APIs = new List<API>();
+            foreach (var api in FeaturesPerAPI.Keys.Union(ExtensionsPerAPI.Keys))
+            {
+                // FIXME: Better way of filtering things.
+                // We don't case about GLSC2.
+                // Ignore GLAPI-None, there is only one disabled extension that doesn't have an API.
+                // - 2023-03-21 NogginBops
+                // Only extensions are marked with GLCore and they always
+                // support normal GL.
+                // - 2023-03-21 NogginBops
+                if (api == GLAPI.GLSC2 ||
+                    api == GLAPI.None ||
+                    api == GLAPI.GLCore)
+                    continue;
+
+                List<FunctionReference> functions = MakeFunctionReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
+                List<EnumReference> enums = MakeEnumReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
+
+                InputAPI inAPI = api switch
+                {
+                    GLAPI.GL => InputAPI.GL,
+                    GLAPI.GLES1 => InputAPI.GLES1,
+                    GLAPI.GLES2 => InputAPI.GLES2,
+                    GLAPI.WGL => InputAPI.WGL,
+                    GLAPI.GLX => InputAPI.GLX,
+
+                    _ => throw new Exception(),
+                };
+
+                APIs.Add(new API(inAPI, functions, enums));
+            }
+
+            return APIs;
+
+            static List<FunctionReference> MakeFunctionReferences(List<Feature> features, List<Extension> extensions, GLAPI api)
+            {
+                //List<FunctionReference> functions = new List<FunctionReference>();
+                Dictionary<string, FunctionReference> entryPointToReference = new Dictionary<string, FunctionReference>();
+
+                // FIXME: If we want to generate the compatibility thing we want to remove all of the 
+                foreach (var feature in features)
+                {
+                    foreach (var requires in feature.Requires)
+                    {
+                        Debug.Assert(requires.Api != feature.Api);
+
+                        foreach (var entryPoint in requires.Commands)
+                        {
+                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            {
+                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint, value);
+                            }
+
+                            // FIXME: This isn't strictly needed... they are already going to be in order.
+                            if (feature.Version < value.AddedIn)
+                            {
+                                value = value with { AddedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = requires.Profile };
+
+                            entryPointToReference[entryPoint] = value;
+                        }
+                    }
+
+                    foreach (var removes in feature.Removes)
+                    {
+                        bool isCompatibility = removes.Profile == GLProfile.Compatibility;
+
+                        foreach (var entryPoint in removes.Commands)
+                        {
+                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            {
+                                value = new FunctionReference(entryPoint, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint, value);
+                            }
+
+                            // If we should, update the removed in.
+                            if (value.RemovedIn == null || feature.Version < value.RemovedIn)
+                            {
+                                value = value with { RemovedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = removes.Profile };
+
+                            entryPointToReference[entryPoint] = value;
+                        }
+                    }
+                }
+
+                foreach (var extension in extensions)
+                {
+                    Debug.Assert(extension.SupportedApis.Contains(api));
+
+                    foreach (var requires in extension.Requires)
+                    {
+                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == GLAPI.None);
+
+                        foreach (var entryPoint in requires.Commands)
+                        {
+                            if (entryPointToReference.TryGetValue(entryPoint, out FunctionReference? value) == false)
+                            {
+                                value = new FunctionReference(entryPoint, null, null, new List<ExtensionReference>(), GLProfile.None);
+                                entryPointToReference.Add(entryPoint, value);
+                            }
+
+                            value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
+
+                            // FIXME: Should we do this?
+                            value = value with { Profile = requires.Profile };
+
+                            entryPointToReference[entryPoint] = value;
+                        }
+                    }
+                }
+
+                return entryPointToReference.Values.ToList();
+            }
+
+            static List<EnumReference> MakeEnumReferences(List<Feature> features, List<Extension> extensions, GLAPI api)
+            {
+                Dictionary<string, EnumReference> enumNameToReference = new Dictionary<string, EnumReference>();
+
+                // FIXME: If we want to generate the compatibility thing we want to remove all of the 
+                foreach (var feature in features)
+                {
+                    foreach (var requires in feature.Requires)
+                    {
+                        Debug.Assert(requires.Api != feature.Api);
+
+                        foreach (var enumName in requires.Enums)
+                        {
+                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            {
+                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                enumNameToReference.Add(enumName, value);
+                            }
+
+                            // FIXME: This isn't strictly needed... they are already going to be in order.
+                            if (feature.Version < value.AddedIn)
+                            {
+                                value = value with { AddedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = requires.Profile };
+
+                            enumNameToReference[enumName] = value;
+                        }
+                    }
+
+                    foreach (var removes in feature.Removes)
+                    {
+                        foreach (var enumName in removes.Enums)
+                        {
+                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            {
+                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                enumNameToReference.Add(enumName, value);
+                            }
+
+                            // If we should, update the removed in.
+                            if (value.RemovedIn == null || feature.Version < value.RemovedIn)
+                            {
+                                value = value with { RemovedIn = feature.Version };
+                            }
+
+                            value = value with { Profile = removes.Profile };
+
+                            enumNameToReference[enumName] = value;
+                        }
+                    }
+                }
+
+                foreach (var extension in extensions)
+                {
+                    Debug.Assert(extension.SupportedApis.Contains(api));
+
+                    foreach (var requires in extension.Requires)
+                    {
+                        Debug.Assert(extension.SupportedApis.Contains(requires.Api) || requires.Api == GLAPI.None);
+
+                        foreach (var enumName in requires.Enums)
+                        {
+                            if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
+                            {
+                                value = new EnumReference(enumName, null, null, new List<ExtensionReference>(), GLProfile.None);
+                                enumNameToReference.Add(enumName, value);
+                            }
+
+                            value.PartOfExtensions.Add(new ExtensionReference(extension.Name, extension.Vendor));
+
+                            // FIXME: Should we do this?
+                            value = value with { Profile = requires.Profile };
+
+                            enumNameToReference[enumName] = value;
+                        }
+                    }
+                }
+
+                return enumNameToReference.Values.ToList();
+            }
+        }
+
+        private static List<Command> ParseCommands(XElement input)
         {
             Logger.Info("Begining parsing of commands.");
             XElement? xelement = input.Element("commands")!;
@@ -38,6 +274,12 @@ namespace Generator.Parsing
             foreach (XElement? element in xelement.Elements("command"))
             {
                 Command? command = ParseCommand(element);
+
+                // Don't add this command to the list if we should ignore it.
+                if (GeneratorSettings.Settings.IgnoreFunctions.Contains(command.EntryPoint))
+                {
+                    continue;
+                }
 
                 commands.Add(command);
             }
@@ -213,6 +455,8 @@ namespace Generator.Parsing
                 // We leave it null here to let the "GLSync" handling do this.
                 "sync" => null,
                 "display list" => HandleType.DisplayListHandle,
+                "perf query handle" => HandleType.PerfQueryHandle,
+                "perf query id" => null,
                 _ => throw new Exception(className + " is not a supported handle type yet!"),
             };
 
@@ -312,6 +556,93 @@ namespace Generator.Parsing
                     // But we leave it here as a primitive type so we have the information if we need it later.
                     // - 2021-06-23
                     "GLVULKANPROCNV" => PrimitiveType.GLVulkanProcNV,
+
+                    // WGL.xml types
+                    "BOOL" => PrimitiveType.Bool32,
+                    "CHAR" => PrimitiveType.Char8,
+                    "DWORD" => PrimitiveType.Uint,
+                    "FLOAT" => PrimitiveType.Float,
+                    "HANDLE" => PrimitiveType.IntPtr,
+                    "HDC" => PrimitiveType.IntPtr,
+                    "HGLRC" => PrimitiveType.IntPtr,
+                    "INT" => PrimitiveType.Int,
+                    "INT32" => PrimitiveType.Int,
+                    "INT64" => PrimitiveType.Long,
+                    "PROC" => PrimitiveType.WGL_Proc,
+                    "RECT" => PrimitiveType.WGL_Rect,
+                    "LPCSTR" => PrimitiveType.WGL_LPString,
+                    "LPVOID" => PrimitiveType.IntPtr,
+                    "UINT" => PrimitiveType.Uint,
+                    "USHORT" => PrimitiveType.Ushort,
+                    "VOID" => PrimitiveType.Void,
+                    "COLORREF" => PrimitiveType.WGL_COLORREF,
+                    "HENHMETAFILE" => PrimitiveType.IntPtr,
+                    "LAYERPLANEDESCRIPTOR" => PrimitiveType.WGL_LAYERPLANEDESCRIPTOR,
+                    // FIXME?
+                    "LPGLYPHMETRICSFLOAT" => PrimitiveType.IntPtr,
+                    "PIXELFORMATDESCRIPTOR" => PrimitiveType.WGL_PIXELFORMATDESCRIPTOR,
+                    "HPBUFFERARB" => PrimitiveType.IntPtr,
+                    "HPBUFFEREXT" => PrimitiveType.IntPtr,
+                    "HVIDEOOUTPUTDEVICENV" => PrimitiveType.IntPtr,
+                    "HPVIDEODEV" => PrimitiveType.IntPtr,
+                    "HPGPUNV" => PrimitiveType.IntPtr,
+                    "HGPUNV" => PrimitiveType.IntPtr,
+                    "HVIDEOINPUTDEVICENV" => PrimitiveType.IntPtr,
+                    "GPU_DEVICE" => PrimitiveType.WGL_GPU_DEVICE,
+                    // FIXME? _GPU_DEVICE*
+                    "PGPU_DEVICE" => PrimitiveType.WGL_PGPU_DEVICE,
+
+                    "int" => PrimitiveType.Int,
+                    "unsigned int" => PrimitiveType.Uint,
+                    "char" => PrimitiveType.Char8,
+                    "float" => PrimitiveType.Float,
+                    "long" => PrimitiveType.Long,
+                    "unsigned long" => PrimitiveType.Ulong,
+
+                    // GLX types
+
+                    "Bool" => PrimitiveType.Bool8,
+                    "Colormap" => PrimitiveType.GLX_Colormap,
+                    "Display" => PrimitiveType.GLX_Display,
+                    "Font" => PrimitiveType.GLX_Font,
+                    "Pixmap" => PrimitiveType.GLX_Pixmap,
+                    "Screen" => PrimitiveType.GLX_Screen,
+                    "Status" => PrimitiveType.GLX_Status, // FIXME: Maybe type?
+                    "Window" => PrimitiveType.GLX_Window,
+                    "XVisualInfo" => PrimitiveType.GLX_XVisualInfo,
+                    "DMbuffer" => PrimitiveType.GLX_DMbuffer,
+                    "DMparams" => PrimitiveType.GLX_DMparams,
+                    "VLNode" => PrimitiveType.GLX_VLNode,
+                    "VLPath" => PrimitiveType.GLX_VLPath,
+                    "VLServer" => PrimitiveType.GLX_VLServer,
+                    "GLXFBConfigID" => PrimitiveType.GLX_FBConfigID,
+                    "GLXFBConfig" => PrimitiveType.GLX_FBConfig,
+                    "GLXContextID" => PrimitiveType.GLX_ContextID,
+                    "GLXContext" => PrimitiveType.GLX_Context,
+                    "GLXPixmap" => PrimitiveType.GLX_GLXPixmap,
+                    "GLXDrawable" => PrimitiveType.GLX_GLXDrawable,
+                    "GLXWindow" => PrimitiveType.GLX_GLXWindow,
+                    "__GLXextFuncPtr" => PrimitiveType.GLX_EXTFuncPtr, // FIXME!
+                    "GLXPbuffer" => PrimitiveType.GLX_GLXPbuffer,
+                    "GLXVideoCaptureDeviceNV" => PrimitiveType.GLX_VideoCaptureDeviceNV,
+                    "GLXVideoDeviceNV" => PrimitiveType.GLX_VideoDeviceNV,
+                    "GLXVideoSourceSGIX" => PrimitiveType.GLX_VideoSourceSGIX,
+                    "GLXFBConfigIDSGIX" => PrimitiveType.GLX_FBConfigIDSGIX,
+                    "GLXFBConfigSGIX" => PrimitiveType.GLX_FBConfigSGIX,
+                    "GLXPbufferSGIX" => PrimitiveType.GLX_GLXPbufferSGIX,
+                    "GLXPbufferClobberEvent" => PrimitiveType.GLX_GLXPbufferClobberEvent,
+                    "GLXBufferSwapComplete" => PrimitiveType.GLX_GLXBufferSwapComplete,
+                    "GLXEvent" => PrimitiveType.GLX_GLXEvent,
+                    "GLXStereoNotifyEventEXT" => PrimitiveType.GLX_GLXStereoNotifyEventEXT,
+                    "GLXBufferClobberEventSGIX" => PrimitiveType.GLX_GLXBufferClobberEventSGIX,
+                    "GLXHyperpipeNetworkSGIX" => PrimitiveType.GLX_GLXHyperpipeNetworkSGIX,
+                    "GLXHyperpipeConfigSGIX" => PrimitiveType.GLX_GLXHyperpipeConfigSGIX,
+                    "GLXPipeRect" => PrimitiveType.GLX_GLXPipeRect,
+                    "GLXPipeRectLimits" => PrimitiveType.GLX_GLXPipeRectLimits,
+
+                    "int32_t" => PrimitiveType.Int,
+                    "int64_t" => PrimitiveType.Long,
+
                     _ => PrimitiveType.Invalid,
                 };
 
@@ -333,6 +664,12 @@ namespace Generator.Parsing
             {
                 string? @namespace = enums.Attribute("namespace")?.Value;
                 if (@namespace == null) throw new Exception($"Enums entry '{enums}' is missing a namespace attribute.");
+
+                // GLX.xml abuses enum tags to define strings,
+                // to work around this we skip all enums tags marked
+                // with the GLXStrings namespace
+                // - 2023-03-25 NogginBops
+                if (@namespace == "GLXStrings") continue;
 
                 string[] group = enums.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
@@ -478,7 +815,7 @@ namespace Generator.Parsing
 
                 // Remove "GL_" and get the vendor name from the first part of the extension name
                 // Extension name convention: "GL_VENDOR_EXTENSION_NAME"
-                string? extNameWithoutGLPrefix = NameMangler.RemoveStart(extName, "GL_");
+                string? extNameWithoutGLPrefix = NameMangler.RemoveExtensionPrefix(extName);
                 string? vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
                 if (string.IsNullOrEmpty(vendor))
                 {
@@ -585,6 +922,9 @@ namespace Generator.Parsing
             "gles2" => GLAPI.GLES2,
             "glsc2" => GLAPI.GLSC2,
             "glcore" => GLAPI.GLCore,
+
+            "wgl" => GLAPI.WGL,
+            "glx" => GLAPI.GLX,
 
             _ => GLAPI.Invalid,
         };

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Generator.Parsing;
 using Generator.Utility;
@@ -49,7 +50,7 @@ namespace Generator.Process
 
         private static readonly Regex EndingsNotToTrim = new Regex(
             "(sh|ib|[tdrey]s|[eE]n[vd]|bled" +
-            "|Attrib|Access|Boolean|Coord|Depth|Feedbacks|Finish|Flag" +
+            "|Attrib|Address|Access|Boolean|Bitmaps|Coord|Depth|Feedbacks|Finish|Flag" +
             "|Groups|IDs|Indexed|Instanced|Pixels|Queries|Status|Tess|Through" +
             "|Uniforms|Varyings|Weight|Width|[1-4][fdhi]v)$",
             RegexOptions.Compiled);
@@ -111,19 +112,44 @@ namespace Generator.Process
     {
         public bool TryGenerateOverloads(Overload overload, [NotNullWhen(true)] out List<Overload>? newOverloads)
         {
-            if (overload.NativeFunction.EntryPoint.StartsWith("glGetInteger") ||
+            if (overload.NativeFunction.EntryPoint.StartsWith("glGet")
+                // FIXME: It might be better to be more selective about what
+                // functions we overload like this to reduce the number of
+                // garbage overloads generated.
+                /*
+                overload.NativeFunction.EntryPoint.StartsWith("glGetInteger") ||
                 overload.NativeFunction.EntryPoint.StartsWith("glGetFloat") ||
                 overload.NativeFunction.EntryPoint.StartsWith("glGetDouble") ||
-                overload.NativeFunction.EntryPoint.StartsWith("glGetBoolean"))
+                overload.NativeFunction.EntryPoint.StartsWith("glGetBoolean") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetFixed") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetShader") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetProgram") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetBuffer") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetFramebuffer") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetTexture") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetSampler") ||
+                overload.NativeFunction.EntryPoint.StartsWith("glGetVertexArray") ||
+                */
+                )
             {
-                // We are looking for function where the last parameter is a pointer argument called "data" that we are going to convert to a return value.
+                if (overload.InputParameters.Length == 0)
+                {
+                    newOverloads = default;
+                    return false;
+                }
 
-                if (overload.InputParameters[^1].Type is CSPointer pointer && overload.InputParameters[^1].Name == "data")
+                // We are looking for function where the last parameter is a pointer argument called "data" that we are going to convert to a return value.
+                if (overload.InputParameters[^1].Type is CSPointer pointer &&
+                    pointer.BaseType is not CSVoid &&
+                    pointer.BaseType is not CSChar8)
                 {
                     string newReturnName = $"{overload.InputParameters[^1].Name}_val";
                     var layer = new GetReturnLayer(overload.InputParameters[^1], pointer.BaseType, newReturnName);
 
                     var inputParams = overload.InputParameters[0..^1];
+
+                    var nameTable = overload.NameTable.New();
+                    nameTable.ReturnName = newReturnName;
 
                     newOverloads = new List<Overload>()
                     {
@@ -134,7 +160,7 @@ namespace Generator.Process
                             MarshalLayerToNested = layer,
                             InputParameters = inputParams,
                             ReturnType = pointer.BaseType,
-                            ReturnVariableName = overload.InputParameters[^1].Name,
+                            NameTable = nameTable,
                         }
                     };
                     return true;
@@ -149,7 +175,8 @@ namespace Generator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"{BaseType.ToCSString()} {NewReturnName} = default;");
+                // FIXME: Detect if we need to create our own variable!
+                //writer.WriteLine($"{BaseType.ToCSString()} {NewReturnName};");
                 writer.WriteLine($"{ReturnParam.Type.ToCSString()} {nameTable[ReturnParam]} = &{NewReturnName};");
             }
 
@@ -169,15 +196,38 @@ namespace Generator.Process
             if (overload.NativeFunction.EntryPoint == "glGetString" ||
                 overload.NativeFunction.EntryPoint == "glGetStringi")
             {
-                var newReturnName = $"{overload.ReturnVariableName}_str";
-                var layer = new StringReturnLayer(newReturnName);
+                var newReturnName = $"{overload.NameTable.ReturnName}_str";
+                var layer = new StringReturnLayer(new CSPointer(new CSPrimitive("byte", true), true), newReturnName, overload.NameTable.ReturnName!);
                 var returnType = new CSString(Nullable: true);
+                var nameTable = overload.NameTable.New();
+                nameTable.ReturnName = newReturnName;
                 newOverloads = new List<Overload>()
                 {
                     overload with
                     {
-                        NestedOverload = overload, MarshalLayerToNested = layer, ReturnType = returnType,
-                        ReturnVariableName = newReturnName
+                        NestedOverload = overload,
+                        MarshalLayerToNested = layer,
+                        ReturnType = returnType,
+                        NameTable = nameTable,
+                    }
+                };
+                return true;
+            }
+            else if (overload.ReturnType is CSPointer pt && pt.BaseType is ICSCharType bt)
+            {
+                var newReturnName = $"{overload.NameTable.ReturnName}_str";
+                var layer = new StringReturnLayer(pt, newReturnName, overload.NameTable.ReturnName!);
+                var returnType = new CSString(Nullable: true);
+                var nameTable = overload.NameTable.New();
+                nameTable.ReturnName = newReturnName;
+                newOverloads = new List<Overload>()
+                {
+                    overload with
+                    {
+                        NestedOverload = overload,
+                        MarshalLayerToNested = layer,
+                        ReturnType = returnType,
+                        NameTable = nameTable,
                     }
                 };
                 return true;
@@ -189,11 +239,14 @@ namespace Generator.Process
             }
         }
 
-        private record StringReturnLayer(string NewReturnName) : IOverloadLayer
+        private record StringReturnLayer(CSPointer PointerType, string NewReturnName, string NestedReturnName) : IOverloadLayer
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"string? {NewReturnName};");
+                // This is weird, here we need to create the variable that the internal layers
+                // are going to consider as the final return variable. So we need access to the
+                // return name of the nested layer.
+                writer.WriteLine($"{PointerType.ToCSString()} {NestedReturnName};");
             }
 
             public string WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -319,7 +372,7 @@ namespace Generator.Process
     public sealed class MathTypeOverloader : IOverloader
     {
         // Regex to match names of vector methods.
-        private static readonly Regex VectorNameMatch = new Regex("([1-4])([fdhi])v$", RegexOptions.Compiled);
+        private static readonly Regex VectorNameMatch = new Regex("(?<!6)([1-4])([fdhi])v$", RegexOptions.Compiled);
         
         private static readonly HashSet<string> _mathKinds = new HashSet<string>()
         {
@@ -433,7 +486,7 @@ namespace Generator.Process
                             _ => $"{mathKind}{typePostfix}",
                         };
 
-                        CSStruct mathType = new CSStruct(name, baseType.Constant, null);
+                        CSStruct mathType = new CSStruct(name, baseType.Constant);
 
                         Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, mathType), Length = null };
                         Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
@@ -476,7 +529,7 @@ namespace Generator.Process
 
                             pointerParameters.Add(parameter);
 
-                            CSStruct mathType = new CSStruct(typeName, baseType.Constant, null);
+                            CSStruct mathType = new CSStruct(typeName, baseType.Constant);
 
                             Parameter refParamter = parameter with { Type = new CSRef(baseType.Constant ? CSRef.Type.In : CSRef.Type.Ref, mathType), Length = null };
                             Parameter spanParamter = parameter with { Type = new CSSpan(mathType, baseType.Constant), Length = null };
@@ -578,7 +631,7 @@ namespace Generator.Process
                         _toSystemNumerics.TryGetValue(mathType.TypeName, out string? numericsTypeName))
                     {
                         // Create new object with the same mathType as pointerType
-                        Parameter numericsParam = parameter with { Type = pointerType.CreateWithNewType(new CSStruct(numericsTypeName, mathType.Constant, mathType.UnderlyingType)) };
+                        Parameter numericsParam = parameter with { Type = pointerType.CreateWithNewType(new CSStruct(numericsTypeName, mathType.Constant)) };
 
                         parameters[i] = numericsParam;
 
@@ -1063,7 +1116,7 @@ namespace Generator.Process
             {
                 // FIXME: We want to handle sized strings different!!!
                 var param = newParams[i];
-                if (param.Type is CSPointer pt && pt.BaseType is CSChar8 bt)
+                if (param.Type is CSPointer pt && pt.BaseType is ICSCharType bt)
                 {
                     var pointerParam = newParams[i];
                     var nameTable = newOverload.NameTable.New();
@@ -1071,10 +1124,17 @@ namespace Generator.Process
 
                     if (bt.Constant)
                     {
+                        StringLayer.StringType stringType = bt switch
+                        {
+                            CSChar8 => StringLayer.StringType.Char8,
+                            CSChar16 => StringLayer.StringType.Char16,
+                            _ => throw new Exception("Unknown string type!"),
+                        };
+
                         // FIXME: Can we know if the string is nullable or not?
                         newParams[i] = newParams[i] with { Type = new CSString(Nullable: false), Length = null };
                         var stringParams = newParams.ToArray();
-                        var stringLayer = new StringLayer(pointerParam, newParams[i]);
+                        var stringLayer = new StringLayer(pointerParam, newParams[i], stringType);
 
                         newOverload = newOverload with
                         {
@@ -1093,8 +1153,7 @@ namespace Generator.Process
                             string? paramName = Expression.InvertExpressionAndGetReferencedName(param.Length, out var expr);
                             if (paramName == null)
                             {
-                                Logger.Info(
-                                    $"{overload.NativeFunction.EntryPoint} has a COMPSIZE string length for parameter '{param.Name}'!");
+                                Logger.Info($"{overload.NativeFunction.EntryPoint} has a COMPSIZE string length for parameter '{param.Name}'!");
                                 continue;
                             }
 
@@ -1104,8 +1163,7 @@ namespace Generator.Process
 
                         if (lenParam == null)
                         {
-                            Logger.Info(
-                                $"{overload.NativeFunction.EntryPoint} is missing a len attribute for parameter '{param.Name}'");
+                            Logger.Info($"{overload.NativeFunction.EntryPoint} is missing a len attribute for parameter '{param.Name}'");
                             continue;
                         }
 
@@ -1116,6 +1174,13 @@ namespace Generator.Process
                             Length = null
                         };
                         newParams[stringParamIndex] = stringParam;
+
+                        // As wgl doesn't output any 16-bit strings we don't handle this case for now
+                        // - 2023-03-23 NogginBops
+                        if (bt is CSChar16)
+                        {
+                            throw new Exception("We don't support out 16-bit strings atm.");
+                        }
 
                         var stringParams = newParams.ToArray();
                         var stringLayer = new OutStringLayer(pointerParam, lenParam, stringParam);
@@ -1147,12 +1212,27 @@ namespace Generator.Process
             }
         }
 
-        private record StringLayer(Parameter PointerParameter, Parameter StringParameter) : IOverloadLayer
+        private record StringLayer(Parameter PointerParameter, Parameter StringParameter, StringLayer.StringType Type) : IOverloadLayer
         {
+            public enum StringType
+            {
+                Char8,
+                Char16,
+            }
+
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine(
-                    $"byte* {nameTable[PointerParameter]} = (byte*)Marshal.StringToCoTaskMemUTF8({nameTable[StringParameter]});");
+                switch (Type)
+                {
+                    case StringType.Char8:
+                        writer.WriteLine($"byte* {nameTable[PointerParameter]} = (byte*)Marshal.StringToCoTaskMemUTF8({nameTable[StringParameter]});");
+                        break;
+                    case StringType.Char16:
+                        writer.WriteLine($"char* {nameTable[PointerParameter]} = (char*)Marshal.StringToCoTaskMemAuto({nameTable[StringParameter]});");
+                        break;
+                    default:
+                        throw new Exception($"Unknown string type '{Type}'.");
+                }
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -1206,8 +1286,7 @@ namespace Generator.Process
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
             {
-                writer.WriteLine(
-                    $"{nameTable[StringParameter]} = Marshal.PtrToStringUTF8((IntPtr){nameTable[PointerParameter]})!;");
+                writer.WriteLine($"{nameTable[StringParameter]} = Marshal.PtrToStringUTF8((IntPtr){nameTable[PointerParameter]})!;");
                 writer.WriteLine($"Marshal.FreeCoTaskMem((IntPtr){nameTable[PointerParameter]});");
                 return returnName;
             }
@@ -1420,6 +1499,10 @@ namespace Generator.Process
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
+                        case CSStructPrimitive bt:
+                            baseType = pt.BaseType;
+                            constant = bt.Constant;
+                            break;
                         case CSStruct bt:
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
@@ -1428,11 +1511,18 @@ namespace Generator.Process
                             baseType = pt.BaseType;
                             constant |= bt.Constant;
                             break;
+                        case CSBool32 bt:
+                            baseType = pt.BaseType;
+                            constant |= bt.Constant;
+                            break;
+
                         case CSPointer:
+                        case CSChar8:
+                        case CSChar16:
                             continue;
+
                         default:
-                            Logger.Warning($"{pt} is not supported by the ref overloader.");
-                            continue;
+                            throw new InvalidOperationException($"{pt} is not supported by the ref overloader.");
                     }
                     // FIXME: When do we know it's an out ref mathType?
                     CSRef.Type refType = constant ? CSRef.Type.In : CSRef.Type.Ref;
@@ -1453,7 +1543,13 @@ namespace Generator.Process
                 var layer = new RefInsteadOfPointerLayer(changed, original);
                 newOverloads = new List<Overload>()
                 {
-                    overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable, GenericTypes = genericTypes }
+                    overload with {
+                        NestedOverload = overload,
+                        MarshalLayerToNested = layer,
+                        InputParameters = parameters,
+                        NameTable = nameTable,
+                        GenericTypes = genericTypes
+                    }
                 };
                 return true;
             }
@@ -1530,13 +1626,18 @@ namespace Generator.Process
                 return false;
             }
 
+            var nameTable = overload.NameTable.New();
+            nameTable.ReturnName = outParameter.Name;
+
             newOverloads = new List<Overload>()
             {
                 overload with
                 {
-                    NestedOverload = overload, InputParameters = newParameters,
+                    NestedOverload = overload,
+                    InputParameters = newParameters,
                     ReturnType = outType!.ReferencedType,
-                    MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType)
+                    MarshalLayerToNested = new OutToReturnOverloadLayer(outParameter, outType),
+                    NameTable = nameTable,
                 },
                 overload,
             };
@@ -1547,7 +1648,7 @@ namespace Generator.Process
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"{OutType.ReferencedType.ToCSString()} {nameTable[OutParameter]};");
+                //writer.WriteLine($"{OutType.ReferencedType.ToCSString()} {nameTable[OutParameter]};");
             }
 
             public string? WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
