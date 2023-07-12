@@ -64,7 +64,6 @@ namespace Generator.Writing
         NativeFunction NativeFunction,
         BaseCSType ReturnType,
         NameTable NameTable,
-        string ReturnVariableName,
         string[] GenericTypes,
         string OverloadName);
 
@@ -298,6 +297,8 @@ namespace Generator.Writing
     {
         public Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
 
+        public string? ReturnName = "returnValue";
+
         public NameTable()
         {
         }
@@ -305,6 +306,7 @@ namespace Generator.Writing
         public NameTable(NameTable table)
         {
             Table = new Dictionary<Parameter, string>(table.Table);
+            ReturnName = table.ReturnName;
         }
 
         public NameTable New()
@@ -333,6 +335,9 @@ namespace Generator.Writing
             {
                 Table[param] = name;
             }
+
+            // Replace the return name.
+            ReturnName = table.ReturnName;
         }
     }
 

@@ -126,6 +126,9 @@ namespace Generator.Process
 
                     var inputParams = overload.InputParameters[0..^1];
 
+                    var nameTable = overload.NameTable.New();
+                    nameTable.ReturnName = overload.InputParameters[^1].Name;
+
                     newOverloads = new List<Overload>()
                     {
                         overload,
@@ -135,7 +138,7 @@ namespace Generator.Process
                             MarshalLayerToNested = layer,
                             InputParameters = inputParams,
                             ReturnType = pointer.BaseType,
-                            ReturnVariableName = overload.InputParameters[^1].Name,
+                            NameTable = nameTable,
                         }
                     };
                     return true;
@@ -170,9 +173,11 @@ namespace Generator.Process
             if (overload.NativeFunction.EntryPoint == "glGetString" ||
                 overload.NativeFunction.EntryPoint == "glGetStringi")
             {
-                var newReturnName = $"{overload.ReturnVariableName}_str";
-                var layer = new StringReturnLayer(newReturnName);
+                var newReturnName = $"{overload.NameTable.ReturnName}_str";
+                var layer = new StringReturnLayer(new CSPointer(new CSPrimitive("byte", true), true), newReturnName, overload.NameTable.ReturnName!);
                 var returnType = new CSString(Nullable: true);
+                var nameTable = overload.NameTable.New();
+                nameTable.ReturnName = newReturnName;
                 newOverloads = new List<Overload>()
                 {
                     overload with
@@ -180,16 +185,18 @@ namespace Generator.Process
                         NestedOverload = overload,
                         MarshalLayerToNested = layer,
                         ReturnType = returnType,
-                        ReturnVariableName = newReturnName
+                        NameTable = nameTable,
                     }
                 };
                 return true;
             }
             else if (overload.ReturnType is CSPointer pt && pt.BaseType is ICSCharType bt)
             {
-                var newReturnName = $"{overload.ReturnVariableName}_str";
-                var layer = new StringReturnLayer(newReturnName);
+                var newReturnName = $"{overload.NameTable.ReturnName}_str";
+                var layer = new StringReturnLayer(pt, newReturnName, overload.NameTable.ReturnName!);
                 var returnType = new CSString(Nullable: true);
+                var nameTable = overload.NameTable.New();
+                nameTable.ReturnName = newReturnName;
                 newOverloads = new List<Overload>()
                 {
                     overload with
@@ -197,7 +204,7 @@ namespace Generator.Process
                         NestedOverload = overload,
                         MarshalLayerToNested = layer,
                         ReturnType = returnType,
-                        ReturnVariableName = newReturnName,
+                        NameTable = nameTable,
                     }
                 };
                 return true;
@@ -209,11 +216,20 @@ namespace Generator.Process
             }
         }
 
-        private record StringReturnLayer(string NewReturnName) : IOverloadLayer
+        private record StringReturnLayer(CSPointer PointerType, string NewReturnName, string NestedReturnName) : IOverloadLayer
         {
             public void WritePrologue(IndentedTextWriter writer, NameTable nameTable)
             {
-                writer.WriteLine($"string? {NewReturnName};");
+                //writer.WriteLine($"string? {NewReturnName};");
+
+                // This is weird, here we need to create the variable that the internal layers
+                // are going to consider as the final return variable. So we need access to the
+                // return name of the nested layer.
+
+                // FIXME: Here we want the previous return name, ie the name of the return value from
+                // the nested overload layer.
+                // Maybe we pass that into the ctor of the layer?
+                writer.WriteLine($"{PointerType.ToCSString()} {NestedReturnName};");
             }
 
             public string WriteEpilogue(IndentedTextWriter writer, NameTable nameTable, string? returnName)
@@ -1509,7 +1525,13 @@ namespace Generator.Process
                 var layer = new RefInsteadOfPointerLayer(changed, original);
                 newOverloads = new List<Overload>()
                 {
-                    overload with { NestedOverload = overload, MarshalLayerToNested = layer, InputParameters = parameters, NameTable = nameTable, GenericTypes = genericTypes }
+                    overload with {
+                        NestedOverload = overload,
+                        MarshalLayerToNested = layer,
+                        InputParameters = parameters,
+                        NameTable = nameTable,
+                        GenericTypes = genericTypes
+                    }
                 };
                 return true;
             }

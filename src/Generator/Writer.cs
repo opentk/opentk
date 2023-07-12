@@ -26,7 +26,13 @@ namespace Generator.Writing
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
-            WriteFunctionPointers(outputProjectPath, apiName, data.AllNativeFunctions);
+            // FIXME: We are relying on string constants that live in different files to match for this to work...
+            string? pointersNamespace = null;
+            if (apiName == "WGL") pointersNamespace = "Wgl";
+            if (apiName == "GLX") pointersNamespace = "Glx";
+
+            WriteFunctionPointers(outputProjectPath, apiName, pointersNamespace, data.AllNativeFunctions);
+
             // This should create folders to put the versions in
             foreach (var api in data.Apis)
             {
@@ -56,7 +62,7 @@ namespace Generator.Writing
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, string apiName, List<NativeFunction> nativeFunctions)
+        private static void WriteFunctionPointers(string directoryPath, string apiName, string? apiNamespace, List<NativeFunction> nativeFunctions)
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
@@ -66,7 +72,15 @@ namespace Generator.Writing
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}");
+            if (apiNamespace == null)
+            {
+                writer.WriteLine($"namespace {GraphicsNamespace}");
+            }
+            else
+            {
+                writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
+            }
+
             using (writer.CsScope())
             {
                 writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenGL entry points.</summary>");
@@ -201,7 +215,7 @@ namespace Generator.Writing
         private static void WriteNativeFunctions(
             string directoryPath,
             string apiName,
-            string glNamespace,
+            string apiNamespace,
             SortedDictionary<string, GLVendorFunctions> groups,
             Dictionary<NativeFunction, FunctionDocumentation> documentation)
         {
@@ -212,7 +226,7 @@ namespace Generator.Writing
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            writer.WriteLine($"namespace {GraphicsNamespace}.{glNamespace}");
+            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (writer.CsScope())
             {
                 writer.WriteLine($"public static unsafe partial class {apiName}");
@@ -353,9 +367,20 @@ namespace Generator.Writing
 
             using (writer.CsScope())
             {
-                if (overload.ReturnType is not CSVoid && overload.NativeFunction.ReturnType is not CSVoid)
+                // FIXME: Shouldn't we create the overloads return type here and let the overload layers
+                // create the intermediate return values?
+                /*if (overload.ReturnType is not CSVoid && overload.NativeFunction.ReturnType is not CSVoid)
                 {
                     writer.WriteLine($"{overload.NativeFunction.ReturnType.ToCSString()} returnValue;");
+                }*/
+                if (overload.ReturnType is not CSVoid && overload.NativeFunction.ReturnType is not CSVoid)
+                {
+                    if (overload.NativeFunction.EntryPoint == "glXGetClientString")
+                    {
+                        ;
+                    }
+
+                    writer.WriteLine($"{overload.ReturnType.ToCSString()} {overload.NameTable.ReturnName};");
                 }
 
                 string? returnName = WriteNestedOverload(writer, overload, new NameTable(), postfixNativeCall);

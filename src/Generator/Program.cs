@@ -116,6 +116,14 @@ namespace Generator
                             "ERROR_INVALID_PIXEL_TYPE_EXT",
                             "ERROR_INCOMPATIBLE_AFFINITY_MASKS_NV",
                             "ERROR_MISSING_AFFINITY_MASK_NV",*/
+                        },
+                        IgnoreFunctions = new List<string>()
+                        {
+                            // #if _DM_BUFFER_H_
+                            "glXAssociateDMPbufferSGIX",
+                            // #if _VL_H
+                            "glXCreateGLXVideoSourceSGIX",
+                            "glXDestroyGLXVideoSourceSGIX"
                         }
                     };
 
@@ -123,7 +131,7 @@ namespace Generator
                     using FileStream specificationStream = Reader.ReadGLXSpecFromGithub();
                     Specification2 specification = SpecificationParser.Parse(specificationStream);
 
-                    // FIXME: Does there exist wgl documentation?
+                    // FIXME: Does there exist glx documentation?
                     // Read the documentation folders and parse it into data structures.
                     //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
                     Documentation documentation = new Documentation(new Dictionary<OutputApi, VersionDocumentation>());

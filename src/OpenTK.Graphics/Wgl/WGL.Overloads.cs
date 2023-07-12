@@ -395,8 +395,8 @@ namespace OpenTK.Graphics.Wgl
             /// <inheritdoc cref="GetExtensionsStringARB(IntPtr)"/>
             public static unsafe string? GetExtensionsStringARB(IntPtr hdc)
             {
-                byte* returnValue;
                 string? returnValue_str;
+                byte* returnValue;
                 returnValue = GetExtensionsStringARB_(hdc);
                 returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
                 return returnValue_str;
@@ -580,8 +580,8 @@ namespace OpenTK.Graphics.Wgl
             /// <inheritdoc cref="GetExtensionsStringEXT()"/>
             public static unsafe string? GetExtensionsStringEXT()
             {
-                byte* returnValue;
                 string? returnValue_str;
+                byte* returnValue;
                 returnValue = GetExtensionsStringEXT_();
                 returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
                 return returnValue_str;

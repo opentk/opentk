@@ -10,9 +10,9 @@ namespace OpenTK.Graphics.Glx
     public static unsafe partial class GLX
     {
         /// <inheritdoc cref="ChooseFBConfig(Display*, int, int*, int*)"/>
-        public static unsafe __GLXFBConfigRec** ChooseFBConfig(ref Display dpy, int screen, in int attrib_list, ref int nelements)
+        public static unsafe GLXFBConfig* ChooseFBConfig(ref Display dpy, int screen, in int attrib_list, ref int nelements)
         {
-            __GLXFBConfigRec** returnValue;
+            GLXFBConfig* returnValue;
             fixed (Display* dpy_ptr = &dpy)
             fixed (int* attrib_list_ptr = &attrib_list)
             fixed (int* nelements_ptr = &nelements)
@@ -32,25 +32,22 @@ namespace OpenTK.Graphics.Glx
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CopyContext(Display*, __GLXContextRec*, __GLXContextRec*, ulong)"/>
-        public static unsafe void CopyContext(ref Display dpy, ref __GLXContextRec src, ref __GLXContextRec dst, ulong mask)
+        /// <inheritdoc cref="CopyContext(Display*, GLXContext, GLXContext, ulong)"/>
+        public static unsafe void CopyContext(ref Display dpy, GLXContext src, GLXContext dst, ulong mask)
         {
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXContextRec* src_ptr = &src)
-            fixed (__GLXContextRec* dst_ptr = &dst)
             {
-                CopyContext(dpy_ptr, src_ptr, dst_ptr, mask);
+                CopyContext(dpy_ptr, src, dst, mask);
             }
         }
-        /// <inheritdoc cref="CreateContext(Display*, XVisualInfo*, __GLXContextRec*, bool)"/>
-        public static unsafe __GLXContextRec* CreateContext(ref Display dpy, ref XVisualInfo vis, ref __GLXContextRec shareList, bool direct)
+        /// <inheritdoc cref="CreateContext(Display*, XVisualInfo*, GLXContext, bool)"/>
+        public static unsafe GLXContext CreateContext(ref Display dpy, ref XVisualInfo vis, GLXContext shareList, bool direct)
         {
-            __GLXContextRec* returnValue;
+            GLXContext returnValue;
             fixed (Display* dpy_ptr = &dpy)
             fixed (XVisualInfo* vis_ptr = &vis)
-            fixed (__GLXContextRec* shareList_ptr = &shareList)
             {
-                returnValue = CreateContext(dpy_ptr, vis_ptr, shareList_ptr, direct);
+                returnValue = CreateContext(dpy_ptr, vis_ptr, shareList, direct);
             }
             return returnValue;
         }
@@ -65,61 +62,55 @@ namespace OpenTK.Graphics.Glx
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateNewContext(Display*, __GLXFBConfigRec*, int, __GLXContextRec*, bool)"/>
-        public static unsafe __GLXContextRec* CreateNewContext(ref Display dpy, ref __GLXFBConfigRec config, int render_type, ref __GLXContextRec share_list, bool direct)
+        /// <inheritdoc cref="CreateNewContext(Display*, GLXFBConfig, int, GLXContext, bool)"/>
+        public static unsafe GLXContext CreateNewContext(ref Display dpy, GLXFBConfig config, int render_type, GLXContext share_list, bool direct)
         {
-            __GLXContextRec* returnValue;
+            GLXContext returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXFBConfigRec* config_ptr = &config)
-            fixed (__GLXContextRec* share_list_ptr = &share_list)
             {
-                returnValue = CreateNewContext(dpy_ptr, config_ptr, render_type, share_list_ptr, direct);
+                returnValue = CreateNewContext(dpy_ptr, config, render_type, share_list, direct);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreatePbuffer(Display*, __GLXFBConfigRec*, int*)"/>
-        public static unsafe GLXPbuffer CreatePbuffer(ref Display dpy, ref __GLXFBConfigRec config, in int attrib_list)
+        /// <inheritdoc cref="CreatePbuffer(Display*, GLXFBConfig, int*)"/>
+        public static unsafe GLXPbuffer CreatePbuffer(ref Display dpy, GLXFBConfig config, in int attrib_list)
         {
             GLXPbuffer returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXFBConfigRec* config_ptr = &config)
             fixed (int* attrib_list_ptr = &attrib_list)
             {
-                returnValue = CreatePbuffer(dpy_ptr, config_ptr, attrib_list_ptr);
+                returnValue = CreatePbuffer(dpy_ptr, config, attrib_list_ptr);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreatePixmap(Display*, __GLXFBConfigRec*, Pixmap, int*)"/>
-        public static unsafe GLXPixmap CreatePixmap(ref Display dpy, ref __GLXFBConfigRec config, Pixmap pixmap, in int attrib_list)
+        /// <inheritdoc cref="CreatePixmap(Display*, GLXFBConfig, Pixmap, int*)"/>
+        public static unsafe GLXPixmap CreatePixmap(ref Display dpy, GLXFBConfig config, Pixmap pixmap, in int attrib_list)
         {
             GLXPixmap returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXFBConfigRec* config_ptr = &config)
             fixed (int* attrib_list_ptr = &attrib_list)
             {
-                returnValue = CreatePixmap(dpy_ptr, config_ptr, pixmap, attrib_list_ptr);
+                returnValue = CreatePixmap(dpy_ptr, config, pixmap, attrib_list_ptr);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="CreateWindow(Display*, __GLXFBConfigRec*, Window, int*)"/>
-        public static unsafe GLXWindow CreateWindow(ref Display dpy, ref __GLXFBConfigRec config, Window win, in int attrib_list)
+        /// <inheritdoc cref="CreateWindow(Display*, GLXFBConfig, Window, int*)"/>
+        public static unsafe GLXWindow CreateWindow(ref Display dpy, GLXFBConfig config, Window win, in int attrib_list)
         {
             GLXWindow returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXFBConfigRec* config_ptr = &config)
             fixed (int* attrib_list_ptr = &attrib_list)
             {
-                returnValue = CreateWindow(dpy_ptr, config_ptr, win, attrib_list_ptr);
+                returnValue = CreateWindow(dpy_ptr, config, win, attrib_list_ptr);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="DestroyContext(Display*, __GLXContextRec*)"/>
-        public static unsafe void DestroyContext(ref Display dpy, ref __GLXContextRec ctx)
+        /// <inheritdoc cref="DestroyContext(Display*, GLXContext)"/>
+        public static unsafe void DestroyContext(ref Display dpy, GLXContext ctx)
         {
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXContextRec* ctx_ptr = &ctx)
             {
-                DestroyContext(dpy_ptr, ctx_ptr);
+                DestroyContext(dpy_ptr, ctx);
             }
         }
         /// <inheritdoc cref="DestroyGLXPixmap(Display*, GLXPixmap)"/>
@@ -157,10 +148,10 @@ namespace OpenTK.Graphics.Glx
         /// <inheritdoc cref="GetClientString(Display*, int)"/>
         public static unsafe string? GetClientString(ref Display dpy, int name)
         {
-            byte* returnValue;
+            string? returnValue_str;
             fixed (Display* dpy_ptr = &dpy)
             {
-                string? returnValue_str;
+                byte* returnValue;
                 returnValue = GetClientString(dpy_ptr, name);
                 returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             }
@@ -178,22 +169,21 @@ namespace OpenTK.Graphics.Glx
             }
             return returnValue;
         }
-        /// <inheritdoc cref="GetFBConfigAttrib(Display*, __GLXFBConfigRec*, int, int*)"/>
-        public static unsafe int GetFBConfigAttrib(ref Display dpy, ref __GLXFBConfigRec config, int attribute, ref int value)
+        /// <inheritdoc cref="GetFBConfigAttrib(Display*, GLXFBConfig, int, int*)"/>
+        public static unsafe int GetFBConfigAttrib(ref Display dpy, GLXFBConfig config, int attribute, ref int value)
         {
             int returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXFBConfigRec* config_ptr = &config)
             fixed (int* value_ptr = &value)
             {
-                returnValue = GetFBConfigAttrib(dpy_ptr, config_ptr, attribute, value_ptr);
+                returnValue = GetFBConfigAttrib(dpy_ptr, config, attribute, value_ptr);
             }
             return returnValue;
         }
         /// <inheritdoc cref="GetFBConfigs(Display*, int, int*)"/>
-        public static unsafe __GLXFBConfigRec** GetFBConfig(ref Display dpy, int screen, ref int nelements)
+        public static unsafe GLXFBConfig* GetFBConfig(ref Display dpy, int screen, ref int nelements)
         {
-            __GLXFBConfigRec** returnValue;
+            GLXFBConfig* returnValue;
             fixed (Display* dpy_ptr = &dpy)
             fixed (int* nelements_ptr = &nelements)
             {
@@ -220,59 +210,54 @@ namespace OpenTK.Graphics.Glx
                 GetSelectedEvent(dpy_ptr, draw, event_mask_ptr);
             }
         }
-        /// <inheritdoc cref="GetVisualFromFBConfig(Display*, __GLXFBConfigRec*)"/>
-        public static unsafe XVisualInfo* GetVisualFromFBConfig(ref Display dpy, ref __GLXFBConfigRec config)
+        /// <inheritdoc cref="GetVisualFromFBConfig(Display*, GLXFBConfig)"/>
+        public static unsafe XVisualInfo* GetVisualFromFBConfig(ref Display dpy, GLXFBConfig config)
         {
             XVisualInfo* returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXFBConfigRec* config_ptr = &config)
             {
-                returnValue = GetVisualFromFBConfig(dpy_ptr, config_ptr);
+                returnValue = GetVisualFromFBConfig(dpy_ptr, config);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="IsDirect(Display*, __GLXContextRec*)"/>
-        public static unsafe bool IsDirect(ref Display dpy, ref __GLXContextRec ctx)
+        /// <inheritdoc cref="IsDirect(Display*, GLXContext)"/>
+        public static unsafe bool IsDirect(ref Display dpy, GLXContext ctx)
         {
             bool returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXContextRec* ctx_ptr = &ctx)
             {
-                returnValue = IsDirect(dpy_ptr, ctx_ptr);
+                returnValue = IsDirect(dpy_ptr, ctx);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="MakeContextCurrent(Display*, GLXDrawable, GLXDrawable, __GLXContextRec*)"/>
-        public static unsafe bool MakeContextCurrent(ref Display dpy, GLXDrawable draw, GLXDrawable read, ref __GLXContextRec ctx)
+        /// <inheritdoc cref="MakeContextCurrent(Display*, GLXDrawable, GLXDrawable, GLXContext)"/>
+        public static unsafe bool MakeContextCurrent(ref Display dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx)
         {
             bool returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXContextRec* ctx_ptr = &ctx)
             {
-                returnValue = MakeContextCurrent(dpy_ptr, draw, read, ctx_ptr);
+                returnValue = MakeContextCurrent(dpy_ptr, draw, read, ctx);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="MakeCurrent(Display*, GLXDrawable, __GLXContextRec*)"/>
-        public static unsafe bool MakeCurrent(ref Display dpy, GLXDrawable drawable, ref __GLXContextRec ctx)
+        /// <inheritdoc cref="MakeCurrent(Display*, GLXDrawable, GLXContext)"/>
+        public static unsafe bool MakeCurrent(ref Display dpy, GLXDrawable drawable, GLXContext ctx)
         {
             bool returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXContextRec* ctx_ptr = &ctx)
             {
-                returnValue = MakeCurrent(dpy_ptr, drawable, ctx_ptr);
+                returnValue = MakeCurrent(dpy_ptr, drawable, ctx);
             }
             return returnValue;
         }
-        /// <inheritdoc cref="QueryContext(Display*, __GLXContextRec*, int, int*)"/>
-        public static unsafe int QueryContext(ref Display dpy, ref __GLXContextRec ctx, int attribute, ref int value)
+        /// <inheritdoc cref="QueryContext(Display*, GLXContext, int, int*)"/>
+        public static unsafe int QueryContext(ref Display dpy, GLXContext ctx, int attribute, ref int value)
         {
             int returnValue;
             fixed (Display* dpy_ptr = &dpy)
-            fixed (__GLXContextRec* ctx_ptr = &ctx)
             fixed (int* value_ptr = &value)
             {
-                returnValue = QueryContext(dpy_ptr, ctx_ptr, attribute, value_ptr);
+                returnValue = QueryContext(dpy_ptr, ctx, attribute, value_ptr);
             }
             return returnValue;
         }
@@ -300,10 +285,10 @@ namespace OpenTK.Graphics.Glx
         /// <inheritdoc cref="QueryExtensionsString(Display*, int)"/>
         public static unsafe string? QueryExtensionsString(ref Display dpy, int screen)
         {
-            byte* returnValue;
+            string? returnValue_str;
             fixed (Display* dpy_ptr = &dpy)
             {
-                string? returnValue_str;
+                byte* returnValue;
                 returnValue = QueryExtensionsString(dpy_ptr, screen);
                 returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             }
@@ -312,10 +297,10 @@ namespace OpenTK.Graphics.Glx
         /// <inheritdoc cref="QueryServerString(Display*, int, int)"/>
         public static unsafe string? QueryServerString(ref Display dpy, int screen, int name)
         {
-            byte* returnValue;
+            string? returnValue_str;
             fixed (Display* dpy_ptr = &dpy)
             {
-                string? returnValue_str;
+                byte* returnValue;
                 returnValue = QueryServerString(dpy_ptr, screen, name);
                 returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
             }
@@ -351,52 +336,13 @@ namespace OpenTK.Graphics.Glx
         }
         public static unsafe partial class AMD
         {
-            /// <inheritdoc cref="BlitContextFramebufferAMD(__GLXContextRec*, int, int, int, int, int, int, int, int, uint, All)"/>
-            public static unsafe void BlitContextFramebufferAMD(ref __GLXContextRec dstCtx, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, All filter)
+            /// <inheritdoc cref="CreateAssociatedContextAttribsAMD(uint, GLXContext, int*)"/>
+            public static unsafe GLXContext CreateAssociatedContextAttribsAMD(uint id, GLXContext share_context, in int attribList)
             {
-                fixed (__GLXContextRec* dstCtx_ptr = &dstCtx)
-                {
-                    BlitContextFramebufferAMD(dstCtx_ptr, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
-                }
-            }
-            /// <inheritdoc cref="CreateAssociatedContextAMD(uint, __GLXContextRec*)"/>
-            public static unsafe __GLXContextRec* CreateAssociatedContextAMD(uint id, ref __GLXContextRec share_list)
-            {
-                __GLXContextRec* returnValue;
-                fixed (__GLXContextRec* share_list_ptr = &share_list)
-                {
-                    returnValue = CreateAssociatedContextAMD(id, share_list_ptr);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="CreateAssociatedContextAttribsAMD(uint, __GLXContextRec*, int*)"/>
-            public static unsafe __GLXContextRec* CreateAssociatedContextAttribsAMD(uint id, ref __GLXContextRec share_context, in int attribList)
-            {
-                __GLXContextRec* returnValue;
-                fixed (__GLXContextRec* share_context_ptr = &share_context)
+                GLXContext returnValue;
                 fixed (int* attribList_ptr = &attribList)
                 {
-                    returnValue = CreateAssociatedContextAttribsAMD(id, share_context_ptr, attribList_ptr);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="DeleteAssociatedContextAMD(__GLXContextRec*)"/>
-            public static unsafe bool DeleteAssociatedContextAMD(ref __GLXContextRec ctx)
-            {
-                bool returnValue;
-                fixed (__GLXContextRec* ctx_ptr = &ctx)
-                {
-                    returnValue = DeleteAssociatedContextAMD(ctx_ptr);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="GetContextGPUIDAMD(__GLXContextRec*)"/>
-            public static unsafe uint GetContextGPUIDAMD(ref __GLXContextRec ctx)
-            {
-                uint returnValue;
-                fixed (__GLXContextRec* ctx_ptr = &ctx)
-                {
-                    returnValue = GetContextGPUIDAMD(ctx_ptr);
+                    returnValue = CreateAssociatedContextAttribsAMD(id, share_context, attribList_ptr);
                 }
                 return returnValue;
             }
@@ -429,29 +375,17 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="MakeAssociatedContextCurrentAMD(__GLXContextRec*)"/>
-            public static unsafe bool MakeAssociatedContextCurrentAMD(ref __GLXContextRec ctx)
-            {
-                bool returnValue;
-                fixed (__GLXContextRec* ctx_ptr = &ctx)
-                {
-                    returnValue = MakeAssociatedContextCurrentAMD(ctx_ptr);
-                }
-                return returnValue;
-            }
         }
         public static unsafe partial class ARB
         {
-            /// <inheritdoc cref="CreateContextAttribsARB(Display*, __GLXFBConfigRec*, __GLXContextRec*, bool, int*)"/>
-            public static unsafe __GLXContextRec* CreateContextAttribsARB(ref Display dpy, ref __GLXFBConfigRec config, ref __GLXContextRec share_context, bool direct, in int attrib_list)
+            /// <inheritdoc cref="CreateContextAttribsARB(Display*, GLXFBConfig, GLXContext, bool, int*)"/>
+            public static unsafe GLXContext CreateContextAttribsARB(ref Display dpy, GLXFBConfig config, GLXContext share_context, bool direct, in int attrib_list)
             {
-                __GLXContextRec* returnValue;
+                GLXContext returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXFBConfigRec* config_ptr = &config)
-                fixed (__GLXContextRec* share_context_ptr = &share_context)
                 fixed (int* attrib_list_ptr = &attrib_list)
                 {
-                    returnValue = CreateContextAttribsARB(dpy_ptr, config_ptr, share_context_ptr, direct, attrib_list_ptr);
+                    returnValue = CreateContextAttribsARB(dpy_ptr, config, share_context, direct, attrib_list_ptr);
                 }
                 return returnValue;
             }
@@ -477,44 +411,32 @@ namespace OpenTK.Graphics.Glx
                     BindTexImageEXT(dpy_ptr, drawable, buffer, attrib_list_ptr);
                 }
             }
-            /// <inheritdoc cref="FreeContextEXT(Display*, __GLXContextRec*)"/>
-            public static unsafe void FreeContextEXT(ref Display dpy, ref __GLXContextRec context)
+            /// <inheritdoc cref="FreeContextEXT(Display*, GLXContext)"/>
+            public static unsafe void FreeContextEXT(ref Display dpy, GLXContext context)
             {
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXContextRec* context_ptr = &context)
                 {
-                    FreeContextEXT(dpy_ptr, context_ptr);
+                    FreeContextEXT(dpy_ptr, context);
                 }
             }
-            /// <inheritdoc cref="GetContextIDEXT(__GLXContextRec*)"/>
-            public static unsafe ContextID GetContextIDEXT(in __GLXContextRec context)
+            /// <inheritdoc cref="ImportContextEXT(Display*, GLXContextID)"/>
+            public static unsafe GLXContext ImportContextEXT(ref Display dpy, GLXContextID contextID)
             {
-                ContextID returnValue;
-                fixed (__GLXContextRec* context_ptr = &context)
-                {
-                    returnValue = GetContextIDEXT(context_ptr);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="ImportContextEXT(Display*, ContextID)"/>
-            public static unsafe __GLXContextRec* ImportContextEXT(ref Display dpy, ContextID contextID)
-            {
-                __GLXContextRec* returnValue;
+                GLXContext returnValue;
                 fixed (Display* dpy_ptr = &dpy)
                 {
                     returnValue = ImportContextEXT(dpy_ptr, contextID);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryContextInfoEXT(Display*, __GLXContextRec*, int, int*)"/>
-            public static unsafe int QueryContextInfoEXT(ref Display dpy, ref __GLXContextRec context, int attribute, ref int value)
+            /// <inheritdoc cref="QueryContextInfoEXT(Display*, GLXContext, int, int*)"/>
+            public static unsafe int QueryContextInfoEXT(ref Display dpy, GLXContext context, int attribute, ref int value)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXContextRec* context_ptr = &context)
                 fixed (int* value_ptr = &value)
                 {
-                    returnValue = QueryContextInfoEXT(dpy_ptr, context_ptr, attribute, value_ptr);
+                    returnValue = QueryContextInfoEXT(dpy_ptr, context, attribute, value_ptr);
                 }
                 return returnValue;
             }
@@ -588,8 +510,8 @@ namespace OpenTK.Graphics.Glx
             /// <inheritdoc cref="QueryCurrentRendererStringMESA(int)"/>
             public static unsafe string? QueryCurrentRendererStringMESA(int attribute)
             {
-                byte* returnValue;
                 string? returnValue_str;
+                byte* returnValue;
                 returnValue = QueryCurrentRendererStringMESA_(attribute);
                 returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
                 return returnValue_str;
@@ -608,10 +530,10 @@ namespace OpenTK.Graphics.Glx
             /// <inheritdoc cref="QueryRendererStringMESA(Display*, int, int, int)"/>
             public static unsafe string? QueryRendererStringMESA(ref Display dpy, int screen, int renderer, int attribute)
             {
-                byte* returnValue;
+                string? returnValue_str;
                 fixed (Display* dpy_ptr = &dpy)
                 {
-                    string? returnValue_str;
+                    byte* returnValue;
                     returnValue = QueryRendererStringMESA(dpy_ptr, screen, renderer, attribute);
                     returnValue_str = Marshal.PtrToStringAnsi((IntPtr)returnValue);
                 }
@@ -640,8 +562,8 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="BindVideoCaptureDeviceNV(Display*, uint, VideoCaptureDeviceNV)"/>
-            public static unsafe int BindVideoCaptureDeviceNV(ref Display dpy, uint video_capture_slot, VideoCaptureDeviceNV device)
+            /// <inheritdoc cref="BindVideoCaptureDeviceNV(Display*, uint, GLXVideoCaptureDeviceNV)"/>
+            public static unsafe int BindVideoCaptureDeviceNV(ref Display dpy, uint video_capture_slot, GLXVideoCaptureDeviceNV device)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
@@ -661,8 +583,8 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="BindVideoImageNV(Display*, VideoDeviceNV, GLXPbuffer, int)"/>
-            public static unsafe int BindVideoImageNV(ref Display dpy, VideoDeviceNV VideoDevice, GLXPbuffer pbuf, int iVideoBuffer)
+            /// <inheritdoc cref="BindVideoImageNV(Display*, GLXVideoDeviceNV, GLXPbuffer, int)"/>
+            public static unsafe int BindVideoImageNV(ref Display dpy, GLXVideoDeviceNV VideoDevice, GLXPbuffer pbuf, int iVideoBuffer)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
@@ -671,24 +593,20 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CopyBufferSubDataNV(Display*, __GLXContextRec*, __GLXContextRec*, All, All, IntPtr, IntPtr, nint)"/>
-            public static unsafe void CopyBufferSubDataNV(ref Display dpy, ref __GLXContextRec readCtx, ref __GLXContextRec writeCtx, All readTarget, All writeTarget, IntPtr readOffset, IntPtr writeOffset, nint size)
+            /// <inheritdoc cref="CopyBufferSubDataNV(Display*, GLXContext, GLXContext, All, All, IntPtr, IntPtr, nint)"/>
+            public static unsafe void CopyBufferSubDataNV(ref Display dpy, GLXContext readCtx, GLXContext writeCtx, All readTarget, All writeTarget, IntPtr readOffset, IntPtr writeOffset, nint size)
             {
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXContextRec* readCtx_ptr = &readCtx)
-                fixed (__GLXContextRec* writeCtx_ptr = &writeCtx)
                 {
-                    CopyBufferSubDataNV(dpy_ptr, readCtx_ptr, writeCtx_ptr, readTarget, writeTarget, readOffset, writeOffset, size);
+                    CopyBufferSubDataNV(dpy_ptr, readCtx, writeCtx, readTarget, writeTarget, readOffset, writeOffset, size);
                 }
             }
-            /// <inheritdoc cref="CopyImageSubDataNV(Display*, __GLXContextRec*, uint, All, int, int, int, int, __GLXContextRec*, uint, All, int, int, int, int, int, int, int)"/>
-            public static unsafe void CopyImageSubDataNV(ref Display dpy, ref __GLXContextRec srcCtx, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, ref __GLXContextRec dstCtx, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth)
+            /// <inheritdoc cref="CopyImageSubDataNV(Display*, GLXContext, uint, All, int, int, int, int, GLXContext, uint, All, int, int, int, int, int, int, int)"/>
+            public static unsafe void CopyImageSubDataNV(ref Display dpy, GLXContext srcCtx, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, GLXContext dstCtx, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth)
             {
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXContextRec* srcCtx_ptr = &srcCtx)
-                fixed (__GLXContextRec* dstCtx_ptr = &dstCtx)
                 {
-                    CopyImageSubDataNV(dpy_ptr, srcCtx_ptr, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx_ptr, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+                    CopyImageSubDataNV(dpy_ptr, srcCtx, srcName, srcTarget, srcLevel, srcX, srcY, srcZ, dstCtx, dstName, dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
                 }
             }
             /// <inheritdoc cref="DelayBeforeSwapNV(Display*, GLXDrawable, float)"/>
@@ -702,9 +620,9 @@ namespace OpenTK.Graphics.Glx
                 return returnValue;
             }
             /// <inheritdoc cref="EnumerateVideoCaptureDevicesNV(Display*, int, int*)"/>
-            public static unsafe VideoCaptureDeviceNV* EnumerateVideoCaptureDevicesNV(ref Display dpy, int screen, ref int nelements)
+            public static unsafe GLXVideoCaptureDeviceNV* EnumerateVideoCaptureDevicesNV(ref Display dpy, int screen, ref int nelements)
             {
-                VideoCaptureDeviceNV* returnValue;
+                GLXVideoCaptureDeviceNV* returnValue;
                 fixed (Display* dpy_ptr = &dpy)
                 fixed (int* nelements_ptr = &nelements)
                 {
@@ -723,19 +641,19 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetVideoDeviceNV(Display*, int, int, VideoDeviceNV*)"/>
-            public static unsafe int GetVideoDeviceNV(ref Display dpy, int screen, int numVideoDevices, ref VideoDeviceNV pVideoDevice)
+            /// <inheritdoc cref="GetVideoDeviceNV(Display*, int, int, GLXVideoDeviceNV*)"/>
+            public static unsafe int GetVideoDeviceNV(ref Display dpy, int screen, int numVideoDevices, ref GLXVideoDeviceNV pVideoDevice)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (VideoDeviceNV* pVideoDevice_ptr = &pVideoDevice)
+                fixed (GLXVideoDeviceNV* pVideoDevice_ptr = &pVideoDevice)
                 {
                     returnValue = GetVideoDeviceNV(dpy_ptr, screen, numVideoDevices, pVideoDevice_ptr);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetVideoInfoNV(Display*, int, VideoDeviceNV, ulong*, ulong*)"/>
-            public static unsafe int GetVideoInfoNV(ref Display dpy, int screen, VideoDeviceNV VideoDevice, ref ulong pulCounterOutputPbuffer, ref ulong pulCounterOutputVideo)
+            /// <inheritdoc cref="GetVideoInfoNV(Display*, int, GLXVideoDeviceNV, ulong*, ulong*)"/>
+            public static unsafe int GetVideoInfoNV(ref Display dpy, int screen, GLXVideoDeviceNV VideoDevice, ref ulong pulCounterOutputPbuffer, ref ulong pulCounterOutputVideo)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
@@ -756,22 +674,20 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="LockVideoCaptureDeviceNV(Display*, VideoCaptureDeviceNV)"/>
-            public static unsafe void LockVideoCaptureDeviceNV(ref Display dpy, VideoCaptureDeviceNV device)
+            /// <inheritdoc cref="LockVideoCaptureDeviceNV(Display*, GLXVideoCaptureDeviceNV)"/>
+            public static unsafe void LockVideoCaptureDeviceNV(ref Display dpy, GLXVideoCaptureDeviceNV device)
             {
                 fixed (Display* dpy_ptr = &dpy)
                 {
                     LockVideoCaptureDeviceNV(dpy_ptr, device);
                 }
             }
-            /// <inheritdoc cref="NamedCopyBufferSubDataNV(Display*, __GLXContextRec*, __GLXContextRec*, uint, uint, IntPtr, IntPtr, nint)"/>
-            public static unsafe void NamedCopyBufferSubDataNV(ref Display dpy, ref __GLXContextRec readCtx, ref __GLXContextRec writeCtx, uint readBuffer, uint writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size)
+            /// <inheritdoc cref="NamedCopyBufferSubDataNV(Display*, GLXContext, GLXContext, uint, uint, IntPtr, IntPtr, nint)"/>
+            public static unsafe void NamedCopyBufferSubDataNV(ref Display dpy, GLXContext readCtx, GLXContext writeCtx, uint readBuffer, uint writeBuffer, IntPtr readOffset, IntPtr writeOffset, nint size)
             {
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXContextRec* readCtx_ptr = &readCtx)
-                fixed (__GLXContextRec* writeCtx_ptr = &writeCtx)
                 {
-                    NamedCopyBufferSubDataNV(dpy_ptr, readCtx_ptr, writeCtx_ptr, readBuffer, writeBuffer, readOffset, writeOffset, size);
+                    NamedCopyBufferSubDataNV(dpy_ptr, readCtx, writeCtx, readBuffer, writeBuffer, readOffset, writeOffset, size);
                 }
             }
             /// <inheritdoc cref="QueryFrameCountNV(Display*, int, uint*)"/>
@@ -809,8 +725,8 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(Display*, VideoCaptureDeviceNV, int, int*)"/>
-            public static unsafe int QueryVideoCaptureDeviceNV(ref Display dpy, VideoCaptureDeviceNV device, int attribute, ref int value)
+            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(Display*, GLXVideoCaptureDeviceNV, int, int*)"/>
+            public static unsafe int QueryVideoCaptureDeviceNV(ref Display dpy, GLXVideoCaptureDeviceNV device, int attribute, ref int value)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
@@ -820,16 +736,16 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="ReleaseVideoCaptureDeviceNV(Display*, VideoCaptureDeviceNV)"/>
-            public static unsafe void ReleaseVideoCaptureDeviceNV(ref Display dpy, VideoCaptureDeviceNV device)
+            /// <inheritdoc cref="ReleaseVideoCaptureDeviceNV(Display*, GLXVideoCaptureDeviceNV)"/>
+            public static unsafe void ReleaseVideoCaptureDeviceNV(ref Display dpy, GLXVideoCaptureDeviceNV device)
             {
                 fixed (Display* dpy_ptr = &dpy)
                 {
                     ReleaseVideoCaptureDeviceNV(dpy_ptr, device);
                 }
             }
-            /// <inheritdoc cref="ReleaseVideoDeviceNV(Display*, int, VideoDeviceNV)"/>
-            public static unsafe int ReleaseVideoDeviceNV(ref Display dpy, int screen, VideoDeviceNV VideoDevice)
+            /// <inheritdoc cref="ReleaseVideoDeviceNV(Display*, int, GLXVideoDeviceNV)"/>
+            public static unsafe int ReleaseVideoDeviceNV(ref Display dpy, int screen, GLXVideoDeviceNV VideoDevice)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
@@ -954,14 +870,13 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="MakeCurrentReadSGI(Display*, GLXDrawable, GLXDrawable, __GLXContextRec*)"/>
-            public static unsafe bool MakeCurrentReadSGI(ref Display dpy, GLXDrawable draw, GLXDrawable read, ref __GLXContextRec ctx)
+            /// <inheritdoc cref="MakeCurrentReadSGI(Display*, GLXDrawable, GLXDrawable, GLXContext)"/>
+            public static unsafe bool MakeCurrentReadSGI(ref Display dpy, GLXDrawable draw, GLXDrawable read, GLXContext ctx)
             {
                 bool returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXContextRec* ctx_ptr = &ctx)
                 {
-                    returnValue = MakeCurrentReadSGI(dpy_ptr, draw, read, ctx_ptr);
+                    returnValue = MakeCurrentReadSGI(dpy_ptr, draw, read, ctx);
                 }
                 return returnValue;
             }
@@ -978,29 +893,6 @@ namespace OpenTK.Graphics.Glx
         }
         public static unsafe partial class SGIX
         {
-            /// <inheritdoc cref="AssociateDMPbufferSGIX(Display*, GLXPbufferSGIX, void*, void)"/>
-            public static unsafe bool AssociateDMPbufferSGIX(ref Display dpy, GLXPbufferSGIX pbuffer, IntPtr parameters, void dmbuffer)
-            {
-                bool returnValue;
-                fixed (Display* dpy_ptr = &dpy)
-                {
-                    void* parameters_vptr = (void*)parameters;
-                    returnValue = AssociateDMPbufferSGIX(dpy_ptr, pbuffer, parameters_vptr, dmbuffer);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="AssociateDMPbufferSGIX(Display*, GLXPbufferSGIX, void*, void)"/>
-            public static unsafe bool AssociateDMPbufferSGIX<T1>(ref Display dpy, GLXPbufferSGIX pbuffer, ref T1 parameters, void dmbuffer)
-                where T1 : unmanaged
-            {
-                bool returnValue;
-                fixed (Display* dpy_ptr = &dpy)
-                fixed (void* parameters_ptr = &parameters)
-                {
-                    returnValue = AssociateDMPbufferSGIX(dpy_ptr, pbuffer, parameters_ptr, dmbuffer);
-                }
-                return returnValue;
-            }
             /// <inheritdoc cref="BindChannelToWindowSGIX(Display*, int, int, Window)"/>
             public static unsafe int BindChannelToWindowSGIX(ref Display display, int screen, int channel, Window window)
             {
@@ -1050,9 +942,9 @@ namespace OpenTK.Graphics.Glx
                 return returnValue;
             }
             /// <inheritdoc cref="ChooseFBConfigSGIX(Display*, int, int*, int*)"/>
-            public static unsafe __GLXFBConfigRec** ChooseFBConfigSGIX(ref Display dpy, int screen, ref int attrib_list, ref int nelements)
+            public static unsafe GLXFBConfigSGIX* ChooseFBConfigSGIX(ref Display dpy, int screen, ref int attrib_list, ref int nelements)
             {
-                __GLXFBConfigRec** returnValue;
+                GLXFBConfigSGIX* returnValue;
                 fixed (Display* dpy_ptr = &dpy)
                 fixed (int* attrib_list_ptr = &attrib_list)
                 fixed (int* nelements_ptr = &nelements)
@@ -1061,48 +953,34 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateContextWithConfigSGIX(Display*, __GLXFBConfigRec*, int, __GLXContextRec*, bool)"/>
-            public static unsafe __GLXContextRec* CreateContextWithConfigSGIX(ref Display dpy, ref __GLXFBConfigRec config, int render_type, ref __GLXContextRec share_list, bool direct)
+            /// <inheritdoc cref="CreateContextWithConfigSGIX(Display*, GLXFBConfigSGIX, int, GLXContext, bool)"/>
+            public static unsafe GLXContext CreateContextWithConfigSGIX(ref Display dpy, GLXFBConfigSGIX config, int render_type, GLXContext share_list, bool direct)
             {
-                __GLXContextRec* returnValue;
+                GLXContext returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXFBConfigRec* config_ptr = &config)
-                fixed (__GLXContextRec* share_list_ptr = &share_list)
                 {
-                    returnValue = CreateContextWithConfigSGIX(dpy_ptr, config_ptr, render_type, share_list_ptr, direct);
+                    returnValue = CreateContextWithConfigSGIX(dpy_ptr, config, render_type, share_list, direct);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateGLXPbufferSGIX(Display*, __GLXFBConfigRec*, uint, uint, int*)"/>
-            public static unsafe GLXPbufferSGIX CreateGLXPbufferSGIX(ref Display dpy, ref __GLXFBConfigRec config, uint width, uint height, ref int attrib_list)
+            /// <inheritdoc cref="CreateGLXPbufferSGIX(Display*, GLXFBConfigSGIX, uint, uint, int*)"/>
+            public static unsafe GLXPbufferSGIX CreateGLXPbufferSGIX(ref Display dpy, GLXFBConfigSGIX config, uint width, uint height, ref int attrib_list)
             {
                 GLXPbufferSGIX returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXFBConfigRec* config_ptr = &config)
                 fixed (int* attrib_list_ptr = &attrib_list)
                 {
-                    returnValue = CreateGLXPbufferSGIX(dpy_ptr, config_ptr, width, height, attrib_list_ptr);
+                    returnValue = CreateGLXPbufferSGIX(dpy_ptr, config, width, height, attrib_list_ptr);
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="CreateGLXPixmapWithConfigSGIX(Display*, __GLXFBConfigRec*, Pixmap)"/>
-            public static unsafe GLXPixmap CreateGLXPixmapWithConfigSGIX(ref Display dpy, ref __GLXFBConfigRec config, Pixmap pixmap)
+            /// <inheritdoc cref="CreateGLXPixmapWithConfigSGIX(Display*, GLXFBConfigSGIX, Pixmap)"/>
+            public static unsafe GLXPixmap CreateGLXPixmapWithConfigSGIX(ref Display dpy, GLXFBConfigSGIX config, Pixmap pixmap)
             {
                 GLXPixmap returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXFBConfigRec* config_ptr = &config)
                 {
-                    returnValue = CreateGLXPixmapWithConfigSGIX(dpy_ptr, config_ptr, pixmap);
-                }
-                return returnValue;
-            }
-            /// <inheritdoc cref="CreateGLXVideoSourceSGIX(Display*, int, void, void, int, void)"/>
-            public static unsafe VideoSourceSGIX CreateGLXVideoSourceSGIX(ref Display display, int screen, void server, void path, int nodeClass, void drainNode)
-            {
-                VideoSourceSGIX returnValue;
-                fixed (Display* display_ptr = &display)
-                {
-                    returnValue = CreateGLXVideoSourceSGIX(display_ptr, screen, server, path, nodeClass, drainNode);
+                    returnValue = CreateGLXPixmapWithConfigSGIX(dpy_ptr, config, pixmap);
                 }
                 return returnValue;
             }
@@ -1112,14 +990,6 @@ namespace OpenTK.Graphics.Glx
                 fixed (Display* dpy_ptr = &dpy)
                 {
                     DestroyGLXPbufferSGIX(dpy_ptr, pbuf);
-                }
-            }
-            /// <inheritdoc cref="DestroyGLXVideoSourceSGIX(Display*, VideoSourceSGIX)"/>
-            public static unsafe void DestroyGLXVideoSourceSGIX(ref Display dpy, VideoSourceSGIX glxvideosource)
-            {
-                fixed (Display* dpy_ptr = &dpy)
-                {
-                    DestroyGLXVideoSourceSGIX(dpy_ptr, glxvideosource);
                 }
             }
             /// <inheritdoc cref="DestroyHyperpipeConfigSGIX(Display*, int)"/>
@@ -1132,22 +1002,21 @@ namespace OpenTK.Graphics.Glx
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetFBConfigAttribSGIX(Display*, __GLXFBConfigRec*, int, int*)"/>
-            public static unsafe int GetFBConfigAttribSGIX(ref Display dpy, ref __GLXFBConfigRec config, int attribute, ref int value)
+            /// <inheritdoc cref="GetFBConfigAttribSGIX(Display*, GLXFBConfigSGIX, int, int*)"/>
+            public static unsafe int GetFBConfigAttribSGIX(ref Display dpy, GLXFBConfigSGIX config, int attribute, ref int value)
             {
                 int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXFBConfigRec* config_ptr = &config)
                 fixed (int* value_ptr = &value)
                 {
-                    returnValue = GetFBConfigAttribSGIX(dpy_ptr, config_ptr, attribute, value_ptr);
+                    returnValue = GetFBConfigAttribSGIX(dpy_ptr, config, attribute, value_ptr);
                 }
                 return returnValue;
             }
             /// <inheritdoc cref="GetFBConfigFromVisualSGIX(Display*, XVisualInfo*)"/>
-            public static unsafe __GLXFBConfigRec* GetFBConfigFromVisualSGIX(ref Display dpy, ref XVisualInfo vis)
+            public static unsafe GLXFBConfigSGIX GetFBConfigFromVisualSGIX(ref Display dpy, ref XVisualInfo vis)
             {
-                __GLXFBConfigRec* returnValue;
+                GLXFBConfigSGIX returnValue;
                 fixed (Display* dpy_ptr = &dpy)
                 fixed (XVisualInfo* vis_ptr = &vis)
                 {
@@ -1164,14 +1033,13 @@ namespace OpenTK.Graphics.Glx
                     GetSelectedEventSGIX(dpy_ptr, drawable, mask_ptr);
                 }
             }
-            /// <inheritdoc cref="GetVisualFromFBConfigSGIX(Display*, __GLXFBConfigRec*)"/>
-            public static unsafe XVisualInfo* GetVisualFromFBConfigSGIX(ref Display dpy, ref __GLXFBConfigRec config)
+            /// <inheritdoc cref="GetVisualFromFBConfigSGIX(Display*, GLXFBConfigSGIX)"/>
+            public static unsafe XVisualInfo* GetVisualFromFBConfigSGIX(ref Display dpy, GLXFBConfigSGIX config)
             {
                 XVisualInfo* returnValue;
                 fixed (Display* dpy_ptr = &dpy)
-                fixed (__GLXFBConfigRec* config_ptr = &config)
                 {
-                    returnValue = GetVisualFromFBConfigSGIX(dpy_ptr, config_ptr);
+                    returnValue = GetVisualFromFBConfigSGIX(dpy_ptr, config);
                 }
                 return returnValue;
             }
@@ -1349,9 +1217,9 @@ namespace OpenTK.Graphics.Glx
         public static unsafe partial class SUN
         {
             /// <inheritdoc cref="GetTransparentIndexSUN(Display*, Window, Window, ulong*)"/>
-            public static unsafe Status GetTransparentIndexSUN(ref Display dpy, Window overlay, Window underlay, ref ulong pTransparentIndex)
+            public static unsafe int GetTransparentIndexSUN(ref Display dpy, Window overlay, Window underlay, ref ulong pTransparentIndex)
             {
-                Status returnValue;
+                int returnValue;
                 fixed (Display* dpy_ptr = &dpy)
                 fixed (ulong* pTransparentIndex_ptr = &pTransparentIndex)
                 {

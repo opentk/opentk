@@ -16,6 +16,8 @@ namespace Generator
         public HashSet<string> FunctionsWithoutPrefix { get; init; }
         public HashSet<string> EnumsWithoutPrefix { get; init; }
 
+        public List<string> IgnoreFunctions { get; init; }
+
         public GeneratorSettings()
         {
             ExtensionPrefix = "GL_";
@@ -23,6 +25,7 @@ namespace Generator
             EnumPrefixes = new List<string> { "GL_" };
             FunctionsWithoutPrefix = new HashSet<string>();
             EnumsWithoutPrefix = new HashSet<string>();
+            IgnoreFunctions = new List<string>();
         }
     }
 }

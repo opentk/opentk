@@ -275,6 +275,12 @@ namespace Generator.Parsing
             {
                 Command? command = ParseCommand(element);
 
+                // Don't add this command to the list if we should ignore it.
+                if (GeneratorSettings.Settings.IgnoreFunctions.Contains(command.EntryPoint))
+                {
+                    continue;
+                }
+
                 commands.Add(command);
             }
 

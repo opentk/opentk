@@ -183,6 +183,11 @@ namespace Generator.Process
             Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
             foreach (Command command in spec.Commands)
             {
+                if (GeneratorSettings.Settings.IgnoreFunctions.Contains(command.EntryPoint))
+                {
+                    ;
+                }
+
                 NativeFunction nativeFunction = MakeNativeFunction(command);
                 Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
                 OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
@@ -351,7 +356,14 @@ namespace Generator.Process
                         }
                         else
                         {
-                            throw new Exception($"Could not find function '{functionRef.EntryPoint}'!");
+                            if (GeneratorSettings.Settings.IgnoreFunctions.Contains(functionRef.EntryPoint))
+                            {
+                                // We are ignoring this function.
+                            }
+                            else
+                            {
+                                throw new Exception($"Could not find function '{functionRef.EntryPoint}'!");
+                            }
                         }
                     }
 
@@ -1095,33 +1107,40 @@ namespace Generator.Process
                             PrimitiveType.WGL_GPU_DEVICE => new CSStruct("_GPU_DEVICE", bt.Constant),
                             PrimitiveType.WGL_PGPU_DEVICE => new CSPointer(new CSStruct("_GPU_DEVICE", false), bt.Constant),
 
-                            PrimitiveType.GLX_Colormap => new CSStructPrimitive("Colormap", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_Display => new CSStructPrimitive("Display", bt.Constant, new CSPrimitive("ulong", bt.Constant)), // FIXME: This is just a struct?
-                            PrimitiveType.GLX_Font => new CSStructPrimitive("Font", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_Pixmap => new CSStructPrimitive("Pixmap", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_Screen => new CSStructPrimitive("Screen", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_Status => new CSStructPrimitive("Status", bt.Constant, new CSPrimitive("int", bt.Constant)),
-                            PrimitiveType.GLX_Window => new CSStructPrimitive("Window", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
+                            PrimitiveType.GLX_Colormap => new CSStructPrimitive("Colormap", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_Display => new CSStruct("Display", bt.Constant), // FIXME: This is just a struct?
+                            PrimitiveType.GLX_Font => new CSStructPrimitive("Font", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_Pixmap => new CSStructPrimitive("Pixmap", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_Screen => new CSStruct("Screen", bt.Constant),
+                            PrimitiveType.GLX_Status => new CSPrimitive("int", bt.Constant),
+                            PrimitiveType.GLX_Window => new CSStructPrimitive("Window", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
                             PrimitiveType.GLX_EXTFuncPtr => new CSFunctionPointer("__GLXextFuncPtr", bt.Constant),
-                            PrimitiveType.GLX_XVisualInfo => new CSStructPrimitive("XVisualInfo", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
+                            PrimitiveType.GLX_XVisualInfo => new CSStruct("XVisualInfo", bt.Constant),
+
+                            // FIXME: These types are conditionally removed from the header if _DM_BUFFER_H_ is not defined
+                            // Should we have some way to say that specific functions should be ignored?
                             PrimitiveType.GLX_DMbuffer => new CSVoid(bt.Constant),
                             PrimitiveType.GLX_DMparams => new CSVoid(bt.Constant),
+
+                            // FIXME: These types are conditionally removed from the header if _VL_H_ is not defined.
+                            // Should we have some way to say that specific functions should be ignored?
                             PrimitiveType.GLX_VLNode => new CSVoid(bt.Constant),
                             PrimitiveType.GLX_VLPath => new CSVoid(bt.Constant),
                             PrimitiveType.GLX_VLServer => new CSVoid(bt.Constant),
-                            PrimitiveType.GLX_FBConfigID => new CSStructPrimitive("FBConfigID", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_FBConfig => new CSPointer(new CSStruct("__GLXFBConfigRec", bt.Constant), bt.Constant),
-                            PrimitiveType.GLX_ContextID => new CSStructPrimitive("ContextID", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_Context => new CSPointer(new CSStruct("__GLXContextRec", bt.Constant), bt.Constant),
-                            PrimitiveType.GLX_GLXPixmap => new CSStructPrimitive("GLXPixmap", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_GLXDrawable => new CSStructPrimitive("GLXDrawable", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_GLXWindow => new CSStructPrimitive("GLXWindow", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_GLXPbuffer => new CSStructPrimitive("GLXPbuffer", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_VideoCaptureDeviceNV => new CSStructPrimitive("VideoCaptureDeviceNV", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_VideoDeviceNV => new CSStructPrimitive("VideoDeviceNV", bt.Constant, new CSPrimitive("uint", bt.Constant)),
-                            PrimitiveType.GLX_VideoSourceSGIX => new CSStructPrimitive("VideoSourceSGIX", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_FBConfigIDSGIX => new CSStructPrimitive("FBConfigIDSGIX", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
-                            PrimitiveType.GLX_FBConfigSGIX => new CSPointer(new CSStruct("__GLXFBConfigRec", bt.Constant), bt.Constant),
+
+                            PrimitiveType.GLX_FBConfigID => new CSStructPrimitive("FBConfigID", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_FBConfig => new CSStructPrimitive("GLXFBConfig", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                            PrimitiveType.GLX_ContextID => new CSStructPrimitive("GLXContextID", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_Context => new CSStructPrimitive("GLXContext", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
+                            PrimitiveType.GLX_GLXPixmap => new CSStructPrimitive("GLXPixmap", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_GLXDrawable => new CSStructPrimitive("GLXDrawable", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_GLXWindow => new CSStructPrimitive("GLXWindow", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_GLXPbuffer => new CSStructPrimitive("GLXPbuffer", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_VideoCaptureDeviceNV => new CSStructPrimitive("GLXVideoCaptureDeviceNV", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_VideoDeviceNV => new CSStructPrimitive("GLXVideoDeviceNV", bt.Constant, new CSPrimitive("uint", bt.Constant)),
+                            PrimitiveType.GLX_VideoSourceSGIX => new CSStructPrimitive("GLXVideoSourceSGIX", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_FBConfigIDSGIX => new CSStructPrimitive("GLXFBConfigIDSGIX", bt.Constant, new CSPrimitive("nuint", bt.Constant)),
+                            PrimitiveType.GLX_FBConfigSGIX => new CSStructPrimitive("GLXFBConfigSGIX", bt.Constant, new CSPrimitive("IntPtr", bt.Constant)),
                             PrimitiveType.GLX_GLXPbufferSGIX => new CSStructPrimitive("GLXPbufferSGIX", bt.Constant, new CSPrimitive("ulong", bt.Constant)),
                             PrimitiveType.GLX_GLXPbufferClobberEvent => new CSStruct("GLXPbufferClobberEvent", bt.Constant),
                             PrimitiveType.GLX_GLXBufferSwapComplete => new CSStruct("GLXBufferSwapComplete", bt.Constant),
@@ -1177,7 +1196,7 @@ namespace Generator.Process
             {
                 // Make a "base" overload
                 new Overload(null, null, nativeFunction.Parameters.ToArray(), nativeFunction, nativeFunction.ReturnType,
-                    new NameTable(), "returnValue", Array.Empty<string>(), nativeFunction.FunctionName),
+                    new NameTable(), /*"returnValue",*/ Array.Empty<string>(), nativeFunction.FunctionName),
             };
 
             bool overloadedOnce = false;

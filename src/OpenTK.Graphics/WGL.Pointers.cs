@@ -3,7 +3,7 @@ using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
 
-namespace OpenTK.Graphics
+namespace OpenTK.Graphics.Wgl
 {
     /// <summary>A collection of all function pointers to all OpenGL entry points.</summary>
     public static unsafe partial class WGLPointers
