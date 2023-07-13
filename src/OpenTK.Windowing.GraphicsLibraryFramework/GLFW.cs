@@ -15,6 +15,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 {
     /// <summary>
     /// Provides access to the GLFW API.
+    /// On Linux to use GLFW compiled for Wayland set the environment variable <c>OPENTK_4_USE_WAYLAND=1</c>.
     /// </summary>
     public static class GLFW
     {

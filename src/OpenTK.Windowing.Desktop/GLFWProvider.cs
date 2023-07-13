@@ -20,6 +20,7 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     public static class GLFWProvider
     {
+        // FIXME: This will throw "through" native frames, which doesn't work anywhere other than windows.
         private static readonly GLFWCallbacks.ErrorCallback ErrorCallback =
             (errorCode, description) => throw new GLFWException(description, errorCode);
 
