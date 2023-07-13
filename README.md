@@ -52,7 +52,8 @@ Instructions
 
 OpenTK is available as a [NuGet Package](http://www.nuget.org/packages/OpenTK/).
 
-OpenTK 4 running on Windows requires "Visual C++ Redistributable 2015" to be installed to run.
+As of OpenTK 4.8 "Visual C++ Redistributable 2015" is not longer required to run OpenTK 4 on windows.
+For earlier versions of OpenTK 4 you can install any version of `OpenTK.redist.glfw >= 3.3.8.35` to remove the "Visual C++ Redistributable 2015" requirement.
 See https://github.com/opentk/glfw-redist for more details.
 
 News
