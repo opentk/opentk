@@ -235,7 +235,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         private unsafe void UpdateButtons()
         {
-            MathHelper.Swap(ref _buttons, ref _buttonsPrevious);
+            (_buttons, _buttonsPrevious) = (_buttonsPrevious, _buttons);
 
             var b = GLFW.GetJoystickButtonsRaw(Id, out int count);
             for (var j = 0; j < count; j++)
@@ -247,7 +247,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void UpdateAxes()
         {
-            MathHelper.Swap(ref _axes, ref _axesPrevious);
+            (_axes, _axesPrevious) = (_axesPrevious, _axes);
 
             var axes = GLFW.GetJoystickAxes(Id);
             SetAxes(axes);
@@ -255,7 +255,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
 
         private unsafe void UpdateHats()
         {
-            MathHelper.Swap(ref _hats, ref _hatsPrevious);
+            (_hats, _hatsPrevious) = (_hatsPrevious, _hats);
 
             var h = GLFW.GetJoystickHatsRaw(Id, out int count);
             for (var j = 0; j < count; j++)

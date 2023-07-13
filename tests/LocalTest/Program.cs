@@ -5,6 +5,8 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace LocalTest
 {
@@ -14,8 +16,8 @@ namespace LocalTest
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
-                // UpdateFrequency = 60,
-                // RenderFrequency = 60,
+                UpdateFrequency = 250,
+                //RenderFrequency = 10,
             };
 
             NativeWindowSettings nwSettings = new NativeWindowSettings()
@@ -47,8 +49,11 @@ namespace LocalTest
         protected override void OnLoad()
         {
             base.OnLoad();
+        }
 
-
+        protected override void OnUnload()
+        {
+            base.OnUnload();
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -64,8 +69,6 @@ namespace LocalTest
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
-
-
         }
     }
 }

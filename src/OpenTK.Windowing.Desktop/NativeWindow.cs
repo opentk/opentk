@@ -1053,9 +1053,6 @@ namespace OpenTK.Windowing.Desktop
         private GLFWCallbacks.DropCallback _dropCallback;
         private GLFWCallbacks.JoystickCallback _joystickCallback;
 
-        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
-        private GLFWCallbacks.MonitorCallback _monitorCallback;
-
         private unsafe void RegisterWindowCallbacks()
         {
             // These must be assigned to fields even when they're methods
