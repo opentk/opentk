@@ -22,6 +22,10 @@ namespace OpenTK.Core
         /// The expected scheduler period in milliseconds. Can also be seen as the expected sleep time of <c>Thread.Sleep(1)</c>. <br/>
         /// Set on windows using <c>timeBeginPeriod()</c>.
         /// </param>
+        /// <remarks>
+        /// The details of this method is described in detail here:
+        /// <see href="https://blog.bearcats.nl/perfect-sleep-function/"/>.
+        /// </remarks>
         public static void AccurateSleep(double seconds, int expectedSchedulerPeriod)
         {
             // FIXME: Make this a parameter?
