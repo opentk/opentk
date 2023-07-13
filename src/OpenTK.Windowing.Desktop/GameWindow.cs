@@ -172,11 +172,16 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// <para>
         /// The expected scheduler period in milliseconds. Used to provide accurate sleep timings.
-        ///
-        /// On windows the scheduler period can be set using <c>timeBeginPeriod()</c>, OpenTK sets this value to 8ms by default.
+        /// </para>
+        /// <para>
+        /// On Windows the scheduler period can be set using <c>timeBeginPeriod()</c>, OpenTK sets this value to 8ms by default.
+        /// See <see cref="Run()"/> for more details.<br/>
+        /// On Linux we set this to 1 as it seems like <see cref="Thread.Sleep(int)"/> is able to accurately sleep 1ms.<br/>
+        /// On macos we set this to 1 aswell as tests imply <see cref="Thread.Sleep(int)"/> can accurately sleep 1ms.
+        /// </para>
         /// </summary>
-        // FIXME: Figure out a story for Linux and macos
         public int ExpectedSchedulerPeriod { get; set; } = 16;
 
         /// <summary>
@@ -218,17 +223,17 @@ namespace OpenTK.Windowing.Desktop
         /// Initialize the update thread (if using a multi-threaded context, and enter the game loop of the GameWindow).
         /// </summary>
         /// <remarks>
-        /// <para>On windows this function sets the thread affinity mask to avoid the thread from changing cores.</para>
+        /// <para>On windows this function sets the thread affinity mask to 0x0001 to avoid the thread from changing cores.</para>
         /// <para>
         /// On windows this function calls <c>timeBeginPeriod(8)</c> to get better sleep timings, which can increase power usage.
         /// This can be undone by calling <c>timeEndPeriod(8)</c> in <see cref="OnLoad"/> and <c>timeBeginPeriod(8)</c> in <see cref="OnUnload"/>.
+        /// If the expected scheduler time is changed set <see cref="ExpectedSchedulerPeriod"/> to the appropriate value to keep the accuracy of the update loop.
         /// </para>
         /// </remarks>
         public virtual unsafe void Run()
         {
             // 8 is a good compromise between accuracy and power consumption
             // according to: https://chromium-review.googlesource.com/c/chromium/src/+/2265402
-            // FIXME: Maybe expose this as a constant so that we can change this without source breaking code
             const int TIME_PERIOD = 8;
 
             // We do this before OnLoad so that users have some way to affect these settings in OnLoad if they need to.
@@ -242,14 +247,23 @@ namespace OpenTK.Windowing.Desktop
                 timeBeginPeriod(TIME_PERIOD);
                 ExpectedSchedulerPeriod = TIME_PERIOD;
             }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) ||
+                    // FIXME: We assume FreeBSD is able to do 1ms sleeps as well.
+                    RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
+            {
+                // Seems like `Thread.Sleep` can accurately sleep for 1ms on Ubuntu 20.04
+                // - 2023-07-13 Noggin_bops
+                ExpectedSchedulerPeriod = 1;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                // Seems like `Thread.Slepp` can accurately sleep for 1ms on a 2018 Macbook Air running macos 12.3.1.
+                // - 2023-07-13 Noggin_bops
+                ExpectedSchedulerPeriod = 1;
+            }
 
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context?.MakeCurrent();
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                timeBeginPeriod(1);
-            }
 
             // Send the OnLoad event, to load all user code.
             OnLoad();

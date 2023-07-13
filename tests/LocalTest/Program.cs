@@ -6,17 +6,12 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace LocalTest
 {
     class Window : GameWindow
     {
-        [DllImport("winmm")]
-        private static extern uint timeBeginPeriod(uint uPeriod);
-
-        [DllImport("winmm")]
-        private static extern uint timeEndPeriod(uint uPeriod);
-
         static void Main(string[] args)
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
@@ -54,19 +49,11 @@ namespace LocalTest
         protected override void OnLoad()
         {
             base.OnLoad();
-
-            timeEndPeriod(8);
-            timeBeginPeriod(1);
-            ExpectedSchedulerPeriod = 1;
         }
 
         protected override void OnUnload()
         {
             base.OnUnload();
-
-            timeEndPeriod(1);
-            timeBeginPeriod(8);
-            ExpectedSchedulerPeriod = 8;
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -82,8 +69,6 @@ namespace LocalTest
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
-
-            Console.WriteLine(args.Time * 1000);
         }
     }
 }
