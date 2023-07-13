@@ -9,7 +9,7 @@
 
 using OpenTK.Mathematics;
 
-namespace OpenTK.Audio.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
     /// A set of reverb presets that can be used with the extension.

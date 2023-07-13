@@ -11,6 +11,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Text;
 using OpenTK.Core;
+using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 

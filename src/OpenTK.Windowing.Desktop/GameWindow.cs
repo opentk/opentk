@@ -269,7 +269,7 @@ namespace OpenTK.Windowing.Desktop
             OnLoad();
 
             // Send a dummy OnResize event, to make sure any listening user code has the correct values.
-            OnResize(new ResizeEventArgs(Size));
+            OnResize(new ResizeEventArgs(ClientSize));
 
             Debug.Print("Entering main loop.");
 

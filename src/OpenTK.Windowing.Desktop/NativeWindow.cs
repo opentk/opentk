@@ -290,15 +290,17 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
-                var monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                var mode = GLFW.GetVideoMode(monitor);
+                GraphicsLibraryFramework.Monitor* monitor = value.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+                VideoMode* mode = GLFW.GetVideoMode(monitor);
+                Vector2i location = ClientLocation;
+                Vector2i size = ClientSize;
                 GLFW.SetWindowMonitor(
                     WindowPtr,
                     monitor,
-                    _location.X,
-                    _location.Y,
-                    _size.X,
-                    _size.Y,
+                    location.X,
+                    location.Y,
+                    size.X,
+                    size.Y,
                     mode->RefreshRate);
 
                 _currentMonitor = value;
@@ -393,9 +395,8 @@ namespace OpenTK.Windowing.Desktop
                         break;
 
                     case WindowState.Fullscreen:
-                        // Cache the window size so we can reset to it when we go out of fullscreen.
                         _cachedWindowClientSize = ClientSize;
-                        _cachedWindowLocation = Location;
+                        _cachedWindowLocation = ClientLocation;
                         var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                         var modePtr = GLFW.GetVideoMode(monitor);
                         GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
@@ -455,13 +456,14 @@ namespace OpenTK.Windowing.Desktop
             get => new Box2i(Location, Location + Size);
             set
             {
-                GLFW.SetWindowSize(WindowPtr, (int)value.Size.X, (int)value.Size.Y);
-                GLFW.SetWindowPos(WindowPtr, (int)value.Min.X, (int)value.Min.Y);
+                GLFW.GetWindowFrameSize(WindowPtr, out int left, out int top, out int right, out int bottom);
+                int extraWidth = left + right;
+                int extraHeight = top + bottom;
+
+                GLFW.SetWindowSize(WindowPtr, value.Size.X - extraWidth, value.Size.Y - extraHeight);
+                GLFW.SetWindowPos(WindowPtr, value.Min.X + left, value.Min.Y + top);
             }
         }
-
-        // This is updated by the constructor, by OnMove, and in the Location property setter.
-        private Vector2i _location;
 
         /// <summary>
         /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the location of this window on the
@@ -469,15 +471,39 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public unsafe Vector2i Location
         {
-            get => _location;
+            get
+            {
+                GLFW.GetWindowFrameSize(WindowPtr, out int left, out int top, out _, out _);
+                GLFW.GetWindowPos(WindowPtr, out int x, out int y);
+
+                return (x - left, y - top);
+            }
+
             set
             {
-                GLFW.SetWindowPos(WindowPtr, value.X, value.Y);
-                _location = value;
+                GLFW.GetWindowFrameSize(WindowPtr, out int left, out int top, out _, out _);
+                GLFW.SetWindowPos(WindowPtr, value.X + left, value.Y + top);
             }
         }
 
-        private Vector2i _size;
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the location of the client area of
+        /// this window on the desktop.
+        /// </summary>
+        public unsafe Vector2i ClientLocation
+        {
+            get
+            {
+                GLFW.GetWindowPos(WindowPtr, out int x, out int y);
+                return (x, y);
+            }
+
+            set
+            {
+                GLFW.SetWindowPos(WindowPtr, value.X, value.Y);
+            }
+        }
+
         private Vector2i? _minimumSize;
         private Vector2i? _maximumSize;
 
@@ -486,10 +512,39 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public unsafe Vector2i Size
         {
-            get => _size;
+            get
+            {
+                GLFW.GetWindowFrameSize(WindowPtr, out int left, out int top, out int right, out int bottom);
+                GLFW.GetWindowSize(WindowPtr, out int width, out int height);
+
+                return (width + left + right, height + top + bottom);
+            }
+
             set
             {
-                _size = value;
+                GLFW.GetWindowFrameSize(WindowPtr, out int left, out int top, out int right, out int bottom);
+                int newWidth = value.X - left - right;
+                int newHeight = value.Y - top - bottom;
+                // Make sure the values are not negative when 0 size is set.
+                newWidth = Math.Max(newWidth, 0);
+                newHeight = Math.Max(newHeight, 0);
+                GLFW.SetWindowSize(WindowPtr, newWidth, newHeight);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the client size of this window.
+        /// </summary>
+        public unsafe Vector2i ClientSize
+        {
+            get
+            {
+                GLFW.GetWindowSize(WindowPtr, out int width, out int height);
+                return (width, height);
+            }
+
+            set
+            {
                 GLFW.SetWindowSize(WindowPtr, value.X, value.Y);
             }
         }
@@ -554,18 +609,13 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public Box2i ClientRectangle
         {
-            get => new Box2i(Location, Location + Size);
+            get => new Box2i(ClientLocation, ClientLocation + ClientSize);
             set
             {
-                Location = value.Min;
-                Size = value.Size;
+                ClientLocation = value.Min;
+                ClientSize = value.Size;
             }
         }
-
-        /// <summary>
-        /// Gets a <see cref="OpenTK.Mathematics.Vector2i" /> structure that contains the internal size this window.
-        /// </summary>
-        public Vector2i ClientSize { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether the window is fullscreen or not.
@@ -806,45 +856,42 @@ namespace OpenTK.Windowing.Desktop
                 GLFW.WindowHint(WindowHintBool.TransparentFramebuffer, transparent);
             }
 
-            // We do the work to set the hint bits outside of the CreateWindow conditional
-            // so that the window will get the correct fullscreen red/green/blue bits stored
-            // in its hidden fields regardless of how it gets created.  (The extra curly
-            // braces here keep the local `monitor` definition from conflicting with the
-            // _monitorCallback lambda below.)
+            var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
+            var modePtr = GLFW.GetVideoMode(monitor);
+            GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
+            GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
+            GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
+            if (settings.AlphaBits.HasValue)
             {
-                var monitor = settings.CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
-                var modePtr = GLFW.GetVideoMode(monitor);
-                GLFW.WindowHint(WindowHintInt.RedBits, settings.RedBits ?? modePtr->RedBits);
-                GLFW.WindowHint(WindowHintInt.GreenBits, settings.GreenBits ?? modePtr->GreenBits);
-                GLFW.WindowHint(WindowHintInt.BlueBits, settings.BlueBits ?? modePtr->BlueBits);
-                if (settings.AlphaBits.HasValue)
-                {
-                    GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
-                }
+                GLFW.WindowHint(WindowHintInt.AlphaBits, settings.AlphaBits.Value);
+            }
 
-                if (settings.DepthBits.HasValue)
-                {
-                    GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
-                }
+            if (settings.DepthBits.HasValue)
+            {
+                GLFW.WindowHint(WindowHintInt.DepthBits, settings.DepthBits.Value);
+            }
 
-                if (settings.StencilBits.HasValue)
-                {
-                    GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
-                }
+            if (settings.StencilBits.HasValue)
+            {
+                GLFW.WindowHint(WindowHintInt.StencilBits, settings.StencilBits.Value);
+            }
 
-                GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
+            GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
-                if (settings.WindowState == WindowState.Fullscreen && _isVisible)
-                {
-                    _windowState = WindowState.Fullscreen;
-                    _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
-                    _cachedWindowClientSize = settings.Size;
-                    WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
-                }
-                else
-                {
-                    WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
-                }
+            _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
+            _cachedWindowClientSize = settings.Size;
+
+            if (settings.WindowState == WindowState.Fullscreen && _isVisible)
+            {
+                _windowState = WindowState.Fullscreen;
+                WindowPtr = GLFW.CreateWindow(modePtr->Width, modePtr->Height, _title, monitor, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
+            }
+            else
+            {
+                WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
+
+                // If we are starting the window maximized or minimized we need to set that here.
+                WindowState = settings.WindowState;
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
@@ -883,14 +930,6 @@ namespace OpenTK.Windowing.Desktop
                 Focus();
             }
 
-            // Setting WindowState to e.g. Normal while the
-            // window is hidden will show the window
-            // So if we don't set WindowState when StartVisible is false.
-            if (settings.StartVisible)
-            {
-                WindowState = settings.WindowState;
-            }
-
             IsEventDriven = settings.IsEventDriven;
 
             if (settings.Icon != null)
@@ -898,14 +937,13 @@ namespace OpenTK.Windowing.Desktop
                 Icon = settings.Icon;
             }
 
+            // FIXME: Should this be client location or external location?
             if (settings.Location.HasValue)
             {
                 Location = settings.Location.Value;
             }
 
             GLFW.GetWindowSize(WindowPtr, out var width, out var height);
-
-            HandleResize(width, height);
 
             AspectRatio = settings.AspectRatio;
             _minimumSize = settings.MinimumSize;
@@ -914,7 +952,6 @@ namespace OpenTK.Windowing.Desktop
             GLFW.SetWindowSizeLimits(WindowPtr, _minimumSize?.X ?? GLFW.DontCare, _minimumSize?.Y ?? GLFW.DontCare, _maximumSize?.X ?? GLFW.DontCare, _maximumSize?.Y ?? GLFW.DontCare);
 
             GLFW.GetWindowPos(WindowPtr, out var x, out var y);
-            _location = new Vector2i(x, y);
 
             GLFW.GetCursorPos(WindowPtr, out var mousex, out var mousey);
             _lastReportedMousePos = new Vector2((float)mousex, (float)mousey);
@@ -952,14 +989,19 @@ namespace OpenTK.Windowing.Desktop
 
             void LoadBindings(string typeNamespace)
             {
-                var type = assembly.GetType($"OpenTK.Graphics.{typeNamespace}.GL");
+                Type type = assembly.GetType($"OpenTK.Graphics.{typeNamespace}.GL");
                 if (type == null)
                 {
                     return;
                 }
 
-                var load = type.GetMethod("LoadBindings");
-                load.Invoke(null, new object[] { provider });
+                MethodInfo load = type.GetMethod("LoadBindings");
+                if (load == null)
+                {
+                    throw new MissingMethodException($"OpenTK tried to auto-load the OpenGL bindings. We found the {$"OpenTK.Graphics.{typeNamespace}.GL"} class, but we could not find the 'LoadBindings' method. " +
+                        $"If you are trying to run a trimmed assembly please add a [DynamicDependency()] attribute to your program, or set NativeWindowSettings.AutoLoadBindings = false and load the OpenGL bindings manually.");
+                }
+                load?.Invoke(null, new object[] { provider });
             }
 
             LoadBindings("ES11");
@@ -967,16 +1009,6 @@ namespace OpenTK.Windowing.Desktop
             LoadBindings("ES30");
             LoadBindings("OpenGL");
             LoadBindings("OpenGL4");
-        }
-
-        private unsafe void HandleResize(int width, int height)
-        {
-            _size.X = width;
-            _size.Y = height;
-
-            GLFW.GetFramebufferSize(WindowPtr, out width, out height);
-
-            ClientSize = new Vector2i(width, height);
         }
 
         /// <summary>
@@ -1308,7 +1340,7 @@ namespace OpenTK.Windowing.Desktop
 
                 for (var i = 0; i < count; i++)
                 {
-                    arrayOfPaths[i] = MarshalUtility.PtrToStringUTF8(paths[i]);
+                    arrayOfPaths[i] = Marshal.PtrToStringUTF8((IntPtr)paths[i]);
                 }
 
                 OnFileDrop(new FileDropEventArgs(arrayOfPaths));
@@ -1487,7 +1519,7 @@ namespace OpenTK.Windowing.Desktop
         /// </returns>
         public Vector2i PointToClient(Vector2i point)
         {
-            return point - Location;
+            return point - ClientLocation;
         }
 
         /// <summary>
@@ -1501,7 +1533,7 @@ namespace OpenTK.Windowing.Desktop
         /// </returns>
         public Vector2i PointToScreen(Vector2i point)
         {
-            return point + Location;
+            return point + ClientLocation;
         }
 
         /// <summary>
@@ -1532,13 +1564,11 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Occurs when the window is minimized.
-        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MinimizedEventArgs> Minimized;
 
         /// <summary>
         /// Occurs when the window is maximized.
-        /// <para> WARNING: During this callback <see cref="ClientSize"/> will not be guaranteed to contain the new size of the window.</para>
         /// </summary>
         public event Action<MaximizedEventArgs> Maximized;
 
@@ -1576,11 +1606,13 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="NativeWindow.Bounds" />.
         /// </summary>
+        // FIXME: This this when we leave the client rectangle or the window bounds?
         public event Action MouseLeave;
 
         /// <summary>
         /// Occurs whenever the mouse cursor enters the window <see cref="NativeWindow.Bounds" />.
         /// </summary>
+        // FIXME: This this when we enter the client rectangle or the window bounds?
         public event Action MouseEnter;
 
         /// <summary>
@@ -1755,9 +1787,6 @@ namespace OpenTK.Windowing.Desktop
         protected virtual void OnMove(WindowPositionEventArgs e)
         {
             Move?.Invoke(e);
-
-            _location.X = e.X;
-            _location.Y = e.Y;
         }
 
         /// <summary>
@@ -1766,8 +1795,6 @@ namespace OpenTK.Windowing.Desktop
         /// <param name="e">A <see cref="ResizeEventArgs"/> that contains the event data.</param>
         protected virtual void OnResize(ResizeEventArgs e)
         {
-            HandleResize(e.Width, e.Height);
-
             Resize?.Invoke(e);
         }
 
@@ -2006,7 +2033,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Centers the <see cref="NativeWindow"/> on the monitor where resides.
         /// </summary>
-        public void CenterWindow() => CenterWindow(Size);
+        public void CenterWindow() => CenterWindow(ClientSize);
 
         /// <summary>
         /// Centers and resizes the <see cref="NativeWindow"/> on the monitor where resides.
