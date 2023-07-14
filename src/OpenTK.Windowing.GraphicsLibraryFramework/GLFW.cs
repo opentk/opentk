@@ -1913,9 +1913,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe Span<float> GetJoystickAxes(int jid)
+        public static unsafe ReadOnlySpan<float> GetJoystickAxes(int jid)
         {
-            return new Span<float>(GetJoystickAxesRaw(jid, out var count), count);
+            var ptr = GetJoystickButtonsRaw(jid, out var count);
+            if (ptr == null)
+            {
+                return ReadOnlySpan<float>.Empty;
+            }
+            else
+            {
+                return new ReadOnlySpan<float>(ptr, count);
+            }
         }
 
         /// <summary>
@@ -2033,22 +2041,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe JoystickInputAction[] GetJoystickButtons(int jid)
+        public static unsafe ReadOnlySpan<JoystickInputAction> GetJoystickButtons(int jid)
         {
             var ptr = GetJoystickButtonsRaw(jid, out var count);
-
             if (ptr == null)
             {
-                return null;
+                return ReadOnlySpan<JoystickInputAction>.Empty;
             }
-
-            var array = new JoystickInputAction[count];
-            for (var i = 0; i < count; i++)
+            else
             {
-                array[i] = ptr[i];
+                return new ReadOnlySpan<JoystickInputAction>(ptr, count);
             }
-
-            return array;
         }
 
         /// <summary>
@@ -2185,22 +2188,17 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// Possible errors include <see cref="ErrorCode.NotInitialized"/>, <see cref="ErrorCode.InvalidEnum"/> and <see cref="ErrorCode.PlatformError"/>.
         /// </para>
         /// </remarks>
-        public static unsafe JoystickHats[] GetJoystickHats(int jid)
+        public static unsafe ReadOnlySpan<JoystickHats> GetJoystickHats(int jid)
         {
             var ptr = GetJoystickHatsRaw(jid, out var count);
-
             if (ptr == null)
             {
-                return null;
+                return ReadOnlySpan<JoystickHats>.Empty;
             }
-
-            var array = new JoystickHats[count];
-            for (var i = 0; i < count; i++)
+            else
             {
-                array[i] = ptr[i];
+                return new ReadOnlySpan<JoystickHats>(ptr, count);
             }
-
-            return array;
         }
 
         /// <summary>

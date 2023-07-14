@@ -1413,9 +1413,9 @@ namespace OpenTK.Windowing.Desktop
         /// <returns>This function will always return true.</returns>
         public bool ProcessEvents(double timeout)
         {
-            GLFW.WaitEventsTimeout(timeout);
+            NewInputFrame();
 
-            ProcessInputEvents();
+            GLFW.WaitEventsTimeout(timeout);
 
             RethrowCallbackExceptionsIfNeeded();
 
@@ -1429,7 +1429,7 @@ namespace OpenTK.Windowing.Desktop
         [Obsolete("This function wrongly implies that only events from this window are processed, while in fact events for all windows are processed. Use NativeWindow.ProcessWindowEvents() instead.")]
         public virtual void ProcessEvents()
         {
-            ProcessInputEvents();
+            NewInputFrame();
 
             ProcessWindowEvents(IsEventDriven);
         }
@@ -1489,22 +1489,14 @@ namespace OpenTK.Windowing.Desktop
         /// Updates the input state in preparation for a call to <see cref="GLFW.PollEvents"/> or <see cref="GLFW.WaitEvents"/>.
         /// Do not call this function if you are calling <see cref="ProcessEvents()"/> or if you are running the window using <see cref="GameWindow.Run()"/>.
         /// </summary>
-        public unsafe void ProcessInputEvents()
+        public unsafe void NewInputFrame()
         {
-            MouseState.Update();
-            KeyboardState.Update();
-
-            GLFW.GetCursorPos(WindowPtr, out var x, out var y);
-            MouseState.Position = new Vector2((float)x, (float)y);
+            MouseState.NewFrame(WindowPtr);
+            KeyboardState.NewFrame();
 
             for (var i = 0; i < _joystickStates.Length; i++)
             {
-                if (_joystickStates[i] == null)
-                {
-                    continue;
-                }
-
-                _joystickStates[i].Update();
+                _joystickStates[i]?.NewFrame();
             }
         }
 
@@ -1512,7 +1504,7 @@ namespace OpenTK.Windowing.Desktop
         /// Transforms the specified point from screen to client coordinates.
         /// </summary>
         /// <param name="point">
-        /// A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
+        /// A <see cref="Vector2" /> to transform.
         /// </param>
         /// <returns>
         /// The point transformed to client coordinates.
@@ -1526,7 +1518,7 @@ namespace OpenTK.Windowing.Desktop
         /// Transforms the specified point from client to screen coordinates.
         /// </summary>
         /// <param name="point">
-        /// A <see cref="OpenTK.Mathematics.Vector2" /> to transform.
+        /// A <see cref="Vector2" /> to transform.
         /// </param>
         /// <returns>
         /// The point transformed to screen coordinates.

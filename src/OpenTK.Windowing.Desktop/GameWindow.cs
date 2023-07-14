@@ -284,7 +284,7 @@ namespace OpenTK.Windowing.Desktop
                     _watchUpdate.Restart();
 
                     // Update input state for next frame
-                    ProcessInputEvents();
+                    NewInputFrame();
 
                     // Handle events for this frame
                     ProcessWindowEvents(IsEventDriven);
