@@ -1086,23 +1086,5 @@ namespace OpenTK.Audio.OpenAL
         {
             return (ALDistanceModel)Get(ALGetInteger.DistanceModel);
         }
-
-        /// <summary>(Helper) Returns Source state information.</summary>
-        /// <param name="sid">The source to be queried.</param>
-        /// <returns>state information from OpenAL.</returns>
-        public static ALSourceState GetSourceState(int sid)
-        {
-            GetSource(sid, ALGetSourcei.SourceState, out int state);
-            return (ALSourceState)state;
-        }
-
-        /// <summary>(Helper) Returns Source type information.</summary>
-        /// <param name="sid">The source to be queried.</param>
-        /// <returns>type information from OpenAL.</returns>
-        public static ALSourceType GetSourceType(int sid)
-        {
-            GetSource(sid, ALGetSourcei.SourceType, out int temp);
-            return (ALSourceType)temp;
-        }
     }
 }
