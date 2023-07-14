@@ -474,14 +474,6 @@ namespace OpenTK.Audio.OpenAL
         public static extern void Source(int sid, ALSourceb param, bool value);
         // FIXME: Double check that the mashaling here works!!
 
-        /// <summary>(Helper) Binds a Buffer to a Source handle.</summary>
-        /// <param name="source">Source name to attach the Buffer to.</param>
-        /// <param name="buffer">Buffer name which is attached to the Source.</param>
-        public static void BindBufferToSource(int source, int buffer)
-        {
-            Source(source, ALSourcei.Buffer, buffer);
-        }
-
         /// <summary>This function sets 3 integer properties of a source.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: EfxAuxiliarySendFilter..</param>
@@ -1093,24 +1085,6 @@ namespace OpenTK.Audio.OpenAL
         public static ALDistanceModel GetDistanceModel()
         {
             return (ALDistanceModel)Get(ALGetInteger.DistanceModel);
-        }
-
-        /// <summary>(Helper) Returns Source state information.</summary>
-        /// <param name="sid">The source to be queried.</param>
-        /// <returns>state information from OpenAL.</returns>
-        public static ALSourceState GetSourceState(int sid)
-        {
-            GetSource(sid, ALGetSourcei.SourceState, out int state);
-            return (ALSourceState)state;
-        }
-
-        /// <summary>(Helper) Returns Source type information.</summary>
-        /// <param name="sid">The source to be queried.</param>
-        /// <returns>type information from OpenAL.</returns>
-        public static ALSourceType GetSourceType(int sid)
-        {
-            GetSource(sid, ALGetSourcei.SourceType, out int temp);
-            return (ALSourceType)temp;
         }
     }
 }
