@@ -41,8 +41,20 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             Func<string, string, string> libNameFormatter;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                libNameFormatter = (libName, ver) =>
-                    libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                string sessionType = Environment.GetEnvironmentVariable("XDG_SESSION_TYPE");
+                string useWayland = Environment.GetEnvironmentVariable("OPENTK_4_USE_WAYLAND");
+                if (sessionType == "wayland" && useWayland == "1")
+                {
+                    // As we have a delimiter in the name the runtime will not prepend or append
+                    // stuff like `lib` and stuff.
+                    libNameFormatter = (libName, ver) =>
+                        "/wayland/lib" + libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                }
+                else
+                {
+                    libNameFormatter = (libName, ver) =>
+                        libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                }
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
