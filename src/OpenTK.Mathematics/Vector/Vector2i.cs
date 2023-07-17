@@ -102,7 +102,12 @@ namespace OpenTK.Mathematics
         public int ManhattanLength => Math.Abs(X) + Math.Abs(Y);
 
         /// <summary>
-        /// Gets the euclidian length of the vector.
+        /// Gets the squared euclidean length of the vector.
+        /// </summary>
+        public int EuclideanLengthSquared => (X * X) + (Y * Y);
+
+        /// <summary>
+        /// Gets the euclidean length of the vector.
         /// </summary>
         public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
 

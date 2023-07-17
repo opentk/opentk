@@ -21,7 +21,7 @@ using OpenTK.OpenAL;
 namespace OpenTK.Audio.OpenAL
 {
     /// <summary>Alc = Audio Library Context.</summary>
-    public class ALC : ALBase
+    public partial class ALC : ALBase
     {
         internal const string Lib = AL.Lib;
         internal const CallingConvention AlcCallingConv = CallingConvention.Cdecl;

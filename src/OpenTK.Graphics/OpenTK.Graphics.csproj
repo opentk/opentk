@@ -35,7 +35,8 @@
     <GLSpec Include="..\gl.xml" />
     <GeneratedFiles Include="ES11/ES11.cs;ES11/ES11Enums.cs;ES20/ES20.cs;ES20/ES20Enums.cs;ES30/ES30.cs;ES30/ES30Enums.cs;OpenGL2/GL.cs;OpenGL2/GLEnums.cs;OpenGL4/GL4.cs;OpenGL4/GL4Enums.cs" Exclude="**/Helper.cs" />
     <!-- We use this to use as an input for the Generate bindings step, this means that if the we (msbuild) rebuilds the Generator.Bind we will rerun the generator -->
-    <GeneratorExe Include="..\Generator.Bind\bin\$(Configuration)\netcoreapp3.1\Bind.exe" />
+    <GeneratorExe Include="..\Generator.Bind\bin\$(Configuration)\netcoreapp3.1\Bind.exe" Condition="'$(OS)' == 'Windows_NT'" />
+    <GeneratorExe Include="..\Generator.Bind\bin\$(Configuration)\netcoreapp3.1\Bind" Condition="'$(OS)' != 'Windows_NT'" />
   </ItemGroup>
 
   <!--  'DispatchToInnerBuilds' is so that this target is only run once in contrast to task that run after 'PreBuildEvent' which get run multiple times for each target framework  -->
@@ -63,7 +64,8 @@
     <Message Text="Generating bindings..." Importance="high" />
 
     <!-- Run the exe directly to avoid dotnet rebuilding anything. -->
-    <Exec Command=".\src\Generator.Bind\bin\$(Configuration)\netcoreapp3.1\Bind.exe" WorkingDirectory="../../" />
+    <Exec Command=".\src\Generator.Bind\bin\$(Configuration)\netcoreapp3.1\Bind.exe" WorkingDirectory="../../" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command=".\src\Generator.Bind\bin\$(Configuration)\netcoreapp3.1\Bind" WorkingDirectory="../../" Condition="'$(OS)' != 'Windows_NT'" />
 
     <Message Text="Generated bindings!" Importance="high" />
 
@@ -78,7 +80,8 @@
   <!-- After we have compiled the dll we run the rewriter -->
   <Target Name="Rewrite" BeforeTargets="PostBuildEvent">
     <Message Text="Rewriting src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
-    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" />
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite.exe -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' == 'Windows_NT'" />
+    <Exec Command=".\src\Generator.Rewrite\bin\$(Configuration)\netcoreapp3.1\Rewrite -a ./src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)/OpenTK.Graphics.dll" WorkingDirectory="../../" StandardOutputImportance="high" StandardErrorImportance="high" Condition="'$(OS)' != 'Windows_NT'" />
     <Message Text="Rewrote src/OpenTK.Graphics/bin/$(Configuration)/$(TargetFramework)" Importance="high" />
   </Target>
 

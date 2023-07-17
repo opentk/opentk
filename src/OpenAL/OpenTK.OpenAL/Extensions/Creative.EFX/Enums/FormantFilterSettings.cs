@@ -7,7 +7,7 @@
 // of the MIT license. See the LICENSE file for details.
 //
 
-namespace OpenTK.Audio.OpenAL.Extensions.Creative.EFX
+namespace OpenTK.Audio.OpenAL
 {
     /// <summary>
     /// Vocal morpher effect parameters. If both parameters are set to the same phoneme, that determines the filtering
