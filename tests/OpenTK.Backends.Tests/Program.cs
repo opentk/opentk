@@ -28,6 +28,11 @@ namespace OpenTK.Backends.Tests
 
         static ImGuiMouseCursor prevCursor;
 
+        static readonly MainTabContainer MainTabContainer = new MainTabContainer()
+        {
+            new OverviewView(),
+        };
+
         static void Main(string[] args)
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
@@ -151,7 +156,8 @@ namespace OpenTK.Backends.Tests
 
                 ImGuiController.Update(InputData, dt);
 
-                ImGui.ShowDemoWindow();
+                // ImGui.ShowDemoWindow();
+                MainTabContainer.Paint();
 
                 Render();
             }
@@ -255,6 +261,19 @@ namespace OpenTK.Backends.Tests
             {
                 GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
                 ImGuiController?.WindowResized(resize.NewSize.X, resize.NewSize.Y);
+            }
+        }
+
+        internal static IPalComponent? GetComponent(PalComponents component)
+        {
+            switch (component)
+            {
+                // TODO: Add other component drivers.
+                case PalComponents.Window: return WindowComp;
+                case PalComponents.OpenGL: return OpenGLComp;
+                case PalComponents.MouseCursor: return CursorComp;
+
+                default: return null;
             }
         }
     }
