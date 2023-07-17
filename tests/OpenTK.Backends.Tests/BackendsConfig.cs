@@ -11,6 +11,9 @@ using OpenTK.Core.Utility;
 
 namespace OpenTK.Backends.Tests
 {
+    /// <summary>
+    /// Loads the backend configuration for the application.
+    /// </summary>
     [JsonSerializable(typeof(BackendsConfig))]
     public class BackendsConfig
     {
@@ -31,23 +34,68 @@ namespace OpenTK.Backends.Tests
         /// <seealso cref="OpenTK.Platform.Native.Backend"/>
         public bool PreferSDL2 {get; set; } = false;
 
+        /// <summary>
+        /// Extra assemblies to load before loading PAL2 drivers.
+        /// </summary>
         public List<string> ExtraAssemblies { get; set; } = new List<string>();
 
         // These keys provide overrides for specific backends.
+        /// <summary>
+        /// Override the default driver for OpenGL component.
+        /// </summary>
         public string? OpenGL { get; set; }
+        /// <summary>
+        /// Override the default driver for Vulkan component.
+        /// </summary>
         public string? Vulkan { get; set; }
+        /// <summary>
+        /// Override the default driver for WindowIcon component.
+        /// </summary>
         public string? WindowIcon { get; set; }
+        /// <summary>
+        /// Override the default driver for MouseCursor component.
+        /// </summary>
         public string? MouseCursor { get; set; }
+        /// <summary>
+        /// Override the default driver for Window component.
+        /// </summary>
         public string? Window { get; set; }
+        /// <summary>
+        /// Override the default driver for Surface component.
+        /// </summary>
         public string? Surface { get; set; }
+        /// <summary>
+        /// Override the default driver for Display component.
+        /// </summary>
         public string? Display { get; set; }
+        /// <summary>
+        /// Override the default driver for MiceInput component.
+        /// </summary>
         public string? MiceInput { get; set; }
+        /// <summary>
+        /// Override the default driver for KeyboardInput component.
+        /// </summary>
         public string? KeyboardInput { get; set; }
+        /// <summary>
+        /// Override the default driver for ControllerInput component.
+        /// </summary>
         public string? ControllerInput { get; set; }
+        /// <summary>
+        /// Override the default driver for Clipboard component.
+        /// </summary>
         public string? Clipboard { get; set; }
+        /// <summary>
+        /// Override the default driver for Shell component.
+        /// </summary>
         public string? Shell { get; set; }
+        /// <summary>
+        /// Override the default driver for Joystick component.
+        /// </summary>
         public string? Joystick { get; set; }
 
+        /// <summary>
+        /// Get the override for a component by it's enum.
+        /// </summary>
         [JsonIgnore]
         public string? this[PalComponents component] => component switch
         {
@@ -67,10 +115,16 @@ namespace OpenTK.Backends.Tests
             _ => null
         };
 
+        /// <summary>
+        /// Create a new instance of BackendsConfig.
+        /// </summary>
         public BackendsConfig() { }
 
         private static BackendsConfig? _singleton = null;
 
+        /// <summary>
+        /// The logger for this configuration loader.
+        /// </summary>
         public static ILogger? Logger = null;
 
         /// <summary>
@@ -171,6 +225,12 @@ namespace OpenTK.Backends.Tests
             }
         }
 
+        /// <summary>
+        /// Get the driver instance for a specific backend.
+        /// </summary>
+        /// <param name="component">The component to get the backend for.</param>
+        /// <returns>The component driver, or null if not found/implemented.</returns>
+        /// <remarks>May also throw if PlatformComponents.CreateXXX throws.</remarks>
         public static IPalComponent? GetBackend(PalComponents component)
         {
             IPalComponent? driver = null;

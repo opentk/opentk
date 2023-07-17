@@ -8,8 +8,12 @@ using OpenTK.Core.Utility;
 
 namespace OpenTK.Backends.Tests
 {
+    /// <summary>
+    /// The view class for the first overview tab.
+    /// </summary>
     public class OverviewView : View
     {
+        /// <inheritdoc/>
         public override string Title => "Overview";
 
         readonly PalComponents[] Components = Enum.GetValues<PalComponents>();
@@ -18,6 +22,9 @@ namespace OpenTK.Backends.Tests
 
         const ImGuiTreeNodeFlags TREE_NODE_FLAGS = ImGuiTreeNodeFlags.Framed | ImGuiTreeNodeFlags.DefaultOpen;
 
+        /// <summary>
+        /// Create a new instance of OverviewView.
+        /// </summary>
         public OverviewView()
         {
             if (Program.Logger is ModularLogger logger)
@@ -31,6 +38,7 @@ namespace OpenTK.Backends.Tests
             log.Add($"[{DateTime.Now:O} {level}] {member} {filePath}:{lineNumber} {str}");
         }
 
+        /// <inheritdoc/>
         public override void Paint()
         {
             ImGui.Text("This is the OpenTK PAL2 driver test suite.");
