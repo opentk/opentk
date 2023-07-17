@@ -82,10 +82,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             Array.Copy(source._hats, _hats, source._hats.Length);
             Array.Copy(source._axes, _axes, source._axes.Length);
-            _buttons = (BitArray)source._buttons.Clone(); // Array.Copy(source._buttons, _buttons, source._buttons.Length);
+            _buttons.Or(source._buttons);
+
             Array.Copy(source._hatsPrevious, _hatsPrevious, source._hatsPrevious.Length);
             Array.Copy(source._axesPrevious, _axesPrevious, source._axesPrevious.Length);
-            _buttonsPrevious = (BitArray)source._buttonsPrevious.Clone(); // Array.Copy(source._previousButtons, _previousButtons, source._previousButtons.Length);
+            _buttonsPrevious.Or(source._buttonsPrevious);
         }
 
         /// <summary>
@@ -93,6 +94,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the hat to check.</param>
         /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Hat GetHat(int index)
         {
             return _hats[index];
@@ -103,6 +105,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the hat to check.</param>
         /// <returns>A <see cref="Hat"/> describing the hat state.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Hat GetHatPrevious(int index)
         {
             return _hatsPrevious[index];
@@ -175,6 +178,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the Axis to check.</param>
         /// <returns>A <see cref="float"/> between -1 and 1 describing the position of the axis.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetAxis(int index)
         {
             return _axes[index];
@@ -185,19 +189,14 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         /// </summary>
         /// <param name="index">The index of the Axis to check.</param>
         /// <returns>A <see cref="float"/> between -1 and 1 describing the position of the axis.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public float GetAxisPrevious(int index)
         {
             return _axesPrevious[index];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetAxis(int index, float value)
-        {
-            _axes[index] = value < -1 ? -1 : (value > 1 ? 1 : value);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetAxes(Span<float> axes)
+        private void SetAxes(ReadOnlySpan<float> axes)
         {
             if (axes.Length > _axes.Length)
             {
@@ -210,10 +209,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         public override string ToString()
         {
             // string.Join internally uses a StringBuilder
-            var joinedHats = string.Join(", ", _hats);
-            var joinedAxes = string.Join(", ", _axes);
+            string joinedHats = string.Join(", ", _hats);
+            string joinedAxes = string.Join(", ", _axes);
 
-            var buttonBuilder = new StringBuilder();
+            StringBuilder buttonBuilder = new StringBuilder();
 
             for (int i = 0; i < _buttons.Length; i++)
             {
@@ -224,7 +223,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return $"{{id: {Id}, name: {Name}, hats: [{joinedHats}], axes: [{joinedAxes}], buttons: [{buttonBuilder}]}}";
         }
 
-        internal unsafe void Update()
+        internal unsafe void NewFrame()
         {
             UpdateHats();
 
@@ -237,10 +236,10 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             (_buttons, _buttonsPrevious) = (_buttonsPrevious, _buttons);
 
-            var b = GLFW.GetJoystickButtonsRaw(Id, out int count);
-            for (var j = 0; j < count; j++)
+            ReadOnlySpan<JoystickInputAction> buttons = GLFW.GetJoystickButtons(Id);
+            for (var j = 0; j < buttons.Length; j++)
             {
-                SetButtonDown(j, b[j] == JoystickInputAction.Press);
+                SetButtonDown(j, buttons[j] == JoystickInputAction.Press);
             }
         }
 
@@ -249,7 +248,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             (_axes, _axesPrevious) = (_axesPrevious, _axes);
 
-            var axes = GLFW.GetJoystickAxes(Id);
+            ReadOnlySpan<float> axes = GLFW.GetJoystickAxes(Id);
             SetAxes(axes);
         }
 
@@ -257,10 +256,11 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
         {
             (_hats, _hatsPrevious) = (_hatsPrevious, _hats);
 
-            var h = GLFW.GetJoystickHatsRaw(Id, out int count);
-            for (var j = 0; j < count; j++)
+            ReadOnlySpan<JoystickHats> hats = GLFW.GetJoystickHats(Id);
+            for (var j = 0; j < hats.Length; j++)
             {
-                SetHat(j, (Hat)h[j]);
+                // FIXME: If we ever want to change the Hat enum this is going to break horribly.
+                SetHat(j, (Hat)hats[j]);
             }
         }
 
