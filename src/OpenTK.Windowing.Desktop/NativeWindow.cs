@@ -52,13 +52,6 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public KeyboardState KeyboardState { get; } = new KeyboardState();
 
-        /// <summary>
-        ///     Gets the previous keyboard state.
-        ///     This value is updated with the new state every time the window processes events.
-        /// </summary>
-        [Obsolete("Use " + nameof(KeyboardState.WasKeyDown) + " instead.", true)]
-        public KeyboardState LastKeyboardState => null;
-
         private readonly JoystickState[] _joystickStates = new JoystickState[16];
 
         /// <summary>
@@ -68,9 +61,6 @@ namespace OpenTK.Windowing.Desktop
         {
             get => _joystickStates;
         }
-
-        [Obsolete("Use " + nameof(JoystickState.WasButtonDown) + ", " + nameof(JoystickState.GetAxisPrevious) + " and " + nameof(JoystickState.GetHatPrevious) + " instead.", true)]
-        public IReadOnlyList<JoystickState> LastJoystickStates => null;
 
         /// <summary>
         ///     Gets or sets the position of the mouse relative to the content area of this window.
@@ -91,23 +81,9 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        ///     Gets the amount that the mouse moved since the last frame.
-        ///     This does not necessarily correspond to pixels, for example in the case of raw input.
-        /// </summary>
-        [Obsolete("Use " + nameof(OpenTK.Windowing.GraphicsLibraryFramework.MouseState.Delta) + " member of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
-        public Vector2 MouseDelta => Vector2.Zero;
-
-        /// <summary>
         ///     Gets the current state of the mouse as of the last time the window processed events.
         /// </summary>
         public MouseState MouseState { get; } = new MouseState();
-
-        /// <summary>
-        ///     Gets the previous keyboard state.
-        ///     This value is updated with the new state every time the window processes events.
-        /// </summary>
-        [Obsolete("Use " + nameof(OpenTK.Windowing.GraphicsLibraryFramework.MouseState.WasButtonDown) + " and " + nameof(OpenTK.Windowing.GraphicsLibraryFramework.MouseState.PreviousPosition) + " members of the " + nameof(NativeWindow.MouseState) + " property instead.", true)]
-        public MouseState LastMouseState => null;
 
         /// <summary>
         /// Gets a value indicating whether any key is down.
@@ -741,50 +717,6 @@ namespace OpenTK.Windowing.Desktop
         /// Whether or not <see cref="RawMouseInput"/> is supported.
         /// </summary>
         public bool SupportsRawMouseInput => GLFW.RawMouseMotionSupported();
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the mouse cursor is visible.
-        /// </summary>
-        [Obsolete("Use CursorState insatead.")]
-        public unsafe bool CursorVisible
-        {
-            get
-            {
-                var inputMode = GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor);
-                return inputMode != CursorModeValue.CursorHidden
-                       && inputMode != CursorModeValue.CursorDisabled;
-            }
-
-            set =>
-                GLFW.SetInputMode(
-                WindowPtr,
-                CursorStateAttribute.Cursor,
-                value ? CursorModeValue.CursorNormal : CursorModeValue.CursorHidden);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the mouse cursor is confined inside the window size.
-        /// </summary>
-        [Obsolete("Use CursorState instead.")]
-        public unsafe bool CursorGrabbed
-        {
-            get => GLFW.GetInputMode(WindowPtr, CursorStateAttribute.Cursor) == CursorModeValue.CursorDisabled;
-            set
-            {
-                if (value)
-                {
-                    GLFW.SetInputMode(WindowPtr, CursorStateAttribute.Cursor, CursorModeValue.CursorDisabled);
-                }
-                else if (CursorVisible)
-                {
-                    GLFW.SetInputMode(WindowPtr, CursorStateAttribute.Cursor, CursorModeValue.CursorNormal);
-                }
-                else
-                {
-                    GLFW.SetInputMode(WindowPtr, CursorStateAttribute.Cursor, CursorModeValue.CursorHidden);
-                }
-            }
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
@@ -1450,17 +1382,6 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Processes pending window events.
-        /// </summary>
-        [Obsolete("This function wrongly implies that only events from this window are processed, while in fact events for all windows are processed. Use NativeWindow.ProcessWindowEvents() instead.")]
-        public virtual void ProcessEvents()
-        {
-            NewInputFrame();
-
-            ProcessWindowEvents(IsEventDriven);
-        }
-
-        /// <summary>
         /// Processes pending window events, either by calling <see cref="GLFW.WaitEvents"/> or <see cref="GLFW.PollEvents"/> depending on if <paramref name="waitForEvents"/> is set to true or not.
         /// </summary>
         /// <remarks>This function should only be called from the main thread.</remarks>
@@ -1575,12 +1496,6 @@ namespace OpenTK.Windowing.Desktop
         public event Action<CancelEventArgs> Closing;
 
         /// <summary>
-        /// Occurs after the window has closed.
-        /// </summary>
-        [Obsolete("This event will never be invoked.")]
-        public event Action Closed;
-
-        /// <summary>
         /// Occurs when the window is minimized.
         /// </summary>
         public event Action<MinimizedEventArgs> Minimized;
@@ -1614,12 +1529,6 @@ namespace OpenTK.Windowing.Desktop
         /// Occurs whenever a keyboard key is released.
         /// </summary>
         public event Action<KeyboardKeyEventArgs> KeyUp;
-
-        /// <summary>
-        /// Occurs when a <see cref="MonitorHandle"/> is connected or disconnected.
-        /// </summary>
-        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
-        public event Action<MonitorEventArgs> MonitorConnected;
 
         /// <summary>
         /// Occurs whenever the mouse cursor leaves the window <see cref="NativeWindow.Bounds" />.
@@ -1731,22 +1640,6 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Find the monitor this window is currently in.
-        /// </summary>
-        /// <returns>The monitor the window is in, if found.</returns>
-        /// <remarks>
-        /// This method first tries to find the monitor by querying the GLFW
-        /// backend. However this rarely works, so this function invokes
-        /// <see cref="Monitors.GetMonitorFromWindow(NativeWindow)"/>
-        /// to find it.
-        /// </remarks>
-        [Obsolete("Use Monitors.GetMonitorFromWindow instead", true)]
-        public unsafe MonitorInfo FindMonitor()
-        {
-            return Monitors.GetMonitorFromWindow(WindowPtr);
-        }
-
-        /// <summary>
         /// Gets the current monitor scale.
         /// </summary>
         /// <param name="horizontalScale">Horizontal scale.</param>
@@ -1834,15 +1727,6 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
-        /// Raises the <see cref="Closed"/> event.
-        /// </summary>
-        [Obsolete("This method will never be called.")]
-        protected virtual void OnClosed()
-        {
-            Closed?.Invoke();
-        }
-
-        /// <summary>
         /// Raises the <see cref="JoystickConnected"/> event.
         /// </summary>
         /// <param name="e">A <see cref="JoystickEventArgs"/> that contains the event data.</param>
@@ -1887,16 +1771,6 @@ namespace OpenTK.Windowing.Desktop
         protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
         {
             KeyUp?.Invoke(e);
-        }
-
-        /// <summary>
-        /// Raises the <see cref="MonitorConnected"/> event.
-        /// </summary>
-        /// <param name="e">A <see cref="MonitorEventArgs"/> that contains the event data.</param>
-        [Obsolete("Use the Monitors.OnMonitorConnected event instead.", true)]
-        protected virtual void OnMonitorConnected(MonitorEventArgs e)
-        {
-            MonitorConnected?.Invoke(e);
         }
 
         /// <summary>

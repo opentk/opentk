@@ -59,7 +59,7 @@ namespace OpenTK.Windowing.Desktop
         public event Action Unload;
 
         /// <summary>
-        /// Occurs when it is time to update a frame.
+        /// Occurs when it is time to update a frame. This is invoked before <see cref="RenderFrame"/>.
         /// </summary>
         public event Action<FrameEventArgs> UpdateFrame;
 
@@ -73,18 +73,14 @@ namespace OpenTK.Windowing.Desktop
         public event Action RenderThreadStarted;
 
         /// <summary>
-        /// Occurs when it is time to render a frame.
+        /// Occurs when it is time to render a frame. This is invoked after <see cref="UpdateFrequency"/>.
         /// </summary>
-        [Obsolete("Use UpdateFrame instead. We no longer separate UpdateFrame and RenderFrame.")]
         public event Action<FrameEventArgs> RenderFrame;
 
         /// <summary>
         /// Frequency cap for Update/RenderFrame events.
         /// </summary>
         private const double MaxFrequency = 500.0;
-
-        [Obsolete]
-        private readonly Stopwatch _watchRender = new Stopwatch();
 
         private readonly Stopwatch _watchUpdate = new Stopwatch();
 
@@ -94,8 +90,6 @@ namespace OpenTK.Windowing.Desktop
         /// to handle the application.
         /// </summary>
         protected bool IsRunningSlowly { get; private set; }
-
-        private double _updateEpsilon; // quantization error for UpdateFrame events
 
         private double _updateFrequency;
 
@@ -362,7 +356,8 @@ namespace OpenTK.Windowing.Desktop
 
         /// <summary>
         /// Run when the update thread is started. This will never run if you set IsSingleThreaded to true.
-        /// </summary>
+        /// </summary
+        [Obsolete("There is no longer a separate render thread.")]
         protected virtual void OnRenderThreadStarted()
         {
             RenderThreadStarted?.Invoke();
