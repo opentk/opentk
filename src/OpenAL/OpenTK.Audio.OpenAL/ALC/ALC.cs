@@ -16,7 +16,6 @@ using System.Security;
 using OpenTK.Audio.OpenAL.Native;
 using OpenTK.Core;
 using OpenTK.Core.Native;
-using OpenTK.OpenAL;
 
 namespace OpenTK.Audio.OpenAL
 {

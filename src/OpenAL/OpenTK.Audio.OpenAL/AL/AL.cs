@@ -14,7 +14,6 @@ using OpenTK.Audio.OpenAL;
 using OpenTK.Audio.OpenAL.Native;
 using OpenTK.Core.Native;
 using OpenTK.Mathematics;
-using OpenTK.OpenAL;
 
 namespace OpenTK.Audio.OpenAL
 {
