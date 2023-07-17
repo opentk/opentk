@@ -12,6 +12,7 @@ namespace OpenTK.Backends.Tests
         public override string Title => "Main Tab View";
 
         private readonly List<View> _views;
+        private int activeItem = -1;
 
         public MainTabContainer()
         {
@@ -52,12 +53,22 @@ namespace OpenTK.Backends.Tests
                 if (!view.IsVisible)
                     continue;
 
-                if (ImGui.BeginTabItem($"{view.Title}##{TAB_VIEW_ID}{i++}"))
+                if (ImGui.BeginTabItem($"{view.Title}##{TAB_VIEW_ID}{i}"))
                 {
+                    if (i != activeItem)
+                    {
+                        if (activeItem != -1)
+                            _views[activeItem].NotifyLeave();
+                        view.NotifyEnter();
+
+                        activeItem = i;
+                    }
                     view.Paint();
 
                     ImGui.EndTabItem();
                 }
+
+                i++;
             }
             ImGui.EndTabItem();
 
