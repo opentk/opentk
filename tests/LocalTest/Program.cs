@@ -62,14 +62,15 @@ namespace LocalTest
         {
             base.OnRenderFrame(args);
 
-            time += (float)args.Time;
-            if (time > 8) time = 0;
+            const float CycleTime = 8.0f;
 
-            Color4 color = Color4.FromHsv(new Vector4(time / 8f, 1, 1, 1));
+            time += (float)args.Time;
+            if (time > CycleTime) time = 0;
+
+            Color4 color = Color4.FromHsv(new Vector4(time / CycleTime, 1, 1, 1));
 
             GL.ClearColor(color);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
 
             SwapBuffers();
         }
