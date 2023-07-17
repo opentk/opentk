@@ -396,5 +396,27 @@ namespace OpenTK.Windowing.Desktop
         {
             RenderFrame?.Invoke(args);
         }
+
+        /// <summary>
+        /// The current time since the last update.
+        /// This function is useful when implementing updates on resize using windows.
+        /// </summary>
+        /// <returns>The time since the last update.</returns>
+        /// <remarks>
+        /// Don't use this in <see cref="OnUpdateFrame(FrameEventArgs)"/> or <see cref="OnRenderFrame(FrameEventArgs)"/>, instead use <see cref="FrameEventArgs.Time"/>.
+        /// </remarks>
+        public double TimeSinceLastUpdate()
+        {
+            return (float)_watchUpdate.Elapsed.TotalSeconds;
+        }
+
+        /// <summary>
+        /// Resets the time since the last update.
+        /// This function is useful when implementing updates on resize using windows.
+        /// </summary>
+        public void ResetTimeSinceLastUpdate()
+        {
+            _watchUpdate.Restart();
+        }
     }
 }
