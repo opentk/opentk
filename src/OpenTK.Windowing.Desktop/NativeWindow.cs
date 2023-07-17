@@ -717,6 +717,32 @@ namespace OpenTK.Windowing.Desktop
         }
 
         /// <summary>
+        /// Enables or disables raw mouse input.
+        /// Raw mouse input is only enabled when <see cref="CursorState"/>=<see cref="CursorState.Grabbed"/>.
+        /// Check <see cref="SupportsRawMouseInput"/> before settings this.
+        /// </summary>
+        public unsafe bool RawMouseInput
+        {
+            get
+            {
+                return GLFW.GetInputMode(WindowPtr, RawMouseMotionAttribute.RawMouseMotion);
+            }
+
+            set
+            {
+                if (SupportsRawMouseInput)
+                {
+                    GLFW.SetInputMode(WindowPtr, RawMouseMotionAttribute.RawMouseMotion, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Whether or not <see cref="RawMouseInput"/> is supported.
+        /// </summary>
+        public bool SupportsRawMouseInput => GLFW.RawMouseMotionSupported();
+
+        /// <summary>
         /// Gets or sets a value indicating whether the mouse cursor is visible.
         /// </summary>
         [Obsolete("Use CursorState insatead.")]
