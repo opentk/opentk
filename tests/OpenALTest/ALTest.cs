@@ -79,7 +79,7 @@ namespace OpenTK.Audio.OpenAL
                 int current = 0;
                 while (current < recording.Length)
                 {
-                    int samplesAvailable = ALC.GetAvailableSamples(captureDevice);
+                    int samplesAvailable = ALC.GetInteger(captureDevice, AlcGetInteger.CaptureSamples);
                     if (samplesAvailable > 512)
                     {
                         int samplesToRead = Math.Min(samplesAvailable, recording.Length - current);
@@ -132,7 +132,7 @@ namespace OpenTK.Audio.OpenAL
                 CheckALError(" ");
             }
 
-            while (AL.GetSourceState(alSource) == ALSourceState.Playing)
+            while ((ALSourceState)AL.GetSource(alSource, ALGetSourcei.SourceState) == ALSourceState.Playing)
             {
                 if (AL.SourceLatency.IsExtensionPresent())
                 {
@@ -175,7 +175,7 @@ namespace OpenTK.Audio.OpenAL
 
                 AL.SourcePlay(alSource);
 
-                while (AL.GetSourceState(alSource) == ALSourceState.Playing)
+                while ((ALSourceState)AL.GetSource(alSource, ALGetSourcei.SourceState) == ALSourceState.Playing)
                 {
                     Thread.Sleep(10);
                 }
@@ -205,7 +205,7 @@ namespace OpenTK.Audio.OpenAL
 
                 AL.SourcePlay(alSource);
 
-                while (AL.GetSourceState(alSource) == ALSourceState.Playing)
+                while ((ALSourceState)AL.GetSource(alSource, ALGetSourcei.SourceState) == ALSourceState.Playing)
                 {
                     Thread.Sleep(10);
                 }

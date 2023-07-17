@@ -16,7 +16,6 @@ using System.Security;
 using OpenTK.Audio.OpenAL.Native;
 using OpenTK.Core;
 using OpenTK.Core.Native;
-using OpenTK.OpenAL;
 
 namespace OpenTK.Audio.OpenAL
 {
@@ -448,15 +447,14 @@ namespace OpenTK.Audio.OpenAL
         public static extern void GetInteger(ALCaptureDevice device, AlcGetInteger param, int size, out int data);
         // ALC_API void            ALC_APIENTRY alcGetIntegerv( ALCdevice *device, ALCenum param, ALCsizei size, ALCint *buffer );
 
-        /// <summary>
-        /// Gets the current number of available capture samples.
-        /// </summary>
-        /// <param name="device">The device.</param>
-        /// <returns>The number of capture samples available.</returns>
-        public static int GetAvailableSamples(ALCaptureDevice device)
+        /// <summary>This function returns integers related to the context.</summary>
+        /// <param name="device">A pointer to the device to be queried.</param>
+        /// <param name="param">An attribute to be retrieved: ALC_MAJOR_VERSION, ALC_MINOR_VERSION, ALC_ATTRIBUTES_SIZE, ALC_ALL_ATTRIBUTES.</param>
+        /// <returns>The int returned.</returns>
+        public static int GetInteger(ALCaptureDevice device, AlcGetInteger param)
         {
-            GetInteger(device, AlcGetInteger.CaptureSamples, 1, out int result);
-            return result;
+            GetInteger(device, param, 1, out int value);
+            return value;
         }
 
         // -------- ALC_ENUMERATION_EXT --------

@@ -14,7 +14,6 @@ using OpenTK.Audio.OpenAL;
 using OpenTK.Audio.OpenAL.Native;
 using OpenTK.Core.Native;
 using OpenTK.Mathematics;
-using OpenTK.OpenAL;
 
 namespace OpenTK.Audio.OpenAL
 {
@@ -161,9 +160,9 @@ namespace OpenTK.Audio.OpenAL
         public static extern void Listener(ALListener3f param, float value1, float value2, float value3);
         // AL_API void AL_APIENTRY alListener3f( ALenum param, ALfloat value1, ALfloat value2, ALfloat value3 );
 
-        /// <summary>This function sets a Math.Vector3 property for the listener.</summary>
+        /// <summary>This function sets a <see cref="Vector3"/> property for the listener.</summary>
         /// <param name="param">The name of the attribute to set.</param>
-        /// <param name="values">The Math.Vector3 to set the attribute to.</param>
+        /// <param name="values">The <see cref="Vector3"/> to set the attribute to.</param>
         public static void Listener(ALListener3f param, ref Vector3 values)
         {
             Listener(param, values.X, values.Y, values.Z);
@@ -190,10 +189,10 @@ namespace OpenTK.Audio.OpenAL
         public static extern void Listener(ALListenerfv param, float[] values);
         // AL_API void AL_APIENTRY alListenerfv( ALenum param, const ALfloat* values );
 
-        /// <summary>This function sets two Math.Vector3 properties of the listener.</summary>
+        /// <summary>This function sets two <see cref="Vector3"/> properties of the listener.</summary>
         /// <param name="param">The name of the attribute to be set.</param>
-        /// <param name="at">A Math.Vector3 for the At-Vector.</param>
-        /// <param name="up">A Math.Vector3 for the Up-Vector.</param>
+        /// <param name="at">A <see cref="Vector3"/> for the At-Vector.</param>
+        /// <param name="up">A <see cref="Vector3"/> for the Up-Vector.</param>
         public static void Listener(ALListenerfv param, ref Vector3 at, ref Vector3 up)
         {
             Span<float> data = stackalloc float[6];
@@ -221,6 +220,15 @@ namespace OpenTK.Audio.OpenAL
         public static extern void GetListener(ALListenerf param, [Out] out float value);
         // AL_API void AL_APIENTRY alGetListenerf( ALenum param, ALfloat* value );
 
+        /// <summary>This function retrieves a floating-point property of the listener.</summary>
+        /// <param name="param">the name of the attribute to be retrieved: ALListenerf.Gain.</param>
+        /// <returns>The floating-point value being retrieved.</returns>
+        public static float GetListener(ALListenerf param)
+        {
+            GetListener(param, out float value);
+            return value;
+        }
+
         /// <summary>This function retrieves a set of three floating-point values from a property of the listener.</summary>
         /// <param name="param">The name of the attribute to be retrieved.</param>
         /// <param name="value1">The first floating-point value being retrieved.</param>
@@ -230,12 +238,21 @@ namespace OpenTK.Audio.OpenAL
         public static extern void GetListener(ALListener3f param, [Out] out float value1, [Out] out float value2, [Out] out float value3);
         // AL_API void AL_APIENTRY alGetListener3f( ALenum param, ALfloat *value1, ALfloat *value2, ALfloat *value3 );
 
-        /// <summary>This function retrieves a Math.Vector3 from a property of the listener.</summary>
+        /// <summary>This function retrieves a <see cref="Vector3"/> from a property of the listener.</summary>
         /// <param name="param">The name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity.</param>
-        /// <param name="values">A Math.Vector3 to hold the three floats being retrieved.</param>
+        /// <param name="values">A <see cref="Vector3"/> to hold the three floats being retrieved.</param>
         public static void GetListener(ALListener3f param, out Vector3 values)
         {
             GetListener(param, out values.X, out values.Y, out values.Z);
+        }
+
+        /// <summary>This function retrieves a <see cref="Vector3"/> from a property of the listener.</summary>
+        /// <param name="param">The name of the attribute to be retrieved: ALListener3f.Position, ALListener3f.Velocity.</param>
+        /// <returns>A <see cref="Vector3"/> to hold the three floats being retrieved.</returns>
+        public static Vector3 GetListener(ALListener3f param)
+        {
+            GetListener(param, out Vector3 values);
+            return values;
         }
 
         /// <summary>This function retrieves a floating-point vector property of the listener. You must pin it manually.</summary>
@@ -259,10 +276,10 @@ namespace OpenTK.Audio.OpenAL
         public static extern void GetListener(ALListenerfv param, [In] float[] values);
         // AL_API void AL_APIENTRY alGetListenerfv( ALenum param, ALfloat* values );
 
-        /// <summary>This function retrieves two Math.Vector3 properties of the listener.</summary>
+        /// <summary>This function retrieves two <see cref="Vector3"/> properties of the listener.</summary>
         /// <param name="param">the name of the attribute to be retrieved: ALListenerfv.Orientation.</param>
-        /// <param name="at">A Math.Vector3 for the At-Vector.</param>
-        /// <param name="up">A Math.Vector3 for the Up-Vector.</param>
+        /// <param name="at">A <see cref="Vector3"/> for the At-Vector.</param>
+        /// <param name="up">A <see cref="Vector3"/> for the Up-Vector.</param>
         public static void GetListener(ALListenerfv param, out Vector3 at, out Vector3 up)
         {
             Span<float> values = stackalloc float[6];
@@ -452,7 +469,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function sets a source property requiring three floating-point values.</summary>
         /// <param name="sid">Source name whose attribute is being set.</param>
         /// <param name="param">The name of the attribute to set: ALSource3f.Position, Velocity, Direction.</param>
-        /// <param name="values">A Math.Vector3 which the attribute will be set to.</param>
+        /// <param name="values">A <see cref="Vector3"/> which the attribute will be set to.</param>
         public static void Source(int sid, ALSource3f param, ref Vector3 values)
         {
             Source(sid, param, values.X, values.Y, values.Z);
@@ -495,6 +512,16 @@ namespace OpenTK.Audio.OpenAL
         [DllImport(Lib, EntryPoint = "alGetSourcef", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void GetSource(int sid, ALSourcef param, out float value);
 
+        /// <summary>This function retrieves a floating-point property of a source.</summary>
+        /// <param name="sid">Source name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute to set: ALSourcef.Pitch, Gain, MinGain, MaxGain, MaxDistance, RolloffFactor, ConeOuterGain, ConeInnerAngle, ConeOuterAngle, SecOffset, ReferenceDistance, EfxAirAbsorptionFactor, EfxRoomRolloffFactor, EfxConeOuterGainHighFrequency.</param>
+        /// <returns>The floating-point value being retrieved.</returns>
+        public static float GetSource(int sid, ALSourcef param)
+        {
+            GetSource(sid, param, out float value);
+            return value;
+        }
+
         /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
@@ -508,10 +535,21 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
-        /// <param name="values">A Math.Vector3 to retrieve the values to.</param>
+        /// <param name="values">A <see cref="Vector3"/> to retrieve the values to.</param>
         public static void GetSource(int sid, ALSource3f param, out Vector3 values)
         {
             GetSource(sid, param, out values.X, out values.Y, out values.Z);
+        }
+
+        /// <summary>This function retrieves three floating-point values representing a property of a source.</summary>
+        /// <param name="sid">Source name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
+        /// <returns>A <see cref="Vector3"/> to with the received values.</returns>
+        public static Vector3 GetSource(int sid, ALSource3f param)
+        {
+            Vector3 values;
+            GetSource(sid, param, out values.X, out values.Y, out values.Z);
+            return values;
         }
 
         /// <summary>This function retrieves three integer-point values representing a property of a source.</summary>
@@ -527,12 +565,22 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>This function retrieves three integer-point values representing a property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
-        /// <param name="values">A Math.Vector3i to retrieve the values to.</param>
+        /// <param name="values">A <see cref="Vector3"/>i to retrieve the values to.</param>
         public static void GetSource(int sid, ALSource3i param, out Vector3i values)
         {
             GetSource(sid, param, out values.X, out values.Y, out values.Z);
         }
-        // AL_API void AL_APIENTRY alGetSource3i( ALuint sid, ALenum param, ALint* value1, ALint* value2, ALint* value3);
+
+        /// <summary>This function retrieves three integer-point values representing a property of a source.</summary>
+        /// <param name="sid">Source name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute being retrieved: ALSource3f.Position, Velocity, Direction.</param>
+        /// <returns>A <see cref="Vector3i"/> to retrieve the values to.</returns>
+        public static Vector3i GetSource(int sid, ALSource3i param)
+        {
+            Vector3i values;
+            GetSource(sid, param, out values.X, out values.Y, out values.Z);
+            return values;
+        }
 
         /// <summary>This function retrieves an integer property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
@@ -542,6 +590,16 @@ namespace OpenTK.Audio.OpenAL
         public static extern void GetSource(int sid, ALGetSourcei param, [Out] out int value);
         // AL_API void AL_APIENTRY alGetSourcei( ALuint sid,  ALenum param, ALint* value );
 
+        /// <summary>This function retrieves an integer property of a source.</summary>
+        /// <param name="sid">Source name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute to retrieve: ALSourcei.SourceRelative, Buffer, SourceState, BuffersQueued, BuffersProcessed.</param>
+        /// <returns>The integer value being retrieved.</returns>
+        public static int GetSource(int sid, ALGetSourcei param)
+        {
+            GetSource(sid, param, out int value);
+            return value;
+        }
+
         /// <summary>This function retrieves a bool property of a source.</summary>
         /// <param name="sid">Source name whose attribute is being retrieved.</param>
         /// <param name="param">The name of the attribute to get: ALSourceb.SourceRelative, Looping.</param>
@@ -550,6 +608,16 @@ namespace OpenTK.Audio.OpenAL
         {
             GetSource(sid, (ALGetSourcei)param, out int result);
             value = result != 0;
+        }
+
+        /// <summary>This function retrieves a bool property of a source.</summary>
+        /// <param name="sid">Source name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute to get: ALSourceb.SourceRelative, Looping.</param>
+        /// <returns>A the bool value being retrieved.</returns>
+        public static bool GetSource(int sid, ALSourceb param)
+        {
+            GetSource(sid, (ALGetSourcei)param, out int result);
+            return result != 0;
         }
 
         // Not used by any Enum:
@@ -1018,6 +1086,16 @@ namespace OpenTK.Audio.OpenAL
         [DllImport(Lib, EntryPoint = "alGetBufferi", ExactSpelling = true, CallingConvention = ALCallingConvention)]
         public static extern void GetBuffer(int bid, ALGetBufferi param, [Out] out int value);
         // AL_API void AL_APIENTRY alGetBufferi( ALuint bid, ALenum param, ALint* value );
+
+        /// <summary>This function retrieves an integer property of a buffer.</summary>
+        /// <param name="bid">Buffer name whose attribute is being retrieved.</param>
+        /// <param name="param">The name of the attribute to be retrieved: ALGetBufferi.Frequency, Bits, Channels, Size, and the currently hidden AL_DATA (dangerous).</param>
+        /// <returns>An int to hold the retrieved buffer.</returns>
+        public static int GetBuffer(int bid, ALGetBufferi param)
+        {
+            GetBuffer(bid, param, out int value);
+            return value;
+        }
 
         // AL_API void AL_APIENTRY alGetBufferf( ALuint bid, ALenum param, ALfloat* value );
         // AL_API void AL_APIENTRY alGetBuffer3f( ALuint bid, ALenum param, ALfloat* value1, ALfloat* value2, ALfloat* value3);
