@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>obj\Release\netstandard2.0\OpenTK.OpenAL.xml</DocumentationFile>
+    <DocumentationFile>obj\Release\netstandard2.0\OpenTK.Audio.OpenAL.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
