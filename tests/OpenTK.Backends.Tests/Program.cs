@@ -14,7 +14,7 @@ namespace OpenTK.Backends.Tests
 {
     internal class Program
     {
-        static ILogger Logger;
+        public static ILogger Logger = new ModularLogger() { new ConsoleLogger() };
 
         static IWindowComponent WindowComp;
         static IOpenGLComponent OpenGLComp;
@@ -37,6 +37,8 @@ namespace OpenTK.Backends.Tests
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
+            BackendsConfig.Logger = Logger;
+
             WindowComp = PlatformComponents.CreateWindowComponent();
             OpenGLComp = PlatformComponents.CreateOpenGLComponent();
             try
@@ -45,8 +47,6 @@ namespace OpenTK.Backends.Tests
             }
             catch
             { }
-
-            Logger = new ConsoleLogger();
 
             WindowComp.Logger = Logger;
             OpenGLComp.Logger = Logger;
