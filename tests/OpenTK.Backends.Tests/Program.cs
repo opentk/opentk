@@ -18,7 +18,14 @@ namespace OpenTK.Backends.Tests
 
         static IWindowComponent WindowComp;
         static IOpenGLComponent OpenGLComp;
+        static IIconComponent? IconComponent;
         static ICursorComponent? CursorComp;
+        static IDisplayComponent? DisplayComponent;
+        static IMouseComponent? MouseComponent;
+        static IKeyboardComponent? KeyboardComponent;
+        static IClipboardComponent? ClipboardComponent;
+        static IShellComponent? ShellComponent;
+        static IJoystickComponent? JoystickComponent;
 
         static WindowHandle Window;
         static OpenGLContextHandle OpenGLContext;
@@ -39,22 +46,45 @@ namespace OpenTK.Backends.Tests
 
             BackendsConfig.Logger = Logger;
 
-            WindowComp = PlatformComponents.CreateWindowComponent();
-            OpenGLComp = PlatformComponents.CreateOpenGLComponent();
-            try
+            foreach (PalComponents component in Enum.GetValues<PalComponents>())
             {
-                CursorComp = PlatformComponents.CreateCursorComponent();
+                try
+                {
+                    IPalComponent? driver = BackendsConfig.GetBackend(component);
+                    if (driver != null)
+                    {
+                        switch (component)
+                        {
+                        case PalComponents.Window:      WindowComp = (IWindowComponent)driver; break;
+                        case PalComponents.OpenGL:      OpenGLComp = (IOpenGLComponent)driver; break;
+                        case PalComponents.WindowIcon:  IconComponent = (IIconComponent)driver; break;
+                        case PalComponents.MouseCursor: CursorComp = (ICursorComponent)driver; break;
+                        case PalComponents.Display:     DisplayComponent = (IDisplayComponent)driver; break;
+                        case PalComponents.MiceInput:   MouseComponent = (IMouseComponent)driver; break;
+                        case PalComponents.KeyboardInput: KeyboardComponent = (IKeyboardComponent)driver; break;
+                        case PalComponents.Clipboard:   ClipboardComponent = (IClipboardComponent)driver; break;
+                        case PalComponents.Shell:       ShellComponent = (IShellComponent)driver; break;
+                        case PalComponents.Joystick:    JoystickComponent = (IJoystickComponent)driver; break;
+                        }
+                        driver.Logger = Logger;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError($"Could not initialize component {component}: {ex}\n{ex.StackTrace}");
+                }
             }
-            catch
-            { }
-
-            WindowComp.Logger = Logger;
-            OpenGLComp.Logger = Logger;
-            if (CursorComp != null) CursorComp.Logger = Logger;
 
             WindowComp.Initialize(PalComponents.Window);
             OpenGLComp.Initialize(PalComponents.OpenGL);
             CursorComp?.Initialize(PalComponents.MouseCursor);
+            IconComponent?.Initialize(PalComponents.WindowIcon);
+            DisplayComponent?.Initialize(PalComponents.Display);
+            MouseComponent?.Initialize(PalComponents.MiceInput);
+            KeyboardComponent?.Initialize(PalComponents.KeyboardInput);
+            ClipboardComponent?.Initialize(PalComponents.Clipboard);
+            ShellComponent?.Initialize(PalComponents.Shell);
+            JoystickComponent?.Initialize(PalComponents.Joystick);
 
             OpenGLGraphicsApiHints hints = new OpenGLGraphicsApiHints()
             {
@@ -268,10 +298,16 @@ namespace OpenTK.Backends.Tests
         {
             switch (component)
             {
-                // TODO: Add other component drivers.
                 case PalComponents.Window: return WindowComp;
                 case PalComponents.OpenGL: return OpenGLComp;
                 case PalComponents.MouseCursor: return CursorComp;
+                case PalComponents.WindowIcon: return IconComponent;
+                case PalComponents.Display: return DisplayComponent;
+                case PalComponents.MiceInput: return MouseComponent;
+                case PalComponents.KeyboardInput: return KeyboardComponent;
+                case PalComponents.Clipboard: return ClipboardComponent;
+                case PalComponents.Shell: return ShellComponent;
+                case PalComponents.Joystick: return JoystickComponent;
 
                 default: return null;
             }
