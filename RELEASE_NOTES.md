@@ -1,3 +1,37 @@
+## 4.8.0
+
+* BREAKING: Renamed the `OpenTK.OpenAL` assembly to `OpenTK.Audio.OpenAL` to match the namespace. (@NogginBops)
+
+* BREAKING: Make OpenAL extensions nested classes of `AL` and `ALC` instead of being namespaces to more closely match the OpenGL bindings. (@NogginBops)
+
+* BREAKING: Removed `AL.BindBufferToSource`, `AL.GetSourceState`, `AL.GetSourceType`, and `ALC.GetAvailableSamples` that doesn't exist in the OpenAL API (use `AL.Get*` and `ALC.Get*` instead). (@Khhs167, @NogginBops)
+
+* BREAKING: `NativeWindow.Location`, `NativeWindow.Size`, and `NativeWindow.Bounds` now correctly refer to the external size and location of the window. (@NogginBops)
+
+* BREAKING: Removed a few functions marked `[Obsolete]` since at least `4.7.2` but some even older. (@NogginBops)
+
+* BREAKING: Removed `OpenTK.Core.Utils.Swap<T>`, use `MathHelper.Swap<T>` instead. (@NogginBops)
+
+* API: Rename `Box.Inflate` to `Box.Extend`, and mark `Box.Inflate` as obsolete so we can change the behavior of `Box.Inflate` in future versions. (@NogginBops)
+
+* API: Added `GameWindow.TimeSinceLastUpdate()` and `GameWindow.ResetTimeSinceLastUpdate()` which are useful when dealing with the modal move/resize loop on windows. (@NogginBops)
+
+* API: Added `NativeWindow.RawMouseInput` and `NativeWindow.SupportsRawMouseInput` for activating raw mouse input. (@NogginBops)
+
+* API: Added opt-in preliminary GLFW Wayland support through the environment variable `OPENTK_4_USE_WAYLAND` (it's broken when used with `GameWindow` or `NativeWindow` in this version). (@NogginBops)
+
+* API: Updated the `GameWindow` run loop to be much more accurate. Exposed `GameWindow.ExpectedSchedulerPeriod` to tell OpenTK how accurate `Thread.Sleep` can be expected to be (this defaults to good defaults for Windows, Linux, and macos). (@NogginBops)
+
+* FIX: Cleaned up some internal OpenGL definitions (doesn't change any bindings). (@BoyBayKiller)
+
+* API: Expose `MouseCursor.StandardShape` as public. (@NogginBops)
+
+* API: Add `VectorNi.EuclideanLengthSquared`. (@NogginBops)
+
+* FIX: Added helpful exception message to `NativeWindow` when running with trimmed assemblies with a workaround for the issue. (@NogginBops)
+
+* FIX: Fixed an issue where starting `NativeWindow` as a fullscreen window and then going to a normal window would throw an exception. (@NogginBops)
+
 ## 4.7.7
 
 * FIX: `ToString()` on all math types no longer throw `NullReferenceException`. (@NogginBops)
