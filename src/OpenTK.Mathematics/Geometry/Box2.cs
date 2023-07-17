@@ -263,7 +263,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="point">The point to inflate to.</param>
+        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
         public void Inflate(Vector2 point)
         {
             _min = Vector2.ComponentMin(_min, point);
@@ -273,14 +274,39 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="point">The point to inflate to.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
         public Box2 Inflated(Vector2 point)
         {
             // create a local copy of this box
             Box2 box = this;
             box.Inflate(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Extend this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        public void Extend(Vector2 point)
+        {
+            _min = Vector2.ComponentMin(_min, point);
+            _max = Vector2.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Extend this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box2 Extended(Vector2 point)
+        {
+            // create a local copy of this box
+            Box2 box = this;
+            box.Extend(point);
             return box;
         }
 
