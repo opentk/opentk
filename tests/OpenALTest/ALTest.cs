@@ -79,7 +79,7 @@ namespace OpenTK.Audio.OpenAL
                 int current = 0;
                 while (current < recording.Length)
                 {
-                    int samplesAvailable = ALC.GetAvailableSamples(captureDevice);
+                    int samplesAvailable = ALC.GetInteger(captureDevice, AlcGetInteger.CaptureSamples);
                     if (samplesAvailable > 512)
                     {
                         int samplesToRead = Math.Min(samplesAvailable, recording.Length - current);
