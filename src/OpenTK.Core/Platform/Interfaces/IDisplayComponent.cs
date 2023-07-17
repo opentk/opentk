@@ -8,10 +8,7 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IDisplayComponent : IPalComponent
     {
-        /// <summary>
-        /// True if the driver can set the video mode.
-        /// </summary>
-        bool CanSetVideoMode { get; }
+        // FIXME: Add API for getting the display orientation!
 
         /// <summary>
         /// True if the driver can get the virtual position of the display.
@@ -24,26 +21,31 @@ namespace OpenTK.Core.Platform
         /// <returns>Number of displays available.</returns>
         int GetDisplayCount();
 
+        // FIXME: Define the how the indices work?
+        // Will we guarantee that index = 0 is the primary monitor?
+        // Should we sort the displays in some order?
+        // What happens when monitors are added and removed?
+
         /// <summary>
         /// Create a display handle to the indexed display.
         /// </summary>
         /// <param name="index">The display index to create a display handle to.</param>
         /// <returns>Handle to the display.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is out of range.</exception>
-        DisplayHandle Create(int index);
+        DisplayHandle Open(int index);
 
         /// <summary>
         /// Create a display handle to the primary display.
         /// </summary>
         /// <returns>Handle to the primary display.</returns>
-        DisplayHandle CreatePrimary();
+        DisplayHandle OpenPrimary();
 
         /// <summary>
         /// Destroy a display handle.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void Destroy(DisplayHandle handle);
+        void Close(DisplayHandle handle);
 
         /// <summary>
         /// Checks if a display is the primary display or not.
@@ -69,30 +71,12 @@ namespace OpenTK.Core.Platform
         void GetVideoMode(DisplayHandle handle, out VideoMode mode);
 
         /// <summary>
-        /// Set the active video mode of a display.
+        /// Get all supported video modes for a specific display.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="mode">Target video mode.</param>
+        /// <returns>An array of all supported video modes.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mode"/> is unsupported by display.</exception>
-        /// <exception cref="PalNotImplementedException">The driver does not support this action. See <see cref="CanSetVideoMode"/>.</exception>
-        void SetVideoMode(DisplayHandle handle, in VideoMode mode);
-
-        /// <summary>
-        /// Get the number of video modes the display supports.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <returns>Number of supported display modes.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        int GetSupportedVideoModeCount(DisplayHandle handle);
-
-        /// <summary>
-        /// Get all supported video modes.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <param name="modes">Span where supported display modes will be written to.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes);
+        VideoMode[] GetSupportedVideoModes(DisplayHandle handle);
 
         /// <summary>
         /// Get the position of the display in the virtual desktop.

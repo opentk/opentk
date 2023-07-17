@@ -8,17 +8,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static OpenTK.Platform.Native.X11.LibX11;
+using static OpenTK.Platform.Native.X11.XFixes;
+using static OpenTK.Platform.Native.X11.LibXcursor;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
 {
     public class X11CursorComponent : ICursorComponent
     {
+        /// <inheritdoc />
         public string Name => nameof(X11CursorComponent);
 
+        /// <inheritdoc />
         public PalComponents Provides => PalComponents.MouseCursor;
 
+        /// <inheritdoc />
         public ILogger? Logger { get; set; }
 
+        private bool _hasXFixes = false;
+
+        /// <inheritdoc />
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -26,58 +36,36 @@ namespace OpenTK.Platform.Native.X11
                 throw new PalException(this, $"Cannot initialize unimplemented components {which & ~Provides}.");
             }
 
-
-        }
-
-        public bool CanLoadFromFile => throw new NotImplementedException();
-
-        public bool CanLoadSystemCursor => true;
-
-        public bool CanScaleCursor => throw new NotImplementedException();
-
-        public bool CanSupportAnimatedCursor => throw new NotImplementedException();
-
-        public CursorHandle Create()
-        {
-            return new XCursorHandle();
-        }
-
-        public void Destroy(CursorHandle handle)
-        {
-            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
-
-            // FIXME: Don't destroy system cursors?
-            if (xcursor.Cursor != XCursor.None)
+            if (XFixesQueryExtension(X11.Display, out int event_base, out int error_base))
             {
-                XFreeCursor(X11.Display, xcursor.Cursor);
+                _hasXFixes = true;
+
+                int major = 5;
+                int minor = 0;
+                int status = XFixesQueryVersion(X11.Display, ref major, ref minor);
+
+                if (major < 5)
+                {
+                    Logger?.LogError($"Could not load XFixes. Got version: {major}.{minor} but we require 5.0. Status: {status}");
+                    _hasXFixes = false;
+                }
+
+                Console.WriteLine("Loaded xfixes!");
             }
-
-            xcursor.Cursor = XCursor.None;
         }
 
-        public void GetSize(CursorHandle handle, out int width, out int height)
-        {
-            throw new NotImplementedException();
-        }
+        /// <inheritdoc />
+        public bool CanLoadSystemCursors => true;
 
-        public void GetHotspot(CursorHandle handle, out int x, out int y)
-        {
-            throw new NotImplementedException();
-        }
+        /// <inheritdoc />
+        public bool CanInspectSystemCursors => false;
 
-        public void GetImage(CursorHandle handle, Span<byte> image)
+        /// <inheritdoc />
+        public CursorHandle Create(SystemCursorType systemCursor)
         {
-            throw new NotImplementedException();
-        }
+            XCursorHandle xcursor = new XCursorHandle();
 
-        public void GetScale(CursorHandle handle, out float horizontal, out float vertical)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Load(CursorHandle handle, SystemCursorType systemCursor)
-        {
-            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+            // FIXME: Maybe use Xcursor themes?
 
             XCursorShape shape;
             switch (systemCursor)
@@ -137,18 +125,43 @@ namespace OpenTK.Platform.Native.X11
             XCursor cursor = XCreateFontCursor(X11.Display, shape);
 
             xcursor.Cursor = cursor;
+            xcursor.Mode = XCursorHandle.CursorMode.SystemCursor;
+
+            return xcursor;
         }
 
-        public void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
+        // FIXME: Save size and hotspot for image cursors so we can return them later.
+        // FIXME: Separate system and image cursors.
+
+        /// <inheritdoc />
+        public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = new XCursorHandle();
+
+            XcursorImage* ximage = XcursorImageCreate(width, height);
+
+            ximage->xhot = (uint)hotspotX;
+            ximage->yhot = (uint)hotspotY;
+
+            // FIXME: Figure out if this copy is correct.
+            Unsafe.CopyBlock(ref Unsafe.AsRef<byte>(ximage->pixels), ref MemoryMarshal.GetReference(image), (uint)image.Length);
+
+            xcursor.Cursor = XcursorImageLoadCursor(X11.Display, ximage);
+            XcursorImageDestroy(ximage);
+
+            xcursor.Mode = XCursorHandle.CursorMode.ImageCursor;
+            xcursor.Width = width;
+            xcursor.Height = height;
+            xcursor.HotspotX = hotspotX;
+            xcursor.HotspotY = hotspotY;
+
+            return xcursor;
         }
 
-        public unsafe void Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
+        /// <inheritdoc />
+        public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
-            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
-
-            Destroy(xcursor);
+            XCursorHandle xcursor = new XCursorHandle();
 
             byte[] mask = new byte[maskData.Length / 8];
             for (int i = 0; i < maskData.Length; i++)
@@ -165,37 +178,75 @@ namespace OpenTK.Platform.Native.X11
                 pixmap = XCreateBitmapFromData(X11.Display, X11.DefaultRootWindow, maskPtr, width, height);
             }
 
+            // FIXME: Color?
             XColor color;
             color.red = 255;
             color.green = 128;
             color.blue = 64;
             color.flags = XColorFlags.DoRed | XColorFlags.DoGreen | XColorFlags.DoBlue;
 
-            XCursor cursor = XCreatePixmapCursor(X11.Display, pixmap, pixmap, &color, &color, 0, 0);
+            XCursor cursor = XCreatePixmapCursor(X11.Display, pixmap, pixmap, &color, &color, hotspotX, hotspotY);
+            XFreePixmap(X11.Display, pixmap);
 
             xcursor.Cursor = cursor;
+            xcursor.Mode = XCursorHandle.CursorMode.ImageCursor;
+            xcursor.Width = width;
+            xcursor.Height = height;
+            xcursor.HotspotX = hotspotX;
+            xcursor.HotspotY = hotspotY;
 
-            XFreePixmap(X11.Display, pixmap);
+            return xcursor;
         }
 
-        public void Load(CursorHandle handle, string file)
+        /// <inheritdoc />
+        public void Destroy(CursorHandle handle)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            // FIXME: Don't destroy system cursors?
+            if (xcursor.Cursor != XCursor.None)
+            {
+                XFreeCursor(X11.Display, xcursor.Cursor);
+            }
+
+            xcursor.Cursor = XCursor.None;
+            xcursor.Mode = XCursorHandle.CursorMode.Uninitialized;
         }
 
-        public void Load(CursorHandle handle, Stream stream)
+        /// <inheritdoc />
+        public bool IsSystemCursor(CursorHandle handle)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            return xcursor.Mode == XCursorHandle.CursorMode.SystemCursor;
         }
 
-        public void SetHotspot(CursorHandle handle, int x, int y)
+        /// <inheritdoc />
+        public unsafe void GetSize(CursorHandle handle, out int width, out int height)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            if (xcursor.Mode == XCursorHandle.CursorMode.SystemCursor)
+            {
+                throw new InvalidOperationException("X11 backend cannot get the size of a system cursor.");    
+            }
+            
+            width = xcursor.Width;
+            height = xcursor.Height;
         }
 
-        public void SetScale(CursorHandle handle, float horizontal, float vertical)
+        /// <inheritdoc />
+        public void GetHotspot(CursorHandle handle, out int x, out int y)
         {
-            throw new NotImplementedException();
+            XCursorHandle xcursor = handle.As<XCursorHandle>(this);
+
+            if (xcursor.Mode == XCursorHandle.CursorMode.SystemCursor)
+            {
+                throw new InvalidOperationException("X11 backend cannot get the hotspot of a system cursor.");
+            }
+
+            x = xcursor.HotspotX;
+            y = xcursor.HotspotY;
         }
     }
 }

@@ -1,9 +1,23 @@
 namespace OpenTK.Core.Platform
 {
+    /// <summary>
+    /// OpenGL Profile.
+    /// </summary>
     public enum OpenGLProfile
     {
+        /// <summary>
+        /// No OpenGL profile.
+        /// </summary>
         None,
+
+        /// <summary>
+        /// OpenGL Core profile.
+        /// </summary>
         Core,
-        Compatibility
+
+        /// <summary>
+        /// OpenGL Compatibility profile.
+        /// </summary>
+        Compatibility,
     }
 }

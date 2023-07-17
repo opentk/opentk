@@ -45,7 +45,7 @@ namespace OpenTK.Platform.Native
             {
                 "libGL.so",
                 "libGL.so.1",
-                "libGL.so.0"
+                "libGL.so.0",
             },
 
             // FIXME: By default let the OS decide, if that fails use vendor. Add other vendor GLX versions.
@@ -55,7 +55,7 @@ namespace OpenTK.Platform.Native
                 "libGLX.so.0",
                 "libGLX_nvidia.so.1",
                 "libGLX_nvidia.so.0",
-                "libGLX_mesa.so.0"
+                "libGLX_mesa.so.0",
             },
 
             ["X11"] = new string[]
@@ -67,7 +67,30 @@ namespace OpenTK.Platform.Native
                 "libX11.so.3",
                 "libX11.so.2",
                 "libX11.so.1",
-                "libX11.so.0"
+                "libX11.so.0",
+            },
+
+            ["XFixes"] = new string[]
+            {
+                "libXfixes.so",
+                "libXfixes.so.5",
+                "libXfixes.so.4",
+                "libXfixes.so.3",
+                "libXfixes.so.2",
+                "libXfixes.so.1",
+            },
+
+            ["Xcursor"] = new string[]
+            {
+                "libXcursor.so",
+                "libXcursor.so.1",
+            },
+
+            ["SDL2"] = new string[]
+            {
+                "libSDL2-2.0.so",
+                // FIXME: Complete this list with a more comprehensive collection of names.
+                "libSDL2-2.0.so.0.2600.5",
             }
         };
     }

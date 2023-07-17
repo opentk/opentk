@@ -32,6 +32,7 @@ namespace OpenTK.Core.Platform
         /// <param name="width">The width of the bitmap.</param>
         /// <param name="height">The height of the bitmap.</param>
         /// <param name="data">The pixel data of the bitmap.</param>
+        // FIXME: Document the format of the data!
         public Bitmap(int width, int height, byte[] data)
         {
             if (width * height * 4 > data.Length)

@@ -11,12 +11,16 @@ namespace OpenTK.Platform.Native.X11
 {
     public partial class X11OpenGLComponent : IOpenGLComponent
     {
+        /// <inheritdoc />
         public string Name => "X11OpenGLComponent";
 
+        /// <inheritdoc />
         public PalComponents Provides => PalComponents.OpenGL;
 
+        /// <inheritdoc />
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc />
         public void Initialize(PalComponents which)
         {
             if (!glXQueryExtension(X11.Display, out int errorBase, out int eventBase))
@@ -96,8 +100,13 @@ namespace OpenTK.Platform.Native.X11
             );
         }
 
+        /// <inheritdoc />
         public bool CanShareContexts => false;
+
+        /// <inheritdoc />
         public bool CanCreateFromWindow => true;
+
+        /// <inheritdoc />
         public bool CanCreateFromSurface => false;
 
         public Version GLXVersion { get; private set; }
@@ -109,18 +118,20 @@ namespace OpenTK.Platform.Native.X11
         public Version? GLXServerVersion { get; private set; }
         public Version? GLXClientVersion { get; private set; }
 
-        private static Dictionary<GLXContext, XOpenGLContextHandle> s_handles = new Dictionary<GLXContext, XOpenGLContextHandle>();
+        private static Dictionary<GLXContext, XOpenGLContextHandle> contextDict = new Dictionary<GLXContext, XOpenGLContextHandle>();
 
         private delegate IntPtr glXGetProcAddressProc(string procName);
 
         private glXGetProcAddressProc s_glXGetProcAddress = null;
         private glXCreateContextAttribARBProc s_glXCreateContextAttribARB = null;
 
+        /// <inheritdoc />
         public OpenGLContextHandle CreateFromSurface()
         {
             throw new PalNotImplementedException(this);
         }
 
+        /// <inheritdoc />
         public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
             XWindowHandle window = handle.As<XWindowHandle>(this);
@@ -161,22 +172,25 @@ namespace OpenTK.Platform.Native.X11
 
             XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, window.Window, sharedContext);
 
-            s_handles[contextHandle.Context] = contextHandle;
+            contextDict[contextHandle.Context] = contextHandle;
 
             return contextHandle;
         }
 
+        /// <inheritdoc />
         public void DestroyContext(OpenGLContextHandle handle)
         {
             var xhandle = handle.As<XOpenGLContextHandle>(this);
             glXDestroyContext(xhandle.Display, xhandle.Context);
         }
 
+        /// <inheritdoc />
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
             return new Pal2BindingsContext(this, handle);
         }
 
+        /// <inheritdoc />
         public IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             XOpenGLContextHandle xhandle = handle.As<XOpenGLContextHandle>(this);
@@ -184,13 +198,15 @@ namespace OpenTK.Platform.Native.X11
             return s_glXGetProcAddress(procedureName);
         }
 
+        /// <inheritdoc />
         public OpenGLContextHandle? GetCurrentContext()
         {
             GLXContext context = glXGetCurrentContext();
 
-            return context.Value != IntPtr.Zero ? s_handles[context] : null;
+            return context.Value != IntPtr.Zero ? contextDict[context] : null;
         }
 
+        /// <inheritdoc />
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
             XOpenGLContextHandle? xhandle = handle?.As<XOpenGLContextHandle>(this);
@@ -205,11 +221,37 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc />
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
             return handle.As<XOpenGLContextHandle>(this).SharedContext;
         }
 
+        /// <summary>
+        /// Queries EXT_swap_control for the max supported swap interval.
+        /// This function returns <c>null</c> if EXT_swap_control is not supported.
+        /// </summary>
+        public int? EXT_swap_control_GetMaxSwapInterval()
+        {
+            if (GLXExtensions.Contains("GLX_EXT_swap_control"))
+            {
+                XOpenGLContextHandle? context = GetCurrentContext() as XOpenGLContextHandle;
+                if (context == null)
+                {
+                    throw new InvalidOperationException("No context bound. Can't set swap interval.");
+                }
+
+                glXQueryDrawable(X11.Display, context.Drawable, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
+
+                return (int)max_interval;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <inheritdoc />
         public void SetSwapInterval(int interval)
         {
             XOpenGLContextHandle? context = GetCurrentContext() as XOpenGLContextHandle;
@@ -220,7 +262,6 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_EXT_swap_control"))
             {
-                // FIXME: API for getting the maximum supported interval instead!
                 glXQueryDrawable(X11.Display, context.Drawable, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
                 if (interval > max_interval)
                 {
@@ -235,7 +276,7 @@ namespace OpenTK.Platform.Native.X11
                 int status = glXSwapIntervalMESA((uint)interval);
                 if (status != 0)
                 {
-                    // FAILED!
+                    Logger?.LogWarning($"glXSwapIntervalMESA failed with: {status}");
                 }
             }
             else if (GLXExtensions.Contains("GLX_SGI_swap_control"))
@@ -243,7 +284,7 @@ namespace OpenTK.Platform.Native.X11
                 int status = glXSwapIntervalSGI(interval);
                 if (status != 0)
                 {
-                    // FAILED!
+                    Logger?.LogWarning($"glXSwapIntervalSGI failed with: {status}");
                 }
                 else
                 {
@@ -256,6 +297,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc />
         public int GetSwapInterval()
         {
             XOpenGLContextHandle? context = GetCurrentContext() as XOpenGLContextHandle;

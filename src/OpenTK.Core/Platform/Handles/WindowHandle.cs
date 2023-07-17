@@ -7,6 +7,11 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public abstract class WindowHandle : PalHandle
     {
-        public GraphicsApiHints? GraphicsApiHints { get; protected set; }
+        public GraphicsApiHints GraphicsApiHints { get; protected set; }
+
+        public WindowHandle(GraphicsApiHints graphicsApiHints)
+        {
+            GraphicsApiHints = graphicsApiHints;
+        }
     }
 }

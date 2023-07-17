@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace OpenTK.Platform.Native.Windows
 {
     internal enum WindowState
@@ -17,7 +15,7 @@ namespace OpenTK.Platform.Native.Windows
         Minimized,
     }
 
-#pragma warning disable SA1649 // File name should match first type name
+
     internal class HWND : WindowHandle
     {
         public IntPtr HWnd { get; private set; }
@@ -43,12 +41,16 @@ namespace OpenTK.Platform.Native.Windows
 
         public CursorCaptureMode CaptureMode { get; set; } = CursorCaptureMode.Normal;
         public Vector2i LastMousePosition { get; set; }
-        public Vector2 VirtualMousePosition { get; set; }
+        public Vector2 VirtualCursorPosition { get; set; }
 
-        public HWND(IntPtr hWnd, GraphicsApiHints hints)
+        public HMonitor? FullscreenMonitor { get; set; }
+        public bool ExclusiveFullscreen { get; set; }
+        public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }
+        public WindowBorderStyle PreviousBorderStyle { get; set; } = WindowBorderStyle.ResizableBorder;
+
+        public HWND(IntPtr hWnd, GraphicsApiHints hints) : base(hints)
         {
             HWnd = hWnd;
-            GraphicsApiHints = hints;
         }
     }
 
@@ -73,10 +75,6 @@ namespace OpenTK.Platform.Native.Windows
     internal class HCursor : CursorHandle
     {
         public IntPtr Cursor { get; set; }
-
-        public int HotSpotX { get; set; }
-
-        public int HotSpotY { get; set; }
 
         public CursorMode Mode { get; set; } = CursorMode.Uninitialized;
 
@@ -116,7 +114,7 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr Monitor { get; set; }
 
-        public string Name { get; set; }
+        public string DeviceName { get; set; }
 
         public string AdapterName { get; set; }
 
@@ -132,9 +130,26 @@ namespace OpenTK.Platform.Native.Windows
 
         public int RefreshRate { get; set; }
 
+        public int BitsPerPixel { get; set; }
+
         public int DpiX { get; set; }
 
         public int DpiY { get; set; }
     }
-#pragma warning restore SA1649 // File name should match first type name
+
+    internal class Joystick : JoystickHandle
+    {
+        public int XInputIndex;
+
+        public DirectInput.IDirectInputDevice8 Device;
+        public Guid InstanceGuid;
+        public string InstanceName;
+
+        public Joystick(DirectInput.IDirectInputDevice8 device, Guid instanceGuid, string instanceName)
+        {
+            Device = device;
+            InstanceGuid = instanceGuid;
+            InstanceName = instanceName;
+        }
+    }
 }

@@ -809,6 +809,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 GetBooleanv(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetBooleanv"/>
+        public static unsafe bool GetBoolean(GetPName pname)
+        {
+            bool data_val = default;
+            bool* data = &data_val;
+            GetBooleanv(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetBufferParameteriv"/>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, Span<int> parameters)
         {
@@ -857,6 +865,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 GetFloatv(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetFloatv"/>
+        public static unsafe float GetFloat(GetPName pname)
+        {
+            float data_val = default;
+            float* data = &data_val;
+            GetFloatv(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetFramebufferAttachmentParameteriv"/>
         public static unsafe void GetFramebufferAttachmentParameteri(FramebufferTarget target, FramebufferAttachment attachment, FramebufferAttachmentParameterName pname, Span<int> parameters)
         {
@@ -904,6 +920,14 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 GetIntegerv(pname, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetIntegerv"/>
+        public static unsafe int GetInteger(GetPName pname)
+        {
+            int data_val = default;
+            int* data = &data_val;
+            GetIntegerv(pname, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetProgramiv"/>
         public static unsafe void GetProgrami(int program, ProgramPropertyARB pname, Span<int> parameters)
@@ -2727,6 +2751,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 GetIntegeri_v(target, index, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetIntegeri_v"/>
+        public static unsafe int GetInteger(GetPName target, uint index)
+        {
+            int data_val = default;
+            int* data = &data_val;
+            GetIntegeri_v(target, index, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetTransformFeedbackVarying"/>
         public static unsafe string GetTransformFeedbackVarying(int program, uint index, int bufSize, Span<int> length, Span<int> size, Span<AttributeType> type)
         {
@@ -3329,6 +3361,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 GetInteger64v(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetInteger64v"/>
+        public static unsafe long GetInteger64(GetPName pname)
+        {
+            long data_val = default;
+            long* data = &data_val;
+            GetInteger64v(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetSynciv"/>
         public static unsafe void GetSynci(GLSync sync, SyncParameterName pname, Span<int> length, Span<int> values)
         {
@@ -3385,6 +3425,14 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 GetInteger64i_v(target, index, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetInteger64i_v"/>
+        public static unsafe long GetInteger64(GetPName target, uint index)
+        {
+            long data_val = default;
+            long* data = &data_val;
+            GetInteger64i_v(target, index, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetBufferParameteri64v"/>
         public static unsafe void GetBufferParameteri64(BufferTargetARB target, BufferPNameARB pname, Span<long> parameters)
@@ -5013,6 +5061,14 @@ namespace OpenTK.Graphics.OpenGLES3
             {
                 GetBooleani_v(target, index, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetBooleani_v"/>
+        public static unsafe bool GetBoolean(BufferTargetARB target, uint index)
+        {
+            bool data_val = default;
+            bool* data = &data_val;
+            GetBooleani_v(target, index, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetMultisamplefv"/>
         public static unsafe void GetMultisamplef(GetMultisamplePNameNV pname, uint index, Span<float> val)
@@ -6795,6 +6851,14 @@ namespace OpenTK.Graphics.OpenGLES3
                     GetInteger64vEXT(pname, data_ptr);
                 }
             }
+            /// <inheritdoc cref="GetInteger64vEXT"/>
+            public static unsafe long GetInteger64vEXT(GetPName pname)
+            {
+                long data_val = default;
+                long* data = &data_val;
+                GetInteger64vEXT(pname, data);
+                return data_val;
+            }
             /// <inheritdoc cref="DrawBuffersEXT"/>
             public static unsafe void DrawBuffersEXT(ReadOnlySpan<All> bufs)
             {
@@ -7226,6 +7290,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 {
                     GetIntegeri_vEXT(target, index, data_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetIntegeri_vEXT"/>
+            public static unsafe int GetIntegeri_vEXT(GetPName target, uint index)
+            {
+                int data_val = default;
+                int* data = &data_val;
+                GetIntegeri_vEXT(target, index, data);
+                return data_val;
             }
             /// <inheritdoc cref="ReadnPixelsEXT"/>
             public static unsafe void ReadnPixelsEXT(int x, int y, int width, int height, PixelFormat format, PixelType type, int bufSize, IntPtr data)
@@ -11096,6 +11168,14 @@ namespace OpenTK.Graphics.OpenGLES3
                     GetFloati_vNV(target, index, data_ptr);
                 }
             }
+            /// <inheritdoc cref="GetFloati_vNV"/>
+            public static unsafe float GetFloati_vNV(GetPName target, uint index)
+            {
+                float data_val = default;
+                float* data = &data_val;
+                GetFloati_vNV(target, index, data);
+                return data_val;
+            }
         }
         public static unsafe partial class IMG
         {
@@ -12933,6 +13013,14 @@ namespace OpenTK.Graphics.OpenGLES3
                 {
                     GetFloati_vOES(target, index, data_ptr);
                 }
+            }
+            /// <inheritdoc cref="GetFloati_vOES"/>
+            public static unsafe float GetFloati_vOES(GetPName target, uint index)
+            {
+                float data_val = default;
+                float* data = &data_val;
+                GetFloati_vOES(target, index, data);
+                return data_val;
             }
         }
         public static unsafe partial class OVR

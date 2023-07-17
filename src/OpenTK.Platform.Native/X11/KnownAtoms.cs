@@ -7,6 +7,7 @@ namespace OpenTK.Platform.Native.X11
         #region Common Property Types
         ATOM,
         CARDINAL,
+        STRING,
         UTF8_STRING,
         WINDOW,
         #endregion
@@ -19,6 +20,14 @@ namespace OpenTK.Platform.Native.X11
         WM_STATE,
         WM_CHANGE_STATE,
         WM_NAME,
+        WM_NORMAL_HINTS,
+
+        PRIMARY,
+        SECONDARY,
+        CLIPBOARD,
+        INCR,
+        TARGETS,
+        MULTIPLE,
         #endregion
 
         #region Freedesktop Atoms
@@ -101,6 +110,12 @@ namespace OpenTK.Platform.Native.X11
         _NET_WM_FULLSCREEN_MONITORS,
         _NET_WM_FULL_PLACEMENT,
         #endregion
+
+        #region Motif
+        _MOTIF_WM_HINTS,
+        #endregion
+
+        EDID,
 
         /// <summary>
         /// This is not a valid known atom name, however it is used for internal verification.

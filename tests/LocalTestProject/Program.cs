@@ -9,10 +9,9 @@ using System.Text;
 using System.Diagnostics;
 using OpenTK.Core.Utility;
 using OpenTK;
-using OpenTK.Core.Platform.Interfaces;
 using System;
 using System.Collections.Generic;
-using OpenTK.Core.Platform.Enums;
+using System.Linq;
 
 namespace LocalTestProject
 {
@@ -40,6 +39,8 @@ namespace LocalTestProject
 
         static IShellComponent shellComp = new ShellComponent();
 
+        static IJoystickComponent joystickComponent = new JoystickComponent();
+
         static CursorHandle CursorHandle;
         static CursorHandle ImageCursorHandle;
         static CursorHandle FileCursorHandle;
@@ -60,6 +61,7 @@ namespace LocalTestProject
             dispComp.Logger = logger;
             keyboardComp.Logger = logger;
             clipComp.Logger = logger;
+            joystickComponent.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
@@ -75,29 +77,28 @@ namespace LocalTestProject
 
             shellComp.Initialize(PalComponents.Shell);
 
-            Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout()}");
+            joystickComponent.Initialize(PalComponents.Joystick);
+
+            Console.WriteLine($"Current Keyboard Layout name: {keyboardComp.GetActiveKeyboardLayout(null)}");
 
             Console.WriteLine($"Available Keyboard Layouts:\n  {string.Join("\n  ", keyboardComp.GetAvailableKeyboardLayouts())}");
 
             {
-                PrimaryDisplayHandle = dispComp.CreatePrimary();
+                PrimaryDisplayHandle = dispComp.OpenPrimary();
                 string name = dispComp.GetName(PrimaryDisplayHandle);
                 dispComp.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
                 dispComp.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
                 Console.WriteLine($"Primary monitor name: {name}");
-                Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
-                Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
-                Console.WriteLine($"  Scale: {videoMode.Scale}");
-                Console.WriteLine($"  Dpi: {videoMode.Dpi}");
-                Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+                Console.WriteLine($"  {videoMode}");
+                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
 
-                int modeCount = dispComp.GetSupportedVideoModeCount(PrimaryDisplayHandle);
+                int modeCount = dispComp.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
 
                 if (dispComp.GetDisplayCount() > 1)
                 {
-                    var secondaryHandle = dispComp.Create(1);
-                    modeCount = dispComp.GetSupportedVideoModeCount(secondaryHandle);
+                    var secondaryHandle = dispComp.Open(1);
+                    modeCount = dispComp.GetSupportedVideoModes(secondaryHandle).Length;
                     Console.WriteLine($"Secondary monitor supports {modeCount} video modes.");
                 }
                 
@@ -107,17 +108,14 @@ namespace LocalTestProject
             Console.WriteLine($"Monitors: {dispComp.GetDisplayCount()}");
             for (int i = 0; i < dispComp.GetDisplayCount(); i++)
             {
-                DisplayHandle disp = dispComp.Create(i);
+                DisplayHandle disp = dispComp.Open(i);
 
                 string name = dispComp.GetName(disp);
                 dispComp.GetVideoMode(disp, out VideoMode videoMode);
                 dispComp.GetDisplayScale(disp, out float scaleX, out float scaleY);
                 Console.WriteLine($"Primary monitor name: {name}");
-                Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
-                Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
-                Console.WriteLine($"  Scale: {videoMode.Scale}");
-                Console.WriteLine($"  Dpi: {videoMode.Dpi}");
-                Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+                Console.WriteLine($"  {videoMode}");
+                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -182,13 +180,11 @@ namespace LocalTestProject
             glComp.SetCurrentContext(WindowContext);
             GLLoader.LoadBindings(glComp.GetBindingsContext(WindowContext));
 
-            CursorHandle = cursorComp.Create();
-            cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+            CursorHandle = cursorComp.Create(SystemCursorType.TextBeam);
             cursorComp.GetSize(CursorHandle, out _, out _);
             windowComp.SetCursor(WindowHandle, CursorHandle);
             windowComp.SetCursor(WindowHandle2, CursorHandle);
 
-            ImageCursorHandle = cursorComp.Create();
             byte[] image = new byte[16 * 16 * 3];
             byte[] mask = new byte[16 * 16 * 1];
             for (int ccx = 0; ccx < 16; ccx++)
@@ -204,9 +200,8 @@ namespace LocalTestProject
                     mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
                 }
             }
-            cursorComp.SetHotspot(ImageCursorHandle, 8, 8);
-            cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
-            windowComp.SetCursor(WindowHandle, ImageCursorHandle);
+            ImageCursorHandle = cursorComp.Create(16, 16, image, mask, 8, 8);
+            windowComp.SetCursor(WindowHandle2, ImageCursorHandle);
 
             {
                 byte[] icon = new byte[16 * 16 * 4];
@@ -216,33 +211,84 @@ namespace LocalTestProject
                     {
                         int index = (ccy * 16 + ccx) * 4;
 
-                        icon[index + 0] = (byte)(ccx * 16);
-                        icon[index + 1] = (byte)(ccx * 16);
-                        icon[index + 2] = (byte)(ccx * 16);
+                        if (ccx < 5)
+                        {
+                            icon[index + 0] = 255;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 0;
+                        }
+                        else if (ccx < 10)
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 255;
+                            icon[index + 2] = 0;
+                        }
+                        else
+                        {
+                            icon[index + 0] = 0;
+                            icon[index + 1] = 0;
+                            icon[index + 2] = 255;
+                        }
+
+                        //icon[index + 0] = (byte)(ccx * 16);
+                        //icon[index + 1] = (byte)(ccx * 16);
+                        //icon[index + 2] = (byte)(ccx * 16);
                         icon[index + 3] = 255;
+                        if (ccy < 5) icon[index + 3] = 50;
                     }
                 }
 
-                IconHandle = iconComp.Create();
-                iconComp.Load(IconHandle, 16, 16, icon);
+                IconHandle = iconComp.Create(16, 16, icon);
 
                 windowComp.SetIcon(WindowHandle, IconHandle);
+
+                // FIXME: Make reading icon data backend specific?
+                {
+                    iconComp.GetSize(IconHandle, out int iw, out int ih);
+
+                    int bytes = ((IconComponent)iconComp).GetBitmapByteSize(IconHandle);
+                    byte[] data = new byte[bytes];
+
+                    ((IconComponent)iconComp).GetBitmapData(IconHandle, data);
+
+                    Debug.Assert(iw == 16);
+                    Debug.Assert(ih == 16);
+                    Debug.Assert(bytes == 1024);
+                    Debug.Assert(data.SequenceEqual(icon));
+                }
             }
 
             {
-                IconHandle2 = iconComp.Create();
-                iconComp.Load(IconHandle2, "Wikipedia-Flags-UN-United-Nations-Flag.ico");
-
+                IconHandle2 = (iconComp as IconComponent)?.CreateFromIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
+                                iconComp.Create(SystemIconType.Default);
+                
                 windowComp.SetIcon(WindowHandle2, IconHandle2);
             }
 
-            FileCursorHandle = cursorComp.Create();
-            cursorComp.Load(FileCursorHandle, "Cute Light Green Normal Select.cur");
+            FileCursorHandle = (cursorComp as CursorComponent)?.CreateFromCurFile("Cute Light Green Normal Select.cur") ??
+                                cursorComp.Create(SystemCursorType.Default);
+
             windowComp.SetCursor(WindowHandle, FileCursorHandle);
 
             {
                 cursorComp.GetSize(ImageCursorHandle, out int curW, out int curH);
                 Console.WriteLine($"Width: {curW}, Height: {curH}");
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                var handle = joystickComponent.Open(i);
+
+                if (joystickComponent.TryGetBatteryInfo(handle, out GamepadBatteryInfo info))
+                {
+                    Console.WriteLine($"Gamepad {i+1}: {info.BatteryType} {info.ChargeLevel*100}%");
+                }
+                else
+                {
+                    Console.WriteLine($"Could not get battery info for gamepad {i+1}");
+                }
+
+                joystickComponent.Close(handle);
             }
 
             Init();
@@ -271,22 +317,20 @@ namespace LocalTestProject
             windowComp.SetSize(handle, width, height);
             //windowComp.SetPosition(handle, 100, 100);
 
-            windowComp.SetBorderStyle(handle, WindowStyle.Borderless);
-            WindowStyle border = windowComp.GetBorderStyle(handle);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.Borderless);
+            WindowBorderStyle border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowStyle.FixedBorder);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowStyle.ResizableBorder);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.ResizableBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
-
-            windowComp.SetCursorCaptureMode(handle, CursorCaptureMode.Confined);
         }
 
-        static List<ulong> vks = new List<ulong>();
+        static List<Scancode> vks = new List<Scancode>();
 
         static Vector2 MousePos = (0, 0);
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
@@ -372,24 +416,45 @@ namespace LocalTestProject
             {
                 FileDropEventArgs fileDrop = (FileDropEventArgs)args;
 
-                Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, In Window: {fileDrop.DroppedInWindow}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
+                Console.WriteLine($"Files dropped! Position: {fileDrop.Position}, Paths: {string.Join(", ", fileDrop.FilePaths)}");
             }
             else if (type == PlatformEventType.KeyDown)
             {
                 KeyDownEventArgs keyDown = (KeyDownEventArgs)args;
 
-                if (keyDown.WasDown == false)
-                    vks.Add(keyDown.VirtualKey);
+                Console.WriteLine($"keyDown: {keyDown.Key}");
 
-                if (keyDown.VirtualKey == 'C')
+                if (keyDown.IsRepeat == false)
+                    vks.Add(keyDown.Scancode);
+
+                if (keyDown.Key == Key.F11)
+                {
+                    // FIXME: What does bpp=32 compared to bpp=24?
+                    VideoMode mode = new VideoMode(1920, 1080, 144, 32);
+
+                    if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    {
+                        windowComp.SetMode(keyDown.Window, WindowMode.Normal);
+                    }
+                    else
+                    {
+                        windowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
+                    }
+                }
+                else if (keyDown.Key == Key.M)
+                {
+                    windowComp.GetFullscreenDisplay(keyDown.Window, out var display);
+                    Console.WriteLine($"Current fullscreen display: {(display != null ? dispComp.GetName(display) : "null")}");
+                }
+                else if (keyDown.Key == Key.C)
                 {
                     clipComp.SetClipboardText("Copy");
                 }
-                else if (keyDown.VirtualKey == 'V')
+                else if (keyDown.Key == Key.V)
                 {
                     clipComp.SetClipboardText("Paste");
                 }
-                else if (keyDown.VirtualKey == 'A')
+                else if (keyDown.Key == Key.A)
                 {
                     AudioData data = new AudioData();
                     data.SampleRate = 44100;
@@ -408,7 +473,7 @@ namespace LocalTestProject
 
                     ((ClipboardComponent)clipComp).SetClipboardAudio(data);
                 }
-                else if (keyDown.VirtualKey == 'B')
+                else if (keyDown.Key == Key.B)
                 {
                     const int W = 600;
                     const int H = 600;
@@ -467,7 +532,7 @@ namespace LocalTestProject
 
                     ((ClipboardComponent)clipComp).SetClipboardBitmap(bitmap);
                 }
-                else if (keyDown.VirtualKey == 'P')
+                else if (keyDown.Key == Key.P)
                 {
                     ClipboardFormat format = clipComp.GetClipboardFormat();
                     Console.WriteLine($"Clipboard format: {format}");
@@ -535,7 +600,7 @@ namespace LocalTestProject
                             break;
                     }
                 }
-                else if (keyDown.VirtualKey == 'D')
+                else if (keyDown.Key == Key.D)
                 {
                     DisplayHandle disp = windowComp.GetDisplay(WindowHandle);
                     bool isPrimary = dispComp.IsPrimary(disp);
@@ -546,12 +611,12 @@ namespace LocalTestProject
                     
                     Console.WriteLine($"Window is on monitor '{name}', primary: {isPrimary}, res: ({resX}x{resY}, refresh rate: {refreshRate:0.})");
                 }
-                else if (keyDown.VirtualKey == 'S')
+                else if (keyDown.Key == Key.S)
                 {
                     windowComp.GetClientSize(WindowHandle, out int width, out int height);
                     Console.WriteLine($"Window 1 client size: ({width}, {height})");
                 }
-                else if (keyDown.VirtualKey == 'Q')
+                else if (keyDown.Key == Key.Q)
                 {
                     BatteryStatus status = shellComp.GetBatteryInfo(out BatteryInfo info);
                     switch (status)
@@ -568,6 +633,25 @@ namespace LocalTestProject
                             break;
                     }
                 }
+                else if (keyDown.Key == Key.M)
+                {
+                    
+
+                    var style = windowComp.GetBorderStyle(WindowHandle);
+                    Console.WriteLine($"Before: {style}");
+                    style += 1;
+                    style = (WindowBorderStyle)((int)style % 4);
+
+                    windowComp.SetBorderStyle(WindowHandle, style);
+
+                    Console.WriteLine($"After: {style}, Result: {windowComp.GetBorderStyle(WindowHandle)}");
+                }
+            }
+            else if (type == PlatformEventType.KeyUp)
+            {
+                KeyUpEventArgs keyUp = (KeyUpEventArgs)args;
+
+                Console.WriteLine($"keyUp: {keyUp.Key}");
             }
             else if (type == PlatformEventType.WindowMove)
             {
@@ -586,6 +670,24 @@ namespace LocalTestProject
                 WindowModeChangeEventArgs modeChange = (WindowModeChangeEventArgs)args;
 
                 Console.WriteLine($"Window '{windowComp.GetTitle(modeChange.Window)}' new mode: ({modeChange.NewMode})");
+            }
+            else if (type == PlatformEventType.PowerStateChange)
+            {
+                PowerStateChangeEventArgs powerStateChange = (PowerStateChangeEventArgs)args;
+
+                if (powerStateChange.GoingToSleep)
+                {
+                    Console.WriteLine("Going to sleep?");
+                }
+                else
+                {
+                    Console.WriteLine("Waking up?");
+                }
+            }
+            else if (type == PlatformEventType.ClipboardUpdate)
+            {
+                ClipboardUpdateEventArgs clipboardUpdate = (ClipboardUpdateEventArgs)args;
+                Console.WriteLine($"Clipboard update! New format: {clipboardUpdate.NewFormat}");
             }
         }
 
@@ -632,7 +734,7 @@ void main()
             cursorComp.GetSize(handle, out int width, out int height);
             byte[] data = new byte[width * height * 4];
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            cursorComp.GetImage(handle, data);
+            ((CursorComponent)cursorComp).GetImage(handle, data);
 
             for (int i = 0; i < width * height; i++)
             {
@@ -662,13 +764,13 @@ void main()
 
         public static int GetIconImage(IconHandle handle)
         {
-            int size = iconComp.GetBitmapSize(handle);
+            int size = ((IconComponent)iconComp).GetBitmapByteSize(handle);
             byte[] data = new byte[size];
             
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            iconComp.GetBitmap(handle, data);
+            ((IconComponent)iconComp).GetBitmapData(handle, data);
 
-            iconComp.GetDimensions(handle, out int width, out int height);
+            iconComp.GetSize(handle, out int width, out int height);
 
             int tex = GL.GenTexture();
 
@@ -839,6 +941,77 @@ void main()
         {
             float deltaTime = watch.ElapsedTicks / (float)Stopwatch.Frequency;
             watch.Restart();
+
+            for (int i = 0; i < 4; i++)
+            {
+                int player = i + 1;
+                JoystickHandle handle = joystickComponent.Open(i);
+
+                float leftX = joystickComponent.GetAxis(handle, JoystickAxis.LeftXAxis);
+                float leftY = joystickComponent.GetAxis(handle, JoystickAxis.LeftYAxis);
+                float rightX = joystickComponent.GetAxis(handle, JoystickAxis.RightXAxis);
+                float rightY = joystickComponent.GetAxis(handle, JoystickAxis.RightYAxis);
+                float triggerLeft = joystickComponent.GetAxis(handle, JoystickAxis.LeftTrigger);
+                float triggerRight = joystickComponent.GetAxis(handle, JoystickAxis.RightTrigger);
+
+                if (MathF.Abs(leftX) < joystickComponent.LeftDeadzone)
+                    leftX = 0;
+
+                if (MathF.Abs(leftY) < joystickComponent.LeftDeadzone)
+                    leftY = 0;
+
+                if (MathF.Abs(rightX) < joystickComponent.RightDeadzone)
+                    rightX = 0;
+
+                if (MathF.Abs(rightY) < joystickComponent.RightDeadzone)
+                    rightY = 0;
+
+                if (triggerLeft < joystickComponent.TriggerThreshold)
+                    triggerLeft = 0;
+
+                if (triggerRight < joystickComponent.TriggerThreshold)
+                    triggerRight = 0;
+
+                Vector2 left = (leftX, leftY);
+                Vector2 right = (rightX, rightY);
+
+                if (left.Length > 0)
+                {
+                    Console.WriteLine($"Player {player} Left: {left}");
+                }
+
+                if (right.Length > 0)
+                {
+                    Console.WriteLine($"Player {player} Right: {right}");
+                }
+
+                if (triggerLeft > 0)
+                {
+                    Console.WriteLine($"Player {player} Trigger left: {triggerLeft}");
+                }
+
+                if (triggerRight > 0)
+                {
+                    Console.WriteLine($"Player {player} Trigger right: {triggerRight}");
+                }
+
+                foreach (JoystickButton button in Enum.GetValues<JoystickButton>())
+                {
+                    if (joystickComponent.GetButton(handle, button))
+                    {
+                        Console.WriteLine($"Player {player} Button {button}");
+                    }
+                }
+
+                if (triggerLeft > 0 || triggerRight > 0)
+                {
+                    Console.WriteLine($"Supports FFB: {(joystickComponent as JoystickComponent)?.SupportsForceFeedback(handle)}");
+                }
+                
+                joystickComponent.SetVibration(handle, triggerLeft, triggerRight);
+
+                joystickComponent.Close(handle);
+            }
 
             time += deltaTime;
             frames++;
