@@ -418,6 +418,9 @@ namespace OpenTK.Windowing.Desktop
         /// This function is useful when implementing updates on resize using windows.
         /// </summary>
         /// <returns>The time since the last update.</returns>
+        /// <remarks>
+        /// Don't use this in <see cref="OnUpdateFrame(FrameEventArgs)"/> or <see cref="OnRenderFrame(FrameEventArgs)"/>, instead use <see cref="FrameEventArgs.Time"/>.
+        /// </remarks>
         public double TimeSinceLastUpdate()
         {
             return (float)_watchUpdate.Elapsed.TotalSeconds;
