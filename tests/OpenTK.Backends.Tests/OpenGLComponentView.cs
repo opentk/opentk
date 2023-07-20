@@ -1,13 +1,11 @@
 using ImGuiNET;
-using System;
-using System.Linq;
-using System.Text;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Core.Platform;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using OpenTK.Platform.Native.X11;
 using System.Numerics;
+using System.IO;
 
 namespace OpenTK.Backends.Tests
 {
@@ -16,7 +14,6 @@ namespace OpenTK.Backends.Tests
         public override string Title => "OpenGL";
         public override bool IsVisible => Program.OpenGLComp != null;  // Yes it won't fail, for now :)
 
-        private bool isInit = false;
         private bool canCreateFromWindow;
         private bool canCreateFromSurface;
         private bool canCanShareContexts;
@@ -24,14 +21,16 @@ namespace OpenTK.Backends.Tests
         private string glslVersion = string.Empty;
         private string vendorString = string.Empty;
         private string renderer = string.Empty;
+        private int numExtensions = 0;
+        private string extensionHeader = "##opengl_view_extensions_header";
         private List<(string vendor, List<string> extensions)> extensionGroups = new List<(string, List<string>)>();
+
+        private string savePath = Path.Combine(Environment.CurrentDirectory, "opengl.ini");
 
         private readonly Regex vendorRegex = new Regex("GL_([0-9a-zA-Z]+)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
-        public override void NotifyEnter()
+        public override void Initialize()
         {
-            if (isInit) return;
-
             try { canCreateFromWindow = Program.OpenGLComp.CanCreateFromWindow; }
             catch { canCreateFromWindow = false;}
             try { canCreateFromSurface = Program.OpenGLComp.CanCreateFromSurface; }
@@ -45,7 +44,8 @@ namespace OpenTK.Backends.Tests
             renderer = GL.GetString(StringName.Renderer) ?? string.Empty;
 
             Dictionary<string, List<string>> extensions = new Dictionary<string, List<string>>();
-            int numExtensions = GL.GetInteger(GetPName.NumExtensions);
+            numExtensions = GL.GetInteger(GetPName.NumExtensions);
+            extensionHeader = $"Extensions ({numExtensions})" + extensionHeader;
 
             for(int i = 0; i < numExtensions; i++)
             {
@@ -101,24 +101,73 @@ namespace OpenTK.Backends.Tests
                 ImGui.InputText("OpenGL Renderer", ref dummyString, 1024);
             ImGui.EndDisabled();
 
-            ImGui.SeparatorText("Extensions");
-            ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, true, ImGuiWindowFlags.AlwaysVerticalScrollbar);
-
-            const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick;
-            const ImGuiTreeNodeFlags EXTENSION_FLAGS = ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.Bullet;
-
-            foreach (var(vendor, extensions) in extensionGroups)
+            ImGui.SeparatorText(extensionHeader);
+            ImGui.InputText(string.Empty, ref savePath, 4096);
+            if (ImGui.Button("Save"))
             {
-                if(!ImGui.TreeNodeEx(vendor, VENDOR_FLAGS))
-                    continue;
+                SaveOpenGLDetails(savePath);
+            }
 
-                foreach (string extension in extensions)
+            if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
+            {
+                const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick;
+                const ImGuiTreeNodeFlags EXTENSION_FLAGS = ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.Bullet;
+
+                foreach (var(vendor, extensions) in extensionGroups)
                 {
-                    if (ImGui.TreeNodeEx(extension, EXTENSION_FLAGS))
-                        ImGui.TreePop();
-                }
+                    if(!ImGui.TreeNodeEx(vendor, VENDOR_FLAGS))
+                        continue;
 
-                ImGui.TreePop();
+                    foreach (string extension in extensions)
+                    {
+                        if (ImGui.TreeNodeEx(extension, EXTENSION_FLAGS))
+                            ImGui.TreePop();
+                    }
+
+                    ImGui.TreePop();
+                }
+                ImGui.EndChild();
+            }
+        }
+
+        private void SaveOpenGLDetails(string path)
+        {
+            try
+            {
+                using StreamWriter writer = new StreamWriter(new FileStream(path, FileMode.Create));
+
+                writer.WriteLine("# OpenTK PAL2 OpenGL Information Dump");
+
+                writer.WriteLine("[Context]");
+                writer.WriteLine("GL_VERSION={0}", glVersion);
+                writer.WriteLine("GL_SHADING_LANGUAGE_VERSION={0}", glslVersion);
+                writer.WriteLine("GL_VENDOR={0}", vendorString);
+                writer.WriteLine("GL_RENDERER={0}", renderer);
+                writer.WriteLine();
+
+                writer.WriteLine("[Extensions]");
+                writer.WriteLine("GL_NUM_EXTENSIONS={0}", numExtensions);
+                foreach (var(vendor, list) in extensionGroups)
+                {
+                    writer.WriteLine("{0}={1}", vendor, list.Count);
+                }
+                writer.WriteLine();
+
+                foreach (var(vendor, list) in extensionGroups)
+                {
+                    writer.WriteLine("[Extensions/{0}]", vendor);
+
+                    foreach (string extension in list)
+                    {
+                        writer.WriteLine("{0}=1", extension);
+                    }
+
+                    writer.WriteLine();
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.Logger.LogError($"Could not write OpenGL info log to \"{path}\": {ex}\n{ex.StackTrace}");
             }
         }
     }
