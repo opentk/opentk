@@ -35,7 +35,7 @@ namespace OpenTK.Backends.Tests
 
         private void OnLog(string str, LogLevel level, string filePath, int lineNumber, string member)
         {
-            log.Add($"[{DateTime.Now:O} {level}] {member} {filePath}:{lineNumber} {str}");
+            log.Add($"[{DateTime.Now:HH:mm:ss.fff} {level}] {member} {Path.GetFileName(filePath)}:{lineNumber} {str}");
         }
 
         /// <inheritdoc/>
