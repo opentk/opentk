@@ -72,8 +72,6 @@ namespace OpenTK.Backends.Tests
                 extensionGroups.Add((key, value));
             }
             extensionGroups.Sort((a, b) => StringComparer.InvariantCulture.Compare(a.vendor, b.vendor));
-
-            isInit = true;
         }
 
         public override void Paint()
