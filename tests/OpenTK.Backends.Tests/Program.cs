@@ -39,6 +39,7 @@ namespace OpenTK.Backends.Tests
         {
             new OverviewView(),
             new WindowComponentView(),
+            new OpenGLComponentView(),
         };
 
         static void Main(string[] args)
