@@ -100,7 +100,7 @@ namespace OpenTK.Backends.Tests
             ImGui.EndDisabled();
 
             ImGui.SeparatorText(extensionHeader);
-            ImGui.InputText(string.Empty, ref savePath, 4096);
+            ImGui.InputText(string.Empty, ref savePath, 4096); ImGui.SameLine();
             if (ImGui.Button("Save"))
             {
                 SaveOpenGLDetails(savePath);
