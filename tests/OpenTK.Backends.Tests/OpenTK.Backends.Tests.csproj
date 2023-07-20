@@ -17,4 +17,10 @@
     <ProjectReference Include="..\..\src\OpenTK.Platform.Native\OpenTK.Platform.Native.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SDL2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

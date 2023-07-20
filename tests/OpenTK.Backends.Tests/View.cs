@@ -18,6 +18,11 @@ namespace OpenTK.Backends.Tests
         public virtual bool IsVisible => true;
 
         /// <summary>
+        /// Called at the start of the program, when the main window as been created.
+        /// </summary>
+        public virtual void Initialize() { }
+
+        /// <summary>
         /// Called once when the tab becomes active.
         /// </summary>
         public virtual void NotifyEnter() { }

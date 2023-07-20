@@ -41,6 +41,15 @@ namespace OpenTK.Backends.Tests
         private const string TAB_VIEW_ID = "main_tab_view_tab_id";
 
         /// <inheritdoc/>
+        public override void Initialize()
+        {
+            foreach (View view in _views)
+            {
+                view.Initialize();
+            }
+        }
+
+        /// <inheritdoc/>
         public override void Paint()
         {
             Vector2 size = ImGui.GetIO().DisplaySize;
@@ -57,32 +66,36 @@ namespace OpenTK.Backends.Tests
                 return;
             }
 
-            ImGui.BeginTabBar(TAB_VIEW_ID);
-            int i = 0;
-            foreach (View view in _views)
+            if (ImGui.BeginTabBar(TAB_VIEW_ID, ImGuiTabBarFlags.FittingPolicyResizeDown))
             {
-                if (!view.IsVisible)
-                    continue;
-
-                if (ImGui.BeginTabItem($"{view.Title}##{TAB_VIEW_ID}{i}"))
+                for (int i = 0; i < _views.Count; i++)
                 {
-                    if (i != activeItem)
+                    View view = _views[i];
+
+                    if (!view.IsVisible)
+                        continue;
+
+                    if (ImGui.BeginTabItem($"{view.Title}##{TAB_VIEW_ID}{i}"))
                     {
-                        if (activeItem != -1)
-                            _views[activeItem].NotifyLeave();
-                        view.NotifyEnter();
+                        if (i != activeItem)
+                        {
+                            if (activeItem != -1)
+                                _views[activeItem].NotifyLeave();
+                            view.NotifyEnter();
 
-                        activeItem = i;
+                            activeItem = i;
+                        }
+
+                        ImGui.BeginChild($"##{i}");
+                        view.Paint();
+                        ImGui.EndChild();
+
+                        ImGui.EndTabItem();
                     }
-                    view.Paint();
-
-                    ImGui.EndTabItem();
                 }
-
-                i++;
+                ImGui.EndTabBar();
             }
-            ImGui.EndTabItem();
-
+            
             ImGui.End();
         }
 

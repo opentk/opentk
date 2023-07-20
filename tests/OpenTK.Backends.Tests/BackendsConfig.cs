@@ -250,7 +250,7 @@ namespace OpenTK.Backends.Tests
                 }
                 catch (Exception ex)
                 {
-                    Logger?.LogError($"Could not load overridden platform driver \"{overridePath}\": {ex}\n{ex.StackTrace}");
+                    Logger?.LogError($"Could not load overridden platform driver \"{overridePath}\": {ex}");
 
                     if (Debugger.IsAttached)
                         Debugger.Break();

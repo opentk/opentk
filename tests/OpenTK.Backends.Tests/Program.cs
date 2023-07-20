@@ -16,18 +16,18 @@ namespace OpenTK.Backends.Tests
     {
         public static ILogger Logger = new ModularLogger() { new ConsoleLogger() };
 
-        static IWindowComponent WindowComp;
-        static IOpenGLComponent OpenGLComp;
-        static IIconComponent? IconComponent;
-        static ICursorComponent? CursorComp;
-        static IDisplayComponent? DisplayComponent;
-        static IMouseComponent? MouseComponent;
-        static IKeyboardComponent? KeyboardComponent;
-        static IClipboardComponent? ClipboardComponent;
-        static IShellComponent? ShellComponent;
-        static IJoystickComponent? JoystickComponent;
+        public static IWindowComponent WindowComp;
+        public static IOpenGLComponent OpenGLComp;
+        public static IIconComponent? IconComponent;
+        public static ICursorComponent? CursorComp;
+        public static IDisplayComponent? DisplayComponent;
+        public static IMouseComponent? MouseComponent;
+        public static IKeyboardComponent? KeyboardComponent;
+        public static IClipboardComponent? ClipboardComponent;
+        public static IShellComponent? ShellComponent;
+        public static IJoystickComponent? JoystickComponent;
 
-        static WindowHandle Window;
+        public static WindowHandle Window;
         static OpenGLContextHandle OpenGLContext;
 
         static ImGuiController ImGuiController;
@@ -38,6 +38,7 @@ namespace OpenTK.Backends.Tests
         static readonly MainTabContainer MainTabContainer = new MainTabContainer()
         {
             new OverviewView(),
+            new WindowComponentView(),
         };
 
         static void Main(string[] args)
@@ -45,6 +46,8 @@ namespace OpenTK.Backends.Tests
             EventQueue.EventRaised += EventQueue_EventRaised;
 
             BackendsConfig.Logger = Logger;
+
+            BackendsConfig.Singleton.PreferSDL2 = true;
 
             foreach (PalComponents component in Enum.GetValues<PalComponents>())
             {
@@ -101,6 +104,7 @@ namespace OpenTK.Backends.Tests
 
             GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(OpenGLContext));
 
+            WindowComp.SetTitle(Window, "OpenTK PAL Test Application");
             WindowComp.SetClientSize(Window, 800, 600);
             WindowComp.SetMode(Window, WindowMode.Normal);
 
@@ -116,6 +120,8 @@ namespace OpenTK.Backends.Tests
 
                 ImGui.GetIO().BackendFlags |= ImGuiBackendFlags.HasMouseCursors;
             }
+
+            MainTabContainer.Initialize();
 
             Stopwatch watch = Stopwatch.StartNew();
 
@@ -186,7 +192,6 @@ namespace OpenTK.Backends.Tests
 
                 ImGuiController.Update(InputData, dt);
 
-                // ImGui.ShowDemoWindow();
                 MainTabContainer.Paint();
 
                 Render();
@@ -239,6 +244,15 @@ namespace OpenTK.Backends.Tests
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
+            if (args is WindowEventArgs windowEvent && windowEvent.Window != Window)
+            {
+                if (args is CloseEventArgs close2)
+                {
+                    WindowComp.Destroy(close2.Window);
+                }
+                return;
+            }
+
             if (args is CloseEventArgs close)
             {
                 WindowComp.Destroy(close.Window);
@@ -289,8 +303,11 @@ namespace OpenTK.Backends.Tests
             }
             else if (args is WindowResizeEventArgs resize)
             {
-                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
-                ImGuiController?.WindowResized(resize.NewSize.X, resize.NewSize.Y);
+                if (resize.Window == Window)
+                {
+                    GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+                    ImGuiController?.WindowResized(resize.NewSize.X, resize.NewSize.Y);
+                }
             }
         }
 

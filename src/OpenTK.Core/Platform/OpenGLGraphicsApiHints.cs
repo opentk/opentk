@@ -83,5 +83,10 @@ namespace OpenTK.Core.Platform
 
             Api = api;
         }
+
+        public OpenGLGraphicsApiHints Copy()
+        {
+            return (OpenGLGraphicsApiHints)MemberwiseClone();
+        }
     }
 }

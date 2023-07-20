@@ -113,7 +113,7 @@ namespace OpenTK.Backends.Tests
                     }
                     catch (Exception ex)
                     {
-                        Program.Logger?.LogError($"Could not save log file: {ex}");
+                        Program.Logger.LogError($"Could not save log file: {ex}");
                     }
                 }
 
@@ -139,9 +139,8 @@ namespace OpenTK.Backends.Tests
 
                     if (ImGui.GetScrollY() >= ImGui.GetScrollMaxY())
                         ImGui.SetScrollHereY(1.0f);
-
-                    ImGui.EndChild();
                 }
+                ImGui.EndChild();
 
                 ImGui.TreePop();
             }

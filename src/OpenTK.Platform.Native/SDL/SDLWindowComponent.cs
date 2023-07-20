@@ -552,11 +552,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public string GetTitle(WindowHandle handle)
+        public unsafe string GetTitle(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            return SDL_GetWindowTitle(window.Window);
+            byte* title = SDL_GetWindowTitle(window.Window);
+            return Marshal.PtrToStringUTF8((IntPtr)title)!;
         }
 
         /// <inheritdoc/>
@@ -590,7 +591,9 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            // FIXME: This gets the client position!!
             SDL_GetWindowPosition(window.Window, out x, out y);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -600,6 +603,7 @@ namespace OpenTK.Platform.Native.SDL
 
             // FIXME: This sets the client position!!
             SDL_SetWindowPosition(window.Window, x, y);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -609,6 +613,7 @@ namespace OpenTK.Platform.Native.SDL
 
             // FIXME: This sets the client position!!
             SDL_GetWindowSize(window.Window, out width, out height);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -616,7 +621,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            SDL_SetWindowSize(window.Window, width, height);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -648,7 +653,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            SDL_SetWindowSize(window.Window, width, height);
         }
 
         /// <inheritdoc/>

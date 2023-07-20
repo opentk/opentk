@@ -24,6 +24,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IWindowComponent : IPalComponent
     {
+        // FIXME: Make most Get* functions return their value instead of going through out parameters.
+
         /// <summary>
         /// True when the driver supports setting the window icon.
         /// </summary>

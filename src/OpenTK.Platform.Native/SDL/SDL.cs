@@ -138,8 +138,7 @@ namespace OpenTK.Platform.Native.SDL
         internal static extern int SDL_SetWindowTitle(SDL_WindowPtr window, [MarshalAs(UnmanagedType.LPUTF8Str)] string title);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.LPUTF8Str)]
-        internal static extern string SDL_GetWindowTitle(SDL_WindowPtr window);
+        internal static extern byte* SDL_GetWindowTitle(SDL_WindowPtr window);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SDL_SetWindowPosition(SDL_WindowPtr window, int x, int y);

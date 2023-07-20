@@ -963,7 +963,7 @@ namespace OpenTK.Platform.Native.Windows
             IntPtr hWnd = Win32.CreateWindowEx(
                 0,
                 CLASS_NAME,
-                "OpenTK Window",
+                "",
                 WindowStyles.OverlappedWindow,
                 Win32.CW_USEDEFAULT,
                 Win32.CW_USEDEFAULT,
@@ -1039,7 +1039,7 @@ namespace OpenTK.Platform.Native.Windows
             int error = Marshal.GetLastWin32Error();
             if (textLength == 0 && error != 0)
             {
-                throw new Win32Exception(error, "GetWindowTextLength: Could not get length of window text");
+                throw new Win32Exception(error);
             }
 
             StringBuilder title = new StringBuilder(textLength + 1);
