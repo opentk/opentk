@@ -79,9 +79,7 @@ namespace OpenTK.Platform.Native.SDL
         public unsafe void ProcessEvents(bool waitForEvents = false)
         {
             SDLEvent @event;
-            int result = SDL_PollEvent(&@event);
-
-            if (result == 1)
+            while (SDL_PollEvent(&@event) != 0)
             {
                 switch (@event.Type)
                 {
