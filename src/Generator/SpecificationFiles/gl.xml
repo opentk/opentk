@@ -527,7 +527,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0" name="GL_FALSE" group="SpecialNumbers,Boolean,VertexShaderWriteMaskEXT,ClampColorModeARB"/>
         <enum value="0" name="GL_NO_ERROR" group="SpecialNumbers,GraphicsResetStatus,ErrorCode"/>
         <enum value="0" name="GL_ZERO" group="SpecialNumbers,TextureSwizzle,StencilOp,BlendingFactor,FragmentShaderGenericSourceATI"/>
-        <enum value="0" name="GL_NONE" group="SpecialNumbers,FragmentShaderValueRepATI,FragmentShaderDestModMaskATI,FragmentShaderDestMaskATI,SyncBehaviorFlags,TextureCompareMode,PathColorFormat,CombinerBiasNV,CombinerScaleNV,DrawBufferMode,PixelTexGenModeSGIX,ReadBufferMode,ColorBuffer,PathGenMode,PathTransformType,PathFontStyle"/>
+        <enum value="0" name="GL_NONE" group="SpecialNumbers,FragmentShaderValueRepATI,FragmentShaderDestModMaskATI,FragmentShaderDestMaskATI,SyncBehaviorFlags,TextureCompareMode,PathColorFormat,CombinerBiasNV,CombinerScaleNV,DrawBufferMode,PixelTexGenModeSGIX,ReadBufferMode,ColorBuffer,PathGenMode,PathTransformType,PathFontStyle,wgl::ObjectTypeDX"/>
         <enum value="0" name="GL_NONE_OES" group="SpecialNumbers,ReadBufferMode,DrawBufferMode"/>
         <enum value="1" name="GL_TRUE" group="SpecialNumbers,Boolean,VertexShaderWriteMaskEXT,ClampColorModeARB"/>
         <enum value="1" name="GL_ONE" group="SpecialNumbers,TextureSwizzle,BlendingFactor,FragmentShaderGenericSourceATI"/>
@@ -922,7 +922,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0x0DD3" name="GL_MAP2_GRID_SEGMENTS" group="GetPName"/>
 
         <enum value="0x0DE0" name="GL_TEXTURE_1D" group="CopyImageSubDataTarget,EnableCap,GetPName,TextureTarget"/>
-        <enum value="0x0DE1" name="GL_TEXTURE_2D" group="CopyImageSubDataTarget,EnableCap,GetPName,TextureTarget"/>
+        <enum value="0x0DE1" name="GL_TEXTURE_2D" group="CopyImageSubDataTarget,EnableCap,GetPName,TextureTarget,wgl::ObjectTypeDX"/>
 
         <enum value="0x0DF0" name="GL_FEEDBACK_BUFFER_POINTER" group="GetPointervPName"/>
         <enum value="0x0DF1" name="GL_FEEDBACK_BUFFER_SIZE" group="GetPName"/>
@@ -1412,7 +1412,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0x806D" name="GL_UNPACK_SKIP_IMAGES_EXT" group="PixelStoreParameter,GetPName"/>
         <enum value="0x806E" name="GL_UNPACK_IMAGE_HEIGHT" group="PixelStoreParameter,GetPName"/>
         <enum value="0x806E" name="GL_UNPACK_IMAGE_HEIGHT_EXT" group="PixelStoreParameter,GetPName"/>
-        <enum value="0x806F" name="GL_TEXTURE_3D" group="CopyImageSubDataTarget,TextureTarget"/>
+        <enum value="0x806F" name="GL_TEXTURE_3D" group="CopyImageSubDataTarget,TextureTarget,wgl::ObjectTypeDX"/>
         <enum value="0x806F" name="GL_TEXTURE_3D_EXT" group="TextureTarget,EnableCap,GetPName"/>
         <enum value="0x806F" name="GL_TEXTURE_3D_OES" group="TextureTarget"/>
         <enum value="0x8070" name="GL_PROXY_TEXTURE_3D" group="TextureTarget"/>
@@ -2777,7 +2777,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0x84F2" name="GL_ALL_COMPLETED_NV" group="FenceConditionNV"/>
         <enum value="0x84F3" name="GL_FENCE_STATUS_NV" group="FenceParameterNameNV"/>
         <enum value="0x84F4" name="GL_FENCE_CONDITION_NV" group="FenceParameterNameNV"/>
-        <enum value="0x84F5" name="GL_TEXTURE_RECTANGLE" group="CopyImageSubDataTarget,TextureTarget,EnableCap"/>
+        <enum value="0x84F5" name="GL_TEXTURE_RECTANGLE" group="CopyImageSubDataTarget,TextureTarget,EnableCap,wgl::ObjectTypeDX"/>
         <enum value="0x84F5" name="GL_TEXTURE_RECTANGLE_ARB" group="TextureTarget,EnableCap"/>
         <enum value="0x84F5" name="GL_TEXTURE_RECTANGLE_NV" group="TextureTarget,EnableCap"/>
         <enum value="0x84F6" name="GL_TEXTURE_BINDING_RECTANGLE" group="GetPName"/>
@@ -2838,7 +2838,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0x8512" name="GL_REFLECTION_MAP_EXT" group="GetTextureParameter"/>
         <enum value="0x8512" name="GL_REFLECTION_MAP_NV" group="GetTextureParameter"/>
         <enum value="0x8512" name="GL_REFLECTION_MAP_OES" group="GetTextureParameter"/>
-        <enum value="0x8513" name="GL_TEXTURE_CUBE_MAP" group="CopyImageSubDataTarget,TextureTarget,EnableCap"/>
+        <enum value="0x8513" name="GL_TEXTURE_CUBE_MAP" group="CopyImageSubDataTarget,TextureTarget,EnableCap,wgl::ObjectTypeDX"/>
         <enum value="0x8513" name="GL_TEXTURE_CUBE_MAP_ARB" group="TextureTarget,EnableCap"/>
         <enum value="0x8513" name="GL_TEXTURE_CUBE_MAP_EXT" group="TextureTarget,EnableCap"/>
         <enum value="0x8513" name="GL_TEXTURE_CUBE_MAP_OES" group="TextureTarget,EnableCap"/>
@@ -4991,7 +4991,7 @@ typedef unsigned int GLhandleARB;
         <enum value="0x8D40" name="GL_FRAMEBUFFER" group="ObjectIdentifier,FramebufferTarget"/>
         <enum value="0x8D40" name="GL_FRAMEBUFFER_EXT"/>
         <enum value="0x8D40" name="GL_FRAMEBUFFER_OES" group="FramebufferTarget"/>
-        <enum value="0x8D41" name="GL_RENDERBUFFER" group="ObjectIdentifier,RenderbufferTarget,CopyImageSubDataTarget,TextureTarget"/>
+        <enum value="0x8D41" name="GL_RENDERBUFFER" group="ObjectIdentifier,RenderbufferTarget,CopyImageSubDataTarget,TextureTarget,wgl::ObjectTypeDX"/>
         <enum value="0x8D41" name="GL_RENDERBUFFER_EXT"/>
         <enum value="0x8D41" name="GL_RENDERBUFFER_OES" group="RenderbufferTarget"/>
         <enum value="0x8D42" name="GL_RENDERBUFFER_WIDTH" group="RenderbufferParameterName"/>

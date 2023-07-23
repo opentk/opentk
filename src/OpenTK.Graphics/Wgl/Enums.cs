@@ -502,6 +502,7 @@ namespace OpenTK.Graphics.Wgl
         SwapUndefinedArb = 8234,
         SwapUndefinedExt = 8234,
     }
+    ///<summary>Used in <see cref="WGL.AMD.GetGPUInfoAMD" /></summary>
     public enum PixelType : uint
     {
         TypeRgbaArb = 8235,

@@ -24,6 +24,14 @@ namespace OpenTK.Graphics.Wgl
             return _DescribePixelFormat_fnptr(hdc, ipfd, cjpfd, ppfd);
         }
         
+        internal static delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint> _GetEnhMetaFilePixelFormat_fnptr = &GetEnhMetaFilePixelFormat_Lazy;
+        [UnmanagedCallersOnly]
+        private static uint GetEnhMetaFilePixelFormat_Lazy(IntPtr hemf, uint cbBuffer, PixelFormatDescriptor* ppfd)
+        {
+            _GetEnhMetaFilePixelFormat_fnptr = (delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint>)GLLoader.BindingsContext.GetProcAddress("GetEnhMetaFilePixelFormat");
+            return _GetEnhMetaFilePixelFormat_fnptr(hemf, cbBuffer, ppfd);
+        }
+        
         internal static delegate* unmanaged<IntPtr, int> _GetPixelFormat_fnptr = &GetPixelFormat_Lazy;
         [UnmanagedCallersOnly]
         private static int GetPixelFormat_Lazy(IntPtr hdc)
@@ -560,28 +568,12 @@ namespace OpenTK.Graphics.Wgl
             return _wglGetCurrentReadDCEXT_fnptr();
         }
         
-        internal static delegate* unmanaged<char*, IntPtr> _wglGetDefaultProcAddress_fnptr = &wglGetDefaultProcAddress_Lazy;
-        [UnmanagedCallersOnly]
-        private static IntPtr wglGetDefaultProcAddress_Lazy(char* lpszProc)
-        {
-            _wglGetDefaultProcAddress_fnptr = (delegate* unmanaged<char*, IntPtr>)GLLoader.BindingsContext.GetProcAddress("wglGetDefaultProcAddress");
-            return _wglGetDefaultProcAddress_fnptr(lpszProc);
-        }
-        
         internal static delegate* unmanaged<IntPtr, int, int*, int> _wglGetDigitalVideoParametersI3D_fnptr = &wglGetDigitalVideoParametersI3D_Lazy;
         [UnmanagedCallersOnly]
         private static int wglGetDigitalVideoParametersI3D_Lazy(IntPtr hDC, int iAttribute, int* piValue)
         {
             _wglGetDigitalVideoParametersI3D_fnptr = (delegate* unmanaged<IntPtr, int, int*, int>)GLLoader.BindingsContext.GetProcAddress("wglGetDigitalVideoParametersI3D");
             return _wglGetDigitalVideoParametersI3D_fnptr(hDC, iAttribute, piValue);
-        }
-        
-        internal static delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint> _GetEnhMetaFilePixelFormat_fnptr = &GetEnhMetaFilePixelFormat_Lazy;
-        [UnmanagedCallersOnly]
-        private static uint GetEnhMetaFilePixelFormat_Lazy(IntPtr hemf, uint cbBuffer, PixelFormatDescriptor* ppfd)
-        {
-            _GetEnhMetaFilePixelFormat_fnptr = (delegate* unmanaged<IntPtr, uint, PixelFormatDescriptor*, uint>)GLLoader.BindingsContext.GetProcAddress("GetEnhMetaFilePixelFormat");
-            return _GetEnhMetaFilePixelFormat_fnptr(hemf, cbBuffer, ppfd);
         }
         
         internal static delegate* unmanaged<IntPtr, byte*> _wglGetExtensionsStringARB_fnptr = &wglGetExtensionsStringARB_Lazy;
@@ -1088,20 +1080,20 @@ namespace OpenTK.Graphics.Wgl
             return _wglSwapBuffersMscOML_fnptr(hdc, target_msc, divisor, remainder);
         }
         
-        internal static delegate* unmanaged<IntPtr, uint, int> _wglSwapLayerBuffers_fnptr = &wglSwapLayerBuffers_Lazy;
-        [UnmanagedCallersOnly]
-        private static int wglSwapLayerBuffers_Lazy(IntPtr hdc, uint fuFlags)
-        {
-            _wglSwapLayerBuffers_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffers");
-            return _wglSwapLayerBuffers_fnptr(hdc, fuFlags);
-        }
-        
         internal static delegate* unmanaged<int, int> _wglSwapIntervalEXT_fnptr = &wglSwapIntervalEXT_Lazy;
         [UnmanagedCallersOnly]
         private static int wglSwapIntervalEXT_Lazy(int interval)
         {
             _wglSwapIntervalEXT_fnptr = (delegate* unmanaged<int, int>)GLLoader.BindingsContext.GetProcAddress("wglSwapIntervalEXT");
             return _wglSwapIntervalEXT_fnptr(interval);
+        }
+        
+        internal static delegate* unmanaged<IntPtr, uint, int> _wglSwapLayerBuffers_fnptr = &wglSwapLayerBuffers_Lazy;
+        [UnmanagedCallersOnly]
+        private static int wglSwapLayerBuffers_Lazy(IntPtr hdc, uint fuFlags)
+        {
+            _wglSwapLayerBuffers_fnptr = (delegate* unmanaged<IntPtr, uint, int>)GLLoader.BindingsContext.GetProcAddress("wglSwapLayerBuffers");
+            return _wglSwapLayerBuffers_fnptr(hdc, fuFlags);
         }
         
         internal static delegate* unmanaged<IntPtr, int, long, long, long, long> _wglSwapLayerBuffersMscOML_fnptr = &wglSwapLayerBuffersMscOML_Lazy;

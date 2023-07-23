@@ -20,71 +20,100 @@ namespace Generator.Writing
         private const string LoaderClass = "GLLoader";
         private const string LoaderBindingsContext = LoaderClass + ".BindingsContext";
 
-        public static void Write(OutputData data, string apiName)
+        public static void Write(OutputData data)
         {
+            // This is quite fragile, no idea if there is an easy way that is "better".
             string outputProjectPath = Path.Combine(
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? throw new NullReferenceException(),
                 "..", "..", "..", "..", GraphicsNamespace);
 
-            // FIXME: We are relying on string constants that live in different files to match for this to work...
-            string? pointersNamespace = null;
-            if (apiName == "WGL") pointersNamespace = "Wgl";
-            if (apiName == "GLX") pointersNamespace = "Glx";
-
-            WriteFunctionPointers(outputProjectPath, apiName, pointersNamespace, data.AllNativeFunctions);
-
-            // This should create folders to put the versions in
-            foreach (var api in data.Apis)
+            foreach (Pointers pointers in data.Pointers)
             {
-                // FIXME: Add more output apis?
-                string apiNamespace = api.Api switch
+                string className = pointers.File switch
                 {
-                    OutputApi.GL => "OpenGL",
-                    OutputApi.GLCompat => "OpenGL.Compatibility",
-                    OutputApi.GLES1 => "OpenGLES1",
-                    OutputApi.GLES2 => "OpenGLES2",
-                    OutputApi.WGL => "Wgl",
-                    OutputApi.GLX => "Glx",
-                    _ => throw new Exception($"This is not a valid output API ({api.Api})"),
+                    GLFile.GL => "GL",
+                    GLFile.WGL => "WGL",
+                    GLFile.GLX => "GLX",
+                    _ => throw new Exception(),
                 };
-                string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
-                if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
-                var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
-                foreach (var file in files.Where(file => Path.GetFileName(file) != $"{apiName}.Manual.cs"))
+
+                string pointersNamespace = pointers.File switch
                 {
-                    File.Delete(file);
-                }
+                    GLFile.GL => "OpenGL",
+                    GLFile.WGL => "Wgl",
+                    GLFile.GLX => "Glx",
+                    _ => throw new Exception(),
+                };
 
-                WriteNativeFunctions(directoryPath, apiName, apiNamespace, api.Vendors, api.Documentation);
-                WriteOverloads(directoryPath, apiName, apiNamespace, api.Vendors);
+                // FIXME: Merge the writing of these function pointers for the relevant namespaces!
+                WriteFunctionPointers(outputProjectPath, className, pointersNamespace, pointers.NativeFunctions);
+            }
 
-                WriteEnums(directoryPath, apiName, apiNamespace, api.EnumGroups);
+            foreach (Namespace @namespace in data.Namespaces)
+            {
+                WriteNamespace(outputProjectPath, @namespace);
             }
         }
 
-        private static void WriteFunctionPointers(string directoryPath, string apiName, string? apiNamespace, List<NativeFunction> nativeFunctions)
+        public static void WriteNamespace(string outputProjectPath, Namespace @namespace)
         {
-            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Pointers.cs"));
+            // FIXME: Fix function pointers so we can merge this.
+            string className = @namespace.Name switch
+            {
+                OutputApi.GL => "GL",
+                OutputApi.GLCompat => "GL",
+                OutputApi.GLES1 => "GL",
+                OutputApi.GLES2 => "GL",
+                OutputApi.WGL => "WGL",
+                OutputApi.GLX => "GLX",
+                _ => throw new Exception(),
+            };
+
+            string apiNamespace = @namespace.Name switch
+            {
+                OutputApi.GL => "OpenGL",
+                OutputApi.GLCompat => "OpenGL.Compatibility",
+                OutputApi.GLES1 => "OpenGLES1",
+                OutputApi.GLES2 => "OpenGLES2",
+                OutputApi.WGL => "Wgl",
+                OutputApi.GLX => "Glx",
+                _ => throw new Exception($"This is not a valid output API ({@namespace.Name})"),
+            };
+
+            string directoryPath = Path.Combine(outputProjectPath, Path.Combine(apiNamespace.Split('.')));
+            if (Directory.Exists(directoryPath) == false) Directory.CreateDirectory(directoryPath);
+            var files = Directory.GetFiles(directoryPath, "*.cs", SearchOption.TopDirectoryOnly);
+            foreach (var file in files.Where(file => Path.GetFileName(file) != $"{className}.Manual.cs"))
+            {
+                File.Delete(file);
+            }
+
+            WriteNativeFunctions(directoryPath, className, apiNamespace, @namespace.Vendors, @namespace.Documentation);
+            WriteOverloads(directoryPath, className, apiNamespace, @namespace.Vendors);
+
+            WriteEnums(directoryPath, className, apiNamespace, @namespace.EnumGroups);
+        }
+
+        // FIXME: Maybe we should nest this 
+        private static void WriteFunctionPointers(string directoryPath, string className, string apiNamespace, List<NativeFunction> nativeFunctions)
+        {
+            using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{className}.Pointers.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
+
+            // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
 
             writer.WriteLine("// This file is auto generated, do not edit.");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
             writer.WriteLine();
-            if (apiNamespace == null)
-            {
-                writer.WriteLine($"namespace {GraphicsNamespace}");
-            }
-            else
-            {
-                writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
-            }
+            writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
 
             using (writer.CsScope())
             {
                 writer.WriteLine($"/// <summary>A collection of all function pointers to all OpenGL entry points.</summary>");
-                writer.WriteLine($"public static unsafe partial class {apiName}Pointers");
+                // FIXME: Better class name?
+                writer.WriteLine($"public static unsafe partial class {className}Pointers");
                 using (writer.CsScope())
                 {
                     foreach (NativeFunction function in nativeFunctions)

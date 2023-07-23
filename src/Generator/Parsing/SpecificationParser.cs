@@ -14,27 +14,15 @@ namespace Generator.Parsing
 {
     public class SpecificationParser
     {
-        class APIData
-        {
-            public GLAPI API;
-            public List<Feature> Features = new List<Feature>();
-            public List<Extension> Extensions = new List<Extension>();
-
-            public APIData(GLAPI api)
-            {
-                API = api;
-            }
-        }
-
-        public static Specification2 Parse(Stream input)
+        public static Specification2 Parse(Stream input, GLFile currentFile, List<string> ignoreFunctions)
         {
             XDocument? xdocument = XDocument.Load(input);
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
-            List<Command>? commands = ParseCommands(xdocument.Root);
-            List<Enums>? enums = ParseEnums(xdocument.Root);
+            List<Command>? commands = ParseCommands(xdocument.Root, ignoreFunctions);
+            List<EnumEntry>? enums = ParseEnums(xdocument.Root, currentFile);
 
             List<Feature>? features = ParseFeatures(xdocument.Root);
             List<Extension>? extensions = ParseExtensions(xdocument.Root);
@@ -265,7 +253,7 @@ namespace Generator.Parsing
             }
         }
 
-        private static List<Command> ParseCommands(XElement input)
+        private static List<Command> ParseCommands(XElement input, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of commands.");
             XElement? xelement = input.Element("commands")!;
@@ -276,7 +264,7 @@ namespace Generator.Parsing
                 Command? command = ParseCommand(element);
 
                 // Don't add this command to the list if we should ignore it.
-                if (GeneratorSettings.Settings.IgnoreFunctions.Contains(command.EntryPoint))
+                if (ignoreFunctions.Contains(command.EntryPoint))
                 {
                     continue;
                 }
@@ -435,6 +423,23 @@ namespace Generator.Parsing
         private static PType ParsePType(XElement t)
         {
             string? group = t.Attribute("group")?.Value;
+            GroupRef? groupRef;
+            if (group != null)
+            {
+                if (group.StartsWith("gl::"))
+                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "gl::"), GLFile.GL);
+                else if (group.StartsWith("wgl::"))
+                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "wgl::"), GLFile.WGL);
+                else if (group.StartsWith("glx::"))
+                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
+                else
+                    // FIXME: Get the input api!
+                    groupRef = new GroupRef(group, default);
+            }
+            else
+            {
+                groupRef = null;
+            }
 
             string? className = t.Attribute("class")?.Value;
             HandleType? handle = className switch
@@ -462,7 +467,7 @@ namespace Generator.Parsing
 
             string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
-            return new PType(ParseType(str), handle, group);
+            return new PType(ParseType(str), handle, groupRef);
         }
 
         private static GLType ParseType(string type)
@@ -656,10 +661,10 @@ namespace Generator.Parsing
         }
 
 
-        public static List<Enums> ParseEnums(XElement input)
+        public static List<EnumEntry> ParseEnums(XElement input, GLFile currentFilee)
         {
             Logger.Info("Begining parsing of enums.");
-            List<Enums> enumsEntries = new List<Enums>();
+            List<EnumEntry> enumsEntries = new List<EnumEntry>();
             foreach (XElement? enums in input.Elements("enums"))
             {
                 string? @namespace = enums.Attribute("namespace")?.Value;
@@ -671,42 +676,73 @@ namespace Generator.Parsing
                 // - 2023-03-25 NogginBops
                 if (@namespace == "GLXStrings") continue;
 
-                string[] group = enums.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+                GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFilee);
 
                 string? vendor = enums.Attribute("vendor")?.Value;
 
                 EnumType type = ParseEnumsType(enums.Attribute("type")?.Value);
 
-                string? startStr = enums.Attribute("start")?.Value;
-                string? endStr = enums.Attribute("end")?.Value;
-                if (startStr == null && endStr != null ||
-                    startStr != null && endStr == null)
-                    throw new Exception($"Enums entry '{enums}' is missing either a start or end attribute.");
+                string? enumsComment = enums.Attribute("comment")?.Value;
 
-                Range? range = null;
-                if (startStr != null && endStr != null)
-                {
-                    Index start = (Index)ParseInt(startStr);
-                    Index end = (Index)ParseInt(endStr);
-                    range = new Range(start, end);
-
-                    static int ParseInt(string str)
-                    {
-                        bool hex = str.StartsWith("0x");
-                        if (hex) str = str[2..];
-                        return int.Parse(str, hex ? NumberStyles.HexNumber : NumberStyles.Integer);
-                    }
-                }
-
-                string? comment = enums.Attribute("comment")?.Value;
-
-                List<EnumEntry> entries = new List<EnumEntry>();
                 foreach (XElement? @enum in enums.Elements("enum"))
                 {
-                    entries.Add(ParseEnumEntry(@enum));
-                }
+                    string? name = @enum.Attribute("name")?.Value;
+                    string? valueStr = @enum.Attribute("value")?.Value;
+                    if (valueStr == null || name == null)
+                    {
+                        throw new Exception($"Enum {name} did not pass correctly");
+                    }
 
-                enumsEntries.Add(new Enums(@namespace, group, type, vendor, range, comment, entries));
+                    TypeSuffix suffix = ParseEnumTypeSuffix(@enum.Attribute("type")?.Value);
+
+                    ulong value = ConvertToUInt64(valueStr, suffix);
+
+                    string? alias = @enum.Attribute("alias")?.Value;
+
+                    GroupRef[] groups = ParseGroups(@enum.Attribute("group")?.Value, currentFilee);
+                    // Mark this with all of the groups from the parent tag.
+                    groups = ArrayUtil.MergeDeduplicate(groups, parentGroups);
+
+                    string? enumComment = @enum.Attribute("comment")?.Value;
+
+                    GLAPI api = ParseApi(@enum.Attribute("api")?.Value);
+                    EnumAPI enumApi;
+                    if (api == GLAPI.None)
+                    {
+                        switch (currentFilee)
+                        {
+                            case GLFile.GL:
+                                enumApi = EnumAPI.GL | EnumAPI.GLCompat | EnumAPI.GLES1 | EnumAPI.GLES2;
+                                break;
+                            case GLFile.WGL:
+                                enumApi = EnumAPI.WGL;
+                                break;
+                            case GLFile.GLX:
+                                enumApi = EnumAPI.GLX;
+                                break;
+                            default:
+                                throw new Exception();
+                        }
+                    }
+                    else 
+                    {
+                        enumApi = api switch
+                        {
+                            GLAPI.GL => EnumAPI.GL | EnumAPI.GLCompat,
+                            GLAPI.GLES1 => EnumAPI.GLES1,
+                            GLAPI.GLES2 => EnumAPI.GLES2,
+                            GLAPI.WGL => EnumAPI.WGL,
+                            GLAPI.GLX => EnumAPI.GLX,
+
+                            GLAPI.GLCore => throw new Exception(),
+                            GLAPI.GLSC2 => throw new Exception(),
+                            GLAPI.Invalid => throw new Exception(),
+                            _ => throw new Exception(),
+                        };
+                    }
+
+                    enumsEntries.Add(new EnumEntry(name, value, enumApi, type, vendor, alias, /*enumComment,*/ groups, suffix));
+                }
             }
 
             return enumsEntries;
@@ -717,30 +753,6 @@ namespace Generator.Parsing
                 "bitmask" => EnumType.Bitmask,
                 _ => EnumType.Invalid,
             };
-        }
-
-        public static EnumEntry ParseEnumEntry(XElement @enum)
-        {
-            string? name = @enum.Attribute("name")?.Value;
-            string? valueStr = @enum.Attribute("value")?.Value;
-            if (valueStr == null || name == null)
-            {
-                throw new Exception($"Enum {name} did not pass correctly");
-            }
-
-            TypeSuffix suffix = ParseEnumTypeSuffix(@enum.Attribute("type")?.Value);
-
-            ulong value = ConvertToUInt64(valueStr, suffix);
-
-            string? alias = @enum.Attribute("alias")?.Value;
-
-            string[] groups = @enum.Attribute("group")?.Value?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
-
-            string? comment = @enum.Attribute("comment")?.Value;
-
-            GLAPI api = ParseApi(@enum.Attribute("api")?.Value);
-
-            return new EnumEntry(name, api, value, alias, comment, groups, suffix);
 
             static TypeSuffix ParseEnumTypeSuffix(string? suffix) => suffix switch
             {
@@ -758,6 +770,30 @@ namespace Generator.Parsing
                 TypeSuffix.Invalid or _ => throw new Exception($"Invalid suffix '{type}'!"),
             };
         }
+
+        public static GroupRef[] ParseGroups(string? groups, GLFile currentFile)
+        {
+            if (groups == null) return Array.Empty<GroupRef>();
+
+            string[] rawGroups = groups.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+            GroupRef[] groupRefs = new GroupRef[rawGroups.Length];
+            for (int i = 0; i < rawGroups.Length; i++)
+            {
+                string group = rawGroups[i];
+                if (group.StartsWith("gl::"))
+                    groupRefs[i] = new GroupRef(NameMangler.RemoveStart(group, "gl::"), GLFile.GL);
+                else if (group.StartsWith("wgl::"))
+                    groupRefs[i] = new GroupRef(NameMangler.RemoveStart(group, "wgl::"), GLFile.WGL);
+                else if (group.StartsWith("glx::"))
+                    groupRefs[i] = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
+                else
+                    // FIXME: Get the input api!
+                    groupRefs[i] = new GroupRef(group, currentFile);
+            }
+
+            return groupRefs;
+        }
+
 
 
         public static List<Feature> ParseFeatures(XElement input)

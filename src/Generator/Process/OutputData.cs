@@ -7,16 +7,29 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    // FIXME: Add the needed properties for apis here...
-    //public record API(string name, APIVersion[] APIVersions);
+    public record OutputData(
+        /* FIXME: Maybe do like this?
+        Namespace GL,
+        Namespace GLCompat,
+        Namespace GLES1,
+        Namespace GLES2,
+        Namespace WGL,
+        Namespace GLX,
+        */
 
-    //public record APIVersion(Version Version, Function[] Functions /* something enums */);
+        List<Pointers> Pointers,
+        List<Namespace> Namespaces);
 
-    //public record Extension(string name, Function[] Functions /* something enums */);
+    // FIXME: Maybe change to API.. something? "namespace" is quite generic.
+    public record Namespace(
+        OutputApi Name,
+        SortedDictionary<string, GLVendorFunctions> Vendors,
+        List<EnumGroup> EnumGroups,
+        Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
-    //public record Function(NativeFunction Native, Overload[] Overloads);
-
-    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
+    public record Pointers(
+        GLFile File,
+        List<NativeFunction> NativeFunctions);
 
     public record GLOutputApi(
         OutputApi Api,
@@ -75,7 +88,7 @@ namespace Generator.Writing
     public record EnumGroupMember(
         string Name,
         ulong Value,
-        string[] Groups,
+        GroupRef[] Groups,
         bool IsFlag) : IEquatable<EnumGroupMember?>;
 
     public record EnumGroup(

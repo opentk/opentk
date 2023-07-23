@@ -16,9 +16,21 @@ namespace Generator.Parsing
         GLX,
     }
 
+    [Flags]
+    public enum EnumAPI
+    {
+        None = 0,
+        GL = 1 << 0,
+        GLCompat = 1 << 1,
+        GLES1 = 1 << 2,
+        GLES2 = 1 << 3,
+        WGL = 1 << 4,
+        GLX = 1 << 5,
+    }
+
     public record Specification2(
         List<Command> Commands,
-        List<Enums> Enums,
+        List<EnumEntry> Enums,
         List<API> APIs);
 
     public record API(
@@ -53,11 +65,11 @@ namespace Generator.Parsing
         //List<string> EnumValues);
 
 
-    public record Specification(
+    /*public record Specification(
         List<Command> Commands,
         List<Enums> Enums,
         List<Feature> Features,
-        List<Extension> Extensions);
+        List<Extension> Extensions);*/
 
 
     public record Command(
@@ -66,23 +78,25 @@ namespace Generator.Parsing
         GLParameter[] Parameters);
 
     // FIXME: Maybe flatten the list of enums?
-    public record Enums(
+    /*public record Enums(
         string Namespace,
-        string[] Groups,
+        GroupRef[] Groups,
         EnumType Type,
         string? Vendor,
         Range? Range,
         string? Comment,
-        List<EnumEntry> Entries);
+        List<EnumEntry> Entries);*/
 
     public record EnumEntry(
         string Name,
-        GLAPI Api,
         ulong Value,
+        EnumAPI Api,
+        EnumType Type,
+        string? Vendor,
         string? Alias,
-        string? Comment,
-        string[] Groups,
-        TypeSuffix Type);
+        //string? Comment,
+        GroupRef[] Groups,
+        TypeSuffix Suffix);
 
 
     public record Feature(
@@ -123,7 +137,19 @@ namespace Generator.Parsing
     public record PType(
         GLType Type,
         HandleType? Handle,
-        string? Group);
+        GroupRef? Group);
+
+    public enum GLFile
+    {
+        GL,
+        WGL,
+        GLX,
+    }
+
+    /// <param name="GroupName">The name of the referenced enum group.</param>
+    /// <param name="Namespace">The enum namespace that is referenced (gl, wgl, or glx).</param>
+    // FIXME: Make an enum for files? gl.xml, wgl.xml, glx.xml...
+    public record GroupRef(string Name, GLFile Namespace);
 
 
     public abstract record GLType();

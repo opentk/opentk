@@ -2,6 +2,7 @@
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Graphics.Wgl
 {
@@ -11,7 +12,7 @@ namespace OpenTK.Graphics.Wgl
         public static int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor* pPfd) => WGLPointers._ChoosePixelFormat_fnptr(hDc, pPfd);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglCopyContext</c>]</b><br/>  </summary>
-        public static int CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, uint mask) => WGLPointers._wglCopyContext_fnptr(hglrcSrc, hglrcDst, mask);
+        public static int CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, AttribMask mask) => WGLPointers._wglCopyContext_fnptr(hglrcSrc, hglrcDst, (uint)mask);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglCreateContext</c>]</b><br/>  </summary>
         public static IntPtr CreateContext(IntPtr hDc) => WGLPointers._wglCreateContext_fnptr(hDc);
@@ -96,7 +97,7 @@ namespace OpenTK.Graphics.Wgl
         public static unsafe partial class AMD
         {
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b> <b>[entry point: <c>wglBlitContextFramebufferAMD</c>]</b><br/>  </summary>
-            public static void BlitContextFramebufferAMD(IntPtr dstCtx, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, uint mask, All filter) => WGLPointers._wglBlitContextFramebufferAMD_fnptr(dstCtx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, (uint)filter);
+            public static void BlitContextFramebufferAMD(IntPtr dstCtx, int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, ClearBufferMask mask, All filter) => WGLPointers._wglBlitContextFramebufferAMD_fnptr(dstCtx, srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, (uint)mask, (uint)filter);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b> <b>[entry point: <c>wglCreateAssociatedContextAMD</c>]</b><br/>  </summary>
             public static IntPtr CreateAssociatedContextAMD(uint id) => WGLPointers._wglCreateAssociatedContextAMD_fnptr(id);
@@ -117,7 +118,7 @@ namespace OpenTK.Graphics.Wgl
             public static uint GetGPUIDsAMD(uint maxCount, uint* ids) => WGLPointers._wglGetGPUIDsAMD_fnptr(maxCount, ids);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b> <b>[entry point: <c>wglGetGPUInfoAMD</c>]</b><br/>  </summary>
-            public static int GetGPUInfoAMD(uint id, GPUPropertyAMD property, All dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, (int)property, (uint)dataType, size, data);
+            public static int GetGPUInfoAMD(uint id, GPUPropertyAMD property, PixelType dataType, uint size, void* data) => WGLPointers._wglGetGPUInfoAMD_fnptr(id, (int)property, (uint)dataType, size, data);
             
             /// <summary> <b>[requires: WGL_AMD_gpu_association]</b> <b>[entry point: <c>wglMakeAssociatedContextCurrentAMD</c>]</b><br/>  </summary>
             public static int MakeAssociatedContextCurrentAMD(IntPtr hglrc) => WGLPointers._wglMakeAssociatedContextCurrentAMD_fnptr(hglrc);
@@ -352,7 +353,7 @@ namespace OpenTK.Graphics.Wgl
             public static int BindVideoImageNV(IntPtr hVideoDevice, IntPtr hPbuffer, VideoOutputBuffer iVideoBuffer) => WGLPointers._wglBindVideoImageNV_fnptr(hVideoDevice, hPbuffer, (int)iVideoBuffer);
             
             /// <summary> <b>[requires: WGL_NV_copy_image]</b> <b>[entry point: <c>wglCopyImageSubDataNV</c>]</b><br/>  </summary>
-            public static int CopyImageSubDataNV(IntPtr hSrcRC, uint srcName, All srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr hDstRC, uint dstName, All dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth) => WGLPointers._wglCopyImageSubDataNV_fnptr(hSrcRC, srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
+            public static int CopyImageSubDataNV(IntPtr hSrcRC, uint srcName, TextureTarget srcTarget, int srcLevel, int srcX, int srcY, int srcZ, IntPtr hDstRC, uint dstName, TextureTarget dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int width, int height, int depth) => WGLPointers._wglCopyImageSubDataNV_fnptr(hSrcRC, srcName, (uint)srcTarget, srcLevel, srcX, srcY, srcZ, hDstRC, dstName, (uint)dstTarget, dstLevel, dstX, dstY, dstZ, width, height, depth);
             
             /// <summary> <b>[requires: WGL_NV_gpu_affinity]</b> <b>[entry point: <c>wglCreateAffinityDCNV</c>]</b><br/>  </summary>
             public static IntPtr CreateAffinityDCNV(IntPtr* phGpuList) => WGLPointers._wglCreateAffinityDCNV_fnptr(phGpuList);
@@ -376,7 +377,7 @@ namespace OpenTK.Graphics.Wgl
             public static IntPtr DXOpenDeviceNV(void* dxDevice) => WGLPointers._wglDXOpenDeviceNV_fnptr(dxDevice);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b> <b>[entry point: <c>wglDXRegisterObjectNV</c>]</b><br/>  </summary>
-            public static IntPtr DXRegisterObjectNV(IntPtr hDevice, void* dxObject, uint name, All type, WGLDXInteropMaskNV access) => WGLPointers._wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, (uint)type, (uint)access);
+            public static IntPtr DXRegisterObjectNV(IntPtr hDevice, void* dxObject, uint name, ObjectTypeDX type, WGLDXInteropMaskNV access) => WGLPointers._wglDXRegisterObjectNV_fnptr(hDevice, dxObject, name, (uint)type, (uint)access);
             
             /// <summary> <b>[requires: WGL_NV_DX_interop]</b> <b>[entry point: <c>wglDXSetResourceShareHandleNV</c>]</b><br/>  </summary>
             public static int DXSetResourceShareHandleNV(void* dxObject, IntPtr shareHandle) => WGLPointers._wglDXSetResourceShareHandleNV_fnptr(dxObject, shareHandle);
