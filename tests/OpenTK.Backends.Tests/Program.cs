@@ -27,6 +27,8 @@ namespace OpenTK.Backends.Tests
         public static IShellComponent? ShellComponent;
         public static IJoystickComponent? JoystickComponent;
 
+        public static WindowManager WindowManager { get; private set; }
+
         public static WindowHandle Window;
         static OpenGLContextHandle OpenGLContext;
 
@@ -102,6 +104,8 @@ namespace OpenTK.Backends.Tests
 
             Window = WindowComp.Create(hints);
             OpenGLContext = OpenGLComp.CreateFromWindow(Window);
+
+            WindowManager = new WindowManager(Window, OpenGLContext);
 
             GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(OpenGLContext));
 
@@ -196,6 +200,8 @@ namespace OpenTK.Backends.Tests
                 MainTabContainer.Paint();
 
                 Render();
+
+                WindowManager.RenderChildWindows();
             }
         }
 
