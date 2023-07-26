@@ -40,6 +40,11 @@ namespace OpenTK.Backends.Tests
         {
             base.Paint();
 
+            if (selectedWindow > WindowManager.Count)
+            {
+                selectedWindow = -1;
+            }
+
             if (ImGui.BeginTable("window_caps_id", 2, ImGuiTableFlags.Borders))
             {
                 ImGui.TableSetupColumn("Capability", ImGuiTableColumnFlags.WidthFixed);
@@ -75,12 +80,19 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginListBox("Windows"))
             {
+                PaintWindow(WindowManager.RootWindow, 0);
                 for (int i = 0; i < WindowManager.Count; i++)
+                {
+                    PaintWindow(WindowManager[i].Window, i + 1);
+                }
+                ImGui.EndListBox();
+
+                void PaintWindow(WindowHandle window, int i)
                 {
                     string name;
                     try
                     {
-                        name = WindowComponent!.GetTitle(WindowManager.Windows[i]);
+                        name = WindowComponent!.GetTitle(window);
                     }
                     catch (Exception e)
                     {
@@ -88,7 +100,7 @@ namespace OpenTK.Backends.Tests
                         name = $"Window #{i} (unable to get name)";
                     }
 
-                    if (WindowManager.Windows[i] == Program.Window)
+                    if (window == Program.Window)
                     {
                         name += " (this window)";
                     }
@@ -101,7 +113,10 @@ namespace OpenTK.Backends.Tests
 
                         try
                         {
-                            titleString = WindowComponent!.GetTitle(WindowManager.Windows[selectedWindow]);
+                            titleString =
+                                (selectedWindow == 0)
+                                ? WindowComponent!.GetTitle(Program.Window)
+                                : WindowComponent!.GetTitle(WindowManager[selectedWindow - 1].Window);
                         }
                         catch (Exception e)
                         {
@@ -112,7 +127,7 @@ namespace OpenTK.Backends.Tests
 
                     if (isSelected) ImGui.SetItemDefaultFocus();
 
-                    if (WindowManager.Windows[i] != Program.Window)
+                    if (window != Program.Window)
                     {
                         ImGui.SameLine();
                         ImGui.PushID(i);
@@ -120,7 +135,7 @@ namespace OpenTK.Backends.Tests
                         {
                             try
                             {
-                                WindowManager.RemoveWindow(i);
+                                WindowManager.RemoveAt(i - 1);
 
                                 if (selectedWindow == i)
                                 {
@@ -129,14 +144,12 @@ namespace OpenTK.Backends.Tests
                             }
                             catch (Exception e)
                             {
-
                                 throw;
                             }
                         }
                         ImGui.PopID();
                     }
                 }
-                ImGui.EndListBox();
             }
             
 
@@ -264,7 +277,10 @@ namespace OpenTK.Backends.Tests
                     try
                     {
                         WindowHandle handle = WindowComponent!.Create(openglSettings.Copy());
-                        int index = WindowManager.AddWindow(handle, null);
+
+                        int index = WindowManager.Count + 1;
+                        WindowManager.Add(handle);
+
                         WindowComponent.SetTitle(handle, $"Child Window #{index}");
                     }
                     catch (Exception e)
@@ -277,7 +293,10 @@ namespace OpenTK.Backends.Tests
 
             if (selectedWindow != -1)
             {
-                WindowHandle window = WindowManager.Windows[selectedWindow];
+                WindowHandle window =
+                    (selectedWindow == 0)
+                        ? WindowManager.RootWindow
+                        : WindowManager[selectedWindow - 1].Window;
 
                 if (ImGui.CollapsingHeader("Info"))
                 {

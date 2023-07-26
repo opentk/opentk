@@ -105,7 +105,7 @@ namespace OpenTK.Backends.Tests
             Window = WindowComp.Create(hints);
             OpenGLContext = OpenGLComp.CreateFromWindow(Window);
 
-            WindowManager = new WindowManager(Window, OpenGLContext);
+            WindowManager = new WindowManager(WindowComp, OpenGLComp, Window, OpenGLContext);
 
             GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(OpenGLContext));
 

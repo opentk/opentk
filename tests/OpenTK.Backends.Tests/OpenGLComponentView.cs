@@ -29,7 +29,6 @@ namespace OpenTK.Backends.Tests
         private string lastActiveWindowLabel = string.Empty;
         private string[] testApps = TestApps.ByName.Keys.ToArray();
         private int lastActiveApp = 0;
-
         private string savePath = Path.Combine(Environment.CurrentDirectory, "opengl.ini");
 
         private readonly Regex vendorRegex = new Regex("GL_([0-9a-zA-Z]+)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
@@ -92,21 +91,41 @@ namespace OpenTK.Backends.Tests
             dummyBoolean = canCanShareContexts;
             ImGui.Checkbox("Can Share Context", ref dummyBoolean);
 
+            ImGui.SeparatorText("Contexts");
+
+            if (
+                lastActiveWindowIndex >= Program.WindowManager.Count ||
+                Program.WindowManager.Count == 0)
+            {
+                lastActiveWindowIndex = -1;
+                lastActiveWindowLabel = "???";
+            }
+
+            if (lastActiveWindowIndex == -1 && Program.WindowManager.Count != 0)
+            {
+                lastActiveWindowIndex = 0;
+                var data = Program.WindowManager[0];
+                string title = Program.WindowComp.GetTitle(data.Window);
+                lastActiveWindowLabel = $"{title} ({(data.Context == null ? "no context" : "opengl")})";
+            }
 
             if (lastActiveWindowIndex == -1)
             {
-                lastActiveWindowIndex = 0;
-                lastActiveWindowLabel = $"{Program.WindowComp.GetTitle(Program.Window)} (this window)";
-            }
+                ImGui.BeginDisabled();
+                if (ImGui.BeginCombo("Child Window", "No child windows"))
+                    ImGui.EndCombo();
+                ImGui.EndDisabled();
 
-            ImGui.SeparatorText("Contexts");
-            if (ImGui.BeginCombo("Window", lastActiveWindowLabel))
+                lastActiveWindowIndex = -1;
+                lastActiveWindowLabel = "???";
+            }
+            else if (ImGui.BeginCombo("Child Window", lastActiveWindowLabel))
             {
                 for (int i = 0; i < Program.WindowManager.Count; i++)
                 {
-                    (WindowHandle window, OpenGLContextHandle? context) = Program.WindowManager[i];
-                    string title = Program.WindowComp.GetTitle(window);
-                    string label = i == 0 ? $"{title} (this window)" : $"{title} ({(context == null ? "no context" : "opengl")})";
+                    var data = Program.WindowManager[i];
+                    string title = Program.WindowComp.GetTitle(data.Window);
+                    string label = $"{title} ({(data.Context == null ? "no context" : "opengl")})";
 
                     if (ImGui.Selectable(label))
                     {
@@ -118,37 +137,49 @@ namespace OpenTK.Backends.Tests
             }
 
             ImGui.SameLine();
-            ImGui.BeginDisabled(lastActiveWindowIndex == 0);
+            if (lastActiveWindowIndex == -1)
             {
-                (WindowHandle window, OpenGLContextHandle? context) = Program.WindowManager[lastActiveWindowIndex];
+                ImGui.BeginDisabled();
+                    ImGui.Button("Create");
+                ImGui.EndDisabled();
+            }
+            else
+            {
+                var data = Program.WindowManager[lastActiveWindowIndex];
 
-                if (context == null)
+                if (data.Context == null)
                 {
                     if (ImGui.Button("Create"))
                     {
-                        OpenGLContextHandle newContext = Program.OpenGLComp.CreateFromWindow(window);
-                        Program.WindowManager.SetOpenGLContext(lastActiveWindowIndex, newContext);
+                        OpenGLContextHandle newContext = Program.OpenGLComp.CreateFromWindow(data.Window);
+                        data.Context = newContext;
                     }
                 }
                 else
                 {
                     if (ImGui.Button("Destroy"))
                     {
+                        OpenGLContextHandle context = data.Context;
+                        data.Context = null;
                         Program.OpenGLComp.DestroyContext(context);
-                        Program.WindowManager.SetOpenGLContext(lastActiveWindowIndex, null);
                     }
                 }
             }
-            ImGui.EndDisabled();
 
             ImGui.Combo("Application", ref lastActiveApp, testApps, testApps.Length);
             ImGui.SameLine();
-            if (ImGui.Button("Launch"))
-            {
-                Program.WindowManager.SetTestApp(lastActiveWindowIndex, TestApps.Create(lastActiveApp));
-            }
 
-            ImGui.SeparatorText("Active Context Information");
+            ImGui.BeginDisabled(
+                lastActiveWindowIndex == -1 ||
+                Program.WindowManager[lastActiveWindowIndex].Application?.GetType() == TestApps.All[lastActiveApp]
+            );
+            if (ImGui.Button("Launch") && lastActiveWindowIndex != -1)
+            {
+                Program.WindowManager[lastActiveWindowIndex].Application = TestApps.Create(lastActiveApp);
+            }
+            ImGui.EndDisabled();
+
+            ImGui.SeparatorText("Main Context Information");
             ImGui.BeginDisabled();
                 dummyString = glVersion;
                 ImGui.InputText("OpenGL Version", ref dummyString, 1024);
@@ -169,7 +200,7 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginChild("opengl_view_extensions_child_frame", Vector2.Zero, true, ImGuiWindowFlags.AlwaysVerticalScrollbar))
             {
-                const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.OpenOnDoubleClick;
+                const ImGuiTreeNodeFlags VENDOR_FLAGS = ImGuiTreeNodeFlags.OpenOnArrow;
                 const ImGuiTreeNodeFlags EXTENSION_FLAGS = ImGuiTreeNodeFlags.Leaf | ImGuiTreeNodeFlags.Bullet;
 
                 foreach (var(vendor, extensions) in extensionGroups)
