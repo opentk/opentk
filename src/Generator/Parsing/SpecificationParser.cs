@@ -21,7 +21,7 @@ namespace Generator.Parsing
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
-            List<Command>? commands = ParseCommands(xdocument.Root, ignoreFunctions);
+            List<NativeFunction> functions = ParseCommands(xdocument.Root, ignoreFunctions);
             List<EnumEntry>? enums = ParseEnums(xdocument.Root, currentFile);
 
             List<Feature>? features = ParseFeatures(xdocument.Root);
@@ -29,7 +29,7 @@ namespace Generator.Parsing
 
             List<API> APIs = MakeAPIs(features, extensions);
 
-            return new Specification2(commands, enums, APIs);
+            return new Specification2(functions, enums, APIs);
         }
 
         private static List<API> MakeAPIs(List<Feature> features, List<Extension> extensions)
@@ -253,29 +253,30 @@ namespace Generator.Parsing
             }
         }
 
-        private static List<Command> ParseCommands(XElement input, List<string> ignoreFunctions)
+        // FIXME: Maybe change name?
+        private static List<NativeFunction> ParseCommands(XElement input, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of commands.");
             XElement? xelement = input.Element("commands")!;
 
-            List<Command>? commands = new List<Command>();
-            foreach (XElement? element in xelement.Elements("command"))
+            List<NativeFunction> functions = new List<NativeFunction>();
+            foreach (XElement element in xelement.Elements("command"))
             {
-                Command? command = ParseCommand(element);
+                NativeFunction function = ParseCommand(element);
 
                 // Don't add this command to the list if we should ignore it.
-                if (ignoreFunctions.Contains(command.EntryPoint))
+                if (ignoreFunctions.Contains(function.EntryPoint))
                 {
                     continue;
                 }
 
-                commands.Add(command);
+                functions.Add(function);
             }
 
-            return commands;
+            return functions;
         }
 
-        private static Command ParseCommand(XElement c)
+        private static NativeFunction ParseCommand(XElement c)
         {
             XElement? proto = c.Element("proto");
             if (proto == null) throw new Exception("Missing proto tag!");
@@ -283,25 +284,37 @@ namespace Generator.Parsing
             string? entryPoint = proto.Element("name")?.Value;
             if (entryPoint == null) throw new Exception("Missing name tag!");
 
-            List<GLParameter>? parameterList = new List<GLParameter>();
+            HashSet<string> referencedEnumGroups = new HashSet<string>();
+
+            List<Parameter>? paramList = new List<Parameter>();
             foreach (XElement? element in c.Elements("param"))
             {
-                string? paramName = element.Element("name")?.Value;
-                PType? ptype = ParsePType(element);
+                string paramName = element.Element("name")?.Value ?? throw new Exception("Missing parameter name!");
+                string mangledName = NameMangler.MangleParameterName(paramName);
+
+                //PType? ptype = ParsePType(element);
+                BaseCSType type = ParsePType2(element);
+
+                // FIXME: Get group info!
+                //if (type.Group != null) referencedEnumGroups.Add(ptype.Group.Name);
 
                 string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
-
-                if (paramName == null) throw new Exception("Missing parameter name!");
 
                 string? length = element.Attribute("len")?.Value;
                 Expression? paramLength = length == null ? null : ParseExpression(length);
 
-                parameterList.Add(new GLParameter(ptype, kind, paramName, paramLength));
+                // FIXME: Parse kinds in some way?
+                paramList.Add(new Parameter(type, kind, mangledName, paramLength));
             }
 
-            PType? returnType = ParsePType(proto);
+            //PType? returnType = ParsePType(proto);
+            BaseCSType returnType = ParsePType2(proto);
+            // FIXME: Get group info!
+            //if (returnType.Group != null) referencedEnumGroups.Add(returnType.Group.Name);
+            
+            string functionName = NameMangler.MangleFunctionName(entryPoint);
 
-            return new Command(entryPoint, returnType, parameterList.ToArray());
+            return new NativeFunction(entryPoint, functionName, paramList, returnType, referencedEnumGroups.ToArray());
         }
 
         private static Expression ParseExpression(string expression)
@@ -420,6 +433,58 @@ namespace Generator.Parsing
             else throw new Exception($"Could not parse expression '{expression}'");
         }
 
+        private static BaseCSType ParsePType2(XElement t)
+        {
+            string? group = t.Attribute("group")?.Value;
+            GroupRef? groupRef;
+            if (group != null)
+            {
+                if (group.StartsWith("gl::"))
+                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "gl::"), GLFile.GL);
+                else if (group.StartsWith("wgl::"))
+                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "wgl::"), GLFile.WGL);
+                else if (group.StartsWith("glx::"))
+                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
+                else
+                    // FIXME: Get the input api!
+                    groupRef = new GroupRef(group, default);
+            }
+            else
+            {
+                groupRef = null;
+            }
+
+            string? className = t.Attribute("class")?.Value;
+            HandleType? handle = className switch
+            {
+                null => null,
+                "program" => HandleType.ProgramHandle,
+                "program pipeline" => HandleType.ProgramPipelineHandle,
+                "texture" => HandleType.TextureHandle,
+                "buffer" => HandleType.BufferHandle,
+                "shader" => HandleType.ShaderHandle,
+                "query" => HandleType.QueryHandle,
+                "framebuffer" => HandleType.FramebufferHandle,
+                "renderbuffer" => HandleType.RenderbufferHandle,
+                "sampler" => HandleType.SamplerHandle,
+                "transform feedback" => HandleType.TransformFeedbackHandle,
+                "vertex array" => HandleType.VertexArrayHandle,
+                // The "Sync" class is already marked with the "GLSync" type which is handled differently from the other types
+                // We leave it null here to let the "GLSync" handling do this.
+                "sync" => null,
+                "display list" => HandleType.DisplayListHandle,
+                "perf query handle" => HandleType.PerfQueryHandle,
+                "perf query id" => null,
+                _ => throw new Exception(className + " is not a supported handle type yet!"),
+            };
+
+            string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
+
+            BaseCSType type = ParseType2(str, handle, groupRef);
+            
+            return type;
+        }
+
         private static PType ParsePType(XElement t)
         {
             string? group = t.Attribute("group")?.Value;
@@ -468,6 +533,210 @@ namespace Generator.Parsing
             string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
             return new PType(ParseType(str), handle, groupRef);
+        }
+
+        private static BaseCSType ParseType2(string type, HandleType? handle, GroupRef? group)
+        {
+            type = type.Trim();
+
+            if (type.EndsWith('*'))
+            {
+                // This removes the last character of the string, ^1 is an exclusive upper bound.
+                string? withoutAsterisk = type[0..^1].TrimEnd();
+
+                // A pointer is only const if const is directly in front of the pointer,
+                // if the const is in front of the type the type is the constant and not the pointer.
+                bool @const = false;
+                if (withoutAsterisk.EndsWith("const"))
+                {
+                    @const = true;
+                    withoutAsterisk = withoutAsterisk[0..^"const".Length];
+                }
+
+                BaseCSType? baseType = ParseType2(withoutAsterisk, handle, group);
+
+                return new CSPointer(baseType, @const);
+            }
+            else
+            {
+                bool @const = false;
+                if (type.StartsWith("const"))
+                {
+                    @const = true;
+                    type = type["const".Length..].TrimStart();
+                }
+
+                // This is needed for _cl_context, and _cl_event
+                // We don't care about struct here because it doesn't add any information (we are not a c compiler).
+                if (type.StartsWith("struct"))
+                {
+                    type = type["struct".Length..].TrimStart();
+                }
+
+                // To make OpenTK 5 more like OpenTK 4 we want handles to be int instead of uint
+                if (handle != null)
+                {
+                    return new CSPrimitive("int", @const);
+                }
+
+                BaseCSType csType;
+                {
+                    csType = type switch
+                    {
+                        "void" => new CSVoid(@const),
+                        "GLenum" => new CSEnum(group?.Name ?? "All", CSPrimitive.Uint(@const), @const),
+                        "GLboolean" => new CSBool8(@const),
+                        "GLbitfield" => group != null ?
+                                            new CSEnum(group?.Name ?? "All", CSPrimitive.Uint(@const), @const) :
+                                            CSPrimitive.Uint(@const),
+                        "GLvoid" => new CSVoid(@const),
+                        "GLbyte" => CSPrimitive.Sbyte(@const),
+                        "GLubyte" => CSPrimitive.Byte(@const),
+                        "GLshort" => CSPrimitive.Short(@const),
+                        "GLushort" => CSPrimitive.Ushort(@const),
+                        "GLint" => CSPrimitive.Int(@const),
+                        "GLuint" => CSPrimitive.Uint(@const),
+                        "GLclampx" => CSPrimitive.Int(@const),
+                        "GLsizei" => CSPrimitive.Int(@const),
+                        "GLfloat" => CSPrimitive.Float(@const),
+                        "GLclampf" => CSPrimitive.Float(@const),
+                        "GLdouble" => CSPrimitive.Double(@const),
+                        "GLclampd" => CSPrimitive.Double(@const),
+                        "GLeglClientBufferEXT" => new CSPointer(new CSVoid(false), @const),
+                        "GLeglImageOES" => new CSPointer(new CSVoid(false), @const),
+                        "GLchar" => new CSChar8(@const),
+                        "GLcharARB" => new CSChar8(@const),
+                        "GLhalf" => CSPrimitive.Half(@const),
+                        "GLhalfARB" => CSPrimitive.Half(@const),
+                        "GLfixed" => CSPrimitive.Int(@const),
+                        "GLintptr" => CSPrimitive.IntPtr(@const),
+                        "GLintptrARB" => CSPrimitive.IntPtr(@const),
+                        "GLsizeiptr" => CSPrimitive.Nint(@const),
+                        "GLsizeiptrARB" => CSPrimitive.Nint(@const),
+                        "GLint64" => CSPrimitive.Long(@const),
+                        "GLint64EXT" => CSPrimitive.Long(@const),
+                        "GLuint64" => CSPrimitive.Ulong(@const),
+                        "GLuint64EXT" => CSPrimitive.Ulong(@const),
+                        "GLhalfNV" => CSPrimitive.Half(@const),
+                        "GLvdpauSurfaceNV" => CSPrimitive.IntPtr(@const),
+
+                        // This type is platform specific on apple.
+                        "GLhandleARB" => new CSStructPrimitive("GLHandleARB", @const, new CSPrimitive("IntPtr", @const)),
+
+                        // The following have a custom c# implementation in the writer.
+                        "GLsync" => new CSStructPrimitive("GLSync", @const, new CSPrimitive("IntPtr", @const)),
+                        "_cl_context" => new CSStructPrimitive("CLContext", @const, new CSPrimitive("IntPtr", @const)),
+                        "_cl_event" => new CSStructPrimitive("CLEvent", @const, new CSPrimitive("IntPtr", @const)),
+                        "GLDEBUGPROC" => new CSFunctionPointer("GLDebugProc", @const),
+                        "GLDEBUGPROCARB" => new CSFunctionPointer("GLDebugProcARB", @const),
+                        "GLDEBUGPROCKHR" => new CSFunctionPointer("GLDebugProcKHR", @const),
+                        "GLDEBUGPROCAMD" => new CSFunctionPointer("GLDebugProcAMD", @const),
+                        "GLDEBUGPROCNV" => new CSFunctionPointer("GLDebugProcNV", @const),
+                        // This isn't actually used in the output bindings.
+                        // But we leave it here as a primitive type so we have the information if we need it later.
+                        // - 2021-06-23
+                        "GLVULKANPROCNV" => new CSFunctionPointer("GLVulkanProcNV", @const),
+
+                        // WGL.xml types
+                        "BOOL" => new CSBool32(@const),
+                        "CHAR" => new CSChar8(@const),
+                        "DWORD" => CSPrimitive.Uint(@const),
+                        "FLOAT" => CSPrimitive.Float(@const),
+                        "HANDLE" => CSPrimitive.IntPtr(@const),
+                        "HDC" => CSPrimitive.IntPtr(@const),
+                        "HGLRC" => CSPrimitive.IntPtr(@const),
+                        "INT" => CSPrimitive.Int(@const),
+                        "INT32" => CSPrimitive.Int(@const),
+                        "INT64" => CSPrimitive.Long(@const),
+                        "PROC" => new CSFunctionPointer("???", @const),
+                        "RECT" => new CSStruct("Rect", @const),
+                        "LPCSTR" => new CSPointer(new CSChar16(true), @const),
+                        "LPVOID" => CSPrimitive.IntPtr(@const),
+                        "UINT" => CSPrimitive.Uint(@const),
+                        "USHORT" => CSPrimitive.Ushort(@const),
+                        "VOID" => new CSVoid(@const),
+                        "COLORREF" => new CSStructPrimitive("ColorRef", @const, new CSPrimitive("uint", false)),
+                        "HENHMETAFILE" => CSPrimitive.IntPtr(@const),
+                        "LAYERPLANEDESCRIPTOR" => new CSStruct("LayerPlaneDescriptor", @const),
+                        // FIXME?
+                        "LPGLYPHMETRICSFLOAT" => CSPrimitive.IntPtr(@const),
+                        "PIXELFORMATDESCRIPTOR" => new CSStruct("PixelFormatDescriptor", @const),
+                        "HPBUFFERARB" => CSPrimitive.IntPtr(@const),
+                        "HPBUFFEREXT" => CSPrimitive.IntPtr(@const),
+                        "HVIDEOOUTPUTDEVICENV" => CSPrimitive.IntPtr(@const),
+                        "HPVIDEODEV" => CSPrimitive.IntPtr(@const),
+                        "HPGPUNV" => CSPrimitive.IntPtr(@const),
+                        "HGPUNV" => CSPrimitive.IntPtr(@const),
+                        "HVIDEOINPUTDEVICENV" => CSPrimitive.IntPtr(@const),
+                        "GPU_DEVICE" => new CSStruct("_GPU_DEVICE", @const),
+                        // FIXME? _GPU_DEVICE*
+                        "PGPU_DEVICE" => new CSPointer(new CSStruct("_GPU_DEVICE", false), @const),
+
+                        "int" => CSPrimitive.Int(@const),
+                        "unsigned int" => CSPrimitive.Uint(@const),
+                        "char" => new CSChar8(@const),
+                        "float" => CSPrimitive.Float(@const),
+                        "long" => CSPrimitive.Long(@const),
+                        "unsigned long" => CSPrimitive.Ulong(@const),
+
+                        // GLX types
+
+                        "Bool" => new CSBool8(@const),
+                        "Colormap" => new CSStructPrimitive("Colormap", @const, new CSPrimitive("nuint", @const)),
+                        "Display" => new CSStruct("Display", @const), // FIXME: This is just a struct?
+                        "Font" => new CSStructPrimitive("Font", @const, new CSPrimitive("nuint", @const)),
+                        "Pixmap" => new CSStructPrimitive("Pixmap", @const, new CSPrimitive("nuint", @const)),
+                        "Screen" => new CSStruct("Screen", @const),
+                        "Status" => new CSPrimitive("int", @const), // FIXME: Maybe type?
+                        "Window" => new CSStructPrimitive("Window", @const, new CSPrimitive("nuint", @const)),
+                        "XVisualInfo" => new CSStruct("XVisualInfo", @const),
+
+                        // FIXME: These types are conditionally removed from the header if _DM_BUFFER_H_ is not defined
+                        // Should we have some way to say that specific functions should be ignored?
+                        "DMbuffer" => new CSVoid(@const),
+                        "DMparams" => new CSVoid(@const),
+
+                        // FIXME: These types are conditionally removed from the header if _VL_H_ is not defined.
+                        // Should we have some way to say that specific functions should be ignored?
+                        "VLNode" => new CSVoid(@const),
+                        "VLPath" => new CSVoid(@const),
+                        "VLServer" => new CSVoid(@const),
+
+                        "__GLXextFuncPtr" => new CSFunctionPointer("__GLXextFuncPtr", @const), // FIXME!
+
+                        "GLXFBConfigID" => new CSStructPrimitive("FBConfigID", @const, new CSPrimitive("nuint", @const)),
+                        "GLXFBConfig" => new CSStructPrimitive("GLXFBConfig", @const, new CSPrimitive("IntPtr", @const)),
+                        "GLXContextID" => new CSStructPrimitive("GLXContextID", @const, new CSPrimitive("nuint", @const)),
+                        "GLXContext" => new CSStructPrimitive("GLXContext", @const, new CSPrimitive("IntPtr", @const)),
+                        "GLXPixmap" => new CSStructPrimitive("GLXPixmap", @const, new CSPrimitive("nuint", @const)),
+                        "GLXDrawable" => new CSStructPrimitive("GLXDrawable", @const, new CSPrimitive("nuint", @const)),
+                        "GLXWindow" => new CSStructPrimitive("GLXWindow", @const, new CSPrimitive("nuint", @const)),
+                        "GLXPbuffer" => new CSStructPrimitive("GLXPbuffer", @const, new CSPrimitive("nuint", @const)),
+                        "GLXVideoCaptureDeviceNV" => new CSStructPrimitive("GLXVideoCaptureDeviceNV", @const, new CSPrimitive("nuint", @const)),
+                        "GLXVideoDeviceNV" => new CSStructPrimitive("GLXVideoDeviceNV", @const, new CSPrimitive("uint", @const)),
+                        "GLXVideoSourceSGIX" => new CSStructPrimitive("GLXVideoSourceSGIX", @const, new CSPrimitive("nuint", @const)),
+                        "GLXFBConfigIDSGIX" => new CSStructPrimitive("GLXFBConfigIDSGIX", @const, new CSPrimitive("nuint", @const)),
+                        "GLXFBConfigSGIX" => new CSStructPrimitive("GLXFBConfigSGIX", @const, new CSPrimitive("IntPtr", @const)),
+                        "GLXPbufferSGIX" => new CSStructPrimitive("GLXPbufferSGIX", @const, new CSPrimitive("nuint", @const)),
+                        "GLXPbufferClobberEvent" => new CSStruct("GLXPbufferClobberEvent", @const),
+                        "GLXBufferSwapComplete" => new CSStruct("GLXBufferSwapComplete", @const),
+                        "GLXEvent" => new CSStruct("GLXEvent", @const),
+                        "GLXStereoNotifyEventEXT" => new CSStruct("GLXStereoNotifyEventEXT", @const),
+                        "GLXBufferClobberEventSGIX" => new CSStruct("GLXBufferClobberEventSGIX", @const),
+                        "GLXHyperpipeNetworkSGIX" => new CSStruct("GLXHyperpipeNetworkSGIX", @const),
+                        "GLXHyperpipeConfigSGIX" => new CSStruct("GLXHyperpipeConfigSGIX", @const),
+                        "GLXPipeRect" => new CSStruct("GLXPipeRect", @const),
+                        "GLXPipeRectLimits" => new CSStruct("GLXPipeRectLimits", @const),
+
+                        "int32_t" => CSPrimitive.Int(@const),
+                        "int64_t" => CSPrimitive.Long(@const),
+
+                        _ => throw new Exception($"Type conversion has not been created for type {type}"),
+                    };
+                }
+
+                return csType;
+            }
         }
 
         private static GLType ParseType(string type)

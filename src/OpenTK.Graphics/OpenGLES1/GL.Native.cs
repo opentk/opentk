@@ -835,7 +835,7 @@ namespace OpenTK.Graphics.OpenGLES1
         /// <param name="type">Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, and GL_UNSIGNED_SHORT_5_5_5_1.</param>
         /// <param name="pixels">Specifies a pointer to the image data in memory.</param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es1.1/xhtml/glTexImage2D.xml" /></remarks>
-        public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
+        public static void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, internalformat, width, height, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glTexParameterf</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target">Specifies the target texture, which must be GL_TEXTURE_2D.</param>

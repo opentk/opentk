@@ -8775,14 +8775,14 @@ namespace OpenTK.Graphics.OpenGL
                 Marshal.FreeCoTaskMem((IntPtr)pEntryPoint_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage1D(TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage1D(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        /// <inheritdoc cref="TexImage1D(TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage1D(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage1D(target, level, internalformat, width, border, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="TexImage1D(TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        /// <inheritdoc cref="TexImage1D(TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -8790,8 +8790,8 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage1D(target, level, internalformat, width, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage1D(TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
+        /// <inheritdoc cref="TexImage1D(TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -8799,8 +8799,8 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage1D(target, level, internalformat, width, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage1D(TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+        /// <inheritdoc cref="TexImage1D(TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage1D<T1>(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -8808,14 +8808,14 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage1D(target, level, internalformat, width, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -8823,8 +8823,8 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -8832,8 +8832,8 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -8841,14 +8841,14 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -8856,8 +8856,8 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -8865,8 +8865,8 @@ namespace OpenTK.Graphics.OpenGL
                 TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -26962,24 +26962,24 @@ namespace OpenTK.Graphics.OpenGL
                     NormalStream3svATI(stream, coords_ptr);
                 }
             }
-            /// <inheritdoc cref="SetFragmentShaderConstantATI(FragmentShaderConATI, float*)"/>
-            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, ReadOnlySpan<float> value)
+            /// <inheritdoc cref="SetFragmentShaderConstantATI(uint, float*)"/>
+            public static unsafe void SetFragmentShaderConstantATI(uint dst, ReadOnlySpan<float> value)
             {
                 fixed (float* value_ptr = value)
                 {
                     SetFragmentShaderConstantATI(dst, value_ptr);
                 }
             }
-            /// <inheritdoc cref="SetFragmentShaderConstantATI(FragmentShaderConATI, float*)"/>
-            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, float[] value)
+            /// <inheritdoc cref="SetFragmentShaderConstantATI(uint, float*)"/>
+            public static unsafe void SetFragmentShaderConstantATI(uint dst, float[] value)
             {
                 fixed (float* value_ptr = value)
                 {
                     SetFragmentShaderConstantATI(dst, value_ptr);
                 }
             }
-            /// <inheritdoc cref="SetFragmentShaderConstantATI(FragmentShaderConATI, float*)"/>
-            public static unsafe void SetFragmentShaderConstantATI(FragmentShaderConATI dst, in float value)
+            /// <inheritdoc cref="SetFragmentShaderConstantATI(uint, float*)"/>
+            public static unsafe void SetFragmentShaderConstantATI(uint dst, in float value)
             {
                 fixed (float* value_ptr = &value)
                 {
@@ -32271,14 +32271,14 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexGenivEXT(texunit, coord, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 MultiTexImage1DEXT(texunit, target, level, internalformat, width, border, format, type, pixels_vptr);
             }
-            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -32286,8 +32286,8 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage1DEXT(texunit, target, level, internalformat, width, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
+            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -32295,8 +32295,8 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage1DEXT(texunit, target, level, internalformat, width, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+            /// <inheritdoc cref="MultiTexImage1DEXT(TextureUnit, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage1DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -32304,14 +32304,14 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage1DEXT(texunit, target, level, internalformat, width, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 MultiTexImage2DEXT(texunit, target, level, internalformat, width, height, border, format, type, pixels_vptr);
             }
-            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -32319,8 +32319,8 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage2DEXT(texunit, target, level, internalformat, width, height, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -32328,8 +32328,8 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage2DEXT(texunit, target, level, internalformat, width, height, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+            /// <inheritdoc cref="MultiTexImage2DEXT(TextureUnit, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage2DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -32337,14 +32337,14 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage2DEXT(texunit, target, level, internalformat, width, height, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 MultiTexImage3DEXT(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
             }
-            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -32352,8 +32352,8 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage3DEXT(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -32361,8 +32361,8 @@ namespace OpenTK.Graphics.OpenGL
                     MultiTexImage3DEXT(texunit, target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+            /// <inheritdoc cref="MultiTexImage3DEXT(TextureUnit, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void MultiTexImage3DEXT<T1>(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34798,14 +34798,14 @@ namespace OpenTK.Graphics.OpenGL
                     TexSubImage3DEXT(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage1DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage1DEXT(int texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 TextureImage1DEXT(texture, target, level, internalformat, width, border, format, type, pixels_vptr);
             }
-            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -34813,8 +34813,8 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage1DEXT(texture, target, level, internalformat, width, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
+            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -34822,8 +34822,8 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage1DEXT(texture, target, level, internalformat, width, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, InternalFormat, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
+            /// <inheritdoc cref="TextureImage1DEXT(int, TextureTarget, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage1DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34831,14 +34831,14 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage1DEXT(texture, target, level, internalformat, width, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage2DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage2DEXT(int texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 TextureImage2DEXT(texture, target, level, internalformat, width, height, border, format, type, pixels_vptr);
             }
-            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -34846,8 +34846,8 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage2DEXT(texture, target, level, internalformat, width, height, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -34855,8 +34855,8 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage2DEXT(texture, target, level, internalformat, width, height, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+            /// <inheritdoc cref="TextureImage2DEXT(int, TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage2DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -34864,14 +34864,14 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage2DEXT(texture, target, level, internalformat, width, height, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage3DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage3DEXT(int texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
             {
                 void* pixels_vptr = (void*)pixels;
                 TextureImage3DEXT(texture, target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
             }
-            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -34879,8 +34879,8 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage3DEXT(texture, target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = pixels)
@@ -34888,8 +34888,8 @@ namespace OpenTK.Graphics.OpenGL
                     TextureImage3DEXT(texture, target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
                 }
             }
-            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
-            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+            /// <inheritdoc cref="TextureImage3DEXT(int, TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
+            public static unsafe void TextureImage3DEXT<T1>(int texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
                 where T1 : unmanaged
             {
                 fixed (void* pixels_ptr = &pixels)
@@ -36338,8 +36338,8 @@ namespace OpenTK.Graphics.OpenGL
                 }
                 return rawCounterMaxValue_val;
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe void GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, IntPtr data, ref uint bytesWritten)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
+            public static unsafe void GetPerfQueryDataINTEL(int queryHandle, uint flags, int dataSize, IntPtr data, ref uint bytesWritten)
             {
                 fixed (uint* bytesWritten_ptr = &bytesWritten)
                 {
@@ -36347,8 +36347,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_vptr, bytesWritten_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe void GetPerfQueryDataINTEL<T1>(int queryHandle, PerfQueryDataFlags flags, int dataSize, ref T1 data, ref uint bytesWritten)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
+            public static unsafe void GetPerfQueryDataINTEL<T1>(int queryHandle, uint flags, int dataSize, ref T1 data, ref uint bytesWritten)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -36357,8 +36357,8 @@ namespace OpenTK.Graphics.OpenGL
                     GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_ptr, bytesWritten_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, IntPtr data)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
+            public static unsafe uint GetPerfQueryDataINTEL(int queryHandle, uint flags, int dataSize, IntPtr data)
             {
                 uint bytesWritten_val;
                 void* data_vptr = (void*)data;
@@ -36366,8 +36366,8 @@ namespace OpenTK.Graphics.OpenGL
                 GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_vptr, bytesWritten);
                 return bytesWritten_val;
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL<T1>(int queryHandle, PerfQueryDataFlags flags, int dataSize, ref T1 data)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
+            public static unsafe uint GetPerfQueryDataINTEL<T1>(int queryHandle, uint flags, int dataSize, ref T1 data)
                 where T1 : unmanaged
             {
                 uint bytesWritten_val;
@@ -36394,14 +36394,14 @@ namespace OpenTK.Graphics.OpenGL
                 GetPerfQueryIdByNameINTEL(queryName, queryId);
                 return queryId_val;
             }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, uint*)"/>
+            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
             {
                 string queryName;
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
-                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = &capsMask)
+                fixed (uint* capsMask_ptr = &capsMask)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
@@ -36410,13 +36410,13 @@ namespace OpenTK.Graphics.OpenGL
                 }
                 return queryName;
             }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, uint*)"/>
+            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
             {
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
-                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = &capsMask)
+                fixed (uint* capsMask_ptr = &capsMask)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
@@ -36424,16 +36424,16 @@ namespace OpenTK.Graphics.OpenGL
                     Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
-            public static unsafe PerformanceQueryCapsMaskINTEL GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances)
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, uint*)"/>
+            public static unsafe uint GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances)
             {
-                PerformanceQueryCapsMaskINTEL capsMask_val;
+                uint capsMask_val;
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                    PerformanceQueryCapsMaskINTEL* capsMask = &capsMask_val;
+                    uint* capsMask = &capsMask_val;
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask);
                     queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
@@ -37868,50 +37868,50 @@ namespace OpenTK.Graphics.OpenGL
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="Color3hvNV(Half*)"/>
-            public static unsafe void Color3hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="Color3hvNV(half*)"/>
+            public static unsafe void Color3hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Color3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color3hvNV(Half*)"/>
-            public static unsafe void Color3hvNV(Half[] v)
+            /// <inheritdoc cref="Color3hvNV(half*)"/>
+            public static unsafe void Color3hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Color3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color3hvNV(Half*)"/>
-            public static unsafe void Color3hvNV(in Half v)
+            /// <inheritdoc cref="Color3hvNV(half*)"/>
+            public static unsafe void Color3hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     Color3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4hvNV(Half*)"/>
-            public static unsafe void Color4hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="Color4hvNV(half*)"/>
+            public static unsafe void Color4hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Color4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4hvNV(Half*)"/>
-            public static unsafe void Color4hvNV(Half[] v)
+            /// <inheritdoc cref="Color4hvNV(half*)"/>
+            public static unsafe void Color4hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Color4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4hvNV(Half*)"/>
-            public static unsafe void Color4hvNV(in Half v)
+            /// <inheritdoc cref="Color4hvNV(half*)"/>
+            public static unsafe void Color4hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     Color4hvNV(v_ptr);
                 }
@@ -38460,26 +38460,26 @@ namespace OpenTK.Graphics.OpenGL
                     ExecuteProgramNV(target, id, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="FogCoordhvNV(Half*)"/>
-            public static unsafe void FogCoordhvNV(ReadOnlySpan<Half> fog)
+            /// <inheritdoc cref="FogCoordhvNV(half*)"/>
+            public static unsafe void FogCoordhvNV(ReadOnlySpan<half> fog)
             {
-                fixed (Half* fog_ptr = fog)
+                fixed (half* fog_ptr = fog)
                 {
                     FogCoordhvNV(fog_ptr);
                 }
             }
-            /// <inheritdoc cref="FogCoordhvNV(Half*)"/>
-            public static unsafe void FogCoordhvNV(Half[] fog)
+            /// <inheritdoc cref="FogCoordhvNV(half*)"/>
+            public static unsafe void FogCoordhvNV(half[] fog)
             {
-                fixed (Half* fog_ptr = fog)
+                fixed (half* fog_ptr = fog)
                 {
                     FogCoordhvNV(fog_ptr);
                 }
             }
-            /// <inheritdoc cref="FogCoordhvNV(Half*)"/>
-            public static unsafe void FogCoordhvNV(in Half fog)
+            /// <inheritdoc cref="FogCoordhvNV(half*)"/>
+            public static unsafe void FogCoordhvNV(in half fog)
             {
-                fixed (Half* fog_ptr = &fog)
+                fixed (half* fog_ptr = &fog)
                 {
                     FogCoordhvNV(fog_ptr);
                 }
@@ -41676,98 +41676,98 @@ namespace OpenTK.Graphics.OpenGL
                     MultiDrawElementsIndirectBindlessNV(mode, type, indirect_ptr, drawCount, stride, vertexBufferCount);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord1hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, Half[] v)
+            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord1hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, in Half v)
+            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     MultiTexCoord1hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord2hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, Half[] v)
+            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord2hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, in Half v)
+            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     MultiTexCoord2hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord3hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, Half[] v)
+            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord3hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, in Half v)
+            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     MultiTexCoord3hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord4hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, Half[] v)
+            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     MultiTexCoord4hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, Half*)"/>
-            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, in Half v)
+            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, half*)"/>
+            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     MultiTexCoord4hvNV(target, v_ptr);
                 }
@@ -41780,26 +41780,26 @@ namespace OpenTK.Graphics.OpenGL
                     NamedFramebufferSampleLocationsfvNV(framebuffer, start, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3hvNV(Half*)"/>
-            public static unsafe void Normal3hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="Normal3hvNV(half*)"/>
+            public static unsafe void Normal3hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Normal3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3hvNV(Half*)"/>
-            public static unsafe void Normal3hvNV(Half[] v)
+            /// <inheritdoc cref="Normal3hvNV(half*)"/>
+            public static unsafe void Normal3hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Normal3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3hvNV(Half*)"/>
-            public static unsafe void Normal3hvNV(in Half v)
+            /// <inheritdoc cref="Normal3hvNV(half*)"/>
+            public static unsafe void Normal3hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     Normal3hvNV(v_ptr);
                 }
@@ -43460,26 +43460,26 @@ namespace OpenTK.Graphics.OpenGL
                     ScissorExclusiveArrayvNV(first, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="SecondaryColor3hvNV(Half*)"/>
-            public static unsafe void SecondaryColor3hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="SecondaryColor3hvNV(half*)"/>
+            public static unsafe void SecondaryColor3hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     SecondaryColor3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="SecondaryColor3hvNV(Half*)"/>
-            public static unsafe void SecondaryColor3hvNV(Half[] v)
+            /// <inheritdoc cref="SecondaryColor3hvNV(half*)"/>
+            public static unsafe void SecondaryColor3hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     SecondaryColor3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="SecondaryColor3hvNV(Half*)"/>
-            public static unsafe void SecondaryColor3hvNV(in Half v)
+            /// <inheritdoc cref="SecondaryColor3hvNV(half*)"/>
+            public static unsafe void SecondaryColor3hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     SecondaryColor3hvNV(v_ptr);
                 }
@@ -43786,98 +43786,98 @@ namespace OpenTK.Graphics.OpenGL
                     StencilThenCoverStrokePathInstancedNV(numPaths, pathNameType, paths_ptr, pathBase, reference, mask, coverMode, transformType, transformValues_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1hvNV(Half*)"/>
-            public static unsafe void TexCoord1hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="TexCoord1hvNV(half*)"/>
+            public static unsafe void TexCoord1hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord1hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1hvNV(Half*)"/>
-            public static unsafe void TexCoord1hvNV(Half[] v)
+            /// <inheritdoc cref="TexCoord1hvNV(half*)"/>
+            public static unsafe void TexCoord1hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord1hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1hvNV(Half*)"/>
-            public static unsafe void TexCoord1hvNV(in Half v)
+            /// <inheritdoc cref="TexCoord1hvNV(half*)"/>
+            public static unsafe void TexCoord1hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     TexCoord1hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2hvNV(Half*)"/>
-            public static unsafe void TexCoord2hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="TexCoord2hvNV(half*)"/>
+            public static unsafe void TexCoord2hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2hvNV(Half*)"/>
-            public static unsafe void TexCoord2hvNV(Half[] v)
+            /// <inheritdoc cref="TexCoord2hvNV(half*)"/>
+            public static unsafe void TexCoord2hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2hvNV(Half*)"/>
-            public static unsafe void TexCoord2hvNV(in Half v)
+            /// <inheritdoc cref="TexCoord2hvNV(half*)"/>
+            public static unsafe void TexCoord2hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     TexCoord2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3hvNV(Half*)"/>
-            public static unsafe void TexCoord3hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="TexCoord3hvNV(half*)"/>
+            public static unsafe void TexCoord3hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3hvNV(Half*)"/>
-            public static unsafe void TexCoord3hvNV(Half[] v)
+            /// <inheritdoc cref="TexCoord3hvNV(half*)"/>
+            public static unsafe void TexCoord3hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3hvNV(Half*)"/>
-            public static unsafe void TexCoord3hvNV(in Half v)
+            /// <inheritdoc cref="TexCoord3hvNV(half*)"/>
+            public static unsafe void TexCoord3hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     TexCoord3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4hvNV(Half*)"/>
-            public static unsafe void TexCoord4hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="TexCoord4hvNV(half*)"/>
+            public static unsafe void TexCoord4hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4hvNV(Half*)"/>
-            public static unsafe void TexCoord4hvNV(Half[] v)
+            /// <inheritdoc cref="TexCoord4hvNV(half*)"/>
+            public static unsafe void TexCoord4hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     TexCoord4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4hvNV(Half*)"/>
-            public static unsafe void TexCoord4hvNV(in Half v)
+            /// <inheritdoc cref="TexCoord4hvNV(half*)"/>
+            public static unsafe void TexCoord4hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     TexCoord4hvNV(v_ptr);
                 }
@@ -43941,28 +43941,28 @@ namespace OpenTK.Graphics.OpenGL
                     TransformFeedbackStreamAttribsNV(count, attribs_ptr, nbuffers, bufstreams_ptr, bufferMode);
                 }
             }
-            /// <inheritdoc cref="TransformFeedbackVaryingsNV(int, int, TransformFeedbackTokenNV*, TransformFeedbackBufferMode)"/>
-            public static unsafe void TransformFeedbackVaryingsNV(int program, ReadOnlySpan<TransformFeedbackTokenNV> locations, TransformFeedbackBufferMode bufferMode)
+            /// <inheritdoc cref="TransformFeedbackVaryingsNV(int, int, int*, TransformFeedbackBufferMode)"/>
+            public static unsafe void TransformFeedbackVaryingsNV(int program, ReadOnlySpan<int> locations, TransformFeedbackBufferMode bufferMode)
             {
                 int count = (int)(locations.Length);
-                fixed (TransformFeedbackTokenNV* locations_ptr = locations)
+                fixed (int* locations_ptr = locations)
                 {
                     TransformFeedbackVaryingsNV(program, count, locations_ptr, bufferMode);
                 }
             }
-            /// <inheritdoc cref="TransformFeedbackVaryingsNV(int, int, TransformFeedbackTokenNV*, TransformFeedbackBufferMode)"/>
-            public static unsafe void TransformFeedbackVaryingsNV(int program, TransformFeedbackTokenNV[] locations, TransformFeedbackBufferMode bufferMode)
+            /// <inheritdoc cref="TransformFeedbackVaryingsNV(int, int, int*, TransformFeedbackBufferMode)"/>
+            public static unsafe void TransformFeedbackVaryingsNV(int program, int[] locations, TransformFeedbackBufferMode bufferMode)
             {
                 int count = (int)(locations.Length);
-                fixed (TransformFeedbackTokenNV* locations_ptr = locations)
+                fixed (int* locations_ptr = locations)
                 {
                     TransformFeedbackVaryingsNV(program, count, locations_ptr, bufferMode);
                 }
             }
-            /// <inheritdoc cref="TransformFeedbackVaryingsNV(int, int, TransformFeedbackTokenNV*, TransformFeedbackBufferMode)"/>
-            public static unsafe void TransformFeedbackVaryingsNV(int program, int count, in TransformFeedbackTokenNV locations, TransformFeedbackBufferMode bufferMode)
+            /// <inheritdoc cref="TransformFeedbackVaryingsNV(int, int, int*, TransformFeedbackBufferMode)"/>
+            public static unsafe void TransformFeedbackVaryingsNV(int program, int count, in int locations, TransformFeedbackBufferMode bufferMode)
             {
-                fixed (TransformFeedbackTokenNV* locations_ptr = &locations)
+                fixed (int* locations_ptr = &locations)
                 {
                     TransformFeedbackVaryingsNV(program, count, locations_ptr, bufferMode);
                 }
@@ -44755,74 +44755,74 @@ namespace OpenTK.Graphics.OpenGL
                     VDPAUUnmapSurfacesNV(numSurface, surfaces_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2hvNV(Half*)"/>
-            public static unsafe void Vertex2hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="Vertex2hvNV(half*)"/>
+            public static unsafe void Vertex2hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Vertex2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2hvNV(Half*)"/>
-            public static unsafe void Vertex2hvNV(Half[] v)
+            /// <inheritdoc cref="Vertex2hvNV(half*)"/>
+            public static unsafe void Vertex2hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Vertex2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2hvNV(Half*)"/>
-            public static unsafe void Vertex2hvNV(in Half v)
+            /// <inheritdoc cref="Vertex2hvNV(half*)"/>
+            public static unsafe void Vertex2hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     Vertex2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3hvNV(Half*)"/>
-            public static unsafe void Vertex3hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="Vertex3hvNV(half*)"/>
+            public static unsafe void Vertex3hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Vertex3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3hvNV(Half*)"/>
-            public static unsafe void Vertex3hvNV(Half[] v)
+            /// <inheritdoc cref="Vertex3hvNV(half*)"/>
+            public static unsafe void Vertex3hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Vertex3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3hvNV(Half*)"/>
-            public static unsafe void Vertex3hvNV(in Half v)
+            /// <inheritdoc cref="Vertex3hvNV(half*)"/>
+            public static unsafe void Vertex3hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     Vertex3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4hvNV(Half*)"/>
-            public static unsafe void Vertex4hvNV(ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="Vertex4hvNV(half*)"/>
+            public static unsafe void Vertex4hvNV(ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Vertex4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4hvNV(Half*)"/>
-            public static unsafe void Vertex4hvNV(Half[] v)
+            /// <inheritdoc cref="Vertex4hvNV(half*)"/>
+            public static unsafe void Vertex4hvNV(half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     Vertex4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4hvNV(Half*)"/>
-            public static unsafe void Vertex4hvNV(in Half v)
+            /// <inheritdoc cref="Vertex4hvNV(half*)"/>
+            public static unsafe void Vertex4hvNV(in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     Vertex4hvNV(v_ptr);
                 }
@@ -44908,26 +44908,26 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttrib1fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib1hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib1hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttrib1hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib1hvNV(uint index, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib1hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib1hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib1hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttrib1hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib1hvNV(uint index, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib1hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib1hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib1hvNV(uint index, in Half v)
+            /// <inheritdoc cref="VertexAttrib1hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib1hvNV(uint index, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttrib1hvNV(index, v_ptr);
                 }
@@ -45004,26 +45004,26 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttrib2fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib2hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib2hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttrib2hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib2hvNV(uint index, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib2hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib2hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib2hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttrib2hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib2hvNV(uint index, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib2hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib2hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib2hvNV(uint index, in Half v)
+            /// <inheritdoc cref="VertexAttrib2hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib2hvNV(uint index, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttrib2hvNV(index, v_ptr);
                 }
@@ -45100,26 +45100,26 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttrib3fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib3hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib3hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttrib3hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib3hvNV(uint index, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib3hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib3hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib3hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttrib3hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib3hvNV(uint index, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib3hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib3hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib3hvNV(uint index, in Half v)
+            /// <inheritdoc cref="VertexAttrib3hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib3hvNV(uint index, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttrib3hvNV(index, v_ptr);
                 }
@@ -45196,26 +45196,26 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttrib4fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib4hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib4hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttrib4hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib4hvNV(uint index, ReadOnlySpan<half> v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib4hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib4hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib4hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttrib4hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib4hvNV(uint index, half[] v)
             {
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttrib4hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib4hvNV(uint, Half*)"/>
-            public static unsafe void VertexAttrib4hvNV(uint index, in Half v)
+            /// <inheritdoc cref="VertexAttrib4hvNV(uint, half*)"/>
+            public static unsafe void VertexAttrib4hvNV(uint index, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttrib4hvNV(index, v_ptr);
                 }
@@ -45866,28 +45866,28 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttribs1fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs1hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs1hvNV(uint index, ReadOnlySpan<half> v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs1hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs1hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs1hvNV(uint index, half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs1hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs1hvNV(uint index, int n, in Half v)
+            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs1hvNV(uint index, int n, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttribs1hvNV(index, n, v_ptr);
                 }
@@ -45970,28 +45970,28 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttribs2fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs2hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs2hvNV(uint index, ReadOnlySpan<half> v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs2hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs2hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs2hvNV(uint index, half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs2hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs2hvNV(uint index, int n, in Half v)
+            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs2hvNV(uint index, int n, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttribs2hvNV(index, n, v_ptr);
                 }
@@ -46074,28 +46074,28 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttribs3fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs3hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs3hvNV(uint index, ReadOnlySpan<half> v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs3hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs3hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs3hvNV(uint index, half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs3hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs3hvNV(uint index, int n, in Half v)
+            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs3hvNV(uint index, int n, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttribs3hvNV(index, n, v_ptr);
                 }
@@ -46178,28 +46178,28 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttribs4fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs4hvNV(uint index, ReadOnlySpan<Half> v)
+            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs4hvNV(uint index, ReadOnlySpan<half> v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs4hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs4hvNV(uint index, Half[] v)
+            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs4hvNV(uint index, half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (Half* v_ptr = v)
+                fixed (half* v_ptr = v)
                 {
                     VertexAttribs4hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, Half*)"/>
-            public static unsafe void VertexAttribs4hvNV(uint index, int n, in Half v)
+            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, half*)"/>
+            public static unsafe void VertexAttribs4hvNV(uint index, int n, in half v)
             {
-                fixed (Half* v_ptr = &v)
+                fixed (half* v_ptr = &v)
                 {
                     VertexAttribs4hvNV(index, n, v_ptr);
                 }
@@ -46256,26 +46256,26 @@ namespace OpenTK.Graphics.OpenGL
                     VertexAttribs4ubvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexWeighthvNV(Half*)"/>
-            public static unsafe void VertexWeighthvNV(ReadOnlySpan<Half> weight)
+            /// <inheritdoc cref="VertexWeighthvNV(half*)"/>
+            public static unsafe void VertexWeighthvNV(ReadOnlySpan<half> weight)
             {
-                fixed (Half* weight_ptr = weight)
+                fixed (half* weight_ptr = weight)
                 {
                     VertexWeighthvNV(weight_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexWeighthvNV(Half*)"/>
-            public static unsafe void VertexWeighthvNV(Half[] weight)
+            /// <inheritdoc cref="VertexWeighthvNV(half*)"/>
+            public static unsafe void VertexWeighthvNV(half[] weight)
             {
-                fixed (Half* weight_ptr = weight)
+                fixed (half* weight_ptr = weight)
                 {
                     VertexWeighthvNV(weight_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexWeighthvNV(Half*)"/>
-            public static unsafe void VertexWeighthvNV(in Half weight)
+            /// <inheritdoc cref="VertexWeighthvNV(half*)"/>
+            public static unsafe void VertexWeighthvNV(in half weight)
             {
-                fixed (Half* weight_ptr = &weight)
+                fixed (half* weight_ptr = &weight)
                 {
                     VertexWeighthvNV(weight_ptr);
                 }
@@ -49643,26 +49643,26 @@ namespace OpenTK.Graphics.OpenGL
                     SpriteParameterfvSGIX(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, SpriteModeSGIX*)"/>
-            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, ReadOnlySpan<SpriteModeSGIX> parameters)
+            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, int*)"/>
+            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, ReadOnlySpan<int> parameters)
             {
-                fixed (SpriteModeSGIX* parameters_ptr = parameters)
+                fixed (int* parameters_ptr = parameters)
                 {
                     SpriteParameterivSGIX(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, SpriteModeSGIX*)"/>
-            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX[] parameters)
+            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, int*)"/>
+            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, int[] parameters)
             {
-                fixed (SpriteModeSGIX* parameters_ptr = parameters)
+                fixed (int* parameters_ptr = parameters)
                 {
                     SpriteParameterivSGIX(pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, SpriteModeSGIX*)"/>
-            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, in SpriteModeSGIX parameters)
+            /// <inheritdoc cref="SpriteParameterivSGIX(SpriteParameterNameSGIX, int*)"/>
+            public static unsafe void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, in int parameters)
             {
-                fixed (SpriteModeSGIX* parameters_ptr = &parameters)
+                fixed (int* parameters_ptr = &parameters)
                 {
                     SpriteParameterivSGIX(pname, parameters_ptr);
                 }
@@ -49866,10 +49866,10 @@ namespace OpenTK.Graphics.OpenGL
                     ReplacementCodeubvSUN(code_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, in Color3<Rgb> c, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(ReadOnlySpan<uint> rc, in Color3<Rgb> c, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* v_ptr = v)
                     {
@@ -49881,10 +49881,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN[] rc, in Color3<Rgb> c, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(uint[] rc, in Color3<Rgb> c, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* v_ptr = v)
                     {
@@ -49896,10 +49896,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(in TriangleListSUN rc, in Color3<Rgb> c, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiColor3fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor3fVertex3fvSUN(in uint rc, in Color3<Rgb> c, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (float* v_ptr = &v)
                 {
                     fixed (Color3<Rgb>* tmp_c = &c)
@@ -49909,10 +49909,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(uint*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(ReadOnlySpan<uint> rc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* n_ptr = n)
                     {
@@ -49927,10 +49927,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN[] rc, in Color4<Rgba> c, float[] n, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(uint*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(uint[] rc, in Color4<Rgba> c, float[] n, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* n_ptr = n)
                     {
@@ -49945,10 +49945,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in Color4<Rgba> c, in float n, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiColor4fNormal3fVertex3fvSUN(uint*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(in uint rc, in Color4<Rgba> c, in float n, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
                 {
@@ -49959,10 +49959,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN*, byte*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<byte> c, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(uint*, byte*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(ReadOnlySpan<uint> rc, ReadOnlySpan<byte> c, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (byte* c_ptr = c)
                     {
@@ -49973,10 +49973,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN*, byte*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN[] rc, byte[] c, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(uint*, byte*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(uint[] rc, byte[] c, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (byte* c_ptr = c)
                     {
@@ -49987,20 +49987,20 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN*, byte*, float*)"/>
-            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(in TriangleListSUN rc, in byte c, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiColor4ubVertex3fvSUN(uint*, byte*, float*)"/>
+            public static unsafe void ReplacementCodeuiColor4ubVertex3fvSUN(in uint rc, in byte c, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (byte* c_ptr = &c)
                 fixed (float* v_ptr = &v)
                 {
                     ReplacementCodeuiColor4ubVertex3fvSUN(rc_ptr, c_ptr, v_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(ReadOnlySpan<uint> rc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* n_ptr = n)
                     {
@@ -50011,10 +50011,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN[] rc, float[] n, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(uint[] rc, float[] n, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* n_ptr = n)
                     {
@@ -50025,20 +50025,20 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(in TriangleListSUN rc, in float n, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiNormal3fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiNormal3fVertex3fvSUN(in uint rc, in float n, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
                 {
                     ReplacementCodeuiNormal3fVertex3fvSUN(rc_ptr, n_ptr, v_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(uint*, float*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(ReadOnlySpan<uint> rc, ReadOnlySpan<float> tc, in Color4<Rgba> c, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
@@ -50056,10 +50056,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN[] rc, float[] tc, in Color4<Rgba> c, float[] n, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(uint*, float*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(uint[] rc, float[] tc, in Color4<Rgba> c, float[] n, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
@@ -50077,10 +50077,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(in TriangleListSUN rc, in float tc, in Color4<Rgba> c, in float n, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(uint*, float*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(in uint rc, in float tc, in Color4<Rgba> c, in float n, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (float* tc_ptr = &tc)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
@@ -50092,10 +50092,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(uint*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(ReadOnlySpan<uint> rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> n, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
@@ -50109,10 +50109,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN[] rc, float[] tc, float[] n, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(uint*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(uint[] rc, float[] tc, float[] n, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
@@ -50126,10 +50126,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN*, float*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(in TriangleListSUN rc, in float tc, in float n, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(uint*, float*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(in uint rc, in float tc, in float n, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (float* tc_ptr = &tc)
                 fixed (float* n_ptr = &n)
                 fixed (float* v_ptr = &v)
@@ -50137,10 +50137,10 @@ namespace OpenTK.Graphics.OpenGL
                     ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(rc_ptr, tc_ptr, n_ptr, v_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(ReadOnlySpan<uint> rc, ReadOnlySpan<float> tc, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
@@ -50151,10 +50151,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN[] rc, float[] tc, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(uint[] rc, float[] tc, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* tc_ptr = tc)
                     {
@@ -50165,20 +50165,20 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN*, float*, float*)"/>
-            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(in TriangleListSUN rc, in float tc, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiTexCoord2fVertex3fvSUN(uint*, float*, float*)"/>
+            public static unsafe void ReplacementCodeuiTexCoord2fVertex3fvSUN(in uint rc, in float tc, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (float* tc_ptr = &tc)
                 fixed (float* v_ptr = &v)
                 {
                     ReplacementCodeuiTexCoord2fVertex3fvSUN(rc_ptr, tc_ptr, v_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(TriangleListSUN*, float*)"/>
-            public static unsafe void ReplacementCodeuiVertex3fvSUN(ReadOnlySpan<TriangleListSUN> rc, ReadOnlySpan<float> v)
+            /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(uint*, float*)"/>
+            public static unsafe void ReplacementCodeuiVertex3fvSUN(ReadOnlySpan<uint> rc, ReadOnlySpan<float> v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* v_ptr = v)
                     {
@@ -50186,10 +50186,10 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(TriangleListSUN*, float*)"/>
-            public static unsafe void ReplacementCodeuiVertex3fvSUN(TriangleListSUN[] rc, float[] v)
+            /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(uint*, float*)"/>
+            public static unsafe void ReplacementCodeuiVertex3fvSUN(uint[] rc, float[] v)
             {
-                fixed (TriangleListSUN* rc_ptr = rc)
+                fixed (uint* rc_ptr = rc)
                 {
                     fixed (float* v_ptr = v)
                     {
@@ -50197,35 +50197,35 @@ namespace OpenTK.Graphics.OpenGL
                     }
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(TriangleListSUN*, float*)"/>
-            public static unsafe void ReplacementCodeuiVertex3fvSUN(in TriangleListSUN rc, in float v)
+            /// <inheritdoc cref="ReplacementCodeuiVertex3fvSUN(uint*, float*)"/>
+            public static unsafe void ReplacementCodeuiVertex3fvSUN(in uint rc, in float v)
             {
-                fixed (TriangleListSUN* rc_ptr = &rc)
+                fixed (uint* rc_ptr = &rc)
                 fixed (float* v_ptr = &v)
                 {
                     ReplacementCodeuiVertex3fvSUN(rc_ptr, v_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuivSUN(TriangleListSUN*)"/>
-            public static unsafe void ReplacementCodeuivSUN(ReadOnlySpan<TriangleListSUN> code)
+            /// <inheritdoc cref="ReplacementCodeuivSUN(uint*)"/>
+            public static unsafe void ReplacementCodeuivSUN(ReadOnlySpan<uint> code)
             {
-                fixed (TriangleListSUN* code_ptr = code)
+                fixed (uint* code_ptr = code)
                 {
                     ReplacementCodeuivSUN(code_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuivSUN(TriangleListSUN*)"/>
-            public static unsafe void ReplacementCodeuivSUN(TriangleListSUN[] code)
+            /// <inheritdoc cref="ReplacementCodeuivSUN(uint*)"/>
+            public static unsafe void ReplacementCodeuivSUN(uint[] code)
             {
-                fixed (TriangleListSUN* code_ptr = code)
+                fixed (uint* code_ptr = code)
                 {
                     ReplacementCodeuivSUN(code_ptr);
                 }
             }
-            /// <inheritdoc cref="ReplacementCodeuivSUN(TriangleListSUN*)"/>
-            public static unsafe void ReplacementCodeuivSUN(in TriangleListSUN code)
+            /// <inheritdoc cref="ReplacementCodeuivSUN(uint*)"/>
+            public static unsafe void ReplacementCodeuivSUN(in uint code)
             {
-                fixed (TriangleListSUN* code_ptr = &code)
+                fixed (uint* code_ptr = &code)
                 {
                     ReplacementCodeuivSUN(code_ptr);
                 }

@@ -29,7 +29,8 @@ namespace Generator.Parsing
     }
 
     public record Specification2(
-        List<Command> Commands,
+        //List<Command> Commands,
+        List<NativeFunction> Functions,
         List<EnumEntry> Enums,
         List<API> APIs);
 
@@ -72,10 +73,10 @@ namespace Generator.Parsing
         List<Extension> Extensions);*/
 
 
-    public record Command(
+    /*public record Command(
         string EntryPoint,
         PType ReturnType,
-        GLParameter[] Parameters);
+        GLParameter[] Parameters);*/
 
     // FIXME: Maybe flatten the list of enums?
     /*public record Enums(
@@ -127,12 +128,6 @@ namespace Generator.Parsing
         List<string> Commands,
         List<string> Enums);
 
-
-    public record GLParameter(
-        PType Type,
-        string[] Kinds,
-        string Name,
-        Expression? Length);
 
     public record PType(
         GLType Type,

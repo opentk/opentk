@@ -65,6 +65,7 @@ namespace Generator.Writing
         string FunctionName,
         List<Parameter> Parameters,
         BaseCSType ReturnType,
+        // FIXME: Convert referencedEnumGroups to use GroupRef!
         string[] ReferencedEnumGroups);
 
     public record Overload(
@@ -133,6 +134,24 @@ namespace Generator.Writing
 
     public record CSPrimitive(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
+        // FIXME: const??
+        public static CSPrimitive Sbyte(bool @const) => new CSPrimitive("sbyte", @const);
+        public static CSPrimitive Byte(bool @const) => new CSPrimitive("byte", @const);
+        public static CSPrimitive Short(bool @const) => new CSPrimitive("short", @const);
+        public static CSPrimitive Ushort(bool @const) => new CSPrimitive("ushort", @const);
+        public static CSPrimitive Int(bool @const) => new CSPrimitive("int", @const);
+        public static CSPrimitive Uint(bool @const) => new CSPrimitive("uint", @const);
+        public static CSPrimitive Long(bool @const) => new CSPrimitive("long", @const);
+        public static CSPrimitive Ulong(bool @const) => new CSPrimitive("ulong", @const);
+
+        public static CSPrimitive Nint(bool @const) => new CSPrimitive("nint", @const);
+        public static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const);
+        public static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const);
+
+        public static CSPrimitive Half(bool @const) => new CSPrimitive("half", @const);
+        public static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const);
+        public static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const);
+
         public override string ToCSString()
         {
             return TypeName;

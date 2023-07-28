@@ -2060,7 +2060,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage2D.xhtml" /></remarks>
-        public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
+        public static void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, internalformat, width, height, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v3.0]</b> <b>[entry point: <c>glTexImage3D</c>]</b><br/> Specify a three-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be one of GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
@@ -2074,7 +2074,7 @@ namespace OpenTK.Graphics.OpenGLES2
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_INT_2_10_10_10_REV, GL_UNSIGNED_INT_10F_11F_11F_REV, GL_UNSIGNED_INT_5_9_9_9_REV, GL_UNSIGNED_INT_24_8, and GL_FLOAT_32_UNSIGNED_INT_24_8_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/es3.0/htmlglTexImage3D.xhtml" /></remarks>
-        public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3D_fnptr((uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+        public static void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3D_fnptr((uint)target, level, internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v2.0]</b> <b>[entry point: <c>glTexParameterf</c>]</b><br/> Set texture parameters. </summary>
         /// <param name="target"> Specifies the target texture, which must be either GL_TEXTURE_2D, GL_TEXTURE_3D, GL_TEXTURE_2D_ARRAY, GL_TEXTURE_2D_MULTISAMPLE, GL_TEXTURE_2D_MULTISAMPLE_ARRAY, GL_TEXTURE_CUBE_MAP, or GL_TEXTURE_CUBE_MAP_ARRAY. </param>
@@ -2907,7 +2907,7 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void GetFragmentShadingRatesEXT(int samples, int maxCount, int* count, ShadingRate* shadingRates) => GLPointers._glGetFragmentShadingRatesEXT_fnptr(samples, maxCount, count, (uint*)shadingRates);
             
             /// <summary> <b>[requires: GL_EXT_shader_pixel_local_storage2]</b> <b>[entry point: <c>glGetFramebufferPixelLocalStorageSizeEXT</c>]</b><br/>  </summary>
-            public static int GetFramebufferPixelLocalStorageSizeEXT(FramebufferTarget target) => GLPointers._glGetFramebufferPixelLocalStorageSizeEXT_fnptr((uint)target);
+            public static int GetFramebufferPixelLocalStorageSizeEXT(uint target) => GLPointers._glGetFramebufferPixelLocalStorageSizeEXT_fnptr(target);
             
             /// <summary> <b>[requires: GL_EXT_robustness]</b> <b>[entry point: <c>glGetGraphicsResetStatusEXT</c>]</b><br/>  </summary>
             public static GraphicsResetStatus GetGraphicsResetStatusEXT() => (GraphicsResetStatus) GLPointers._glGetGraphicsResetStatusEXT_fnptr();
@@ -3219,10 +3219,10 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void TexStorage3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth) => GLPointers._glTexStorage3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage_compression]</b> <b>[entry point: <c>glTexStorageAttribs2DEXT</c>]</b><br/>  </summary>
-            public static void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, TexStorageAttribs* attrib_list) => GLPointers._glTexStorageAttribs2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, (int*)attrib_list);
+            public static void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int* attrib_list) => GLPointers._glTexStorageAttribs2DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, attrib_list);
             
             /// <summary> <b>[requires: GL_EXT_texture_storage_compression]</b> <b>[entry point: <c>glTexStorageAttribs3DEXT</c>]</b><br/>  </summary>
-            public static void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, TexStorageAttribs* attrib_list) => GLPointers._glTexStorageAttribs3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth, (int*)attrib_list);
+            public static void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, int* attrib_list) => GLPointers._glTexStorageAttribs3DEXT_fnptr((uint)target, levels, (uint)internalformat, width, height, depth, attrib_list);
             
             /// <summary> <b>[requires: GL_EXT_memory_object]</b> <b>[entry point: <c>glTexStorageMem1DEXT</c>]</b><br/>  </summary>
             public static void TexStorageMem1DEXT(TextureTarget target, int levels, SizedInternalFormat internalFormat, int width, uint memory, ulong offset) => GLPointers._glTexStorageMem1DEXT_fnptr((uint)target, levels, (uint)internalFormat, width, memory, offset);
@@ -3347,13 +3347,13 @@ namespace OpenTK.Graphics.OpenGLES2
             public static void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, byte* counterName, uint counterDescLength, byte* counterDesc, uint* counterOffset, uint* counterDataSize, uint* counterTypeEnum, uint* counterDataTypeEnum, ulong* rawCounterMaxValue) => GLPointers._glGetPerfCounterInfoINTEL_fnptr(queryId, counterId, counterNameLength, counterName, counterDescLength, counterDesc, counterOffset, counterDataSize, counterTypeEnum, counterDataTypeEnum, rawCounterMaxValue);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query]</b> <b>[entry point: <c>glGetPerfQueryDataINTEL</c>]</b><br/>  </summary>
-            public static void GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, void* data, uint* bytesWritten) => GLPointers._glGetPerfQueryDataINTEL_fnptr(queryHandle, (uint)flags, dataSize, data, bytesWritten);
+            public static void GetPerfQueryDataINTEL(int queryHandle, uint flags, int dataSize, void* data, uint* bytesWritten) => GLPointers._glGetPerfQueryDataINTEL_fnptr(queryHandle, flags, dataSize, data, bytesWritten);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query]</b> <b>[entry point: <c>glGetPerfQueryIdByNameINTEL</c>]</b><br/>  </summary>
             public static void GetPerfQueryIdByNameINTEL(byte* queryName, uint* queryId) => GLPointers._glGetPerfQueryIdByNameINTEL_fnptr(queryName, queryId);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query]</b> <b>[entry point: <c>glGetPerfQueryInfoINTEL</c>]</b><br/>  </summary>
-            public static void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, PerformanceQueryCapsMaskINTEL* capsMask) => GLPointers._glGetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, (uint*)capsMask);
+            public static void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, uint* capsMask) => GLPointers._glGetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, capsMask);
             
         }
         /// <summary>KHR extensions.</summary>

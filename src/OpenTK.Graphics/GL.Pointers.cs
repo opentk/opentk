@@ -1952,19 +1952,19 @@ namespace OpenTK.Graphics.OpenGL
             _glColor3fVertex3fvSUN_fnptr(c, v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, void> _glColor3hNV_fnptr = &glColor3hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, void> _glColor3hNV_fnptr = &glColor3hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glColor3hNV_Lazy(ushort red, ushort green, ushort blue)
+        private static void glColor3hNV_Lazy(half red, half green, half blue)
         {
-            _glColor3hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glColor3hNV");
+            _glColor3hNV_fnptr = (delegate* unmanaged<half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glColor3hNV");
             _glColor3hNV_fnptr(red, green, blue);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glColor3hvNV_fnptr = &glColor3hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glColor3hvNV_fnptr = &glColor3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glColor3hvNV_Lazy(ushort* v)
+        private static void glColor3hvNV_Lazy(half* v)
         {
-            _glColor3hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glColor3hvNV");
+            _glColor3hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glColor3hvNV");
             _glColor3hvNV_fnptr(v);
         }
         
@@ -2128,19 +2128,19 @@ namespace OpenTK.Graphics.OpenGL
             _glColor4fv_fnptr(v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, ushort, void> _glColor4hNV_fnptr = &glColor4hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, half, void> _glColor4hNV_fnptr = &glColor4hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glColor4hNV_Lazy(ushort red, ushort green, ushort blue, ushort alpha)
+        private static void glColor4hNV_Lazy(half red, half green, half blue, half alpha)
         {
-            _glColor4hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glColor4hNV");
+            _glColor4hNV_fnptr = (delegate* unmanaged<half, half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glColor4hNV");
             _glColor4hNV_fnptr(red, green, blue, alpha);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glColor4hvNV_fnptr = &glColor4hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glColor4hvNV_fnptr = &glColor4hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glColor4hvNV_Lazy(ushort* v)
+        private static void glColor4hvNV_Lazy(half* v)
         {
-            _glColor4hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glColor4hvNV");
+            _glColor4hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glColor4hvNV");
             _glColor4hvNV_fnptr(v);
         }
         
@@ -5832,19 +5832,19 @@ namespace OpenTK.Graphics.OpenGL
             _glFogCoordfvEXT_fnptr(coord);
         }
         
-        internal static delegate* unmanaged<ushort, void> _glFogCoordhNV_fnptr = &glFogCoordhNV_Lazy;
+        internal static delegate* unmanaged<half, void> _glFogCoordhNV_fnptr = &glFogCoordhNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glFogCoordhNV_Lazy(ushort fog)
+        private static void glFogCoordhNV_Lazy(half fog)
         {
-            _glFogCoordhNV_fnptr = (delegate* unmanaged<ushort, void>)GLLoader.BindingsContext.GetProcAddress("glFogCoordhNV");
+            _glFogCoordhNV_fnptr = (delegate* unmanaged<half, void>)GLLoader.BindingsContext.GetProcAddress("glFogCoordhNV");
             _glFogCoordhNV_fnptr(fog);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glFogCoordhvNV_fnptr = &glFogCoordhvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glFogCoordhvNV_fnptr = &glFogCoordhvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glFogCoordhvNV_Lazy(ushort* fog)
+        private static void glFogCoordhvNV_Lazy(half* fog)
         {
-            _glFogCoordhvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glFogCoordhvNV");
+            _glFogCoordhvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glFogCoordhvNV");
             _glFogCoordhvNV_fnptr(fog);
         }
         
@@ -13288,19 +13288,19 @@ namespace OpenTK.Graphics.OpenGL
             _glMultiTexCoord1fvARB_fnptr(target, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, void> _glMultiTexCoord1hNV_fnptr = &glMultiTexCoord1hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, void> _glMultiTexCoord1hNV_fnptr = &glMultiTexCoord1hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord1hNV_Lazy(uint target, ushort s)
+        private static void glMultiTexCoord1hNV_Lazy(uint target, half s)
         {
-            _glMultiTexCoord1hNV_fnptr = (delegate* unmanaged<uint, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord1hNV");
+            _glMultiTexCoord1hNV_fnptr = (delegate* unmanaged<uint, half, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord1hNV");
             _glMultiTexCoord1hNV_fnptr(target, s);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glMultiTexCoord1hvNV_fnptr = &glMultiTexCoord1hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glMultiTexCoord1hvNV_fnptr = &glMultiTexCoord1hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord1hvNV_Lazy(uint target, ushort* v)
+        private static void glMultiTexCoord1hvNV_Lazy(uint target, half* v)
         {
-            _glMultiTexCoord1hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord1hvNV");
+            _glMultiTexCoord1hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord1hvNV");
             _glMultiTexCoord1hvNV_fnptr(target, v);
         }
         
@@ -13464,19 +13464,19 @@ namespace OpenTK.Graphics.OpenGL
             _glMultiTexCoord2fvARB_fnptr(target, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, ushort, void> _glMultiTexCoord2hNV_fnptr = &glMultiTexCoord2hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, half, void> _glMultiTexCoord2hNV_fnptr = &glMultiTexCoord2hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord2hNV_Lazy(uint target, ushort s, ushort t)
+        private static void glMultiTexCoord2hNV_Lazy(uint target, half s, half t)
         {
-            _glMultiTexCoord2hNV_fnptr = (delegate* unmanaged<uint, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord2hNV");
+            _glMultiTexCoord2hNV_fnptr = (delegate* unmanaged<uint, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord2hNV");
             _glMultiTexCoord2hNV_fnptr(target, s, t);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glMultiTexCoord2hvNV_fnptr = &glMultiTexCoord2hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glMultiTexCoord2hvNV_fnptr = &glMultiTexCoord2hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord2hvNV_Lazy(uint target, ushort* v)
+        private static void glMultiTexCoord2hvNV_Lazy(uint target, half* v)
         {
-            _glMultiTexCoord2hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord2hvNV");
+            _glMultiTexCoord2hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord2hvNV");
             _glMultiTexCoord2hvNV_fnptr(target, v);
         }
         
@@ -13640,19 +13640,19 @@ namespace OpenTK.Graphics.OpenGL
             _glMultiTexCoord3fvARB_fnptr(target, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, ushort, ushort, void> _glMultiTexCoord3hNV_fnptr = &glMultiTexCoord3hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, half, half, void> _glMultiTexCoord3hNV_fnptr = &glMultiTexCoord3hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord3hNV_Lazy(uint target, ushort s, ushort t, ushort r)
+        private static void glMultiTexCoord3hNV_Lazy(uint target, half s, half t, half r)
         {
-            _glMultiTexCoord3hNV_fnptr = (delegate* unmanaged<uint, ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord3hNV");
+            _glMultiTexCoord3hNV_fnptr = (delegate* unmanaged<uint, half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord3hNV");
             _glMultiTexCoord3hNV_fnptr(target, s, t, r);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glMultiTexCoord3hvNV_fnptr = &glMultiTexCoord3hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glMultiTexCoord3hvNV_fnptr = &glMultiTexCoord3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord3hvNV_Lazy(uint target, ushort* v)
+        private static void glMultiTexCoord3hvNV_Lazy(uint target, half* v)
         {
-            _glMultiTexCoord3hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord3hvNV");
+            _glMultiTexCoord3hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord3hvNV");
             _glMultiTexCoord3hvNV_fnptr(target, v);
         }
         
@@ -13816,19 +13816,19 @@ namespace OpenTK.Graphics.OpenGL
             _glMultiTexCoord4fvARB_fnptr(target, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, ushort, ushort, ushort, void> _glMultiTexCoord4hNV_fnptr = &glMultiTexCoord4hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, half, half, half, void> _glMultiTexCoord4hNV_fnptr = &glMultiTexCoord4hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord4hNV_Lazy(uint target, ushort s, ushort t, ushort r, ushort q)
+        private static void glMultiTexCoord4hNV_Lazy(uint target, half s, half t, half r, half q)
         {
-            _glMultiTexCoord4hNV_fnptr = (delegate* unmanaged<uint, ushort, ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord4hNV");
+            _glMultiTexCoord4hNV_fnptr = (delegate* unmanaged<uint, half, half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord4hNV");
             _glMultiTexCoord4hNV_fnptr(target, s, t, r, q);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glMultiTexCoord4hvNV_fnptr = &glMultiTexCoord4hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glMultiTexCoord4hvNV_fnptr = &glMultiTexCoord4hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glMultiTexCoord4hvNV_Lazy(uint target, ushort* v)
+        private static void glMultiTexCoord4hvNV_Lazy(uint target, half* v)
         {
-            _glMultiTexCoord4hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord4hvNV");
+            _glMultiTexCoord4hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glMultiTexCoord4hvNV");
             _glMultiTexCoord4hvNV_fnptr(target, v);
         }
         
@@ -14728,19 +14728,19 @@ namespace OpenTK.Graphics.OpenGL
             _glNormal3fVertex3fvSUN_fnptr(n, v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, void> _glNormal3hNV_fnptr = &glNormal3hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, void> _glNormal3hNV_fnptr = &glNormal3hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glNormal3hNV_Lazy(ushort nx, ushort ny, ushort nz)
+        private static void glNormal3hNV_Lazy(half nx, half ny, half nz)
         {
-            _glNormal3hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glNormal3hNV");
+            _glNormal3hNV_fnptr = (delegate* unmanaged<half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glNormal3hNV");
             _glNormal3hNV_fnptr(nx, ny, nz);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glNormal3hvNV_fnptr = &glNormal3hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glNormal3hvNV_fnptr = &glNormal3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glNormal3hvNV_Lazy(ushort* v)
+        private static void glNormal3hvNV_Lazy(half* v)
         {
-            _glNormal3hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glNormal3hvNV");
+            _glNormal3hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glNormal3hvNV");
             _glNormal3hvNV_fnptr(v);
         }
         
@@ -18688,19 +18688,19 @@ namespace OpenTK.Graphics.OpenGL
             _glSecondaryColor3fvEXT_fnptr(v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, void> _glSecondaryColor3hNV_fnptr = &glSecondaryColor3hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, void> _glSecondaryColor3hNV_fnptr = &glSecondaryColor3hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glSecondaryColor3hNV_Lazy(ushort red, ushort green, ushort blue)
+        private static void glSecondaryColor3hNV_Lazy(half red, half green, half blue)
         {
-            _glSecondaryColor3hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glSecondaryColor3hNV");
+            _glSecondaryColor3hNV_fnptr = (delegate* unmanaged<half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glSecondaryColor3hNV");
             _glSecondaryColor3hNV_fnptr(red, green, blue);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glSecondaryColor3hvNV_fnptr = &glSecondaryColor3hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glSecondaryColor3hvNV_fnptr = &glSecondaryColor3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glSecondaryColor3hvNV_Lazy(ushort* v)
+        private static void glSecondaryColor3hvNV_Lazy(half* v)
         {
-            _glSecondaryColor3hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glSecondaryColor3hvNV");
+            _glSecondaryColor3hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glSecondaryColor3hvNV");
             _glSecondaryColor3hvNV_fnptr(v);
         }
         
@@ -19696,19 +19696,19 @@ namespace OpenTK.Graphics.OpenGL
             _glTexCoord1fv_fnptr(v);
         }
         
-        internal static delegate* unmanaged<ushort, void> _glTexCoord1hNV_fnptr = &glTexCoord1hNV_Lazy;
+        internal static delegate* unmanaged<half, void> _glTexCoord1hNV_fnptr = &glTexCoord1hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord1hNV_Lazy(ushort s)
+        private static void glTexCoord1hNV_Lazy(half s)
         {
-            _glTexCoord1hNV_fnptr = (delegate* unmanaged<ushort, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord1hNV");
+            _glTexCoord1hNV_fnptr = (delegate* unmanaged<half, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord1hNV");
             _glTexCoord1hNV_fnptr(s);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glTexCoord1hvNV_fnptr = &glTexCoord1hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glTexCoord1hvNV_fnptr = &glTexCoord1hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord1hvNV_Lazy(ushort* v)
+        private static void glTexCoord1hvNV_Lazy(half* v)
         {
-            _glTexCoord1hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord1hvNV");
+            _glTexCoord1hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord1hvNV");
             _glTexCoord1hvNV_fnptr(v);
         }
         
@@ -19888,19 +19888,19 @@ namespace OpenTK.Graphics.OpenGL
             _glTexCoord2fVertex3fvSUN_fnptr(tc, v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, void> _glTexCoord2hNV_fnptr = &glTexCoord2hNV_Lazy;
+        internal static delegate* unmanaged<half, half, void> _glTexCoord2hNV_fnptr = &glTexCoord2hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord2hNV_Lazy(ushort s, ushort t)
+        private static void glTexCoord2hNV_Lazy(half s, half t)
         {
-            _glTexCoord2hNV_fnptr = (delegate* unmanaged<ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord2hNV");
+            _glTexCoord2hNV_fnptr = (delegate* unmanaged<half, half, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord2hNV");
             _glTexCoord2hNV_fnptr(s, t);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glTexCoord2hvNV_fnptr = &glTexCoord2hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glTexCoord2hvNV_fnptr = &glTexCoord2hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord2hvNV_Lazy(ushort* v)
+        private static void glTexCoord2hvNV_Lazy(half* v)
         {
-            _glTexCoord2hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord2hvNV");
+            _glTexCoord2hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord2hvNV");
             _glTexCoord2hvNV_fnptr(v);
         }
         
@@ -20000,19 +20000,19 @@ namespace OpenTK.Graphics.OpenGL
             _glTexCoord3fv_fnptr(v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, void> _glTexCoord3hNV_fnptr = &glTexCoord3hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, void> _glTexCoord3hNV_fnptr = &glTexCoord3hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord3hNV_Lazy(ushort s, ushort t, ushort r)
+        private static void glTexCoord3hNV_Lazy(half s, half t, half r)
         {
-            _glTexCoord3hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord3hNV");
+            _glTexCoord3hNV_fnptr = (delegate* unmanaged<half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord3hNV");
             _glTexCoord3hNV_fnptr(s, t, r);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glTexCoord3hvNV_fnptr = &glTexCoord3hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glTexCoord3hvNV_fnptr = &glTexCoord3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord3hvNV_Lazy(ushort* v)
+        private static void glTexCoord3hvNV_Lazy(half* v)
         {
-            _glTexCoord3hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord3hvNV");
+            _glTexCoord3hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord3hvNV");
             _glTexCoord3hvNV_fnptr(v);
         }
         
@@ -20144,19 +20144,19 @@ namespace OpenTK.Graphics.OpenGL
             _glTexCoord4fVertex4fvSUN_fnptr(tc, v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, ushort, void> _glTexCoord4hNV_fnptr = &glTexCoord4hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, half, void> _glTexCoord4hNV_fnptr = &glTexCoord4hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord4hNV_Lazy(ushort s, ushort t, ushort r, ushort q)
+        private static void glTexCoord4hNV_Lazy(half s, half t, half r, half q)
         {
-            _glTexCoord4hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord4hNV");
+            _glTexCoord4hNV_fnptr = (delegate* unmanaged<half, half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord4hNV");
             _glTexCoord4hNV_fnptr(s, t, r, q);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glTexCoord4hvNV_fnptr = &glTexCoord4hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glTexCoord4hvNV_fnptr = &glTexCoord4hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glTexCoord4hvNV_Lazy(ushort* v)
+        private static void glTexCoord4hvNV_Lazy(half* v)
         {
-            _glTexCoord4hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord4hvNV");
+            _glTexCoord4hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glTexCoord4hvNV");
             _glTexCoord4hvNV_fnptr(v);
         }
         
@@ -22880,19 +22880,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertex2fv_fnptr(v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, void> _glVertex2hNV_fnptr = &glVertex2hNV_Lazy;
+        internal static delegate* unmanaged<half, half, void> _glVertex2hNV_fnptr = &glVertex2hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertex2hNV_Lazy(ushort x, ushort y)
+        private static void glVertex2hNV_Lazy(half x, half y)
         {
-            _glVertex2hNV_fnptr = (delegate* unmanaged<ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertex2hNV");
+            _glVertex2hNV_fnptr = (delegate* unmanaged<half, half, void>)GLLoader.BindingsContext.GetProcAddress("glVertex2hNV");
             _glVertex2hNV_fnptr(x, y);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glVertex2hvNV_fnptr = &glVertex2hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glVertex2hvNV_fnptr = &glVertex2hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertex2hvNV_Lazy(ushort* v)
+        private static void glVertex2hvNV_Lazy(half* v)
         {
-            _glVertex2hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertex2hvNV");
+            _glVertex2hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertex2hvNV");
             _glVertex2hvNV_fnptr(v);
         }
         
@@ -22992,19 +22992,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertex3fv_fnptr(v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, void> _glVertex3hNV_fnptr = &glVertex3hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, void> _glVertex3hNV_fnptr = &glVertex3hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertex3hNV_Lazy(ushort x, ushort y, ushort z)
+        private static void glVertex3hNV_Lazy(half x, half y, half z)
         {
-            _glVertex3hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertex3hNV");
+            _glVertex3hNV_fnptr = (delegate* unmanaged<half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glVertex3hNV");
             _glVertex3hNV_fnptr(x, y, z);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glVertex3hvNV_fnptr = &glVertex3hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glVertex3hvNV_fnptr = &glVertex3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertex3hvNV_Lazy(ushort* v)
+        private static void glVertex3hvNV_Lazy(half* v)
         {
-            _glVertex3hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertex3hvNV");
+            _glVertex3hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertex3hvNV");
             _glVertex3hvNV_fnptr(v);
         }
         
@@ -23104,19 +23104,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertex4fv_fnptr(v);
         }
         
-        internal static delegate* unmanaged<ushort, ushort, ushort, ushort, void> _glVertex4hNV_fnptr = &glVertex4hNV_Lazy;
+        internal static delegate* unmanaged<half, half, half, half, void> _glVertex4hNV_fnptr = &glVertex4hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertex4hNV_Lazy(ushort x, ushort y, ushort z, ushort w)
+        private static void glVertex4hNV_Lazy(half x, half y, half z, half w)
         {
-            _glVertex4hNV_fnptr = (delegate* unmanaged<ushort, ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertex4hNV");
+            _glVertex4hNV_fnptr = (delegate* unmanaged<half, half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glVertex4hNV");
             _glVertex4hNV_fnptr(x, y, z, w);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glVertex4hvNV_fnptr = &glVertex4hvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glVertex4hvNV_fnptr = &glVertex4hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertex4hvNV_Lazy(ushort* v)
+        private static void glVertex4hvNV_Lazy(half* v)
         {
-            _glVertex4hvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertex4hvNV");
+            _glVertex4hvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertex4hvNV");
             _glVertex4hvNV_fnptr(v);
         }
         
@@ -23504,19 +23504,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttrib1fvNV_fnptr(index, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, void> _glVertexAttrib1hNV_fnptr = &glVertexAttrib1hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, void> _glVertexAttrib1hNV_fnptr = &glVertexAttrib1hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib1hNV_Lazy(uint index, ushort x)
+        private static void glVertexAttrib1hNV_Lazy(uint index, half x)
         {
-            _glVertexAttrib1hNV_fnptr = (delegate* unmanaged<uint, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib1hNV");
+            _glVertexAttrib1hNV_fnptr = (delegate* unmanaged<uint, half, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib1hNV");
             _glVertexAttrib1hNV_fnptr(index, x);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glVertexAttrib1hvNV_fnptr = &glVertexAttrib1hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glVertexAttrib1hvNV_fnptr = &glVertexAttrib1hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib1hvNV_Lazy(uint index, ushort* v)
+        private static void glVertexAttrib1hvNV_Lazy(uint index, half* v)
         {
-            _glVertexAttrib1hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib1hvNV");
+            _glVertexAttrib1hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib1hvNV");
             _glVertexAttrib1hvNV_fnptr(index, v);
         }
         
@@ -23664,19 +23664,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttrib2fvNV_fnptr(index, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, ushort, void> _glVertexAttrib2hNV_fnptr = &glVertexAttrib2hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, half, void> _glVertexAttrib2hNV_fnptr = &glVertexAttrib2hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib2hNV_Lazy(uint index, ushort x, ushort y)
+        private static void glVertexAttrib2hNV_Lazy(uint index, half x, half y)
         {
-            _glVertexAttrib2hNV_fnptr = (delegate* unmanaged<uint, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib2hNV");
+            _glVertexAttrib2hNV_fnptr = (delegate* unmanaged<uint, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib2hNV");
             _glVertexAttrib2hNV_fnptr(index, x, y);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glVertexAttrib2hvNV_fnptr = &glVertexAttrib2hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glVertexAttrib2hvNV_fnptr = &glVertexAttrib2hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib2hvNV_Lazy(uint index, ushort* v)
+        private static void glVertexAttrib2hvNV_Lazy(uint index, half* v)
         {
-            _glVertexAttrib2hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib2hvNV");
+            _glVertexAttrib2hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib2hvNV");
             _glVertexAttrib2hvNV_fnptr(index, v);
         }
         
@@ -23824,19 +23824,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttrib3fvNV_fnptr(index, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, ushort, ushort, void> _glVertexAttrib3hNV_fnptr = &glVertexAttrib3hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, half, half, void> _glVertexAttrib3hNV_fnptr = &glVertexAttrib3hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib3hNV_Lazy(uint index, ushort x, ushort y, ushort z)
+        private static void glVertexAttrib3hNV_Lazy(uint index, half x, half y, half z)
         {
-            _glVertexAttrib3hNV_fnptr = (delegate* unmanaged<uint, ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib3hNV");
+            _glVertexAttrib3hNV_fnptr = (delegate* unmanaged<uint, half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib3hNV");
             _glVertexAttrib3hNV_fnptr(index, x, y, z);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glVertexAttrib3hvNV_fnptr = &glVertexAttrib3hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glVertexAttrib3hvNV_fnptr = &glVertexAttrib3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib3hvNV_Lazy(uint index, ushort* v)
+        private static void glVertexAttrib3hvNV_Lazy(uint index, half* v)
         {
-            _glVertexAttrib3hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib3hvNV");
+            _glVertexAttrib3hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib3hvNV");
             _glVertexAttrib3hvNV_fnptr(index, v);
         }
         
@@ -24000,19 +24000,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttrib4fvNV_fnptr(index, v);
         }
         
-        internal static delegate* unmanaged<uint, ushort, ushort, ushort, ushort, void> _glVertexAttrib4hNV_fnptr = &glVertexAttrib4hNV_Lazy;
+        internal static delegate* unmanaged<uint, half, half, half, half, void> _glVertexAttrib4hNV_fnptr = &glVertexAttrib4hNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib4hNV_Lazy(uint index, ushort x, ushort y, ushort z, ushort w)
+        private static void glVertexAttrib4hNV_Lazy(uint index, half x, half y, half z, half w)
         {
-            _glVertexAttrib4hNV_fnptr = (delegate* unmanaged<uint, ushort, ushort, ushort, ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib4hNV");
+            _glVertexAttrib4hNV_fnptr = (delegate* unmanaged<uint, half, half, half, half, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib4hNV");
             _glVertexAttrib4hNV_fnptr(index, x, y, z, w);
         }
         
-        internal static delegate* unmanaged<uint, ushort*, void> _glVertexAttrib4hvNV_fnptr = &glVertexAttrib4hvNV_Lazy;
+        internal static delegate* unmanaged<uint, half*, void> _glVertexAttrib4hvNV_fnptr = &glVertexAttrib4hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttrib4hvNV_Lazy(uint index, ushort* v)
+        private static void glVertexAttrib4hvNV_Lazy(uint index, half* v)
         {
-            _glVertexAttrib4hvNV_fnptr = (delegate* unmanaged<uint, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib4hvNV");
+            _glVertexAttrib4hvNV_fnptr = (delegate* unmanaged<uint, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttrib4hvNV");
             _glVertexAttrib4hvNV_fnptr(index, v);
         }
         
@@ -25096,11 +25096,11 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttribs1fvNV_fnptr(index, count, v);
         }
         
-        internal static delegate* unmanaged<uint, int, ushort*, void> _glVertexAttribs1hvNV_fnptr = &glVertexAttribs1hvNV_Lazy;
+        internal static delegate* unmanaged<uint, int, half*, void> _glVertexAttribs1hvNV_fnptr = &glVertexAttribs1hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttribs1hvNV_Lazy(uint index, int n, ushort* v)
+        private static void glVertexAttribs1hvNV_Lazy(uint index, int n, half* v)
         {
-            _glVertexAttribs1hvNV_fnptr = (delegate* unmanaged<uint, int, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs1hvNV");
+            _glVertexAttribs1hvNV_fnptr = (delegate* unmanaged<uint, int, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs1hvNV");
             _glVertexAttribs1hvNV_fnptr(index, n, v);
         }
         
@@ -25128,11 +25128,11 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttribs2fvNV_fnptr(index, count, v);
         }
         
-        internal static delegate* unmanaged<uint, int, ushort*, void> _glVertexAttribs2hvNV_fnptr = &glVertexAttribs2hvNV_Lazy;
+        internal static delegate* unmanaged<uint, int, half*, void> _glVertexAttribs2hvNV_fnptr = &glVertexAttribs2hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttribs2hvNV_Lazy(uint index, int n, ushort* v)
+        private static void glVertexAttribs2hvNV_Lazy(uint index, int n, half* v)
         {
-            _glVertexAttribs2hvNV_fnptr = (delegate* unmanaged<uint, int, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs2hvNV");
+            _glVertexAttribs2hvNV_fnptr = (delegate* unmanaged<uint, int, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs2hvNV");
             _glVertexAttribs2hvNV_fnptr(index, n, v);
         }
         
@@ -25160,11 +25160,11 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttribs3fvNV_fnptr(index, count, v);
         }
         
-        internal static delegate* unmanaged<uint, int, ushort*, void> _glVertexAttribs3hvNV_fnptr = &glVertexAttribs3hvNV_Lazy;
+        internal static delegate* unmanaged<uint, int, half*, void> _glVertexAttribs3hvNV_fnptr = &glVertexAttribs3hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttribs3hvNV_Lazy(uint index, int n, ushort* v)
+        private static void glVertexAttribs3hvNV_Lazy(uint index, int n, half* v)
         {
-            _glVertexAttribs3hvNV_fnptr = (delegate* unmanaged<uint, int, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs3hvNV");
+            _glVertexAttribs3hvNV_fnptr = (delegate* unmanaged<uint, int, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs3hvNV");
             _glVertexAttribs3hvNV_fnptr(index, n, v);
         }
         
@@ -25192,11 +25192,11 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexAttribs4fvNV_fnptr(index, count, v);
         }
         
-        internal static delegate* unmanaged<uint, int, ushort*, void> _glVertexAttribs4hvNV_fnptr = &glVertexAttribs4hvNV_Lazy;
+        internal static delegate* unmanaged<uint, int, half*, void> _glVertexAttribs4hvNV_fnptr = &glVertexAttribs4hvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexAttribs4hvNV_Lazy(uint index, int n, ushort* v)
+        private static void glVertexAttribs4hvNV_Lazy(uint index, int n, half* v)
         {
-            _glVertexAttribs4hvNV_fnptr = (delegate* unmanaged<uint, int, ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs4hvNV");
+            _glVertexAttribs4hvNV_fnptr = (delegate* unmanaged<uint, int, half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexAttribs4hvNV");
             _glVertexAttribs4hvNV_fnptr(index, n, v);
         }
         
@@ -25608,19 +25608,19 @@ namespace OpenTK.Graphics.OpenGL
             _glVertexWeightfvEXT_fnptr(weight);
         }
         
-        internal static delegate* unmanaged<ushort, void> _glVertexWeighthNV_fnptr = &glVertexWeighthNV_Lazy;
+        internal static delegate* unmanaged<half, void> _glVertexWeighthNV_fnptr = &glVertexWeighthNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexWeighthNV_Lazy(ushort weight)
+        private static void glVertexWeighthNV_Lazy(half weight)
         {
-            _glVertexWeighthNV_fnptr = (delegate* unmanaged<ushort, void>)GLLoader.BindingsContext.GetProcAddress("glVertexWeighthNV");
+            _glVertexWeighthNV_fnptr = (delegate* unmanaged<half, void>)GLLoader.BindingsContext.GetProcAddress("glVertexWeighthNV");
             _glVertexWeighthNV_fnptr(weight);
         }
         
-        internal static delegate* unmanaged<ushort*, void> _glVertexWeighthvNV_fnptr = &glVertexWeighthvNV_Lazy;
+        internal static delegate* unmanaged<half*, void> _glVertexWeighthvNV_fnptr = &glVertexWeighthvNV_Lazy;
         [UnmanagedCallersOnly]
-        private static void glVertexWeighthvNV_Lazy(ushort* weight)
+        private static void glVertexWeighthvNV_Lazy(half* weight)
         {
-            _glVertexWeighthvNV_fnptr = (delegate* unmanaged<ushort*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexWeighthvNV");
+            _glVertexWeighthvNV_fnptr = (delegate* unmanaged<half*, void>)GLLoader.BindingsContext.GetProcAddress("glVertexWeighthvNV");
             _glVertexWeighthvNV_fnptr(weight);
         }
         

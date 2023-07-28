@@ -61,11 +61,10 @@ namespace Generator.Process
         public static OutputData ProcessSpec2(Specification2 spec, Documentation docs)
         {
             // The first thing we do is process all of the vendorFunctions defined into a dictionary of Functions.
-            List<NativeFunction> allEntryPoints = new List<NativeFunction>();
-            Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Commands.Count);
-            foreach (Command command in spec.Commands)
+            List<NativeFunction> allEntryPoints = new List<NativeFunction>(spec.Functions.Count);
+            Dictionary<string, OverloadedFunction> allFunctions = new Dictionary<string, OverloadedFunction>(spec.Functions.Count);
+            foreach (NativeFunction nativeFunction in spec.Functions)
             {
-                NativeFunction nativeFunction = MakeNativeFunction(command);
                 Dictionary<OutputApi, CommandDocumentation> functionDocumentation = MakeDocumentationForNativeFunction(nativeFunction, docs);
                 OverloadedFunction overloadedFunction = GenerateOverloads(nativeFunction, functionDocumentation);
 
@@ -623,7 +622,7 @@ namespace Generator.Process
             }
         }
 
-        public static NativeFunction MakeNativeFunction(Command command)
+        /*public static NativeFunction MakeNativeFunction(Command command)
         {
             string functionName = NameMangler.MangleFunctionName(command.EntryPoint);
 
@@ -650,7 +649,7 @@ namespace Generator.Process
             }
 
             return new NativeFunction(command.EntryPoint, functionName, parameters, returnType, referencedEnumGroups.ToArray());
-        }
+        }*/
 
         public static BaseCSType MakeCSType(GLType type, HandleType? handle, GroupRef? group)
         {

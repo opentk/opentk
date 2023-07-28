@@ -29,7 +29,9 @@ namespace Generator
                     // Reading the gl.xml file and parsing it into data structures.
                     using FileStream specificationStream = Reader.ReadGLSpecFromGithub();
                     Specification2 specification = SpecificationParser.Parse(specificationStream, GLFile.GL, new List<string>());
-                    
+
+                    // FIXME: Merge all of the parsing.
+
                     // Read the documentation folders and parse it into data structures.
                     using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
                     Documentation documentation = DocumentationParser.Parse(documentationSource);
