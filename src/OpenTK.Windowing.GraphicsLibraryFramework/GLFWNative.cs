@@ -45,10 +45,8 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
                 string useWayland = Environment.GetEnvironmentVariable("OPENTK_4_USE_WAYLAND");
                 if (sessionType == "wayland" && useWayland == "1")
                 {
-                    // As we have a delimiter in the name the runtime will not prepend or append
-                    // stuff like `lib` and stuff.
                     libNameFormatter = (libName, ver) =>
-                        "/wayland/lib" + libName + ".so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
+                        libName + "-wayland.so" + (string.IsNullOrEmpty(ver) ? string.Empty : "." + ver);
                 }
                 else
                 {
