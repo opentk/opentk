@@ -30,6 +30,39 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
+    [DebuggerDisplay("{Value}")]
+    internal struct XIC
+    {
+        public IntPtr Value { get; }
+
+        public XIC(IntPtr value)
+        {
+            Value = value;
+        }
+    }
+
+    [DebuggerDisplay("{Value}")]
+    internal struct XIM
+    {
+        public IntPtr Value { get; }
+
+        public XIM(IntPtr value)
+        {
+            Value = value;
+        }
+    }
+
+    [DebuggerDisplay("{Value}")]
+    internal struct XrmDatabase
+    {
+        public IntPtr Value { get; }
+
+        public XrmDatabase(IntPtr value)
+        {
+            Value = value;
+        }
+    }
+
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
     internal struct XAtom : IEquatable<XAtom>
     {
@@ -380,5 +413,53 @@ namespace OpenTK.Platform.Native.X11
         public long decorations;
         public long input_mode;
         public long status;
+    }
+
+    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    internal struct XKeySym : IEquatable<XKeySym>
+    {
+        public ulong Id { get; }
+
+        public static readonly XKeySym None = new XKeySym(0);
+
+        public XKeySym(ulong id)
+        {
+            Id = id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is XKeySym cursor && Equals(cursor);
+        }
+
+        public bool Equals(XKeySym other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public static bool operator ==(XKeySym left, XKeySym right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(XKeySym left, XKeySym right)
+        {
+            return !(left == right);
+        }
+
+        public override string ToString()
+        {
+            return $"{Id}";
+        }
+    }
+
+    internal unsafe struct XComposeStatus {
+        public char* compose_ptr;
+        public int chars_matched;
     }
 }

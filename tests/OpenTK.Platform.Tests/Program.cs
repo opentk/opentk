@@ -396,6 +396,10 @@ namespace OpenTK.Platform.Tests
                     //keyboardComp.SetImeRectangle(Window, x, y, 0, 0);
                 }
             }
+            else if (args is MouseButtonUpEventArgs buttonUp)
+            {
+                Console.WriteLine($"Mouse button up: {buttonUp.Button}");
+            }
             else if (args is WindowResizeEventArgs resize)
             {
                 Console.WriteLine($"Resize! {resize.NewSize.X} {resize.NewSize.Y}");

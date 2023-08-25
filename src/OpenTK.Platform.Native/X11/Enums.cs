@@ -591,8 +591,8 @@ namespace OpenTK.Platform.Native.X11
     internal enum BarrierDirection : int
     {
         BarrierPositiveX = 1 << 0,
-		BarrierPositiveY = 1 << 1,
-		BarrierNegativeX = 1 << 2,
-		BarrierNegativeY = 1 << 3,
+        BarrierPositiveY = 1 << 1,
+        BarrierNegativeX = 1 << 2,
+        BarrierNegativeY = 1 << 3,
     }
 }

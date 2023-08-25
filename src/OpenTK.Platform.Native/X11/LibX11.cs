@@ -410,5 +410,28 @@ namespace OpenTK.Platform.Native.X11
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XConnectionNumber(XDisplayPtr display);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int XLookupString(XKeyEvent* event_struct, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, XComposeStatus* status_in_out);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern XIM XOpenIM(XDisplayPtr display, XrmDatabase db, string res_name, string res_class);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int /* Status */ XCloseIM(XIM im);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl, EntryPoint = "XSetIMValues")]
+        private static unsafe extern byte* XSetIMValues_(XIM im, __arglist);
+
+        internal static unsafe string? XSetIMValues<T>(XIM im, string key, T value) where T : unmanaged
+        {
+            byte* str = (byte*)Marshal.StringToCoTaskMemUTF8(key);
+            byte* ret = XSetIMValues_(im, __arglist(str, value, null));
+            Marshal.FreeCoTaskMem((IntPtr)str);
+            return Marshal.PtrToStringUTF8((IntPtr)ret);
+        }
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static unsafe extern int Xutf8LookupString(XIC ic, XKeyEvent* @event, byte* buffer_return, int bytes_buffer, XKeySym* keysym_return, int* /*Status*/ status_return);
     }
 }

@@ -393,18 +393,18 @@ namespace OpenTK.Platform.Native.X11
                         }
                     case XEventType.ButtonRelease:
                         {
-                            XButtonEvent buttonPressed = ea.ButtonPressed;
+                            XButtonEvent buttonReleased = ea.ButtonReleased;
 
-                            XWindowHandle xwindow = XWindowDict[buttonPressed.window];
+                            XWindowHandle xwindow = XWindowDict[buttonReleased.window];
 
                             // Ignore release for scroll buttons.
-                            if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
+                            if (buttonReleased.button >= 4 && buttonReleased.button <= 7)
                             {
                                 break;
                             }
 
                             MouseButton button;
-                            switch (buttonPressed.button)
+                            switch (buttonReleased.button)
                             {
                                 case 1: button = MouseButton.Button1; break; // Left
                                 case 2: button = MouseButton.Button3; break; // Middle
@@ -415,6 +415,78 @@ namespace OpenTK.Platform.Native.X11
                             }
 
                             EventQueue.Raise(xwindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(xwindow, button));
+
+                            break;
+                        }
+                    case XEventType.KeyPress:
+                        {
+                            XKeyEvent keyPressed = ea.KeyPressed;
+
+                            XWindowHandle xwindow = XWindowDict[keyPressed.window];
+
+                            // FIXME: Handle repeats
+
+                            unsafe {
+                                XKeySym keysym = default;
+                                const int TEXT_LENGTH = 32;
+                                byte* str = stackalloc byte[TEXT_LENGTH];
+                                int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+
+                                // FIXME: Convert keycode into scancode and then key.
+                                // XDisplayKeycodes -> XGetKeyboardMapping -> "normal" keysym translations..
+
+                                // FIXME: Backspace hack!
+                                if (keysym.Id == 65288)
+                                {
+                                    EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, Key.Backspace, Scancode.Backspace, false));
+                                }
+
+                                bool isHighLatin1 = false;
+                                for (int i = 0; i < TEXT_LENGTH; i++)
+                                {
+                                    if (str[i] >= 0x80)
+                                    {
+                                        isHighLatin1 = true;
+                                        break;
+                                    }
+                                }
+
+                                // FIXME: Figure out when this Latin1 stuff is needed.
+                                // On Ubuntu 22.04 we can just do the "new string()" method
+                                // in all cases, even for characters like åäö.
+                                // - Noggin_bops 2023-08-26
+                                string? result = null;
+                                if (isHighLatin1)
+                                {
+                                    result = Encoding.Latin1.GetString(str, charsWritten);
+                                }
+                                else
+                                {
+                                    result = new string((sbyte*)str, 0, charsWritten);
+                                }
+
+                                EventQueue.Raise(xwindow, PlatformEventType.TextInput, new TextInputEventArgs(xwindow, result));
+                            }
+                            break;
+                        }
+                    case XEventType.KeyRelease:
+                        {
+                            XKeyEvent keyPressed = ea.KeyPressed;
+
+                            XWindowHandle xwindow = XWindowDict[keyPressed.window];
+
+                            unsafe {
+                                XKeySym keysym = default;
+                                const int TEXT_LENGTH = 32;
+                                byte* str = stackalloc byte[TEXT_LENGTH];
+                                int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+
+                                // FIXME: Backspace hack!
+                                if (keysym.Id == 65288)
+                                {
+                                    EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, Key.Backspace, Scancode.Backspace));
+                                }
+                            }
 
                             break;
                         }
@@ -831,6 +903,7 @@ namespace OpenTK.Platform.Native.X11
                     XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
                     ref attributes);
 
+                // FIXME: How do we handle vulkan windows?
                 throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
 
@@ -855,6 +928,7 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.VisibilityChanged |
                     XEventMask.Exposure |
                     XEventMask.ButtonPress |
+                    XEventMask.ButtonRelease |
                     XEventMask.PointerMotion |
                     XEventMask.EnterWindow |
                     XEventMask.LeaveWindow |
