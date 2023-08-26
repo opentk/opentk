@@ -10,11 +10,8 @@ namespace OpenTK.Backends.Tests
     /// <summary>
     /// The main container that houses all tabs.
     /// </summary>
-    public class MainTabContainer : View, IList<View>
+    public class MainTabContainer : IEnumerable<View>
     {
-        /// <inheritdoc/>
-        public override string Title => "Main Tab View";
-
         private readonly List<View> _views;
         private int activeItem = -1;
 
@@ -41,7 +38,7 @@ namespace OpenTK.Backends.Tests
         private const string TAB_VIEW_ID = "main_tab_view_tab_id";
 
         /// <inheritdoc/>
-        public override void Initialize()
+        public void Initialize()
         {
             foreach (View view in _views)
             {
@@ -50,7 +47,7 @@ namespace OpenTK.Backends.Tests
         }
 
         /// <inheritdoc/>
-        public override void Paint()
+        public void Paint()
         {
             Vector2 size = ImGui.GetIO().DisplaySize;
 
@@ -100,68 +97,20 @@ namespace OpenTK.Backends.Tests
         }
 
 
-        #region IList<View>
+        #region IEnumerable<View>
             /// <inheritdoc/>
-            public View this[int index] { get => ((IList<View>)_views)[index]; set => ((IList<View>)_views)[index] = value; }
-
-            /// <inheritdoc/>
-            public int Count => ((ICollection<View>)_views).Count;
-
-            /// <inheritdoc/>
-            public bool IsReadOnly => ((ICollection<View>)_views).IsReadOnly;
+            public int Count => _views.Count;
 
             /// <inheritdoc/>
             public void Add(View item)
             {
-                ((ICollection<View>)_views).Add(item);
-            }
-
-            /// <inheritdoc/>
-            public void Clear()
-            {
-                ((ICollection<View>)_views).Clear();
-            }
-
-            /// <inheritdoc/>
-            public bool Contains(View item)
-            {
-                return ((ICollection<View>)_views).Contains(item);
-            }
-
-            /// <inheritdoc/>
-            public void CopyTo(View[] array, int arrayIndex)
-            {
-                ((ICollection<View>)_views).CopyTo(array, arrayIndex);
+                _views.Add(item);
             }
 
             /// <inheritdoc/>
             public IEnumerator<View> GetEnumerator()
             {
-                return ((IEnumerable<View>)_views).GetEnumerator();
-            }
-
-            /// <inheritdoc/>
-            public int IndexOf(View item)
-            {
-                return ((IList<View>)_views).IndexOf(item);
-            }
-
-            /// <inheritdoc/>
-            public void Insert(int index, View item)
-            {
-                ((IList<View>)_views).Insert(index, item);
-            }
-
-            /// <inheritdoc/>
-            public bool Remove(View item)
-            {
-                return ((ICollection<View>)_views).Remove(item);
-            }
-
-            /// <inheritdoc/>
-            public void RemoveAt(int index)
-            {
-                ((IList<View>)_views).RemoveAt(index);
+                return _views.GetEnumerator();
             }
 
             IEnumerator IEnumerable.GetEnumerator()

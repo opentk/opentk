@@ -705,7 +705,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (success == false)
                 {
-                    throw new Win32Exception("wglMakeCurrent failed");
+                    throw new Win32Exception();
                 }
             }
 

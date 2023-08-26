@@ -18,34 +18,38 @@ namespace OpenTK.Backends.Tests
         private bool canCreateFromWindow;
         private bool canCreateFromSurface;
         private bool canCanShareContexts;
-        private string glVersion = string.Empty;
-        private string glslVersion = string.Empty;
-        private string vendorString = string.Empty;
-        private string renderer = string.Empty;
-        private int numExtensions = 0;
+
+        private string glVersion = "";
+        private string glslVersion = "";
+        private string vendorString = "";
+        private string renderer = "";
+
         private string extensionHeader = "##opengl_view_extensions_header";
-        private List<(string vendor, List<string> extensions)> extensionGroups = new List<(string, List<string>)>();
-        private int lastActiveWindowIndex = -1;
-        private string lastActiveWindowLabel = string.Empty;
-        private string[] testApps = TestApps.ByName.Keys.ToArray();
+
+        private int numExtensions = 0;
+        private List<(string Vendor, List<string> Extensions)> extensionGroups = new List<(string, List<string>)>();
+
+        private int selectedWindow = -1;
+
+        // FIXME: Linq
+        private string[] testAppNames = TestApps.All.Select(app => app.Name).ToArray();
+
         private int lastActiveApp = 0;
+
         private string savePath = Path.Combine(Environment.CurrentDirectory, "opengl.ini");
 
         private readonly Regex vendorRegex = new Regex("GL_([0-9a-zA-Z]+)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
 
         public override void Initialize()
         {
-            try { canCreateFromWindow = Program.OpenGLComp.CanCreateFromWindow; }
-            catch { canCreateFromWindow = false;}
-            try { canCreateFromSurface = Program.OpenGLComp.CanCreateFromSurface; }
-            catch { canCreateFromSurface = false; }
-            try { canCanShareContexts = Program.OpenGLComp.CanShareContexts; }
-            catch { canCanShareContexts = false; }
+            try { canCreateFromWindow =  Program.OpenGLComp.CanCreateFromWindow; }  catch { canCreateFromWindow = false; }
+            try { canCreateFromSurface = Program.OpenGLComp.CanCreateFromSurface; } catch { canCreateFromSurface = false; }
+            try { canCanShareContexts =  Program.OpenGLComp.CanShareContexts; }     catch { canCanShareContexts = false; }
 
-            glVersion = GL.GetString(StringName.Version) ?? string.Empty;
-            glslVersion = GL.GetString(StringName.ShadingLanguageVersion) ?? string.Empty;
-            vendorString = GL.GetString(StringName.Vendor) ?? string.Empty;
-            renderer = GL.GetString(StringName.Renderer) ?? string.Empty;
+            glVersion = GL.GetString(StringName.Version) ?? "";
+            glslVersion = GL.GetString(StringName.ShadingLanguageVersion) ?? "";
+            vendorString = GL.GetString(StringName.Vendor) ?? "";
+            renderer = GL.GetString(StringName.Renderer) ?? "";
 
             Dictionary<string, List<string>> extensions = new Dictionary<string, List<string>>();
             numExtensions = GL.GetInteger(GetPName.NumExtensions);
@@ -75,69 +79,78 @@ namespace OpenTK.Backends.Tests
             {
                 extensionGroups.Add((key, value));
             }
-            extensionGroups.Sort((a, b) => StringComparer.InvariantCulture.Compare(a.vendor, b.vendor));
+            extensionGroups.Sort((a, b) => StringComparer.InvariantCulture.Compare(a.Vendor, b.Vendor));
         }
 
         public override void Paint()
         {
-            bool dummyBoolean;
-            string dummyString;
-
             ImGui.SeparatorText("Component Properties");
-            dummyBoolean = canCreateFromWindow;
-            ImGui.Checkbox("Can Create From Window", ref dummyBoolean);
-            dummyBoolean = canCreateFromSurface;
-            ImGui.Checkbox("Can Create From Surface", ref dummyBoolean);
-            dummyBoolean = canCanShareContexts;
-            ImGui.Checkbox("Can Share Context", ref dummyBoolean);
+            // FIXME: Separate display if the property threw an exception?
+            ImGuiUtils.ReadonlyCheckbox("Can Create From Window", canCreateFromWindow);
+            ImGuiUtils.ReadonlyCheckbox("Can Create From Surface ", canCreateFromSurface);
+            ImGuiUtils.ReadonlyCheckbox("Can Share Context", canCanShareContexts);
 
             ImGui.SeparatorText("Contexts");
 
-            if (
-                lastActiveWindowIndex >= Program.WindowManager.Count ||
-                Program.WindowManager.Count == 0)
+            if (selectedWindow >= Program.WindowManager.Windows.Count)
             {
-                lastActiveWindowIndex = -1;
-                lastActiveWindowLabel = "???";
+                if (Program.WindowManager.Windows.Count == 0)
+                {
+                    selectedWindow = -1;
+                }
+                else
+                {
+                    selectedWindow = 0;
+                }
             }
 
-            if (lastActiveWindowIndex == -1 && Program.WindowManager.Count != 0)
+            if (selectedWindow == -1 && Program.WindowManager.Windows.Count > 0)
             {
-                lastActiveWindowIndex = 0;
-                var data = Program.WindowManager[0];
-                string title = Program.WindowComp.GetTitle(data.Window);
-                lastActiveWindowLabel = $"{title} ({(data.Context == null ? "no context" : "opengl")})";
+                selectedWindow = 0;
             }
 
-            if (lastActiveWindowIndex == -1)
+            if (Program.WindowManager.Windows.Count == 0)
             {
                 ImGui.BeginDisabled();
                 if (ImGui.BeginCombo("Child Window", "No child windows"))
-                    ImGui.EndCombo();
-                ImGui.EndDisabled();
-
-                lastActiveWindowIndex = -1;
-                lastActiveWindowLabel = "???";
-            }
-            else if (ImGui.BeginCombo("Child Window", lastActiveWindowLabel))
-            {
-                for (int i = 0; i < Program.WindowManager.Count; i++)
                 {
-                    var data = Program.WindowManager[i];
-                    string title = Program.WindowComp.GetTitle(data.Window);
-                    string label = $"{title} ({(data.Context == null ? "no context" : "opengl")})";
-
-                    if (ImGui.Selectable(label))
-                    {
-                        lastActiveWindowIndex = i;
-                        lastActiveWindowLabel = label;
-                    }
+                    ImGui.EndCombo();
                 }
-                ImGui.EndCombo();
+                ImGui.EndDisabled();
+            }
+            else
+            {
+                string windowTitle;
+                if (selectedWindow == -1)
+                {
+                    windowTitle = "no window selected";
+                }
+                else
+                {
+                    var windowData = Program.WindowManager.Windows[selectedWindow];
+                    string title = Program.WindowComp.GetTitle(windowData.Window);
+                    windowTitle = $"{title} ({(windowData.Context == null ? "no context" : "opengl")})";
+                }
+                
+                if (ImGui.BeginCombo("Child Window", windowTitle))
+                {
+                    for (int i = 0; i < Program.WindowManager.Windows.Count; i++)
+                    {
+                        var data = Program.WindowManager.Windows[i];
+                        string title = Program.WindowComp.GetTitle(data.Window);
+                        string label = $"{title} ({(data.Context == null ? "no context" : "opengl")})";
+
+                        if (ImGui.Selectable(label))
+                        {
+                            selectedWindow = i;
+                        }
+                    }
+                    ImGui.EndCombo();
+                }
             }
 
             ImGui.SameLine();
-            if (lastActiveWindowIndex == -1)
+            if (selectedWindow == -1)
             {
                 ImGui.BeginDisabled();
                     ImGui.Button("Create");
@@ -145,7 +158,7 @@ namespace OpenTK.Backends.Tests
             }
             else
             {
-                var data = Program.WindowManager[lastActiveWindowIndex];
+                var data = Program.WindowManager.Windows[selectedWindow];
 
                 if (data.Context == null)
                 {
@@ -166,29 +179,25 @@ namespace OpenTK.Backends.Tests
                 }
             }
 
-            ImGui.Combo("Application", ref lastActiveApp, testApps, testApps.Length);
+            ImGui.Combo("Application", ref lastActiveApp, testAppNames, testAppNames.Length);
             ImGui.SameLine();
 
             ImGui.BeginDisabled(
-                lastActiveWindowIndex == -1 ||
-                Program.WindowManager[lastActiveWindowIndex].Application?.GetType() == TestApps.All[lastActiveApp]
+                selectedWindow == -1 ||
+                Program.WindowManager.Windows[selectedWindow].Application?.GetType() == TestApps.All[lastActiveApp]
             );
-            if (ImGui.Button("Launch") && lastActiveWindowIndex != -1)
+            if (ImGui.Button("Launch") && selectedWindow != -1)
             {
-                Program.WindowManager[lastActiveWindowIndex].Application = TestApps.Create(lastActiveApp);
+                Program.WindowManager.Windows[selectedWindow].Application = TestApps.Create(lastActiveApp);
             }
             ImGui.EndDisabled();
 
             ImGui.SeparatorText("Main Context Information");
             ImGui.BeginDisabled();
-                dummyString = glVersion;
-                ImGui.InputText("OpenGL Version", ref dummyString, 1024);
-                dummyString = glslVersion;
-                ImGui.InputText("GLSL Version", ref dummyString, 1024);
-                dummyString = vendorString;
-                ImGui.InputText("OpenGL Vendor", ref dummyString, 1024);
-                dummyString = renderer;
-                ImGui.InputText("OpenGL Renderer", ref dummyString, 1024);
+            ImGui.InputText("OpenGL Version", ref glVersion, 1024);
+            ImGui.InputText("GLSL Version", ref glslVersion, 1024);
+            ImGui.InputText("OpenGL Vendor", ref vendorString, 1024);
+            ImGui.InputText("OpenGL Renderer", ref renderer, 1024);
             ImGui.EndDisabled();
 
             ImGui.SeparatorText(extensionHeader);

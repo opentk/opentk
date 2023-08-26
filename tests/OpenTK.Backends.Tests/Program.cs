@@ -61,16 +61,16 @@ namespace OpenTK.Backends.Tests
                     {
                         switch (component)
                         {
-                        case PalComponents.Window:      WindowComp = (IWindowComponent)driver; break;
-                        case PalComponents.OpenGL:      OpenGLComp = (IOpenGLComponent)driver; break;
-                        case PalComponents.WindowIcon:  IconComponent = (IIconComponent)driver; break;
-                        case PalComponents.MouseCursor: CursorComp = (ICursorComponent)driver; break;
-                        case PalComponents.Display:     DisplayComponent = (IDisplayComponent)driver; break;
-                        case PalComponents.MiceInput:   MouseComponent = (IMouseComponent)driver; break;
-                        case PalComponents.KeyboardInput: KeyboardComponent = (IKeyboardComponent)driver; break;
-                        case PalComponents.Clipboard:   ClipboardComponent = (IClipboardComponent)driver; break;
-                        case PalComponents.Shell:       ShellComponent = (IShellComponent)driver; break;
-                        case PalComponents.Joystick:    JoystickComponent = (IJoystickComponent)driver; break;
+                        case PalComponents.Window:        WindowComp =         (IWindowComponent)   driver; break;
+                        case PalComponents.OpenGL:        OpenGLComp =         (IOpenGLComponent)   driver; break;
+                        case PalComponents.WindowIcon:    IconComponent =      (IIconComponent)     driver; break;
+                        case PalComponents.MouseCursor:   CursorComp =         (ICursorComponent)   driver; break;
+                        case PalComponents.Display:       DisplayComponent =   (IDisplayComponent)  driver; break;
+                        case PalComponents.MiceInput:     MouseComponent =     (IMouseComponent)    driver; break;
+                        case PalComponents.KeyboardInput: KeyboardComponent =  (IKeyboardComponent) driver; break;
+                        case PalComponents.Clipboard:     ClipboardComponent = (IClipboardComponent)driver; break;
+                        case PalComponents.Shell:         ShellComponent =     (IShellComponent)    driver; break;
+                        case PalComponents.Joystick:      JoystickComponent =  (IJoystickComponent) driver; break;
                         }
                         driver.Logger = Logger;
                     }
@@ -255,6 +255,7 @@ namespace OpenTK.Backends.Tests
             {
                 if (args is CloseEventArgs close2)
                 {
+                    WindowManager.RemoveWindow(close2.Window);
                     WindowComp.Destroy(close2.Window);
                 }
                 return;
@@ -296,7 +297,6 @@ namespace OpenTK.Backends.Tests
             else if (args is ScrollEventArgs scroll)
             {
                 ImGui.GetIO().AddMouseWheelEvent(scroll.Delta.X, scroll.Delta.Y);
-                //ImGuiController.MouseScroll(scroll.Delta);
             }
             else if (args is MouseButtonDownEventArgs mouseDown)
             {

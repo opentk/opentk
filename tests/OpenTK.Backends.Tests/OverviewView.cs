@@ -47,7 +47,7 @@ namespace OpenTK.Backends.Tests
             ImGui.BulletText("Alternatively, drag the config file on the application.");
 
             bool preferSDL2 = BackendsConfig.Singleton.PreferSDL2;
-            ImGui.Checkbox("Default Prefers SDL2", ref preferSDL2);
+            ImGuiUtils.ReadonlyCheckbox("Default Prefers SDL2", preferSDL2);
 
             if (ImGui.BeginTable("overview_table_id", 4, ImGuiTableFlags.Borders))
             {

@@ -5,30 +5,27 @@ using OpenTK.Graphics.OpenGL;
 
 namespace OpenTK.Backends.Tests
 {
-    [TestApp("Color Wheel")]
+    [TestApp]
     public class ColorWheel : ITestApp
     {
         public string Name => "Color Wheel";
-        private Stopwatch watch = new Stopwatch();
-        private WindowHandle window;
-        private OpenGLContextHandle context;
 
-        public void Deinitialize(bool cleanExit)
-        {
-            watch.Stop();
-        }
+        public WindowHandle Window;
+        public OpenGLContextHandle Context;
+
+        private Stopwatch watch = new Stopwatch();
 
         public void Initialize(WindowHandle window, OpenGLContextHandle context)
         {
-            this.window = window;
-            this.context = context;
+            this.Window = window;
+            this.Context = context;
             watch.Start();
         }
 
         public void Render()
         {
             const float OMEGA = 0.002f * MathF.PI * 0.1f;
-            const float PHI   = MathF.PI/3;
+            const float PHI = MathF.PI / 3;
             long elapsed = watch.ElapsedMilliseconds;
 
             GL.ClearColor(
@@ -39,7 +36,12 @@ namespace OpenTK.Backends.Tests
             );
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            Program.WindowComp.SwapBuffers(window);
+            Program.WindowComp.SwapBuffers(Window);
+        }
+
+        public void Deinitialize()
+        {
+            watch.Stop();
         }
     }
 }
