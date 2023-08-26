@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-08-26 14:41:41 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -42655,50 +42655,50 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="Color3hvNV(half*)"/>
-            public static unsafe void Color3hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="Color3hvNV(Half*)"/>
+            public static unsafe void Color3hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Color3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color3hvNV(half*)"/>
-            public static unsafe void Color3hvNV(half[] v)
+            /// <inheritdoc cref="Color3hvNV(Half*)"/>
+            public static unsafe void Color3hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Color3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color3hvNV(half*)"/>
-            public static unsafe void Color3hvNV(in half v)
+            /// <inheritdoc cref="Color3hvNV(Half*)"/>
+            public static unsafe void Color3hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     Color3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4hvNV(half*)"/>
-            public static unsafe void Color4hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="Color4hvNV(Half*)"/>
+            public static unsafe void Color4hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Color4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4hvNV(half*)"/>
-            public static unsafe void Color4hvNV(half[] v)
+            /// <inheritdoc cref="Color4hvNV(Half*)"/>
+            public static unsafe void Color4hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Color4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Color4hvNV(half*)"/>
-            public static unsafe void Color4hvNV(in half v)
+            /// <inheritdoc cref="Color4hvNV(Half*)"/>
+            public static unsafe void Color4hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     Color4hvNV(v_ptr);
                 }
@@ -43247,26 +43247,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     ExecuteProgramNV(target, id, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="FogCoordhvNV(half*)"/>
-            public static unsafe void FogCoordhvNV(ReadOnlySpan<half> fog)
+            /// <inheritdoc cref="FogCoordhvNV(Half*)"/>
+            public static unsafe void FogCoordhvNV(ReadOnlySpan<Half> fog)
             {
-                fixed (half* fog_ptr = fog)
+                fixed (Half* fog_ptr = fog)
                 {
                     FogCoordhvNV(fog_ptr);
                 }
             }
-            /// <inheritdoc cref="FogCoordhvNV(half*)"/>
-            public static unsafe void FogCoordhvNV(half[] fog)
+            /// <inheritdoc cref="FogCoordhvNV(Half*)"/>
+            public static unsafe void FogCoordhvNV(Half[] fog)
             {
-                fixed (half* fog_ptr = fog)
+                fixed (Half* fog_ptr = fog)
                 {
                     FogCoordhvNV(fog_ptr);
                 }
             }
-            /// <inheritdoc cref="FogCoordhvNV(half*)"/>
-            public static unsafe void FogCoordhvNV(in half fog)
+            /// <inheritdoc cref="FogCoordhvNV(Half*)"/>
+            public static unsafe void FogCoordhvNV(in Half fog)
             {
-                fixed (half* fog_ptr = &fog)
+                fixed (Half* fog_ptr = &fog)
                 {
                     FogCoordhvNV(fog_ptr);
                 }
@@ -46463,98 +46463,98 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     MultiDrawElementsIndirectBindlessNV(mode, type, indirect_ptr, drawCount, stride, vertexBufferCount);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord1hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, half[] v)
+            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord1hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, in half v)
+            /// <inheritdoc cref="MultiTexCoord1hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord1hvNV(TextureUnit target, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     MultiTexCoord1hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord2hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, half[] v)
+            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord2hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, in half v)
+            /// <inheritdoc cref="MultiTexCoord2hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord2hvNV(TextureUnit target, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     MultiTexCoord2hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord3hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, half[] v)
+            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord3hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, in half v)
+            /// <inheritdoc cref="MultiTexCoord3hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord3hvNV(TextureUnit target, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     MultiTexCoord3hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord4hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, half[] v)
+            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     MultiTexCoord4hvNV(target, v_ptr);
                 }
             }
-            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, half*)"/>
-            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, in half v)
+            /// <inheritdoc cref="MultiTexCoord4hvNV(TextureUnit, Half*)"/>
+            public static unsafe void MultiTexCoord4hvNV(TextureUnit target, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     MultiTexCoord4hvNV(target, v_ptr);
                 }
@@ -46567,26 +46567,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     NamedFramebufferSampleLocationsfvNV(framebuffer, start, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3hvNV(half*)"/>
-            public static unsafe void Normal3hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="Normal3hvNV(Half*)"/>
+            public static unsafe void Normal3hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Normal3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3hvNV(half*)"/>
-            public static unsafe void Normal3hvNV(half[] v)
+            /// <inheritdoc cref="Normal3hvNV(Half*)"/>
+            public static unsafe void Normal3hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Normal3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Normal3hvNV(half*)"/>
-            public static unsafe void Normal3hvNV(in half v)
+            /// <inheritdoc cref="Normal3hvNV(Half*)"/>
+            public static unsafe void Normal3hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     Normal3hvNV(v_ptr);
                 }
@@ -48247,26 +48247,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     ScissorExclusiveArrayvNV(first, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="SecondaryColor3hvNV(half*)"/>
-            public static unsafe void SecondaryColor3hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="SecondaryColor3hvNV(Half*)"/>
+            public static unsafe void SecondaryColor3hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     SecondaryColor3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="SecondaryColor3hvNV(half*)"/>
-            public static unsafe void SecondaryColor3hvNV(half[] v)
+            /// <inheritdoc cref="SecondaryColor3hvNV(Half*)"/>
+            public static unsafe void SecondaryColor3hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     SecondaryColor3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="SecondaryColor3hvNV(half*)"/>
-            public static unsafe void SecondaryColor3hvNV(in half v)
+            /// <inheritdoc cref="SecondaryColor3hvNV(Half*)"/>
+            public static unsafe void SecondaryColor3hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     SecondaryColor3hvNV(v_ptr);
                 }
@@ -48573,98 +48573,98 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     StencilThenCoverStrokePathInstancedNV(numPaths, pathNameType, paths_ptr, pathBase, reference, mask, coverMode, transformType, transformValues_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1hvNV(half*)"/>
-            public static unsafe void TexCoord1hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="TexCoord1hvNV(Half*)"/>
+            public static unsafe void TexCoord1hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord1hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1hvNV(half*)"/>
-            public static unsafe void TexCoord1hvNV(half[] v)
+            /// <inheritdoc cref="TexCoord1hvNV(Half*)"/>
+            public static unsafe void TexCoord1hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord1hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord1hvNV(half*)"/>
-            public static unsafe void TexCoord1hvNV(in half v)
+            /// <inheritdoc cref="TexCoord1hvNV(Half*)"/>
+            public static unsafe void TexCoord1hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     TexCoord1hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2hvNV(half*)"/>
-            public static unsafe void TexCoord2hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="TexCoord2hvNV(Half*)"/>
+            public static unsafe void TexCoord2hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2hvNV(half*)"/>
-            public static unsafe void TexCoord2hvNV(half[] v)
+            /// <inheritdoc cref="TexCoord2hvNV(Half*)"/>
+            public static unsafe void TexCoord2hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord2hvNV(half*)"/>
-            public static unsafe void TexCoord2hvNV(in half v)
+            /// <inheritdoc cref="TexCoord2hvNV(Half*)"/>
+            public static unsafe void TexCoord2hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     TexCoord2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3hvNV(half*)"/>
-            public static unsafe void TexCoord3hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="TexCoord3hvNV(Half*)"/>
+            public static unsafe void TexCoord3hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3hvNV(half*)"/>
-            public static unsafe void TexCoord3hvNV(half[] v)
+            /// <inheritdoc cref="TexCoord3hvNV(Half*)"/>
+            public static unsafe void TexCoord3hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord3hvNV(half*)"/>
-            public static unsafe void TexCoord3hvNV(in half v)
+            /// <inheritdoc cref="TexCoord3hvNV(Half*)"/>
+            public static unsafe void TexCoord3hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     TexCoord3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4hvNV(half*)"/>
-            public static unsafe void TexCoord4hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="TexCoord4hvNV(Half*)"/>
+            public static unsafe void TexCoord4hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4hvNV(half*)"/>
-            public static unsafe void TexCoord4hvNV(half[] v)
+            /// <inheritdoc cref="TexCoord4hvNV(Half*)"/>
+            public static unsafe void TexCoord4hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     TexCoord4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="TexCoord4hvNV(half*)"/>
-            public static unsafe void TexCoord4hvNV(in half v)
+            /// <inheritdoc cref="TexCoord4hvNV(Half*)"/>
+            public static unsafe void TexCoord4hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     TexCoord4hvNV(v_ptr);
                 }
@@ -49542,74 +49542,74 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VDPAUUnmapSurfacesNV(numSurface, surfaces_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2hvNV(half*)"/>
-            public static unsafe void Vertex2hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="Vertex2hvNV(Half*)"/>
+            public static unsafe void Vertex2hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Vertex2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2hvNV(half*)"/>
-            public static unsafe void Vertex2hvNV(half[] v)
+            /// <inheritdoc cref="Vertex2hvNV(Half*)"/>
+            public static unsafe void Vertex2hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Vertex2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex2hvNV(half*)"/>
-            public static unsafe void Vertex2hvNV(in half v)
+            /// <inheritdoc cref="Vertex2hvNV(Half*)"/>
+            public static unsafe void Vertex2hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     Vertex2hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3hvNV(half*)"/>
-            public static unsafe void Vertex3hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="Vertex3hvNV(Half*)"/>
+            public static unsafe void Vertex3hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Vertex3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3hvNV(half*)"/>
-            public static unsafe void Vertex3hvNV(half[] v)
+            /// <inheritdoc cref="Vertex3hvNV(Half*)"/>
+            public static unsafe void Vertex3hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Vertex3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex3hvNV(half*)"/>
-            public static unsafe void Vertex3hvNV(in half v)
+            /// <inheritdoc cref="Vertex3hvNV(Half*)"/>
+            public static unsafe void Vertex3hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     Vertex3hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4hvNV(half*)"/>
-            public static unsafe void Vertex4hvNV(ReadOnlySpan<half> v)
+            /// <inheritdoc cref="Vertex4hvNV(Half*)"/>
+            public static unsafe void Vertex4hvNV(ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Vertex4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4hvNV(half*)"/>
-            public static unsafe void Vertex4hvNV(half[] v)
+            /// <inheritdoc cref="Vertex4hvNV(Half*)"/>
+            public static unsafe void Vertex4hvNV(Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     Vertex4hvNV(v_ptr);
                 }
             }
-            /// <inheritdoc cref="Vertex4hvNV(half*)"/>
-            public static unsafe void Vertex4hvNV(in half v)
+            /// <inheritdoc cref="Vertex4hvNV(Half*)"/>
+            public static unsafe void Vertex4hvNV(in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     Vertex4hvNV(v_ptr);
                 }
@@ -49695,26 +49695,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttrib1fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib1hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib1hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttrib1hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib1hvNV(uint index, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib1hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib1hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib1hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttrib1hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib1hvNV(uint index, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib1hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib1hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib1hvNV(uint index, in half v)
+            /// <inheritdoc cref="VertexAttrib1hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib1hvNV(uint index, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttrib1hvNV(index, v_ptr);
                 }
@@ -49791,26 +49791,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttrib2fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib2hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib2hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttrib2hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib2hvNV(uint index, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib2hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib2hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib2hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttrib2hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib2hvNV(uint index, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib2hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib2hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib2hvNV(uint index, in half v)
+            /// <inheritdoc cref="VertexAttrib2hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib2hvNV(uint index, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttrib2hvNV(index, v_ptr);
                 }
@@ -49887,26 +49887,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttrib3fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib3hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib3hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttrib3hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib3hvNV(uint index, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib3hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib3hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib3hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttrib3hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib3hvNV(uint index, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib3hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib3hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib3hvNV(uint index, in half v)
+            /// <inheritdoc cref="VertexAttrib3hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib3hvNV(uint index, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttrib3hvNV(index, v_ptr);
                 }
@@ -49983,26 +49983,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttrib4fvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib4hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib4hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttrib4hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib4hvNV(uint index, ReadOnlySpan<Half> v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib4hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib4hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib4hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttrib4hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib4hvNV(uint index, Half[] v)
             {
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttrib4hvNV(index, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttrib4hvNV(uint, half*)"/>
-            public static unsafe void VertexAttrib4hvNV(uint index, in half v)
+            /// <inheritdoc cref="VertexAttrib4hvNV(uint, Half*)"/>
+            public static unsafe void VertexAttrib4hvNV(uint index, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttrib4hvNV(index, v_ptr);
                 }
@@ -50653,28 +50653,28 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttribs1fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs1hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs1hvNV(uint index, ReadOnlySpan<Half> v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs1hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs1hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs1hvNV(uint index, Half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs1hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs1hvNV(uint index, int n, in half v)
+            /// <inheritdoc cref="VertexAttribs1hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs1hvNV(uint index, int n, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttribs1hvNV(index, n, v_ptr);
                 }
@@ -50757,28 +50757,28 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttribs2fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs2hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs2hvNV(uint index, ReadOnlySpan<Half> v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs2hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs2hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs2hvNV(uint index, Half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs2hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs2hvNV(uint index, int n, in half v)
+            /// <inheritdoc cref="VertexAttribs2hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs2hvNV(uint index, int n, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttribs2hvNV(index, n, v_ptr);
                 }
@@ -50861,28 +50861,28 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttribs3fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs3hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs3hvNV(uint index, ReadOnlySpan<Half> v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs3hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs3hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs3hvNV(uint index, Half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs3hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs3hvNV(uint index, int n, in half v)
+            /// <inheritdoc cref="VertexAttribs3hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs3hvNV(uint index, int n, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttribs3hvNV(index, n, v_ptr);
                 }
@@ -50965,28 +50965,28 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttribs4fvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs4hvNV(uint index, ReadOnlySpan<half> v)
+            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs4hvNV(uint index, ReadOnlySpan<Half> v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs4hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs4hvNV(uint index, half[] v)
+            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs4hvNV(uint index, Half[] v)
             {
                 int n = (int)(v.Length);
-                fixed (half* v_ptr = v)
+                fixed (Half* v_ptr = v)
                 {
                     VertexAttribs4hvNV(index, n, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, half*)"/>
-            public static unsafe void VertexAttribs4hvNV(uint index, int n, in half v)
+            /// <inheritdoc cref="VertexAttribs4hvNV(uint, int, Half*)"/>
+            public static unsafe void VertexAttribs4hvNV(uint index, int n, in Half v)
             {
-                fixed (half* v_ptr = &v)
+                fixed (Half* v_ptr = &v)
                 {
                     VertexAttribs4hvNV(index, n, v_ptr);
                 }
@@ -51043,26 +51043,26 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
                     VertexAttribs4ubvNV(index, count, v_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexWeighthvNV(half*)"/>
-            public static unsafe void VertexWeighthvNV(ReadOnlySpan<half> weight)
+            /// <inheritdoc cref="VertexWeighthvNV(Half*)"/>
+            public static unsafe void VertexWeighthvNV(ReadOnlySpan<Half> weight)
             {
-                fixed (half* weight_ptr = weight)
+                fixed (Half* weight_ptr = weight)
                 {
                     VertexWeighthvNV(weight_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexWeighthvNV(half*)"/>
-            public static unsafe void VertexWeighthvNV(half[] weight)
+            /// <inheritdoc cref="VertexWeighthvNV(Half*)"/>
+            public static unsafe void VertexWeighthvNV(Half[] weight)
             {
-                fixed (half* weight_ptr = weight)
+                fixed (Half* weight_ptr = weight)
                 {
                     VertexWeighthvNV(weight_ptr);
                 }
             }
-            /// <inheritdoc cref="VertexWeighthvNV(half*)"/>
-            public static unsafe void VertexWeighthvNV(in half weight)
+            /// <inheritdoc cref="VertexWeighthvNV(Half*)"/>
+            public static unsafe void VertexWeighthvNV(in Half weight)
             {
-                fixed (half* weight_ptr = &weight)
+                fixed (Half* weight_ptr = &weight)
                 {
                     VertexWeighthvNV(weight_ptr);
                 }

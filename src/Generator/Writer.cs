@@ -102,7 +102,7 @@ namespace Generator.Writing
 
             // FIXME: using OpenTK.Graphics.OpenGL if we are wgl or glx...
 
-            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
@@ -250,10 +250,16 @@ namespace Generator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Native.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.InteropServices;");
             writer.WriteLine("using OpenTK.Graphics;");
+
+            // FIXME: This is messy.
+            if (apiNamespace != "OpenGL") writer.WriteLine("using OpenTK.Graphics.OpenGL;");
+            if (apiNamespace != "Wgl") writer.WriteLine("using OpenTK.Graphics.Wgl;");
+            if (apiNamespace != "Glx") writer.WriteLine("using OpenTK.Graphics.Glx;");
+
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");
             using (writer.CsScope())
@@ -336,7 +342,7 @@ namespace Generator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, $"{apiName}.Overloads.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
             writer.WriteLine("using System.Runtime.CompilerServices;");
             writer.WriteLine("using System.Runtime.InteropServices;");
@@ -477,7 +483,7 @@ namespace Generator.Writing
         {
             using StreamWriter stream = File.CreateText(Path.Combine(directoryPath, "Enums.cs"));
             using IndentedTextWriter writer = new IndentedTextWriter(stream);
-            writer.WriteLine("// This file is auto generated, do not edit.");
+            writer.WriteLine($"// This file is auto generated, do not edit. Generated: {DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz")}");
             writer.WriteLine("using System;");
             writer.WriteLine();
             writer.WriteLine($"namespace {GraphicsNamespace}.{apiNamespace}");

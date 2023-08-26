@@ -28,6 +28,12 @@ namespace Generator.Parsing
         GLX = 1 << 5,
     }
 
+    public record GLFileData(
+        GLFile File,
+        List<NativeFunction> Functions,
+        List<EnumEntry> Enums,
+        List<API> APIs);
+
     public record Specification2(
         //List<Command> Commands,
         List<NativeFunction> Functions,
@@ -90,12 +96,12 @@ namespace Generator.Parsing
 
     public record EnumEntry(
         string Name,
+        string MangledName,
         ulong Value,
-        EnumAPI Api,
+        OutputApiFlags Apis,
         EnumType Type,
         string? Vendor,
         string? Alias,
-        //string? Comment,
         GroupRef[] Groups,
         TypeSuffix Suffix);
 
@@ -141,11 +147,9 @@ namespace Generator.Parsing
         GLX,
     }
 
-    /// <param name="GroupName">The name of the referenced enum group.</param>
+    /// <param name="Name">The name of the referenced enum group.</param>
     /// <param name="Namespace">The enum namespace that is referenced (gl, wgl, or glx).</param>
-    // FIXME: Make an enum for files? gl.xml, wgl.xml, glx.xml...
     public record GroupRef(string Name, GLFile Namespace);
-
 
     public abstract record GLType();
 

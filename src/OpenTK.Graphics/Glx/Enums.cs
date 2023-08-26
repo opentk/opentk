@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-08-26 14:41:41 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.Glx

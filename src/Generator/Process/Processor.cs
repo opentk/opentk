@@ -124,39 +124,39 @@ namespace Generator.Process
                     }
                 }
 
-                EnumGroupMember data = new EnumGroupMember(NameMangler.MangleEnumName(@enum.Name), @enum.Value, @enum.Groups, isFlag);
+                EnumGroupMember data = new EnumGroupMember(@enum.MangledName, @enum.Value, @enum.Groups, isFlag);
 
-                if (@enum.Api == EnumAPI.None)
+                if (@enum.Apis == OutputApiFlags.None)
                 {
                     throw new Exception();
                 }
 
-                if (@enum.Api.HasFlag(EnumAPI.GL))
+                if (@enum.Apis.HasFlag(OutputApiFlags.GL))
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.GL, @enum.Name, data);
                 }
 
-                if (@enum.Api.HasFlag(EnumAPI.GLCompat))
+                if (@enum.Apis.HasFlag(OutputApiFlags.GLCompat))
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.GLCompat, @enum.Name, data);
                 }
 
-                if (@enum.Api.HasFlag(EnumAPI.GLES1))
+                if (@enum.Apis.HasFlag(OutputApiFlags.GLES1))
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.GLES1, @enum.Name, data);
                 }
 
-                if (@enum.Api.HasFlag(EnumAPI.GLES2))
+                if (@enum.Apis.HasFlag(OutputApiFlags.GLES2))
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.GLES2, @enum.Name, data);
                 }
 
-                if (@enum.Api.HasFlag(EnumAPI.WGL))
+                if (@enum.Apis.HasFlag(OutputApiFlags.WGL))
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.WGL, @enum.Name, data);
                 }
 
-                if (@enum.Api.HasFlag(EnumAPI.GLX))
+                if (@enum.Apis.HasFlag(OutputApiFlags.GLX))
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.GLX, @enum.Name, data);
                 }
@@ -180,14 +180,26 @@ namespace Generator.Process
                     _ => throw new Exception(),
                 };
 
-                outputNamespaces.Add(CreateOutputAPI(outAPI));
+                // FIXME: Do we need this here?
+                GLFile file = api switch
+                {
+                    InputAPI.GL => GLFile.GL,
+                    InputAPI.GLES1 => GLFile.GL,
+                    InputAPI.GLES2 => GLFile.GL,
+                    InputAPI.WGL => GLFile.WGL,
+                    InputAPI.GLX => GLFile.GLX,
+
+                    _ => throw new Exception(),
+                };
+
+                outputNamespaces.Add(CreateOutputAPI(outAPI, file));
 
                 if (outAPI == OutputApi.GL)
                 {
-                    outputNamespaces.Add(CreateOutputAPI(OutputApi.GLCompat));
+                    outputNamespaces.Add(CreateOutputAPI(OutputApi.GLCompat, file));
                 }
 
-                Namespace CreateOutputAPI(OutputApi outAPI)
+                Namespace CreateOutputAPI(OutputApi outAPI, GLFile glFile)
                 {
                     bool removeFunctions = outAPI switch
                     {
@@ -196,7 +208,7 @@ namespace Generator.Process
                         _ => false,
                     };
 
-                    HashSet<string> groupsReferencedByFunctions = new HashSet<string>();
+                    HashSet<GroupRef> groupsReferencedByFunctions = new HashSet<GroupRef>();
 
                     Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
 
@@ -254,6 +266,10 @@ namespace Generator.Process
 
                     Dictionary<string, List<EnumGroupMember>> groupNameToEnumGroup = new Dictionary<string, List<EnumGroupMember>>();
 
+                    // FIXME: Here we are trusting that the enum refs in the <require> tags tell us all of the
+                    // enums to include. But this is not necessarily true as is the case with WGL as it references
+                    // some enums from OpenGL without them going through the require tag...
+                    // - Noggin_bops 2023-08-26
                     foreach (var enumRef in enums)
                     {
                         if (removeFunctions)
@@ -272,9 +288,11 @@ namespace Generator.Process
 
                         if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
                         {
-                            // FIXME: Consider namespaces.
-                            foreach (var (groupName, _) in @enum.Groups)
+                            foreach (var (groupName, @namespace) in @enum.Groups)
                             {
+                                if (@namespace != glFile)
+                                    continue;
+
                                 if (groupNameToEnumGroup.TryGetValue(groupName, out List<EnumGroupMember>? groupMembers) == false)
                                 {
                                     groupMembers = new List<EnumGroupMember>();
@@ -299,7 +317,7 @@ namespace Generator.Process
                     }
 
                     // Go through all vendorFunctions and build up a Dictionary from enumName groups to function using them
-                    Dictionary<string, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<string, List<(string Vendor, NativeFunction Function)>>();
+                    Dictionary<GroupRef, List<(string Vendor, NativeFunction Function)>> enumGroupToNativeFunctionsUsingThatEnumGroup = new Dictionary<GroupRef, List<(string Vendor, NativeFunction Function)>>();
                     foreach (var (vendor, vendorFunctions) in functionsByVendor)
                     {
                         foreach (var function in vendorFunctions)
@@ -356,10 +374,10 @@ namespace Generator.Process
                         // In GL 4.1 to 4.5 there are vendorFunctions that use the groupName "ShaderBinaryFormat"
                         // while not including any members for that enumName groupName.
                         // This is needed to solve that case.
-                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(groupName) == false)
+                        if (members.Count <= 0 && groupsReferencedByFunctions.Contains(new GroupRef(groupName, glFile)) == false)
                             continue;
 
-                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(groupName, out var functionsUsingEnumGroup) == false)
+                        if (enumGroupToNativeFunctionsUsingThatEnumGroup.TryGetValue(new GroupRef(groupName, glFile), out var functionsUsingEnumGroup) == false)
                         {
                             functionsUsingEnumGroup = null;
                         }
@@ -547,26 +565,9 @@ namespace Generator.Process
             // FIXME: This requires us to merge all input data!
             // FIXME: Potentially split the GLES function pointers from the GL ones.
             List<Pointers> pointers = new List<Pointers>();
-
-            // FIXME FIXME FIXME: Super hacky temp fix until we merge the parse data!
-            if (NameMangler.Settings.FunctionPrefix == "gl")
-            {
-                pointers.Add(CreatePointersList(GLFile.GL, outputNamespaces));
-            }
-            else if (NameMangler.Settings.FunctionPrefix == "wgl")
-            {
-                pointers.Add(CreatePointersList(GLFile.WGL, outputNamespaces));
-            }
-            else if (NameMangler.Settings.FunctionPrefix == "glx")
-            {
-                pointers.Add(CreatePointersList(GLFile.GLX, outputNamespaces));
-            }
-
-            /*
             pointers.Add(CreatePointersList(GLFile.GL, outputNamespaces));
             pointers.Add(CreatePointersList(GLFile.WGL, outputNamespaces));
             pointers.Add(CreatePointersList(GLFile.GLX, outputNamespaces));
-            */
 
             return new OutputData(pointers, outputNamespaces);
 
@@ -685,7 +686,7 @@ namespace Generator.Process
                                 _ => throw new Exception("This should not happen!"),
                             };
 
-                            return new CSEnum(group.Name, baseType, bt.Constant);
+                            return new CSEnum(group.Name, group, baseType, bt.Constant);
                         }
                         return bt.Type switch
                         {
@@ -712,7 +713,7 @@ namespace Generator.Process
 
 
                             // Enum
-                            PrimitiveType.Enum => new CSEnum(group?.Name ?? "All", new CSPrimitive("uint", bt.Constant), bt.Constant),
+                            PrimitiveType.Enum => new CSEnum(group?.Name ?? "All", group, new CSPrimitive("uint", bt.Constant), bt.Constant),
 
                             // Pointers
                             PrimitiveType.IntPtr => new CSPrimitive("IntPtr", bt.Constant),

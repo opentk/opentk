@@ -6,6 +6,8 @@ using Generator.Writing;
 using Generator.Parsing;
 using Generator.Process;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 namespace Generator
 {
@@ -17,9 +19,9 @@ namespace Generator
             st.Start();
             using (Logger.CreateLogger(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!, "log.txt")))
             {
+                Specification2 glSpecification;
                 {
-                    // FIXME: Parse gl.xml, wgl.xml, and glx.xml together!!
-                    NameMangler.Settings = new NameManglerSettings()
+                    NameManglerSettings glSettings = new NameManglerSettings()
                     {
                         FunctionPrefix = "gl",
                         EnumPrefixes = new List<string> { "GL_" },
@@ -28,27 +30,12 @@ namespace Generator
 
                     // Reading the gl.xml file and parsing it into data structures.
                     using FileStream specificationStream = Reader.ReadGLSpecFromGithub();
-                    Specification2 specification = SpecificationParser.Parse(specificationStream, GLFile.GL, new List<string>());
-
-                    // FIXME: Merge all of the parsing.
-
-                    // Read the documentation folders and parse it into data structures.
-                    using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
-                    Documentation documentation = DocumentationParser.Parse(documentationSource);
-                    
-                    // Processer/overloading
-                    OutputData outputSpec = Processor.ProcessSpec2(specification, documentation);
-
-                    // Writing cs files.
-                    Writer.Write(outputSpec);
-
-                    st.Stop();
-                    Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");
+                    glSpecification = SpecificationParser.Parse(specificationStream, new NameMangler(glSettings), GLFile.GL, new List<string>());
                 }
 
-                st.Restart();
+                Specification2 wglSpecification;
                 {
-                    NameMangler.Settings = new NameManglerSettings()
+                    NameManglerSettings wglSettings = new NameManglerSettings()
                     {
                         FunctionPrefix = "wgl",
                         EnumPrefixes = new List<string> { "WGL_" },
@@ -75,27 +62,13 @@ namespace Generator
                     };
 
                     // Reading the gl.xml file and parsing it into data structures.
-                    using FileStream specificationStream = Reader.ReadWGLSpecFromGithub();
-                    Specification2 specification = SpecificationParser.Parse(specificationStream, GLFile.WGL, new List<string>());
-                    
-                    // FIXME: Does there exist wgl documentation?
-                    // Read the documentation folders and parse it into data structures.
-                    //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
-                    Documentation documentation = new Documentation(new Dictionary<OutputApi, VersionDocumentation>());
-
-                    // Processer/overloading
-                    OutputData outputSpec = Processor.ProcessSpec2(specification, documentation);
-
-                    // Writing cs files.
-                    Writer.Write(outputSpec);
-
-                    st.Stop();
-                    Logger.Info($"Generated WGL bindings in {st.ElapsedMilliseconds} ms");
+                    using FileStream wglSpecificationStream = Reader.ReadWGLSpecFromGithub();
+                    wglSpecification = SpecificationParser.Parse(wglSpecificationStream, new NameMangler(wglSettings), GLFile.WGL, new List<string>());
                 }
 
-                st.Restart();
+                Specification2 glxSpecification;
                 {
-                    NameMangler.Settings = new NameManglerSettings()
+                    NameManglerSettings glxSettings = new NameManglerSettings()
                     {
                         FunctionPrefix = "glX",
                         EnumPrefixes = new List<string> { "GLX_", "__GLX_" },
@@ -108,33 +81,61 @@ namespace Generator
                         },
                     };
 
-                    List<string> IgnoreFunctions = new List<string>()
-                        {
-                            // #if _DM_BUFFER_H_
-                            "glXAssociateDMPbufferSGIX",
-                            // #if _VL_H
-                            "glXCreateGLXVideoSourceSGIX",
-                            "glXDestroyGLXVideoSourceSGIX"
-                        };
+                    List<string> glxIgnoreFunctions = new List<string>()
+                    {
+                        // #if _DM_BUFFER_H_
+                        "glXAssociateDMPbufferSGIX",
+                        // #if _VL_H
+                        "glXCreateGLXVideoSourceSGIX",
+                        "glXDestroyGLXVideoSourceSGIX"
+                    };
 
                     // Reading the gl.xml file and parsing it into data structures.
-                    using FileStream specificationStream = Reader.ReadGLXSpecFromGithub();
-                    Specification2 specification = SpecificationParser.Parse(specificationStream, GLFile.GLX, IgnoreFunctions);
-
-                    // FIXME: Does there exist glx documentation?
-                    // Read the documentation folders and parse it into data structures.
-                    //using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
-                    Documentation documentation = new Documentation(new Dictionary<OutputApi, VersionDocumentation>());
-
-                    // Processer/overloading
-                    OutputData outputSpec = Processor.ProcessSpec2(specification, documentation);
-
-                    // Writing cs files.
-                    Writer.Write(outputSpec);
-
-                    st.Stop();
-                    Logger.Info($"Generated GLX bindings in {st.ElapsedMilliseconds} ms");
+                    using FileStream glxSpecificationStream = Reader.ReadGLXSpecFromGithub();
+                    glxSpecification = SpecificationParser.Parse(glxSpecificationStream, new NameMangler(glxSettings), GLFile.GLX, glxIgnoreFunctions);
                 }
+
+                List<NativeFunction> functions = new List<NativeFunction>(glSpecification.Functions.Count + wglSpecification.Functions.Count + glxSpecification.Functions.Count);
+                functions.AddRange(glSpecification.Functions);
+                functions.AddRange(wglSpecification.Functions);
+                functions.AddRange(glxSpecification.Functions);
+
+                List<EnumEntry> enums = new List<EnumEntry>(glSpecification.Enums.Count + wglSpecification.Enums.Count + glxSpecification.Enums.Count);
+                enums.AddRange(glSpecification.Enums);
+                enums.AddRange(wglSpecification.Enums);
+                enums.AddRange(glxSpecification.Enums);
+
+                // FIXME: This is one point where we could do some processing to move things from one namespace to another.
+                // Alternatively we can try and do this later in processing. See comment with the same date.
+                // - Noggin_bops 2023-08-26
+                List<API> apis = new List<API>(Enum.GetValues<InputAPI>().Length);
+                foreach (API api in glSpecification.APIs.Concat(wglSpecification.APIs).Concat(glxSpecification.APIs))
+                {
+                    if (apis.Find(x => x.Name == api.Name) != null)
+                    {
+                        // We already have this API. Merge it?
+                        throw new NotImplementedException();
+                    }
+                    else
+                    {
+                        apis.Add(api);
+                    }
+                }
+
+                Specification2 finalSpecification = new Specification2(functions, enums, apis);
+
+                // Read the documentation folders and parse it into data structures.
+                using DocumentationSource documentationSource = Reader.ReadDocumentationFromGithub();
+                Documentation documentation = DocumentationParser.Parse(documentationSource);
+
+                // Processer/overloading
+                OutputData outputSpec = Processor.ProcessSpec2(finalSpecification, documentation);
+
+                // Writing cs files.
+                Writer.Write(outputSpec);
+
+                st.Stop();
+                Logger.Info($"Generated OpenGL bindings in {st.ElapsedMilliseconds} ms");
             }
         }
     }

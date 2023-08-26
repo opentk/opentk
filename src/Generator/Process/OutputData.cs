@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics;
 using Generator.Parsing;
 using System.CodeDom.Compiler;
+using Generator.Utility;
 
 namespace Generator.Writing
 {
@@ -31,11 +32,13 @@ namespace Generator.Writing
         GLFile File,
         List<NativeFunction> NativeFunctions);
 
+    /*
     public record GLOutputApi(
         OutputApi Api,
         SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
+    */
 
     public record FunctionDocumentation(
         string Name,
@@ -66,7 +69,7 @@ namespace Generator.Writing
         List<Parameter> Parameters,
         BaseCSType ReturnType,
         // FIXME: Convert referencedEnumGroups to use GroupRef!
-        string[] ReferencedEnumGroups);
+        GroupRef[] ReferencedEnumGroups);
 
     public record Overload(
         Overload? NestedOverload,
@@ -148,7 +151,7 @@ namespace Generator.Writing
         public static CSPrimitive Nuint(bool @const) => new CSPrimitive("nuint", @const);
         public static CSPrimitive IntPtr(bool @const) => new CSPrimitive("IntPtr", @const);
 
-        public static CSPrimitive Half(bool @const) => new CSPrimitive("half", @const);
+        public static CSPrimitive Half(bool @const) => new CSPrimitive("Half", @const);
         public static CSPrimitive Float(bool @const) => new CSPrimitive("float", @const);
         public static CSPrimitive Double(bool @const) => new CSPrimitive("double", @const);
 
@@ -158,7 +161,8 @@ namespace Generator.Writing
         }
     }
 
-    public record CSEnum(string TypeName, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
+    // FIXME: Maybe combine TypeName and GroupRef.
+    public record CSEnum(string TypeName, GroupRef? GroupRef, CSPrimitive PrimitiveType, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -380,5 +384,17 @@ namespace Generator.Writing
         GLES2,
         WGL,
         GLX,
+    }
+
+    [Flags]
+    public enum OutputApiFlags
+    {
+        None = 0,
+        GL = 1 << 0,
+        GLCompat = 1 << 1,
+        GLES1 = 1 << 2,
+        GLES2 = 1 << 3,
+        WGL = 1 << 4,
+        GLX = 1 << 5,
     }
 }

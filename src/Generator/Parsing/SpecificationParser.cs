@@ -14,18 +14,18 @@ namespace Generator.Parsing
 {
     public class SpecificationParser
     {
-        public static Specification2 Parse(Stream input, GLFile currentFile, List<string> ignoreFunctions)
+        public static Specification2 Parse(Stream input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
         {
             XDocument? xdocument = XDocument.Load(input);
 
             if (xdocument.Root == null)
                 throw new NullReferenceException("The parsed xml didn't contain a Root node.");
 
-            List<NativeFunction> functions = ParseCommands(xdocument.Root, ignoreFunctions);
-            List<EnumEntry>? enums = ParseEnums(xdocument.Root, currentFile);
+            List<NativeFunction> functions = ParseCommands(xdocument.Root, nameMangler, currentFile, ignoreFunctions);
+            List<EnumEntry>? enums = ParseEnums(xdocument.Root, nameMangler, currentFile);
 
             List<Feature>? features = ParseFeatures(xdocument.Root);
-            List<Extension>? extensions = ParseExtensions(xdocument.Root);
+            List<Extension>? extensions = ParseExtensions(xdocument.Root, nameMangler);
 
             List<API> APIs = MakeAPIs(features, extensions);
 
@@ -65,6 +65,7 @@ namespace Generator.Parsing
                     continue;
 
                 List<FunctionReference> functions = MakeFunctionReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
+                // FIXME: Here we miss the enums that where not defined in this file. for example wgl::ObjectTypeDX
                 List<EnumReference> enums = MakeEnumReferences(FeaturesPerAPI[api], ExtensionsPerAPI[api], api);
 
                 InputAPI inAPI = api switch
@@ -173,7 +174,6 @@ namespace Generator.Parsing
             {
                 Dictionary<string, EnumReference> enumNameToReference = new Dictionary<string, EnumReference>();
 
-                // FIXME: If we want to generate the compatibility thing we want to remove all of the 
                 foreach (var feature in features)
                 {
                     foreach (var requires in feature.Requires)
@@ -254,7 +254,7 @@ namespace Generator.Parsing
         }
 
         // FIXME: Maybe change name?
-        private static List<NativeFunction> ParseCommands(XElement input, List<string> ignoreFunctions)
+        private static List<NativeFunction> ParseCommands(XElement input, NameMangler nameMangler, GLFile currentFile, List<string> ignoreFunctions)
         {
             Logger.Info("Begining parsing of commands.");
             XElement? xelement = input.Element("commands")!;
@@ -262,7 +262,7 @@ namespace Generator.Parsing
             List<NativeFunction> functions = new List<NativeFunction>();
             foreach (XElement element in xelement.Elements("command"))
             {
-                NativeFunction function = ParseCommand(element);
+                NativeFunction function = ParseCommand(element, nameMangler, currentFile);
 
                 // Don't add this command to the list if we should ignore it.
                 if (ignoreFunctions.Contains(function.EntryPoint))
@@ -276,7 +276,7 @@ namespace Generator.Parsing
             return functions;
         }
 
-        private static NativeFunction ParseCommand(XElement c)
+        private static NativeFunction ParseCommand(XElement c, NameMangler nameMangler, GLFile currentFile)
         {
             XElement? proto = c.Element("proto");
             if (proto == null) throw new Exception("Missing proto tag!");
@@ -284,7 +284,7 @@ namespace Generator.Parsing
             string? entryPoint = proto.Element("name")?.Value;
             if (entryPoint == null) throw new Exception("Missing name tag!");
 
-            HashSet<string> referencedEnumGroups = new HashSet<string>();
+            HashSet<GroupRef> referencedEnumGroups = new HashSet<GroupRef>();
 
             List<Parameter>? paramList = new List<Parameter>();
             foreach (XElement? element in c.Elements("param"))
@@ -292,11 +292,8 @@ namespace Generator.Parsing
                 string paramName = element.Element("name")?.Value ?? throw new Exception("Missing parameter name!");
                 string mangledName = NameMangler.MangleParameterName(paramName);
 
-                //PType? ptype = ParsePType(element);
-                BaseCSType type = ParsePType2(element);
-
-                // FIXME: Get group info!
-                //if (type.Group != null) referencedEnumGroups.Add(ptype.Group.Name);
+                BaseCSType type = ParsePType(element, currentFile, out GroupRef? groupRef);
+                if (groupRef != null) referencedEnumGroups.Add(groupRef);
 
                 string[] kind = element.Attribute("kind")?.Value?.Split(',') ?? Array.Empty<string>();
 
@@ -307,12 +304,10 @@ namespace Generator.Parsing
                 paramList.Add(new Parameter(type, kind, mangledName, paramLength));
             }
 
-            //PType? returnType = ParsePType(proto);
-            BaseCSType returnType = ParsePType2(proto);
-            // FIXME: Get group info!
-            //if (returnType.Group != null) referencedEnumGroups.Add(returnType.Group.Name);
+            BaseCSType returnType = ParsePType(proto, currentFile, out GroupRef? returnGroup);
+            if (returnGroup != null) referencedEnumGroups.Add(returnGroup);
             
-            string functionName = NameMangler.MangleFunctionName(entryPoint);
+            string functionName = nameMangler.MangleFunctionName(entryPoint);
 
             return new NativeFunction(entryPoint, functionName, paramList, returnType, referencedEnumGroups.ToArray());
         }
@@ -433,10 +428,9 @@ namespace Generator.Parsing
             else throw new Exception($"Could not parse expression '{expression}'");
         }
 
-        private static BaseCSType ParsePType2(XElement t)
+        private static BaseCSType ParsePType(XElement t, GLFile currentFile, out GroupRef? groupRef)
         {
             string? group = t.Attribute("group")?.Value;
-            GroupRef? groupRef;
             if (group != null)
             {
                 if (group.StartsWith("gl::"))
@@ -446,8 +440,7 @@ namespace Generator.Parsing
                 else if (group.StartsWith("glx::"))
                     groupRef = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
                 else
-                    // FIXME: Get the input api!
-                    groupRef = new GroupRef(group, default);
+                    groupRef = new GroupRef(group, currentFile);
             }
             else
             {
@@ -480,62 +473,12 @@ namespace Generator.Parsing
 
             string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
 
-            BaseCSType type = ParseType2(str, handle, groupRef);
+            BaseCSType type = ParseType(str, handle, groupRef);
             
             return type;
         }
 
-        private static PType ParsePType(XElement t)
-        {
-            string? group = t.Attribute("group")?.Value;
-            GroupRef? groupRef;
-            if (group != null)
-            {
-                if (group.StartsWith("gl::"))
-                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "gl::"), GLFile.GL);
-                else if (group.StartsWith("wgl::"))
-                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "wgl::"), GLFile.WGL);
-                else if (group.StartsWith("glx::"))
-                    groupRef = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
-                else
-                    // FIXME: Get the input api!
-                    groupRef = new GroupRef(group, default);
-            }
-            else
-            {
-                groupRef = null;
-            }
-
-            string? className = t.Attribute("class")?.Value;
-            HandleType? handle = className switch
-            {
-                null => null,
-                "program" => HandleType.ProgramHandle,
-                "program pipeline" => HandleType.ProgramPipelineHandle,
-                "texture" => HandleType.TextureHandle,
-                "buffer" => HandleType.BufferHandle,
-                "shader" => HandleType.ShaderHandle,
-                "query" => HandleType.QueryHandle,
-                "framebuffer" => HandleType.FramebufferHandle,
-                "renderbuffer" => HandleType.RenderbufferHandle,
-                "sampler" => HandleType.SamplerHandle,
-                "transform feedback" => HandleType.TransformFeedbackHandle,
-                "vertex array" => HandleType.VertexArrayHandle,
-                // The "Sync" class is already marked with the "GLSync" type which is handled differently from the other types
-                // We leave it null here to let the "GLSync" handling do this.
-                "sync" => null,
-                "display list" => HandleType.DisplayListHandle,
-                "perf query handle" => HandleType.PerfQueryHandle,
-                "perf query id" => null,
-                _ => throw new Exception(className + " is not a supported handle type yet!"),
-            };
-
-            string? str = t.GetXmlText(element => element.Name != "name" ? element.Value : string.Empty).Trim();
-
-            return new PType(ParseType(str), handle, groupRef);
-        }
-
-        private static BaseCSType ParseType2(string type, HandleType? handle, GroupRef? group)
+        private static BaseCSType ParseType(string type, HandleType? handle, GroupRef? group)
         {
             type = type.Trim();
 
@@ -553,7 +496,7 @@ namespace Generator.Parsing
                     withoutAsterisk = withoutAsterisk[0..^"const".Length];
                 }
 
-                BaseCSType? baseType = ParseType2(withoutAsterisk, handle, group);
+                BaseCSType? baseType = ParseType(withoutAsterisk, handle, group);
 
                 return new CSPointer(baseType, @const);
             }
@@ -584,10 +527,10 @@ namespace Generator.Parsing
                     csType = type switch
                     {
                         "void" => new CSVoid(@const),
-                        "GLenum" => new CSEnum(group?.Name ?? "All", CSPrimitive.Uint(@const), @const),
+                        "GLenum" => new CSEnum(group?.Name ?? "All", group, CSPrimitive.Uint(@const), @const),
                         "GLboolean" => new CSBool8(@const),
                         "GLbitfield" => group != null ?
-                                            new CSEnum(group?.Name ?? "All", CSPrimitive.Uint(@const), @const) :
+                                            new CSEnum(group.Name, group, CSPrimitive.Uint(@const), @const) :
                                             CSPrimitive.Uint(@const),
                         "GLvoid" => new CSVoid(@const),
                         "GLbyte" => CSPrimitive.Sbyte(@const),
@@ -739,198 +682,8 @@ namespace Generator.Parsing
             }
         }
 
-        private static GLType ParseType(string type)
-        {
-            type = type.Trim();
 
-            if (type.EndsWith('*'))
-            {
-                // This removes the last character of the string, ^1 is an exclusive upper bound.
-                string? withoutAsterisk = type[0..^1].TrimEnd();
-
-                // A pointer is only const if const is directly in front of the pointer,
-                // if the const is in front of the type the type is the constant and not the pointer.
-                bool @const = false;
-                if (withoutAsterisk.EndsWith("const"))
-                {
-                    @const = true;
-                    withoutAsterisk = withoutAsterisk[0..^"const".Length];
-                }
-
-                GLType? baseType = ParseType(withoutAsterisk);
-
-                return new GLPointerType(baseType, @const);
-            }
-            else
-            {
-                bool @const = false;
-                if (type.StartsWith("const"))
-                {
-                    @const = true;
-                    type = type["const".Length..].TrimStart();
-                }
-
-                // This is needed for _cl_context, and _cl_event
-                // We don't care about struct here because it doesn't add any information (we are not a c compiler).
-                if (type.StartsWith("struct"))
-                {
-                    type = type["struct".Length..].TrimStart();
-                }
-
-                PrimitiveType primitiveType = type switch
-                {
-                    "void" => PrimitiveType.Void,
-                    "GLenum" => PrimitiveType.Enum,
-                    "GLboolean" => PrimitiveType.Bool8,
-                    "GLbitfield" => PrimitiveType.Uint,
-                    "GLvoid" => PrimitiveType.Void,
-                    "GLbyte" => PrimitiveType.Sbyte,
-                    "GLubyte" => PrimitiveType.Byte,
-                    "GLshort" => PrimitiveType.Short,
-                    "GLushort" => PrimitiveType.Ushort,
-                    "GLint" => PrimitiveType.Int,
-                    "GLuint" => PrimitiveType.Uint,
-                    "GLclampx" => PrimitiveType.Int,
-                    "GLsizei" => PrimitiveType.Int,
-                    "GLfloat" => PrimitiveType.Float,
-                    "GLclampf" => PrimitiveType.Float,
-                    "GLdouble" => PrimitiveType.Double,
-                    "GLclampd" => PrimitiveType.Double,
-                    "GLeglClientBufferEXT" => PrimitiveType.VoidPtr,
-                    "GLeglImageOES" => PrimitiveType.VoidPtr,
-                    "GLchar" => PrimitiveType.Char8,
-                    "GLcharARB" => PrimitiveType.Char8,
-                    "GLhalf" => PrimitiveType.Half,
-                    "GLhalfARB" => PrimitiveType.Half,
-                    "GLfixed" => PrimitiveType.Int,
-                    "GLintptr" => PrimitiveType.IntPtr,
-                    "GLintptrARB" => PrimitiveType.IntPtr,
-                    "GLsizeiptr" => PrimitiveType.Nint,
-                    "GLsizeiptrARB" => PrimitiveType.Nint,
-                    "GLint64" => PrimitiveType.Long,
-                    "GLint64EXT" => PrimitiveType.Long,
-                    "GLuint64" => PrimitiveType.Ulong,
-                    "GLuint64EXT" => PrimitiveType.Ulong,
-                    "GLhalfNV" => PrimitiveType.Half,
-                    "GLvdpauSurfaceNV" => PrimitiveType.IntPtr,
-
-                    // This type is platform specific on apple.
-                    "GLhandleARB" => PrimitiveType.GLHandleARB,
-
-                    // The following have a custom c# implementation in the writer.
-                    "GLsync" => PrimitiveType.GLSync,
-                    "_cl_context" => PrimitiveType.CLContext,
-                    "_cl_event" => PrimitiveType.CLEvent,
-                    "GLDEBUGPROC" => PrimitiveType.GLDebugProc,
-                    "GLDEBUGPROCARB" => PrimitiveType.GLDebugProcARB,
-                    "GLDEBUGPROCKHR" => PrimitiveType.GLDebugProcKHR,
-                    "GLDEBUGPROCAMD" => PrimitiveType.GLDebugProcAMD,
-                    "GLDEBUGPROCNV" => PrimitiveType.GLDebugProcNV,
-                    // This isn't actually used in the output bindings.
-                    // But we leave it here as a primitive type so we have the information if we need it later.
-                    // - 2021-06-23
-                    "GLVULKANPROCNV" => PrimitiveType.GLVulkanProcNV,
-
-                    // WGL.xml types
-                    "BOOL" => PrimitiveType.Bool32,
-                    "CHAR" => PrimitiveType.Char8,
-                    "DWORD" => PrimitiveType.Uint,
-                    "FLOAT" => PrimitiveType.Float,
-                    "HANDLE" => PrimitiveType.IntPtr,
-                    "HDC" => PrimitiveType.IntPtr,
-                    "HGLRC" => PrimitiveType.IntPtr,
-                    "INT" => PrimitiveType.Int,
-                    "INT32" => PrimitiveType.Int,
-                    "INT64" => PrimitiveType.Long,
-                    "PROC" => PrimitiveType.WGL_Proc,
-                    "RECT" => PrimitiveType.WGL_Rect,
-                    "LPCSTR" => PrimitiveType.WGL_LPString,
-                    "LPVOID" => PrimitiveType.IntPtr,
-                    "UINT" => PrimitiveType.Uint,
-                    "USHORT" => PrimitiveType.Ushort,
-                    "VOID" => PrimitiveType.Void,
-                    "COLORREF" => PrimitiveType.WGL_COLORREF,
-                    "HENHMETAFILE" => PrimitiveType.IntPtr,
-                    "LAYERPLANEDESCRIPTOR" => PrimitiveType.WGL_LAYERPLANEDESCRIPTOR,
-                    // FIXME?
-                    "LPGLYPHMETRICSFLOAT" => PrimitiveType.IntPtr,
-                    "PIXELFORMATDESCRIPTOR" => PrimitiveType.WGL_PIXELFORMATDESCRIPTOR,
-                    "HPBUFFERARB" => PrimitiveType.IntPtr,
-                    "HPBUFFEREXT" => PrimitiveType.IntPtr,
-                    "HVIDEOOUTPUTDEVICENV" => PrimitiveType.IntPtr,
-                    "HPVIDEODEV" => PrimitiveType.IntPtr,
-                    "HPGPUNV" => PrimitiveType.IntPtr,
-                    "HGPUNV" => PrimitiveType.IntPtr,
-                    "HVIDEOINPUTDEVICENV" => PrimitiveType.IntPtr,
-                    "GPU_DEVICE" => PrimitiveType.WGL_GPU_DEVICE,
-                    // FIXME? _GPU_DEVICE*
-                    "PGPU_DEVICE" => PrimitiveType.WGL_PGPU_DEVICE,
-
-                    "int" => PrimitiveType.Int,
-                    "unsigned int" => PrimitiveType.Uint,
-                    "char" => PrimitiveType.Char8,
-                    "float" => PrimitiveType.Float,
-                    "long" => PrimitiveType.Long,
-                    "unsigned long" => PrimitiveType.Ulong,
-
-                    // GLX types
-
-                    "Bool" => PrimitiveType.Bool8,
-                    "Colormap" => PrimitiveType.GLX_Colormap,
-                    "Display" => PrimitiveType.GLX_Display,
-                    "Font" => PrimitiveType.GLX_Font,
-                    "Pixmap" => PrimitiveType.GLX_Pixmap,
-                    "Screen" => PrimitiveType.GLX_Screen,
-                    "Status" => PrimitiveType.GLX_Status, // FIXME: Maybe type?
-                    "Window" => PrimitiveType.GLX_Window,
-                    "XVisualInfo" => PrimitiveType.GLX_XVisualInfo,
-                    "DMbuffer" => PrimitiveType.GLX_DMbuffer,
-                    "DMparams" => PrimitiveType.GLX_DMparams,
-                    "VLNode" => PrimitiveType.GLX_VLNode,
-                    "VLPath" => PrimitiveType.GLX_VLPath,
-                    "VLServer" => PrimitiveType.GLX_VLServer,
-                    "GLXFBConfigID" => PrimitiveType.GLX_FBConfigID,
-                    "GLXFBConfig" => PrimitiveType.GLX_FBConfig,
-                    "GLXContextID" => PrimitiveType.GLX_ContextID,
-                    "GLXContext" => PrimitiveType.GLX_Context,
-                    "GLXPixmap" => PrimitiveType.GLX_GLXPixmap,
-                    "GLXDrawable" => PrimitiveType.GLX_GLXDrawable,
-                    "GLXWindow" => PrimitiveType.GLX_GLXWindow,
-                    "__GLXextFuncPtr" => PrimitiveType.GLX_EXTFuncPtr, // FIXME!
-                    "GLXPbuffer" => PrimitiveType.GLX_GLXPbuffer,
-                    "GLXVideoCaptureDeviceNV" => PrimitiveType.GLX_VideoCaptureDeviceNV,
-                    "GLXVideoDeviceNV" => PrimitiveType.GLX_VideoDeviceNV,
-                    "GLXVideoSourceSGIX" => PrimitiveType.GLX_VideoSourceSGIX,
-                    "GLXFBConfigIDSGIX" => PrimitiveType.GLX_FBConfigIDSGIX,
-                    "GLXFBConfigSGIX" => PrimitiveType.GLX_FBConfigSGIX,
-                    "GLXPbufferSGIX" => PrimitiveType.GLX_GLXPbufferSGIX,
-                    "GLXPbufferClobberEvent" => PrimitiveType.GLX_GLXPbufferClobberEvent,
-                    "GLXBufferSwapComplete" => PrimitiveType.GLX_GLXBufferSwapComplete,
-                    "GLXEvent" => PrimitiveType.GLX_GLXEvent,
-                    "GLXStereoNotifyEventEXT" => PrimitiveType.GLX_GLXStereoNotifyEventEXT,
-                    "GLXBufferClobberEventSGIX" => PrimitiveType.GLX_GLXBufferClobberEventSGIX,
-                    "GLXHyperpipeNetworkSGIX" => PrimitiveType.GLX_GLXHyperpipeNetworkSGIX,
-                    "GLXHyperpipeConfigSGIX" => PrimitiveType.GLX_GLXHyperpipeConfigSGIX,
-                    "GLXPipeRect" => PrimitiveType.GLX_GLXPipeRect,
-                    "GLXPipeRectLimits" => PrimitiveType.GLX_GLXPipeRectLimits,
-
-                    "int32_t" => PrimitiveType.Int,
-                    "int64_t" => PrimitiveType.Long,
-
-                    _ => PrimitiveType.Invalid,
-                };
-
-                if (primitiveType == PrimitiveType.Invalid)
-                {
-                    throw new Exception($"Type conversion has not been created for type {type}");
-                }
-
-                return new GLBaseType(type, primitiveType, @const);
-            }
-        }
-
-
-        public static List<EnumEntry> ParseEnums(XElement input, GLFile currentFilee)
+        public static List<EnumEntry> ParseEnums(XElement input, NameMangler nameMangler, GLFile currentFile)
         {
             Logger.Info("Begining parsing of enums.");
             List<EnumEntry> enumsEntries = new List<EnumEntry>();
@@ -945,7 +698,7 @@ namespace Generator.Parsing
                 // - 2023-03-25 NogginBops
                 if (@namespace == "GLXStrings") continue;
 
-                GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFilee);
+                GroupRef[] parentGroups = ParseGroups(enums.Attribute("group")?.Value, currentFile);
 
                 string? vendor = enums.Attribute("vendor")?.Value;
 
@@ -968,40 +721,34 @@ namespace Generator.Parsing
 
                     string? alias = @enum.Attribute("alias")?.Value;
 
-                    GroupRef[] groups = ParseGroups(@enum.Attribute("group")?.Value, currentFilee);
+                    GroupRef[] groups = ParseGroups(@enum.Attribute("group")?.Value, currentFile);
                     // Mark this with all of the groups from the parent tag.
                     groups = ArrayUtil.MergeDeduplicate(groups, parentGroups);
 
                     string? enumComment = @enum.Attribute("comment")?.Value;
 
                     GLAPI api = ParseApi(@enum.Attribute("api")?.Value);
-                    EnumAPI enumApi;
+                    OutputApiFlags enumApi;
                     if (api == GLAPI.None)
                     {
-                        switch (currentFilee)
+                        enumApi = currentFile switch
                         {
-                            case GLFile.GL:
-                                enumApi = EnumAPI.GL | EnumAPI.GLCompat | EnumAPI.GLES1 | EnumAPI.GLES2;
-                                break;
-                            case GLFile.WGL:
-                                enumApi = EnumAPI.WGL;
-                                break;
-                            case GLFile.GLX:
-                                enumApi = EnumAPI.GLX;
-                                break;
-                            default:
-                                throw new Exception();
-                        }
+                            GLFile.GL => OutputApiFlags.GL | OutputApiFlags.GLCompat | OutputApiFlags.GLES1 | OutputApiFlags.GLES2,
+                            GLFile.WGL => OutputApiFlags.WGL,
+                            GLFile.GLX => OutputApiFlags.GLX,
+
+                            _ => throw new Exception(),
+                        };
                     }
                     else 
                     {
                         enumApi = api switch
                         {
-                            GLAPI.GL => EnumAPI.GL | EnumAPI.GLCompat,
-                            GLAPI.GLES1 => EnumAPI.GLES1,
-                            GLAPI.GLES2 => EnumAPI.GLES2,
-                            GLAPI.WGL => EnumAPI.WGL,
-                            GLAPI.GLX => EnumAPI.GLX,
+                            GLAPI.GL => OutputApiFlags.GL | OutputApiFlags.GLCompat,
+                            GLAPI.GLES1 => OutputApiFlags.GLES1,
+                            GLAPI.GLES2 => OutputApiFlags.GLES2,
+                            GLAPI.WGL => OutputApiFlags.WGL,
+                            GLAPI.GLX => OutputApiFlags.GLX,
 
                             GLAPI.GLCore => throw new Exception(),
                             GLAPI.GLSC2 => throw new Exception(),
@@ -1010,7 +757,23 @@ namespace Generator.Parsing
                         };
                     }
 
-                    enumsEntries.Add(new EnumEntry(name, value, enumApi, type, vendor, alias, /*enumComment,*/ groups, suffix));
+                    foreach (var group in groups)
+                    {
+                        switch (group.Namespace)
+                        {
+                            case GLFile.GL:
+                                enumApi |= OutputApiFlags.GL | OutputApiFlags.GLCompat | OutputApiFlags.GLES1 | OutputApiFlags.GLES2;
+                                break;
+                            case GLFile.WGL:
+                                enumApi |= OutputApiFlags.WGL;
+                                break;
+                            case GLFile.GLX:
+                                enumApi |= OutputApiFlags.GLX;
+                                break;
+                        }
+                    }
+
+                    enumsEntries.Add(new EnumEntry(name, nameMangler.MangleEnumName(name), value, enumApi, type, vendor, alias, groups, suffix));
                 }
             }
 
@@ -1056,7 +819,6 @@ namespace Generator.Parsing
                 else if (group.StartsWith("glx::"))
                     groupRefs[i] = new GroupRef(NameMangler.RemoveStart(group, "glx::"), GLFile.GLX);
                 else
-                    // FIXME: Get the input api!
                     groupRefs[i] = new GroupRef(group, currentFile);
             }
 
@@ -1105,7 +867,7 @@ namespace Generator.Parsing
             return features;
         }
 
-        public static List<Extension> ParseExtensions(XElement input)
+        public static List<Extension> ParseExtensions(XElement input, NameMangler nameMangler)
         {
             List<Extension> extensions = new List<Extension>();
             XElement? xelement = input.Element("extensions")!;
@@ -1120,7 +882,7 @@ namespace Generator.Parsing
 
                 // Remove "GL_" and get the vendor name from the first part of the extension name
                 // Extension name convention: "GL_VENDOR_EXTENSION_NAME"
-                string? extNameWithoutGLPrefix = NameMangler.RemoveExtensionPrefix(extName);
+                string? extNameWithoutGLPrefix = nameMangler.RemoveExtensionPrefix(extName);
                 string? vendor = extNameWithoutGLPrefix[..extNameWithoutGLPrefix.IndexOf("_")];
                 if (string.IsNullOrEmpty(vendor))
                 {

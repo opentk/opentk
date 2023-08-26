@@ -1,7 +1,10 @@
-// This file is auto generated, do not edit.
+// This file is auto generated, do not edit. Generated: 2023-08-26 14:41:41 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Graphics.Wgl;
+using OpenTK.Graphics.Glx;
 
 namespace OpenTK.Graphics.OpenGLES1
 {
