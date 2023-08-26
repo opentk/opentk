@@ -13,9 +13,8 @@ namespace OpenTK.Backends.Tests
     {
         public override string Title => "Window Component";
 
-        private List<WindowHandle> Windows = new List<WindowHandle>();
-
         private IWindowComponent? WindowComponent;
+        private WindowManager WindowManager;
 
         public WindowComponentView() { }
 
@@ -24,9 +23,7 @@ namespace OpenTK.Backends.Tests
         public override void Initialize()
         {
             WindowComponent = Program.WindowComp;
-
-            // FIXME?
-            Windows.Add(Program.Window);
+            WindowManager = Program.WindowManager;
         }
 
         int selectedWindow = -1;
@@ -42,6 +39,11 @@ namespace OpenTK.Backends.Tests
         public override void Paint()
         {
             base.Paint();
+
+            if (selectedWindow > WindowManager.Count)
+            {
+                selectedWindow = -1;
+            }
 
             if (ImGui.BeginTable("window_caps_id", 2, ImGuiTableFlags.Borders))
             {
@@ -78,12 +80,19 @@ namespace OpenTK.Backends.Tests
 
             if (ImGui.BeginListBox("Windows"))
             {
-                for (int i = 0; i < Windows.Count; i++)
+                PaintWindow(WindowManager.RootWindow, 0);
+                for (int i = 0; i < WindowManager.Count; i++)
+                {
+                    PaintWindow(WindowManager[i].Window, i + 1);
+                }
+                ImGui.EndListBox();
+
+                void PaintWindow(WindowHandle window, int i)
                 {
                     string name;
                     try
                     {
-                        name = WindowComponent!.GetTitle(Windows[i]);
+                        name = WindowComponent!.GetTitle(window);
                     }
                     catch (Exception e)
                     {
@@ -91,7 +100,7 @@ namespace OpenTK.Backends.Tests
                         name = $"Window #{i} (unable to get name)";
                     }
 
-                    if (Windows[i] == Program.Window)
+                    if (window == Program.Window)
                     {
                         name += " (this window)";
                     }
@@ -104,7 +113,10 @@ namespace OpenTK.Backends.Tests
 
                         try
                         {
-                            titleString = WindowComponent!.GetTitle(Windows[selectedWindow]);
+                            titleString =
+                                (selectedWindow == 0)
+                                ? WindowComponent!.GetTitle(Program.Window)
+                                : WindowComponent!.GetTitle(WindowManager[selectedWindow - 1].Window);
                         }
                         catch (Exception e)
                         {
@@ -115,7 +127,7 @@ namespace OpenTK.Backends.Tests
 
                     if (isSelected) ImGui.SetItemDefaultFocus();
 
-                    if (Windows[i] != Program.Window)
+                    if (window != Program.Window)
                     {
                         ImGui.SameLine();
                         ImGui.PushID(i);
@@ -123,8 +135,7 @@ namespace OpenTK.Backends.Tests
                         {
                             try
                             {
-                                WindowComponent!.Destroy(Windows[i]);
-                                Windows.RemoveAt(i);
+                                WindowManager.RemoveAt(i - 1);
 
                                 if (selectedWindow == i)
                                 {
@@ -133,14 +144,12 @@ namespace OpenTK.Backends.Tests
                             }
                             catch (Exception e)
                             {
-
                                 throw;
                             }
                         }
                         ImGui.PopID();
                     }
                 }
-                ImGui.EndListBox();
             }
             
 
@@ -268,7 +277,11 @@ namespace OpenTK.Backends.Tests
                     try
                     {
                         WindowHandle handle = WindowComponent!.Create(openglSettings.Copy());
-                        Windows.Add(handle);
+
+                        int index = WindowManager.Count + 1;
+                        WindowManager.Add(handle);
+
+                        WindowComponent.SetTitle(handle, $"Child Window #{index}");
                     }
                     catch (Exception e)
                     {
@@ -280,7 +293,10 @@ namespace OpenTK.Backends.Tests
 
             if (selectedWindow != -1)
             {
-                WindowHandle window = Windows[selectedWindow];
+                WindowHandle window =
+                    (selectedWindow == 0)
+                        ? WindowManager.RootWindow
+                        : WindowManager[selectedWindow - 1].Window;
 
                 if (ImGui.CollapsingHeader("Info"))
                 {
