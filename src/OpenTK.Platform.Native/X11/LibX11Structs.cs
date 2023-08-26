@@ -369,6 +369,11 @@ namespace OpenTK.Platform.Native.X11
         {
             return !(left == right);
         }
+
+        public override string ToString()
+        {
+            return $"0x{Id:X8}";
+        }
     }
 
     internal struct XWindowAttributes

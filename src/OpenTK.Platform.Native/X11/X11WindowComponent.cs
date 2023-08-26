@@ -310,7 +310,13 @@ namespace OpenTK.Platform.Native.X11
             while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
             {
                 XNextEvent(X11.Display, out ea);
-                //Debug.Print(ea.Type.ToString());
+
+                if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
+                {
+                    // This event likely for a deleted window.
+                    Logger?.LogDebug($"Received event {ea.Type} for an unknown (likely destroyed) window {ea.Any.Window}.");
+                    continue;
+                }
 
                 switch (ea.Type)
                 {
@@ -322,8 +328,6 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
                                 {
-                                    XWindowHandle xwindow = XWindowDict[clientMessage.Window];
-
                                     EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
                                 }
                                 else if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
@@ -341,8 +345,6 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.ButtonPress:
                         {
                             XButtonEvent buttonPressed = ea.ButtonPressed;
-
-                            XWindowHandle xwindow = XWindowDict[buttonPressed.window];
 
                             // Buttons 4 to 7 are used for scroll.
                             if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
@@ -395,8 +397,6 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XButtonEvent buttonReleased = ea.ButtonReleased;
 
-                            XWindowHandle xwindow = XWindowDict[buttonReleased.window];
-
                             // Ignore release for scroll buttons.
                             if (buttonReleased.button >= 4 && buttonReleased.button <= 7)
                             {
@@ -421,8 +421,6 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.KeyPress:
                         {
                             XKeyEvent keyPressed = ea.KeyPressed;
-
-                            XWindowHandle xwindow = XWindowDict[keyPressed.window];
 
                             // FIXME: Handle repeats
 
@@ -473,8 +471,6 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XKeyEvent keyPressed = ea.KeyPressed;
 
-                            XWindowHandle xwindow = XWindowDict[keyPressed.window];
-
                             unsafe {
                                 XKeySym keysym = default;
                                 const int TEXT_LENGTH = 32;
@@ -493,8 +489,6 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.MotionNotify:
                         {
                             XMotionEvent motion = ea.Motion;
-
-                            XWindowHandle xwindow = XWindowDict[motion.window];
 
                             if (CursorCapturingWindow == xwindow && xwindow.CaptureMode == CursorCaptureMode.Locked)
                             {
@@ -519,8 +513,6 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XCrossingEvent enter = ea.Enter;
 
-                            XWindowHandle xwindow = XWindowDict[enter.window];
-
                             EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, true));
 
                             break;
@@ -528,8 +520,6 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.LeaveNotify:
                         {
                             XCrossingEvent leave = ea.Leave;
-
-                            XWindowHandle xwindow = XWindowDict[leave.window];
 
                             EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, false));
 
@@ -541,7 +531,7 @@ namespace OpenTK.Platform.Native.X11
 
                             // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
                             // I copied what SDLLib did:
-                            // https://github.com/libsdl-org/SDLLib/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
                             // The documentation for these values is very obtuse:
                             // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
                             // - Noggin_bops 2023-01-12
@@ -560,8 +550,6 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            XWindowHandle xwindow = XWindowDict[focusIn.window];
-
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
 
                             break;
@@ -572,7 +560,7 @@ namespace OpenTK.Platform.Native.X11
 
                             // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
                             // I copied what SDLLib did:
-                            // https://github.com/libsdl-org/SDLLib/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
                             // The documentation for these values is very obtuse:
                             // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
                             // - Noggin_bops 2023-01-12
@@ -590,8 +578,6 @@ namespace OpenTK.Platform.Native.X11
                                 Logger?.LogDebug($"FocusOut detail={focusOut.detail}. Ignoring.");
                                 break;
                             }
-
-                            XWindowHandle xwindow = XWindowDict[focusOut.window];
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
 
@@ -649,8 +635,6 @@ namespace OpenTK.Platform.Native.X11
 
                             if (property.atom == X11.Atoms[KnownAtoms.WM_STATE])
                             {
-                                XWindowHandle xwindow = XWindowDict[property.window];
-
                                 int result = XGetWindowProperty(
                                     X11.Display,
                                     property.window,
@@ -693,11 +677,10 @@ namespace OpenTK.Platform.Native.X11
                             }
                             else if (property.atom == X11.Atoms[KnownAtoms._NET_WM_STATE])
                             {
-                                XWindowHandle xwindow = XWindowDict[property.window];
-
                                 WMState state = GetNETWMState(property.window);
                                 WMState changed = xwindow.WMState ^ state;
 
+                                // FIXME: Remove or make debug print.
                                 Console.WriteLine($"State: {state}, Changed: {changed}, Before: {xwindow.WMState}");
 
                                 xwindow.WMState = state;
@@ -753,8 +736,6 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.ConfigureNotify:
                         {
                             XConfigureEvent configure = ea.Configure;
-
-                            XWindowHandle xwindow = XWindowDict[configure.window];
 
                             if (configure.width != xwindow.Width ||
                                 configure.height != xwindow.Height)
@@ -1525,11 +1506,13 @@ namespace OpenTK.Platform.Native.X11
                         XMapWindow(X11.Display, xwindow.Window);
 
                         // FIXME: We might need to do something if NET_WM is defined
-                        // See: https://github.com/libsdl-org/SDLLib/blob/c5c94a6be6bfaccec9c41f6326bd4be6b2db8aea/src/video/x11/SDL_x11window.c#L1161
+                        // See: https://github.com/libsdl-org/SDL/blob/c5c94a6be6bfaccec9c41f6326bd4be6b2db8aea/src/video/x11/SDL_x11window.c#L1161
                         break;
                     }
                 case WindowMode.Hidden:
                     {
+                        // FIXME: Figure out what we really need to do here.
+
                         //GetClientPosition(xwindow, out int x, out int y);
 
                         XWithdrawWindow(X11.Display, xwindow.Window, X11.DefaultScreen);
