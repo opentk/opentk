@@ -65,7 +65,7 @@ namespace OpenTK.Backends.Tests
             int major = GL.GetInteger(GetPName.MajorVersion);
             int minor = GL.GetInteger(GetPName.MinorVersion);
 
-            KHRDebugAvailable = (major == 4 && minor >= 3) || IsExtensionSupported("KHR_debug");
+            KHRDebugAvailable = (major == 4 && minor >= 3) || IsExtensionSupported("KHR_debug") || IsExtensionSupported("GL_KHR_debug");
 
             IntPtr context = ImGui.CreateContext();
             ImGui.SetCurrentContext(context);
@@ -104,7 +104,7 @@ namespace OpenTK.Backends.Tests
 
             _vertexArray = GL.GenVertexArray();
             GL.BindVertexArray(_vertexArray);
-            LabelObject(ObjectIdentifier.VertexArray, _vertexArray, "ImGui");
+            LabelObject(ObjectIdentifier.VertexArray, _vertexArray, "VAO: ImGui");
 
             _vertexBuffer = GL.GenBuffer();
             GL.BindBuffer(BufferTargetARB.ArrayBuffer, _vertexBuffer);
@@ -185,7 +185,7 @@ void main()
             _fontTexture = GL.GenTexture();
             GL.BindTexture(TextureTarget.Texture2d, _fontTexture);
             GL.TexStorage2D(TextureTarget.Texture2d, mips, SizedInternalFormat.Rgba8, width, height);
-            LabelObject(ObjectIdentifier.Texture, _fontTexture, "ImGui Text Atlas");
+            LabelObject(ObjectIdentifier.Texture, _fontTexture, "Texture: ImGui Text Atlas");
 
             GL.TexSubImage2D(TextureTarget.Texture2d, 0, 0, 0, width, height, PixelFormat.Bgra, PixelType.UnsignedByte, pixels);
 
@@ -538,7 +538,10 @@ void main()
         private static int CompileShader(string name, ShaderType type, string source)
         {
             int shader = GL.CreateShader(type);
-            LabelObject(ObjectIdentifier.Shader, shader, $"Shader: {name}");
+            if (type == ShaderType.VertexShader)
+                LabelObject(ObjectIdentifier.Shader, shader, $"Vertex Shader: {name}");
+            else if (type == ShaderType.FragmentShader)
+                LabelObject(ObjectIdentifier.Shader, shader, $"Fragment Shader: {name}");
 
             GL.ShaderSource(shader, source);
             GL.CompileShader(shader);

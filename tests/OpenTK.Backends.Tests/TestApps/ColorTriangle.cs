@@ -4,6 +4,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -30,6 +31,8 @@ namespace OpenTK.Backends.Tests
 
         private WindowHandle Window;
         private OpenGLContextHandle Context;
+
+        private bool KHRDebugAvailable;
 
         private int VAO;
         private int VBO;
@@ -71,19 +74,45 @@ void main()
             Window = window;
             Context = context;
 
+            static bool IsExtensionSupported(string name)
+            {
+                int n = GL.GetInteger(GetPName.NumExtensions);
+                for (int i = 0; i < n; i++)
+                {
+                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    if (extension == name) return true;
+                }
+
+                return false;
+            }
+
+            int major = GL.GetInteger(GetPName.MajorVersion);
+            int minor = GL.GetInteger(GetPName.MinorVersion);
+            KHRDebugAvailable = (major == 4 && minor >= 3) || IsExtensionSupported("KHR_debug") || IsExtensionSupported("GL_KHR_debug");
+
+            if (KHRDebugAvailable)
+            {
+                GL.DebugMessageCallback(Program.DebugProcCallback, IntPtr.Zero);
+                GL.Enable(EnableCap.DebugOutput);
+                GL.Enable(EnableCap.DebugOutputSynchronous);
+            }
+
             ShaderProgram = CompileShader(VertexShader, FragmentShader);
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Program, (uint)ShaderProgram, -1, "Program: Color Triangle");
 
-            VAO = GL.CreateVertexArray();
-            VBO = GL.CreateBuffer();
-
+            VAO = GL.GenVertexArray();
             GL.BindVertexArray(VAO);
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.VertexArray, (uint)VAO, -1, "VAO: Color Triangle");
 
+            VBO = GL.GenBuffer();
             GL.BindBuffer(BufferTargetARB.ArrayBuffer, VBO);
+            if (KHRDebugAvailable) GL.ObjectLabel(ObjectIdentifier.Buffer, (uint)VBO, -1, "VBO: Color Triangle");
+
             GL.BufferData(BufferTargetARB.ArrayBuffer, Vertices, BufferUsageARB.StaticDraw);
 
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, Unsafe.SizeOf<Vertex>(), 0);
-
+            
             GL.EnableVertexAttribArray(1);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, Unsafe.SizeOf<Vertex>(), Vector2.SizeInBytes);
 
@@ -136,7 +165,7 @@ void main()
 
         public void Render()
         {
-            GL.ClearColor(Color4.Black);
+            GL.ClearColor(new Color4<Rgba>(0.05f, 0.05f, 0.1f, 1.0f));
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             GL.UseProgram(ShaderProgram);

@@ -49,7 +49,7 @@ namespace OpenTK.Platform.Native.X11
                     }
                     DisplayExtensionVersion = new Version(major, minor);
 
-                    XrrScreenConfiguration = XRRGetScreenInfo(X11.Display, X11.DefaultRootWindow);
+                    XrrScreenConfiguration = XRRGetScreenInfo(X11.Display, (XDrawable)X11.DefaultRootWindow);
 
                     int screenCount = XScreenCount(X11.Display);
 

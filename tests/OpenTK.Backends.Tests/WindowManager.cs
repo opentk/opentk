@@ -32,7 +32,7 @@ namespace OpenTK.Backends.Tests
         {
             foreach (WindowData data in Windows)
             {
-                data.Render(true);
+                data.Render();
             }
 
             OpenGLComponent.SetCurrentContext(RootContext);
@@ -122,16 +122,14 @@ namespace OpenTK.Backends.Tests
                 Window = window;
             }
 
-            public void Render(bool noRestoreContext = false)
+            public void Render()
             {
                 if (application == null) return;
                 if (context == null) return;
 
                 Manager.OpenGLComponent.SetCurrentContext(context);
                 application.Render();
-
-                if (!noRestoreContext)
-                    Manager.OpenGLComponent.SetCurrentContext(Manager.RootContext);
+                Manager.OpenGLComponent.SetCurrentContext(Manager.RootContext);
             }
 
             public void Dispose()
@@ -150,6 +148,9 @@ namespace OpenTK.Backends.Tests
                     Manager.OpenGLComponent.SetCurrentContext(context);
                     Application?.Deinitialize();
                     Manager.OpenGLComponent.SetCurrentContext(Manager.RootContext);
+
+                    if (context != null)
+                        Manager.OpenGLComponent.DestroyContext(context);
                 }
 
                 isDisposed = true;

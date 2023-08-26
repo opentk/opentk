@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.X11
 {
+    // FIXME: XID is an "unsigned long int". This will be 4 bytes on a 32-bit machine and 8 bytes on a 64-bit machine.
+    // - Noggin_bops 2023-08-26
+
     [DebuggerDisplay("{Value}")]
     internal struct XDisplayPtr
     {
@@ -118,7 +121,7 @@ namespace OpenTK.Platform.Native.X11
             Id = id;
         }
 
-        public static implicit operator XDrawable(XWindow window)
+        public static explicit operator XDrawable(XWindow window)
         {
             return new XDrawable(window.Id);
         }

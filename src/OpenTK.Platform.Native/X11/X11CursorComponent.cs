@@ -175,7 +175,7 @@ namespace OpenTK.Platform.Native.X11
             XPixmap pixmap;
             fixed (byte* maskPtr = mask)
             {
-                pixmap = XCreateBitmapFromData(X11.Display, X11.DefaultRootWindow, maskPtr, width, height);
+                pixmap = XCreateBitmapFromData(X11.Display, (XDrawable)X11.DefaultRootWindow, maskPtr, width, height);
             }
 
             // FIXME: Color?

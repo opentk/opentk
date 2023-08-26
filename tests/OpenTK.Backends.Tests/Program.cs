@@ -7,14 +7,16 @@ using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
 using System;
 using System.Diagnostics;
-using System.Net.Http.Headers;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Backends.Tests
 {
     internal class Program
     {
         public static ILogger Logger = new ModularLogger() { new ConsoleLogger() };
+
+        public readonly static GLDebugProc DebugProcCallback = Window_DebugProc;
 
         public static IWindowComponent WindowComp;
         public static IOpenGLComponent OpenGLComp;
@@ -104,10 +106,33 @@ namespace OpenTK.Backends.Tests
 
             Window = WindowComp.Create(hints);
             OpenGLContext = OpenGLComp.CreateFromWindow(Window);
+            OpenGLComp.SetCurrentContext(OpenGLContext);
+            GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(OpenGLContext));
+
+            static bool IsExtensionSupported(string name)
+            {
+                int n = GL.GetInteger(GetPName.NumExtensions);
+                for (int i = 0; i < n; i++)
+                {
+                    string extension = GL.GetStringi(StringName.Extensions, (uint)i)!;
+                    if (extension == name) return true;
+                }
+
+                return false;
+            }
+
+            int major = GL.GetInteger(GetPName.MajorVersion);
+            int minor = GL.GetInteger(GetPName.MinorVersion);
+            bool KHRDebugAvailable = (major == 4 && minor >= 3) || IsExtensionSupported("KHR_debug") || IsExtensionSupported("GL_KHR_debug");
+
+            if (KHRDebugAvailable)
+            {
+                GL.DebugMessageCallback(DebugProcCallback, IntPtr.Zero);
+                GL.Enable(EnableCap.DebugOutput);
+                GL.Enable(EnableCap.DebugOutputSynchronous);
+            }
 
             WindowManager = new WindowManager(WindowComp, OpenGLComp, Window, OpenGLContext);
-
-            GLLoader.LoadBindings(OpenGLComp.GetBindingsContext(OpenGLContext));
 
             WindowComp.SetTitle(Window, "OpenTK PAL Test Application");
             WindowComp.SetClientSize(Window, 800, 600);
@@ -199,6 +224,7 @@ namespace OpenTK.Backends.Tests
 
                 MainTabContainer.Paint();
 
+                OpenGLComp.SetCurrentContext(OpenGLContext);
                 Render();
 
                 WindowManager.RenderChildWindows();
@@ -334,6 +360,54 @@ namespace OpenTK.Backends.Tests
                 case PalComponents.Joystick: return JoystickComponent;
 
                 default: return null;
+            }
+        }
+    
+        private static void Window_DebugProc(DebugSource source, DebugType type, uint id, DebugSeverity severity, int length, IntPtr messagePtr, IntPtr userParam)
+        {
+            string message = Marshal.PtrToStringAnsi(messagePtr, length);
+
+            bool showMessage = true;
+
+            switch (source)
+            {
+                case DebugSource.DebugSourceApplication:
+                    showMessage = false;
+                    break;
+                case DebugSource.DontCare:
+                case DebugSource.DebugSourceApi:
+                case DebugSource.DebugSourceWindowSystem:
+                case DebugSource.DebugSourceShaderCompiler:
+                case DebugSource.DebugSourceThirdParty:
+                case DebugSource.DebugSourceOther:
+                default:
+                    showMessage = true;
+                    break;
+            }
+
+            if (showMessage)
+            {
+                switch (severity)
+                {
+                    case DebugSeverity.DontCare:
+                        Logger?.LogInfo($"[DontCare] [{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityNotification:
+                        //Logger?.LogDebug($"[{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityHigh:
+                        Logger?.LogError($"[{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityMedium:
+                        Logger?.LogWarning($"[{source}] {message}");
+                        break;
+                    case DebugSeverity.DebugSeverityLow:
+                        Logger?.LogInfo($"[{source}] {message}");
+                        break;
+                    default:
+                        Logger?.LogInfo($"[default] [{source}] {message}");
+                        break;
+                }
             }
         }
     }

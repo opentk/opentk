@@ -926,8 +926,6 @@ namespace OpenTK.Platform.Native.X11
                 XSetWMHints(X11.Display, window, wmHints);
             }
 
-
-
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
 
             XWindowDict.Add(handle.Window, handle);
@@ -2145,7 +2143,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            glXSwapBuffers(xwindow.Display, xwindow.Window);
+            glXSwapBuffers(xwindow.Display, (GLXDrawable)xwindow.GLXWindow);
         }
     }
 }

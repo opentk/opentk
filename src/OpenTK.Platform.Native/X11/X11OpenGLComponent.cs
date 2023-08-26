@@ -161,8 +161,15 @@ namespace OpenTK.Platform.Native.X11
                 });
             }
 
+            // Add the terminating attribute.
+            attribs.Add(0);
+            attribs.Add(0);
+
             XOpenGLContextHandle? sharedContext = hints.SharedContext as XOpenGLContextHandle;
 
+            // FIXME: This might not be able to create OpenGL 1.0 contexts...
+            // See: https://github.com/glfw/glfw/blob/3eaf1255b29fdf5c2895856c7be7d7185ef2b241/src/glx_context.c#L592-L595
+            // - Noggin_bops 2023-08-26
             GLXContext context = s_glXCreateContextAttribARB(
                 window.Display,
                 window.FBConfig!.Value,
@@ -170,7 +177,16 @@ namespace OpenTK.Platform.Native.X11
                 true,
                 ref CollectionsMarshal.AsSpan(attribs)[0]);
 
-            XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, window.Window, sharedContext);
+            // FIXME: This was added in glX 1.3, earlier versions of glX allowed passing the
+            // Window itself instead of making a GLXWindow. Maybe we should do something to
+            // check the glX version.
+            // - Noggin_bops 2023-08-27
+            GLXWindow glxWindow = glXCreateWindow(X11.Display, window.FBConfig!.Value, window.Window, IntPtr.Zero);
+            
+            // This is important so SwapBuffers works.
+            window.GLXWindow = glxWindow;
+
+            XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext);
 
             contextDict[contextHandle.Context] = contextHandle;
 
@@ -181,7 +197,9 @@ namespace OpenTK.Platform.Native.X11
         public void DestroyContext(OpenGLContextHandle handle)
         {
             var xhandle = handle.As<XOpenGLContextHandle>(this);
-            glXDestroyContext(xhandle.Display, xhandle.Context);
+            // FIXME: Remove the glxWindow from the window handle!
+            glXDestroyWindow(X11.Display, xhandle.GLXWindow);
+            glXDestroyContext(X11.Display, xhandle.Context);
         }
 
         /// <inheritdoc />
@@ -194,7 +212,6 @@ namespace OpenTK.Platform.Native.X11
         public IntPtr GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             XOpenGLContextHandle xhandle = handle.As<XOpenGLContextHandle>(this);
-            SetCurrentContext(xhandle);
             return s_glXGetProcAddress(procedureName);
         }
 
@@ -213,11 +230,11 @@ namespace OpenTK.Platform.Native.X11
 
             if (xhandle != null)
             {
-                return glXMakeCurrent(X11.Display, xhandle.Drawable, xhandle.Context);
+                return glXMakeCurrent(X11.Display, (GLXDrawable)xhandle.GLXWindow, xhandle.Context);
             }
             else
             {
-                return glXMakeCurrent(X11.Display, XDrawable.None, new GLXContext(IntPtr.Zero));
+                return glXMakeCurrent(X11.Display, GLXDrawable.None, new GLXContext(IntPtr.Zero));
             }
         }
 
@@ -241,7 +258,7 @@ namespace OpenTK.Platform.Native.X11
                     throw new InvalidOperationException("No context bound. Can't set swap interval.");
                 }
 
-                glXQueryDrawable(X11.Display, context.Drawable, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
+                glXQueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
 
                 return (int)max_interval;
             }
@@ -262,14 +279,14 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_EXT_swap_control"))
             {
-                glXQueryDrawable(X11.Display, context.Drawable, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
+                glXQueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, GLX_MAX_SWAP_INTERVAL_EXT, out uint max_interval);
                 if (interval > max_interval)
                 {
                     Logger?.LogWarning($"Specified swap interval '{interval}' is larger than the max supported inverval of '{max_interval}'. Clamping to the maximum swap interval.");
                     interval = (int)max_interval;
                 }
 
-                glXSwapIntervalEXT(X11.Display, context.Drawable, interval);
+                glXSwapIntervalEXT(X11.Display, (GLXDrawable)context.GLXWindow, interval);
             }
             else if (GLXExtensions.Contains("GLX_MESA_swap_control"))
             {
@@ -308,7 +325,7 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_EXT_swap_control"))
             {
-                glXQueryDrawable(X11.Display, context.Drawable, GLX_SWAP_INTERVAL_EXT, out uint interval);
+                glXQueryDrawable(X11.Display, (GLXDrawable)context.GLXWindow, GLX_SWAP_INTERVAL_EXT, out uint interval);
                 return (int)interval;
             }
             else if (GLXExtensions.Contains("GLX_MESA_swap_control"))

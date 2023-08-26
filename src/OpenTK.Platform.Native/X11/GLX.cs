@@ -35,6 +35,12 @@ namespace OpenTK.Platform.Native.X11
         internal static extern unsafe XVisualInfo* glXChooseVisual(XDisplayPtr display, int screen, int[] attributeList);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern unsafe GLXWindow glXCreateWindow(XDisplayPtr display, GLXFBConfig config, XWindow window, IntPtr attrib_list);
+
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void glXDestroyWindow(XDisplayPtr dpy, GLXWindow win);
+
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern GLXContext glXCreateContext(
             XDisplayPtr display,
             ref XVisualInfo visualInfo,
@@ -45,7 +51,10 @@ namespace OpenTK.Platform.Native.X11
         internal static extern void glXDestroyContext(XDisplayPtr display, GLXContext context);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern bool glXMakeCurrent(XDisplayPtr display, XDrawable drawable, GLXContext context);
+        internal static extern bool glXMakeCurrent(XDisplayPtr display, GLXDrawable drawable, GLXContext context);
+
+        [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool glXMakeContextCurrent(XDisplayPtr display, GLXDrawable draw, GLXDrawable read, GLXContext ctx);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void glXCopyContext(
@@ -55,15 +64,13 @@ namespace OpenTK.Platform.Native.X11
             ulong mask);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void glXSwapBuffers(XDisplayPtr display, XDrawable drawable);
-
-        // TODO: Replace XPixMap for GLXPixMap in these functions, as they are different XIDs.
+        internal static extern void glXSwapBuffers(XDisplayPtr display, GLXDrawable drawable);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XPixmap glXCreateGLXPixmap(XDisplayPtr display, ref XVisualInfo visualInfo, XPixmap pixMap);
+        internal static extern GLXPixmap glXCreateGLXPixmap(XDisplayPtr display, ref XVisualInfo visualInfo, XPixmap pixMap);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void glXDestroyGLXPixmap(XDisplayPtr display, XPixmap pixMap);
+        internal static extern void glXDestroyGLXPixmap(XDisplayPtr display, GLXPixmap pixMap);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern bool glXQueryExtension(XDisplayPtr display, out int errorBase, out int eventBase);
@@ -85,7 +92,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern GLXContext glXGetCurrentContext();
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern XDrawable glXGetCurrentDrawable();
+        internal static extern GLXDrawable glXGetCurrentDrawable();
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void glXWaitGL();
@@ -223,7 +230,7 @@ namespace OpenTK.Platform.Native.X11
         //     ref uint value);
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern unsafe int glXQueryDrawable(XDisplayPtr dpy, XDrawable draw, int attribute, out uint value);
+        internal static extern unsafe int glXQueryDrawable(XDisplayPtr dpy, GLXDrawable draw, int attribute, out uint value);
 
         #endregion
 
@@ -257,6 +264,7 @@ namespace OpenTK.Platform.Native.X11
         internal const int GLX_CONTEXT_CORE_PROFILE_BIT_ARB = 0x1;
         internal const int GLX_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB = 0x2;
 
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate GLXContext glXCreateContextAttribARBProc(
             XDisplayPtr display,
             GLXFBConfig config,
@@ -272,7 +280,7 @@ namespace OpenTK.Platform.Native.X11
         internal const int GLX_MAX_SWAP_INTERVAL_EXT = 0x20F2;
 
         [DllImport(glx, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void glXSwapIntervalEXT(XDisplayPtr dpy, XDrawable drawable, int interval);
+        internal static extern void glXSwapIntervalEXT(XDisplayPtr dpy, GLXDrawable drawable, int interval);
 
         #endregion
 

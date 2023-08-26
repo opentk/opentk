@@ -40,7 +40,9 @@ namespace OpenTK.Platform.Native.X11
         public XDisplayPtr Display { get; }
         public GLXContext Context { get; }
 
-        public XDrawable Drawable { get; }
+        public GLXWindow GLXWindow { get; }
+
+        public XWindow Window { get; }
 
         public XOpenGLContextHandle? SharedContext { get; }
 
@@ -52,12 +54,14 @@ namespace OpenTK.Platform.Native.X11
         public XOpenGLContextHandle(
             XDisplayPtr display,
             GLXContext context,
-            XDrawable drawable,
+            GLXWindow glxWindow,
+            XWindow window,
             XOpenGLContextHandle? sharedContext = null)
         {
             Display = display;
             Context = context;
-            Drawable = drawable;
+            GLXWindow = glxWindow;
+            Window = window;
             SharedContext = sharedContext;
         }
     }
@@ -75,6 +79,10 @@ namespace OpenTK.Platform.Native.X11
         public XDisplayPtr Display { get; }
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
+
+        // This is needed for glXSwapBuffers.
+        // This gets filled when the context is created.
+        public GLXWindow GLXWindow { get; set; }
 
         public int X { get; set; }
 
