@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Deterministic>true</Deterministic>
     <LangVersion>latest</LangVersion>
@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>obj\Release\net5.0\OpenTK.OpenAL.xml</DocumentationFile>
+    <DocumentationFile>obj\Release\net7.0\OpenTK.OpenAL.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

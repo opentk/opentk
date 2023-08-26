@@ -3,10 +3,10 @@ id OpenTK.OpenAL
 description
     OpenAL bindings for dotnet from the Khronos openAL c library.
 dependencies
-    framework: net5.0
+    framework: net7.0
         OpenTK.Core ~> #VERSION#
         OpenTK.Mathematics ~> #VERSION#
 files
-    bin\Release\net5.0\OpenTK.OpenAL.dll ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.OpenAL.xml ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.OpenAL.pdb ==> lib\net5.0
+    bin\Release\net7.0\OpenTK.OpenAL.dll ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.OpenAL.xml ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.OpenAL.pdb ==> lib\net7.0
