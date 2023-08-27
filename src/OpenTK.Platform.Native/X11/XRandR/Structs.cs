@@ -23,7 +23,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     /// XRandR Output handle.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct RROutput
+    internal struct RROutput : IEquatable<RROutput>
     {
         public ulong Id { get; }
 
@@ -32,6 +32,31 @@ namespace OpenTK.Platform.Native.X11.XRandR
         public RROutput(ulong id)
         {
             Id = id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RROutput mode && Id == mode.Id;
+        }
+
+        public bool Equals(RROutput other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public static bool operator ==(RROutput a, RROutput b)
+        {
+            return a.Id == b.Id;
+        }
+
+        public static bool operator !=(RROutput a, RROutput b)
+        {
+            return a.Id != b.Id;
         }
     }
 

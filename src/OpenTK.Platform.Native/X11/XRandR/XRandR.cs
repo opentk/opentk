@@ -113,5 +113,8 @@ namespace OpenTK.Platform.Native.X11.XRandR
             out long nitems,
             out long bytes_after,
             out IntPtr prop);
+
+        [DllImport(xrandr, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern RROutput XRRGetOutputPrimary(XDisplayPtr dpy, XWindow window);
     }
 }

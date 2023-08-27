@@ -1,5 +1,6 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.X11.XRandR;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -66,11 +67,19 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
-    internal class XRandRDisplayHandle : DisplayHandle
+    internal class XDisplayHandle : DisplayHandle
     {
+        public RROutput Output { get; set; }
+
+        public RRCrtc Crtc { get; set; }
+
         public string Name { get; set; }
 
-        
+        public XDisplayHandle(RROutput output, RRCrtc crtc)
+        {
+            Output = output;
+            Crtc = crtc;
+        }
     }
 
     [DebuggerDisplay("XWindowHandle: Display={Display.Value} Window={Window.Id}")]

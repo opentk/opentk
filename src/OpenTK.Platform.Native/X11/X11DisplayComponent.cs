@@ -23,6 +23,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public ILogger? Logger { get ; set; }
 
+        private static readonly List<XDisplayHandle> _displays = new List<XDisplayHandle>();
+
         /// <inheritdoc />
         public void Initialize(PalComponents which)
         {
@@ -59,6 +61,8 @@ namespace OpenTK.Platform.Native.X11
                         unsafe {
                             XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, screen));
 
+                            RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
+
                             if (resources == null) continue;
 
                             for (int i = 0; i < resources->NumberOfOutputs; i++)
@@ -72,7 +76,7 @@ namespace OpenTK.Platform.Native.X11
                                     continue;
                                 }
 
-                                string name = Marshal.PtrToStringUTF8((IntPtr)outputInfo->name);
+                                string name = Marshal.PtrToStringUTF8((IntPtr)outputInfo->name)!;
 
                                 Span<XAtom> atoms = XRRListOutputProperties(X11.Display, output, out int nprops);
 
@@ -114,20 +118,27 @@ namespace OpenTK.Platform.Native.X11
 
                                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, outputInfo->crtc);
 
-                                XRRFreeOutputInfo(outputInfo);
-
                                 if (crtcInfo == null)
                                 {
                                     continue;
                                 }
 
+                                bool isPrimary = output == primaryOutput;
+
                                 Console.WriteLine($"Name: {name}");
                                 Console.WriteLine($"Name: {displayName}");
+                                if (isPrimary) Console.WriteLine($"Primary display");
                                 Console.WriteLine($"Position: ({crtcInfo->x}, {crtcInfo->y})");
                                 Console.WriteLine($"Resolution: ({crtcInfo->width}, {crtcInfo->height})");
                                 Console.WriteLine($"Rotation: {crtcInfo->rotation}");
                                 Console.WriteLine($"Atoms: {string.Join(", ", list)}");
 
+                                XDisplayHandle handle = new XDisplayHandle(output, outputInfo->crtc);
+                                handle.Name = displayName ?? name;
+
+                                _displays.Add(handle);
+
+                                XRRFreeOutputInfo(outputInfo);
                                 XRRFreeCrtcInfo(crtcInfo);
                             }
 
@@ -193,7 +204,7 @@ namespace OpenTK.Platform.Native.X11
             {
             case DisplayExtensionType.XRandR:
             {
-                return -1;
+                return _displays.Count;
             }
             default:
             case DisplayExtensionType.None:
@@ -207,18 +218,10 @@ namespace OpenTK.Platform.Native.X11
             switch (DisplayExtension)
             {
             case DisplayExtensionType.XRandR:
-                unsafe
                 {
-                    XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
-
-                    if (resources is null)
-                    {
-                        throw new PalException(this, "Could not get screen XRandR screen resources.");
-                    }
-
-                    XRRFreeScreenResources(resources);
+                    // FIXME: Bounds check
+                    return _displays[index];
                 }
-                throw new NotImplementedException();
             default:
             case DisplayExtensionType.None:
                 if (index > 0)
@@ -242,8 +245,11 @@ namespace OpenTK.Platform.Native.X11
             switch (DisplayExtension)
             {
             case DisplayExtensionType.XRandR:
-                XRandRDisplayHandle randr = handle.As<XRandRDisplayHandle>(this);
-                throw new NotImplementedException();
+            {
+                // We don't need to do anything here, we just verify that we got the right type of handle.
+                XDisplayHandle randr = handle.As<XDisplayHandle>(this);
+                break;
+            }
             default:
             case DisplayExtensionType.None:
                 // Nothing needs to be done to the dummy handle as long as it is the dummy handle.
@@ -255,7 +261,10 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public bool IsPrimary(DisplayHandle handle)
         {
-            throw new NotImplementedException();
+            XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+            RROutput primary = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
+
+            return xdisplay.Output == primary;
         }
 
         /// <inheritdoc />
@@ -264,7 +273,7 @@ namespace OpenTK.Platform.Native.X11
             switch (DisplayExtension)
             {
             case DisplayExtensionType.XRandR:
-                XRandRDisplayHandle randr = handle.As<XRandRDisplayHandle>(this);
+                XDisplayHandle randr = handle.As<XDisplayHandle>(this);
                 return randr.Name;
             default:
             case DisplayExtensionType.None:
@@ -291,7 +300,22 @@ namespace OpenTK.Platform.Native.X11
             switch (DisplayExtension)
             {
                 case DisplayExtensionType.XRandR:
-                    throw new NotImplementedException();
+                unsafe
+                {
+                    XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+                    // FIXME: DefaultScreen...?
+                    XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
+                    XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+
+                    x = crtcInfo->x;
+                    y = crtcInfo->y;
+
+                    XRRFreeCrtcInfo(crtcInfo);
+                    XRRFreeScreenResources(resources);
+
+                    break;
+                }
                 default:
                 case DisplayExtensionType.None:
                     handle.As<DummyDisplayHandle>(this);
