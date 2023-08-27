@@ -8,6 +8,7 @@ using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static OpenTK.Platform.Native.X11.XScreenSaver;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -34,12 +35,33 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc/>
         public void AllowScreenSaver(bool allow)
         {
-            // Seems like we can either use some dbus functions or
-            // we can use X11 Screen Saver Extension to turn it off.
-            // https://github.com/libsdl-org/SDL/blob/fde78d12f247a776b52b007479e5274d4bd4e3fe/src/video/x11/SDL_x11events.c#L1730
+            if (X11.Extensions.Contains("MIT-SCREEN-SAVER"))
+            {
+                if (XScreenSaverQueryExtension(X11.Display, out _, out _) == false)
+                {
+                    Logger?.LogWarning("XScreenSaverQueryExtension failed, cannot enable/disable screen saver.");
+                    return;
+                }
 
+                if (XScreenSaverQueryVersion(X11.Display, out int major, out int minor) != 1)
+                {
+                    Logger?.LogWarning("XScreenSaverQueryVersion failed, cannot enable/disable screen saver.");
+                    return;
+                }
 
-            throw new NotImplementedException();
+                if (major > 1 || (major == 1 && minor >= 1))
+                {
+                    XScreenSaverSuspend(X11.Display, !allow);
+                }
+                else
+                {
+                    Logger?.LogWarning($"XScreenSaver 1.1 is required to enable/disable screen saver. Using version: {major}.{minor}");
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Cannot enable/disable screen saver because XScreenSaver () can't be found.");
+            }
         }
 
         /// <inheritdoc/>
