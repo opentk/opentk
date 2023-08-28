@@ -33,6 +33,33 @@ namespace OpenTK.Platform.Native.X11
 
         private static readonly List<XDisplayHandle> _displays = new List<XDisplayHandle>();
 
+        private unsafe XRRModeInfo* GetModeInfo(XRRScreenResources* resources, RRMode mode)
+        {
+            for (int i = 0; i < resources->NumberOfModes; i++)
+            {
+                if (resources->Modes[i].ModeId == mode)
+                {
+                    return &resources->Modes[i];
+                }
+            }
+
+            return null;
+        }
+
+        private unsafe float CalculateRefreshRate(XRRModeInfo* info)
+        {
+            if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
+            {
+                return ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
+            }
+            else
+            {
+                // FIXME: Name or index of the display or some info about the mode...?
+                Logger?.LogWarning($"Could not get refresh rate. (dotclock: {info->DotClock}, vtotal: {info->VTotal}, htotal: {info->HTotal})");
+                return 0;
+            }
+        }
+
         /// <inheritdoc />
         public void Initialize(PalComponents which)
         {
@@ -232,31 +259,13 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                XRRModeInfo* info = null;
-                for (int i = 0; i < resources->NumberOfModes; i++)
-                {
-                    if (resources->Modes[i].ModeId == crtcInfo->mode)
-                    {
-                        info = &resources->Modes[i];
-                        break;
-                    }
-                }
-
+                XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
                 if (info != null)
                 {
                     // FIXME: Handle screen rotation!
                     mode.Width = (int)crtcInfo->width;
                     mode.Height = (int)crtcInfo->height;
-                    if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
-                    {
-                        mode.RefreshRate = ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
-                    }
-                    else
-                    {
-                        // FIXME: Name or index of the display...
-                        Logger?.LogWarning("Could not get refresh rate.");
-                        mode.RefreshRate = 0;
-                    }
+                    mode.RefreshRate = CalculateRefreshRate(info);
                     mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
                 }
                 else
@@ -273,7 +282,32 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public VideoMode[] GetSupportedVideoModes(DisplayHandle handle)
         {
-            throw new NotImplementedException();
+            unsafe
+            {
+                XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+                XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, xdisplay.Output);
+
+                VideoMode[] modes = new VideoMode[outputInfo->nmode];
+                for (int i = 0; i < outputInfo->nmode; i++)
+                {
+                    // FIXME: glfw removes RR_Interlaced modes. Why?
+                    XRRModeInfo* info = GetModeInfo(resources, outputInfo->modes[i]);
+                    
+                    modes[i].Width = (int)crtcInfo->width;
+                    modes[i].Height = (int)crtcInfo->height;
+                    modes[i].RefreshRate = CalculateRefreshRate(info);
+                    modes[i].BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
+                }
+
+                XRRFreeOutputInfo(outputInfo);
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+
+                return modes;
+            }
         }
 
         /// <inheritdoc />
@@ -409,16 +443,7 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                XRRModeInfo* info = null;
-                for (int i = 0; i < resources->NumberOfModes; i++)
-                {
-                    if (resources->Modes[i].ModeId == crtcInfo->mode)
-                    {
-                        info = &resources->Modes[i];
-                        break;
-                    }
-                }
-
+                XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
                 if (info != null)
                 {
                     if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)

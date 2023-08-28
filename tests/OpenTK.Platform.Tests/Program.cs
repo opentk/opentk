@@ -167,6 +167,7 @@ namespace OpenTK.Platform.Tests
                 displayComp.GetResolution(primary, out int width, out int height);
                 displayComp.GetWorkArea(primary, out Box2i workArea);
                 displayComp.GetVideoMode(primary, out VideoMode videoMode);
+                VideoMode[] modes = displayComp.GetSupportedVideoModes(primary);
 
                 Console.WriteLine($"Primary display: {name}");
                 Console.WriteLine($"Refresh rate: {refreshRate}Hz");
@@ -174,6 +175,11 @@ namespace OpenTK.Platform.Tests
                 Console.WriteLine($"Resolution: {width}x{height}");
                 Console.WriteLine($"Work area: {workArea.Location} {workArea.Size}");
                 Console.WriteLine($"Video mode: {videoMode}");
+                Console.WriteLine($"Supported video modes:");
+                foreach (var mode in modes)
+                {
+                    Console.WriteLine($"  {mode}");
+                }
             }
 
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
