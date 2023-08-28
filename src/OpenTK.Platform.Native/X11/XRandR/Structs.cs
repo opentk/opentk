@@ -77,7 +77,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
 
         public override bool Equals(object? obj)
         {
-            return obj is RRMode mode && Id == mode.Id;
+            return obj is RRCrtc mode && Id == mode.Id;
         }
 
         public bool Equals(RRCrtc other)
@@ -105,7 +105,7 @@ namespace OpenTK.Platform.Native.X11.XRandR
     /// XRandR mode handle.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct RRMode
+    internal struct RRMode : IEquatable<RRMode>
     {
         public ulong Id { get; }
 
@@ -114,6 +114,31 @@ namespace OpenTK.Platform.Native.X11.XRandR
         public RRMode(ulong id)
         {
             Id = id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RRMode mode && Id == mode.Id;
+        }
+
+        public bool Equals(RRMode other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public static bool operator ==(RRMode a, RRMode b)
+        {
+            return a.Id == b.Id;
+        }
+
+        public static bool operator !=(RRMode a, RRMode b)
+        {
+            return a.Id != b.Id;
         }
     }
 

@@ -23,6 +23,13 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public ILogger? Logger { get ; set; }
 
+        // TODO: Write Xinerama fallback.
+
+        /// <inheritdoc />
+        public bool CanGetVirtualPosition { get; } = false;
+
+        public XRRScreenConfiguration XrrScreenConfiguration { get; private set; }
+
         private static readonly List<XDisplayHandle> _displays = new List<XDisplayHandle>();
 
         /// <inheritdoc />
@@ -30,12 +37,8 @@ namespace OpenTK.Platform.Native.X11
         {
             if (X11.Extensions.Contains("RANDR"))
             {
-                DisplayExtension = DisplayExtensionType.XRandR;
-
                 if (XRRQueryExtension(X11.Display, out int eventBase, out int errorBase) != 0)
                 {
-                    DisplayExtension = DisplayExtensionType.XRandR;
-
                     X11.XRandREventBase = eventBase;
                     X11.XRandRErrorBase = errorBase;
 
@@ -45,11 +48,9 @@ namespace OpenTK.Platform.Native.X11
                     if (major != 1 && minor < 3)
                     {
                         Logger?.LogError($"XRandR failed to load. Got version {major}.{minor} but 1.3 is required.");
-                        // FIXME: Fallback to XINERAMA or just X11?
-                        DisplayExtension = DisplayExtensionType.None;
                         return;
                     }
-                    DisplayExtensionVersion = new Version(major, minor);
+                    //DisplayExtensionVersion = new Version(major, minor);
 
                     XrrScreenConfiguration = XRRGetScreenInfo(X11.Display, (XDrawable)X11.DefaultRootWindow);
 
@@ -148,21 +149,16 @@ namespace OpenTK.Platform.Native.X11
                             XRRSelectInput(X11.Display, X11.DefaultRootWindow, RRSelectMask.OutputChangeNotifyMask);
                         }
                     }
+                
+                    Logger?.LogInfo("Using XRANDR for display component.");
                 }
+
+                // FIXME: Error message for when this fails?
             }
-            else if (X11.Extensions.Contains("XINERAMA"))
+            else 
             {
-                DisplayExtension = DisplayExtensionType.Xinerama;
+                Logger?.LogError("Could not find XRANDR extension. The display component will not work.");
             }
-            else {
-                DisplayExtension = DisplayExtensionType.None;
-            }
-
-            // FIXME
-
-            Logger?.LogInfo($"Using display extension: {DisplayExtension}.");
-            if (DisplayExtension != DisplayExtensionType.None)
-                Logger?.LogInfo($"{DisplayExtension} version {DisplayExtensionVersion}");
         }
 
         internal static void HandleXRREvent(XEvent @event)
@@ -180,57 +176,17 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        // TODO: Write Xinerama fallback.
-
-        /// <inheritdoc />
-        public bool CanGetVirtualPosition { get; } = false;
-
-        /// <summary>
-        /// The type of extension that is used to get display information.
-        /// </summary>
-        public DisplayExtensionType DisplayExtension { get; private set; } = DisplayExtensionType.None;
-
-        /// <summary>
-        /// Version of the extension used to get display information.
-        /// </summary>
-        public Version DisplayExtensionVersion { get; private set; }
-
-        public XRRScreenConfiguration XrrScreenConfiguration { get; private set; }
-
         /// <inheritdoc />
         public int GetDisplayCount()
         {
-            switch (DisplayExtension)
-            {
-            case DisplayExtensionType.XRandR:
-            {
-                return _displays.Count;
-            }
-            default:
-            case DisplayExtensionType.None:
-                return 1;
-            }
+            return _displays.Count;
         }
 
         /// <inheritdoc />
         public DisplayHandle Open(int index)
         {
-            switch (DisplayExtension)
-            {
-            case DisplayExtensionType.XRandR:
-                {
-                    // FIXME: Bounds check
-                    return _displays[index];
-                }
-            default:
-            case DisplayExtensionType.None:
-                if (index > 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(index));
-                }
-
-                return DummyDisplayHandle.Instance;
-            }
+            // FIXME: Bounds check
+            return _displays[index];
         }
 
         /// <inheritdoc />
@@ -242,20 +198,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void Close(DisplayHandle handle)
         {
-            switch (DisplayExtension)
-            {
-            case DisplayExtensionType.XRandR:
-            {
-                // We don't need to do anything here, we just verify that we got the right type of handle.
-                XDisplayHandle randr = handle.As<XDisplayHandle>(this);
-                break;
-            }
-            default:
-            case DisplayExtensionType.None:
-                // Nothing needs to be done to the dummy handle as long as it is the dummy handle.
-                handle.As<DummyDisplayHandle>(this);
-                break;
-            }
+            // We don't need to do anything here, we just verify that we got the right type of handle.
+            XDisplayHandle randr = handle.As<XDisplayHandle>(this);
         }
 
         /// <inheritdoc />
@@ -270,16 +214,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public string GetName(DisplayHandle handle)
         {
-            switch (DisplayExtension)
-            {
-            case DisplayExtensionType.XRandR:
-                XDisplayHandle randr = handle.As<XDisplayHandle>(this);
-                return randr.Name;
-            default:
-            case DisplayExtensionType.None:
-                handle.As<DummyDisplayHandle>(this);
-                return "X Root Window";
-            }
+            XDisplayHandle randr = handle.As<XDisplayHandle>(this);
+            return randr.Name;
         }
 
         /// <inheritdoc />
@@ -297,67 +233,102 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
         {
-            switch (DisplayExtension)
+            // FIXME: Should we get this every time or should we cache this?
+            unsafe
             {
-                case DisplayExtensionType.XRandR:
-                unsafe
-                {
-                    XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+                XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                    // FIXME: DefaultScreen...?
-                    XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
-                    XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+                // FIXME: DefaultScreen...?
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
-                    x = crtcInfo->x;
-                    y = crtcInfo->y;
+                x = crtcInfo->x;
+                y = crtcInfo->y;
 
-                    XRRFreeCrtcInfo(crtcInfo);
-                    XRRFreeScreenResources(resources);
-
-                    break;
-                }
-                default:
-                case DisplayExtensionType.None:
-                    handle.As<DummyDisplayHandle>(this);
-                    x = y = 0;
-                    break;
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
             }
         }
 
         /// <inheritdoc />
         public void GetResolution(DisplayHandle handle, out int width, out int  height)
         {
-            throw new NotImplementedException();
+            // FIXME: Should we get this every time or should we cache this?
+            unsafe
+            {
+                XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+                // FIXME: DefaultScreen...?
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+
+                // FIXME: Should we use crtc size or output size?
+                width = (int)crtcInfo->width;
+                height = (int)crtcInfo->height;
+
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+            }
         }
 
         /// <inheritdoc />
         public void GetWorkArea(DisplayHandle handle, out Box2i area)
         {
+            // Use NET_WORKAREA and NET_DESKTOP to get the work area
+            // fall back to the crtc area if NET_WORKAREA isn't available.
             throw new NotImplementedException();
         }
 
         /// <inheritdoc />
         public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
         {
-            throw new NotImplementedException();
+            unsafe
+            {
+                XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+                // FIXME: DefaultScreen...?
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+
+                XRRModeInfo* info = null;
+                for (int i = 0; i < resources->NumberOfModes; i++)
+                {
+                    if (resources->Modes[i].ModeId == crtcInfo->mode)
+                    {
+                        info = &resources->Modes[i];
+                        break;
+                    }
+                }
+
+                if (info != null)
+                {
+                    if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
+                        {
+                            refreshRate = ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
+                        }
+                        else
+                        {
+                            // FIXME: Name or index of the display...
+                            Logger?.LogWarning("Could not get refresh rate.");
+                            refreshRate = 0;
+                        }
+                }
+                else
+                {
+                    // FIXME: Name or index of the display...
+                    Logger?.LogWarning("Could not find mode info for display.");
+                    refreshRate = 0;
+                }
+
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+            }
         }
 
         /// <inheritdoc />
         public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
             throw new NotImplementedException();
-        }
-
-        public enum DisplayExtensionType
-        {
-            None,
-            XRandR,
-            Xinerama
-        }
-
-        private class DummyDisplayHandle : DisplayHandle
-        {
-            public static readonly DummyDisplayHandle Instance = new DummyDisplayHandle();
         }
     }
 }

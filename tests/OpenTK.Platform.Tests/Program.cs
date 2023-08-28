@@ -159,6 +159,15 @@ namespace OpenTK.Platform.Tests
 
             Console.WriteLine($"Number of screens: {displayComp.GetDisplayCount()}");
 
+            {
+                var primary = displayComp.OpenPrimary();
+                string name = displayComp.GetName(primary);
+                displayComp.GetRefreshRate(primary, out float refreshRate);
+
+                Console.WriteLine($"Primary display: {name}");
+                Console.WriteLine($"Refresh rate: {refreshRate}Hz");
+            }
+
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
 
 
