@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Platform.Native.X11.XRandR;
+using System.Security.Authentication;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -57,7 +58,7 @@ namespace OpenTK.Platform.Native.X11
                     for (int screen = 0; screen < screenCount; screen++)
                     {
                         unsafe {
-                            XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, screen));
+                            XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
 
                             RROutput primaryOutput = XRRGetOutputPrimary(X11.Display, X11.DefaultRootWindow);
 
@@ -224,7 +225,49 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
         {
-            throw new NotImplementedException();
+            unsafe
+            {
+                XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+
+                XRRModeInfo* info = null;
+                for (int i = 0; i < resources->NumberOfModes; i++)
+                {
+                    if (resources->Modes[i].ModeId == crtcInfo->mode)
+                    {
+                        info = &resources->Modes[i];
+                        break;
+                    }
+                }
+
+                if (info != null)
+                {
+                    // FIXME: Handle screen rotation!
+                    mode.Width = (int)crtcInfo->width;
+                    mode.Height = (int)crtcInfo->height;
+                    if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
+                    {
+                        mode.RefreshRate = ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
+                    }
+                    else
+                    {
+                        // FIXME: Name or index of the display...
+                        Logger?.LogWarning("Could not get refresh rate.");
+                        mode.RefreshRate = 0;
+                    }
+                    mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
+                }
+                else
+                {
+                    mode = default;
+                    Logger?.LogError("Could not get the current video mode.");
+                }
+
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+            }
         }
 
         /// <inheritdoc />
@@ -241,8 +284,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                // FIXME: DefaultScreen...?
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 x = crtcInfo->x;
@@ -261,8 +303,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                // FIXME: DefaultScreen...?
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 // FIXME: Handle screen rotation!
@@ -283,7 +324,6 @@ namespace OpenTK.Platform.Native.X11
 
             unsafe
             {
-                // FIXME: DefaultRootWindow...?
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
@@ -366,8 +406,7 @@ namespace OpenTK.Platform.Native.X11
             {
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
-                // FIXME: DefaultScreen...?
-                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
                 XRRModeInfo* info = null;
@@ -383,15 +422,15 @@ namespace OpenTK.Platform.Native.X11
                 if (info != null)
                 {
                     if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
-                        {
-                            refreshRate = ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
-                        }
-                        else
-                        {
-                            // FIXME: Name or index of the display...
-                            Logger?.LogWarning("Could not get refresh rate.");
-                            refreshRate = 0;
-                        }
+                    {
+                        refreshRate = ((info->DotClock * 100) / (info->VTotal * info->HTotal)) / 100.0f;
+                    }
+                    else
+                    {
+                        // FIXME: Name or index of the display...
+                        Logger?.LogWarning("Could not get refresh rate.");
+                        refreshRate = 0;
+                    }
                 }
                 else
                 {

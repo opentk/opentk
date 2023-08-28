@@ -203,6 +203,9 @@ namespace OpenTK.Platform.Native.X11
         internal static extern XColorMap XDefaultColormap(XDisplayPtr display, int screen_number);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int XDefaultDepth(XDisplayPtr display, int screen_number);
+
+        [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int XFreeColormap(XDisplayPtr display, XColorMap colormap);
 
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]

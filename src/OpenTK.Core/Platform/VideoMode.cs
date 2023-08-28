@@ -23,11 +23,14 @@ namespace OpenTK.Core.Platform
         public float RefreshRate;
 
         /// <summary>
-        /// Number of bits used to represent each color in  the video mode.
+        /// Number of bits used to represent each color in the video mode.
         /// </summary>
         // FIXME: What practical usage does this have?
         // Is this something we can reliably use?
         // Maybe we'll want to change this in favor of a format enum like SDL has..?
+        //
+        // The current conceivable use would be to be able to select a VideoMode with a high bpp.
+        // - Noggin_bops 2023-08-28
         public int BitsPerPixel;
 
         /// <summary>

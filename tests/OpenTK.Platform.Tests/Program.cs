@@ -166,12 +166,14 @@ namespace OpenTK.Platform.Tests
                 displayComp.GetVirtualPosition(primary, out int x, out int y);
                 displayComp.GetResolution(primary, out int width, out int height);
                 displayComp.GetWorkArea(primary, out Box2i workArea);
+                displayComp.GetVideoMode(primary, out VideoMode videoMode);
 
                 Console.WriteLine($"Primary display: {name}");
                 Console.WriteLine($"Refresh rate: {refreshRate}Hz");
                 Console.WriteLine($"Position: ({x},{y})");
                 Console.WriteLine($"Resolution: {width}x{height}");
                 Console.WriteLine($"Work area: {workArea.Location} {workArea.Size}");
+                Console.WriteLine($"Video mode: {videoMode}");
             }
 
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
