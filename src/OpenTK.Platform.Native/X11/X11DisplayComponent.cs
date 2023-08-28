@@ -26,9 +26,9 @@ namespace OpenTK.Platform.Native.X11
         // TODO: Write Xinerama fallback.
 
         /// <inheritdoc />
-        public bool CanGetVirtualPosition { get; } = false;
+        public bool CanGetVirtualPosition { get; } = HasRANDR == true;
 
-        public XRRScreenConfiguration XrrScreenConfiguration { get; private set; }
+        private static bool HasRANDR = false;
 
         private static readonly List<XDisplayHandle> _displays = new List<XDisplayHandle>();
 
@@ -50,9 +50,6 @@ namespace OpenTK.Platform.Native.X11
                         Logger?.LogError($"XRandR failed to load. Got version {major}.{minor} but 1.3 is required.");
                         return;
                     }
-                    //DisplayExtensionVersion = new Version(major, minor);
-
-                    XrrScreenConfiguration = XRRGetScreenInfo(X11.Display, (XDrawable)X11.DefaultRootWindow);
 
                     int screenCount = XScreenCount(X11.Display);
 
@@ -137,7 +134,11 @@ namespace OpenTK.Platform.Native.X11
                                 XDisplayHandle handle = new XDisplayHandle(output, outputInfo->crtc);
                                 handle.Name = displayName ?? name;
 
-                                _displays.Add(handle);
+                                // FIXME: More proper order of displays?
+                                if (isPrimary)
+                                    _displays.Insert(0, handle);
+                                else
+                                    _displays.Add(handle);
 
                                 XRRFreeOutputInfo(outputInfo);
                                 XRRFreeCrtcInfo(crtcInfo);
@@ -150,6 +151,7 @@ namespace OpenTK.Platform.Native.X11
                         }
                     }
                 
+                    HasRANDR = true;
                     Logger?.LogInfo("Using XRANDR for display component.");
                 }
 
@@ -157,6 +159,7 @@ namespace OpenTK.Platform.Native.X11
             }
             else 
             {
+                HasRANDR = false;
                 Logger?.LogError("Could not find XRANDR extension. The display component will not work.");
             }
         }
@@ -199,7 +202,7 @@ namespace OpenTK.Platform.Native.X11
         public void Close(DisplayHandle handle)
         {
             // We don't need to do anything here, we just verify that we got the right type of handle.
-            XDisplayHandle randr = handle.As<XDisplayHandle>(this);
+            XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
         }
 
         /// <inheritdoc />
@@ -214,8 +217,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public string GetName(DisplayHandle handle)
         {
-            XDisplayHandle randr = handle.As<XDisplayHandle>(this);
-            return randr.Name;
+            XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+            return xdisplay.Name;
         }
 
         /// <inheritdoc />
@@ -262,6 +265,8 @@ namespace OpenTK.Platform.Native.X11
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, XRootWindow(X11.Display, X11.DefaultScreen));
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
+                // FIXME: Handle screen rotation!
+
                 // FIXME: Should we use crtc size or output size?
                 width = (int)crtcInfo->width;
                 height = (int)crtcInfo->height;
@@ -274,9 +279,84 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetWorkArea(DisplayHandle handle, out Box2i area)
         {
-            // Use NET_WORKAREA and NET_DESKTOP to get the work area
-            // fall back to the crtc area if NET_WORKAREA isn't available.
-            throw new NotImplementedException();
+            XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
+            unsafe
+            {
+                // FIXME: DefaultRootWindow...?
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+
+                // FIXME: Get mode info to handle rotated displays!
+
+                // FIXME: Should we use crtc size or output size?
+                area = new Box2i(crtcInfo->x, crtcInfo->y, crtcInfo->x + (int)crtcInfo->width, crtcInfo->y + (int)crtcInfo->height);
+
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+            }
+
+            // _NET_WORKAREA tells us the area of the screen where desktops
+            // should place desktop icons.
+            // We intersect this area with the display area as a best effort
+            // to get the "usable" area of the display.
+            // - Noggin_bops 2023-08-28
+            if (X11.Atoms[KnownAtoms._NET_WORKAREA] != XAtom.None &&
+                X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP] != XAtom.None)
+            {
+                XGetWindowProperty(
+                    X11.Display, 
+                    X11.DefaultRootWindow,
+                    X11.Atoms[KnownAtoms._NET_WORKAREA],
+                    0, long.MaxValue,
+                    false,
+                    X11.Atoms![KnownAtoms.CARDINAL],
+                    out XAtom actualType,
+                    out int _,
+                    out long workAreaCount,
+                    out long _,
+                    out IntPtr workAreasPtr);
+
+                XGetWindowProperty(X11.Display, 
+                    X11.DefaultRootWindow,
+                    X11.Atoms[KnownAtoms._NET_CURRENT_DESKTOP],
+                    0, long.MaxValue,
+                    false,
+                    X11.Atoms[KnownAtoms.CARDINAL],
+                    out _,
+                    out _,
+                    out long items,
+                    out _,
+                    out IntPtr desktopPtr);
+                
+                if (items > 0)
+                unsafe 
+                {
+                    int desktop = *(int*)desktopPtr;
+
+                    if (workAreaCount >= 4 && desktop < (workAreaCount / 4))
+                    {
+                        nint* workAreas = (nint*)workAreasPtr;
+
+                        int x = (int)workAreas[desktop * 4 + 0];
+                        int y = (int)workAreas[desktop * 4 + 1];
+                        int w = (int)workAreas[desktop * 4 + 2];
+                        int h = (int)workAreas[desktop * 4 + 3];
+
+                        area = Box2i.Intersect(area, new Box2i(x, y, x + w, y + h));
+                    }
+                }
+            
+                if (workAreasPtr != IntPtr.Zero)
+                    XFree(workAreasPtr);
+
+                if (desktopPtr != IntPtr.Zero)
+                    XFree(desktopPtr);
+            }
+            else
+            {
+                Logger?.LogInfo("Could not get work area from _NET_WORKAREA. Reporting display area as work area.");
+            }
         }
 
         /// <inheritdoc />
@@ -328,6 +408,8 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
+            // FIXME: We can read something like XrmGetResource "Xft.dpi" or use X11_XGetDefault(dpy, "Xft", "dpi")
+            // But the question is how do we get the scale factor from just the DPI?
             throw new NotImplementedException();
         }
     }

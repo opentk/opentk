@@ -163,9 +163,15 @@ namespace OpenTK.Platform.Tests
                 var primary = displayComp.OpenPrimary();
                 string name = displayComp.GetName(primary);
                 displayComp.GetRefreshRate(primary, out float refreshRate);
+                displayComp.GetVirtualPosition(primary, out int x, out int y);
+                displayComp.GetResolution(primary, out int width, out int height);
+                displayComp.GetWorkArea(primary, out Box2i workArea);
 
                 Console.WriteLine($"Primary display: {name}");
                 Console.WriteLine($"Refresh rate: {refreshRate}Hz");
+                Console.WriteLine($"Position: ({x},{y})");
+                Console.WriteLine($"Resolution: {width}x{height}");
+                Console.WriteLine($"Work area: {workArea.Location} {workArea.Size}");
             }
 
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
