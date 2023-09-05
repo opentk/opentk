@@ -5,6 +5,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
+using StbImageSharp;
 using System;
 using System.Diagnostics;
 using System.Numerics;
@@ -44,6 +45,7 @@ namespace OpenTK.Backends.Tests
             new OverviewView(),
             new WindowComponentView(),
             new OpenGLComponentView(),
+            new DisplayComponentView(),
         };
 
         static void Main(string[] args)
@@ -138,6 +140,27 @@ namespace OpenTK.Backends.Tests
             WindowComp.SetClientSize(Window, 800, 600);
             WindowComp.SetMode(Window, WindowMode.Normal);
 
+            if (WindowComp.CanSetIcon)
+            {
+                IconHandle? handle;
+                if (OperatingSystem.IsWindows())
+                {
+                    // FIXME: We would ideally just pass the Icons.opentk_logo_small_ico byte[] directly into the function...
+                    handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoFile("Resources/opentk_logo_small.ico");
+                }
+                else
+                {
+                    ImageResult icon = ImageResult.FromMemory(Icons.opentk_logo_small_png, ColorComponents.RedGreenBlueAlpha);
+                    handle = IconComponent?.Create(icon.Width, icon.Height, icon.Data);
+                }
+
+                if (handle != null)
+                    WindowComp.SetIcon(Window, handle);
+
+                // FIXME: Should we destroy the icon?
+                IconComponent?.Destroy(handle);
+            }
+
             GL.Viewport(0, 0, 800, 600);
 
             WindowComp.GetClientSize(Window, out int width, out int height);
@@ -168,67 +191,74 @@ namespace OpenTK.Backends.Tests
                     break;
                 }
 
-                if (CursorComp != null && CursorComp.CanLoadSystemCursors)
-                {
-                    ImGuiConfigFlags flags = ImGui.GetIO().ConfigFlags;
-                    if ((flags & ImGuiConfigFlags.NoMouseCursorChange) == 0)
-                    {
-                        var imguiCursor = ImGui.GetMouseCursor();
-                        if (imguiCursor != prevCursor)
-                        {
-                            CursorHandle? cursor;
-                            switch (imguiCursor)
-                            {
-                                case ImGuiMouseCursor.None:
-                                    cursor = null;
-                                    break;
-                                case ImGuiMouseCursor.Arrow:
-                                    cursor = CursorComp.Create(SystemCursorType.Default);
-                                    break;
-                                case ImGuiMouseCursor.TextInput:
-                                    cursor = CursorComp.Create(SystemCursorType.TextBeam);
-                                    break;
-                                case ImGuiMouseCursor.ResizeAll:
-                                    cursor = CursorComp.Create(SystemCursorType.ArrowFourway);
-                                    break;
-                                case ImGuiMouseCursor.ResizeNS:
-                                    cursor = CursorComp.Create(SystemCursorType.ArrowNS);
-                                    break;
-                                case ImGuiMouseCursor.ResizeEW:
-                                    cursor = CursorComp.Create(SystemCursorType.ArrowEW);
-                                    break;
-                                case ImGuiMouseCursor.ResizeNESW:
-                                    cursor = CursorComp.Create(SystemCursorType.ArrowNESW);
-                                    break;
-                                case ImGuiMouseCursor.ResizeNWSE:
-                                    cursor = CursorComp.Create(SystemCursorType.ArrowNWSE);
-                                    break;
-                                case ImGuiMouseCursor.Hand:
-                                    cursor = CursorComp.Create(SystemCursorType.Hand);
-                                    break;
-                                case ImGuiMouseCursor.NotAllowed:
-                                    cursor = CursorComp.Create(SystemCursorType.Forbidden);
-                                    break;
-                                default:
-                                    cursor = null;
-                                    break;
-                            }
-                            // FIXME: We are leaking the previous cursor.
-                            WindowComp.SetCursor(Window, cursor);
-                        }
-                        prevCursor = imguiCursor;
-                    }
-                }
-
-                ImGuiController.Update(InputData, dt);
-
-                MainTabContainer.Paint();
+                Update(dt);
 
                 OpenGLComp.SetCurrentContext(OpenGLContext);
                 Render();
 
                 WindowManager.RenderChildWindows();
             }
+        }
+
+        static void Update(float dt)
+        {
+            if (CursorComp != null && CursorComp.CanLoadSystemCursors)
+            {
+                ImGuiConfigFlags flags = ImGui.GetIO().ConfigFlags;
+                if ((flags & ImGuiConfigFlags.NoMouseCursorChange) == 0)
+                {
+                    var imguiCursor = ImGui.GetMouseCursor();
+                    if (imguiCursor != prevCursor)
+                    {
+                        CursorHandle? cursor;
+                        switch (imguiCursor)
+                        {
+                            case ImGuiMouseCursor.None:
+                                cursor = null;
+                                break;
+                            case ImGuiMouseCursor.Arrow:
+                                cursor = CursorComp.Create(SystemCursorType.Default);
+                                break;
+                            case ImGuiMouseCursor.TextInput:
+                                cursor = CursorComp.Create(SystemCursorType.TextBeam);
+                                break;
+                            case ImGuiMouseCursor.ResizeAll:
+                                cursor = CursorComp.Create(SystemCursorType.ArrowFourway);
+                                break;
+                            case ImGuiMouseCursor.ResizeNS:
+                                cursor = CursorComp.Create(SystemCursorType.ArrowNS);
+                                break;
+                            case ImGuiMouseCursor.ResizeEW:
+                                cursor = CursorComp.Create(SystemCursorType.ArrowEW);
+                                break;
+                            case ImGuiMouseCursor.ResizeNESW:
+                                cursor = CursorComp.Create(SystemCursorType.ArrowNESW);
+                                break;
+                            case ImGuiMouseCursor.ResizeNWSE:
+                                cursor = CursorComp.Create(SystemCursorType.ArrowNWSE);
+                                break;
+                            case ImGuiMouseCursor.Hand:
+                                cursor = CursorComp.Create(SystemCursorType.Hand);
+                                break;
+                            case ImGuiMouseCursor.NotAllowed:
+                                cursor = CursorComp.Create(SystemCursorType.Forbidden);
+                                break;
+                            default:
+                                cursor = null;
+                                break;
+                        }
+                        // FIXME: We are leaking the previous cursor.
+                        WindowComp.SetCursor(Window, cursor);
+                    }
+                    prevCursor = imguiCursor;
+                }
+            }
+
+            ImGuiController.Update(InputData, dt);
+
+            MainTabContainer.Paint();
+
+            //ImGui.ShowDemoWindow();
         }
 
         static void Render()
@@ -340,6 +370,13 @@ namespace OpenTK.Backends.Tests
                 {
                     GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
                     ImGuiController?.WindowResized(resize.NewSize.X, resize.NewSize.Y);
+
+                    if (ImGuiController != null)
+                    {
+                        Update(0f);
+                        OpenGLComp.SetCurrentContext(OpenGLContext);
+                        Render();
+                    }
                 }
             }
         }

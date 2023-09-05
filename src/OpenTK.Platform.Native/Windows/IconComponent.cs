@@ -170,6 +170,9 @@ namespace OpenTK.Platform.Native.Windows
         /// <param name="file">The icon file to load.</param>
         public IconHandle CreateFromIcoFile(string file)
         {
+            // FIXME: Add a function for reading an ico file from resources.
+            // Using something like CreateIconFromResourceEx or similar.
+
             HIcon hicon = new HIcon();
 
             IntPtr icon = Win32.LoadImage(IntPtr.Zero, file, ImageType.Icon, 0, 0, LR.LoadFromFile | LR.DefaultSize);

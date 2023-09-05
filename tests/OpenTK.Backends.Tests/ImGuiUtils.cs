@@ -1,8 +1,10 @@
 ﻿using ImGuiNET;
+using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +12,14 @@ namespace OpenTK.Backends.Tests
 {
     internal static class ImGuiUtils
     {
+        public static ref Vector2 AsOpenTK(ref this System.Numerics.Vector2 vec) => ref Unsafe.As<System.Numerics.Vector2, Vector2>(ref vec);
+
+        public static Vector2 ToOpenTK(this System.Numerics.Vector2 vec) => Unsafe.As<System.Numerics.Vector2, Vector2>(ref vec);
+
+        public static ref System.Numerics.Vector2 AsNumerics(ref this Vector2 vec) => ref Unsafe.As<Vector2, System.Numerics.Vector2>(ref vec);
+
+        public static System.Numerics.Vector2 ToNumerics(this Vector2 vec) => Unsafe.As<Vector2, System.Numerics.Vector2>(ref vec);
+
         public static void ReadonlyCheckbox(string label, bool value)
         {
             ImGui.BeginDisabled();

@@ -474,6 +474,18 @@ namespace OpenTK.Platform.Native.Windows
             int cy,
             LR fuLoad);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HICON */ CreateIconFromResource(byte* presbits, uint dwResSize, bool fIcon, uint dwVer);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HICON */ CreateIconFromResourceEx(byte* presbits, uint dwResSize, bool fIcon, uint dwVer, int cxDesired, int cyDesired, LR Flags);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HRSRC */ FindResource(IntPtr /* HMODULE */ hModule, string lpName, string lpType);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HRSRC */ FindResource(IntPtr /* HMODULE */ hModule, string lpName, IntPtr lpType);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ SetCursor(IntPtr /*HCURSOR*/ hCursor);
 

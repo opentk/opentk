@@ -147,6 +147,15 @@ namespace OpenTK.Platform.Native.Windows
 
                     if (info == null)
                     {
+                        // FIXME: It seems DeviceString isn't great at actually getting a useful name
+                        // for the display itself. It often returns "Generic PnP Monitor".
+                        // It seems like there are some other APIs that can be used to query this information:
+                        // https://stackoverflow.com/questions/7767036/how-do-i-get-the-number-of-displays-in-windows/65013500#65013500
+                        // https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-displayconfiggetdeviceinfo
+                        // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name
+                        // Seems like we have to enumerate these too and link them to the hmonitor we are working with...?
+                        // - Noggin_bops 2023-09-05
+
                         // This display didn't exist before, which means it's now conncted.
                         info = new HMonitor()
                         {
