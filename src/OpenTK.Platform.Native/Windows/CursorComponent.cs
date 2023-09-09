@@ -268,6 +268,9 @@ namespace OpenTK.Platform.Native.Windows
             return hcursor;
         }
 
+        // FIXME: A function for loading a cursor from a exe resource
+        // FIXME: A function for loading a cursor from resource data (aka memory)
+
         /// <summary>
         /// Creates a cursor from a .cur file.
         /// </summary>
