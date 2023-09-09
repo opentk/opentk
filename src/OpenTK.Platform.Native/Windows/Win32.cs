@@ -437,6 +437,10 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern bool SwapBuffers(IntPtr hDC);
 
+        // FIXME: The heck is going on with pszIconPath?
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HICON */ ExtractAssociatedIcon(IntPtr /* HINSTANCE */ hInst, string pszIconPath, ref ushort piIcon);
+
         // FIXME: Use LoadImage instead.
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, IDC lpCursorName);
@@ -473,6 +477,9 @@ namespace OpenTK.Platform.Native.Windows
             int cx,
             int cy,
             LR fuLoad);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern int LookupIconIdFromDirectoryEx(byte* presbits, bool fIcon, int cxDesired, int cyDesired, LR Flags);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HICON */ CreateIconFromResource(byte* presbits, uint dwResSize, bool fIcon, uint dwVer);

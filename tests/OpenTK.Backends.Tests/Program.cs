@@ -145,8 +145,14 @@ namespace OpenTK.Backends.Tests
                 IconHandle? handle;
                 if (OperatingSystem.IsWindows())
                 {
-                    // FIXME: We would ideally just pass the Icons.opentk_logo_small_ico byte[] directly into the function...
+                    // Here are three ways to load .ico file on windows, in increasing complexity.
+                    // First, just load the .ico as a file.
                     handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoFile("Resources/opentk_logo_small.ico");
+                    // Second, use a resx file and load that. This will result in a ico with a single resolution instead of adaptive.
+                    handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource(Icons.opentk_logo_small_ico);
+                    // Last, create a .rc file, add an icon to that resource file, add a target to your csproj to compile the .rc file
+                    // use <Win32Resource> to include the resulting .res file in the exe.
+                    handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource("OPENTK_ICO");
                 }
                 else
                 {
@@ -155,10 +161,12 @@ namespace OpenTK.Backends.Tests
                 }
 
                 if (handle != null)
+                {
                     WindowComp.SetIcon(Window, handle);
 
-                // FIXME: Should we destroy the icon?
-                IconComponent?.Destroy(handle);
+                    // FIXME: Should we destroy the icon?
+                    IconComponent?.Destroy(handle);
+                }
             }
 
             GL.Viewport(0, 0, 800, 600);

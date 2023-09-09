@@ -5,7 +5,9 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>
+    <!-- Uncomment this if not using the .res resource file. -->
+    <!--<ApplicationIcon>Resources\opentk_logo_small.ico</ApplicationIcon>-->
+    <Win32Resource>icons.res</Win32Resource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <!-- This compiles the icons.rc file into icons.res file if we can find a rc.exe at a very specific path -->
+  <!-- We would ideally have a better way of getting access to the rc.exe path, but this will do for this demo... -->
+  <Target Name="RC file" BeforeTargets="PreBuildEvent" Condition="Exists('C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\rc.exe')">
+    <Message Importance="High" Text="Compiling resource file" />
+    <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64\rc.exe&quot; icons.rc" />
+  </Target>
 
   <ItemGroup>
     <PackageReference Include="ImGui.NET" Version="1.89.7.1" />
@@ -41,6 +50,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Resources\Wikipedia-Flags-UN-United-Nations-Flag.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="SDL2.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

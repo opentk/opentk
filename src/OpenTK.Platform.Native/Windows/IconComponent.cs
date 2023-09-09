@@ -165,8 +165,11 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <summary>
-        /// Creates an icom from a windows .ico file.
+        /// Creates an icon from a windows .ico file.
         /// </summary>
+        /// <remarks>
+        /// This icon will have a dynamic resolution.
+        /// </remarks>
         /// <param name="file">The icon file to load.</param>
         public IconHandle CreateFromIcoFile(string file)
         {
@@ -176,6 +179,71 @@ namespace OpenTK.Platform.Native.Windows
             HIcon hicon = new HIcon();
 
             IntPtr icon = Win32.LoadImage(IntPtr.Zero, file, ImageType.Icon, 0, 0, LR.LoadFromFile | LR.DefaultSize);
+            if (icon == IntPtr.Zero)
+            {
+                throw new Win32Exception();
+            }
+
+            hicon.Icon = icon;
+            hicon.Mode = HIcon.IconMode.FileIcon;
+
+            return hicon;
+        }
+
+        /// <summary>
+        /// Creates an icon from resx ico resource data.
+        /// </summary>
+        /// <remarks>
+        /// This icon will not have a dynamic resoltion. The icon will only have one resolution.
+        /// To get an icon with a dynamic resoltion, use <see cref="CreateFromIcoFile(string)"/> or <see cref="CreateFromIcoResource(string)"/>.
+        /// </remarks>
+        /// <param name="resource">The ico resource data to load.</param>
+        public unsafe IconHandle CreateFromIcoResource(byte[] resource)
+        {
+            HIcon hicon = new HIcon();
+
+            fixed (byte* ptr = resource)
+            {
+                int id = Win32.LookupIconIdFromDirectoryEx(ptr, true, 0, 0, LR.DefaultColor);
+                if (id == 0)
+                {
+                    throw new Win32Exception();
+                }
+
+                IntPtr icon = Win32.CreateIconFromResourceEx(ptr + id, (uint)(resource.Length - id), true, 0x00030000, 0, 0, LR.DefaultSize);
+
+                if (icon == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+
+                hicon.Icon = icon;
+            }
+
+            //hicon.Icon = icon;
+            hicon.Mode = HIcon.IconMode.FileIcon;
+
+            return hicon;
+        }
+
+        /// <summary>
+        /// Creates an icon from a resource name.
+        /// </summary>
+        /// <remarks>
+        /// <para>This icon will have a dynamic resolution.</para>
+        /// 
+        /// To use this function you need to create and include a resource file in your exe.
+        /// To do this, first create a .rc resource definition file and include your icon.
+        /// Then you need to compile that file into a .res file using rc.exe, the resource compiler.
+        /// Lastly you need to include that .res file in your csproj using the &lt;Win32Resource&gt; property.
+        /// FIXME: Write a guide on how to compile .rc files and include a .res file using &lt;Win32Resource&gt;.
+        /// </remarks>
+        /// <param name="resourceName">The name of the icon resource to load.</param>
+        public unsafe IconHandle CreateFromIcoResource(string resourceName)
+        {
+            HIcon hicon = new HIcon();
+
+            IntPtr icon = Win32.LoadIcon(WindowComponent.HInstance, resourceName);
             if (icon == IntPtr.Zero)
             {
                 throw new Win32Exception();

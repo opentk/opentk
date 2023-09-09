@@ -67,12 +67,31 @@ namespace OpenTK.Platform.Native.Windows
             // FIXME: Does this cause GC issues where "this" is circularly referenced?
             WindowProc = Win32WindowProc;
 
+            // FIXME: Maybe try extract the small icon too?
+            // Get the exe path and extract the icon if possible, this will be the window default icon.
+            IntPtr icon = IntPtr.Zero;
+            string? processPath = Environment.ProcessPath;
+            if (string.IsNullOrEmpty(processPath) == false)
+            {
+                ushort index = 0;
+                icon = Win32.ExtractAssociatedIcon(HInstance, processPath, ref index);
+                if (icon == IntPtr.Zero)
+                {
+                    Logger?.LogWarning($"Could not extract exe icon from '{processPath}': {new Win32Exception().Message}");
+                }
+            }
+            else
+            {
+                Logger?.LogWarning("Could not get process path, will not extract window icon.");
+            }
+
             // Here we register the window class that we will use for all created windows.
             Win32.WNDCLASSEX wndClass = Win32.WNDCLASSEX.Create();
+            wndClass.style = ClassStyles.OwnDC;
             wndClass.lpfnWndProc = WindowProc;
             wndClass.hInstance = HInstance;
+            wndClass.hIcon = icon;
             wndClass.lpszClassName = CLASS_NAME;
-            wndClass.style = ClassStyles.OwnDC;
 
             short wndClassAtom = Win32.RegisterClassEx(in wndClass);
 
