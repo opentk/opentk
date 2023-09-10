@@ -3,6 +3,7 @@ using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,6 +41,11 @@ namespace OpenTK.Backends.Tests
 
         bool hasSetCursor = false;
 
+        string cursorFilePath = Path.Combine(Environment.CurrentDirectory, "Resources");
+        CursorHandle? loadedCursor = null;
+        string cursorName = "";
+        string? loadingError = null;
+
         public override void Paint()
         {
             base.Paint();
@@ -50,8 +56,6 @@ namespace OpenTK.Backends.Tests
             ImGuiUtils.ReadonlyCheckbox("Can Inspect System Cursors", canInspectSystemCursors);
 
             ImGui.SeparatorText("System Cursors");
-
-            var cursor = ImGui.GetMouseCursor();
 
             float maxTextWidth = float.NegativeInfinity;
             foreach (string name in Enum.GetNames<SystemCursorType>())
@@ -101,7 +105,7 @@ namespace OpenTK.Backends.Tests
 
             if (canInspectSystemCursors)
             {
-                string name = null;
+                string? name = null;
                 Vector2i size = (0, 0);
                 Vector2i hotspot = (0, 0);
 
@@ -123,6 +127,63 @@ namespace OpenTK.Backends.Tests
                 ImGui.Text($"Hotspot: ({hotspot.X}, {hotspot.Y})");
             }
             
+            if (OperatingSystem.IsWindows())
+            {
+                if (ImGui.CollapsingHeader("Win32", ImGuiTreeNodeFlags.DefaultOpen))
+                {
+                    // FIXME: Add test stuff for win32 specific api.
+
+                    ImGui.InputText("Load cursor file", ref cursorFilePath, 4096);
+                    ImGui.SameLine();
+
+                    if (ImGui.Button("Load"))
+                    {
+                        if (loadedCursor != null)
+                        {
+                            Program.CursorComp!.Destroy(loadedCursor);
+                        }
+
+                        // FIXME: catch exceptions.
+                        try
+                        {
+                            loadedCursor = (Program.CursorComp as Platform.Native.Windows.CursorComponent)!.CreateFromCurFile(cursorFilePath);
+                            cursorName = Path.GetFileNameWithoutExtension(cursorFilePath);
+                            loadingError = null;
+                        }
+                        catch (FileNotFoundException e)
+                        {
+                            loadingError = e.Message;
+                        }
+                        catch (Exception e)
+                        {
+                            loadingError = e.Message;
+                        }
+                    }
+
+                    if (loadedCursor != null)
+                    {
+                        // Make button more square.
+                        ImGui.Button(cursorName);
+                        if (ImGui.IsItemHovered())
+                        {
+                            Program.WindowComp.SetCursor(Program.Window, loadedCursor);
+                            setCursor = true;
+                        }
+                    }
+                    else if (loadingError != null)
+                    {
+                        ImGui.PushStyleColor(ImGuiCol.Text, 0xFF1111FF);
+                        ImGui.Text($"Could not load cursor: {loadingError}");
+                        ImGui.PopStyleColor();
+                    }
+
+                    // FIXME: Add something to test loading from resx and .rc resources too...
+
+                    //CursorHandle cursor = (CursorComp as Platform.Native.Windows.CursorComponent)!.CreateFromCurResorce(Icons.Cute_Light_Green_Normal_Select);
+                    //CursorHandle cursor = (CursorComp as Platform.Native.Windows.CursorComponent)!.CreateFromCurResorce("light_green_cursor");
+                    //WindowComp.SetCursor(Window, cursor);
+                }
+            }
 
             // FIXME: We are resetting back to default, which might not always be the correct cursor...
             // Will ImGui set the mouse cursor change flag correctly?
@@ -130,20 +191,6 @@ namespace OpenTK.Backends.Tests
             {
                 Program.WindowComp.SetCursor(Program.Window, SystemCursors[SystemCursorType.Default]);
             }
-
-            if (OperatingSystem.IsWindows())
-            {
-                if (ImGui.CollapsingHeader("Win32"))
-                {
-                    // FIXME: Add test stuff for win32 specific api.
-
-                    //CursorHandle cursor = (CursorComp as Platform.Native.Windows.CursorComponent)!.CreateFromCurResorce(Icons.Cute_Light_Green_Normal_Select);
-                    //CursorHandle cursor = (CursorComp as Platform.Native.Windows.CursorComponent)!.CreateFromCurFile("Resources/Blue-cursor.cur");
-                    //CursorHandle cursor = (CursorComp as Platform.Native.Windows.CursorComponent)!.CreateFromCurResorce("light_green_cursor");
-                    //WindowComp.SetCursor(Window, cursor);
-                }
-            }
-
             hasSetCursor = setCursor;
         }
     }
