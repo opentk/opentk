@@ -3,6 +3,7 @@ using OpenTK.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -209,6 +210,8 @@ namespace OpenTK.Platform.Native.Windows
                 {
                     throw new Win32Exception();
                 }
+
+                //Debug.Assert((((IntPtr)(ptr + id)) % IntPtr.Size) == 0);
 
                 IntPtr icon = Win32.CreateIconFromResourceEx(ptr + id, (uint)(resource.Length - id), true, 0x00030000, 0, 0, LR.DefaultSize);
 

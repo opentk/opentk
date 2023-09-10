@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static OpenTK.Platform.Native.Windows.Win32;
 
 namespace OpenTK.Platform.Native.Windows
 {
@@ -268,8 +269,7 @@ namespace OpenTK.Platform.Native.Windows
             return hcursor;
         }
 
-        // FIXME: A function for loading a cursor from a exe resource
-        // FIXME: A function for loading a cursor from resource data (aka memory)
+        // FIXME: Document if you can get the size and hotspot of these cursors?
 
         /// <summary>
         /// Creates a cursor from a .cur file.
@@ -297,6 +297,116 @@ namespace OpenTK.Platform.Native.Windows
                     throw new Win32Exception(error);
                 }
             }
+
+            hcursor.Cursor = cursor;
+            hcursor.Mode = HCursor.CursorMode.FileIcon;
+
+            return hcursor;
+        }
+
+        private struct ICONDIR
+        {
+            public ushort idReserved;   // Reserved (must be 0)
+            public ushort idType;       // Resource Type (1 for icons)
+            public ushort idCount;      // How many images?
+        }
+
+        private struct CURSORDIRENTRY
+        {
+            public byte bWidth;          // Width, in pixels, of the image
+            public byte bHeight;         // Height, in pixels, of the image
+            public byte bColorCount;     // Number of colors in image (0 if >=8bpp)
+            public byte bReserved;       // Reserved ( must be 0)
+            public ushort wHotSpotX;         // Color Planes
+            public ushort wHotSpotY;       // Bits per pixel
+            public uint dwBytesInRes;    // How many bytes in this resource?
+            public uint dwImageOffset;   // Where in the file is this image?
+        }
+
+        /// <remarks>
+        /// Currently this function does not work with .ani files.
+        /// </remarks>
+        public unsafe CursorHandle CreateFromCurResorce(byte[] resource)
+        {
+            HCursor hcursor = new HCursor();
+
+            fixed (byte* ptr = resource)
+            {
+                int offset = Win32.LookupIconIdFromDirectoryEx(ptr, false, 0, 0, LR.DefaultColor | LR.DefaultSize);
+                if (offset == 0)
+                {
+                    throw new Win32Exception();
+                }
+
+                // The .cur file format is unfortunately not compatible with the cursor resource format.
+                // The difference is that the file format stores the hotspot in the DIRENTRY while
+                // the resource format prepends the hotspot before the BITMAPINFOHEADER.
+                // Because of this we need to first find the DIRENTRY that LookupIconIdFromDirectoryEx selected
+                // Then we need to extract the hotspot and resource byte count so that we can then
+                // allocate an aligned buffer (does it need to be aligned?) where we can first put in
+                // the hotspot followed by the complete resource data.
+                // I don't like this solution, but it's the best one I can figure out.
+                // - Noggin_bops 2023-09-10
+
+                ICONDIR* dir = (ICONDIR*)(ptr);
+                int count = dir->idCount;
+
+                uint bytes = 0;
+                ushort hotspotx = 0, hotspoty = 0;
+                CURSORDIRENTRY* image = (CURSORDIRENTRY*)(ptr + sizeof(ICONDIR));
+                for (int i = 0; i < count; i++)
+                {
+                    CURSORDIRENTRY* cursorEntry = &image[i];
+
+                    if (offset == cursorEntry->dwImageOffset)
+                    {
+                        hotspotx = cursorEntry->wHotSpotX;
+                        hotspoty = cursorEntry->wHotSpotY;
+                        bytes = cursorEntry->dwBytesInRes;
+                    }
+                }
+
+                byte* data = (byte*)NativeMemory.AlignedAlloc(bytes + 4, (nuint)IntPtr.Size);
+
+                // Set the hotspot.
+                *(ushort*)(data + 0) = hotspotx;
+                *(ushort*)(data + 2) = hotspoty;
+
+                NativeMemory.Copy(ptr + offset, data + 4, bytes);
+
+                IntPtr cursor = Win32.CreateIconFromResourceEx(data, bytes + 4, false, 0x00030000, 0, 0, LR.DefaultColor | LR.DefaultSize);
+
+                NativeMemory.Free(data);
+
+                if (cursor == IntPtr.Zero)
+                {
+                    throw new Win32Exception();
+                }
+
+                hcursor.Cursor = cursor;
+            }
+
+            hcursor.Mode = HCursor.CursorMode.FileIcon;
+
+            return hcursor;
+        }
+
+        /// <summary>
+        /// Creates a cursor from a resource name.
+        /// </summary>
+        /// <remarks>
+        /// To use this function you need to create and include a resource file in your exe.
+        /// To do this, first create a .rc resource definition file and include your icon.
+        /// Then you need to compile that file into a .res file using rc.exe, the resource compiler.
+        /// Lastly you need to include that .res file in your csproj using the &lt;Win32Resource&gt; property.
+        /// FIXME: Write a guide on how to compile .rc files and include a .res file using &lt;Win32Resource&gt;.
+        /// </remarks>
+        /// <param name="resourceName">The name of the icon resource to load.</param>
+        public unsafe CursorHandle CreateFromCurResorce(string resourceName)
+        {
+            HCursor hcursor = new HCursor();
+
+            IntPtr cursor = Win32.LoadCursor(WindowComponent.HInstance, resourceName);
 
             hcursor.Cursor = cursor;
             hcursor.Mode = HCursor.CursorMode.FileIcon;
@@ -415,6 +525,7 @@ namespace OpenTK.Platform.Native.Windows
         /// <param name="image">Buffer to copy cursor image into.</param>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
         // FIXME: Document the format of the return image!
+        // Maybe we don't care about this function? - Noggin_Bops 2023-09-10
         public unsafe void GetImage(CursorHandle handle, Span<byte> image)
         {
             HCursor hcursor = handle.As<HCursor>(this);

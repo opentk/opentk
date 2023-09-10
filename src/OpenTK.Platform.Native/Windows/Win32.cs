@@ -443,6 +443,9 @@ namespace OpenTK.Platform.Native.Windows
 
         // FIXME: Use LoadImage instead.
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, string lpCursorName);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, IDC lpCursorName);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]

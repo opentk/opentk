@@ -23,6 +23,9 @@ namespace OpenTK.Core.Platform
         /// <seealso cref="GetHotspot(CursorHandle, out int, out int)"/>
         bool CanInspectSystemCursors { get; }
 
+        // FIXME: Do we need to destroy system cursors?
+        // FIXME: Do two system cursors have reference equality?
+
         /// <summary>
         /// Create a standard system cursor.
         /// </summary>

@@ -118,6 +118,18 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Blue_cursor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Blue-cursor.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Circle_normal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Circle normal.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Custom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Custom.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Cute_Light_Green_Normal_Select" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Cute Light Green Normal Select.cur;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="opentk_logo_small_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\opentk_logo_small.ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

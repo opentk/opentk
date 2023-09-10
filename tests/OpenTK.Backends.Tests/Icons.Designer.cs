@@ -63,6 +63,46 @@ namespace OpenTK.Backends.Tests {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Blue_cursor {
+            get {
+                object obj = ResourceManager.GetObject("Blue_cursor", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Circle_normal {
+            get {
+                object obj = ResourceManager.GetObject("Circle_normal", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Custom {
+            get {
+                object obj = ResourceManager.GetObject("Custom", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Cute_Light_Green_Normal_Select {
+            get {
+                object obj = ResourceManager.GetObject("Cute_Light_Green_Normal_Select", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] opentk_logo_small_ico {
             get {
                 object obj = ResourceManager.GetObject("opentk_logo_small_ico", resourceCulture);

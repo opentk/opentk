@@ -46,6 +46,7 @@ namespace OpenTK.Backends.Tests
             new WindowComponentView(),
             new OpenGLComponentView(),
             new DisplayComponentView(),
+            new CursorComponentView(),
         };
 
         static void Main(string[] args)
@@ -256,6 +257,7 @@ namespace OpenTK.Backends.Tests
                                 break;
                         }
                         // FIXME: We are leaking the previous cursor.
+                        // Or should the window contain it's own copy?
                         WindowComp.SetCursor(Window, cursor);
                     }
                     prevCursor = imguiCursor;

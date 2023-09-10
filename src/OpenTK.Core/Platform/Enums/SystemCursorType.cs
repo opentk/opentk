@@ -1,5 +1,8 @@
 ﻿namespace OpenTK.Core.Platform
 {
+    // FIXME: Better documentation string.
+    // FIXME: Maybe start the enum values at 0?
+
     /// <summary>
     /// Enumeration of system cursor types based on the Win32 mouse cursor set.
     /// </summary>
