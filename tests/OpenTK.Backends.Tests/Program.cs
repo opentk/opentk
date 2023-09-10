@@ -47,6 +47,7 @@ namespace OpenTK.Backends.Tests
             new OpenGLComponentView(),
             new DisplayComponentView(),
             new CursorComponentView(),
+            new IconComponentView(),
         };
 
         static void Main(string[] args)

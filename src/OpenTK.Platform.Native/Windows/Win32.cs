@@ -466,7 +466,7 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadImage(
             IntPtr /*HINSTANCE*/ hInstance,
-            OIC name,
+            IDI name,
             ImageType type,
             int cx,
             int cy,

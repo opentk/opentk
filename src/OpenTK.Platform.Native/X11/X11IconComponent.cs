@@ -34,7 +34,7 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
-        public bool CanLoadSystemIcon => false;
+        public bool CanLoadSystemIcons => false;
 
         public IconHandle Create(SystemIconType systemIcon)
         {

@@ -307,7 +307,7 @@ namespace OpenTK.Core.Platform
         bool ICursorComponent.CanInspectSystemCursors => _cursorComponent!.CanInspectSystemCursors;
 
         /// <inheritdoc/>
-        bool IIconComponent.CanLoadSystemIcon => _iconComponent!.CanLoadSystemIcon;
+        bool IIconComponent.CanLoadSystemIcons => _iconComponent!.CanLoadSystemIcons;
 
         /// <inheritdoc/>
         bool IWindowComponent.CanSetIcon => _windowComponent!.CanSetIcon;

@@ -130,9 +130,6 @@ namespace OpenTK.Platform.Native.X11
             return xcursor;
         }
 
-        // FIXME: Save size and hotspot for image cursors so we can return them later.
-        // FIXME: Separate system and image cursors.
-
         /// <inheritdoc />
         public unsafe CursorHandle Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {

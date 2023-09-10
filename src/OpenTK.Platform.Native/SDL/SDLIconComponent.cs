@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public bool CanLoadSystemIcon => false;
+        public bool CanLoadSystemIcons => false;
 
         /// <inheritdoc/>
         public IconHandle Create(SystemIconType systemIcon)

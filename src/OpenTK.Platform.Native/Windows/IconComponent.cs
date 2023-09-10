@@ -32,52 +32,43 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool CanLoadSystemIcon => true;
+        public bool CanLoadSystemIcons => true;
 
         /// <inheritdoc/>
         public IconHandle Create(SystemIconType systemIcon)
         {
             HIcon hicon = new HIcon();
 
-            OIC oic = default;
+            IDI idi = default;
             switch (systemIcon)
             {
                 case SystemIconType.Default:
-                    oic = OIC.WinLogo;
-                    break;
-                case SystemIconType.Asterisk:
-                    // FIXME
-                    oic = OIC.Information;
+                    idi = IDI.Application;
                     break;
                 case SystemIconType.Error:
-                    oic = OIC.Error;
-                    break;
-                case SystemIconType.Exclamation:
-                    oic = OIC.Bang;
-                    break;
-                case SystemIconType.Hand:
-                    oic = OIC.Hand;
+                    idi = IDI.Error;
                     break;
                 case SystemIconType.Information:
-                    oic = OIC.Information;
+                    idi = IDI.Information;
                     break;
                 case SystemIconType.Question:
-                    oic = OIC.Ques;
+                    idi = IDI.Question;
                     break;
                 case SystemIconType.Shield:
-                    oic = OIC.Shield;
+                    idi = IDI.Shield;
                     break;
                 case SystemIconType.Warning:
-                    oic = OIC.Warning;
+                    idi = IDI.Warning;
                     break;
                 case SystemIconType.OperatingSystem:
-                    oic = OIC.WinLogo;
+                    // FIXME: This doesn't result in a windows logo...
+                    idi = IDI.WinLogo;
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(systemIcon), (int)systemIcon, typeof(SystemIconType));
             }
 
-            hicon.Icon = Win32.LoadImage(IntPtr.Zero, oic, ImageType.Icon, 0, 0, LR.Shared | LR.DefaultSize);
+            hicon.Icon = Win32.LoadImage(IntPtr.Zero, idi, ImageType.Icon, 0, 0, LR.Shared | LR.DefaultSize);
             hicon.Mode = HIcon.IconMode.SystemIcon;
 
             return hicon;

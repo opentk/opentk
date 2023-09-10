@@ -30,7 +30,6 @@ namespace OpenTK.Backends.Tests
 
             if (canLoadSystemCursors)
             {
-                int i = 0;
                 foreach (SystemCursorType cursorType in Enum.GetValues<SystemCursorType>())
                 {
                     CursorHandle handle = Program.CursorComp!.Create(cursorType);
@@ -50,6 +49,8 @@ namespace OpenTK.Backends.Tests
         {
             base.Paint();
 
+            bool setCursor = false;
+
             ImGui.SeparatorText("Component Properties");
             // FIXME: Separate display if the property threw an exception?
             ImGuiUtils.ReadonlyCheckbox("Can Load System Cursors", canLoadSystemCursors);
@@ -57,76 +58,89 @@ namespace OpenTK.Backends.Tests
 
             ImGui.SeparatorText("System Cursors");
 
-            float maxTextWidth = float.NegativeInfinity;
-            foreach (string name in Enum.GetNames<SystemCursorType>())
+            if (canLoadSystemCursors == false)
             {
-                float textWidth = ImGui.CalcTextSize(name).X;
-                if (textWidth > maxTextWidth)
-                {
-                    maxTextWidth = textWidth;
-                }
+                ImGui.BeginDisabled();
             }
 
-            float columnWidth = ImGui.GetColumnWidth();
-            // The max text width + some padding.
-            float targetSize = maxTextWidth + 10;
-            int buttonsPerLine = (int)(columnWidth / targetSize);
-            if (buttonsPerLine == 0) buttonsPerLine = 1;
-            targetSize = columnWidth / buttonsPerLine;
-
-            // Remove a little size to account for padding
-            // FIXME: Get the actual size we need to remove
-            targetSize -= 8;
-
-            ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 5);
-            bool setCursor = false;
-            int i = 0;
-            int hoveredIndex = -1;
-            foreach (var (cursorType, handle) in SystemCursors)
             {
-                if (i++ % buttonsPerLine != 0) ImGui.SameLine();
-
-                ImGui.Button(cursorType.ToString(), new System.Numerics.Vector2(targetSize, targetSize));
-
-                if (ImGui.IsItemHovered())
+                float maxTextWidth = float.NegativeInfinity;
+                foreach (string name in Enum.GetNames<SystemCursorType>())
                 {
-                    // FIXME: Should we even show the cursors if they can't be set?
-                    if (Program.WindowComp.CanSetIcon)
+                    float textWidth = ImGui.CalcTextSize(name).X;
+                    if (textWidth > maxTextWidth)
                     {
-                        // FIXME: We are potentially leaking a cursor? or does the window hold it's own copy?
-                        Program.WindowComp.SetCursor(Program.Window, handle);
-                        setCursor = true;
-
-                        hoveredIndex = i - 1;
+                        maxTextWidth = textWidth;
                     }
                 }
-            }
-            ImGui.PopStyleVar();
 
-            if (canInspectSystemCursors)
-            {
-                string? name = null;
-                Vector2i size = (0, 0);
-                Vector2i hotspot = (0, 0);
+                float columnWidth = ImGui.GetColumnWidth();
+                // The max text width + some padding.
+                float targetSize = maxTextWidth + 10;
+                int buttonsPerLine = (int)(columnWidth / targetSize);
+                if (buttonsPerLine == 0) buttonsPerLine = 1;
+                targetSize = columnWidth / buttonsPerLine;
 
-                if (hoveredIndex != -1)
+                // Remove a little size to account for padding
+                // FIXME: Get the actual size we need to remove
+                targetSize -= 8;
+
+                ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 5);
+                int i = 0;
+                int hoveredIndex = -1;
+                foreach (var (cursorType, handle) in SystemCursors)
                 {
-                    // FIXME: linq
-                    var (type, handle) = SystemCursors.ElementAt(hoveredIndex);
-                    name = type.ToString();
+                    if (i++ % buttonsPerLine != 0) ImGui.SameLine();
 
-                    Program.CursorComp!.GetSize(handle, out int width, out int height);
-                    size = (width, height);
+                    ImGui.Button(cursorType.ToString(), new System.Numerics.Vector2(targetSize, targetSize));
 
-                    Program.CursorComp!.GetHotspot(handle, out int hx, out int hy);
-                    hotspot = (hx, hy);
+                    if (ImGui.IsItemHovered())
+                    {
+                        // FIXME: Should we even show the cursors if they can't be set?
+                        if (Program.WindowComp.CanSetIcon)
+                        {
+                            // FIXME: We are potentially leaking a cursor? or does the window hold it's own copy?
+                            Program.WindowComp.SetCursor(Program.Window, handle);
+                            setCursor = true;
+
+                            hoveredIndex = i - 1;
+                        }
+                    }
                 }
+                ImGui.PopStyleVar();
 
-                ImGui.Text($"Name: {name}");
-                ImGui.Text($"Width: {size.X}px, Height: {size.Y}px");
-                ImGui.Text($"Hotspot: ({hotspot.X}, {hotspot.Y})");
+                if (canInspectSystemCursors)
+                {
+                    string? name = null;
+                    Vector2i size = (0, 0);
+                    Vector2i hotspot = (0, 0);
+
+                    if (hoveredIndex != -1)
+                    {
+                        // FIXME: linq
+                        var (type, handle) = SystemCursors.ElementAt(hoveredIndex);
+                        name = type.ToString();
+
+                        Program.CursorComp!.GetSize(handle, out int width, out int height);
+                        size = (width, height);
+
+                        Program.CursorComp!.GetHotspot(handle, out int hx, out int hy);
+                        hotspot = (hx, hy);
+                    }
+
+                    ImGui.Text($"Name: {name}");
+                    ImGui.Text($"Width: {size.X}px, Height: {size.Y}px");
+                    ImGui.Text($"Hotspot: ({hotspot.X}, {hotspot.Y})");
+                }
             }
-            
+
+            if (canLoadSystemCursors == false)
+            {
+                ImGui.EndDisabled();
+            }
+
+            // FIXME: Add UI for either drawing an image or loading an image to make a cursor.
+
             if (OperatingSystem.IsWindows())
             {
                 if (ImGui.CollapsingHeader("Win32", ImGuiTreeNodeFlags.DefaultOpen))
