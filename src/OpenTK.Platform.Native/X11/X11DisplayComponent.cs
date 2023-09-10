@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Platform.Native.X11.XRandR;
 using System.Security.Authentication;
+using System.Reflection;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -27,7 +28,7 @@ namespace OpenTK.Platform.Native.X11
         // TODO: Write Xinerama fallback.
 
         /// <inheritdoc />
-        public bool CanGetVirtualPosition { get; } = HasRANDR == true;
+        public bool CanGetVirtualPosition => HasRANDR == true;
 
         private static bool HasRANDR = false;
 
@@ -295,9 +296,9 @@ namespace OpenTK.Platform.Native.X11
                 {
                     // FIXME: glfw removes RR_Interlaced modes. Why?
                     XRRModeInfo* info = GetModeInfo(resources, outputInfo->modes[i]);
-                    
-                    modes[i].Width = (int)crtcInfo->width;
-                    modes[i].Height = (int)crtcInfo->height;
+
+                    modes[i].Width = (int)info->Width;
+                    modes[i].Height = (int)info->Height;
                     modes[i].RefreshRate = CalculateRefreshRate(info);
                     modes[i].BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
                 }
