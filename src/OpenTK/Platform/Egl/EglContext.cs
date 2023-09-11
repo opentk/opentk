@@ -83,16 +83,7 @@ namespace OpenTK.Platform.Egl
                 Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
             }
 
-            bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
-
-            SurfaceType surfaceType = offscreen
-                ? SurfaceType.PBUFFER_BIT
-                : SurfaceType.WINDOW_BIT;
-
-            Mode = new EglGraphicsMode().SelectGraphicsMode(surfaceType,
-                    window.Display, mode.ColorFormat, mode.Depth, mode.Stencil,
-                    mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
-                    Renderable);
+            Mode = SelectGraphicsMode(window, mode, flags, Renderable);
 
             if (!Mode.Index.HasValue)
             {
@@ -100,17 +91,7 @@ namespace OpenTK.Platform.Egl
             }
             IntPtr config = Mode.Index.Value;
 
-            if (window.Surface == IntPtr.Zero)
-            {
-                if (!offscreen)
-                {
-                    window.CreateWindowSurface(config);
-                }
-                else
-                {
-                    window.CreatePbufferSurface(config);
-                }
-            }
+            EnsureSurface(Mode);
 
             int[] attribList = { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
             var shareContext = shared?.HandleAsEGLContext ?? IntPtr.Zero;
@@ -160,7 +141,7 @@ namespace OpenTK.Platform.Egl
                     WindowInfo = ((IAngleWindowInfoInternal)window).EglWindowInfo;
                 }
 #endif
-
+                EnsureSurface(Mode);
                 if (!Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext))
                 {
                     throw new GraphicsContextException(string.Format("Failed to make context {0} current. Error: {1}", Handle, Egl.GetError()));
@@ -266,6 +247,51 @@ namespace OpenTK.Platform.Egl
                 return (EglContext)internalContext.Implementation;
             }
             return (EglContext)sharedContext;
+        }
+
+        private static GraphicsMode SelectGraphicsMode(
+            EglWindowInfo window,
+            GraphicsMode mode,
+            GraphicsContextFlags contextFlags,
+            RenderableFlags renderableFlags
+        )
+        {
+            bool offscreen = (contextFlags & GraphicsContextFlags.Offscreen) != 0;
+            SurfaceType surfaceType = offscreen
+                ? SurfaceType.PBUFFER_BIT
+                : SurfaceType.WINDOW_BIT;
+            return new EglGraphicsMode().SelectGraphicsMode(
+                surfaceType,
+                window.Display,
+                mode.ColorFormat,
+                mode.Depth,
+                mode.Stencil,
+                mode.Samples,
+                mode.AccumulatorFormat,
+                mode.Buffers,
+                mode.Stereo,
+                renderableFlags
+            );
+        }
+
+        private void EnsureSurface(GraphicsMode mode)
+        {
+            if (WindowInfo.Surface == IntPtr.Zero)
+            {
+                if (!mode.Index.HasValue)
+                {
+                    throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+                }
+                IntPtr config = mode.Index.Value;
+                if ((GraphicsContextFlags & GraphicsContextFlags.Offscreen) == GraphicsContextFlags.Offscreen)
+                {
+                    WindowInfo.CreatePbufferSurface(config);
+                }
+                else
+                {
+                    WindowInfo.CreateWindowSurface(config);
+                }
+            }
         }
     }
 }

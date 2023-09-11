@@ -236,10 +236,22 @@ namespace OpenTK.Platform
         /// </summary>
         /// <param name="windowHandle">The handle of the window.</param>
         /// <returns>A new IWindowInfo instance.</returns>
-        public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle)
+        public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle, bool isEmbedded = false)
         {
             #if WIN32
-            return new OpenTK.Platform.Windows.WinWindowInfo(windowHandle, null);
+            var windowInfo = new Windows.WinWindowInfo(windowHandle, null);
+            if (isEmbedded)
+            {
+                // It's preferable to obtain EglDisplay from null pointer (EGL_DEFAULT_DISPLAY)
+                // on Windows because it allows you to use multiple window infos with a single context.
+                IntPtr eglDisplay = Egl.Egl.GetDisplay(IntPtr.Zero);
+                if (eglDisplay == IntPtr.Zero)
+                {
+                    eglDisplay = Egl.Egl.GetDisplay(windowInfo.DeviceContext);
+                }
+                return new Egl.EglWindowInfo(windowInfo.Handle, eglDisplay);
+            }
+            return windowInfo;
             #else
             return new Dummy.DummyWindowInfo();
             #endif
