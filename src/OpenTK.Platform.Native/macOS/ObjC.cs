@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
@@ -17,6 +18,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static readonly SEL Init = sel_registerName("init"u8);
         internal static readonly SEL Alloc = sel_registerName("alloc"u8);
         internal static readonly SEL Retain = sel_registerName("retain"u8);
+        internal static readonly SEL Release = sel_registerName("release"u8);
+
+        internal static readonly SEL selcStringUsingEncoding = sel_registerName("cStringUsingEncoding:"u8);
 
         internal static SEL sel_registerName(ReadOnlySpan<byte> str)
         {
@@ -50,6 +54,7 @@ namespace OpenTK.Platform.Native.macOS
             static extern IntPtr dlopen(byte* path, int mode);
         }
 
+        // FIXME: Maybe rename this to GetSymbol?
         internal static IntPtr GetStringConstant(IntPtr handle, ReadOnlySpan<byte> symbol)
         {
             fixed(byte* ptr = symbol)
@@ -60,6 +65,29 @@ namespace OpenTK.Platform.Native.macOS
 
             [DllImport(libdl)]
             static extern IntPtr dlsym(IntPtr handle, byte* symbol);
+        }
+
+        internal static IntPtr GetSymbol(IntPtr handle, ReadOnlySpan<byte> symbol)
+        {
+            fixed (byte* ptr = symbol)
+            {
+                // Load the pointer to the constant, then dereference it.
+                return *(IntPtr*)dlsym(handle, ptr);
+            }
+
+            [DllImport(libdl)]
+            static extern IntPtr dlsym(IntPtr handle, byte* symbol);
+        }
+
+        internal static IntPtr GetSymbol(IntPtr handle, string symbol)
+        {
+            IntPtr strPtr = Marshal.StringToCoTaskMemUTF8(symbol);
+            IntPtr value = dlsym(handle, strPtr);
+            Marshal.FreeCoTaskMem(strPtr);
+            return value;
+
+            [DllImport(libdl)]
+            static extern IntPtr dlsym(IntPtr handle, IntPtr symbol);
         }
 
         [DllImport(AppKitFramework, CharSet = CharSet.Ansi)]
@@ -83,10 +111,19 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGPoint point);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, ulong value);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, CGRect rect);
@@ -96,6 +133,9 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, IntPtr value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, ulong value);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, ulong value1, IntPtr value2);
@@ -155,10 +195,33 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(FoundationFramework)]
         internal static extern void objc_registerClassPair(ObjCClass cls);
-        
+
+        internal static string FromNSString(IntPtr nsString)
+        {
+            char* strPtr = (char*)objc_msgSend_IntPtr(nsString, selcStringUsingEncoding, (ulong)NSStringEncoding.UTF16);
+            string str = new string(strPtr);
+            return str;
+        }
+
+        internal static IntPtr ToNSString(string str)
+        {
+            return CFStringCreateWithBytes(IntPtr.Zero, str.AsSpan(), CFStringEncoding.UTF16, false);
+        }
+
         internal static IntPtr ToNSString(ReadOnlySpan<byte> str)
         {
             return CFStringCreateWithBytes(IntPtr.Zero, str, CFStringEncoding.UTF8, false);
+        }
+
+        internal static IntPtr /* CFStringRef */ CFStringCreateWithBytes(IntPtr allocator, ReadOnlySpan<char> buffer, CFStringEncoding encoding, bool isExternalRepresentation)
+        {
+            fixed (char* ptr = buffer)
+            {
+                return CFStringCreateWithBytes(allocator, ptr, buffer.Length * 2, encoding, isExternalRepresentation ? (byte)1 : (byte)0);
+            }
+
+            [DllImport(FoundationFramework)]
+            static extern IntPtr /* CFStringRef */ CFStringCreateWithBytes(IntPtr allocator, char* buffer, long numBytes, CFStringEncoding encoding, byte /* Boolean */ isExternalRepresentation);
         }
 
         internal static IntPtr /* CFStringRef */ CFStringCreateWithBytes(IntPtr allocator, ReadOnlySpan<byte> buffer, CFStringEncoding encoding, bool isExternalRepresentation)

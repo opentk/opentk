@@ -3,11 +3,22 @@ namespace OpenTK.Platform.Native.macOS
 {
     public enum CFStringEncoding : uint
     {
+        // Incomplete enum...
         UTF8 = 0x0800_0100,
         UTF16 = 0x0000_0100,
         UTF16BE = 0x1000_0100,
         UTF16LE = 0x1400_0100,
         ASCII = 0x0000_0600,
+    }
+    
+    public enum NSStringEncoding : ulong
+    {
+        // Incomplete enum...
+        ASCII = 1,
+        UTF8 = 4,
+        UTF16 = 10,
+        UTF16BE = 0x90000100,
+        UTF16LE = 0x94000100,
     }
 
     // On watchOS this is a uint...
