@@ -115,7 +115,7 @@ namespace OpenTK.Windowing.Desktop
         ///  </para>
         ///  <para>Values lower than 1.0Hz are clamped to 0.0. Values higher than 500.0Hz are clamped to 500.0Hz.</para>
         /// </remarks>
-        [Obsolete("Use UpdateFrame instead. We no longer separate UpdateFrame and RenderFrame.", true)]
+        [Obsolete("Use UpdateTime instead. We no longer separate UpdateFrame and RenderFrame.", true)]
         public double RenderFrequency
         {
             get => throw new Exception($"This property is obsolete. Use UpdateFrame instead.");
