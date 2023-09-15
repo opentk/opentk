@@ -42,7 +42,9 @@ namespace OpenTK.Backends.Tests
         {
             foreach (View view in _views)
             {
-                view.Initialize();
+                // FIXME: Some other property to tell us that the view shouldn't/can't be initialized
+                if (view.IsVisible)
+                    view.Initialize();
             }
         }
 

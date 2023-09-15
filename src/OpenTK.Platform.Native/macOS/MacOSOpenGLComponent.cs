@@ -18,11 +18,15 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selSetView = sel_registerName("setView:"u8);
         internal static SEL selSetWantsBestResolutionOpenGLSurface = sel_registerName("setWantsBestResolutionOpenGLSurface:"u8);
         internal static SEL selUpdate = sel_registerName("update"u8);
-        internal static SEL selMakeCurrentContext = sel_registerName("makeCurrentContext"u8);
         internal static SEL selClearCurrentContext = sel_registerName("clearCurrentContext"u8);
+        internal static SEL selCurrentContext = sel_registerName("currentContext"u8);
+        internal static SEL selMakeCurrentContext = sel_registerName("makeCurrentContext"u8);
+        internal static SEL selClearDrawable = sel_registerName("clearDrawable"u8);
         internal static SEL selFlushBuffer = sel_registerName("flushBuffer"u8);
 
         internal static IntPtr opengl = LoadLibrary("/System/Library/Frameworks/OpenGl.framework/OpenGL"u8, true);
+
+        internal static Dictionary<IntPtr, NSOpenGLContext> NSOpenGLContextDict = new Dictionary<nint, NSOpenGLContext>();
 
         public string Name => nameof(MacOSOpenGLComponent);
 
@@ -32,12 +36,12 @@ namespace OpenTK.Platform.Native.macOS
 
         public void Initialize(PalComponents which)
         {
-            // FIXME:
+            // FIXME: Do something?
         }
 
         public bool CanShareContexts => throw new NotImplementedException();
 
-        public bool CanCreateFromWindow => throw new NotImplementedException();
+        public bool CanCreateFromWindow => true;
 
         public bool CanCreateFromSurface => throw new NotImplementedException();
 
@@ -53,6 +57,20 @@ namespace OpenTK.Platform.Native.macOS
             if (nswindow.GraphicsApiHints is not OpenGLGraphicsApiHints settings)
             {
                 throw new PalException(this, $"Can't create an OpenGL context from a window that was not created with {nameof(OpenGLGraphicsApiHints)}");
+            }
+
+            // FIXME: Make this a parameter to this function instead?
+            NSOpenGLContext? nsShareContext = null;
+            if (settings.SharedContext != null)
+            {
+                if (settings.SharedContext is NSOpenGLContext nsShare)
+                {
+                    nsShareContext = nsShare;
+                }
+                else
+                {
+                    throw new PalException(this, $"Can't create a shared context with a non-macOS OpenGL context. {settings.SharedContext}");
+                }
             }
 
             List<NSOpenGLPixelFormatAttribute> attributes = new List<NSOpenGLPixelFormatAttribute>();
@@ -136,16 +154,19 @@ namespace OpenTK.Platform.Native.macOS
                 throw new PalException(this, $"Failed to create pixel format matching settings.");
             }
 
-            // FIXME: context sharing!
+            IntPtr share = nsShareContext?.Context ?? IntPtr.Zero;
+
             IntPtr context = objc_msgSend_IntPtr(
                 objc_msgSend_IntPtr((IntPtr)NSOpenGLContextClass, Alloc),
                 selInitWithFormatShareContext,
-                pixelFormat, IntPtr.Zero);
+                pixelFormat, share);
 
-            NSOpenGLContext nscontext = new NSOpenGLContext(context);
+            NSOpenGLContext nscontext = new NSOpenGLContext(context, nsShareContext);
 
             // We do this so the window component can implement SwapBuffers.
             nswindow.Context = nscontext;
+
+            NSOpenGLContextDict.Add(nscontext.Context, nscontext);
 
             // Release the pixelFormat
             objc_msgSend(pixelFormat, Release);
@@ -161,7 +182,14 @@ namespace OpenTK.Platform.Native.macOS
 
         public void DestroyContext(OpenGLContextHandle handle)
         {
-            throw new NotImplementedException();
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+
+            NSOpenGLContextDict.Remove(nscontext.Context);
+
+            objc_msgSend(nscontext.Context, selClearDrawable);
+            objc_msgSend(nscontext.Context, Release);
+
+            nscontext.Context = IntPtr.Zero;
         }
 
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
@@ -177,7 +205,16 @@ namespace OpenTK.Platform.Native.macOS
 
         public OpenGLContextHandle? GetCurrentContext()
         {
-            throw new NotImplementedException();
+            IntPtr contextPtr = objc_msgSend_IntPtr((IntPtr)NSOpenGLContextClass, selCurrentContext);
+
+            if (contextPtr == IntPtr.Zero)
+            {
+                return null;
+            }
+            else
+            {
+                return NSOpenGLContextDict[contextPtr];
+            }
         }
 
         public bool SetCurrentContext(OpenGLContextHandle? handle)
@@ -198,17 +235,31 @@ namespace OpenTK.Platform.Native.macOS
 
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
-            throw new NotImplementedException();
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+            return nscontext.SharedContext;
         }
 
-        public void SetSwapInterval(int interval)
+        public unsafe void SetSwapInterval(int interval)
         {
-            throw new NotImplementedException();
+            NSOpenGLContext? nscontext = (NSOpenGLContext?)GetCurrentContext();
+
+            if (nscontext != null)
+            {
+                objc_msgSend(nscontext.Context, sel_registerName("setValues:forParameter:"u8), (IntPtr)(&interval), (long)NSOpenGLContextParameter.SwapInterval);
+            }
         }
 
         public int GetSwapInterval()
         {
-            throw new NotImplementedException();
+            NSOpenGLContext? nscontext = (NSOpenGLContext?)GetCurrentContext();
+
+            int interval = default;
+            if (nscontext != null)
+            {
+                objc_msgSend(nscontext.Context, sel_registerName("getValues:forParameter:"u8), (IntPtr)(&interval), (long)NSOpenGLContextParameter.SwapInterval);
+            }
+
+            return interval;
         }
     }
 }

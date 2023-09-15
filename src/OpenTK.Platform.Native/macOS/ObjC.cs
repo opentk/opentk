@@ -111,6 +111,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern void objc_msgSend(IntPtr receiver, SEL selector, IntPtr ptr, long value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern void objc_msgSend(IntPtr receiver, SEL selector, CGPoint point);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -155,6 +158,12 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern ulong objc_msgSend_ulong(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern ulong objc_msgSend_ulong(IntPtr receiver, SEL selector, ulong value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector, long value);
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector)
@@ -166,7 +175,47 @@ namespace OpenTK.Platform.Native.macOS
             static extern bool objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector);
         }
 
-        
+        internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1)
+        {
+            objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1);
+            return rect;
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
+            static extern bool objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1);
+        }
+
+        // FIXME: What happens on ARM?
+        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector);
+
+        // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1, IntPtr ptr);
+
+        internal static float objc_msgSend_float(IntPtr receiver, SEL selector)
+        {
+            if (RuntimeInformation.ProcessArchitecture == Architecture.X86)
+            {
+                return objc_msgSend_fret(receiver, selector);
+            }
+            else if (RuntimeInformation.ProcessArchitecture == Architecture.X64)
+            {
+                return (float)objc_msgSend_float(receiver, selector);
+            }
+            else
+            {
+                // FIXME: What do we do with ARM? Do we only need to consider 64bit?
+                return (float)objc_msgSend_float(receiver, selector);
+            }
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_fret")]
+            static extern float objc_msgSend_fret(IntPtr receiver, SEL selector);
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+            static extern double objc_msgSend_float(IntPtr receiver, SEL selector);
+        }
+
 
         internal static ObjCClass objc_allocateClassPair(ObjCClass superclass, ReadOnlySpan<byte> name, ulong extraBytes)
         {

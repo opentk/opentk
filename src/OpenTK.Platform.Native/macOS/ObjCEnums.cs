@@ -148,5 +148,11 @@ namespace OpenTK.Platform.Native.macOS
         Accessory,
         Prohibited,
     }
+
+    public enum NSRequestUserAttentionType : ulong
+    {
+        CriticalRequest = 0,
+        InformationalRequest = 10,
+    }
 }
 

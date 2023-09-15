@@ -142,39 +142,48 @@ namespace OpenTK.Backends.Tests
             WindowComp.SetClientSize(Window, 800, 600);
             WindowComp.SetMode(Window, WindowMode.Normal);
 
-            if (WindowComp.CanSetIcon)
+            try
             {
-                IconHandle? handle;
-                if (OperatingSystem.IsWindows())
+                if (WindowComp.CanSetIcon)
                 {
-                    // Here are three ways to load .ico file on windows, in increasing complexity.
-                    // First, just load the .ico as a file.
-                    handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoFile("Resources/opentk_logo_small.ico");
-                    // Second, use a resx file and load that. This will result in a ico with a single resolution instead of adaptive.
-                    handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource(Icons.opentk_logo_small_ico);
-                    // Last, create a .rc file, add an icon to that resource file, add a target to your csproj to compile the .rc file
-                    // use <Win32Resource> to include the resulting .res file in the exe.
-                    handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource("OPENTK_ICO");
-                }
-                else
-                {
-                    ImageResult icon = ImageResult.FromMemory(Icons.opentk_logo_small_png, ColorComponents.RedGreenBlueAlpha);
-                    handle = IconComponent?.Create(icon.Width, icon.Height, icon.Data);
-                }
+                    IconHandle? handle;
+                    if (OperatingSystem.IsWindows())
+                    {
+                        // Here are three ways to load .ico file on windows, in increasing complexity.
+                        // First, just load the .ico as a file.
+                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoFile("Resources/opentk_logo_small.ico");
+                        // Second, use a resx file and load that. This will result in a ico with a single resolution instead of adaptive.
+                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource(Icons.opentk_logo_small_ico);
+                        // Last, create a .rc file, add an icon to that resource file, add a target to your csproj to compile the .rc file
+                        // use <Win32Resource> to include the resulting .res file in the exe.
+                        handle = (IconComponent as Platform.Native.Windows.IconComponent)?.CreateFromIcoResource("OPENTK_ICO");
+                    }
+                    else
+                    {
+                        ImageResult icon = ImageResult.FromMemory(Icons.opentk_logo_small_png, ColorComponents.RedGreenBlueAlpha);
+                        handle = IconComponent?.Create(icon.Width, icon.Height, icon.Data);
+                    }
 
-                if (handle != null)
-                {
-                    WindowComp.SetIcon(Window, handle);
+                    if (handle != null)
+                    {
+                        WindowComp.SetIcon(Window, handle);
 
-                    // FIXME: Should we destroy the icon?
-                    IconComponent?.Destroy(handle);
+                        // FIXME: Should we destroy the icon?
+                        IconComponent?.Destroy(handle);
+                    }
                 }
+            } catch
+            {
+
             }
 
-            GL.Viewport(0, 0, 800, 600);
-
+            // FIXME: Here we want to get the pixel size of the backbuffer.
             WindowComp.GetClientSize(Window, out int width, out int height);
-            ImGuiController = new ImGuiController(width, height);
+            GL.Viewport(0, 0, width, height);
+
+            //ImGuiController = new ImGuiController(width, height);
+            // FIXME:
+            ImGuiController = new ImGuiController(1000, 1000);
 
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
             {

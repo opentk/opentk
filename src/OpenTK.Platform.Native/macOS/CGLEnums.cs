@@ -50,5 +50,24 @@ namespace OpenTK.Platform.Native.macOS
         Version3_2Core = 0x3200,
         Version4_1Core = 0x4100,
     }
+
+    internal enum NSOpenGLContextParameter : long
+    {
+        SwapInterval = 222,
+        SurfaceOrder = 235,
+        SurfaceOpacity = 236,
+        SurfaceBackingSize = 304,
+        ReclaimResources = 308,
+        CurrentRendererID = 309,
+        GPUVertexProcessing = 310,
+        GPUFragmentProcessing = 311,
+        HasDrawable = 314,
+        MPSwapsInFlight = 315,
+        SwapRectangle = 200,
+        SwapRectangleEnable = 201,
+        RasterizationEnable =  221,
+        StateValidation = 301,
+        SurfaceSurfaceVolatile = 306,
+    }
 }
 

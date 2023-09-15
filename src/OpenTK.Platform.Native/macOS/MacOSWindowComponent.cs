@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using OpenTK.Core.Platform;
 using OpenTK.Core.Utility;
+using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.macOS.ObjC;
 
 namespace OpenTK.Platform.Native.macOS
@@ -19,11 +21,14 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selFrame = sel_registerName("frame"u8);
         internal static SEL selSetFrameTopLeftPoint = sel_registerName("setFrameTopLeftPoint:"u8);
 
+        internal static SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
+
+        internal static SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
+
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
         internal static ObjCClass NSOpenTKWindowClass;
         internal static ObjCClass NSOpenTKViewClass;
-
 
         internal static readonly Dictionary<IntPtr, NSWindowHandle> NSWindowDict = new Dictionary<nint, NSWindowHandle>();
 
@@ -79,6 +84,7 @@ namespace OpenTK.Platform.Native.macOS
             // Allocate a window class
             NSOpenTKWindowClass = objc_allocateClassPair(objc_getClass("NSWindow"), "NSOpenTKWindow"u8, 0);
             // FIXME: Store delegate to prevent GC.. or use unmanagedcallersonly.
+            class_addMethod(NSOpenTKWindowClass, sel_registerName("windowShouldClose:"u8), ShouldWindowCloseHandler, "b@:@"u8);
             //class_addMethod(opentkWindowClass, sel_registerName("keyDown:"u8), (KeyDownDelegate)keyDown, "v@:@"u8);
             objc_registerClassPair(NSOpenTKWindowClass);
 
@@ -96,6 +102,24 @@ namespace OpenTK.Platform.Native.macOS
 
             // Actually quit.
             objc_msgSend(nsApplication, sel_registerName("terminate:"u8), nsApplication);
+        }
+
+        delegate bool ShouldWindowCloseDelegate(IntPtr windowPtr, SEL selector, IntPtr sender);
+        static ShouldWindowCloseDelegate ShouldWindowCloseHandler = ShouldWindowClose;
+        static bool ShouldWindowClose(IntPtr window, SEL selector, IntPtr sender)
+        {
+            // FIXME:
+            // Send event and return false?
+            // Or should we override performClose instead?
+            if (NSWindowDict.TryGetValue(window, out NSWindowHandle? nswindow))
+            {
+                EventQueue.Raise(nswindow, PlatformEventType.Close, new CloseEventArgs(nswindow));
+
+                // FIXME: Don't destroy the window by default.
+                nswindow.Destroyed = true;
+            }
+
+            return true;
         }
 
         delegate void ResetCursorRectDelegate(IntPtr self, SEL cmd);
@@ -129,6 +153,7 @@ namespace OpenTK.Platform.Native.macOS
 
         public void ProcessEvents(bool waitForEvents = false)
         {
+            // FIXME: Make this a loop!
             IntPtr @event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true);
             if (@event == IntPtr.Zero)
             {
@@ -136,9 +161,130 @@ namespace OpenTK.Platform.Native.macOS
             }
 
             NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
-            //Console.WriteLine($"Event type: {type}");
+            
+            IntPtr windowPtr = objc_msgSend_IntPtr(@event, sel_registerName("window"u8));
+            if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
+            {
+                Console.WriteLine($"Event for non opentk window: {type}");
+                objc_msgSend(nsApplication, selSendEvent, @event);
+                // FIXME: Change this to continue.
+                return;
+            }
 
-            objc_msgSend(nsApplication, selSendEvent, @event);
+            switch (type)
+            {
+                case NSEventType.LeftMouseDown:
+                case NSEventType.RightMouseDown:
+                case NSEventType.OtherMouseDown:
+                    {
+                        // FIXME: This should be a long, not ulong
+                        ulong button = objc_msgSend_ulong(@event, sel_registerName("buttonNumber"u8));
+                        MouseButton mouseButton;
+                        switch (button)
+                        {
+                            case 0: mouseButton = MouseButton.Button1; break;
+                            case 1: mouseButton = MouseButton.Button2; break;
+                            case 2: mouseButton = MouseButton.Button3; break;
+                            case 3: mouseButton = MouseButton.Button4; break;
+                            case 4: mouseButton = MouseButton.Button5; break;
+                            case 5: mouseButton = MouseButton.Button6; break;
+                            case 6: mouseButton = MouseButton.Button7; break;
+                            case 7: mouseButton = MouseButton.Button8; break;
+                            default: throw new PalException(this, $"Unknown mouse button: {button}");
+                        }
+
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseDown, new MouseButtonDownEventArgs(nswindow, mouseButton));
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.LeftMouseUp:
+                case NSEventType.RightMouseUp:
+                case NSEventType.OtherMouseUp:
+                    {
+                        // FIXME: This should be a long, not ulong
+                        ulong button = objc_msgSend_ulong(@event, sel_registerName("buttonNumber"u8));
+                        MouseButton mouseButton;
+                        switch (button)
+                        {
+                            case 0: mouseButton = MouseButton.Button1; break;
+                            case 1: mouseButton = MouseButton.Button2; break;
+                            case 2: mouseButton = MouseButton.Button3; break;
+                            case 3: mouseButton = MouseButton.Button4; break;
+                            case 4: mouseButton = MouseButton.Button5; break;
+                            case 5: mouseButton = MouseButton.Button6; break;
+                            case 6: mouseButton = MouseButton.Button7; break;
+                            case 7: mouseButton = MouseButton.Button8; break;
+                            default: throw new PalException(this, $"Unknown mouse button: {button}");
+                        }
+
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseUp, new MouseButtonUpEventArgs(nswindow, mouseButton));
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.MouseEntered:
+                    {
+                        Console.WriteLine($"Window: {windowPtr}");
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.MouseExited:
+                    {
+                        Console.WriteLine($"Window: {windowPtr}");
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.MouseMoved:
+                    {
+                        CGPoint point = objc_msgSend_CGPoint(@event, sel_registerName("locationInWindow"u8));
+
+                        CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, sel_registerName("convertRectToBacking:"u8), new CGRect(point, CGPoint.Zero));
+
+                        CGRect backing = objc_msgSend_CGRect(
+                            nswindow.Window,
+                            sel_registerName("convertRectToBacking:"u8),
+                            objc_msgSend_CGRect(nswindow.View, sel_registerName("bounds"u8)));
+
+                        Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
+                        
+                        EventQueue.Raise(nswindow, PlatformEventType.MouseMove, new MouseMoveEventArgs(nswindow, pos));
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.ScrollWheel:
+                    {
+                        float scrollX = objc_msgSend_float(@event, sel_registerName("scrollingDeltaX"u8));
+                        float scrollY = objc_msgSend_float(@event, sel_registerName("scrollingDeltaY"u8));
+                        Console.WriteLine($"scroll: ({scrollX}, {scrollY})");
+
+                        bool preciseScrollingDeltas = objc_msgSend_bool(@event, sel_registerName("hasPreciseScrollingDeltas"u8));
+
+                        // FIXME: We might need to flip the horizontal direction?
+                        // FIXME: Consider precise deltas...
+                        Vector2 delta = new Vector2(scrollX, scrollY);
+                        Vector2 distance = new Vector2(scrollX, scrollY);
+
+                        EventQueue.Raise(nswindow, PlatformEventType.Scroll, new ScrollEventArgs(nswindow, delta, distance));
+
+                        objc_msgSend(nsApplication, selSendEvent, @event);
+                        break;
+                    }
+                case NSEventType.KeyDown:
+                    {
+                        // Steal the keyDown event to avoid the beep.
+                        break;
+                    }
+                case NSEventType.KeyUp:
+                    {
+                        break;
+                    }
+                default:
+                    //Console.WriteLine($"Event type: {type}");
+                    objc_msgSend(nsApplication, selSendEvent, @event);
+                    break;
+            }
         }
 
         public WindowHandle Create(GraphicsApiHints hints)
@@ -171,9 +317,8 @@ namespace OpenTK.Platform.Native.macOS
             // FIXME: Move this somewhere?
             objc_msgSend(windowPtr, sel_registerName("setDelegate:"u8), windowPtr);
             objc_msgSend(windowPtr, sel_registerName("makeKeyWindow"u8));
-            //objc_msgSend(windowPtr, sel_registerName("setTitle:"u8), ToNSString("OpenTK Window"u8));
             objc_msgSend(windowPtr, sel_registerName("center"u8));
-            objc_msgSend(windowPtr, sel_registerName("makeKeyAndOrderFront:"u8), windowPtr);
+            objc_msgSend(windowPtr, selMakeKeyAndOrderFront, windowPtr);
 
             return nswindow;
         }
@@ -277,14 +422,27 @@ namespace OpenTK.Platform.Native.macOS
             throw new NotImplementedException();
         }
 
+        // FIXME: Separate the window size from the framebuffer size?
+
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, sel_registerName("screen"u8));
+
+            CGRect rect = objc_msgSend_CGRect(nswindow.View, sel_registerName("frame"u8));
+
+            CGRect backingRect = objc_msgSend_CGRect(screen, sel_registerName("convertRectToBacking:"u8), rect);
+
+            width = (int)backingRect.size.x;
+            height = (int)backingRect.size.y;
         }
 
         public void SetClientSize(WindowHandle handle, int width, int height)
         {
-            throw new NotImplementedException();
+            // FIXME:
+            //throw new NotImplementedException();
+
+
         }
 
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
@@ -319,7 +477,8 @@ namespace OpenTK.Platform.Native.macOS
 
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
-            throw new NotImplementedException();
+            // FIXME:
+            //throw new NotImplementedException();
         }
 
         public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
@@ -379,12 +538,17 @@ namespace OpenTK.Platform.Native.macOS
 
         public void FocusWindow(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            objc_msgSend(nswindow.Window, selMakeKeyAndOrderFront, nswindow.Window);
         }
 
         public void RequestAttention(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            // FIXME: Maybe store the requestID so we can cancel the request?
+            ulong requestID = objc_msgSend_ulong(nsApplication, selRequestUserAttention, (ulong)NSRequestUserAttentionType.CriticalRequest);
         }
 
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)

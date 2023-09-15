@@ -24,9 +24,12 @@ namespace OpenTK.Platform.Native.macOS
     {
         public IntPtr Context { get; set; }
 
-        public NSOpenGLContext(IntPtr context)
+        public NSOpenGLContext? SharedContext { get; private set; }
+
+        public NSOpenGLContext(IntPtr context, NSOpenGLContext? sharedContext)
         {
             Context = context;
+            SharedContext = sharedContext;
         }
     }
 }

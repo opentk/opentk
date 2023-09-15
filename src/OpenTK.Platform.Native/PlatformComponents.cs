@@ -13,7 +13,7 @@ namespace OpenTK.Platform.Native
     {
         None,
         Win32,
-        Macos,
+        macOS,
         X11,
         SDL,
     }
@@ -79,16 +79,16 @@ namespace OpenTK.Platform.Native
         private static Dictionary<PalComponents, ComponentCtor> macosComponents =
             new Dictionary<PalComponents, ComponentCtor>
             {
-                //[PalComponents.Window] = () => new Macos.WindowComponent(),
-                //[PalComponents.OpenGL] = () => new Macos.OpenGLComponent(),
-                //[PalComponents.Display] = () => new Macos.DisplayComponent(),
-                //[PalComponents.Shell] = () => new Macos.ShellComponent(),
-                //[PalComponents.MiceInput] = () => new Macos.MouseComponent(),
-                //[PalComponents.KeyboardInput] = () => new Macos.KeyboardComponent(),
-                //[PalComponents.MouseCursor] = () => new Macos.CursorComponent(),
-                //[PalComponents.WindowIcon] = () => new Macos.IconComponent(),
-                //[PalComponents.Clipboard] = () => new Macos.ClipboardComponent(),
-                //[PalComponents.Joystick] = () => new Macos.JoystickComponent(),
+                [PalComponents.Window] = () => new macOS.MacOSWindowComponent(),
+                [PalComponents.OpenGL] = () => new macOS.MacOSOpenGLComponent(),
+                //[PalComponents.Display] = () => new macOS.MacOSDisplayComponent(),
+                //[PalComponents.Shell] = () => new macOS.MacOSShellComponent(),
+                //[PalComponents.MiceInput] = () => new macOS.MacOSMouseComponent(),
+                //[PalComponents.KeyboardInput] = () => new macOS.MacOSKeyboardComponent(),
+                //[PalComponents.MouseCursor] = () => new macOS.MacOSCursorComponent(),
+                //[PalComponents.WindowIcon] = () => new macOS.MacOSIconComponent(),
+                //[PalComponents.Clipboard] = () => new macOS.MacOSClipboardComponent(),
+                //[PalComponents.Joystick] = () => new macOS.MacOSJoystickComponent(),
             };
 
         public static Backend GetBackend()
@@ -106,7 +106,7 @@ namespace OpenTK.Platform.Native
             }
             else if (test == macosComponents)
             {
-                return Backend.Macos;
+                return Backend.macOS;
             }
             else if (test == sdlComponents)
             {

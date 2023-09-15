@@ -33,6 +33,8 @@ namespace OpenTK.Platform.Native.macOS
 
     public struct CGPoint
     {
+        public static readonly CGPoint Zero = new CGPoint(0, 0);
+
         public NFloat x;
         public NFloat y;
 
@@ -40,6 +42,11 @@ namespace OpenTK.Platform.Native.macOS
         {
             this.x = x;
             this.y = y;
+        }
+
+        public override string ToString()
+        {
+            return $"({x}, {y})";
         }
     }
 
@@ -58,6 +65,11 @@ namespace OpenTK.Platform.Native.macOS
         {
             origin = new CGPoint(x, y);
             size = new CGPoint(width, height);
+        }
+
+        public override string ToString()
+        {
+            return $"{origin} - {size}";
         }
     }
 }

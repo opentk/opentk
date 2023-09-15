@@ -32,10 +32,10 @@ namespace OpenTK.Backends.Tests
             WindowManager = Program.WindowManager;
 
             // FIXME: Catch any exceptions...
-            canSetCursor = WindowComponent.CanSetCursor;
-            canGetDisplay = WindowComponent.CanGetDisplay;
-            canCaptureCursor = WindowComponent.CanCaptureCursor;
-            canSetIcon = WindowComponent.CanSetIcon;
+            try { canSetCursor = WindowComponent.CanSetCursor; } catch { canSetCursor = false; }
+            try { canGetDisplay = WindowComponent.CanGetDisplay; } catch { canGetDisplay = false; }
+            try { canCaptureCursor = WindowComponent.CanCaptureCursor; } catch { canCaptureCursor = false; }
+            try { canSetIcon = WindowComponent.CanSetIcon; } catch { canSetIcon = false; }
         }
 
         int selectedWindow = -1;

@@ -5,6 +5,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
 using OpenTK.Mathematics;
 using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace MacOSTestProject
 {
@@ -63,6 +64,8 @@ void main()
         {
             Console.WriteLine("Hello World!");
 
+            EventQueue.EventRaised += EventQueue_EventRaised;
+
             MacOSWindowComponent windowComponent = new MacOSWindowComponent();
             MacOSOpenGLComponent openglComponent = new MacOSOpenGLComponent();
 
@@ -81,6 +84,14 @@ void main()
             openglComponent.SetCurrentContext(context);
 
             GLLoader.LoadBindings(openglComponent.GetBindingsContext(context));
+
+            int pre = openglComponent.GetSwapInterval();
+            openglComponent.SetSwapInterval(0);
+            int post = openglComponent.GetSwapInterval();
+
+            Debug.Assert(openglComponent.GetCurrentContext() == context);
+
+            Console.WriteLine($"Swap interval. Pre: {pre}, Post: {post}");
 
             static bool IsExtensionSupported(string name)
             {
@@ -170,7 +181,7 @@ void main()
                 return program;
             }
 
-            while (true)
+            while (windowComponent.IsWindowDestroyed(window) == false)
             {
                 windowComponent.ProcessEvents();
 
@@ -182,6 +193,14 @@ void main()
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 
                 windowComponent.SwapBuffers(window);
+            }
+        }
+
+        private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        {
+            if (args is MouseButtonDownEventArgs mouseDown)
+            {
+                Console.WriteLine($"Mouse down: {mouseDown.Button}");
             }
         }
     }
