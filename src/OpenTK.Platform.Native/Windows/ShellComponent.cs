@@ -201,6 +201,12 @@ namespace OpenTK.Platform.Native.Windows
                 info.TotalPhysicalMemory = (long)status.ullTotalPhys;
                 info.AvailablePhysicalMemory = (long)status.ullAvailPhys;
 
+                success = Win32.GetPhysicallyInstalledSystemMemory(out ulong systemMemory);
+                if (success)
+                {
+                    info.TotalPhysicalMemory = (long)systemMemory * 1024;
+                }
+
                 return info;
             }
             else

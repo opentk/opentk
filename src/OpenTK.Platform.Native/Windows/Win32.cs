@@ -1124,6 +1124,9 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool GetPhysicallyInstalledSystemMemory(out ulong TotalMemoryInKilobytes);
+
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HPOWERNOTIFY */ RegisterSuspendResumeNotification(IntPtr /* HANDLE */ hRecipient, DEVICE_NOTIFY Flags);
 

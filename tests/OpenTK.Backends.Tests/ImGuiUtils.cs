@@ -56,5 +56,18 @@ namespace OpenTK.Backends.Tests
 
             return selectionChanged;
         }
+
+        // Helper to display a little (?) mark which shows a tooltip when hovered.
+        public static void HelpMarker(string desc)
+        {
+            ImGui.TextDisabled("(?)");
+            if (ImGui.BeginItemTooltip())
+            {
+                ImGui.PushTextWrapPos(ImGui.GetFontSize()* 35.0f);
+                ImGui.TextUnformatted(desc);
+                ImGui.PopTextWrapPos();
+                ImGui.EndTooltip();
+            }
+        }
     }
 }
