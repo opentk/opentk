@@ -43,7 +43,7 @@ namespace OpenTK.Backends.Tests
                 BatteryStatus.HasSystemBattery => "has battery",
                 _ => "unknown",
             };
-            ImGui.SeparatorText($"Battery Status ({status})");
+            ImGui.SeparatorText($"Battery Status ({statusStr})");
 
             ImGui.BeginDisabled();
 
