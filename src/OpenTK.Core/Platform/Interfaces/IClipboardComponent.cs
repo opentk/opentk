@@ -50,6 +50,7 @@ namespace OpenTK.Core.Platform
         /// This function returns null if the current clipboard data doesn't have the <see cref="ClipboardFormat.Bitmap"/> format.
         /// </summary>
         /// <returns>The bitmap currently in the clipboard.</returns>
+        // FIXME: What is the orientation of this image? Is it bottom up or top down?
         Bitmap? GetClipboardBitmap();
 
         /// <summary>

@@ -48,6 +48,7 @@ namespace OpenTK.Backends.Tests
             new DisplayComponentView(),
             new CursorComponentView(),
             new IconComponentView(),
+            new ClipboardComponentView(),
         };
 
         static void Main(string[] args)
@@ -183,7 +184,7 @@ namespace OpenTK.Backends.Tests
 
             //ImGuiController = new ImGuiController(width, height);
             // FIXME:
-            ImGuiController = new ImGuiController(1000, 1000);
+            ImGuiController = new ImGuiController(width, height);
 
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
             {

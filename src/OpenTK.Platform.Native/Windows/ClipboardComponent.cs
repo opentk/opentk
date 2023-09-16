@@ -161,11 +161,13 @@ namespace OpenTK.Platform.Native.Windows
                         throw new Win32Exception(code);
                     }
 
-                    Console.WriteLine($"Format (0x{(uint)cf:X4}): {name}");
+                    // FIXME: Are these printouts useful?
+                    logger?.LogDebug($"Format (0x{(uint)cf:X4}): {name}");
                 }
                 else
                 {
-                    Console.WriteLine($"Format (0x{(uint)cf:X4}): {cf}");
+                    // FIXME: Are these printouts useful?
+                    logger?.LogDebug($"Format (0x{(uint)cf:X4}): {cf}");
                 }
             }
 
@@ -181,11 +183,13 @@ namespace OpenTK.Platform.Native.Windows
                         throw new Win32Exception(code);
                     }
 
-                    Console.WriteLine($"Format (0x{(uint)cf:X4}): {name}");
+                    // FIXME: Are these printouts useful?
+                    logger?.LogDebug($"Format (0x{(uint)cf:X4}): {name}");
                 }
                 else
                 {
-                    Console.WriteLine($"Format (0x{(uint)cf:X4}): {cf}");
+                    // FIXME: Are these printouts useful?
+                    logger?.LogDebug($"Format (0x{(uint)cf:X4}): {cf}");
                 }
             }
 
@@ -297,6 +301,10 @@ namespace OpenTK.Platform.Native.Windows
             public int data_bytes; // Number of bytes in data. Number of samples * num_channels * sample byte size
                             // uint8_t bytes[]; // Remainder of wave file is bytes
         }
+
+        // FIXME: It's quite possible that we will not be able to open the clipboard
+        // because someone else is either reading or writing from it.
+        // So we need to handle that when opening the clipboard.
 
         /// <inheritdoc/>
         public unsafe void SetClipboardAudio(AudioData data)
@@ -688,6 +696,8 @@ namespace OpenTK.Platform.Native.Windows
 
             Win32.ReleaseDC(IntPtr.Zero, hDC);
 
+            // FIXME: Potentially flip the image so that it is top to bottom.
+
             // Convert from Bgra to Rgba.
             for (int i = 0; i < image.Length; i += 4)
             {
@@ -730,6 +740,7 @@ namespace OpenTK.Platform.Native.Windows
                     }
                 }
 
+                // FIXME: Should we be flipping the bottom up images instead?
                 if (bmInfo.bmiHeader.biHeight < 0)
                 {
                     // FIXME: Overflow?
@@ -850,7 +861,6 @@ namespace OpenTK.Platform.Native.Windows
             }
 
             uint count = Win32.DragQueryFile(hdrop, 0xFFFFFFFF, null, 0);
-            Console.WriteLine($"Drop! {count}");
 
             List<string> paths = new List<string>();
 
