@@ -183,10 +183,8 @@ namespace OpenTK.Backends.Tests
             WindowComp.GetClientSize(Window, out int width, out int height);
             GL.Viewport(0, 0, width, height);
 
-            //ImGuiController = new ImGuiController(width, height);
-            // FIXME:
             ImGuiController = new ImGuiController(width, height);
-
+            
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
             {
                 CursorHandle defaultCursor = CursorComp.Create(SystemCursorType.Default);

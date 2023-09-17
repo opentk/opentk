@@ -172,20 +172,33 @@ namespace OpenTK.Platform.Native.macOS
             return rect;
 
             [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
-            static extern bool objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector);
+            static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector);
         }
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1)
         {
+            // Huh, here rect has the correct return value, but when we return it, it doesn't?
             objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1);
             return rect;
 
             [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
-            static extern bool objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1);
+            static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1);
+        }
+
+        internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector, CGRect rect1, IntPtr value1)
+        {
+            // Huh, here rect has the correct return value, but when we return it, it doesn't?
+            objc_msgSend_CGRect(out CGRect rect, receiver, selector, rect1, value1);
+            return rect;
+
+            [DllImport(FoundationFramework, EntryPoint = "objc_msgSend_stret")]
+            static extern void objc_msgSend_CGRect(out CGRect rect, IntPtr receiver, SEL selector, CGRect rect1, IntPtr value1);
         }
 
         // FIXME: What happens on ARM?
         // NSPoint doesn't use the _stret version of msgSend (on x86_64?) for some reason..?
+        // This document touches lightly on when to use _stret:
+        // https://learn.microsoft.com/en-us/xamarin/ios/internals/objective-c-selectors
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector);
 
@@ -193,6 +206,7 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern CGPoint objc_msgSend_CGPoint(IntPtr receiver, SEL selector, CGPoint point1, IntPtr ptr);
 
+        // FIXME: Should we even consider 32bit macos?
         internal static float objc_msgSend_float(IntPtr receiver, SEL selector)
         {
             if (RuntimeInformation.ProcessArchitecture == Architecture.X86)

@@ -156,10 +156,14 @@ namespace OpenTK.Backends.Tests
                         WindowComponent.SetTitle(window, titleString);
                         Program.Logger.LogInfo($"WindowComponent.SetTitle(\"{titleString}\")");
                     }
-                    WindowComponent.GetClientSize(window, out int width, out int height);
-                    WindowComponent.GetClientPosition(window, out int x, out int y);
-                    ImGui.Text($"Client Position: ({x}, {y})");
-                    ImGui.Text($"Client Size: ({width}, {height})");
+                    WindowComponent.GetClientSize(window, out int cWidth, out int cHeight);
+                    WindowComponent.GetSize(window, out int wWidth, out int wHeight);
+                    WindowComponent.GetClientPosition(window, out int cx, out int cy);
+                    WindowComponent.GetPosition(window, out int wx, out int wy);
+                    ImGui.Text($"Client Position: ({cx}, {cy})");
+                    ImGui.Text($"Position: ({wx}, {wy})");
+                    ImGui.Text($"Client Size: ({cWidth}, {cHeight})");
+                    ImGui.Text($"Size: ({wWidth}, {wHeight})");
                 }
 
                 ImGui.AlignTextToFramePadding();

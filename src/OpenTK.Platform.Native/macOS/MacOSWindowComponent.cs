@@ -14,16 +14,48 @@ namespace OpenTK.Platform.Native.macOS
     {
         internal static IntPtr nsApplication;
 
+        internal static SEL selQuit = sel_registerName("quit"u8);
+        internal static SEL selSharedApplication = sel_registerName("sharedApplication"u8);
+        internal static SEL selSetActivationPolicy = sel_registerName("setActivationPolicy:"u8);
+        internal static SEL selDiscardEventsMatchingMask_beforeEvent = sel_registerName("discardEventsMatchingMask:beforeEvent:"u8);
+        internal static SEL selMainMenu = sel_registerName("mainMenu"u8);
+
         internal static SEL selType = sel_registerName("type"u8);
         internal static SEL selSendEvent = sel_registerName("sendEvent:"u8);
-        internal static SEL selNextEventMatchingMask = sel_registerName("nextEventMatchingMask:untilDate:inMode:dequeue:"u8);
+        internal static SEL selNextEventMatchingMask_untilDate_inMode_dequeue = sel_registerName("nextEventMatchingMask:untilDate:inMode:dequeue:"u8);
+        internal static SEL selWindow = sel_registerName("window"u8);
+        internal static SEL selButtonNumber = sel_registerName("buttonNumber"u8);
+        internal static SEL selLocationInWindow = sel_registerName("locationInWindow"u8);
+        internal static SEL selScrollingDeltaX = sel_registerName("scrollingDeltaX"u8);
+        internal static SEL selScrollingDeltaY = sel_registerName("scrollingDeltaY"u8);
+        internal static SEL selHasPreciseScrollingDeltas = sel_registerName("hasPreciseScrollingDeltas"u8);
 
+        internal static SEL selInitWithContentRect_styleMask_backing_defer = sel_registerName("initWithContentRect:styleMask:backing:defer:"u8);
+        internal static SEL selInitWithFrame = sel_registerName("initWithFrame:"u8);
+
+        internal static SEL selScreen = sel_registerName("screen"u8);
         internal static SEL selFrame = sel_registerName("frame"u8);
+        internal static SEL selBounds = sel_registerName("bounds"u8);
         internal static SEL selSetFrameTopLeftPoint = sel_registerName("setFrameTopLeftPoint:"u8);
+        internal static SEL selContentView = sel_registerName("contentView"u8);
+        internal static SEL selSetContentView = sel_registerName("setContentView:"u8);
 
         internal static SEL selMakeKeyAndOrderFront = sel_registerName("makeKeyAndOrderFront:"u8);
 
         internal static SEL selRequestUserAttention = sel_registerName("requestUserAttention"u8);
+
+        internal static SEL selConvertRectToBacking = sel_registerName("convertRectToBacking:"u8);
+        internal static SEL selConvertRectToScreen = sel_registerName("convertRectToScreen:"u8);
+
+        internal static SEL selIsMiniaturized = sel_registerName("isMiniaturized"u8);
+        internal static SEL selMiniaturize = sel_registerName("miniaturize:"u8);
+        internal static SEL selDeminiaturize = sel_registerName("deminiaturize:"u8);
+        internal static SEL selIsZoomed = sel_registerName("isZoomed"u8);
+        internal static SEL selZoom = sel_registerName("zoom:"u8);
+        internal static SEL selIsVisible = sel_registerName("isVisible"u8);
+        internal static SEL selOrderFront = sel_registerName("orderFront:"u8);
+        internal static SEL selOrderOut = sel_registerName("orderOut:"u8);
+
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
 
@@ -45,18 +77,15 @@ namespace OpenTK.Platform.Native.macOS
                 throw new PalException(this, "MacOSWindowComponent can only initialize the Window component.");
             }
 
-            SEL selQuit = sel_registerName("quit"u8);
-
             ObjCClass nsapp = objc_getClass("NSApplication"u8);
             class_addMethod(nsapp, selQuit, OnQuitHandler, "v@:"u8);
 
-            SEL selSharedApplication = sel_registerName("sharedApplication"u8);
             nsApplication = objc_msgSend_IntPtr((IntPtr)nsapp, selSharedApplication);
 
-            objc_msgSend_bool(nsApplication, sel_registerName("setActivationPolicy:"u8), (long)NSApplicationActivationpolicy.Regular);
-            objc_msgSend(nsApplication, sel_registerName("discardEventsMatchingMask:beforeEvent:"u8), (ulong)NSEventMask.Any, IntPtr.Zero);
+            objc_msgSend_bool(nsApplication, selSetActivationPolicy, (long)NSApplicationActivationpolicy.Regular);
+            objc_msgSend(nsApplication, selDiscardEventsMatchingMask_beforeEvent, (ulong)NSEventMask.Any, IntPtr.Zero);
 
-            IntPtr mainMenu = objc_msgSend_IntPtr(nsApplication, sel_registerName("mainMenu"u8));
+            IntPtr mainMenu = objc_msgSend_IntPtr(nsApplication, selMainMenu);
             if (mainMenu == IntPtr.Zero)
             {
                 IntPtr menubar = objc_msgSend_IntPtr((IntPtr)objc_getClass("NSMenu"u8), Alloc);
@@ -154,7 +183,7 @@ namespace OpenTK.Platform.Native.macOS
         public void ProcessEvents(bool waitForEvents = false)
         {
             // FIXME: Make this a loop!
-            IntPtr @event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true);
+            IntPtr @event = objc_msgSend_IntPtr(nsApplication, selNextEventMatchingMask_untilDate_inMode_dequeue, NSEventMask.Any, IntPtr.Zero, NSDefaultRunLoop, true);
             if (@event == IntPtr.Zero)
             {
                 return;
@@ -162,7 +191,7 @@ namespace OpenTK.Platform.Native.macOS
 
             NSEventType type = (NSEventType)objc_msgSend_ulong(@event, selType);
             
-            IntPtr windowPtr = objc_msgSend_IntPtr(@event, sel_registerName("window"u8));
+            IntPtr windowPtr = objc_msgSend_IntPtr(@event, selWindow);
             if (NSWindowDict.TryGetValue(windowPtr, out NSWindowHandle? nswindow) == false)
             {
                 Console.WriteLine($"Event for non opentk window: {type}");
@@ -178,7 +207,7 @@ namespace OpenTK.Platform.Native.macOS
                 case NSEventType.OtherMouseDown:
                     {
                         // FIXME: This should be a long, not ulong
-                        ulong button = objc_msgSend_ulong(@event, sel_registerName("buttonNumber"u8));
+                        ulong button = objc_msgSend_ulong(@event, selButtonNumber);
                         MouseButton mouseButton;
                         switch (button)
                         {
@@ -203,7 +232,7 @@ namespace OpenTK.Platform.Native.macOS
                 case NSEventType.OtherMouseUp:
                     {
                         // FIXME: This should be a long, not ulong
-                        ulong button = objc_msgSend_ulong(@event, sel_registerName("buttonNumber"u8));
+                        ulong button = objc_msgSend_ulong(@event, selButtonNumber);
                         MouseButton mouseButton;
                         switch (button)
                         {
@@ -237,14 +266,14 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 case NSEventType.MouseMoved:
                     {
-                        CGPoint point = objc_msgSend_CGPoint(@event, sel_registerName("locationInWindow"u8));
+                        CGPoint point = objc_msgSend_CGPoint(@event, selLocationInWindow);
 
-                        CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, sel_registerName("convertRectToBacking:"u8), new CGRect(point, CGPoint.Zero));
+                        CGRect pointRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, new CGRect(point, CGPoint.Zero));
 
                         CGRect backing = objc_msgSend_CGRect(
                             nswindow.Window,
-                            sel_registerName("convertRectToBacking:"u8),
-                            objc_msgSend_CGRect(nswindow.View, sel_registerName("bounds"u8)));
+                            selConvertRectToBacking,
+                            objc_msgSend_CGRect(nswindow.View, selBounds));
 
                         Vector2 pos = new Vector2((float)pointRect.origin.x, (float)(backing.size.y - pointRect.origin.y));
                         
@@ -255,11 +284,11 @@ namespace OpenTK.Platform.Native.macOS
                     }
                 case NSEventType.ScrollWheel:
                     {
-                        float scrollX = objc_msgSend_float(@event, sel_registerName("scrollingDeltaX"u8));
-                        float scrollY = objc_msgSend_float(@event, sel_registerName("scrollingDeltaY"u8));
+                        float scrollX = objc_msgSend_float(@event, selScrollingDeltaX);
+                        float scrollY = objc_msgSend_float(@event, selScrollingDeltaY);
                         Console.WriteLine($"scroll: ({scrollX}, {scrollY})");
 
-                        bool preciseScrollingDeltas = objc_msgSend_bool(@event, sel_registerName("hasPreciseScrollingDeltas"u8));
+                        bool preciseScrollingDeltas = objc_msgSend_bool(@event, selHasPreciseScrollingDeltas);
 
                         // FIXME: We might need to flip the horizontal direction?
                         // FIXME: Consider precise deltas...
@@ -295,19 +324,19 @@ namespace OpenTK.Platform.Native.macOS
 
             IntPtr windowPtr = objc_msgSend_IntPtr(
                 objc_msgSend_IntPtr((IntPtr)NSOpenTKWindowClass, Alloc),
-                sel_registerName("initWithContentRect:styleMask:backing:defer:"u8),
+                selInitWithContentRect_styleMask_backing_defer,
                 windowRect, style, NSBackingStoreType.Buffered, false);
 
-            IntPtr viewPtr = objc_msgSend_IntPtr(windowPtr, sel_registerName("contentView"u8));
+            IntPtr viewPtr = objc_msgSend_IntPtr(windowPtr, selContentView);
             // FIXME: Error checking!
 
             // Replace the view!
             viewPtr = objc_msgSend_IntPtr(
                 objc_msgSend_IntPtr((IntPtr)NSOpenTKViewClass, Alloc),
-                sel_registerName("initWithFrame:"u8),
-                objc_msgSend_CGRect(viewPtr, sel_registerName("bounds"u8)));
+                selInitWithFrame,
+                objc_msgSend_CGRect(viewPtr, selBounds));
 
-            objc_msgSend(windowPtr, sel_registerName("setContentView:"u8), viewPtr);
+            objc_msgSend(windowPtr, selSetContentView, viewPtr);
 
             NSWindowHandle nswindow = new NSWindowHandle(windowPtr, viewPtr, hints);
 
@@ -375,14 +404,15 @@ namespace OpenTK.Platform.Native.macOS
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
 
-            CGRect rect = objc_msgSend_CGRect(nswindow.Window, selFrame);
+            IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, selScreen);
+            CGRect screenBackingRect = objc_msgSend_CGRect(screen, selConvertRectToBacking, objc_msgSend_CGRect(screen, selFrame));
 
-            // FIXME: Invert the Y coordinate.
+            CGRect frame = objc_msgSend_CGRect(nswindow.Window, selFrame);
 
-            // FIXME: Convert screen coordinates to pixel coordinates.
-            x = (int)rect.origin.x;
-            // Add the height of the window to get the top left location.
-            y = (int)(rect.origin.y + rect.size.y);
+            CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, frame);
+
+            x = (int)backingRect.origin.x;
+            y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
         }
 
         public void SetPosition(WindowHandle handle, int x, int y)
@@ -400,9 +430,11 @@ namespace OpenTK.Platform.Native.macOS
 
             CGRect rect = objc_msgSend_CGRect(nswindow.Window, selFrame);
 
+            CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, rect);
+
             // FIXME: Convert screen coordinates to pixel coordinates.
-            width = (int)rect.size.x;
-            height = (int)rect.size.y;
+            width = (int)backingRect.size.x;
+            height = (int)backingRect.size.y;
         }
 
         public void SetSize(WindowHandle handle, int width, int height)
@@ -414,7 +446,19 @@ namespace OpenTK.Platform.Native.macOS
 
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+            IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, selScreen);
+            CGRect screenBackingRect = objc_msgSend_CGRect(screen, selConvertRectToBacking, objc_msgSend_CGRect(screen, selFrame));
+
+            CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
+
+            CGRect windowBounds = objc_msgSend_CGRect(nswindow.View, sel_registerName("convertRect:toView:"u8), bounds, IntPtr.Zero);
+
+            CGRect screenRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, windowBounds);
+            CGRect backingRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToBacking, screenRect);
+
+            x = (int)backingRect.origin.x;
+            y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
         }
 
         public void SetClientPosition(WindowHandle handle, int x, int y)
@@ -427,11 +471,15 @@ namespace OpenTK.Platform.Native.macOS
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
-            IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, sel_registerName("screen"u8));
+            IntPtr screen = objc_msgSend_IntPtr(nswindow.Window, selScreen);
 
-            CGRect rect = objc_msgSend_CGRect(nswindow.View, sel_registerName("frame"u8));
+            CGRect bounds = objc_msgSend_CGRect(nswindow.View, selBounds);
 
-            CGRect backingRect = objc_msgSend_CGRect(screen, sel_registerName("convertRectToBacking:"u8), rect);
+            CGRect windowBounds = objc_msgSend_CGRect(nswindow.View, sel_registerName("convertRect:toView:"u8), bounds, IntPtr.Zero);
+
+            // FIXME: send to nswindow and not screen?
+            CGRect screenRect = objc_msgSend_CGRect(nswindow.Window, selConvertRectToScreen, windowBounds);
+            CGRect backingRect = objc_msgSend_CGRect(screen, selConvertRectToBacking, screenRect);
 
             width = (int)backingRect.size.x;
             height = (int)backingRect.size.y;
@@ -472,13 +520,107 @@ namespace OpenTK.Platform.Native.macOS
 
         public WindowMode GetMode(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (objc_msgSend_bool(nswindow.Window, selIsMiniaturized, nswindow.Window))
+            {
+                return WindowMode.Minimized;
+            }
+
+            // FIXME: Should we change to fullscreen instead?
+            if (objc_msgSend_bool(nswindow.Window, selIsZoomed, nswindow.Window))
+            {
+                return WindowMode.Maximized;
+            }
+
+            // FIXME: check for fullscreen!
+
+            if (objc_msgSend_bool(nswindow.Window, selIsVisible, nswindow.Window) == false)
+            {
+                return WindowMode.Hidden;
+            }
+            else
+            {
+                return WindowMode.Normal;
+            }
         }
 
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
-            // FIXME:
-            //throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            switch (mode)
+            {
+                case WindowMode.Hidden:
+                    {
+                        objc_msgSend(nswindow.Window, selOrderOut, nswindow.Window);
+
+                        break;
+                    }
+                case WindowMode.Minimized:
+                    {
+                        objc_msgSend(nswindow.Window, selMiniaturize, nswindow.Window);
+                        break;
+                    }
+                case WindowMode.Normal:
+                    {
+                        // FIXME: Is this everything we need to do?
+
+                        // FIXME: Return is BOOL
+                        if (objc_msgSend_bool(nswindow.Window, selIsZoomed))
+                        {
+                            objc_msgSend(nswindow.Window, selZoom, nswindow.Window);
+                        }
+
+                        // FIXME: Return is BOOL
+                        if (objc_msgSend_bool(nswindow.Window, selIsMiniaturized))
+                        {
+                            objc_msgSend(nswindow.Window, selDeminiaturize, nswindow.Window);
+                        }
+
+                        // FIXME: Return is BOOL
+                        if (objc_msgSend_bool(nswindow.Window, selIsVisible) == false)
+                        {
+                            objc_msgSend(nswindow.Window, selOrderFront, nswindow.Window);
+                        }
+
+                        break;
+                    }
+                case WindowMode.Maximized:
+                    {
+                        // FIXME: Return is BOOL
+                        if (objc_msgSend_bool(nswindow.Window, selIsMiniaturized))
+                        {
+                            objc_msgSend(nswindow.Window, selDeminiaturize, nswindow.Window);
+                        }
+
+                        // If the window was hidden, show it.
+                        // FIXME: Return is BOOL
+                        if (objc_msgSend_bool(nswindow.Window, selIsVisible) == false)
+                        {
+                            objc_msgSend(nswindow.Window, selOrderFront, nswindow.Window);
+                        }
+
+                        // FIXME: Should we be calling "zoom:" or "toggleFullscreen:" here?
+                        // What is the "expected" behaviour.
+
+                        // macos calls maximizing "zoom".
+                        objc_msgSend(nswindow.Window, selZoom, nswindow.Window);
+                        break;
+                    }
+                case WindowMode.WindowedFullscreen:
+                    {
+                        throw new NotImplementedException();
+                        break;
+                    }
+                case WindowMode.ExclusiveFullscreen:
+                    {
+                        throw new NotImplementedException();
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(mode), (int)mode, mode.GetType());
+            }
         }
 
         public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
