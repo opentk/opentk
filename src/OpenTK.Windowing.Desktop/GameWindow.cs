@@ -125,7 +125,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         /// Gets a double representing the time spent in the RenderFrame function, in seconds.
         /// </summary>
-        [Obsolete("Use UpdateFrequency instead. We no longer separate UpdateFrame and RenderFrame.", true)]
+        [Obsolete("Use UpdateTime instead. We no longer separate UpdateFrame and RenderFrame.", true)]
         public double RenderTime { get; protected set; }
 
         /// <summary>
