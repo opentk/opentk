@@ -848,8 +848,11 @@ namespace OpenTK.Windowing.Desktop
             {
                 WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
 
-                // If we are starting the window maximized or minimized we need to set that here.
-                WindowState = settings.WindowState;
+                if (settings.StartVisible)
+                {
+                    // If we are starting the window maximized or minimized we need to set that here.
+                    WindowState = settings.WindowState;
+                }
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
