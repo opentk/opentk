@@ -6,7 +6,25 @@ namespace OpenTK.Compute.OpenCL
 
     public enum ContextProperties : int
     {
-        ContextPlatform = 0x1084
+        ContextPlatform = 0x1084,
+        InteropUserSync = 0x1085,
+
+        GlContextKHR = 0x2008,
+        EglDisplayKHR = 0x2009,
+        GlxDisplayKHR = 0x200A,
+        WglHDCKHR = 0x200B,
+        CglShareGroupKHR = 0x200C,
+
+        D3D10DeviceKHR = 0x4014,
+
+        AdapterD3D9KHR = 0x2025,
+        AdapterD3D9EXKHR = 0x2026,
+        AdapterDXVAKHR = 0x2027,
+
+        D3D11DeviceKHR = 0x401D,
+
+        MemoryInitializeKHR = 0x2030,
+        TerminateKHR = 0x2032,
     }
 
     public enum PlatformInfo : uint
