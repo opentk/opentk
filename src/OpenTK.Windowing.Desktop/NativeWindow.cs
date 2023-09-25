@@ -719,6 +719,12 @@ namespace OpenTK.Windowing.Desktop
         public bool SupportsRawMouseInput => GLFW.RawMouseMotionSupported();
 
         /// <summary>
+        /// Whether or not the window has a transparent framebuffer.
+        /// Check this after setting <see cref="NativeWindowSettings.TransparentFramebuffer"/> to check if a transparent framebuffer got created.
+        /// </summary>
+        public unsafe bool HasTransparentFramebuffer => GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.TransparentFramebuffer);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
         /// <param name="settings">The <see cref="NativeWindow"/> related settings.</param>
