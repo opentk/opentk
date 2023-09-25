@@ -283,6 +283,7 @@ namespace OpenTK.Windowing.Desktop
                     // Handle events for this frame
                     ProcessWindowEvents(IsEventDriven);
 
+                    UpdateTime = elapsed;
                     OnUpdateFrame(new FrameEventArgs(elapsed));
                     OnRenderFrame(new FrameEventArgs(elapsed));
 

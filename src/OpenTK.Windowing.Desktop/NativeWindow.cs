@@ -350,6 +350,11 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
+                // Set the new window state before any potential callback is called,
+                // so that the new state is available in for example OnResize.
+                // - Noggin_bops 2023-09-25
+                _windowState = value;
+
                 if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
                     // We are going from fullscreen to something else.
@@ -378,8 +383,6 @@ namespace OpenTK.Windowing.Desktop
                         GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
                         break;
                 }
-
-                _windowState = value;
             }
         }
 
@@ -719,6 +722,12 @@ namespace OpenTK.Windowing.Desktop
         public bool SupportsRawMouseInput => GLFW.RawMouseMotionSupported();
 
         /// <summary>
+        /// Whether or not the window has a transparent framebuffer.
+        /// Check this after setting <see cref="NativeWindowSettings.TransparentFramebuffer"/> to check if a transparent framebuffer got created.
+        /// </summary>
+        public unsafe bool HasTransparentFramebuffer => GLFW.GetWindowAttrib(WindowPtr, WindowAttributeGetBool.TransparentFramebuffer);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="NativeWindow"/> class.
         /// </summary>
         /// <param name="settings">The <see cref="NativeWindow"/> related settings.</param>
@@ -848,8 +857,11 @@ namespace OpenTK.Windowing.Desktop
             {
                 WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
 
-                // If we are starting the window maximized or minimized we need to set that here.
-                WindowState = settings.WindowState;
+                if (settings.StartVisible)
+                {
+                    // If we are starting the window maximized or minimized we need to set that here.
+                    WindowState = settings.WindowState;
+                }
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
