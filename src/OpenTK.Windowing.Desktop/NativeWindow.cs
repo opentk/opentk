@@ -350,6 +350,11 @@ namespace OpenTK.Windowing.Desktop
 
             set
             {
+                // Set the new window state before any potential callback is called,
+                // so that the new state is available in for example OnResize.
+                // - Noggin_bops 2023-09-25
+                _windowState = value;
+
                 if (_windowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
                     // We are going from fullscreen to something else.
@@ -378,8 +383,6 @@ namespace OpenTK.Windowing.Desktop
                         GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
                         break;
                 }
-
-                _windowState = value;
             }
         }
 
