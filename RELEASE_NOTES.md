@@ -1,3 +1,21 @@
+## 4.8.1
+
+* API: Added `NativeWindow.HasTransparentFramebuffer` to be able to check if a transparent framebuffer was created successfully. (@NogginBops)
+
+* API: Added missing enum entries in `OpenCL.ContextProperties`. (@NogginBops)
+
+* FIX: `NativeWindowSettings.StartVisible = false` has been fixed and should now work as expected. (@NogginBops)
+
+* FIX: Fixed issue where `JoystickState.GetAxis` returned buttons instead of axes. (@NogginBops)
+
+* FIX: Fixed issue where self-contained `dotnet publish` would break due to duplicate `libglfw.so` files. (@Th3Dilli)
+
+* FIX: Setting `NativeWindow.WindowState` will now be reflected in `OnResize` event caused by it. (@NogginBops)
+
+* FIX: `GameWindow.UpdateTime` is now correctly updated, fixing an issue that first appeared in `4.7.1`. (@NogginBops)
+
+* FIX: Fixed typo in deprecation message for `GameWindow.RenderFrequency`. (@postmeback)
+
 ## 4.8.0
 
 * BREAKING: Renamed the `OpenTK.OpenAL` assembly to `OpenTK.Audio.OpenAL` to match the namespace. (@NogginBops)
