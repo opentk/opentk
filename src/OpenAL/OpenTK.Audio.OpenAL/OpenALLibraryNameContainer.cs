@@ -35,7 +35,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>
         /// Gets the library name to use on Android.
         /// </summary>
-        public string Android => Linux;
+        public string Android => "libopenal.so";
 
         /// <summary>
         /// Gets the library name to use on iOS.

@@ -9,7 +9,7 @@ namespace OpenTK.Compute.OpenCL
 
         public string MacOS => "/System/Library/Frameworks/OpenCL.framework/OpenCL";
 
-        public string Android => Linux;
+        public string Android => "libOpenCL.so";
 
         public string IOS => MacOS;
 
