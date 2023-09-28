@@ -1,6 +1,6 @@
-image: Visual Studio 2019
+image: Visual Studio 2022
 
-version: 4.0.0.{build}
+version: 5.0.0.{build}
 
 init:
   - git config --global core.autocrlf input
