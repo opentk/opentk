@@ -10,13 +10,15 @@ namespace OpenTK.Platform.Native.ANGLE
     internal class ANGLEOpenGLContextHandle : OpenGLContextHandle
     {
         public IntPtr EglSurface;
-
         public IntPtr EglContext;
 
-        public ANGLEOpenGLContextHandle(IntPtr eglSurface, IntPtr eglContext)
+        public ANGLEOpenGLContextHandle? SharedContext;
+
+        public ANGLEOpenGLContextHandle(IntPtr eglSurface, IntPtr eglContext, ANGLEOpenGLContextHandle? sharedContext)
         {
             EglSurface = eglSurface;
             EglContext = eglContext;
+            SharedContext = sharedContext;
         }
     }
 }

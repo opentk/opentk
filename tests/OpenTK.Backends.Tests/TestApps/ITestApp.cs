@@ -34,7 +34,8 @@ namespace OpenTK.Backends.Tests
         /// </summary>
         /// <param name="window">The window</param>
         /// <param name="context">The context</param>
-        void Initialize(WindowHandle window, OpenGLContextHandle context);
+        /// <param name="useGLES">If the app should render using OpenGL ES instead of OpeGL.</param>
+        void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES);
 
         /// <summary>
         /// Render the application view.

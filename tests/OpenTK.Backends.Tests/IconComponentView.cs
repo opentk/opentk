@@ -49,7 +49,7 @@ namespace OpenTK.Backends.Tests
                 ImGui.BeginDisabled();
             }
 
-            // FIXME: Disable all of the buttons if we can set the window icon.
+            // FIXME: Disable all of the buttons if we can't set the window icon.
 
             {
                 float maxTextWidth = float.NegativeInfinity;
@@ -100,6 +100,8 @@ namespace OpenTK.Backends.Tests
             {
                 ImGui.EndDisabled();
             }
+
+            // FIXME: Set the icon to the OpenTK logo.
         }
     }
 }

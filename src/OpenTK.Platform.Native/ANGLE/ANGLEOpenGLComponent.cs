@@ -3,24 +3,34 @@ using OpenTK.Core.Utility;
 using OpenTK.Graphics.Egl;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace OpenTK.Platform.Native.ANGLE
 {
     public class ANGLEOpenGLComponent : IOpenGLComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(ANGLEOpenGLComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.OpenGL;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
+
+        internal string[] Extensions;
 
         internal IntPtr eglDisplay;
         internal Version eglVersion;
 
+        internal static readonly Dictionary<IntPtr, ANGLEOpenGLContextHandle> ContextDict = new Dictionary<IntPtr, ANGLEOpenGLContextHandle>();
+
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.OpenGL)
@@ -31,14 +41,15 @@ namespace OpenTK.Platform.Native.ANGLE
             const IntPtr EGL_NO_DISPLAY = 0;
             IntPtr extensionsPtr = Egl.QueryString(EGL_NO_DISPLAY, Egl.EXTENSIONS);
             string extensionsStr = Marshal.PtrToStringAnsi(extensionsPtr)!;
-            string[] extensions = extensionsStr.Split(" ");
-            Console.WriteLine(extensionsStr);
+            Extensions = extensionsStr.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            Console.WriteLine(Extensions);
 
-            if (extensions.Contains("EGL_ANGLE_platform_angle") == false)
+            if (Extensions.Contains("EGL_ANGLE_platform_angle") == false)
             {
                 throw new PalException(this, "To create an ANGLE context 'EGL_ANGLE_platform_angle' extension must be supported.");
             }
 
+            // FIXME: What should we really set here?
             int[] attribs = new int[] { Egl.RENDERABLE_TYPE, Egl.OPENGL_ES3_BIT, Egl.NONE };
 
             eglDisplay = Egl.GetPlatformDisplayEXT(Egl.PLATFORM_ANGLE_ANGLE, Egl.DEFAULT_DISPLAY, attribs);
@@ -51,21 +62,30 @@ namespace OpenTK.Platform.Native.ANGLE
             }
 
             eglVersion = new Version(major, minor);
+
+            // FIXME
+            Egl.BindAPI(RenderApi.ES);
         }
 
-        public bool CanShareContexts => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanShareContexts => true;
 
+        /// <inheritdoc/>
         public bool CanCreateFromWindow => true;
 
-        public bool CanCreateFromSurface => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanCreateFromSurface => false;
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromSurface()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle CreateFromWindow(WindowHandle handle)
         {
+            // FIXME: Can we use an SDL window to create an ANGLE context?
             IntPtr windowHandle = handle switch
             {
                 Windows.HWND hwnd => hwnd.HWnd,
@@ -82,48 +102,148 @@ namespace OpenTK.Platform.Native.ANGLE
                 throw new Exception("No settings");
             }
 
-            //Egl.CreatePlatformWindowSurfaceEXT(eglDisplay, config, windowHandle, null);
+            List<int> config_attribs = new List<int>() { Egl.SURFACE_TYPE, Egl.WINDOW_BIT, Egl.RENDERABLE_TYPE, Egl.OPENGL_ES3_BIT };
+
+            if (settings.Multisamples > 0)
+            {
+                config_attribs.Add(Egl.SAMPLE_BUFFERS);
+                config_attribs.Add(1);
+
+                config_attribs.Add(Egl.SAMPLES);
+                config_attribs.Add(settings.Multisamples);
+            }
+
+            if (settings.sRGBFramebuffer && Extensions.Contains("EGL_KHR_gl_colorspace"))
+            {
+                config_attribs.Add(Egl.COLORSPACE);
+                config_attribs.Add(Egl.COLORSPACE_sRGB);
+            }
+
+            config_attribs.Add(Egl.RED_SIZE);
+            config_attribs.Add(settings.RedColorBits);
+            config_attribs.Add(Egl.GREEN_SIZE);
+            config_attribs.Add(settings.GreenColorBits);
+            config_attribs.Add(Egl.BLUE_SIZE);
+            config_attribs.Add(settings.BlueColorBits);
+            config_attribs.Add(Egl.ALPHA_SIZE);
+            config_attribs.Add(settings.AlphaColorBits);
+
+            if (settings.DepthBits != ContextDepthBits.None)
+            {
+                int depthBits;
+                switch (settings.DepthBits)
+                {
+                    case ContextDepthBits.Depth24: depthBits = 24; break;
+                    case ContextDepthBits.Depth32: depthBits = 32; break;
+                    default: throw new InvalidEnumArgumentException(nameof(settings.DepthBits), (int)settings.DepthBits, settings.DepthBits.GetType());
+                }
+
+                config_attribs.Add(Egl.DEPTH_SIZE);
+                config_attribs.Add(depthBits);
+            }
+
+            if (settings.StencilBits != ContextStencilBits.None)
+            {
+                int stencilBits;
+                switch (settings.StencilBits)
+                {
+                    case ContextStencilBits.Stencil1: stencilBits = 1; break;
+                    case ContextStencilBits.Stencil8: stencilBits = 8; break;
+                    default: throw new InvalidEnumArgumentException(nameof(settings.StencilBits), (int)settings.StencilBits, settings.StencilBits.GetType());
+                }
+
+                config_attribs.Add(Egl.STENCIL_SIZE);
+                config_attribs.Add(stencilBits);
+            }
+
+            config_attribs.Add(Egl.NONE);
 
             // FIXME:
-            int[] config_attribs = { Egl.SURFACE_TYPE, Egl.WINDOW_BIT, Egl.RENDERABLE_TYPE, Egl.OPENGL_ES3_BIT, Egl.NONE };
             IntPtr[] configs = new IntPtr[1];
-            bool success = Egl.ChooseConfig(eglDisplay, config_attribs, configs, configs.Length, out int num_configs);
+            bool success = Egl.ChooseConfig(eglDisplay, config_attribs.ToArray(), configs, configs.Length, out int num_configs);
+            if (success == false)
+            {
+                var error = Egl.GetError();
+                throw new PalException(this, $"eglChooseConfig failed with: {error}");
+            }
 
-            IntPtr eglSurface = Egl.CreatePlatformWindowSurfaceEXT(eglDisplay, configs[0], windowHandle, null);
+            List<int> surface_attribs = new List<int>();
+            surface_attribs.Add(Egl.RENDER_BUFFER);
+            surface_attribs.Add(settings.DoubleBuffer ? Egl.BACK_BUFFER : Egl.SINGLE_BUFFER);
+            surface_attribs.Add(Egl.NONE);
 
-            // FIXME
-            Egl.BindAPI(RenderApi.ES);
+            IntPtr eglSurface = Egl.CreatePlatformWindowSurfaceEXT(eglDisplay, configs[0], windowHandle, surface_attribs.ToArray());
 
             // FIXME: Share context
-            int[] context_attribs = new int[] { Egl.CONTEXT_MAJOR_VERSION, 3, Egl.CONTEXT_MINOR_VERSION, 1, Egl.NONE };
-            IntPtr contextPtr = Egl.CreateContext(eglDisplay, configs[0], (IntPtr)null, context_attribs);
+            List<int> context_attribs = new List<int>() { Egl.CONTEXT_MAJOR_VERSION, settings.Version.Major, Egl.CONTEXT_MINOR_VERSION, settings.Version.Minor };
+            if (settings.DebugFlag)
+            {
+                context_attribs.Add(Egl.CONTEXT_OPENGL_DEBUG);
+                context_attribs.Add(1);
+            }
+            
+            context_attribs.Add(Egl.NONE);
 
-            ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr);
+            ANGLEOpenGLContextHandle? shared = settings.SharedContext?.As<ANGLEOpenGLContextHandle>(this);
+            IntPtr shareContext = shared?.EglContext ?? IntPtr.Zero;
+
+            IntPtr contextPtr = Egl.CreateContext(eglDisplay, configs[0], shareContext, context_attribs.ToArray());
+
+            ANGLEOpenGLContextHandle context = new ANGLEOpenGLContextHandle(eglSurface, contextPtr, shared);
+
+            ContextDict.Add(contextPtr, context);
 
             return context;
         }
 
+        /// <inheritdoc/>
         public void DestroyContext(OpenGLContextHandle handle)
         {
-            throw new NotImplementedException();
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+
+            ContextDict.Remove(context.EglContext);
+
+            bool success = Egl.DestroyContext(eglDisplay, context.EglContext);
+            if (success == false)
+            {
+                Logger?.LogError($"Failed to destroy egl context: {Egl.GetError()}");
+            }
+
+            success = Egl.DestroySurface(eglDisplay, context.EglSurface);
+            if (success == false)
+            {
+                Logger?.LogError($"Failed to destroy egl surface: {Egl.GetError()}");
+            }
         }
 
+        /// <inheritdoc/>
         public IBindingsContext GetBindingsContext(OpenGLContextHandle handle)
         {
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this); 
             return new Pal2BindingsContext(this, context);
         }
 
+        /// <inheritdoc/>
         public nint GetProcedureAddress(OpenGLContextHandle handle, string procedureName)
         {
             return Egl.GetProcAddress(procedureName);
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
-            throw new NotImplementedException();
+            IntPtr ptr = Egl.GetCurrentContext();
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+            else
+            {
+                return ContextDict[ptr];
+            }
         }
 
+        /// <inheritdoc/>
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
             ANGLEOpenGLContextHandle? context = handle?.As<ANGLEOpenGLContextHandle>(this);
@@ -137,21 +257,29 @@ namespace OpenTK.Platform.Native.ANGLE
             }
         }
 
+        /// <inheritdoc/>
         public OpenGLContextHandle? GetSharedContext(OpenGLContextHandle handle)
         {
-            throw new NotImplementedException();
+            ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);
+            return context.SharedContext;
         }
 
+        private int swapInterval = 1;
+
+        /// <inheritdoc/>
         public void SetSwapInterval(int interval)
         {
-            throw new NotImplementedException();
+            Egl.SwapInterval(eglDisplay, interval);
+            swapInterval = interval;
         }
 
+        /// <inheritdoc/>
         public int GetSwapInterval()
         {
-            throw new NotImplementedException();
+            return swapInterval;
         }
 
+        /// <inheritdoc/>
         public void SwapBuffers(OpenGLContextHandle handle)
         {
             ANGLEOpenGLContextHandle context = handle.As<ANGLEOpenGLContextHandle>(this);

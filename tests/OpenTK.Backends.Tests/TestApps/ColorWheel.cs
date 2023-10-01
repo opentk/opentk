@@ -15,7 +15,7 @@ namespace OpenTK.Backends.Tests
 
         private Stopwatch watch = new Stopwatch();
 
-        public void Initialize(WindowHandle window, OpenGLContextHandle context)
+        public void Initialize(WindowHandle window, OpenGLContextHandle context, bool useGLES)
         {
             this.Window = window;
             this.Context = context;

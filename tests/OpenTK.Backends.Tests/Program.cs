@@ -108,9 +108,13 @@ namespace OpenTK.Backends.Tests
                 Profile = OpenGLProfile.Core,
                 ForwardCompatibleFlag = true,
                 DebugFlag = true,
-
-                DoubleBuffer = true,
             };
+
+            if (BackendsConfig.Singleton.PreferANGLE)
+            {
+                hints.Version = new Version(3, 1);
+                hints.Profile = OpenGLProfile.None;
+            }
 
             Window = WindowComp.Create(hints);
             OpenGLContext = OpenGLComp.CreateFromWindow(Window);

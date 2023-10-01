@@ -11,6 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ANGLE_LICENCE" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ANGLE_LICENCE" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\opentk_logo_small.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

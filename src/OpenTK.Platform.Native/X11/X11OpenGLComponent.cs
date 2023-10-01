@@ -183,9 +183,6 @@ namespace OpenTK.Platform.Native.X11
             // - Noggin_bops 2023-08-27
             GLXWindow glxWindow = glXCreateWindow(X11.Display, window.FBConfig!.Value, window.Window, IntPtr.Zero);
             
-            // This is important so SwapBuffers works.
-            window.GLXWindow = glxWindow;
-
             XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext);
 
             contextDict[contextHandle.Context] = contextHandle;

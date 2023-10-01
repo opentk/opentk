@@ -109,6 +109,8 @@ namespace OpenTK.Graphics.Egl
         public const int CONTEXT_MAJOR_VERSION = 0x3098;
         public const int CONTEXT_MINOR_VERSION = 0x30FB;
 
+        public const int CONTEXT_OPENGL_DEBUG = 0x31B0;
+
         public const int VERSION_1_0 = 1;
         public const int VERSION_1_1 = 1;
         public const int VERSION_1_2 = 1;
