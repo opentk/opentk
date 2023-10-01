@@ -31,6 +31,8 @@ namespace OpenTK.Backends.Tests
 
     public class ImGuiController : IDisposable
     {
+        private bool _useGLES;
+
         private bool _frameBegun;
 
         private int _vertexArray;
@@ -57,10 +59,12 @@ namespace OpenTK.Backends.Tests
         /// <summary>
         /// Constructs a new ImGuiController.
         /// </summary>
-        public ImGuiController(int width, int height)
+        public ImGuiController(int width, int height, bool useGLES = false)
         {
             _windowWidth = width;
             _windowHeight = height;
+
+            _useGLES = useGLES;
 
             int major = GL.GetInteger(GetPName.MajorVersion);
             int minor = GL.GetInteger(GetPName.MinorVersion);
@@ -149,7 +153,49 @@ void main()
     outputColor = color * texture(in_fontTexture, texCoord);
 }";
 
-            _shader = CreateProgram("ImGui", VertexSource, FragmentSource);
+            string VertexSourceES = @"#version 300 es
+
+precision highp float;
+
+uniform mat4 projection_matrix;
+
+layout(location = 0) in vec2 in_position;
+layout(location = 1) in vec2 in_texCoord;
+layout(location = 2) in vec4 in_color;
+
+out vec4 color;
+out vec2 texCoord;
+
+void main()
+{
+    gl_Position = projection_matrix * vec4(in_position, 0, 1);
+    color = in_color;
+    texCoord = in_texCoord;
+}";
+            string FragmentSourceES = @"#version 300 es
+
+precision highp float;
+
+uniform sampler2D in_fontTexture;
+
+in vec4 color;
+in vec2 texCoord;
+
+out vec4 outputColor;
+
+void main()
+{
+    outputColor = color * texture(in_fontTexture, texCoord);
+}";
+
+            if (_useGLES)
+            {
+                _shader = CreateProgram("ImGui", VertexSourceES, FragmentSourceES);
+            }
+            else
+            {
+                _shader = CreateProgram("ImGui", VertexSource, FragmentSource);
+            }
             _shaderProjectionMatrixLocation = GL.GetUniformLocation(_shader, "projection_matrix");
             _shaderFontTextureLocation = GL.GetUniformLocation(_shader, "in_fontTexture");
 
@@ -187,7 +233,7 @@ void main()
             GL.TexStorage2D(TextureTarget.Texture2d, mips, SizedInternalFormat.Rgba8, width, height);
             LabelObject(ObjectIdentifier.Texture, _fontTexture, "Texture: ImGui Text Atlas");
 
-            GL.TexSubImage2D(TextureTarget.Texture2d, 0, 0, 0, width, height, PixelFormat.Bgra, PixelType.UnsignedByte, pixels);
+            GL.TexSubImage2D(TextureTarget.Texture2d, 0, 0, 0, width, height, PixelFormat.Rgba, PixelType.UnsignedByte, pixels);
 
             GL.GenerateMipmap(TextureTarget.Texture2d);
 

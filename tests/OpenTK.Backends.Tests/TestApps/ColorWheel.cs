@@ -36,7 +36,7 @@ namespace OpenTK.Backends.Tests
             );
             GL.Clear(ClearBufferMask.ColorBufferBit);
 
-            Program.WindowComp.SwapBuffers(Window);
+            Program.OpenGLComp.SwapBuffers(Context);
         }
 
         public void Deinitialize()

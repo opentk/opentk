@@ -261,6 +261,12 @@ namespace OpenTK.Platform.Native.macOS
 
             return interval;
         }
+
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            NSOpenGLContext nscontext = handle.As<NSOpenGLContext>(this);
+            objc_msgSend(nscontext.Context, selFlushBuffer);
+        }
     }
 }
 

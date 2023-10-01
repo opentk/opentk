@@ -1000,7 +1000,7 @@ namespace OpenTK.Platform.Native.Windows
 
             if (hWnd == IntPtr.Zero)
             {
-                throw new Win32Exception("CreateWindowEx failed!");
+                throw new Win32Exception();
             }
 
             // We accept drag and drop operations.
@@ -1905,23 +1905,6 @@ namespace OpenTK.Platform.Native.Windows
 
             x = point.X;
             y = point.Y;
-        }
-
-        /// <inheritdoc/>
-        public void SwapBuffers(WindowHandle handle)
-        {
-            HWND hwnd = handle.As<HWND>(this);
-
-            // We don't release this DC because we have CS_OWNDC set.
-            // - Noggin_bops 2023-01-11
-            IntPtr hDC = Win32.GetDC(hwnd.HWnd);
-
-            bool success = Win32.SwapBuffers(hDC);
-
-            if (success == false)
-            {
-                throw new Win32Exception();
-            }
         }
     }
 }

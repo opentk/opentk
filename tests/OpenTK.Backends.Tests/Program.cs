@@ -5,6 +5,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Platform.Native;
+using OpenTK.Platform.Native.ANGLE;
 using StbImageSharp;
 using System;
 using System.Diagnostics;
@@ -59,6 +60,7 @@ namespace OpenTK.Backends.Tests
             BackendsConfig.Logger = Logger;
 
             BackendsConfig.Singleton.PreferSDL2 = false;
+            BackendsConfig.Singleton.PreferANGLE = true;
 
             foreach (PalComponents component in Enum.GetValues<PalComponents>())
             {
@@ -183,7 +185,8 @@ namespace OpenTK.Backends.Tests
             WindowComp.GetClientSize(Window, out int width, out int height);
             GL.Viewport(0, 0, width, height);
 
-            ImGuiController = new ImGuiController(width, height);
+            bool useGLES = OpenGLComp is ANGLEOpenGLComponent;
+            ImGuiController = new ImGuiController(width, height, useGLES);
             
             if (CursorComp != null && CursorComp.CanLoadSystemCursors)
             {
@@ -288,7 +291,7 @@ namespace OpenTK.Backends.Tests
 
             ImGuiController.Render();
 
-            WindowComp.SwapBuffers(Window);
+            OpenGLComp.SwapBuffers(OpenGLContext);
         }
 
         static ImGuiKey ToImgui(Key key)

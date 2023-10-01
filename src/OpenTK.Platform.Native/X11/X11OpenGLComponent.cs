@@ -343,5 +343,12 @@ namespace OpenTK.Platform.Native.X11
                 return 0;
             }
         }
+
+        /// <inheritdoc />
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);
+            glXSwapBuffers(context.Display, (GLXDrawable)context.GLXWindow);
+        }
     }
 }

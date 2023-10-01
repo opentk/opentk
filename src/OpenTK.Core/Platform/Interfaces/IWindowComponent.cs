@@ -408,11 +408,5 @@ namespace OpenTK.Core.Platform
         /// <param name="y">The screen y coordinate.</param>
         /// FIXME: Change to use Vector2i instead of x and y variables.
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
-
-        /// <summary>
-        /// Swaps the buffer of the specified window.
-        /// </summary>
-        /// <param name="handle">Handle to the window.</param>
-        void SwapBuffers(WindowHandle handle);
     }
 }

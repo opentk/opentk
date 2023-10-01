@@ -172,7 +172,7 @@ void main()
             GL.BindVertexArray(VAO);
             GL.DrawArrays(PrimitiveType.Triangles, 0, 3);
 
-            Program.WindowComp.SwapBuffers(Window);
+            Program.OpenGLComp.SwapBuffers(Context);
         }
 
         public void Deinitialize()

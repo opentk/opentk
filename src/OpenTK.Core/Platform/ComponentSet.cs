@@ -558,11 +558,6 @@ namespace OpenTK.Core.Platform
             _windowComponent!.ClientToScreen(handle, clientX, clientY, out x, out y);
         }
 
-        void IWindowComponent.SwapBuffers(WindowHandle handle)
-        {
-            _windowComponent!.SwapBuffers(handle);
-        }
-
         /// <inheritdoc/>
         IconHandle IIconComponent.Create(SystemIconType systemIcon)
         {
@@ -870,6 +865,12 @@ namespace OpenTK.Core.Platform
         int IOpenGLComponent.GetSwapInterval()
         {
             return _openGLComponent!.GetSwapInterval();
+        }
+
+        /// <inheritdoc/>
+        void IOpenGLComponent.SwapBuffers(OpenGLContextHandle handle)
+        {
+            _openGLComponent!.SwapBuffers(handle);
         }
 
         /// <inheritdoc/>
