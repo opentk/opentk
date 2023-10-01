@@ -11,6 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ANGLE_LICENCE" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="ANGLE_LICENCE" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Resources\opentk_logo_small.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -50,6 +58,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="d3dcompiler_47.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libEGL.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libGLESv1_CM.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libGLESv2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Cute Light Green Normal Select.cur">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

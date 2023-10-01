@@ -761,5 +761,17 @@ namespace OpenTK.Platform.Native.Windows
             // make it a Try* function.
             return 0;
         }
+
+        /// <inheritdoc/>
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
+            bool success = Win32.SwapBuffers(hglrc.HDC);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
+        }
     }
 }

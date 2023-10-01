@@ -95,5 +95,11 @@ namespace OpenTK.Core.Platform
         /// <returns>The current swap interval.</returns>
         // FIXME: Better documentation.
         int GetSwapInterval();
+
+        /// <summary>
+        /// Swaps the buffer of the specified context.
+        /// </summary>
+        /// <param name="handle">Handle to the context.</param>
+        void SwapBuffers(OpenGLContextHandle handle);
     }
 }

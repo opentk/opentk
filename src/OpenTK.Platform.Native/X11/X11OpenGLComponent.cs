@@ -183,9 +183,6 @@ namespace OpenTK.Platform.Native.X11
             // - Noggin_bops 2023-08-27
             GLXWindow glxWindow = glXCreateWindow(X11.Display, window.FBConfig!.Value, window.Window, IntPtr.Zero);
             
-            // This is important so SwapBuffers works.
-            window.GLXWindow = glxWindow;
-
             XOpenGLContextHandle contextHandle = new XOpenGLContextHandle(window.Display, context, glxWindow, window.Window, sharedContext);
 
             contextDict[contextHandle.Context] = contextHandle;
@@ -342,6 +339,13 @@ namespace OpenTK.Platform.Native.X11
                 Logger?.LogWarning("GLX doesn't support GLX_EXT_swap_control, GLX_MESA_swap_control, or GLX_SGI_swap_control. Can't get swap interval.");
                 return 0;
             }
+        }
+
+        /// <inheritdoc />
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            XOpenGLContextHandle context = handle.As<XOpenGLContextHandle>(this);
+            glXSwapBuffers(context.Display, (GLXDrawable)context.GLXWindow);
         }
     }
 }

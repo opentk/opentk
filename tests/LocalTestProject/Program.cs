@@ -1060,7 +1060,7 @@ void main()
 
                 CheckError("draw");
 
-                windowComp.SwapBuffers(WindowHandle);
+                glComp.SwapBuffers(WindowContext);
             }
 
             if (windowComp.IsWindowDestroyed(WindowHandle2) == false)
@@ -1082,7 +1082,8 @@ void main()
 
                 GL.BindVertexArray(vao2);
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
-                windowComp.SwapBuffers(WindowHandle2);
+
+                glComp.SwapBuffers(Window2Context);
             }
 
             return true;

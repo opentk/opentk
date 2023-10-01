@@ -76,7 +76,8 @@ namespace OpenTK.Backends.Tests
                         else
                         {
                             Manager.OpenGLComponent.SetCurrentContext(value);
-                            Application.Initialize(Window, value);
+                            // FIXME: Check so that we actually got angle?
+                            Application.Initialize(Window, value, BackendsConfig.Singleton.PreferANGLE);
                             Manager.OpenGLComponent.SetCurrentContext(Manager.RootContext);
                         }
                     }
@@ -104,7 +105,8 @@ namespace OpenTK.Backends.Tests
                         application.Deinitialize();
                     }
 
-                    value?.Initialize(Window, Context);
+                    // FIXME: Check so that we actually got angle?
+                    value?.Initialize(Window, Context, BackendsConfig.Singleton.PreferANGLE);
 
                     Manager.OpenGLComponent.SetCurrentContext(Manager.RootContext);
 

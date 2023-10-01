@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native
 {
+    // FIXME: Remove or formalize
     public enum Backend
     {
         None,
@@ -28,6 +29,9 @@ namespace OpenTK.Platform.Native
         /// We will fall back to platform specifc backends if SDL cannot be loaded.
         /// </summary>
         public static bool PreferSDL2 { get; set; } = false;
+
+        // FIXME:
+        public static bool PreferANGLE { get; set; } = false;
 
         private delegate IPalComponent ComponentCtor();
 
@@ -181,7 +185,15 @@ namespace OpenTK.Platform.Native
         /// <inheritdoc cref="GetPlatformComponents"/>
         public static IOpenGLComponent CreateOpenGLComponent()
         {
-            return GetPlatformComponent<IOpenGLComponent>(PalComponents.OpenGL);
+            // FIXME: Should we do this here?
+            if (PreferANGLE)
+            {
+                return new ANGLE.ANGLEOpenGLComponent();
+            }
+            else
+            {
+                return GetPlatformComponent<IOpenGLComponent>(PalComponents.OpenGL);
+            }
         }
 
         /// <inheritdoc cref="GetPlatformComponents"/>

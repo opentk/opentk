@@ -55,7 +55,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Enable double buffering.
         /// </summary>
-        public bool DoubleBuffer { get; set; } = true; // TODO: Is it really necessary?
+        public bool DoubleBuffer { get; set; } = true;
 
         /// <summary>
         /// Makes the backbuffer support sRGB.
@@ -67,6 +67,8 @@ namespace OpenTK.Core.Platform
         public bool ForwardCompatibleFlag { get; set; } = true;
 
         public bool DebugFlag { get; set; } = false;
+
+        // FIXME: Robust access and reset notification flags?
 
         public OpenGLContextHandle? SharedContext { get; set; } = null;
 

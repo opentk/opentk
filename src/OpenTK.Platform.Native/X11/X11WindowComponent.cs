@@ -2137,13 +2137,5 @@ namespace OpenTK.Platform.Native.X11
 
             // FIXME: Extents?
         }
-
-        /// <inheritdoc />
-        public void SwapBuffers(WindowHandle handle)
-        {
-            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
-
-            glXSwapBuffers(xwindow.Display, (GLXDrawable)xwindow.GLXWindow);
-        }
     }
 }

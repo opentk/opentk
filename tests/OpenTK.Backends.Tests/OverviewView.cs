@@ -49,6 +49,9 @@ namespace OpenTK.Backends.Tests
             bool preferSDL2 = BackendsConfig.Singleton.PreferSDL2;
             ImGuiUtils.ReadonlyCheckbox("Default Prefers SDL2", preferSDL2);
 
+            bool preferANGLE = BackendsConfig.Singleton.PreferANGLE;
+            ImGuiUtils.ReadonlyCheckbox("Default Prefers ANGLE", preferANGLE);
+
             if (ImGui.BeginTable("overview_table_id", 4, ImGuiTableFlags.Borders))
             {
                 ImGui.TableSetupColumn("Default", ImGuiTableColumnFlags.WidthFixed);

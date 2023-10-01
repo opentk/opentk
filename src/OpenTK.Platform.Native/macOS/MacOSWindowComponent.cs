@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -701,20 +702,6 @@ namespace OpenTK.Platform.Native.macOS
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
             throw new NotImplementedException();
-        }
-
-        public void SwapBuffers(WindowHandle handle)
-        {
-            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
-
-            if (nswindow.Context != null)
-            {
-                objc_msgSend(nswindow.Context.Context, MacOSOpenGLComponent.selFlushBuffer);
-            }
-            else
-            {
-                throw new InvalidOperationException("Cannot swap the buffer of a window without an OpenGL context.");
-            }
         }
     }
 }

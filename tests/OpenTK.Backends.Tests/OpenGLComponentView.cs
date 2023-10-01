@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace OpenTK.Backends.Tests
 {
@@ -220,7 +221,30 @@ namespace OpenTK.Backends.Tests
                     foreach (string extension in extensions)
                     {
                         if (ImGui.TreeNodeEx(extension, EXTENSION_FLAGS))
+                        {
+                            if (ImGui.IsItemClicked(ImGuiMouseButton.Left) && ImGui.IsMouseDoubleClicked(ImGuiMouseButton.Left))
+                            {
+                                string ext = extension;
+                                if (ext.StartsWith("GL_"))
+                                    ext = ext["GL_".Length..];
+
+                                string url;
+                                if (vendor == "ANGLE" || vendor == "CHROMIUM")
+                                {
+                                    url = $"https://chromium.googlesource.com/angle/angle/+/refs/heads/main/extensions/{ext}.txt";
+                                }
+                                else
+                                {
+                                    url = $"https://registry.khronos.org/OpenGL/extensions/{vendor}/{ext}.txt";
+                                }
+
+                                var info = new ProcessStartInfo(url);
+                                info.UseShellExecute = true;
+                                Process.Start(info);
+                            }
+
                             ImGui.TreePop();
+                        }
                     }
 
                     ImGui.TreePop();

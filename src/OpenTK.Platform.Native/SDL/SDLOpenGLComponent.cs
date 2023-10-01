@@ -170,5 +170,13 @@ namespace OpenTK.Platform.Native.SDL
         {
             return SDL_GL_GetSwapInterval();
         }
+
+        /// <inheritdoc/>
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+
+            SDL_GL_SwapWindow(context.Window.Window);
+        }
     }
 }

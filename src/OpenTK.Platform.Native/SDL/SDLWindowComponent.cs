@@ -1110,13 +1110,5 @@ namespace OpenTK.Platform.Native.SDL
 
             throw new NotImplementedException();
         }
-
-        /// <inheritdoc/>
-        public void SwapBuffers(WindowHandle handle)
-        {
-            SDLWindow window = handle.As<SDLWindow>(this);
-
-            SDL_GL_SwapWindow(window.Window);
-        }
     }
 }

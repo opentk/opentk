@@ -35,6 +35,13 @@ namespace OpenTK.Backends.Tests
         public bool PreferSDL2 {get; set; } = false;
 
         /// <summary>
+        /// Provides the preferred backend to pick.
+        /// </summary>
+        /// <remarks>Use "auto" for automatic.</remarks>
+        /// <seealso cref="OpenTK.Platform.Native.Backend"/>
+        public bool PreferANGLE { get; set; } = false;
+
+        /// <summary>
         /// Extra assemblies to load before loading PAL2 drivers.
         /// </summary>
         public List<string> ExtraAssemblies { get; set; } = new List<string>();
@@ -261,6 +268,7 @@ namespace OpenTK.Backends.Tests
             if (driver == null)
             {
                 PlatformComponents.PreferSDL2 = Singleton.PreferSDL2;
+                PlatformComponents.PreferANGLE = Singleton.PreferANGLE;
                 driver = component switch {
                     PalComponents.OpenGL => PlatformComponents.CreateOpenGLComponent(),
                     // PalComponents.Vulkan => PlatformComponents.CreateVulkanComponent(),
