@@ -89,5 +89,28 @@ namespace LocalTest
         {
             base.OnMove(e);
         }
+
+        protected override void OnKeyUp(KeyboardKeyEventArgs e)
+        {
+            if (e.Key == Keys.Escape)
+            {
+                Close();
+            }
+
+            if (e.Key == Keys.F && WindowState != WindowState.Fullscreen)
+            {
+                WindowState = WindowState.Fullscreen;
+            }
+
+            if (e.Key == Keys.N && WindowState != WindowState.Normal)
+            {
+                WindowState = WindowState.Normal;
+            }
+
+            if (e.Key == Keys.M && WindowState != WindowState.Maximized)
+            {
+                WindowState = WindowState.Maximized;
+            }
+        }
     }
 }
