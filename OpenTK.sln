@@ -98,8 +98,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MacOSTestProject", "tests\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANGLETestProject", "tests\ANGLETestProject\ANGLETestProject.csproj", "{7888FB56-FCBC-4240-B78F-691481A56AA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasmTestProject", "tests\WasmTestProject\WasmTestProject.csproj", "{4DCB8278-5C5B-4E90-919A-83D53769FE5B}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,10 +208,6 @@ Global
 		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7888FB56-FCBC-4240-B78F-691481A56AA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4DCB8278-5C5B-4E90-919A-83D53769FE5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4DCB8278-5C5B-4E90-919A-83D53769FE5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4DCB8278-5C5B-4E90-919A-83D53769FE5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4DCB8278-5C5B-4E90-919A-83D53769FE5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -238,7 +232,6 @@ Global
 		{3E6C9007-27B2-4B50-91F5-9FF658089997} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{0892F9BC-D689-47BC-80A3-2AF88DCD84BF} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 		{7888FB56-FCBC-4240-B78F-691481A56AA1} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
-		{4DCB8278-5C5B-4E90-919A-83D53769FE5B} = {0B9B71A1-29F7-4CC5-9A9D-9DF122BE8B28}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82DDE6D6-0D55-49B4-9C64-B31B4A6E729F}
