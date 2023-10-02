@@ -30,7 +30,7 @@ namespace OpenTK.Windowing.Desktop
 
         // Both of these are used to cache the size and location of the window before going into full screen mode.
         // When getting out of full screen mode, the location and size will be set to these value in all states other then minimized.
-        private Vector2i _cachedWindowClientSize;
+        private Vector2i _cachedWindowSize;
         private Vector2i _cachedWindowLocation;
 
         // Used for delta calculation in the mouse position changed event.
@@ -359,7 +359,7 @@ namespace OpenTK.Windowing.Desktop
                 if (previousWindowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
                     // We are going from fullscreen to something else.
-                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
+                    GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowSize.X, _cachedWindowSize.Y, 0);
                 }
 
                 switch (value)
@@ -377,8 +377,8 @@ namespace OpenTK.Windowing.Desktop
                         break;
 
                     case WindowState.Fullscreen:
-                        _cachedWindowClientSize = ClientSize;
-                        _cachedWindowLocation = ClientLocation;
+                        _cachedWindowSize = Size;
+                        _cachedWindowLocation = Location;
                         var monitor = CurrentMonitor.ToUnsafePtr<GraphicsLibraryFramework.Monitor>();
                         var modePtr = GLFW.GetVideoMode(monitor);
                         GLFW.SetWindowMonitor(WindowPtr, monitor, 0, 0, modePtr->Width, modePtr->Height, modePtr->RefreshRate);
@@ -847,7 +847,7 @@ namespace OpenTK.Windowing.Desktop
             GLFW.WindowHint(WindowHintInt.RefreshRate, modePtr->RefreshRate);
 
             _cachedWindowLocation = settings.Location ?? new Vector2i(32, 32);  // Better than nothing.
-            _cachedWindowClientSize = settings.Size;
+            _cachedWindowSize = settings.Size;
 
             if (settings.WindowState == WindowState.Fullscreen && _isVisible)
             {
