@@ -59,8 +59,8 @@ namespace OpenTK.Backends.Tests
 
             BackendsConfig.Logger = Logger;
 
-            BackendsConfig.Singleton.PreferSDL2 = false;
-            BackendsConfig.Singleton.PreferANGLE = true;
+            BackendsConfig.Singleton.PreferSDL2 = true;
+            BackendsConfig.Singleton.PreferANGLE = false;
 
             foreach (PalComponents component in Enum.GetValues<PalComponents>())
             {

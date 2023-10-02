@@ -67,13 +67,13 @@ namespace OpenTK.Core.Platform
         /// <param name="waitForEvents">Specifies if this function should wait for events or return immediately if there are no events.</param>
         void ProcessEvents(bool waitForEvents = false);
 
-        // FIXME: Possibly rethink how to do GraphicsApiHints.
-        // FIXME: API for getting the GraphicsApiHints
         /// <summary>
         /// Create a window object.
         /// </summary>
         /// <param name="hints">Graphics API hints to be passed to the operating system.</param>
         /// <returns>Handle to the new window object.</returns>
+        // FIXME: Possibly rethink how to do GraphicsApiHints.
+        // FIXME: API for getting the GraphicsApiHints
         WindowHandle Create(GraphicsApiHints hints);
 
         /// <summary>

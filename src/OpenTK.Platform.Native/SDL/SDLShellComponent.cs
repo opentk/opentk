@@ -96,7 +96,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SystemMemoryInfo info;
 
-            info.TotalPhysicalMemory = SDL_GetSystemRAM() * 1024 * 1024;
+            info.TotalPhysicalMemory = (long)SDL_GetSystemRAM() * 1024 * 1024;
             // FIXME: Is there some way to get this information using SDL?
             info.AvailablePhysicalMemory = -1;
 
