@@ -353,10 +353,10 @@ namespace OpenTK.Windowing.Desktop
                 // Set the new window state before any potential callback is called,
                 // so that the new state is available in for example OnResize.
                 // - Noggin_bops 2023-09-25
-                var switchFromFullscreen = _windowState == WindowState.Fullscreen && value != WindowState.Fullscreen;
+                var previousWindowState = _windowState;
                 _windowState = value;
 
-                if (switchFromFullscreen)
+                if (previousWindowState == WindowState.Fullscreen && value != WindowState.Fullscreen)
                 {
                     // We are going from fullscreen to something else.
                     GLFW.SetWindowMonitor(WindowPtr, null, _cachedWindowLocation.X, _cachedWindowLocation.Y, _cachedWindowClientSize.X, _cachedWindowClientSize.Y, 0);
