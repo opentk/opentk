@@ -1355,7 +1355,75 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: Is there anything we can do about this function?
+            // It would be nice to be able to reduce the amount of work done
+            // so that this query can be done relatively often.
+            // Currently it involves getting all of the crtcs from
+            // xrandr, creating a list of display handles with their bounds,
+            // and then doing this loop...
+            //
+            // Ideally xrandr or x11 would expose something that tells
+            // us what window the window is considered "on".
+            //
+            // On ubuntu 22.04 this function does not always return the display
+            // that the window would be maximized on when double clicking it's title.
+            // We would ideally match that behaviour.
+            // - Noggin_bops 2023-10-05
+
+            // FIXME: GetBounds function
+            GetPosition(xwindow, out int x, out int y);
+            GetSize(xwindow, out int width, out int height);
+
+            Box2i bounds = new Box2i(x, y, x + width, y + height);
+
+            DisplayHandle? bestDisp = null;
+            int bestArea = 0;
+            float bestDistance = float.PositiveInfinity;
+
+
+            // Get all screens.
+            var rects = X11DisplayComponent.GetDisplayRects();
+            foreach (var rect in rects)
+            {
+                Box2i overlap = bounds.Intersected(rect.Bounds);
+
+                if (overlap.SizeX * overlap.SizeY > bestArea)
+                {
+                    bestArea = overlap.SizeX * overlap.SizeY;
+                    bestDisp = rect.Handle;
+                }
+                else if (bestArea <= 0)
+                {
+                    // If there is no overlap we are looking for the display which is closest.
+                    float dist = Distance(bounds, rect.Bounds);
+                    if (dist < bestDistance)
+                    {
+                        bestDistance = dist;
+                        if (bestArea < 0)
+                        {
+                            bestDisp = rect.Handle;
+                        }
+                    }
+                }
+            }
+
+            Debug.Assert(bestDisp != null);
+
+            return bestDisp;
+
+            // FIXME: Add a function like this to all Box types.
+            static float Distance(Box2i a, Box2i b)
+            {
+                return Math.Min(
+                    Math.Min(
+                        a.DistanceToNearestEdge(b.Min), 
+                        a.DistanceToNearestEdge(b.Max)),
+                    Math.Min(
+                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)), 
+                        a.DistanceToNearestEdge((b.Min.Y, b.Max.X))));
+            }
         }
 
         /// <inheritdoc />

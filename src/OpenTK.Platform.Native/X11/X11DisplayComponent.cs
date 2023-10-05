@@ -34,6 +34,44 @@ namespace OpenTK.Platform.Native.X11
 
         private static readonly List<XDisplayHandle> _displays = new List<XDisplayHandle>();
 
+        // FIXME: Do we really need this?
+        internal struct DisplayRect{
+            public XDisplayHandle Handle;
+            public Box2i Bounds;
+        }
+
+        // FIXME: Is there some better way to expose this function?
+        // See X11WindowComponent.GetDisplay for why this function is needed.
+        internal static unsafe List<DisplayRect> GetDisplayRects()
+        {
+            // XRRGetScreenResourcesCurrent?
+            XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+
+            List<DisplayRect> rects = new List<DisplayRect>(_displays.Count);
+
+            foreach (var xdisplay in _displays)
+            {
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
+
+                // FIXME: Handle screen rotation!
+                
+                // FIXME: Should we use crtc size or output size?
+
+                int x = crtcInfo->x;
+                int y = crtcInfo->y;
+                int width = (int)crtcInfo->width;
+                int height = (int)crtcInfo->height;
+
+                rects.Add(new DisplayRect() { Handle = xdisplay, Bounds = new Box2i(x, y, x + width, y + height) });
+
+                XRRFreeCrtcInfo(crtcInfo);
+            }
+
+            XRRFreeScreenResources(resources);
+
+            return rects;
+        }
+
         private unsafe XRRModeInfo* GetModeInfo(XRRScreenResources* resources, RRMode mode)
         {
             for (int i = 0; i < resources->NumberOfModes; i++)

@@ -51,12 +51,16 @@ namespace X11TestProject
                 GL.ClearColor(1, 0, 1, 1);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                windowComp.SwapBuffers(window);
+                glComp.SwapBuffers(context);
 
                 windowComp.GetSize(window, out int w, out int h);
                 windowComp.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
                 // layer.GetClientPosition(window, out int x, out int y);
                 // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
+
+                var hdisp = windowComp.GetDisplay(window);
+                string name = dispComp.GetName(hdisp);
+                Console.WriteLine($"Display: {name}");
 
                 windowComp.ProcessEvents();
             }
