@@ -936,18 +936,24 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void Destroy(WindowHandle handle)
         {
-            var xhandle = handle.As<XWindowHandle>(this);
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XWindowDict.Remove(xhandle.Window);
+            XWindowDict.Remove(xwindow.Window);
 
-            XDestroyWindow(xhandle.Display, xhandle.Window);
+            XDestroyWindow(xwindow.Display, xwindow.Window);
 
-            if (xhandle.ColorMap.HasValue)
+            // If this window was fullscreen we want to restore the video mode.
+            if (xwindow.FullscreenDisplay != null)
             {
-                XFreeColormap(xhandle.Display, xhandle.ColorMap.Value);
+                X11DisplayComponent.RestoreVideoMode(this, xwindow.FullscreenDisplay);
             }
 
-            xhandle.Destroyed = true;
+            if (xwindow.ColorMap.HasValue)
+            {
+                XFreeColormap(xwindow.Display, xwindow.ColorMap.Value);
+            }
+
+            xwindow.Destroyed = true;
         }
 
         /// <inheritdoc />
@@ -1409,6 +1415,7 @@ namespace OpenTK.Platform.Native.X11
                 }
             }
 
+            // FIXME: Maybe throw here?
             Debug.Assert(bestDisp != null);
 
             return bestDisp;
@@ -1435,10 +1442,16 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            if (xwindow.IsFullscreen == true)
+            if (xwindow.FullscreenDisplay != null)
             {
-                // FIXME: Differentiate exclusive and windowed fullscreen.
-                return WindowMode.ExclusiveFullscreen;
+                if (xwindow.IsExclusiveFullscreen)
+                {
+                    return WindowMode.ExclusiveFullscreen;
+                }
+                else
+                {
+                    return WindowMode.WindowedFullscreen;
+                }
             }
 
             XSync(X11.Display, False);
@@ -1500,9 +1513,14 @@ namespace OpenTK.Platform.Native.X11
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            if (xwindow.IsFullscreen && mode != WindowMode.WindowedFullscreen && mode != WindowMode.ExclusiveFullscreen)
+            if (xwindow.FullscreenDisplay != null && mode != WindowMode.WindowedFullscreen && mode != WindowMode.ExclusiveFullscreen)
             {
                 // Go out of fullscreen!
+
+                if (xwindow.IsExclusiveFullscreen)
+                {
+                    X11DisplayComponent.RestoreVideoMode(this, xwindow.FullscreenDisplay);
+                }
 
                 // FIXME: Do we need to check these?
                 if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
@@ -1559,7 +1577,8 @@ namespace OpenTK.Platform.Native.X11
                     XFree(hints);
                 }
 
-                xwindow.IsFullscreen = false;
+                xwindow.FullscreenDisplay = null;
+                xwindow.IsExclusiveFullscreen = false;
             }
 
             switch (mode)
@@ -1657,74 +1676,18 @@ namespace OpenTK.Platform.Native.X11
 
                         break;
                     }
-                case WindowMode.ExclusiveFullscreen:
+                case WindowMode.WindowedFullscreen:
                     {
-                        if (IsMapped(xwindow))
-                        {
-                            XMapWindow(X11.Display, xwindow.Window);
-                        }
-
-                        if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
-                        {
-                            Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE.");
-                            return;
-                        }
-
-                        if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
-                        {
-                            Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
-                            return;
-                        }
-
-                        XEvent e = new XEvent();
-
-                        ref XClientMessageEvent client = ref e.ClientMessage;
-                        
-                        client.Type = XEventType.ClientMessage;
-                        client.Serial = 0;
-                        client.SendEvent = 1;
-                        client.Display = X11.Display;
-                        client.Window = xwindow.Window;
-                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                        client.Format = 32;
-                        unsafe
-                        {
-                            client.l[0] = X11._NET_WM_STATE_ADD;
-                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
-                            client.l[2] = 0;
-                            client.l[3] = 1;
-                            client.l[4] = 0;
-                        }
-
-                        int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
-
-                        // FIXME: Disable compositor for this window?
-
-                        xwindow.IsFullscreen = true;
-
-                        // Set the window size to be the full size of the monitor.
-                        // Remove the max and min size from WM_NORMAL_HINTS.
-
-                        unsafe
-                        {
-                            XSizeHints* hints = XAllocSizeHints();
-                            XSizeHintFlags supplied;
-                            XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
-                            hints->Flags &= ~XSizeHintFlags.MaxSize;
-                            hints->Flags &= ~XSizeHintFlags.MinSize;
-                            XSetWMNormalHints(X11.Display, xwindow.Window, hints);
-                            XFree(hints);
-                        }
-
-                        // FIXME: Get the correct monitor size and position!
-                        int width = XDisplayWidth(X11.Display, X11.DefaultScreen);
-                        int height = XDisplayHeight(X11.Display, X11.DefaultScreen);
-                        XMoveResizeWindow(X11.Display, xwindow.Window, 0, 0, (uint)width, (uint)height);
-
+                        SetFullscreenDisplay(handle, null);
                         break;
                     }
-                case WindowMode.WindowedFullscreen:
-                    //throw new NotImplementedException();
+                case WindowMode.ExclusiveFullscreen:
+                    {
+                        XDisplayHandle xdisplay = (XDisplayHandle)GetDisplay(handle);
+                        X11DisplayComponent.GetVideoMode(this, xdisplay, out VideoMode videoMode);
+                        SetFullscreenDisplay(handle, xdisplay, videoMode);
+                        break;
+                    }
                 default:
                     break;
             }
@@ -1734,21 +1697,160 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            XDisplayHandle? xdisplay = display?.As<XDisplayHandle>(this);
+            
+            // FIXME: Save window position and size so we can restore later.
+
+            if (xdisplay == null)
+            {
+                xdisplay = (XDisplayHandle)GetDisplay(xwindow);
+            }
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE.");
+                return;
+            }
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
+                return;
+            }
+
+            if (IsMapped(xwindow) == false)
+            {
+                XMapWindow(X11.Display, xwindow.Window);
+            }
+
+            XEvent e = new XEvent();
+            ref XClientMessageEvent client = ref e.ClientMessage;
+
+            client.Type = XEventType.ClientMessage;
+            client.Serial = 0;
+            client.SendEvent = 1;
+            client.Display = X11.Display;
+            client.Window = xwindow.Window;
+            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.Format = 32;
+            unsafe
+            {
+                client.l[0] = X11._NET_WM_STATE_ADD;
+                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                client.l[2] = 0;
+                client.l[3] = 1;
+                client.l[4] = 0;
+            }
+
+            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+            // FIXME: Disable compositor for this window?
+
+            xwindow.FullscreenDisplay = xdisplay;
+            xwindow.IsExclusiveFullscreen = false;
+
+            // Set the window size to be the full size of the monitor.
+            // Remove the max and min size from WM_NORMAL_HINTS.
+
+            unsafe
+            {
+                XSizeHints* hints = XAllocSizeHints();
+                XSizeHintFlags supplied;
+                XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+                hints->Flags &= ~XSizeHintFlags.MaxSize;
+                hints->Flags &= ~XSizeHintFlags.MinSize;
+                XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+                XFree(hints);
+            }
+
+            // FIXME: Do we need to do this?
+            Box2i bounds = X11DisplayComponent.GetBounds(xdisplay);
+            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
         }
 
         /// <inheritdoc />
-        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle display, VideoMode videoMode)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            XDisplayHandle xdisplay = display.As<XDisplayHandle>(this);
+
+            // FIXME: Save window position and size so we can restore later.
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE.");
+                return;
+            }
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
+                return;
+            }
+
+            if (IsMapped(xwindow) == false)
+            {
+                XMapWindow(X11.Display, xwindow.Window);
+            }
+
+            // FIXME: Some way to restore the video mode after the change?
+            // Set the display to use the video mode.
+            X11DisplayComponent.SetVideoMode(this, xdisplay, videoMode);
+
+            XEvent e = new XEvent();
+            ref XClientMessageEvent client = ref e.ClientMessage;
+
+            client.Type = XEventType.ClientMessage;
+            client.Serial = 0;
+            client.SendEvent = 1;
+            client.Display = X11.Display;
+            client.Window = xwindow.Window;
+            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.Format = 32;
+            unsafe
+            {
+                client.l[0] = X11._NET_WM_STATE_ADD;
+                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                client.l[2] = 0;
+                client.l[3] = 1;
+                client.l[4] = 0;
+            }
+
+            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+            // FIXME: Disable compositor for this window?
+
+            xwindow.FullscreenDisplay = xdisplay;
+            xwindow.IsExclusiveFullscreen = true;
+
+            // Set the window size to be the full size of the monitor.
+            // Remove the max and min size from WM_NORMAL_HINTS.
+
+            unsafe
+            {
+                XSizeHints* hints = XAllocSizeHints();
+                XSizeHintFlags supplied;
+                XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+                hints->Flags &= ~XSizeHintFlags.MaxSize;
+                hints->Flags &= ~XSizeHintFlags.MinSize;
+                XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+                XFree(hints);
+            }
+
+            // FIXME: Do we need to do this?
+            Box2i bounds = X11DisplayComponent.GetBounds(xdisplay);
+            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
         }
 
         /// <inheritdoc />
-        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        public bool GetFullscreenDisplay(WindowHandle handle, [NotNullWhen(true)] out DisplayHandle? display)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            display = xwindow.FullscreenDisplay;
+            return display != null;
         }
 
         /// <inheritdoc />

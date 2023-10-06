@@ -111,4 +111,13 @@ namespace OpenTK.Platform.Native.X11.XRandR
         DoubleClock = 1 << 12,
         ClockDivideBy2 = 1 << 13
     }
+
+    internal enum RRConfigStatus : int 
+    {
+        Success = 0x0,
+        InvalidConfigTime = 0x1,
+        InvalidTime = 0x2,
+        Failed = 0x3,
+    }
+	
 }

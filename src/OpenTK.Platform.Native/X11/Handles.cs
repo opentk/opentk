@@ -48,8 +48,9 @@ namespace OpenTK.Platform.Native.X11
 
         public XIconHandle? Icon { get; set; } = null;
 
-        // FIXME: This will have to change so we know what monitor we are fullscreen on.
-        public bool IsFullscreen { get; set; }
+
+        public XDisplayHandle? FullscreenDisplay { get; set; } = null;
+        public bool IsExclusiveFullscreen { get; set; } = false;
 
         public XWindowHandle(
             XDisplayPtr display,
@@ -103,6 +104,11 @@ namespace OpenTK.Platform.Native.X11
         public RRCrtc Crtc { get; set; }
 
         public string Name { get; set; }
+
+        /// <summary>
+        /// RRMode of the display before any window being fullscreened.
+        /// </summary>
+        public RRMode OldMode { get; set; } = RRMode.None;
 
         public XDisplayHandle(RROutput output, RRCrtc crtc)
         {

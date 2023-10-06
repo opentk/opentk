@@ -275,33 +275,33 @@ namespace OpenTK.Core.Platform
         /// Put a window into 'windowed fullscreen' on a specified display or the display the window is displayed on.
         /// If <paramref name="display"/> is <c>null</c> then the window will be made fullscreen on the 'nearest' display.
         /// </summary>
-        /// <param name="window">The window to make fullscreen.</param>
+        /// <param name="handle">The window to make fullscreen.</param>
         /// <param name="display">The display to make the window fullscreen on.</param>
         /// <remarks>
         /// To make an 'exclusive fullscreen' window see <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle, VideoMode)"/>.
         /// </remarks>
-        void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display);
+        void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display);
 
         /// <summary>
         /// Put a window into 'exclusive fullscreen' on a specified display and change the video mode to the specified video mode.
         /// Only video modes accuired using <see cref="IDisplayComponent.GetSupportedVideoModes(DisplayHandle, Span{VideoMode})"/>
         /// are expected to work.
         /// </summary>
-        /// <param name="window">The window to make fullscreen.</param>
+        /// <param name="handle">The window to make fullscreen.</param>
         /// <param name="display">The display to make the window fullscreen on.</param>
         /// <param name="videoMode">The video mode to use when making the window fullscreen.</param>
         /// <remarks>
         /// To make an 'windowed fullscreen' window see <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/>.
         /// </remarks>
-        void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode);
+        void SetFullscreenDisplay(WindowHandle handle, DisplayHandle display, VideoMode videoMode);
 
         /// <summary>
         /// Gets the display that the specified window is fullscreen on, if the window is fullscreen.
         /// </summary>
-        /// <param name="window">The window handle.</param>
+        /// <param name="handle">The window handle.</param>
         /// <param name="display">The display where the window is fullscreen or null if the window is not fullscreen.</param>
         /// <returns><c>true</c> if the window was fullscreen, <c>false</c> otherwise.</returns>
-        bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display);
+        bool GetFullscreenDisplay(WindowHandle handle, [NotNullWhen(true)] out DisplayHandle? display);
 
         /// <summary>
         /// Get the border style of a window.

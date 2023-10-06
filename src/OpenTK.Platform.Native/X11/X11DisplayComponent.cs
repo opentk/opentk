@@ -9,8 +9,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using OpenTK.Platform.Native.X11.XRandR;
-using System.Security.Authentication;
-using System.Reflection;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -72,7 +70,134 @@ namespace OpenTK.Platform.Native.X11
             return rects;
         }
 
-        private unsafe XRRModeInfo* GetModeInfo(XRRScreenResources* resources, RRMode mode)
+        internal static unsafe Box2i GetBounds(XDisplayHandle handle)
+        {
+            // XRRGetScreenResourcesCurrent?
+            XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+            XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, handle.Crtc);
+
+            Box2i bounds = new Box2i(crtcInfo->x, crtcInfo->y, crtcInfo->x + (int)crtcInfo->width, crtcInfo->y + (int)crtcInfo->height);
+
+            XRRFreeCrtcInfo(crtcInfo);
+            XRRFreeScreenResources(resources);
+
+            return bounds;
+        }
+
+        internal static unsafe bool SetVideoMode(IPalComponent comp, XDisplayHandle handle, VideoMode mode)
+        {
+            // Find the mode that best matches the desired video mode.
+            // Priority is color depth > resolution > refresh rate
+            XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+            XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, handle.Crtc);
+            XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, handle.Output);
+
+            XRRModeInfo* bestMode = null;
+            int bestColorDiff = int.MaxValue;
+            int bestSizeDiff = int.MaxValue;
+            float bestRateDiff = int.MaxValue;
+            for (int i = 0; i < outputInfo->nmode; i++)
+            {
+                // FIXME: glfw removes RR_Interlaced modes. Why?
+                XRRModeInfo* info = GetModeInfo(resources, outputInfo->modes[i]);
+
+                int colorDiff = int.Abs(XDefaultDepth(X11.Display, X11.DefaultScreen) - mode.BitsPerPixel);
+
+                int sizeDiff = ((int)info->Width - mode.Width) * ((int)info->Width - mode.Width) +
+                                ((int)info->Height - mode.Height) * ((int)info->Height - mode.Height);
+
+                float rateDiff = float.Abs(CalculateRefreshRate(comp, info) - mode.RefreshRate);
+
+                if (colorDiff < bestColorDiff ||
+                    (colorDiff == bestColorDiff && sizeDiff < bestSizeDiff) ||
+                    (colorDiff == bestColorDiff && sizeDiff == bestSizeDiff && rateDiff < bestRateDiff))
+                {
+                    bestMode = info;
+                    bestColorDiff = colorDiff;
+                    bestSizeDiff = sizeDiff;
+                    bestRateDiff = rateDiff;
+                }
+            }
+
+            if (bestMode != null)
+            {
+                // If the new mode is the same as the current mode
+                // we don't need to do anything, we can just return.
+                // We don't have to keep track of any "OldMode".
+                if (bestMode->ModeId == crtcInfo->mode)
+                {
+                    return true;
+                }
+
+                // We are changing mode. 
+                // If there is no old mode, set it.
+                if (handle.OldMode == RRMode.None)
+                {
+                    handle.OldMode = crtcInfo->mode;
+                }
+
+                // Keep everything the same except the mode.
+                RRConfigStatus status = XRRSetCrtcConfig(
+                    X11.Display, resources, 
+                    handle.Crtc,
+                    XTime.CurrentTime, 
+                    crtcInfo->x, crtcInfo->y,
+                    bestMode->ModeId,
+                    crtcInfo->rotation,
+                    crtcInfo->outputs,
+                    crtcInfo->noutput);
+
+                if (status != RRConfigStatus.Success)
+                {
+                    throw new PalException(comp, $"RRSetCrtcConfig failed with: '{status}' in SetVideoMode().");
+                }
+
+                XRRFreeOutputInfo(outputInfo);
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+                return true;
+            }
+            else 
+            {
+                comp.Logger?.LogWarning($"No mode matched '{mode}' out of {outputInfo->nmode} modes.");
+                XRRFreeOutputInfo(outputInfo);
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+                return false;
+            }
+        }
+
+        internal static unsafe void RestoreVideoMode(IPalComponent comp, XDisplayHandle handle)
+        {
+            // If we don't have an old mode set, we haven't changed mode ever.
+            if (handle.OldMode == RRMode.None)
+                return;
+
+            XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+            XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, handle.Crtc);
+            XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, handle.Output);
+
+            RRConfigStatus status = XRRSetCrtcConfig(
+                X11.Display, resources, 
+                handle.Crtc,
+                XTime.CurrentTime, 
+                crtcInfo->x, crtcInfo->y,
+                handle.OldMode,
+                crtcInfo->rotation,
+                crtcInfo->outputs,
+                crtcInfo->noutput);
+
+            if (status != RRConfigStatus.Success)
+            {
+                throw new PalException(comp, $"RRSetCrtcConfig failed with: '{status}' in RestoreVideoMode().");
+            }
+
+            XRRFreeOutputInfo(outputInfo);
+            XRRFreeCrtcInfo(crtcInfo);
+            XRRFreeScreenResources(resources);
+        }
+
+        private static unsafe XRRModeInfo* GetModeInfo(XRRScreenResources* resources, RRMode mode)
         {
             for (int i = 0; i < resources->NumberOfModes; i++)
             {
@@ -85,7 +210,7 @@ namespace OpenTK.Platform.Native.X11
             return null;
         }
 
-        private unsafe float CalculateRefreshRate(XRRModeInfo* info)
+        private static unsafe float CalculateRefreshRate(IPalComponent comp, XRRModeInfo* info)
         {
             if (info->DotClock != 0 && info->VTotal != 0 && info->HTotal != 0)
             {
@@ -94,7 +219,7 @@ namespace OpenTK.Platform.Native.X11
             else
             {
                 // FIXME: Name or index of the display or some info about the mode...?
-                Logger?.LogWarning($"Could not get refresh rate. (dotclock: {info->DotClock}, vtotal: {info->VTotal}, htotal: {info->HTotal})");
+                comp.Logger?.LogWarning($"Could not get refresh rate. (dotclock: {info->DotClock}, vtotal: {info->VTotal}, htotal: {info->HTotal})");
                 return 0;
             }
         }
@@ -291,10 +416,10 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
         {
+            XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
+
             unsafe
             {
-                XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
-
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
                 XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
 
@@ -304,13 +429,40 @@ namespace OpenTK.Platform.Native.X11
                     // FIXME: Handle screen rotation!
                     mode.Width = (int)crtcInfo->width;
                     mode.Height = (int)crtcInfo->height;
-                    mode.RefreshRate = CalculateRefreshRate(info);
+                    mode.RefreshRate = CalculateRefreshRate(this, info);
                     mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
                 }
                 else
                 {
                     mode = default;
                     Logger?.LogError("Could not get the current video mode.");
+                }
+
+                XRRFreeCrtcInfo(crtcInfo);
+                XRRFreeScreenResources(resources);
+            }
+        }
+
+        internal static void GetVideoMode(IPalComponent comp, XDisplayHandle handle, out VideoMode mode)
+        {
+            unsafe
+            {
+                XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
+                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, handle.Crtc);
+
+                XRRModeInfo* info = GetModeInfo(resources, crtcInfo->mode);
+                if (info != null)
+                {
+                    // FIXME: Handle screen rotation!
+                    mode.Width = (int)crtcInfo->width;
+                    mode.Height = (int)crtcInfo->height;
+                    mode.RefreshRate = CalculateRefreshRate(comp, info);
+                    mode.BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
+                }
+                else
+                {
+                    mode = default;
+                    comp.Logger?.LogError("Could not get the current video mode.");
                 }
 
                 XRRFreeCrtcInfo(crtcInfo);
@@ -326,7 +478,6 @@ namespace OpenTK.Platform.Native.X11
                 XDisplayHandle xdisplay = handle.As<XDisplayHandle>(this);
 
                 XRRScreenResources* resources = XRRGetScreenResources(X11.Display, X11.DefaultRootWindow);
-                XRRCrtcInfo* crtcInfo = XRRGetCrtcInfo(X11.Display, resources, xdisplay.Crtc);
                 XRROutputInfo* outputInfo = XRRGetOutputInfo(X11.Display, resources, xdisplay.Output);
 
                 VideoMode[] modes = new VideoMode[outputInfo->nmode];
@@ -337,12 +488,11 @@ namespace OpenTK.Platform.Native.X11
 
                     modes[i].Width = (int)info->Width;
                     modes[i].Height = (int)info->Height;
-                    modes[i].RefreshRate = CalculateRefreshRate(info);
+                    modes[i].RefreshRate = CalculateRefreshRate(this, info);
                     modes[i].BitsPerPixel = XDefaultDepth(X11.Display, X11.DefaultScreen);
                 }
 
                 XRRFreeOutputInfo(outputInfo);
-                XRRFreeCrtcInfo(crtcInfo);
                 XRRFreeScreenResources(resources);
 
                 return modes;
