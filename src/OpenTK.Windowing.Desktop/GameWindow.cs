@@ -264,8 +264,8 @@ namespace OpenTK.Windowing.Desktop
             // Make sure that the gl contexts is current for OnLoad and the initial OnResize
             Context?.MakeCurrent();
 
-            // Hook the Win32 window message handler and (TODO) wire up related events
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            // Hook the Win32 window message handler and wire up related events
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && _win32SuspendTimerOnDrag)
             {
                 _win32WndProc = new Win32WindowProc(WindowPtr);
                 _win32WndProc.OnModalSizeMoveBegin += Win32_OnModalSizeMoveBegin;
@@ -433,20 +433,16 @@ namespace OpenTK.Windowing.Desktop
             _watchUpdate.Restart();
         }
 
+        // Only fired when GameWindowSettings.Win32SuspendTimerOnDrag is enabled
         private void Win32_OnModalSizeMoveBegin()
         {
-            if (_win32SuspendTimerOnDrag)
-            {
-                _watchUpdate.Stop();
-            }
+            _watchUpdate.Stop();
         }
 
+        // Only fired when GameWindowSettings.Win32SuspendTimerOnDrag is enabled
         private void Win32_OnModalSizeMoveEnd()
         {
-            if (_win32SuspendTimerOnDrag)
-            {
-                _watchUpdate.Restart();
-            }
+            _watchUpdate.Restart();
         }
 
         /// <inheritdoc />
@@ -454,7 +450,7 @@ namespace OpenTK.Windowing.Desktop
         {
             base.Dispose();
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && !(_win32WndProc is null))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && _win32WndProc != null)
             {
                 _win32WndProc.OnModalSizeMoveBegin -= Win32_OnModalSizeMoveBegin;
                 _win32WndProc.OnModalSizeMoveEnd -= Win32_OnModalSizeMoveEnd;

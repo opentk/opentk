@@ -26,29 +26,6 @@ namespace OpenTK.Windowing.Desktop
             return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
         }
 
-        /*
-        Included for completeness. Currently these are unnecessary since SetWindowLongPtr
-        will return the current value, and we aren't currently getting any value that
-        isn't being replaced (specifically the WndProc).
-
-        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
-        private static extern IntPtr GetWindowLongPtr32(IntPtr hWnd, int nIndex);
-
-        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
-        private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
-
-        // Invokes the 32- or 64-bit version depending on pointer size.
-        private static IntPtr GetWindowLongPtr(IntPtr hWnd, int nIndex)
-        {
-            if (IntPtr.Size == 8)
-            {
-                return GetWindowLongPtr64(hWnd, nIndex);
-            }
-
-            return GetWindowLongPtr32(hWnd, nIndex);
-        }
-        */
-
         private enum WindowLongFlags : int
         {
             GWL_EXSTYLE = -20,
@@ -82,20 +59,17 @@ namespace OpenTK.Windowing.Desktop
         private const int WM_CAPTURECHANGED = 0x0215;
 
         // Native win32 window handle
-        private IntPtr _hWnd = IntPtr.Zero;
+        private IntPtr _hWnd;
 
         // Original message-handler
-        private IntPtr _DefaultWndProc = IntPtr.Zero;
+        private IntPtr _defaultWndProc;
+
+        // Local message-handler
+        private WndProcPointer _openTKWndProcDelegate;
 
         // When true, WM_ENTERSIZEMOVE has been received, and this will reset
         // to false when WM_ENTERSIZEMOVE or WM_CAPTURECHANGED is received.
-        private bool _isModalSizeMoveState = false;
-
-        /// <summary>
-        /// Indicates the window is in a modal size/move state and update events
-        /// are temporarily suspended.
-        /// </summary>
-        public bool IsModalSizeMoveState { get => _isModalSizeMoveState; }
+        private bool _inModalSizeMoveState = false;
 
         /// <summary>
         /// Invoked when Windows indicates modal move/size activity has started (the user
@@ -111,8 +85,9 @@ namespace OpenTK.Windowing.Desktop
         public Win32WindowProc(Window* window)
         {
             _hWnd = GLFW.GetWin32Window(window);
-            var openTKWndProc = Marshal.GetFunctionPointerForDelegate((WndProcPointer)WndProc);
-            _DefaultWndProc = SetWindowLongPtr(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, openTKWndProc);
+            _openTKWndProcDelegate = WndProc;
+            var openTKWndProc = Marshal.GetFunctionPointerForDelegate(_openTKWndProcDelegate);
+            _defaultWndProc = SetWindowLongPtr(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, openTKWndProc);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
@@ -120,15 +95,15 @@ namespace OpenTK.Windowing.Desktop
             switch (msg)
             {
                 case WM_ENTERSIZEMOVE:
-                    _isModalSizeMoveState = true;
+                    _inModalSizeMoveState = true;
                     OnModalSizeMoveBegin?.Invoke();
                     break;
 
                 case WM_EXITSIZEMOVE:
                 case WM_CAPTURECHANGED:
-                    if (_isModalSizeMoveState)
+                    if (_inModalSizeMoveState)
                     {
-                        _isModalSizeMoveState = false;
+                        _inModalSizeMoveState = false;
                         OnModalSizeMoveEnd?.Invoke();
                     }
                     break;
@@ -137,7 +112,7 @@ namespace OpenTK.Windowing.Desktop
                     break;
             }
 
-            return CallWindowProc(_DefaultWndProc, _hWnd, msg, wParam, lParam);
+            return CallWindowProc(_defaultWndProc, _hWnd, msg, wParam, lParam);
         }
 
         private bool _isDisposed = false;
@@ -149,10 +124,10 @@ namespace OpenTK.Windowing.Desktop
                 return;
             }
 
-            if (!_DefaultWndProc.Equals(IntPtr.Zero))
+            if (_defaultWndProc != IntPtr.Zero)
             {
-                SetWindowLongPtr(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, _DefaultWndProc);
-                _DefaultWndProc = IntPtr.Zero;
+                SetWindowLongPtr(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, _defaultWndProc);
+                _defaultWndProc = IntPtr.Zero;
             }
 
             GC.SuppressFinalize(this);
