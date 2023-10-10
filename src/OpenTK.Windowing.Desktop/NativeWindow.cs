@@ -857,12 +857,6 @@ namespace OpenTK.Windowing.Desktop
             else
             {
                 WindowPtr = GLFW.CreateWindow(settings.Size.X, settings.Size.Y, _title, null, (Window*)(settings.SharedContext?.WindowPtr ?? IntPtr.Zero));
-
-                if (settings.StartVisible)
-                {
-                    // If we are starting the window maximized or minimized we need to set that here.
-                    WindowState = settings.WindowState;
-                }
             }
 
             // For Vulkan, we need to pass ContextAPI.NoAPI, otherwise we will get an exception.
@@ -886,6 +880,13 @@ namespace OpenTK.Windowing.Desktop
                 {
                     InitializeGlBindings();
                 }
+            }
+
+            // When WindowState is Normal on Wayland it freezes on calling GLFW.RestoreWindow(WindowPtr) before Context?.MakeCurrent()
+            if (settings.WindowState != WindowState.Fullscreen && _isVisible)
+            {
+                // If we are starting the window maximized or minimized we need to set that here.
+                WindowState = settings.WindowState;
             }
 
             // Enables the caps lock modifier to be detected and updated
