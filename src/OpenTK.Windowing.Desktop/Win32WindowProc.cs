@@ -22,8 +22,10 @@ namespace OpenTK.Windowing.Desktop
             {
                 return SetWindowLongPtr(hWnd, nIndex, dwNewLong);
             }
-
-            return new IntPtr(SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32()));
+            else
+            {
+                return new IntPtr(SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32()));
+            }
         }
 
         private enum WindowLongFlags : int
