@@ -9,21 +9,21 @@ namespace OpenTK.Windowing.Desktop
     /// </summary>
     internal unsafe class Win32WindowProc : IDisposable
     {
-        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
-        private static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
+        [DllImport("user32.dll")]
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+        [DllImport("user32.dll")]
+        private static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         // Invokes the 32- or 64-bit version depending on pointer size.
-        public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        public static IntPtr SetWindowPointer(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
-            if (IntPtr.Size == 8)
+            if (Environment.Is64BitProcess)
             {
-                return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+                return SetWindowLongPtr(hWnd, nIndex, dwNewLong);
             }
 
-            return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
+            return new IntPtr(SetWindowLong(hWnd, nIndex, dwNewLong.ToInt32()));
         }
 
         private enum WindowLongFlags : int
@@ -87,7 +87,7 @@ namespace OpenTK.Windowing.Desktop
             _hWnd = GLFW.GetWin32Window(window);
             _openTKWndProcDelegate = WndProc;
             var openTKWndProc = Marshal.GetFunctionPointerForDelegate(_openTKWndProcDelegate);
-            _defaultWndProc = SetWindowLongPtr(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, openTKWndProc);
+            _defaultWndProc = SetWindowPointer(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, openTKWndProc);
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam)
@@ -126,7 +126,7 @@ namespace OpenTK.Windowing.Desktop
 
             if (_defaultWndProc != IntPtr.Zero)
             {
-                SetWindowLongPtr(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, _defaultWndProc);
+                SetWindowPointer(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, _defaultWndProc);
                 _defaultWndProc = IntPtr.Zero;
             }
 
