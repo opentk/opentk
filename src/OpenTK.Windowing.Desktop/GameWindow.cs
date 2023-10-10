@@ -178,9 +178,9 @@ namespace OpenTK.Windowing.Desktop
         /// </summary>
         public int ExpectedSchedulerPeriod { get; set; } = 16;
 
-        private Win32WindowProc _win32WndProc = null;
+        private readonly bool _win32SuspendTimerOnDrag;
 
-        private bool _win32SuspendTimerOnDrag;
+        private Win32WindowProc _win32WndProc = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameWindow"/> class with sensible default attributes.
@@ -445,10 +445,17 @@ namespace OpenTK.Windowing.Desktop
             _watchUpdate.Restart();
         }
 
+        private bool _isDisposed = false;
+
         /// <inheritdoc />
         public override void Dispose()
         {
             base.Dispose();
+
+            if (_isDisposed)
+            {
+                return;
+            }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && _win32WndProc != null)
             {
@@ -457,6 +464,9 @@ namespace OpenTK.Windowing.Desktop
                 _win32WndProc.Dispose();
                 _win32WndProc = null;
             }
+
+            GC.SuppressFinalize(this);
+            _isDisposed = true;
         }
     }
 }

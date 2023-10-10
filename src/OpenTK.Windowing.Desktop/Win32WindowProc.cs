@@ -59,13 +59,13 @@ namespace OpenTK.Windowing.Desktop
         private const int WM_CAPTURECHANGED = 0x0215;
 
         // Native win32 window handle
-        private IntPtr _hWnd;
+        private readonly IntPtr _hWnd;
 
         // Original message-handler
-        private IntPtr _defaultWndProc;
+        private readonly IntPtr _defaultWndProc;
 
         // Local message-handler
-        private WndProcPointer _openTKWndProcDelegate;
+        private readonly WndProcPointer _openTKWndProcDelegate;
 
         // When true, WM_ENTERSIZEMOVE has been received, and this will reset
         // to false when WM_ENTERSIZEMOVE or WM_CAPTURECHANGED is received.
@@ -127,7 +127,6 @@ namespace OpenTK.Windowing.Desktop
             if (_defaultWndProc != IntPtr.Zero)
             {
                 SetWindowPointer(_hWnd, (int)WindowLongFlags.GWL_WNDPROC, _defaultWndProc);
-                _defaultWndProc = IntPtr.Zero;
             }
 
             GC.SuppressFinalize(this);
