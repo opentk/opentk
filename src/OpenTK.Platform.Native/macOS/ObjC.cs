@@ -123,6 +123,9 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, SEL value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern IntPtr objc_msgSend_IntPtr(IntPtr receiver, SEL selector, IntPtr value1, IntPtr value2);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
@@ -161,10 +164,16 @@ namespace OpenTK.Platform.Native.macOS
         internal static extern ulong objc_msgSend_ulong(IntPtr receiver, SEL selector, ulong value);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern uint objc_msgSend_uint(IntPtr receiver, SEL selector);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector);
 
         [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
         internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector, long value);
+
+        [DllImport(FoundationFramework, EntryPoint = "objc_msgSend")]
+        internal static extern bool objc_msgSend_bool(IntPtr receiver, SEL selector, SEL value);
 
         internal static CGRect objc_msgSend_CGRect(IntPtr receiver, SEL selector)
         {
@@ -300,6 +309,12 @@ namespace OpenTK.Platform.Native.macOS
 
         [DllImport(AppKitFramework)]
         internal static extern SEL NSSelectorFromString(IntPtr /* NSString */ aSelectorName);
+
+        [DllImport(FoundationFramework)]
+        internal static extern nint CFArrayGetCount(IntPtr /* CFArrayRef */ theArray);
+
+        [DllImport(FoundationFramework)]
+        internal static extern IntPtr CFArrayGetValueAtIndex(IntPtr /* CFArrayRef */ theArray, nint idx);
     }
 }
 

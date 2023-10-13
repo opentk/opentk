@@ -169,9 +169,20 @@ namespace OpenTK.Backends.Tests
                 ImGui.Text($"Video mode: {currentVideoMode}");
 
                 VideoMode[] modes = Program.DisplayComponent.GetSupportedVideoModes(handle);
-                string[] modeStrs = modes.Select(m => m.ToString()).ToArray();
-                int i = -1;
-                ImGui.ListBox("Supported video modes", ref i, modeStrs, modeStrs.Length, 4);
+                ImGui.EndDisabled();
+                if (ImGui.BeginListBox("Supported video modes"))
+                {
+                    ImGui.BeginDisabled();
+                    for (int i = 0; i < modes.Length; i++)
+                    {
+                        ImGui.Selectable(modes[i].ToString());
+                    }
+                    ImGui.EndDisabled();
+
+                    ImGui.EndListBox();
+                }
+                ImGui.BeginDisabled();
+
                 ImGui.EndDisabled();
             }
         }

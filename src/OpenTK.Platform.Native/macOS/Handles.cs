@@ -32,5 +32,31 @@ namespace OpenTK.Platform.Native.macOS
             SharedContext = sharedContext;
         }
     }
+
+    // FIXME: Is this an NSScreen handle or a CGDirectDisplay handle?
+    public class NSScreenHandle : DisplayHandle
+    {
+        public uint DirectDisplayID { get; set; }
+
+        // FIXME: Do we need this?
+        public uint UnitNumber { get; set; }
+
+        public IntPtr Screen { get; set; }
+
+        public string Name { get; set; } 
+
+        public bool IsPrimary { get; set; }
+
+        public DisplayResolution Resolution { get; set; }
+
+        public double RefreshRate { get; set; }
+
+        public NSScreenHandle(uint directDisplayID, uint unitNumber, IntPtr screen)
+        {
+            DirectDisplayID = directDisplayID;
+            UnitNumber = unitNumber;
+            Screen = screen;
+        }
+    }
 }
 
