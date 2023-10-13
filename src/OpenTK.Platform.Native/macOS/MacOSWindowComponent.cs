@@ -15,7 +15,7 @@ namespace OpenTK.Platform.Native.macOS
     {
         internal static IntPtr nsApplication;
 
-        internal static SEL selQuit = sel_registerName("quit"u8);
+        internal static readonly SEL selQuit = sel_registerName("quit"u8);
         internal static SEL selSharedApplication = sel_registerName("sharedApplication"u8);
         internal static SEL selSetActivationPolicy = sel_registerName("setActivationPolicy:"u8);
         internal static SEL selDiscardEventsMatchingMask_beforeEvent = sel_registerName("discardEventsMatchingMask:beforeEvent:"u8);
@@ -56,6 +56,10 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selIsVisible = sel_registerName("isVisible"u8);
         internal static SEL selOrderFront = sel_registerName("orderFront:"u8);
         internal static SEL selOrderOut = sel_registerName("orderOut:"u8);
+
+        internal static SEL selStyleMask = sel_registerName("styleMask"u8);
+        internal static SEL selSetStyleMask = sel_registerName("setStyleMask:"u8);
+
 
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
@@ -646,7 +650,50 @@ namespace OpenTK.Platform.Native.macOS
 
         public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            switch (style)
+            {
+                case WindowBorderStyle.Borderless:
+                    {
+                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Borderless;
+
+                        objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
+                        break;
+                    }
+                case WindowBorderStyle.FixedBorder:
+                    {
+                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled;
+
+                        objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
+
+                        break;
+                    }
+                case WindowBorderStyle.ResizableBorder:
+                    {
+                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable;
+
+                        objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
+
+                        break;
+                    }
+                case WindowBorderStyle.ToolBox:
+                    {
+                        NSWindowStyleMask nsstyle = NSWindowStyleMask.Closable | NSWindowStyleMask.Miniaturizable | NSWindowStyleMask.Titled | NSWindowStyleMask.Resizable | NSWindowStyleMask.UtilityWindow;
+
+                        objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
+
+                        // FIXME: We can only set the utility flag on a NSPanel and not NSWindow...
+                        // We might need to recreate the window as a panel, alternatively maybe it's
+                        // possible to change the window to be an NSPanel after it's been instantiated?
+
+                        Logger?.LogError("WindowBorderStyle.ToolBox currently doesn't work on macos.");
+
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(style), (int)style, style.GetType());
+            }
         }
 
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)

@@ -50,9 +50,13 @@ namespace OpenTK.Backends.Tests
 
         string titleString = "";
         int modeIndex = 0;
+        int borderStyleIndex = 0;
 
         WindowMode[] WindowModes = Enum.GetValues<WindowMode>();
         string[] WindowModeNames = Enum.GetNames<WindowMode>();
+
+        WindowBorderStyle[] WindowBorderStyles = Enum.GetValues<WindowBorderStyle>();
+        string[] WindowBorderStyleNames = Enum.GetNames<WindowBorderStyle>();
 
         public override void Paint()
         {
@@ -173,6 +177,15 @@ namespace OpenTK.Backends.Tests
                 {
                     WindowComponent!.SetMode(window, WindowModes[modeIndex]);
                     Program.Logger.LogInfo($"WindowComponent.SetMode({WindowModeNames[modeIndex]})");
+                }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Border style"); ImGui.SameLine();
+                ImGui.Combo("##border_style", ref borderStyleIndex, WindowBorderStyleNames, WindowBorderStyleNames.Length); ImGui.SameLine();
+                if (ImGui.Button("Apply##border_style"))
+                {
+                    WindowComponent!.SetBorderStyle(window, WindowBorderStyles[borderStyleIndex]);
+                    Program.Logger.LogInfo($"WindowComponent.SetBorderStyle({WindowBorderStyleNames[borderStyleIndex]})");
                 }
             }
 
