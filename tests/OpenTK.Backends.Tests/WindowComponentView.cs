@@ -186,6 +186,27 @@ namespace OpenTK.Backends.Tests
                 {
                     WindowComponent!.SetBorderStyle(window, WindowBorderStyles[borderStyleIndex]);
                     Program.Logger.LogInfo($"WindowComponent.SetBorderStyle({WindowBorderStyleNames[borderStyleIndex]})");
+
+                    var style = WindowComponent!.GetBorderStyle(window);
+                    Program.Logger.LogInfo($"Border style: {style}");
+                }
+
+                ImGui.AlignTextToFramePadding();
+                ImGui.TextUnformatted("Always on top:"); ImGui.SameLine();
+                if (ImGui.Button("Yes"))
+                {
+                    Program.WindowComp.SetAlwaysOnTop(window, true);
+
+                    bool value = Program.WindowComp.IsAlwaysOnTop(window);
+                    Program.Logger.LogInfo($"Always on top: {value}");
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("No"))
+                {
+                    Program.WindowComp.SetAlwaysOnTop(window, false);
+
+                    bool value = Program.WindowComp.IsAlwaysOnTop(window);
+                    Program.Logger.LogInfo($"Always on top: {value}");
                 }
             }
 

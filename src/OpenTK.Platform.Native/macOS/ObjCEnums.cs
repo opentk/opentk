@@ -154,5 +154,18 @@ namespace OpenTK.Platform.Native.macOS
         CriticalRequest = 0,
         InformationalRequest = 10,
     }
+
+    public enum NSWindowLevel : long
+    {
+        Normal = 0,
+        Floating = 3,
+        Submenu = 3,
+        TornOffMenu = 3,
+        MainMenu = 24,
+        Status = 25,
+        ModalPanel = 8,
+        PopUpMenu = 101,
+        ScreenSaver = 1000,
+    }
 }
 

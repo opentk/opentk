@@ -60,6 +60,8 @@ namespace OpenTK.Platform.Native.macOS
         internal static SEL selStyleMask = sel_registerName("styleMask"u8);
         internal static SEL selSetStyleMask = sel_registerName("setStyleMask:"u8);
 
+        internal static SEL selLevel = sel_registerName("level"u8);
+        internal static SEL selSetLevel = sel_registerName("setLevel:"u8);
 
 
         internal static IntPtr NSDefaultRunLoop = GetStringConstant(FoundationLibrary, "NSDefaultRunLoopMode"u8);
@@ -645,7 +647,27 @@ namespace OpenTK.Platform.Native.macOS
 
         public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            NSWindowStyleMask style = (NSWindowStyleMask)objc_msgSend_IntPtr(nswindow.Window, selStyleMask);
+
+            // If the style mask is 0 it's the same as Borderless, it's not a flag.
+            if (style == NSWindowStyleMask.Borderless)
+            {
+                return WindowBorderStyle.Borderless;
+            }
+
+            if (style.HasFlag(NSWindowStyleMask.UtilityWindow))
+            {
+                return WindowBorderStyle.ToolBox;
+            }
+
+            if (style.HasFlag(NSWindowStyleMask.Resizable))
+            {
+                return WindowBorderStyle.ResizableBorder;
+            }
+
+            return WindowBorderStyle.FixedBorder;
         }
 
         public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
@@ -659,6 +681,7 @@ namespace OpenTK.Platform.Native.macOS
                         NSWindowStyleMask nsstyle = NSWindowStyleMask.Borderless;
 
                         objc_msgSend(nswindow.Window, selSetStyleMask, (IntPtr)nsstyle);
+
                         break;
                     }
                 case WindowBorderStyle.FixedBorder:
@@ -698,12 +721,32 @@ namespace OpenTK.Platform.Native.macOS
 
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            if (floating)
+            {
+                objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)NSWindowLevel.Floating);
+            }
+            else
+            {
+                objc_msgSend(nswindow.Window, selSetLevel, (IntPtr)NSWindowLevel.Normal);
+            }
         }
 
         public bool IsAlwaysOnTop(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
+
+            NSWindowLevel level = (NSWindowLevel)objc_msgSend_IntPtr(nswindow.Window, selLevel);
+            if (level == NSWindowLevel.Floating)
+            {
+                return true;
+            }
+            else
+            {
+                // FIXME: Maybe log if level isn't `NSWindowLevel.Normal`?
+                return false;
+            }
         }
 
         public void SetHitTestCallback(WindowHandle handle, HitTest? test)
