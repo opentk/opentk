@@ -309,11 +309,43 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
+        internal static IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                return GetWindowLongPtr(hWnd, nIndex);
+            }
+            else
+            {
+                return GetWindowLong(hWnd, nIndex);
+            }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong);
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern int GetWindowLong(IntPtr hWnd, GetGWLPIndex nIndex);
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
+        }
+
+        internal static IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                return SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+            }
+            else
+            {
+                return SetWindowLong(hWnd, nIndex, (int)dwNewLong);
+            }
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern int SetWindowLong(IntPtr hWnd, SetGWLPIndex nIndex, int dwNewLong);
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong);
+        }
+
+        
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr BeginPaint(IntPtr hWnd, out PAINTSTRUCT lpPaint);

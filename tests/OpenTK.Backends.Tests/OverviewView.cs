@@ -38,6 +38,8 @@ namespace OpenTK.Backends.Tests
             log.Add($"[{DateTime.Now:HH:mm:ss.fff} {level}] {member} {Path.GetFileName(filePath)}:{lineNumber} {str}");
         }
 
+        // FIXME: Add some other diagnostics data such as OS version, Arch, 64bit?, GPU vendor, etc.
+
         /// <inheritdoc/>
         public override void Paint()
         {
