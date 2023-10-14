@@ -9,5 +9,6 @@ dotnet run --project ./build/build.fsproj $($args)
 
 if ($LASTEXITCODE -ne 0)
 {
-    Write-Error "dotnet run failed with: {0}" -f $LASTEXITCODE
+    Write-Error [string]::Format("dotnet run failed with: {0}", $LASTEXITCODE)
+    $host.SetShouldExit($LASTEXITCODE)
 }
