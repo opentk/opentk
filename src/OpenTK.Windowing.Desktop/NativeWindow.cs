@@ -958,8 +958,7 @@ namespace OpenTK.Windowing.Desktop
 
             var provider = new GLFWBindingsContext();
 
-            var type = assembly.GetType($"OpenTK.Graphics.GLLoader");
-            if (type == null)
+            void LoadBindings(string typeNamespace)
             {
                 Type type = assembly.GetType($"OpenTK.Graphics.{typeNamespace}.GL");
                 if (type == null)
@@ -975,8 +974,12 @@ namespace OpenTK.Windowing.Desktop
                 }
                 load?.Invoke(null, new object[] { provider });
             }
-            var load = type.GetMethod("LoadBindings");
-            load.Invoke(null, new object[] { provider });
+
+            LoadBindings("ES11");
+            LoadBindings("ES20");
+            LoadBindings("ES30");
+            LoadBindings("OpenGL");
+            LoadBindings("OpenGL4");
         }
 
         /// <summary>
