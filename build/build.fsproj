@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="build.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fake.Api.GitHub" Version="6.0.0" />
+    <PackageReference Include="Fake.Core.Environment" Version="6.0.0" />
+    <PackageReference Include="Fake.Core.ReleaseNotes" Version="6.0.0" />
+    <PackageReference Include="Fake.Core.Target" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.AssemblyInfoFile" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.Cli" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.NuGet" Version="6.0.0" />
+    <PackageReference Include="Fake.DotNet.Paket" Version="6.0.0" />
+    <PackageReference Include="Fake.IO.FileSystem" Version="6.0.0" />
+    <PackageReference Include="Fake.Tools.Git" Version="6.0.0" />
+    
+    <!-- See https://github.com/fsprojects/FAKE/issues/2748 -->
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.820" />
+    <!-- See https://github.com/fsprojects/FAKE/issues/2722 -->
+    <!-- 17.3.2 is the last .net6.0 version of the package -->
+    <PackageReference Include="Microsoft.Build" Version="17.3.2" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="17.3.2" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.3.2" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.3.2" />
+  </ItemGroup>
+
+</Project>

@@ -35,5 +35,4 @@ else
     PATH="~/.dotnet:$PATH"
 fi
 
-dotnet tool restore
-dotnet fake run build.fsx $@
+dotnet run --project ./build/build.fsproj $@

@@ -4,5 +4,4 @@ REM Install .NET Core (https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet
 
 SET PATH=%LOCALAPPDATA%\Microsoft\dotnet;%PATH%
 .paket\paket.bootstrapper.exe
-dotnet tool restore
-dotnet fake run build.fsx %* 
+dotnet run --project ./build/build.fsproj %*

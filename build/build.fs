@@ -1,32 +1,17 @@
-open System
+﻿open System
 open System.IO
 open System.Threading
 open Fake.Core
 open Fake.DotNet
 open Fake.DotNet.NuGet
 open Fake.IO
-
-#r "paket:
-storage: packages
-nuget Fake.IO.FileSystem
-nuget Fake.DotNet.MSBuild
-nuget Fake.DotNet.Testing.XUnit2
-nuget Fake.DotNet.AssemblyInfoFile
-nuget Fake.DotNet.NuGet prerelease
-nuget Fake.DotNet.Paket
-nuget Fake.DotNet.Cli
-nuget Fake.Core.Target
-nuget Fake.Net.Http
-nuget Fake.Api.Github
-nuget xunit.runner.console
-nuget NuGet.CommandLine
-nuget Fake.Core.ReleaseNotes //"
-
-#load "./.fake/build.fsx/intellisense.fsx"
-
-open Fake.IO
 open Fake.IO.FileSystemOperators
 open Fake.IO.Globbing.Operators
+
+let execContext = Context.FakeExecutionContext.Create false "build.fsx" [ ]
+Context.setExecutionContext (Context.RuntimeContext.Fake execContext)
+
+let rootDir = __SOURCE_DIRECTORY__ </> ".."
 
 // ---------
 // Configuration
@@ -65,7 +50,7 @@ let tags = "OpenTK OpenGL OpenGLES GLES OpenAL OpenCL C# F# .NET Mono Vector Mat
 
 let copyright = "Copyright (c) 2006 - 2020 Stefanos Apostolopoulos <stapostol@gmail.com> for the Open Toolkit library."
 
-let solutionFile = "OpenTK.sln"
+let solutionFile = rootDir </> "OpenTK.sln"
 
 let gitOwner = "opentk"
 
@@ -78,8 +63,7 @@ let gitName = "opentk"
 let gitRaw = Environment.environVarOrDefault "gitRaw" "https://raw.github.com/opentk"
 
 // Read additional information from the release notes document
-let release = ReleaseNotes.load "RELEASE_NOTES.md"
-
+let release = ReleaseNotes.load (rootDir </> "RELEASE_NOTES.md")
 
 // ---------
 // Properties
@@ -181,7 +165,7 @@ Target.create "Clean" <| fun _ ->
     -- ("./src" </> "OpenTK.Graphics" </> "OpenGLES3" </> "GL.Manual.cs")
     |> Seq.iter(Shell.rm)
 
-Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple "OpenTK.sln" |> ignore)
+Target.create "Restore" (fun _ -> DotNet.restore dotnetSimple solutionFile |> ignore)
 
 // Generate assembly info files with the right version & up-to-date information
 Target.create "AssemblyInfo" (fun _ ->
@@ -309,9 +293,7 @@ Target.create "ReleaseOnGitHub" (fun _ ->
     let token =
         match Environment.environVarOrDefault "opentk_github_token" "" with
         | s when not (System.String.IsNullOrWhiteSpace s) -> s
-        | _ ->
-            failwith
-                "please set the github_token environment variable to a github personal access token with repro access."
+        | _ -> failwith "please set the github_token environment variable to a github personal access token with repro access."
 
     let files = !!"bin/*" |> Seq.toList
 
@@ -346,31 +328,38 @@ Target.create "All" ignore
 
 open Fake.Core.TargetOperators
 
-"Clean"
-  ==> "Restore"
-  ==> "AssemblyInfo"
-  //==> "UpdateSpec"
-  //==> "UpdateBindingsRewrite"
-  ==> "GenerateBindings"
-  ==> "Build"
-  //==> "RewriteBindings"
-//  ==> "RunAllTests"
-  ==> "All"
-  ==> "CreateNuGetPackage"
-  ==> "CreateMetaPackage"
-  ==> "ReleaseOnNuGet"
-  ==> "ReleaseOnGithub"
-  ==> "ReleaseOnAll"
+let dependencies = [
+    "Clean"
+      ==> "Restore"
+      ==> "AssemblyInfo"
+      //==> "UpdateSpec"
+      //==> "UpdateBindingsRewrite"
+      ==> "GenerateBindings"
+      ==> "Build"
+      //==> "RewriteBindings"
+    //  ==> "RunAllTests"
+      ==> "All"
+      ==> "CreateNuGetPackage"
+      ==> "CreateMetaPackage"
+      ==> "ReleaseOnNuGet"
+      ==> "ReleaseOnGithub"
+      ==> "ReleaseOnAll"
 
-"Build"
-  ==> "RunCITests"
-
-//"Build"
-
+    "Build"
+      ==> "RunCITests"
+]
 
 // ---------
 // Startup
 // ---------
 
-// Run all targets by default. Invoke 'build <Target>' to override
-Target.runOrDefault "All"
+[<EntryPoint>]
+let main args = 
+    try
+        match args with
+        | [| target |] -> Target.runOrDefault target
+        | _ -> Target.runOrDefault "All"
+        0
+    with e ->
+        printfn "%A" e
+        1
