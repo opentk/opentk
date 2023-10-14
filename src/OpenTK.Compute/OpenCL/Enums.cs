@@ -11,7 +11,18 @@ namespace OpenTK.Compute.OpenCL
 
     public enum PlatformInfo : uint
     {
+        /// <summary>
+        /// OpenCL profile string. Returns the profile name supported by the implementation. The profile name returned can be one of the following strings:
+        /// FULL_PROFILE - if the implementation supports the OpenCL specification with no need for extensions.
+        /// EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded profile. The embedded profile for OpenCL is described in https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#opencl-embedded-profile.
+        /// </summary>
         Profile = 0x0900,
+
+        /// <summary>
+        /// OpenCL version string. Returns the OpenCL version supported by the implementation. This version string has the following format:
+        /// "OpenCL {major_version.minor_version} {platform-specific information}"
+        /// The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
+        /// </summary>
         Version = 0x0901,
         Name = 0x0902,
         Vendor = 0x0903,
