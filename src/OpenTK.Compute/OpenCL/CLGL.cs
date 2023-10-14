@@ -108,7 +108,7 @@ namespace OpenTK.Compute.OpenCL
         );
 
         /// <summary>
-        /// Introduced in Opencl 1.0
+        /// Introduced in Opencl 1.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetGLTextureInfo")]
         public static extern CLResultCode GetGLTextureInfo(
@@ -193,7 +193,7 @@ namespace OpenTK.Compute.OpenCL
         }
 
         /// <summary>
-        /// Introduced in Opencl 1.0
+        /// Introduced in Opencl 1.0.
         /// </summary>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetGLContextInfoKHR")]
         public static extern CLResultCode GetGLContextInfoKHR(
