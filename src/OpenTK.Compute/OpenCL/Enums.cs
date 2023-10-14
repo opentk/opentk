@@ -94,14 +94,25 @@ namespace OpenTK.Compute.OpenCL
         Extensions = 0x0904,
 
         /// <summary>
-        /// Introduced in version 2.1.
+        /// Introduced in OpenCL 2.1.
         /// Returns the resolution of the host timer in nanoseconds as used by <see cref="CL.GetHostTimer(CLDevice, IntPtr)"/>.
         /// This value must be 0 for devices that do not support device and host timer synchronization.
         /// </summary>
-        PlatformHostTimerResolution = 0x0905,
         HostTimerResolution = 0x0905,
+
+        /// <summary>
+        /// Introduced in OpenCL 3.0
+        /// Returns the detailed (major, minor, patch) version supported by the platform. The major and minor version numbers returned must match those returned via <see cref="Version"/>.
+        /// </summary>
         NumericVersion = 0x0906,
+
+        /// <summary>
+        /// Introduced in OpenCL 3.0
+        /// Returns an array of description (name and version) structures that lists all the extensions supported by the platform. The same extension name must not be reported more than once. The list of extensions reported must match the list reported via <see cref="Extensions"/>.
+        /// </summary>
         ExtensionsWithVersion = 0x0907,
+
+        
         PlatformIcdSuffix = 0x0920
     }
 
