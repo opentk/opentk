@@ -96,9 +96,6 @@ let ciTestProjects =
     allTestProjects
     -- "tests/**/*.Integration.??proj"
 
-let nugetCommandRunnerPath =
-    ".fake/build.fsx/packages/NuGet.CommandLine/tools/NuGet.exe" |> Fake.IO.Path.convertWindowsToCurrentPath
-
 // ---------
 // Other Targets
 // ---------
@@ -217,13 +214,13 @@ Target.create "RunCITests" (fun _ ->
     Trace.log " --- Testing CI-safe projects in parallel --- "
 
 
-    //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+    // Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
     runTests ciTestProjects)
 
 Target.create "RunAllTests" (fun _ ->
     Trace.log " --- Testing ALL projects in parallel --- "
 
-    //Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
+    // Looks overkill for only one csproj but just add 2 or 3 csproj and this will scale a lot better
     runTests allTestProjects)
 
 
@@ -232,7 +229,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
     let notes = release.Notes |> List.reduce (fun s1 s2 -> s1 + "\n" + s2)
 
     for proj in releaseProjects do
-        Trace.logf "Creating nuget package for Project: %s" proj
+        Trace.logf "Creating nuget package for Project: %s\n" proj
 
         let dir = Path.GetDirectoryName proj
         let templatePath = Path.Combine(dir, "paket")
@@ -244,6 +241,7 @@ Target.create "CreateNuGetPackage" (fun _ ->
         File.WriteAllText(templatePath + ".template", newTmplCont)
         let setParams (p:Paket.PaketPackParams) =
             { p with
+                ToolType = ToolType.CreateLocalTool()
                 ReleaseNotes = notes
                 OutputPath = Path.GetFullPath(nugetDir)
                 WorkingDir = dir

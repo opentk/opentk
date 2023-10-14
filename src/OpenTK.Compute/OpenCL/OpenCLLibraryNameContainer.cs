@@ -18,10 +18,7 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         public string MacOS => "/System/Library/Frameworks/OpenCL.framework/OpenCL";
 
-        /// <summary>
-        /// Gets the library name to use on Android.
-        /// </summary>
-        public string Android => Linux;
+        public string Android => "libOpenCL.so";
 
         /// <summary>
         /// Gets the library name to use on iOS.
@@ -39,30 +36,30 @@ namespace OpenTK.Compute.OpenCL
         /// <returns>Library name.</returns>
         public string GetLibraryName()
         {
-            if (OperatingSystem.IsLinux() || OperatingSystem.IsFreeBSD())
-            {
-                return Linux;
-            }
-            else if (OperatingSystem.IsWindows())
-            {
-                return Windows;
-            }
-            else if (OperatingSystem.IsMacOS())
-            {
-                return MacOS;
-            }
-            else if (OperatingSystem.IsAndroid())
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
             {
                 return Android;
             }
-            else if (OperatingSystem.IsIOS())
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return Linux;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return Windows;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
             {
                 return IOS;
             }
-	        else
-	        {
-		        throw new NotSupportedException($"The library name couldn't be resolved for the given platform ('{RuntimeInformation.OSDescription}').");
-	        }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                return MacOS;
+            }
+            else
+            {
+                throw new NotSupportedException($"The library name couldn't be resolved for the given platform ('{RuntimeInformation.OSDescription}').");
+            }
         }
     }
 }

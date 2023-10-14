@@ -98,7 +98,7 @@ namespace OpenTK.Windowing.GraphicsLibraryFramework
             return builder.ToString();
         }
 
-        internal void Update()
+        internal void NewFrame()
         {
             _keysPrevious.SetAll(false);
             _keysPrevious.Or(_keys);
