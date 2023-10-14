@@ -9,6 +9,11 @@ dotnet run --project ./build/build.fsproj $($args)
 
 if ($LASTEXITCODE -ne 0)
 {
-    Write-Error [string]::Format("dotnet run failed with: {0}", $LASTEXITCODE)
-    $host.SetShouldExit($LASTEXITCODE)
+    Write-Error ([string]::Format("dotnet run failed with: {0}", $LASTEXITCODE))
+    # Make sure we are not closing the terminal when running locally.
+    if ($env:APPVEYOR -ceq "True")
+    {
+        $host.SetShouldExit($LASTEXITCODE)
+    }
+    
 }
