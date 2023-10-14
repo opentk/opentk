@@ -35,7 +35,7 @@ namespace OpenTK.Audio.OpenAL
         /// <summary>
         /// Gets the library name to use on Android.
         /// </summary>
-        public string Android => Linux;
+        public string Android => "libopenal.so";
 
         /// <summary>
         /// Gets the library name to use on iOS.
@@ -44,16 +44,13 @@ namespace OpenTK.Audio.OpenAL
 
         public string GetLibraryName()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("ANDROID")))
-                {
-                    return Android;
-                }
-                else
-                {
-                    return Linux;
-                }
+                return Android;
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return Linux;
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
             {
@@ -63,16 +60,13 @@ namespace OpenTK.Audio.OpenAL
             {
                 return Windows;
             }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
+            {
+                return IOS;
+            }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("IOS")))
-                {
-                    return IOS;
-                }
-                else
-                {
-                    return MacOS;
-                }
+                return MacOS;
             }
             else
             {
