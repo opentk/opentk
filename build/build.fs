@@ -343,7 +343,7 @@ let dependencies = [
       ==> "ReleaseOnGithub"
       ==> "ReleaseOnAll"
 
-    "Build"
+    "CreateMetaPackage"
       ==> "RunCITests"
 ]
 
