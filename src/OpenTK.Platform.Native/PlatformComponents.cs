@@ -186,6 +186,7 @@ namespace OpenTK.Platform.Native
         public static IOpenGLComponent CreateOpenGLComponent()
         {
             // FIXME: Should we do this here?
+            // FIXME: Check so that we can actually load angle binaries too!
             if (PreferANGLE)
             {
                 return new ANGLE.ANGLEOpenGLComponent();

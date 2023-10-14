@@ -71,12 +71,16 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static readonly Dictionary<IntPtr, NSWindowHandle> NSWindowDict = new Dictionary<nint, NSWindowHandle>();
 
+        /// <inheritdoc/>
         public string Name => nameof(MacOSWindowComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Window;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Window)
@@ -172,21 +176,29 @@ namespace OpenTK.Platform.Native.macOS
             Console.WriteLine("Key down!");
         }
 
+        /// <inheritdoc/>
         public bool CanSetIcon => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanGetDisplay => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanSetCursor => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public bool CanCaptureCursor => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowBorderStyle> SupportedStyles => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => throw new NotImplementedException();
 
 
+        /// <inheritdoc/>
         public void ProcessEvents(bool waitForEvents = false)
         {
             // FIXME: Make this a loop!
@@ -323,6 +335,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public WindowHandle Create(GraphicsApiHints hints)
         {
             // FIXME: Better default placement of window?
@@ -359,6 +372,7 @@ namespace OpenTK.Platform.Native.macOS
             return nswindow;
         }
 
+        /// <inheritdoc/>
         public void Destroy(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -374,6 +388,7 @@ namespace OpenTK.Platform.Native.macOS
             nswindow.Destroyed = true;
         }
 
+        /// <inheritdoc/>
         public bool IsWindowDestroyed(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -381,6 +396,7 @@ namespace OpenTK.Platform.Native.macOS
             return nswindow.Destroyed;
         }
 
+        /// <inheritdoc/>
         public string GetTitle(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -390,6 +406,7 @@ namespace OpenTK.Platform.Native.macOS
             return title;
         }
 
+        /// <inheritdoc/>
         public void SetTitle(WindowHandle handle, string title)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -397,16 +414,19 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(nswindow.Window, sel_registerName("setTitle:"u8), ToNSString(title));
         }
 
+        /// <inheritdoc/>
         public IconHandle? GetIcon(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void GetPosition(WindowHandle handle, out int x, out int y)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -422,6 +442,7 @@ namespace OpenTK.Platform.Native.macOS
             y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
         }
 
+        /// <inheritdoc/>
         public void SetPosition(WindowHandle handle, int x, int y)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -431,6 +452,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(nswindow.Window, selSetFrameTopLeftPoint, new CGPoint(x, y));
         }
 
+        /// <inheritdoc/>
         public void GetSize(WindowHandle handle, out int width, out int height)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -444,6 +466,7 @@ namespace OpenTK.Platform.Native.macOS
             height = (int)backingRect.size.y;
         }
 
+        /// <inheritdoc/>
         public void SetSize(WindowHandle handle, int width, int height)
         {
             // FIXME: setFrame:display:
@@ -451,6 +474,7 @@ namespace OpenTK.Platform.Native.macOS
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void GetClientPosition(WindowHandle handle, out int x, out int y)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -468,6 +492,7 @@ namespace OpenTK.Platform.Native.macOS
             y = (int)(screenBackingRect.size.y - (backingRect.origin.y + backingRect.size.y));
         }
 
+        /// <inheritdoc/>
         public void SetClientPosition(WindowHandle handle, int x, int y)
         {
             throw new NotImplementedException();
@@ -475,6 +500,7 @@ namespace OpenTK.Platform.Native.macOS
 
         // FIXME: Separate the window size from the framebuffer size?
 
+        /// <inheritdoc/>
         public void GetClientSize(WindowHandle handle, out int width, out int height)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -492,6 +518,7 @@ namespace OpenTK.Platform.Native.macOS
             height = (int)backingRect.size.y;
         }
 
+        /// <inheritdoc/>
         public void SetClientSize(WindowHandle handle, int width, int height)
         {
             // FIXME:
@@ -500,31 +527,37 @@ namespace OpenTK.Platform.Native.macOS
 
         }
 
+        /// <inheritdoc/>
         public void GetMaxClientSize(WindowHandle handle, out int? width, out int? height)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetMaxClientSize(WindowHandle handle, int? width, int? height)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void GetMinClientSize(WindowHandle handle, out int? width, out int? height)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetMinClientSize(WindowHandle handle, int? width, int? height)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public WindowMode GetMode(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -552,6 +585,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -630,21 +664,25 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -670,6 +708,7 @@ namespace OpenTK.Platform.Native.macOS
             return WindowBorderStyle.FixedBorder;
         }
 
+        /// <inheritdoc/>
         public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -719,6 +758,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void SetAlwaysOnTop(WindowHandle handle, bool floating)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -733,6 +773,7 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public bool IsAlwaysOnTop(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -749,26 +790,31 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
+        /// <inheritdoc/>
         public void SetHitTestCallback(WindowHandle handle, HitTest? test)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public CursorCaptureMode GetCursorCaptureMode(WindowHandle handle)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void SetCursorCaptureMode(WindowHandle handle, CursorCaptureMode mode)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void FocusWindow(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -776,6 +822,7 @@ namespace OpenTK.Platform.Native.macOS
             objc_msgSend(nswindow.Window, selMakeKeyAndOrderFront, nswindow.Window);
         }
 
+        /// <inheritdoc/>
         public void RequestAttention(WindowHandle handle)
         {
             NSWindowHandle nswindow = handle.As<NSWindowHandle>(this);
@@ -784,15 +831,16 @@ namespace OpenTK.Platform.Native.macOS
             ulong requestID = objc_msgSend_ulong(nsApplication, selRequestUserAttention, (ulong)NSRequestUserAttentionType.CriticalRequest);
         }
 
+        /// <inheritdoc/>
         public void ScreenToClient(WindowHandle handle, int x, int y, out int clientX, out int clientY)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y)
         {
             throw new NotImplementedException();
         }
     }
 }
-

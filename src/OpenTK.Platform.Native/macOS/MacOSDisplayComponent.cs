@@ -28,14 +28,18 @@ namespace OpenTK.Platform.Native.macOS
 
         internal static SEL selRespondsToSelector = sel_registerName("respondsToSelector:"u8);
 
+        /// <inheritdoc/>
         public string Name => nameof(MacOSDisplayComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides =>  PalComponents.Display;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
         private static readonly List<NSScreenHandle> _displays = new List<NSScreenHandle>();
 
+        /// <inheritdoc/>
         public unsafe void Initialize(PalComponents which)
         {
             if (which != PalComponents.Display)
@@ -130,20 +134,24 @@ namespace OpenTK.Platform.Native.macOS
             }
         }
 
-        public bool CanGetVirtualPosition => throw new NotImplementedException();
+        /// <inheritdoc/>
+        public bool CanGetVirtualPosition => true;
 
+        /// <inheritdoc/>
         public int GetDisplayCount()
         {
             return _displays.Count;
         }
 
+        /// <inheritdoc/>
         public DisplayHandle Open(int index)
         {
             // FIXME: Range check?
 
             return _displays[index];
         }
-        
+
+        /// <inheritdoc/>
         public DisplayHandle OpenPrimary()
         {
             // FIXME: Make the primary array always be first?
@@ -160,24 +168,28 @@ namespace OpenTK.Platform.Native.macOS
 
         // FIXME: platform specific api for getting the monitor with the best color?
 
+        /// <inheritdoc/>
         public void Close(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
             // We just have to check this is a valid NSScreenHandle
         }
 
+        /// <inheritdoc/>
         public bool IsPrimary(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
             return nsscreen.IsPrimary;
         }
 
+        /// <inheritdoc/>
         public string GetName(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
             return nsscreen.Name;
         }
 
+        /// <inheritdoc/>
         public void GetVideoMode(DisplayHandle handle, out VideoMode mode)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
@@ -189,6 +201,7 @@ namespace OpenTK.Platform.Native.macOS
             mode.BitsPerPixel = -1;
         }
 
+        /// <inheritdoc/>
         public VideoMode[] GetSupportedVideoModes(DisplayHandle handle)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
@@ -229,6 +242,7 @@ namespace OpenTK.Platform.Native.macOS
             return modes.ToArray();
         }
 
+        /// <inheritdoc/>
         public void GetVirtualPosition(DisplayHandle handle, out int x, out int y)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
@@ -243,6 +257,7 @@ namespace OpenTK.Platform.Native.macOS
             y = (int)bounds.origin.y;
         }
 
+        /// <inheritdoc/>
         public void GetResolution(DisplayHandle handle, out int width, out int height)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
@@ -250,21 +265,23 @@ namespace OpenTK.Platform.Native.macOS
             height = nsscreen.Resolution.ResolutionY;
         }
 
+        /// <inheritdoc/>
         public void GetWorkArea(DisplayHandle handle, out Box2i area)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public void GetRefreshRate(DisplayHandle handle, out float refreshRate)
         {
             NSScreenHandle nsscreen = handle.As<NSScreenHandle>(this);
             refreshRate = (float)nsscreen.RefreshRate;
         }
 
+        /// <inheritdoc/>
         public void GetDisplayScale(DisplayHandle handle, out float scaleX, out float scaleY)
         {
             throw new NotImplementedException();
         }
     }
 }
-

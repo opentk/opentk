@@ -284,7 +284,7 @@ namespace OpenTK.Core.Platform
 
         /// <summary>
         /// Put a window into 'exclusive fullscreen' on a specified display and change the video mode to the specified video mode.
-        /// Only video modes accuired using <see cref="IDisplayComponent.GetSupportedVideoModes(DisplayHandle, Span{VideoMode})"/>
+        /// Only video modes accuired using <see cref="IDisplayComponent.GetSupportedVideoModes(DisplayHandle)"/>
         /// are expected to work.
         /// </summary>
         /// <param name="handle">The window to make fullscreen.</param>

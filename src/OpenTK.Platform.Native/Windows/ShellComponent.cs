@@ -185,10 +185,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        /// <summary>
-        /// Gets information about the memory of the device and the current status.
-        /// </summary>
-        /// <returns>The memory info.</returns>
+        /// <inheritdoc/>
         public unsafe SystemMemoryInfo GetSystemMemoryInformation()
         {
             Win32.MEMORYSTATUSEX status = default;

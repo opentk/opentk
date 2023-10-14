@@ -112,6 +112,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
+        /// <inheritdoc/>
         public bool IsConnected(int deviceIndex)
         {
             uint result = XInputGetCapabilities((uint)deviceIndex, 0, out _);

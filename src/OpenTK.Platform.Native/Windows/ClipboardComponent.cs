@@ -306,7 +306,7 @@ namespace OpenTK.Platform.Native.Windows
         // because someone else is either reading or writing from it.
         // So we need to handle that when opening the clipboard.
 
-        /// <inheritdoc/>
+        /// 
         public unsafe void SetClipboardAudio(AudioData data)
         {
             int bytes = sizeof(wav_header) + data.Audio.Length * sizeof(short);
@@ -404,7 +404,7 @@ namespace OpenTK.Platform.Native.Windows
             Win32.CloseClipboard();
         }
 
-        /// <inheritdoc/>
+        /// 
         public unsafe void SetClipboardBitmap(Bitmap bitmap)
         {
             // We don't need to consider alignment as 32bpp image data will always align to DWORDs

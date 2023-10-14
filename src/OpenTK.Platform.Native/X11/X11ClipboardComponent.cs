@@ -10,12 +10,16 @@ namespace OpenTK.Platform.Native.X11
 {
     public class X11ClipboardComponent : IClipboardComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(X11ClipboardComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Clipboard;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if ((which & ~Provides) != 0)
@@ -149,8 +153,10 @@ namespace OpenTK.Platform.Native.X11
             }
         }
 
+        /// <inheritdoc/>
         public IReadOnlyList<ClipboardFormat> SupportedFormats => throw new NotImplementedException();
 
+        /// <inheritdoc/>
         public unsafe ClipboardFormat GetClipboardFormat()
         {
             XConvertSelection(
@@ -223,7 +229,8 @@ namespace OpenTK.Platform.Native.X11
                 return ClipboardFormat.None;
             }
         }
-        
+
+        /// <inheritdoc/>
         public void SetClipboardText(string text)
         {
             throw new NotImplementedException();
@@ -309,23 +316,27 @@ namespace OpenTK.Platform.Native.X11
             return null;
         }
 
+        /// <inheritdoc/>
         public AudioData? GetClipboardAudio()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public Bitmap? GetClipboardBitmap()
         {
             // FIXME: We need to decode a png here, and there is no good way to do this really...
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         // FIXME: Remove this if favor of platform specific APIs for getting arbitrary formats.
         public string? GetClipboardHTML()
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public unsafe List<string>? GetClipboardFiles()
         {
             XConvertSelection(

@@ -294,9 +294,6 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool CanSetVideoMode => throw new NotImplementedException();
-
-        /// <inheritdoc/>
         public bool CanGetVirtualPosition => true;
 
         /// <inheritdoc/>
