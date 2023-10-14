@@ -112,7 +112,11 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         ExtensionsWithVersion = 0x0907,
 
-        
+        /// <summary>
+        /// Only available for OpenCL 2.0 and 2.1
+        /// If the cl_khr_icd extension is enabled, the function name suffix used to identify extension functions to be directed to this platform by the ICD Loader. 
+        /// For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/
+        /// </summary>
         PlatformIcdSuffix = 0x0920
     }
 
