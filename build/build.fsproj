@@ -22,7 +22,7 @@
     <PackageReference Include="Fake.Tools.Git" Version="6.0.0" />
     
     <!-- See https://github.com/fsprojects/FAKE/issues/2748 -->
-    <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.820" />
+    <PackageReference Include="MSBuild.StructuredLogger" Version="2.1.858" />
     <!-- See https://github.com/fsprojects/FAKE/issues/2722 -->
     <!-- 17.3.2 is the last .net6.0 version of the package -->
     <PackageReference Include="Microsoft.Build" Version="17.3.2" />
