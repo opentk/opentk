@@ -4,7 +4,6 @@ description
     Platform support for OpenTK, contains backends for Windows, Linux, and macOS.
 dependencies
     framework: net7.0
-
 files
     bin\Release\net7.0\OpenTK.Platform.Native.dll ==> lib\net7.0
     bin\Release\net7.0\OpenTK.Platform.Native.xml ==> lib\net7.0
