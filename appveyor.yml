@@ -27,4 +27,4 @@ init:
 configuration: Release
 
 build_script:
-  - ps: ./build.ps1 -t RunCITests
+  - ps: ./build.ps1 RunCITests
