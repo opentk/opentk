@@ -9,6 +9,10 @@ namespace OpenTK.Compute.OpenCL
         ContextPlatform = 0x1084
     }
 
+    /// <summary>
+    /// The information that can be queried using <see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo, out byte[])"/>.
+    /// For more info see: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table.
+    /// </summary>
     public enum PlatformInfo : uint
     {
         /// <summary>
@@ -24,9 +28,27 @@ namespace OpenTK.Compute.OpenCL
         /// The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
         /// </summary>
         Version = 0x0901,
+
+        /// <summary>
+        /// Platform name string.
+        /// </summary>
         Name = 0x0902,
+
+        /// <summary>
+        /// Platform vendor string.
+        /// </summary>
         Vendor = 0x0903,
+
+        /// <summary>
+        /// Returns a space separated list of extension names (the extension names themselves do not contain any spaces) supported by the platform. Each extension that is supported by all devices associated with this platform must be reported here.
+        /// </summary>
         Extensions = 0x0904,
+
+        /// <summary>
+        /// Introduced in version 2.1.
+        /// Returns the resolution of the host timer in nanoseconds as used by <see cref="CL.GetHostTimer(CLDevice, IntPtr)"/>.
+        /// This value must be 0 for devices that do not support device and host timer synchronization.
+        /// </summary>
         PlatformHostTimerResolution = 0x0905,
         PlatformIcdSuffix = 0x0920
     }
