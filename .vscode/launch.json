@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C#: OpenTK.Platform.Tests",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/tests/OpenTK.Platform.Tests/OpenTK.Platform.Tests.csproj",
+            "launchConfigurationId": "TargetFramework=;OpenTK.Platform.Tests"
+        }
+    ]
+}

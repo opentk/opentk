@@ -1,0 +1,7 @@
+/*
+ * This file instructs the OpenTK backend test to prefer SDL2 over native window
+ * components when possible.
+ */
+{
+    "PreferSDL2": true
+}

@@ -24,7 +24,7 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector4i : IEquatable<Vector4i>
+    public struct Vector4i : IEquatable<Vector4i>, IFormattable
     {
         /// <summary>
         /// The X component of the Vector4i.
@@ -163,7 +163,12 @@ namespace OpenTK.Mathematics
         public int ManhattanLength => Math.Abs(X) + Math.Abs(Y) + Math.Abs(Z) + Math.Abs(W);
 
         /// <summary>
-        /// Gets the euclidian length of the vector.
+        /// Gets the squared euclidean length of the vector.
+        /// </summary>
+        public int EuclideanLengthSquared => (X * X) + (Y * Y) + (Z * Z) + (W * W);
+
+        /// <summary>
+        /// Gets the euclidean length of the vector.
         /// </summary>
         public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y) + (Z * Z) + (W * W));
 
@@ -1635,10 +1640,34 @@ namespace OpenTK.Mathematics
             return new Vector4i(values.X, values.Y, values.Z, values.W);
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{4} {1}{4} {2}{4} {3})", X, Y, Z, W, MathHelper.ListSeparator);
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc />
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{4} {1}{4} {2}{4} {3})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                Z.ToString(format, formatProvider),
+                W.ToString(format, formatProvider),
+                MathHelper.GetListSeparator(formatProvider));
         }
 
         /// <inheritdoc />

@@ -1,19 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5.0</TargetFrameworks>
+    <TargetFrameworks>net7.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>OpenTK.Core</RootNamespace>
+    <Description>Core shared functionality for the OpenTK library.</Description>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
-
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>OpenTK.Windowing.GraphicsLibraryFramework</_Parameter1>
-    </AssemblyAttribute>
-
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
-      <_Parameter1>OpenTK.Windowing.Desktop</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
 
   <PropertyGroup>
     <Description>Core shared functionality for the OpenTK library.</Description>
@@ -22,7 +14,9 @@
   <Import Project="..\..\props\common.props" />
   <Import Project="..\..\props\nuget-common.props" />
   <Import Project="..\..\props\stylecop.props" />
+  
   <ItemGroup>
+    <ProjectReference Include="..\OpenTK.Mathematics\OpenTK.Mathematics.csproj" />
     <PackageReference Update="StyleCop.Analyzers" Version="1.1.118" />
   </ItemGroup>
 </Project>

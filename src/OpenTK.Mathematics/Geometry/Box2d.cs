@@ -20,7 +20,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     [Serializable]
-    public struct Box2d : IEquatable<Box2d>
+    public struct Box2d : IEquatable<Box2d>, IFormattable
     {
         private Vector2d _min;
 
@@ -555,6 +555,7 @@ namespace OpenTK.Mathematics
         /// Inflate this Box2d to encapsulate a given point.
         /// </summary>
         /// <param name="point">The point to query.</param>
+        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
         public void Inflate(Vector2d point)
         {
             _min = Vector2d.ComponentMin(_min, point);
@@ -567,11 +568,36 @@ namespace OpenTK.Mathematics
         /// <param name="point">The point to query.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
         public Box2d Inflated(Vector2d point)
         {
             // create a local copy of this box
             Box2d box = this;
             box.Inflate(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Extend this Box2d to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        public void Extend(Vector2d point)
+        {
+            _min = Vector2d.ComponentMin(_min, point);
+            _max = Vector2d.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Extend this Box2d to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box2d Extended(Vector2d point)
+        {
+            // create a local copy of this box
+            Box2d box = this;
+            box.Extend(point);
             return box;
         }
 
@@ -617,7 +643,25 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Min} - {Max}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }
     }
 }

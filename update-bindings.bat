@@ -1,2 +1,2 @@
-dotnet run -f netcoreapp3.1 --project "src/Generator.Bind/Generator.Bind.csproj" %*
+dotnet run -f net7.0 --project "src/Generator.Bind/Generator.Bind.csproj" %*
 pause

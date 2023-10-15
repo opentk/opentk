@@ -55,6 +55,96 @@
 
 **Note**: The generated functions currently do not have xml documentation attached to them, this will be available in the final release.
 
+## 4.8.1
+
+* API: Added `NativeWindow.HasTransparentFramebuffer` to be able to check if a transparent framebuffer was created successfully. (@NogginBops)
+
+* API: Added missing enum entries in `OpenCL.ContextProperties`. (@NogginBops)
+
+* FIX: `NativeWindowSettings.StartVisible = false` has been fixed and should now work as expected. (@NogginBops)
+
+* FIX: Fixed issue where `JoystickState.GetAxis` returned buttons instead of axes. (@NogginBops)
+
+* FIX: Fixed issue where self-contained `dotnet publish` would break due to duplicate `libglfw.so` files. (@Th3Dilli)
+
+* FIX: Setting `NativeWindow.WindowState` will now be reflected in `OnResize` event caused by it. (@NogginBops)
+
+* FIX: `GameWindow.UpdateTime` is now correctly updated, fixing an issue that first appeared in `4.7.1`. (@NogginBops)
+
+* FIX: Fixed typo in deprecation message for `GameWindow.RenderFrequency`. (@postmeback)
+
+## 4.8.0
+
+* BREAKING: Renamed the `OpenTK.OpenAL` assembly to `OpenTK.Audio.OpenAL` to match the namespace. (@NogginBops)
+
+* BREAKING: Make OpenAL extensions nested classes of `AL` and `ALC` instead of being namespaces to more closely match the OpenGL bindings. (@NogginBops)
+
+* BREAKING: Removed `AL.BindBufferToSource`, `AL.GetSourceState`, `AL.GetSourceType`, and `ALC.GetAvailableSamples` that doesn't exist in the OpenAL API (use `AL.Get*` and `ALC.Get*` instead). (@Khhs167, @NogginBops)
+
+* BREAKING: `NativeWindow.Location`, `NativeWindow.Size`, and `NativeWindow.Bounds` now correctly refer to the external size and location of the window. (@NogginBops)
+
+* BREAKING: Removed a few functions marked `[Obsolete]` since at least `4.7.2` but some even older. (@NogginBops)
+
+* BREAKING: Removed `OpenTK.Core.Utils.Swap<T>`, use `MathHelper.Swap<T>` instead. (@NogginBops)
+
+* API: Rename `Box.Inflate` to `Box.Extend`, and mark `Box.Inflate` as obsolete so we can change the behavior of `Box.Inflate` in future versions. (@NogginBops)
+
+* API: Added `GameWindow.TimeSinceLastUpdate()` and `GameWindow.ResetTimeSinceLastUpdate()` which are useful when dealing with the modal move/resize loop on windows. (@NogginBops)
+
+* API: Added `NativeWindow.RawMouseInput` and `NativeWindow.SupportsRawMouseInput` for activating raw mouse input. (@NogginBops)
+
+* API: Added opt-in preliminary GLFW Wayland support through the environment variable `OPENTK_4_USE_WAYLAND` (it's broken when used with `GameWindow` or `NativeWindow` in this version). (@NogginBops)
+
+* API: Updated the `GameWindow` run loop to be much more accurate. Exposed `GameWindow.ExpectedSchedulerPeriod` to tell OpenTK how accurate `Thread.Sleep` can be expected to be (this defaults to good defaults for Windows, Linux, and macos). (@NogginBops)
+
+* FIX: Cleaned up some internal OpenGL definitions (doesn't change any bindings). (@BoyBayKiller)
+
+* API: Expose `MouseCursor.StandardShape` as public. (@NogginBops)
+
+* API: Add `VectorNi.EuclideanLengthSquared`. (@NogginBops)
+
+* FIX: Added helpful exception message to `NativeWindow` when running with trimmed assemblies with a workaround for the issue. (@NogginBops)
+
+* FIX: Fixed an issue where starting `NativeWindow` as a fullscreen window and then going to a normal window would throw an exception. (@NogginBops)
+
+## 4.7.7
+
+* FIX: `ToString()` on all math types no longer throw `NullReferenceException`. (@NogginBops)
+
+## 4.7.6
+
+**This version is broken, use 4.7.7 instead.**
+
+* BREAKING: Changed the default value of `NativeWindowSettings.Flags` from `ContextFlags.Default` to `ContextFlags.ForwardCompatible` for better out of the box macos support. (@NogginBops)
+
+* API: Added `NativeWindowSettings.TransparentFramebuffer` and `NativeWindowSettings.VSync`. (@NogginBops)
+
+* API: Component-wise `Lerp` methods for `float` and `double` vector types. (@g7ChoGXh)
+
+* API: Implemented `IFormattable` for most `OpenTK.Mathematics` types. (@g7ChoGXh)
+
+* API: Add bindings for `EXT_fragment_shading_rate`. (@BoyBaykiller)
+
+* API: Added casts from `Vector2i` and `Vector2` to `System.Drawing.Point`/`System.Drawing.Size` and `System.Drawing.PointF`/`System.Drawing.SizeF` respectively. (@NogginBops)
+
+* API: Added missing entries in `SizedInternalFormat`. (@BoyBaykiller)
+
+* API: `BinaryFormat` now contains the `ShaderBinaryFormatSpirV` enum value. (@NogginBops)
+
+* FIX: Many fixes related to `NativeWindow.WindowState`. Most notably, going from fullscreen to maximized and back works correctly. (@NogginBops)
+
+* FIX: `MonitorInfo.WorkArea` now gives the correct values. (@utkumaden)
+
+* FIX: Spelling and formatting corrections in documentation. (@sg-wizard-maker)
+
+* FIX: Math types now change their formatting when `CurrentCulture` is changed. (@g7ChoGXh)
+
+* FIX: `Matrix4x3`/`Matrix4x3d` now print their final row. (@NogginBops)
+
+* FIX: On Windows, setting `GameWindowSettings.UpdateFrequency` and `GameWindowSettings.RenderFrequency` should be more accurate. For details see documentation for `GameWindow.Run()`. (@NogginBops)
+
+* The OpenTK solution should now build directly in Visual Studio with no need to run `build.cmd` any more. (@NogginBops)
+
 ## 4.7.5
 
 * BREAKING: Removed the `ALTest` class from the OpenAL namespace. This was an internal test class that was accidentally included in the package. (@NogginBops)

@@ -883,17 +883,12 @@ namespace OpenTK.Mathematics
         }
 
         /// <summary>
-        /// Swaps two float values.
+        /// Swaps two values.
         /// </summary>
         /// <typeparam name="T">The type of the values to swap.</typeparam>
         /// <param name="a">The first value.</param>
         /// <param name="b">The second value.</param>
-        public static void Swap<T>(ref T a, ref T b)
-        {
-            var temp = a;
-            a = b;
-            b = temp;
-        }
+        public static void Swap<T>(ref T a, ref T b) => (a, b) = (b, a);
 
         /// <summary>
         /// Clamps a number between a minimum and a maximum.
@@ -1321,6 +1316,19 @@ namespace OpenTK.Mathematics
             return angle;
         }
 
-        internal static readonly string ListSeparator = CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        internal static string GetListSeparator(IFormatProvider formatProvider)
+        {
+            if (formatProvider is CultureInfo cultureInfo)
+            {
+                return cultureInfo.TextInfo.ListSeparator;
+            }
+
+            if (formatProvider?.GetFormat(typeof(TextInfo)) is TextInfo textInfo)
+            {
+                return textInfo.ListSeparator;
+            }
+
+            return CultureInfo.CurrentCulture.TextInfo.ListSeparator;
+        }
     }
 }

@@ -2,7 +2,9 @@ type file
 id OpenTK.Core
 description
     Holds core functionality used by other OpenTK packages.
+dependencies
+    framework: net7.0
 files
-    bin\Release\net5.0\OpenTK.Core.dll ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.Core.xml ==> lib\net5.0
-    bin\Release\net5.0\OpenTK.Core.pdb ==> lib\net5.0
+    bin\Release\net7.0\OpenTK.Core.dll ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.Core.xml ==> lib\net7.0
+    bin\Release\net7.0\OpenTK.Core.pdb ==> lib\net7.0

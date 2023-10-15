@@ -20,7 +20,7 @@ namespace OpenTK.Mathematics
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     [Serializable]
-    public struct Box2 : IEquatable<Box2>
+    public struct Box2 : IEquatable<Box2>, IFormattable
     {
         private Vector2 _min;
 
@@ -554,7 +554,8 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="point">The point to inflate to.</param>
+        [Obsolete("Use " + nameof(Extend) + " instead. This function will have it's implementation changed in the future.")]
         public void Inflate(Vector2 point)
         {
             _min = Vector2.ComponentMin(_min, point);
@@ -564,14 +565,39 @@ namespace OpenTK.Mathematics
         /// <summary>
         /// Inflate this Box2 to encapsulate a given point.
         /// </summary>
-        /// <param name="point">The point to query.</param>
+        /// <param name="point">The point to inflate to.</param>
         /// <returns>The inflated box.</returns>
         [Pure]
+        [Obsolete("Use " + nameof(Extended) + " instead. This function will have it's implementation changed in the future.")]
         public Box2 Inflated(Vector2 point)
         {
             // create a local copy of this box
             Box2 box = this;
             box.Inflate(point);
+            return box;
+        }
+
+        /// <summary>
+        /// Extend this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        public void Extend(Vector2 point)
+        {
+            _min = Vector2.ComponentMin(_min, point);
+            _max = Vector2.ComponentMax(_max, point);
+        }
+
+        /// <summary>
+        /// Extend this Box2 to encapsulate a given point.
+        /// </summary>
+        /// <param name="point">The point to contain.</param>
+        /// <returns>The inflated box.</returns>
+        [Pure]
+        public Box2 Extended(Vector2 point)
+        {
+            // create a local copy of this box
+            Box2 box = this;
+            box.Extend(point);
             return box;
         }
 
@@ -593,6 +619,16 @@ namespace OpenTK.Mathematics
         public static bool operator !=(Box2 left, Box2 right)
         {
             return !(left == right);
+        }
+
+        /// <summary>
+        /// Converts this <see cref="Box2i"/> to a <see cref="System.Drawing.Rectangle"/> using <see cref="Min"/> as the position and <see cref="Size"/> as the size.
+        /// </summary>
+        /// <param name="box">The box to cast.</param>
+        [Pure]
+        public static explicit operator System.Drawing.RectangleF(Box2 box)
+        {
+            return new System.Drawing.RectangleF((System.Drawing.PointF)box.Min, (System.Drawing.SizeF)box.Size);
         }
 
         /// <inheritdoc/>
@@ -617,7 +653,25 @@ namespace OpenTK.Mathematics
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"{Min} - {Max}";
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc/>
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return $"{Min.ToString(format, formatProvider)} - {Max.ToString(format, formatProvider)}";
         }
     }
 }
