@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 23:11:01 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-15 23:15:13 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -279,16 +279,16 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, int, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD(uint id, int property, PixelType dataType, uint size, IntPtr data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD(uint id, GPUPropertyAMD property, PixelType dataType, uint size, IntPtr data)
             {
                 int returnValue;
                 void* data_vptr = (void*)data;
                 returnValue = GetGPUInfoAMD(id, property, dataType, size, data_vptr);
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, int, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, int property, PixelType dataType, uint size, Span<T1> data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, PixelType dataType, uint size, Span<T1> data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -298,8 +298,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, int, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, int property, PixelType dataType, uint size, T1[] data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, PixelType dataType, uint size, T1[] data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -309,8 +309,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGPUInfoAMD(uint, int, PixelType, uint, void*)"/>
-            public static unsafe int GetGPUInfoAMD<T1>(uint id, int property, PixelType dataType, uint size, ref T1 data)
+            /// <inheritdoc cref="GetGPUInfoAMD(uint, GPUPropertyAMD, PixelType, uint, void*)"/>
+            public static unsafe int GetGPUInfoAMD<T1>(uint id, GPUPropertyAMD property, PixelType dataType, uint size, ref T1 data)
                 where T1 : unmanaged
             {
                 int returnValue;
@@ -475,8 +475,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryPbufferARB(IntPtr, int, int*)"/>
-            public static unsafe int QueryPbufferARB(IntPtr hPbuffer, int iAttribute, Span<int> piValue)
+            /// <inheritdoc cref="QueryPbufferARB(IntPtr, PBufferAttribute, int*)"/>
+            public static unsafe int QueryPbufferARB(IntPtr hPbuffer, PBufferAttribute iAttribute, Span<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -485,8 +485,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryPbufferARB(IntPtr, int, int*)"/>
-            public static unsafe int QueryPbufferARB(IntPtr hPbuffer, int iAttribute, int[] piValue)
+            /// <inheritdoc cref="QueryPbufferARB(IntPtr, PBufferAttribute, int*)"/>
+            public static unsafe int QueryPbufferARB(IntPtr hPbuffer, PBufferAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -495,8 +495,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryPbufferARB(IntPtr, int, int*)"/>
-            public static unsafe int QueryPbufferARB(IntPtr hPbuffer, int iAttribute, ref int piValue)
+            /// <inheritdoc cref="QueryPbufferARB(IntPtr, PBufferAttribute, int*)"/>
+            public static unsafe int QueryPbufferARB(IntPtr hPbuffer, PBufferAttribute iAttribute, ref int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -692,8 +692,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryPbufferEXT(IntPtr, int, int*)"/>
-            public static unsafe int QueryPbufferEXT(IntPtr hPbuffer, int iAttribute, Span<int> piValue)
+            /// <inheritdoc cref="QueryPbufferEXT(IntPtr, PBufferAttribute, int*)"/>
+            public static unsafe int QueryPbufferEXT(IntPtr hPbuffer, PBufferAttribute iAttribute, Span<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -702,8 +702,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryPbufferEXT(IntPtr, int, int*)"/>
-            public static unsafe int QueryPbufferEXT(IntPtr hPbuffer, int iAttribute, int[] piValue)
+            /// <inheritdoc cref="QueryPbufferEXT(IntPtr, PBufferAttribute, int*)"/>
+            public static unsafe int QueryPbufferEXT(IntPtr hPbuffer, PBufferAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -712,8 +712,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryPbufferEXT(IntPtr, int, int*)"/>
-            public static unsafe int QueryPbufferEXT(IntPtr hPbuffer, int iAttribute, ref int piValue)
+            /// <inheritdoc cref="QueryPbufferEXT(IntPtr, PBufferAttribute, int*)"/>
+            public static unsafe int QueryPbufferEXT(IntPtr hPbuffer, PBufferAttribute iAttribute, ref int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -769,8 +769,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDigitalVideoParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int GetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, Span<int> piValue)
+            /// <inheritdoc cref="GetDigitalVideoParametersI3D(IntPtr, DigitalVideoAttribute, int*)"/>
+            public static unsafe int GetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, Span<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -779,8 +779,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDigitalVideoParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int GetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, int[] piValue)
+            /// <inheritdoc cref="GetDigitalVideoParametersI3D(IntPtr, DigitalVideoAttribute, int*)"/>
+            public static unsafe int GetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -789,8 +789,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetDigitalVideoParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int GetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, ref int piValue)
+            /// <inheritdoc cref="GetDigitalVideoParametersI3D(IntPtr, DigitalVideoAttribute, int*)"/>
+            public static unsafe int GetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, ref int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -873,8 +873,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGammaTableParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int GetGammaTableParametersI3D(IntPtr hDC, int iAttribute, Span<int> piValue)
+            /// <inheritdoc cref="GetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int GetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, Span<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -883,8 +883,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGammaTableParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int GetGammaTableParametersI3D(IntPtr hDC, int iAttribute, int[] piValue)
+            /// <inheritdoc cref="GetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int GetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -893,8 +893,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="GetGammaTableParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int GetGammaTableParametersI3D(IntPtr hDC, int iAttribute, ref int piValue)
+            /// <inheritdoc cref="GetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int GetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, ref int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -1226,8 +1226,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetDigitalVideoParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int SetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, ReadOnlySpan<int> piValue)
+            /// <inheritdoc cref="SetDigitalVideoParametersI3D(IntPtr, DigitalVideoAttribute, int*)"/>
+            public static unsafe int SetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, ReadOnlySpan<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1236,8 +1236,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetDigitalVideoParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int SetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, int[] piValue)
+            /// <inheritdoc cref="SetDigitalVideoParametersI3D(IntPtr, DigitalVideoAttribute, int*)"/>
+            public static unsafe int SetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1246,8 +1246,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetDigitalVideoParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int SetDigitalVideoParametersI3D(IntPtr hDC, int iAttribute, in int piValue)
+            /// <inheritdoc cref="SetDigitalVideoParametersI3D(IntPtr, DigitalVideoAttribute, int*)"/>
+            public static unsafe int SetDigitalVideoParametersI3D(IntPtr hDC, DigitalVideoAttribute iAttribute, in int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -1300,8 +1300,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, int iAttribute, ReadOnlySpan<int> piValue)
+            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, ReadOnlySpan<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1310,8 +1310,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, int iAttribute, int[] piValue)
+            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1320,8 +1320,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, int, int*)"/>
-            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, int iAttribute, in int piValue)
+            /// <inheritdoc cref="SetGammaTableParametersI3D(IntPtr, GammaTableAttribute, int*)"/>
+            public static unsafe int SetGammaTableParametersI3D(IntPtr hDC, GammaTableAttribute iAttribute, in int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -1714,8 +1714,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryCurrentContextNV(int, int*)"/>
-            public static unsafe int QueryCurrentContextNV(int iAttribute, Span<int> piValue)
+            /// <inheritdoc cref="QueryCurrentContextNV(ContextAttribute, int*)"/>
+            public static unsafe int QueryCurrentContextNV(ContextAttribute iAttribute, Span<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1724,8 +1724,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryCurrentContextNV(int, int*)"/>
-            public static unsafe int QueryCurrentContextNV(int iAttribute, int[] piValue)
+            /// <inheritdoc cref="QueryCurrentContextNV(ContextAttribute, int*)"/>
+            public static unsafe int QueryCurrentContextNV(ContextAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1734,8 +1734,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryCurrentContextNV(int, int*)"/>
-            public static unsafe int QueryCurrentContextNV(int iAttribute, ref int piValue)
+            /// <inheritdoc cref="QueryCurrentContextNV(ContextAttribute, int*)"/>
+            public static unsafe int QueryCurrentContextNV(ContextAttribute iAttribute, ref int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -1848,8 +1848,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(IntPtr, IntPtr, int, int*)"/>
-            public static unsafe int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, int iAttribute, Span<int> piValue)
+            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(IntPtr, IntPtr, VideoCaptureDeviceAttribute, int*)"/>
+            public static unsafe int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, VideoCaptureDeviceAttribute iAttribute, Span<int> piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1858,8 +1858,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(IntPtr, IntPtr, int, int*)"/>
-            public static unsafe int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, int iAttribute, int[] piValue)
+            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(IntPtr, IntPtr, VideoCaptureDeviceAttribute, int*)"/>
+            public static unsafe int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, VideoCaptureDeviceAttribute iAttribute, int[] piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = piValue)
@@ -1868,8 +1868,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(IntPtr, IntPtr, int, int*)"/>
-            public static unsafe int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, int iAttribute, ref int piValue)
+            /// <inheritdoc cref="QueryVideoCaptureDeviceNV(IntPtr, IntPtr, VideoCaptureDeviceAttribute, int*)"/>
+            public static unsafe int QueryVideoCaptureDeviceNV(IntPtr hDc, IntPtr hDevice, VideoCaptureDeviceAttribute iAttribute, ref int piValue)
             {
                 int returnValue;
                 fixed (int* piValue_ptr = &piValue)
@@ -1878,8 +1878,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SendPbufferToVideoNV(IntPtr, int, ulong*, int)"/>
-            public static unsafe int SendPbufferToVideoNV(IntPtr hPbuffer, int iBufferType, Span<ulong> pulCounterPbuffer, int bBlock)
+            /// <inheritdoc cref="SendPbufferToVideoNV(IntPtr, VideoOutputBufferType, ulong*, int)"/>
+            public static unsafe int SendPbufferToVideoNV(IntPtr hPbuffer, VideoOutputBufferType iBufferType, Span<ulong> pulCounterPbuffer, int bBlock)
             {
                 int returnValue;
                 fixed (ulong* pulCounterPbuffer_ptr = pulCounterPbuffer)
@@ -1888,8 +1888,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SendPbufferToVideoNV(IntPtr, int, ulong*, int)"/>
-            public static unsafe int SendPbufferToVideoNV(IntPtr hPbuffer, int iBufferType, ulong[] pulCounterPbuffer, int bBlock)
+            /// <inheritdoc cref="SendPbufferToVideoNV(IntPtr, VideoOutputBufferType, ulong*, int)"/>
+            public static unsafe int SendPbufferToVideoNV(IntPtr hPbuffer, VideoOutputBufferType iBufferType, ulong[] pulCounterPbuffer, int bBlock)
             {
                 int returnValue;
                 fixed (ulong* pulCounterPbuffer_ptr = pulCounterPbuffer)
@@ -1898,8 +1898,8 @@ namespace OpenTK.Graphics.Wgl
                 }
                 return returnValue;
             }
-            /// <inheritdoc cref="SendPbufferToVideoNV(IntPtr, int, ulong*, int)"/>
-            public static unsafe int SendPbufferToVideoNV(IntPtr hPbuffer, int iBufferType, ref ulong pulCounterPbuffer, int bBlock)
+            /// <inheritdoc cref="SendPbufferToVideoNV(IntPtr, VideoOutputBufferType, ulong*, int)"/>
+            public static unsafe int SendPbufferToVideoNV(IntPtr hPbuffer, VideoOutputBufferType iBufferType, ref ulong pulCounterPbuffer, int bBlock)
             {
                 int returnValue;
                 fixed (ulong* pulCounterPbuffer_ptr = &pulCounterPbuffer)
