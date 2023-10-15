@@ -59,21 +59,33 @@ namespace OpenTK.Compute.OpenCL
     #region Platform
 
     /// <summary>
-    /// The information that can be queried using <see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo, out byte[])"/>.
-    /// For more info see: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table.
+    /// The information that can be queried using <c><see cref="CL.GetPlatformInfo(CLPlatform, PlatformInfo, out byte[])">GetPlatformInfo()</see></c>.
+    /// <para>Original documentation: https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#platform-queries-table.</para>
     /// </summary>
     public enum PlatformInfo : uint
     {
         /// <summary>
-        /// OpenCL profile string. Returns the profile name supported by the implementation. The profile name returned can be one of the following strings:
-        /// FULL_PROFILE - if the implementation supports the OpenCL specification with no need for extensions.
-        /// EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded profile. The embedded profile for OpenCL is described in https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#opencl-embedded-profile.
+        /// OpenCL profile string. Returns the profile name supported by the implementation.
+        /// The profile name returned can be one of the following strings:
+        /// <list type="bullet">
+        /// <item><description>
+        /// FULL_PROFILE - if the implementation supports the OpenCL specification
+        /// (functionality defined as part of the core specification and does not require any extensions to be supported).
+        /// </description></item>
+        /// 
+        /// <item><description>
+        /// EMBEDDED_PROFILE - if the implementation supports the OpenCL embedded profile.
+        /// The embedded profile for OpenCL is described in:
+        /// https://www.khronos.org/registry/OpenCL/specs/3.0-unified/html/OpenCL_API.html#opencl-embedded-profile.
+        /// </description></item>
+        /// </list>
         /// </summary>
         Profile = 0x0900,
 
         /// <summary>
-        /// OpenCL version string. Returns the OpenCL version supported by the implementation. This version string has the following format:
-        /// "OpenCL {major_version.minor_version} {platform-specific information}"
+        /// OpenCL version string. Returns the OpenCL version supported by the implementation.
+        /// This version string has the following format:
+        /// <para>"OpenCL {major_version.minor_version} {platform-specific information}"</para>
         /// The major_version.minor_version value returned will be one of 1.0, 1.1, 1.2, 2.0, 2.1, 2.2 or 3.0.
         /// </summary>
         Version = 0x0901,
@@ -89,7 +101,9 @@ namespace OpenTK.Compute.OpenCL
         Vendor = 0x0903,
 
         /// <summary>
-        /// Returns a space separated list of extension names (the extension names themselves do not contain any spaces) supported by the platform. Each extension that is supported by all devices associated with this platform must be reported here.
+        /// Returns a space separated list of extension names (the extension names themselves do not contain any spaces)~
+        /// supported by the platform. Each extension that is supported by all devices associated with this
+        /// platform must be reported here.
         /// </summary>
         Extensions = 0x0904,
 
@@ -102,20 +116,24 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// Introduced in OpenCL 3.0
-        /// Returns the detailed (major, minor, patch) version supported by the platform. The major and minor version numbers returned must match those returned via <see cref="Version"/>.
+        /// Returns the detailed (major, minor, patch) version supported by the platform.
+        /// The major and minor version numbers returned must match those returned via <see cref="Version"/>.
         /// </summary>
         NumericVersion = 0x0906,
 
         /// <summary>
         /// Introduced in OpenCL 3.0
-        /// Returns an array of description (name and version) structures that lists all the extensions supported by the platform. The same extension name must not be reported more than once. The list of extensions reported must match the list reported via <see cref="Extensions"/>.
+        /// Returns an array of description (name and version) structures that lists all the extensions
+        /// supported by the platform. The same extension name must not be reported more than once.
+        /// The list of extensions reported must match the list reported via <see cref="Extensions"/>.
         /// </summary>
         ExtensionsWithVersion = 0x0907,
 
         /// <summary>
         /// Only available for OpenCL 2.0 and 2.1
-        /// If the cl_khr_icd extension is enabled, the function name suffix used to identify extension functions to be directed to this platform by the ICD Loader. 
-        /// For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/
+        /// If the cl_khr_icd extension is enabled, the function name suffix used to identify extension
+        /// functions to be directed to this platform by the ICD Loader. 
+        /// <para>For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/clGetPlatformInfo.html</para>
         /// </summary>
         PlatformIcdSuffix = 0x0920
     }
@@ -343,6 +361,9 @@ namespace OpenTK.Compute.OpenCL
         SpirVersion = 0x40e0
     }
 
+    /// <summary>
+    /// https://registry.khronos.org/OpenCL/specs/3.0-unified/html/OpenCL_API.html#clGetDeviceIDs
+    /// </summary>
     [Flags]
     public enum DeviceType : ulong
     {
