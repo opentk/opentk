@@ -91,6 +91,7 @@ namespace Generator.Writing
 
     public record EnumGroupMember(
         string Name,
+        string MangledName,
         ulong Value,
         GroupRef[] Groups,
         bool IsFlag) : IEquatable<EnumGroupMember?>;

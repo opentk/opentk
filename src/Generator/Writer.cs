@@ -523,7 +523,7 @@ namespace Generator.Writing
                 {
                     foreach (var member in group.Members)
                     {
-                        writer.WriteLine($"{member.Name} = {member.Value},");
+                        writer.WriteLine($"{member.MangledName} = {member.Value},");
                     }
                 }
             }

@@ -87,6 +87,11 @@ namespace Generator.Process
 
                 foreach ((string groupName, GLFile @namespace) in @enum.Groups)
                 {
+                    if (groupName == "ObjectTypeDX")
+                    {
+                        ;
+                    }
+
                     if (@namespace == GLFile.GL)
                     {
                         AddToGroup(allEnumGroups, OutputApi.GL, groupName, isFlag);
@@ -124,7 +129,7 @@ namespace Generator.Process
                     }
                 }
 
-                EnumGroupMember data = new EnumGroupMember(@enum.MangledName, @enum.Value, @enum.Groups, isFlag);
+                EnumGroupMember data = new EnumGroupMember(@enum.Name, @enum.MangledName, @enum.Value, @enum.Groups, isFlag);
 
                 if (@enum.Apis == OutputApiFlags.None)
                 {
@@ -159,6 +164,163 @@ namespace Generator.Process
                 if (@enum.Apis.HasFlag(OutputApiFlags.GLX))
                 {
                     allEnumsPerAPI.AddToNestedDict(OutputApi.GLX, @enum.Name, data);
+                }
+            }
+
+            foreach (var (api, _, enums) in spec.APIs)
+            {
+                OutputApi outAPI = api switch
+                {
+                    InputAPI.GL => OutputApi.GL,
+                    // FIXME?
+                    //InputAPI.GLCompat => OutputApi.GLCompat,
+                    InputAPI.GLES1 => OutputApi.GLES1,
+                    InputAPI.GLES2 => OutputApi.GLES2,
+                    InputAPI.WGL => OutputApi.WGL,
+                    InputAPI.GLX => OutputApi.GLX,
+
+                    _ => throw new Exception(),
+                };
+
+                // FIXME: Do we need this here?
+                GLFile file = api switch
+                {
+                    InputAPI.GL => GLFile.GL,
+                    InputAPI.GLES1 => GLFile.GL,
+                    InputAPI.GLES2 => GLFile.GL,
+                    InputAPI.WGL => GLFile.WGL,
+                    InputAPI.GLX => GLFile.GLX,
+
+                    _ => throw new Exception(),
+                };
+
+                CrossReferenceEnums(outAPI, file);
+
+                // FIXME: Do we need to do this for GLCompat?
+                // Could there be enums there that needs to be cross referenced?
+                if (outAPI == OutputApi.GL)
+                {
+                    CrossReferenceEnums(OutputApi.GLCompat, file);
+                }
+
+                void CrossReferenceEnums(OutputApi outAPI, GLFile glFile)
+                {
+                    bool removeFunctions = outAPI switch
+                    {
+                        OutputApi.GL => true,
+                        OutputApi.GLES2 => true,
+                        _ => false,
+                    };
+
+                    Dictionary<string, EnumGroupMember>? enumsDict = allEnumsPerAPI[outAPI];
+
+                    foreach (EnumReference enumRef in enums)
+                    {
+                        if (removeFunctions)
+                        {
+                            // FIXME: Should we check the profile of the extension??
+                            if (enumRef.RemovedIn != null || enumRef.Profile == GLProfile.Compatibility)
+                            {
+                                // FIXME: Add the enum if an extension uses it??
+                                continue;
+                            }
+                        }
+
+                        // FIXME! This is a big hack!
+                        // We don't want to process this "enum" as it is a string.
+                        if (enumRef.EnumName == "GLX_EXTENSION_NAME") continue;
+
+                        if (enumsDict.TryGetValue(enumRef.EnumName, out EnumGroupMember? @enum))
+                        {
+                            foreach (var (groupName, @namespace) in @enum.Groups)
+                            {
+                                if (@namespace != glFile)
+                                {
+                                    if (@namespace == GLFile.GL)
+                                    {
+                                        // FIXME: Cleanup
+
+                                        // FIXME: Should we really add it to all GL apis?
+                                        // Is there some good way to detect which ones we should add it to?
+                                        AddEnumToAPI(OutputApi.GL, @enum);
+                                        AddEnumToAPI(OutputApi.GLCompat, @enum);
+                                        AddEnumToAPI(OutputApi.GLES1, @enum);
+                                        AddEnumToAPI(OutputApi.GLES2, @enum);
+                                    }
+                                    else if (@namespace == GLFile.WGL)
+                                    {
+                                        AddEnumToAPI(OutputApi.WGL, @enum);
+                                    }
+                                    else if (@namespace == GLFile.GLX)
+                                    {
+                                        AddEnumToAPI(OutputApi.GLX, @enum);
+                                    }
+
+                                    void AddEnumToAPI(OutputApi outputApi, EnumGroupMember @enum)
+                                    {
+                                        // FIXME: There is an issue where a cross referenced enum gets readded here.
+                                        // We want to avoid this.
+
+                                        if (allEnumsPerAPI[outputApi].ContainsKey(@enum.Name) == false)
+                                        {
+                                            allEnumsPerAPI.AddToNestedDict(outputApi, @enum.Name, @enum);
+                                        }
+
+                                        foreach (var api in spec.APIs)
+                                        {
+                                            if (MatchesAPI(api.Name, outputApi))
+                                            {
+                                                api.Enums.Add(new EnumReference(@enum.Name, null, null, new List<ExtensionReference>(), GLProfile.None));
+                                                Logger.Info($"Added enum entry '{@enum.MangledName}' to {outputApi}.");
+                                            }
+                                        }
+
+                                        AddToGroup(allEnumGroups, outputApi, groupName, @enum.IsFlag);
+
+                                        static bool MatchesAPI(InputAPI api, OutputApi output)
+                                        {
+                                            switch (api)
+                                            {
+                                                case InputAPI.GL: return output == OutputApi.GL || output == OutputApi.GLCompat;
+                                                case InputAPI.GLES1: return output == OutputApi.GLES1;
+                                                case InputAPI.GLES2: return output == OutputApi.GLES2;
+                                                case InputAPI.WGL: return output == OutputApi.WGL;
+                                                case InputAPI.GLX: return output == OutputApi.GLX;
+                                                default: throw new Exception();
+                                            }
+                                        }
+
+                                        // FIXME: Duplicate implementation, see above.
+                                        static void AddToGroup(Dictionary<OutputApi, HashSet<EnumGroupInfo>> allEnumGroups, OutputApi api, string groupName, bool isFlag)
+                                        {
+                                            // If the first groupNameToEnumGroup tag wasn't flagged as a bitmask, but later ones in the same groupName are.
+                                            // Then we want the groupName to be considered a bitmask.
+                                            if (allEnumGroups[api].TryGetValue(new EnumGroupInfo(groupName, isFlag), out EnumGroupInfo? actual))
+                                            {
+                                                // In the current spec this case never happens, but it could.
+                                                // - 2021-07-04
+                                                if (isFlag == true && actual.IsFlags == false)
+                                                {
+                                                    allEnumGroups[api].Remove(actual);
+                                                    allEnumGroups[api].Add(actual with { IsFlags = true });
+                                                }
+                                            }
+                                            else
+                                            {
+                                                allEnumGroups[api].Add(new EnumGroupInfo(groupName, isFlag));
+                                            }
+                                        }
+                                    }
+
+                                    
+                                }
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception($"Could not find any enum called '{enumRef.EnumName}'.");
+                        }
+                    }
                 }
             }
 
@@ -299,7 +461,7 @@ namespace Generator.Process
                                     groupNameToEnumGroup.Add(groupName, groupMembers);
                                 }
 
-                                if (groupMembers.Find(g => g.Name == @enum.Name) == null)
+                                if (groupMembers.Find(g => g.MangledName == @enum.MangledName) == null)
                                 {
                                     groupMembers.Add(@enum);
                                 }
@@ -349,7 +511,7 @@ namespace Generator.Process
                         int comp = e1.Value.CompareTo(e2.Value);
                         if (comp == 0)
                         {
-                            return e1.Name.CompareTo(e2.Name);
+                            return e1.MangledName.CompareTo(e2.MangledName);
                         }
                         else
                         {
@@ -397,7 +559,7 @@ namespace Generator.Process
                             int comp = m1.Value.CompareTo(m2.Value);
                             if (comp == 0)
                             {
-                                return m1.Name.CompareTo(m2.Name);
+                                return m1.MangledName.CompareTo(m2.MangledName);
                             }
                             else
                             {

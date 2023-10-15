@@ -8,6 +8,8 @@ using Generator.Process;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Runtime.CompilerServices;
 
 namespace Generator
 {
@@ -119,6 +121,49 @@ namespace Generator
                     else
                     {
                         apis.Add(api);
+                    }
+                }
+
+                {
+                    foreach (var api in apis)
+                    {
+                        foreach (var @enum in enums)
+                        {
+                            if (MatchesAPI(@enum.Apis, api.Name))
+                            {
+                                bool found = false;
+                                foreach (var @ref in api.Enums)
+                                {
+                                    if (@ref.EnumName == @enum.Name)
+                                    {
+                                        found = true;
+                                        break;
+                                    }
+                                }
+
+                                // Check that the enum is a part of all the groups it's supposed to be part of.
+
+                                if (found == false)
+                                {
+                                    // Add the reference to the enum.
+                                    //api.Enums.Add(new EnumReference(@enum.Name, null, null, new List<ExtensionReference>(), GLProfile.None));
+                                    //Logger.Info($"Adding enum entry '{@enum.MangledName}' into {api.Name}.");
+                                }
+                            }
+
+                            static bool MatchesAPI(OutputApiFlags flags, InputAPI api)
+                            {
+                                switch (api)
+                                {
+                                    case InputAPI.GL: return (flags & (OutputApiFlags.GL | OutputApiFlags.GLCompat)) != 0;
+                                    case InputAPI.GLES1: return flags.HasFlag(OutputApiFlags.GLES1);
+                                    case InputAPI.GLES2: return flags.HasFlag(OutputApiFlags.GLES2);
+                                    case InputAPI.WGL: return flags.HasFlag(OutputApiFlags.WGL);
+                                    case InputAPI.GLX: return flags.HasFlag(OutputApiFlags.GLX);
+                                    default: throw new Exception();
+                                }
+                            }
+                        }
                     }
                 }
 
