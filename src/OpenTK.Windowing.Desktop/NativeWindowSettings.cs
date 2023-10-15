@@ -157,7 +157,7 @@ namespace OpenTK.Windowing.Desktop
         /// <summary>
         ///     Gets or sets the initial size of the contents of the window.
         /// </summary>
-        public Vector2i Size { get; set; } = new Vector2i(640, 360);
+        public Vector2i ClientSize { get; set; } = new Vector2i(640, 360);
 
         /// <summary>
         ///     Gets or sets the minimum size of the contents of the window.
@@ -166,7 +166,7 @@ namespace OpenTK.Windowing.Desktop
         /// Set to <c>null</c> to remove the minimum size constraint.
         /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </remarks>
-        public Vector2i? MinimumSize { get; set; } = null;
+        public Vector2i? MinimumClientSize { get; set; } = null;
 
         /// <summary>
         ///     Gets or sets the maximum size of the contents of the window.
@@ -175,6 +175,19 @@ namespace OpenTK.Windowing.Desktop
         /// Set to <c>null</c> to remove the minimum size constraint.
         /// If you set size limits and an aspect ratio that conflict, the results are undefined.
         /// </remarks>
+        public Vector2i? MaximumClientSize { get; set; } = null;
+
+        [Obsolete("Use the ClientSize property to get or set the initial size of the contents of the window.")]
+        public Vector2i Size
+        {
+            get => ClientSize;
+            set { ClientSize = value; }
+        }
+
+        [Obsolete("Use the MinimumClientSize property to get or set the minimum size of the contents of the window.")]
+        public Vector2i? MinimumSize { get; set; } = null;
+
+        [Obsolete("Use the MaximumClientSize property to get or set the minimum size of the contents of the window.")]
         public Vector2i? MaximumSize { get; set; } = null;
 
         /// <summary>
