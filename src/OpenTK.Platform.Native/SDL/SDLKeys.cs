@@ -10,7 +10,7 @@ namespace OpenTK.Platform.Native.SDL
     {
         SDL_SCANCODE_UNKNOWN = 0,
 
-        /**
+        /*
          *  \name Usage page 0x07
          *
          *  These values are from usage page 0x07 (USB keyboard page).
@@ -65,7 +65,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SCANCODE_EQUALS = 46,
         SDL_SCANCODE_LEFTBRACKET = 47,
         SDL_SCANCODE_RIGHTBRACKET = 48,
-        SDL_SCANCODE_BACKSLASH = 49, /** Located at the lower left of the return
+        SDL_SCANCODE_BACKSLASH = 49, /* Located at the lower left of the return
                                   *   key on ISO keyboards and at the right end
                                   *   of the QWERTY row on ANSI keyboards.
                                   *   Produces REVERSE SOLIDUS (backslash) and
@@ -79,7 +79,7 @@ namespace OpenTK.Platform.Native.SDL
                                   *   layout, and ASTERISK and MICRO SIGN in a
                                   *   French Windows layout.
                                   */
-        SDL_SCANCODE_NONUSHASH = 50, /** ISO USB keyboards actually use this code
+        SDL_SCANCODE_NONUSHASH = 50, /* ISO USB keyboards actually use this code
                                   *   instead of 49 for the same key, but all
                                   *   OSes I've seen treat the two codes
                                   *   identically. So, as an implementor, unless
@@ -93,7 +93,7 @@ namespace OpenTK.Platform.Native.SDL
                                   */
         SDL_SCANCODE_SEMICOLON = 51,
         SDL_SCANCODE_APOSTROPHE = 52,
-        SDL_SCANCODE_GRAVE = 53, /** Located in the top left corner (on both ANSI
+        SDL_SCANCODE_GRAVE = 53, /* Located in the top left corner (on both ANSI
                               *   and ISO keyboards). Produces GRAVE ACCENT and
                               *   TILDE in a US Windows layout and in US and UK
                               *   Mac layouts on ANSI keyboards, GRAVE ACCENT
@@ -132,7 +132,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SCANCODE_PRINTSCREEN = 70,
         SDL_SCANCODE_SCROLLLOCK = 71,
         SDL_SCANCODE_PAUSE = 72,
-        SDL_SCANCODE_INSERT = 73, /** insert on PC, help on some Mac keyboards (but
+        SDL_SCANCODE_INSERT = 73, /* insert on PC, help on some Mac keyboards (but
                                    does send code 73, not 117) */
         SDL_SCANCODE_HOME = 74,
         SDL_SCANCODE_PAGEUP = 75,
@@ -144,7 +144,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SCANCODE_DOWN = 81,
         SDL_SCANCODE_UP = 82,
 
-        SDL_SCANCODE_NUMLOCKCLEAR = 83, /** num lock on PC, clear on Mac keyboards
+        SDL_SCANCODE_NUMLOCKCLEAR = 83, /* num lock on PC, clear on Mac keyboards
                                      */
         SDL_SCANCODE_KP_DIVIDE = 84,
         SDL_SCANCODE_KP_MULTIPLY = 85,
@@ -163,7 +163,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SCANCODE_KP_0 = 98,
         SDL_SCANCODE_KP_PERIOD = 99,
 
-        SDL_SCANCODE_NONUSBACKSLASH = 100, /** This is the additional key that ISO
+        SDL_SCANCODE_NONUSBACKSLASH = 100, /* This is the additional key that ISO
                                         *   keyboards have over ANSI ones,
                                         *   located between left shift and Y.
                                         *   Produces GRAVE ACCENT and TILDE in a
@@ -173,8 +173,8 @@ namespace OpenTK.Platform.Native.SDL
                                         *   LESS-THAN SIGN and GREATER-THAN SIGN
                                         *   in a Swiss German, German, or French
                                         *   layout. */
-        SDL_SCANCODE_APPLICATION = 101, /** windows contextual menu, compose */
-        SDL_SCANCODE_POWER = 102, /** The USB document says this is a status flag,
+        SDL_SCANCODE_APPLICATION = 101, /* windows contextual menu, compose */
+        SDL_SCANCODE_POWER = 102, /* The USB document says this is a status flag,
                                *   not a physical key - but some Mac keyboards
                                *   do have a power key. */
         SDL_SCANCODE_KP_EQUALS = 103,
@@ -191,16 +191,16 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SCANCODE_F23 = 114,
         SDL_SCANCODE_F24 = 115,
         SDL_SCANCODE_EXECUTE = 116,
-        SDL_SCANCODE_HELP = 117,    /** AL Integrated Help Center */
-        SDL_SCANCODE_MENU = 118,    /** Menu (show menu) */
+        SDL_SCANCODE_HELP = 117,    /* AL Integrated Help Center */
+        SDL_SCANCODE_MENU = 118,    /* Menu (show menu) */
         SDL_SCANCODE_SELECT = 119,
-        SDL_SCANCODE_STOP = 120,    /** AC Stop */
-        SDL_SCANCODE_AGAIN = 121,   /** AC Redo/Repeat */
-        SDL_SCANCODE_UNDO = 122,    /** AC Undo */
-        SDL_SCANCODE_CUT = 123,     /** AC Cut */
-        SDL_SCANCODE_COPY = 124,    /** AC Copy */
-        SDL_SCANCODE_PASTE = 125,   /** AC Paste */
-        SDL_SCANCODE_FIND = 126,    /** AC Find */
+        SDL_SCANCODE_STOP = 120,    /* AC Stop */
+        SDL_SCANCODE_AGAIN = 121,   /* AC Redo/Repeat */
+        SDL_SCANCODE_UNDO = 122,    /* AC Undo */
+        SDL_SCANCODE_CUT = 123,     /* AC Cut */
+        SDL_SCANCODE_COPY = 124,    /* AC Copy */
+        SDL_SCANCODE_PASTE = 125,   /* AC Paste */
+        SDL_SCANCODE_FIND = 126,    /* AC Find */
         SDL_SCANCODE_MUTE = 127,
         SDL_SCANCODE_VOLUMEUP = 128,
         SDL_SCANCODE_VOLUMEDOWN = 129,
@@ -211,29 +211,29 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SCANCODE_KP_COMMA = 133,
         SDL_SCANCODE_KP_EQUALSAS400 = 134,
 
-        SDL_SCANCODE_INTERNATIONAL1 = 135, /** used on Asian keyboards, see
+        SDL_SCANCODE_INTERNATIONAL1 = 135, /* used on Asian keyboards, see
                                             footnotes in USB doc */
         SDL_SCANCODE_INTERNATIONAL2 = 136,
-        SDL_SCANCODE_INTERNATIONAL3 = 137, /** Yen */
+        SDL_SCANCODE_INTERNATIONAL3 = 137, /* Yen */
         SDL_SCANCODE_INTERNATIONAL4 = 138,
         SDL_SCANCODE_INTERNATIONAL5 = 139,
         SDL_SCANCODE_INTERNATIONAL6 = 140,
         SDL_SCANCODE_INTERNATIONAL7 = 141,
         SDL_SCANCODE_INTERNATIONAL8 = 142,
         SDL_SCANCODE_INTERNATIONAL9 = 143,
-        SDL_SCANCODE_LANG1 = 144, /** Hangul/English toggle */
-        SDL_SCANCODE_LANG2 = 145, /** Hanja conversion */
-        SDL_SCANCODE_LANG3 = 146, /** Katakana */
-        SDL_SCANCODE_LANG4 = 147, /** Hiragana */
-        SDL_SCANCODE_LANG5 = 148, /** Zenkaku/Hankaku */
-        SDL_SCANCODE_LANG6 = 149, /** reserved */
-        SDL_SCANCODE_LANG7 = 150, /** reserved */
-        SDL_SCANCODE_LANG8 = 151, /** reserved */
-        SDL_SCANCODE_LANG9 = 152, /** reserved */
+        SDL_SCANCODE_LANG1 = 144, /* Hangul/English toggle */
+        SDL_SCANCODE_LANG2 = 145, /* Hanja conversion */
+        SDL_SCANCODE_LANG3 = 146, /* Katakana */
+        SDL_SCANCODE_LANG4 = 147, /* Hiragana */
+        SDL_SCANCODE_LANG5 = 148, /* Zenkaku/Hankaku */
+        SDL_SCANCODE_LANG6 = 149, /* reserved */
+        SDL_SCANCODE_LANG7 = 150, /* reserved */
+        SDL_SCANCODE_LANG8 = 151, /* reserved */
+        SDL_SCANCODE_LANG9 = 152, /* reserved */
 
-        SDL_SCANCODE_ALTERASE = 153,    /** Erase-Eaze */
+        SDL_SCANCODE_ALTERASE = 153,    /* Erase-Eaze */
         SDL_SCANCODE_SYSREQ = 154,
-        SDL_SCANCODE_CANCEL = 155,      /** AC Cancel */
+        SDL_SCANCODE_CANCEL = 155,      /* AC Cancel */
         SDL_SCANCODE_CLEAR = 156,
         SDL_SCANCODE_PRIOR = 157,
         SDL_SCANCODE_RETURN2 = 158,
@@ -293,21 +293,21 @@ namespace OpenTK.Platform.Native.SDL
 
         SDL_SCANCODE_LCTRL = 224,
         SDL_SCANCODE_LSHIFT = 225,
-        SDL_SCANCODE_LALT = 226, /** alt, option */
-        SDL_SCANCODE_LGUI = 227, /** windows, command (apple), meta */
+        SDL_SCANCODE_LALT = 226, /* alt, option */
+        SDL_SCANCODE_LGUI = 227, /* windows, command (apple), meta */
         SDL_SCANCODE_RCTRL = 228,
         SDL_SCANCODE_RSHIFT = 229,
-        SDL_SCANCODE_RALT = 230, /** alt gr, option */
-        SDL_SCANCODE_RGUI = 231, /** windows, command (apple), meta */
+        SDL_SCANCODE_RALT = 230, /* alt gr, option */
+        SDL_SCANCODE_RGUI = 231, /* windows, command (apple), meta */
 
-        SDL_SCANCODE_MODE = 257,    /** I'm not sure if this is really not covered
-                                 *   by any of the above, but since there's a
-                                 *   special KMOD_MODE for it I'm adding it here
-                                 */
+        SDL_SCANCODE_MODE = 257,    /* I'm not sure if this is really not covered
+                                     *   by any of the above, but since there's a
+                                     *   special KMOD_MODE for it I'm adding it here
+                                     */
 
         /* @} *//* Usage page 0x07 */
 
-        /**
+        /*
          *  \name Usage page 0x0C
          *
          *  These values are mapped from usage page 0x0C (USB consumer page).
@@ -325,21 +325,21 @@ namespace OpenTK.Platform.Native.SDL
         SDL_SCANCODE_AUDIOPLAY = 261,
         SDL_SCANCODE_AUDIOMUTE = 262,
         SDL_SCANCODE_MEDIASELECT = 263,
-        SDL_SCANCODE_WWW = 264,             /** AL Internet Browser */
+        SDL_SCANCODE_WWW = 264,             /* AL Internet Browser */
         SDL_SCANCODE_MAIL = 265,
-        SDL_SCANCODE_CALCULATOR = 266,      /** AL Calculator */
+        SDL_SCANCODE_CALCULATOR = 266,      /* AL Calculator */
         SDL_SCANCODE_COMPUTER = 267,
-        SDL_SCANCODE_AC_SEARCH = 268,       /** AC Search */
-        SDL_SCANCODE_AC_HOME = 269,         /** AC Home */
-        SDL_SCANCODE_AC_BACK = 270,         /** AC Back */
-        SDL_SCANCODE_AC_FORWARD = 271,      /** AC Forward */
-        SDL_SCANCODE_AC_STOP = 272,         /** AC Stop */
-        SDL_SCANCODE_AC_REFRESH = 273,      /** AC Refresh */
-        SDL_SCANCODE_AC_BOOKMARKS = 274,    /** AC Bookmarks */
+        SDL_SCANCODE_AC_SEARCH = 268,       /* AC Search */
+        SDL_SCANCODE_AC_HOME = 269,         /* AC Home */
+        SDL_SCANCODE_AC_BACK = 270,         /* AC Back */
+        SDL_SCANCODE_AC_FORWARD = 271,      /* AC Forward */
+        SDL_SCANCODE_AC_STOP = 272,         /* AC Stop */
+        SDL_SCANCODE_AC_REFRESH = 273,      /* AC Refresh */
+        SDL_SCANCODE_AC_BOOKMARKS = 274,    /* AC Bookmarks */
 
         /* @} *//* Usage page 0x0C */
 
-        /**
+        /*
          *  \name Walther keys
          *
          *  These are values that Christian Walther added (for mac keyboard?).
@@ -348,20 +348,20 @@ namespace OpenTK.Platform.Native.SDL
 
         SDL_SCANCODE_BRIGHTNESSDOWN = 275,
         SDL_SCANCODE_BRIGHTNESSUP = 276,
-        SDL_SCANCODE_DISPLAYSWITCH = 277, /** display mirroring/dual display
+        SDL_SCANCODE_DISPLAYSWITCH = 277, /* display mirroring/dual display
                                            switch, video mode switch */
         SDL_SCANCODE_KBDILLUMTOGGLE = 278,
         SDL_SCANCODE_KBDILLUMDOWN = 279,
         SDL_SCANCODE_KBDILLUMUP = 280,
         SDL_SCANCODE_EJECT = 281,
-        SDL_SCANCODE_SLEEP = 282,           /** SC System Sleep */
+        SDL_SCANCODE_SLEEP = 282,           /* SC System Sleep */
 
         SDL_SCANCODE_APP1 = 283,
         SDL_SCANCODE_APP2 = 284,
 
         /* @} *//* Walther keys */
 
-        /**
+        /*
          *  \name Usage page 0x0C (additional media keys)
          *
          *  These values are mapped from usage page 0x0C (USB consumer page).
@@ -373,29 +373,29 @@ namespace OpenTK.Platform.Native.SDL
 
         /* @} *//* Usage page 0x0C (additional media keys) */
 
-        /**
+        /*
          *  \name Mobile keys
          *
          *  These are values that are often used on mobile phones.
          */
         /* @{ */
 
-        SDL_SCANCODE_SOFTLEFT = 287, /** Usually situated below the display on phones and
+        SDL_SCANCODE_SOFTLEFT = 287, /* Usually situated below the display on phones and
                                       used as a multi-function feature key for selecting
                                       a software defined function shown on the bottom left
                                       of the display. */
-        SDL_SCANCODE_SOFTRIGHT = 288, /** Usually situated below the display on phones and
+        SDL_SCANCODE_SOFTRIGHT = 288, /* Usually situated below the display on phones and
                                        used as a multi-function feature key for selecting
                                        a software defined function shown on the bottom right
                                        of the display. */
-        SDL_SCANCODE_CALL = 289, /** Used for accepting phone calls. */
-        SDL_SCANCODE_ENDCALL = 290, /** Used for rejecting phone calls. */
+        SDL_SCANCODE_CALL = 289, /* Used for accepting phone calls. */
+        SDL_SCANCODE_ENDCALL = 290, /* Used for rejecting phone calls. */
 
         /* @} *//* Mobile keys */
 
         /* Add any other keys here. */
 
-        SDL_NUM_SCANCODES = 512 /** not a key, just marks the number of scancodes
+        SDL_NUM_SCANCODES = 512 /* not a key, just marks the number of scancodes
                                  for array bounds */
     }
 

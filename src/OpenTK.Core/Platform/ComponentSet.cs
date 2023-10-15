@@ -367,7 +367,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        IconHandle IWindowComponent.GetIcon(WindowHandle handle)
+        IconHandle? IWindowComponent.GetIcon(WindowHandle handle)
         {
             return _windowComponent!.GetIcon(handle);
         }

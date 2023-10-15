@@ -4,7 +4,7 @@ using static OpenTK.Platform.Native.X11.LibX11;
 
 namespace OpenTK.Platform.Native.X11 
 {
-    public static class LibXkb
+    internal static class LibXkb
     {
         const string Xkb = "Xkb";
 

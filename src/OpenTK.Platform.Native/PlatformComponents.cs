@@ -95,6 +95,12 @@ namespace OpenTK.Platform.Native
                 //[PalComponents.Joystick] = () => new macOS.MacOSJoystickComponent(),
             };
 
+        /// <summary>
+        /// Returns the backend that will be used to create components.
+        /// </summary>
+        /// <returns>The backend that will be used to create components.</returns>
+        // FIXME: Better documentation
+        // FIXME: What do we do with things like, Win32 + ANGLE?
         public static Backend GetBackend()
         {
             // FIXME: Proper backend selection!

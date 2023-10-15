@@ -9,7 +9,7 @@ using static OpenTK.Platform.Native.X11.GLX;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public partial class X11OpenGLComponent : IOpenGLComponent
+    public class X11OpenGLComponent : IOpenGLComponent
     {
         /// <inheritdoc />
         public string Name => "X11OpenGLComponent";
@@ -78,8 +78,7 @@ namespace OpenTK.Platform.Native.X11
 
             if (GLXExtensions.Contains("GLX_ARB_create_context"))
             {
-                s_glXCreateContextAttribARB = Marshal.GetDelegateForFunctionPointer<glXCreateContextAttribARBProc>(
-                        s_glXGetProcAddress("glXCreateContextAttribsARB"));
+                s_glXCreateContextAttribARB = Marshal.GetDelegateForFunctionPointer<glXCreateContextAttribARBProc>(s_glXGetProcAddress("glXCreateContextAttribsARB"));
             }
             else
             {
@@ -122,8 +121,8 @@ namespace OpenTK.Platform.Native.X11
 
         private delegate IntPtr glXGetProcAddressProc(string procName);
 
-        private glXGetProcAddressProc s_glXGetProcAddress = null;
-        private glXCreateContextAttribARBProc s_glXCreateContextAttribARB = null;
+        private glXGetProcAddressProc s_glXGetProcAddress = null!;
+        private glXCreateContextAttribARBProc s_glXCreateContextAttribARB = null!;
 
         /// <inheritdoc />
         public OpenGLContextHandle CreateFromSurface()

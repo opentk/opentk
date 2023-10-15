@@ -4,6 +4,7 @@ using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
 {
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
     internal struct XErrorEvent
     {
         public XEventType type;
@@ -294,4 +295,5 @@ namespace OpenTK.Platform.Native.X11
         public XAtom property;		/* atom or None */
         public XTime time;
     }
+#pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

@@ -7,7 +7,7 @@ namespace OpenTK.Platform.Native.macOS
     // FIXME: Add ToString methods.
 
     [DebuggerDisplay("{Handle}")]
-    public struct ObjCClass
+    internal struct ObjCClass
     {
         public IntPtr Handle;
 
@@ -21,7 +21,7 @@ namespace OpenTK.Platform.Native.macOS
     }
 
     [DebuggerDisplay("{Handle}")]
-    public struct SEL
+    internal struct SEL
     {
         public IntPtr Handle;
 
@@ -31,7 +31,7 @@ namespace OpenTK.Platform.Native.macOS
         }
     }
 
-    public struct CGPoint
+    internal struct CGPoint
     {
         public static readonly CGPoint Zero = new CGPoint(0, 0);
 
@@ -49,8 +49,8 @@ namespace OpenTK.Platform.Native.macOS
             return $"({x}, {y})";
         }
     }
-
-    public struct CGRect
+    
+    internal struct CGRect
     {
         public CGPoint origin;
         public CGPoint size;

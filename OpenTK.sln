@@ -32,7 +32,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9A58BE7A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ci-config", "ci-config", "{DB4C8652-965F-44F9-998B-8918768DB6AA}"
 	ProjectSection(SolutionItems) = preProject
-		.travis.yml = .travis.yml
 		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
@@ -99,7 +98,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MacOSTestProject", "tests\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ANGLETestProject", "tests\ANGLETestProject\ANGLETestProject.csproj", "{7888FB56-FCBC-4240-B78F-691481A56AA1}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "build", "build\build.fsproj", "{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "build", "build\build.fsproj", "{49DFA6FD-D4F9-4EAD-BC24-3D585B1E8B94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

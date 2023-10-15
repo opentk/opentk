@@ -87,6 +87,7 @@ namespace OpenTK.Platform.Native.Windows
             Repeat = 0x0004,
         }
 
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
         public struct XINPUT_STATE
         {
             public uint dwPacketNumber;
@@ -134,6 +135,7 @@ namespace OpenTK.Platform.Native.Windows
             public byte UserIndex;
             public byte HidCode;
         }
+#pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 
         // FIXME: Import xinput 1.3 or ximport 1.4 whatever is available.
 

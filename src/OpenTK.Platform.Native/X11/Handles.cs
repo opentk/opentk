@@ -119,7 +119,6 @@ namespace OpenTK.Platform.Native.X11
 
     internal class XIconHandle : IconHandle
     {
-
         public int Width { get; set; }
         public int Height { get; set; }
 

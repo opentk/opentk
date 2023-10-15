@@ -47,6 +47,8 @@ namespace OpenTK.Core
             }
         }
 
+        // FIXME: this function is supposed to take in a TCHAR string,
+        // but it doesn't handle the 32 bit case...
         public static unsafe string FromTszString(char* ptr, int max_length)
         {
             ReadOnlySpan<char> span = new ReadOnlySpan<char>(ptr, max_length);

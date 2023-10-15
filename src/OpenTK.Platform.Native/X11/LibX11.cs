@@ -99,19 +99,6 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern int /* Status */ XGetWMNormalHints(XDisplayPtr display, XWindow w, XSizeHints* hints_return, XSizeHintFlags* supplied_return);
 
-        internal struct XWMHints
-        {
-            internal XWMHintsMask flags;  /* marks which fields in this structure are defined */
-            internal byte input;          /* does this application rely on the window manager to get keyboard input? */
-            internal int initial_state;	/* see below */
-            internal XPixmap icon_pixmap; /* pixmap to be used as icon */
-            internal XWindow icon_window; /* window to be used as icon */
-            internal int icon_x, icon_y;  /* initial position of icon */
-            internal XPixmap icon_mask;   /* pixmap to be used as mask for icon_pixmap */
-            internal XID window_group;    /* id of related window group */
-            /* this structure may be extended in the future */
-        }
-
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static unsafe extern XWMHints* XAllocWMHints();
 

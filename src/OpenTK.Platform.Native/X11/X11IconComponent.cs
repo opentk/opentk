@@ -80,7 +80,7 @@ namespace OpenTK.Platform.Native.X11
         {
             XIconHandle xicon = handle.As<XIconHandle>(this);
 
-            xicon.Images = null;
+            xicon.Images = null!;
             xicon.Width = -1;
             xicon.Height = -1;
         }

@@ -62,14 +62,26 @@ namespace OpenTK.Core.Platform
         /// </summary>
         public bool sRGBFramebuffer { get; set; } = false;
 
+        /// <summary>
+        /// The OpenGL profile to request.
+        /// </summary>
         public OpenGLProfile Profile { get; set; } = OpenGLProfile.None;
 
+        /// <summary>
+        /// If the forward compatible flag should be set or not.
+        /// </summary>
         public bool ForwardCompatibleFlag { get; set; } = true;
 
+        /// <summary>
+        /// If the debug flag should be set or not.
+        /// </summary>
         public bool DebugFlag { get; set; } = false;
 
         // FIXME: Robust access and reset notification flags?
 
+        /// <summary>
+        /// A context to enable context sharing with.
+        /// </summary>
         public OpenGLContextHandle? SharedContext { get; set; } = null;
 
         /// <summary>
@@ -86,6 +98,10 @@ namespace OpenTK.Core.Platform
             Api = api;
         }
 
+        /// <summary>
+        /// Make a memberwise copy of these settings.
+        /// </summary>
+        /// <returns>The copied settings.</returns>
         public OpenGLGraphicsApiHints Copy()
         {
             return (OpenGLGraphicsApiHints)MemberwiseClone();

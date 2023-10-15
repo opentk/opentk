@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.macOS
 {
-    public static unsafe class CG
+    internal static unsafe class CG
     {
         private const string Lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
 

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace OpenTK.Platform.Native.macOS
 {
-    public enum CFStringEncoding : uint
+    internal enum CFStringEncoding : uint
     {
         // Incomplete enum...
         UTF8 = 0x0800_0100,
@@ -10,8 +10,8 @@ namespace OpenTK.Platform.Native.macOS
         UTF16LE = 0x1400_0100,
         ASCII = 0x0000_0600,
     }
-    
-    public enum NSStringEncoding : ulong
+
+    internal enum NSStringEncoding : ulong
     {
         // Incomplete enum...
         ASCII = 1,
@@ -23,7 +23,7 @@ namespace OpenTK.Platform.Native.macOS
 
     // On watchOS this is a uint...
     [Flags]
-    public enum NSWindowStyleMask : ulong
+    internal enum NSWindowStyleMask : ulong
     {
         Borderless = 0,
         Titled = 1 << 0,
@@ -41,7 +41,7 @@ namespace OpenTK.Platform.Native.macOS
         HUDWindow = 1 << 13,
     }
 
-    public enum NSBackingStoreType : ulong
+    internal enum NSBackingStoreType : ulong
     {
         [Obsolete]
         Retained = 0,
@@ -50,7 +50,7 @@ namespace OpenTK.Platform.Native.macOS
         Buffered  = 2,
     }
 
-    public enum NSEventType : ulong
+    internal enum NSEventType : ulong
     {
         LeftMouseDown = 1,
         LeftMouseUp = 2,
@@ -98,7 +98,7 @@ namespace OpenTK.Platform.Native.macOS
     }
 
     [Flags]
-    public enum NSEventMask : ulong
+    internal enum NSEventMask : ulong
     {
         Any = 0xFFFF_FFFF_FFFF_FFFF,
 
@@ -142,20 +142,20 @@ namespace OpenTK.Platform.Native.macOS
 
     }
 
-    public enum NSApplicationActivationpolicy : long
+    internal enum NSApplicationActivationpolicy : long
     {
         Regular,
         Accessory,
         Prohibited,
     }
 
-    public enum NSRequestUserAttentionType : ulong
+    internal enum NSRequestUserAttentionType : ulong
     {
         CriticalRequest = 0,
         InformationalRequest = 10,
     }
 
-    public enum NSWindowLevel : long
+    internal enum NSWindowLevel : long
     {
         Normal = 0,
         Floating = 3,

@@ -5,7 +5,8 @@ using System.Security.Cryptography;
 
 namespace OpenTK.Platform.Native.macOS
 {
-    public static unsafe class ObjC
+#pragma warning disable IDE1006 // Naming Styles
+    internal static unsafe class ObjC
     {
         private const string libdl = "libdl.dylib";
         private const string FoundationFramework = "/System/Library/Frameworks/Foundation.framework/Foundation";
@@ -316,5 +317,6 @@ namespace OpenTK.Platform.Native.macOS
         [DllImport(FoundationFramework)]
         internal static extern IntPtr CFArrayGetValueAtIndex(IntPtr /* CFArrayRef */ theArray, nint idx);
     }
+#pragma warning restore IDE1006 // Naming Styles
 }
 

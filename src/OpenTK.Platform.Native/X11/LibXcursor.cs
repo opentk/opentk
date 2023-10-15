@@ -2,7 +2,8 @@ using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public static unsafe class LibXcursor
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
+    internal static unsafe class LibXcursor
     {
         private const string Xcursor = "Xcursor";
 
@@ -32,4 +33,5 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(Xcursor)]
         internal static extern XCursor XcursorImageLoadCursor(XDisplayPtr dpy, XcursorImage* image);
     }
+#pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

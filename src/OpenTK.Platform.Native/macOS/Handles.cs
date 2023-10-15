@@ -2,11 +2,10 @@
 using OpenTK.Core.Platform;
 namespace OpenTK.Platform.Native.macOS
 {
-    public class NSWindowHandle : WindowHandle
+    internal class NSWindowHandle : WindowHandle
     {
         public IntPtr Window { get; set; }
         public IntPtr View { get; set; }
-
 
         // This is used to implement SwapBuffers
         public NSOpenGLContext? Context { get; set; }
@@ -20,7 +19,7 @@ namespace OpenTK.Platform.Native.macOS
         }
     }
 
-    public class NSOpenGLContext : OpenGLContextHandle
+    internal class NSOpenGLContext : OpenGLContextHandle
     {
         public IntPtr Context { get; set; }
 
@@ -34,7 +33,7 @@ namespace OpenTK.Platform.Native.macOS
     }
 
     // FIXME: Is this an NSScreen handle or a CGDirectDisplay handle?
-    public class NSScreenHandle : DisplayHandle
+    internal class NSScreenHandle : DisplayHandle
     {
         public uint DirectDisplayID { get; set; }
 

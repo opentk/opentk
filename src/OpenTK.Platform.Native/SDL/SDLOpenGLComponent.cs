@@ -136,9 +136,9 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
-            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+            SDLOpenGLContext? context = handle?.As<SDLOpenGLContext>(this);
 
-            int result = SDL_GL_MakeCurrent(context.Window.Window, context.Context);
+            int result = SDL_GL_MakeCurrent(context?.Window.Window ?? SDL_WindowPtr.Null, context?.Context ?? SDL_GLContext.Null);
             if (result < 0)
             {
                 string error = SDL_GetError();

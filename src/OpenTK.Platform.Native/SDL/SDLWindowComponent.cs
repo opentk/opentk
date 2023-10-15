@@ -1013,9 +1013,9 @@ namespace OpenTK.Platform.Native.SDL
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
-            SDLCursor sdlCursor = cursor.As<SDLCursor>(this);
+            SDLCursor? sdlCursor = cursor?.As<SDLCursor>(this);
 
-            if (cursor == null)
+            if (sdlCursor == null)
             {
                 SDL_ShowCursor(0 /* SDL_DISABLE */);
             }

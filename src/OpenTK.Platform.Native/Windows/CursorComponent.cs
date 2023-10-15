@@ -304,6 +304,7 @@ namespace OpenTK.Platform.Native.Windows
             return hcursor;
         }
 
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
         private struct ICONDIR
         {
             public ushort idReserved;   // Reserved (must be 0)
@@ -322,6 +323,7 @@ namespace OpenTK.Platform.Native.Windows
             public uint dwBytesInRes;    // How many bytes in this resource?
             public uint dwImageOffset;   // Where in the file is this image?
         }
+#pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 
         /// <remarks>
         /// Currently this function does not work with .ani files.

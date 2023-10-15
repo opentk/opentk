@@ -141,13 +141,13 @@ namespace OpenTK.Platform.Native.Windows
 
             int status;
 
-            status = Win32.RegOpenKeyEx((IntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out IntPtr layoutsKey);
+            status = Win32.RegOpenKeyEx((UIntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out UIntPtr layoutsKey);
             if (status != 0)
             {
                 throw new Exception($"RegOpenKeyEx (\"HKEY_LOCAL_MACHINE\\{LAYOUTS_REGISTRY_PATH}\") error: 0x{status:X8}");
             }
 
-            status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out IntPtr layoutKey);
+            status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out UIntPtr layoutKey);
             if (status != 0)
             {
                 throw new Exception($"RegOpenKeyEx (\"{layoutName}\") error: 0x{status:X8}");

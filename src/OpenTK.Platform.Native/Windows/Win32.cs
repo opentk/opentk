@@ -914,15 +914,15 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int /* LSTATUS */ RegOpenKeyEx(
-            IntPtr /* HKEY */ hKey,
+            UIntPtr /* HKEY */ hKey,
             string lpSubKey,
             RegOption ulOptions,
             AccessMask /* REGSAM */ samDesired,
-            out IntPtr /* PHKEY */ phkResult);
+            out UIntPtr /* PHKEY */ phkResult);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern int /* LSTATUS */ RegGetValue(
-            IntPtr /* HKEY */ hkey,
+            UIntPtr /* HKEY */ hkey,
             string? lpSubKey,
             string? lpValue,
             RRF dwFlags,
@@ -931,7 +931,7 @@ namespace OpenTK.Platform.Native.Windows
             ref uint pcbData);
 
         internal static int /* LSTATUS */ RegGetValue<T>(
-            IntPtr /* HKEY */ hkey,
+            UIntPtr /* HKEY */ hkey,
             string? lpSubKey,
             string? lpValue,
             RRF dwFlags,

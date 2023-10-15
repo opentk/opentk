@@ -2,7 +2,7 @@ using System;
 
 namespace OpenTK.Platform.Native.X11
 {
-    public enum KnownAtoms
+    internal enum KnownAtoms
     {
         #region Common Property Types
         ATOM,
