@@ -39,20 +39,19 @@ namespace Generator
     {
         private static readonly string TempDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "..", "..", "..", "SpecificationFiles");
 
-        public static FileStream ReadSpecFromGithub()
+        private static FileStream ReadFileFromGithub(string url, string filePath)
         {
-            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml";
-            string filePath = Path.Combine(TempDirectory, "gl.xml");
+            string fileName = Path.GetFileName(filePath);
 
             FileStream stream;
             if (File.Exists(filePath))
             {
-                Logger.Info($"Found cache file for gl.xml, using that.");
+                Logger.Info($"Found cache file for {fileName}, using that.");
                 stream = File.OpenRead(filePath);
             }
             else
             {
-                Logger.Info($"Didn't find cache file for gl.xml, downloading from {url}. (looked for gl.xml in this directory: {Path.GetFullPath(filePath)})");
+                Logger.Info($"Didn't find cache file for {fileName}, downloading from {url}. (looked for {fileName} in this directory: {Path.GetFullPath(filePath)})");
                 if (!Directory.Exists(TempDirectory))
                 {
                     Directory.CreateDirectory(TempDirectory);
@@ -61,6 +60,30 @@ namespace Generator
             }
 
             return stream;
+        }
+
+        public static FileStream ReadGLSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/gl.xml";
+            string filePath = Path.Combine(TempDirectory, "gl.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
+        public static FileStream ReadWGLSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/wgl.xml";
+            string filePath = Path.Combine(TempDirectory, "wgl.xml");
+
+            return ReadFileFromGithub(url, filePath);
+        }
+
+        public static FileStream ReadGLXSpecFromGithub()
+        {
+            string url = "https://raw.githubusercontent.com/KhronosGroup/OpenGL-Registry/main/xml/glx.xml";
+            string filePath = Path.Combine(TempDirectory, "glx.xml");
+
+            return ReadFileFromGithub(url, filePath);
         }
 
         public static DocumentationSource ReadDocumentationFromGithub()

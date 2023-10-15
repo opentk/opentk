@@ -28,7 +28,7 @@ namespace Generator.Parsing
                 OutputApi api = folder.Folder switch
                 {
                     "es1.1" => OutputApi.GLES1,
-                    "es3" => OutputApi.GLES3,
+                    "es3" => OutputApi.GLES2,
                     "gl2.1" => OutputApi.GLCompat,
                     "gl4" => OutputApi.GL,
                     _ => throw new NotImplementedException(),
@@ -61,7 +61,7 @@ namespace Generator.Parsing
                         case OutputApi.GLES1:
                             refPagesLink += $"es1.1/xhtml/{filename}.xml";
                             break;
-                        case OutputApi.GLES3:
+                        case OutputApi.GLES2:
                             refPagesLink += $"es3.0/html{filename}.xhtml";
                             break;
                         default:
@@ -140,8 +140,6 @@ namespace Generator.Parsing
                     }
 
                     parametersDescriptions.TryGetValue(parameterName, out string? desc);
-                    if (desc != null)
-                        desc = NameMangler.MangleParameterDescription(desc);
 
                     parameters.Add(new ParameterDocumentation(parameterName, desc ?? "!!missing documentation!!"));
                 }
