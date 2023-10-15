@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 23:15:13 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-15 23:17:08 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -13,7 +13,7 @@ namespace OpenTK.Graphics.Wgl
         public static int ChoosePixelFormat(IntPtr hDc, PixelFormatDescriptor* pPfd) => WGLPointers._ChoosePixelFormat_fnptr(hDc, pPfd);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglCopyContext</c>]</b><br/>  </summary>
-        public static int CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, uint mask) => WGLPointers._wglCopyContext_fnptr(hglrcSrc, hglrcDst, mask);
+        public static int CopyContext(IntPtr hglrcSrc, IntPtr hglrcDst, AttribMask mask) => WGLPointers._wglCopyContext_fnptr(hglrcSrc, hglrcDst, (uint)mask);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglCreateContext</c>]</b><br/>  </summary>
         public static IntPtr CreateContext(IntPtr hDc) => WGLPointers._wglCreateContext_fnptr(hDc);
@@ -67,7 +67,7 @@ namespace OpenTK.Graphics.Wgl
         public static int SwapBuffers(IntPtr hdc) => WGLPointers._SwapBuffers_fnptr(hdc);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglSwapLayerBuffers</c>]</b><br/>  </summary>
-        public static int SwapLayerBuffers(IntPtr hdc, uint fuFlags) => WGLPointers._wglSwapLayerBuffers_fnptr(hdc, fuFlags);
+        public static int SwapLayerBuffers(IntPtr hdc, WGLLayerPlaneMask fuFlags) => WGLPointers._wglSwapLayerBuffers_fnptr(hdc, (uint)fuFlags);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>wglUseFontBitmaps</c>]</b><br/>  </summary>
         public static int UseFontBitmaps(IntPtr hDC, uint first, uint count, uint listBase) => WGLPointers._wglUseFontBitmaps_fnptr(hDC, first, count, listBase);
@@ -91,7 +91,7 @@ namespace OpenTK.Graphics.Wgl
         public static unsafe partial class _3DL
         {
             /// <summary> <b>[requires: WGL_3DL_stereo_control]</b> <b>[entry point: <c>wglSetStereoEmitterState3DL</c>]</b><br/>  </summary>
-            public static int SetStereoEmitterState3DL(IntPtr hDC, uint uState) => WGLPointers._wglSetStereoEmitterState3DL_fnptr(hDC, uState);
+            public static int SetStereoEmitterState3DL(IntPtr hDC, StereoEmitterState uState) => WGLPointers._wglSetStereoEmitterState3DL_fnptr(hDC, (uint)uState);
             
         }
         /// <summary>AMD extensions.</summary>
@@ -135,7 +135,7 @@ namespace OpenTK.Graphics.Wgl
             public static int ChoosePixelFormatARB(IntPtr hdc, int* piAttribIList, float* pfAttribFList, uint nMaxFormats, int* piFormats, uint* nNumFormats) => WGLPointers._wglChoosePixelFormatARB_fnptr(hdc, piAttribIList, pfAttribFList, nMaxFormats, piFormats, nNumFormats);
             
             /// <summary> <b>[requires: WGL_ARB_buffer_region]</b> <b>[entry point: <c>wglCreateBufferRegionARB</c>]</b><br/>  </summary>
-            public static IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, uint uType) => WGLPointers._wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, uType);
+            public static IntPtr CreateBufferRegionARB(IntPtr hDC, int iLayerPlane, WGLColorBufferMask uType) => WGLPointers._wglCreateBufferRegionARB_fnptr(hDC, iLayerPlane, (uint)uType);
             
             /// <summary> <b>[requires: WGL_ARB_create_context]</b> <b>[entry point: <c>wglCreateContextAttribsARB</c>]</b><br/>  </summary>
             public static IntPtr CreateContextAttribsARB(IntPtr hDC, IntPtr hShareContext, int* attribList) => WGLPointers._wglCreateContextAttribsARB_fnptr(hDC, hShareContext, attribList);
@@ -251,7 +251,7 @@ namespace OpenTK.Graphics.Wgl
             public static int BeginFrameTrackingI3D() => WGLPointers._wglBeginFrameTrackingI3D_fnptr();
             
             /// <summary> <b>[requires: WGL_I3D_image_buffer]</b> <b>[entry point: <c>wglCreateImageBufferI3D</c>]</b><br/>  </summary>
-            public static IntPtr CreateImageBufferI3D(IntPtr hDC, uint dwSize, uint uFlags) => WGLPointers._wglCreateImageBufferI3D_fnptr(hDC, dwSize, uFlags);
+            public static IntPtr CreateImageBufferI3D(IntPtr hDC, uint dwSize, WGLImageBufferMaskI3D uFlags) => WGLPointers._wglCreateImageBufferI3D_fnptr(hDC, dwSize, (uint)uFlags);
             
             /// <summary> <b>[requires: WGL_I3D_image_buffer]</b> <b>[entry point: <c>wglDestroyImageBufferI3D</c>]</b><br/>  </summary>
             public static int DestroyImageBufferI3D(IntPtr hDC, IntPtr pAddress) => WGLPointers._wglDestroyImageBufferI3D_fnptr(hDC, pAddress);

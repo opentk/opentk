@@ -526,7 +526,7 @@ namespace Generator.Parsing
                 // - 2022-08-09
                 // FIXME: We might want to make sure that the underlying type for the enumName groupName is the same as the parameter groupName.
                 //   Right now we blindly substituting the type for the enumName.
-                if (group != null && (type == "GLuint" || type == "GLint" || type == "INT" || type == "INT32" || type == "int" || type == "int32_t"))
+                if (group != null && (type == "GLuint" || type == "GLint" || type == "INT" || type == "UINT" || type == "INT32" || type == "int" || type == "int32_t"))
                 {
                     Console.WriteLine($"Making {type} into group {group}");
                     CSPrimitive baseType = type switch
@@ -534,6 +534,7 @@ namespace Generator.Parsing
                         "GLint" => new CSPrimitive("int", @const),
                         "GLuint" => new CSPrimitive("uint", @const),
                         "INT" => new CSPrimitive("int", @const),
+                        "UINT" => new CSPrimitive("uint", @const),
                         "INT32" => new CSPrimitive("int", @const),
                         "int" => new CSPrimitive("int", @const),
                         "int32_t" => new CSPrimitive("int", @const),
