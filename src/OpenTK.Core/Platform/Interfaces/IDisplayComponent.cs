@@ -11,11 +11,6 @@ namespace OpenTK.Core.Platform
         // FIXME: Add API for getting the display orientation!
 
         /// <summary>
-        /// True if the driver can set the video mode.
-        /// </summary>
-        bool CanSetVideoMode { get; }
-
-        /// <summary>
         /// True if the driver can get the virtual position of the display.
         /// </summary>
         bool CanGetVirtualPosition { get; }
@@ -76,30 +71,12 @@ namespace OpenTK.Core.Platform
         void GetVideoMode(DisplayHandle handle, out VideoMode mode);
 
         /// <summary>
-        /// Set the active video mode of a display.
+        /// Get all supported video modes for a specific display.
         /// </summary>
         /// <param name="handle">Handle to a display.</param>
-        /// <param name="mode">Target video mode.</param>
+        /// <returns>An array of all supported video modes.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="mode"/> is unsupported by display.</exception>
-        /// <exception cref="PalNotImplementedException">The driver does not support this action. See <see cref="CanSetVideoMode"/>.</exception>
-        void SetVideoMode(DisplayHandle handle, in VideoMode mode);
-
-        /// <summary>
-        /// Get the number of video modes the display supports.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <returns>Number of supported display modes.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        int GetSupportedVideoModeCount(DisplayHandle handle);
-
-        /// <summary>
-        /// Get all supported video modes.
-        /// </summary>
-        /// <param name="handle">Handle to a display.</param>
-        /// <param name="modes">Span where supported display modes will be written to.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes);
+        VideoMode[] GetSupportedVideoModes(DisplayHandle handle);
 
         /// <summary>
         /// Get the position of the display in the virtual desktop.

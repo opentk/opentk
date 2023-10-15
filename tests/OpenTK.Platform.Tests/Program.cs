@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace OpenTK.Platform.Tests
 {
@@ -19,6 +20,8 @@ namespace OpenTK.Platform.Tests
         static ICursorComponent cursorComp;
         static IMouseComponent mouseComp;
         static IShellComponent shellComp;
+        static IIconComponent iconComp;
+        static IClipboardComponent clipComp;
         //static IKeyboardComponent keyboardComp;
 
         static IDisplayComponent displayComp;
@@ -71,12 +74,15 @@ namespace OpenTK.Platform.Tests
         {
             EventQueue.EventRaised += EventQueue_EventRaised;
 
+            //Native.PlatformComponents.PreferSDL2 = true;
             windowComp = Native.PlatformComponents.CreateWindowComponent();
             glComp = Native.PlatformComponents.CreateOpenGLComponent();
             cursorComp = Native.PlatformComponents.CreateCursorComponent();
             mouseComp = Native.PlatformComponents.CreateMouseComponent();
             shellComp = Native.PlatformComponents.CreateShellComponent();
             displayComp = Native.PlatformComponents.CreateDisplayComponent();
+            iconComp = Native.PlatformComponents.CreateIconComponent();
+            clipComp = Native.PlatformComponents.CreateClipboardComponent();
             //keyboardComp = Native.PlatformComponents.CreateKeyboardComponent();
 
             var logger = new ConsoleLogger();
@@ -86,6 +92,8 @@ namespace OpenTK.Platform.Tests
             mouseComp.Logger = logger;
             shellComp.Logger = logger;
             displayComp.Logger = logger;
+            iconComp.Logger = logger;
+            clipComp.Logger = logger;
             //keyboardComp.Logger = logger;
 
             windowComp.Initialize(PalComponents.Window);
@@ -94,6 +102,8 @@ namespace OpenTK.Platform.Tests
             mouseComp.Initialize(PalComponents.MiceInput);
             shellComp.Initialize(PalComponents.Shell);
             displayComp.Initialize(PalComponents.Display);
+            iconComp.Initialize(PalComponents.WindowIcon);
+            clipComp.Initialize(PalComponents.Clipboard);
             //keyboardComp.Initialize(PalComponents.KeyboardInput);
 
             /*
@@ -149,6 +159,29 @@ namespace OpenTK.Platform.Tests
 
             Console.WriteLine($"Number of screens: {displayComp.GetDisplayCount()}");
 
+            {
+                var primary = displayComp.OpenPrimary();
+                string name = displayComp.GetName(primary);
+                displayComp.GetRefreshRate(primary, out float refreshRate);
+                displayComp.GetVirtualPosition(primary, out int x, out int y);
+                displayComp.GetResolution(primary, out int width, out int height);
+                displayComp.GetWorkArea(primary, out Box2i workArea);
+                displayComp.GetVideoMode(primary, out VideoMode videoMode);
+                VideoMode[] modes = displayComp.GetSupportedVideoModes(primary);
+
+                Console.WriteLine($"Primary display: {name}");
+                Console.WriteLine($"Refresh rate: {refreshRate}Hz");
+                Console.WriteLine($"Position: ({x},{y})");
+                Console.WriteLine($"Resolution: {width}x{height}");
+                Console.WriteLine($"Work area: {workArea.Location} {workArea.Size}");
+                Console.WriteLine($"Video mode: {videoMode}");
+                Console.WriteLine($"Supported video modes:");
+                foreach (var mode in modes)
+                {
+                    Console.WriteLine($"  {mode}");
+                }
+            }
+
             Console.WriteLine($"Is always on top: {windowComp.IsAlwaysOnTop(Window)}");
 
 
@@ -161,35 +194,45 @@ namespace OpenTK.Platform.Tests
             Stopwatch watch = Stopwatch.StartNew();
 
             SystemCursorType cursor = SystemCursorType.Default;
-            cursorHandle = cursorComp.Create();
+            cursorHandle = cursorComp.Create(cursor);
 
-            cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
-            Console.WriteLine($"Default cursor size: {cWidth}, {cHeight}");
+            //cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
+            //Console.WriteLine($"Default cursor size: {cWidth}, {cHeight}");
 
             windowComp.SetCursor(Window, cursorHandle);
 
-            cursorHandle = cursorComp.Create();
             byte[] image = new byte[16 * 16 * 3];
+            image = new byte[16 * 16 * 4];
             byte[] mask = new byte[16 * 16 * 1];
             for (int ccx = 0; ccx < 16; ccx++)
             {
                 for (int ccy = 0; ccy < 16; ccy++)
                 {
-                    int index = (ccy * 16 + ccx) * 3;
+                    //int index = (ccy * 16 + ccx) * 3;
 
+                    //image[index + 0] = (byte)(ccx * 16);
+                    //image[index + 1] = (byte)(ccx * 16);
+                    //image[index + 2] = (byte)(ccx * 16);
+
+                    int index = (ccy * 16 + ccx) * 4;
+                    
                     image[index + 0] = (byte)(ccx * 16);
                     image[index + 1] = (byte)(ccx * 16);
                     image[index + 2] = (byte)(ccx * 16);
+                    image[index + 3] = (byte)((ccy % 2 == 0) ? 255 : 0);
 
-                    mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
+                    //mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
                 }
             }
-            //cursorComp.SetHotspot(cursorHandle, 8, 8);
-            cursorComp.Load(cursorHandle, 16, 16, image, mask);
-            cursorComp.GetSize(cursorHandle, out cWidth, out cHeight);
+            cursorHandle = cursorComp.Create(16, 16, image, 8, 8);
+            cursorComp.GetSize(cursorHandle, out int cWidth, out int cHeight);
             Console.WriteLine($"Custom cursor size: {cWidth}, {cHeight}");
             //cursorComp.SetHotspot(cursorHandle, 7, 7);
             windowComp.SetCursor(Window, cursorHandle);
+
+            //var icon = iconComp.Create(16, 16, image);
+            //windowComp.SetIcon(Window, icon);
+            GenerateAndSetWindowIcon(Window);
 
             while (windowComp.IsWindowDestroyed(Window) == false)
             {
@@ -198,7 +241,12 @@ namespace OpenTK.Platform.Tests
                 if (windowComp.IsWindowDestroyed(Window))
                     break;
 
-                if (watch.ElapsedMilliseconds > 3000)
+                if (windowMode != WindowMode.Hidden)
+                {
+                    watch.Restart();
+                }
+
+                if (watch.ElapsedMilliseconds > 3000 && windowMode == WindowMode.Hidden)
                 {
                     //windowComp.FocusWindow(window);
                     windowComp.RequestAttention(Window);
@@ -225,13 +273,64 @@ namespace OpenTK.Platform.Tests
             }
         }
 
+        static void GenerateAndSetWindowIcon(WindowHandle handle)
+        {
+            byte[] image16 = new byte[16 * 16 * 4];
+            for (int ccx = 0; ccx < 16; ccx++)
+            {
+                for (int ccy = 0; ccy < 16; ccy++)
+                {
+                    int index = (ccy * 16 + ccx) * 4;
+                    
+                    image16[index + 0] = (byte)(ccx * 16);
+                    image16[index + 1] = (byte)(ccx * 16);
+                    image16[index + 2] = (byte)(ccy * 16);
+                    image16[index + 3] = (byte)((ccy % 2 == 0) ? 255 : 0);
+                }
+            }
+
+            byte[] image128 = new byte[128 * 128 * 4];
+            for (int ccx = 0; ccx < 128; ccx++)
+            {
+                for (int ccy = 0; ccy < 128; ccy++)
+                {
+                    int index = (ccy * 128 + ccx) * 4;
+                    
+                    image128[index + 0] = (byte)((ccx / 128f) * 255);
+                    image128[index + 1] = (byte)((ccx / 128f) * 255);
+                    image128[index + 2] = (byte)((ccy / 128f) * 255);
+                    image128[index + 3] = (byte)((ccy % 4 == 0) ? 255 : 0);
+                }
+            }
+
+            X11IconComponent.IconImage[] images = new X11IconComponent.IconImage[]
+            {
+                new X11IconComponent.IconImage()
+                {
+                    Width = 128,
+                    Height = 128,
+                    Data = image128,
+                },
+                new X11IconComponent.IconImage()
+                {
+                    Width = 16,
+                    Height = 16,
+                    Data = image16,
+                },
+            };
+
+            var icon = (iconComp as X11IconComponent)?.Create(128, 128, images);
+            windowComp.SetIcon(handle, icon);
+        }
+
         static CursorCaptureMode captureMode = CursorCaptureMode.Normal;
         static WindowMode windowMode = WindowMode.Normal;
 
         static Vector2 lastPos;
 
-        static bool fixedBorder = false;
         static bool client = false;
+
+        static WindowBorderStyle borderStyle = WindowBorderStyle.ResizableBorder;
 
         private static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
         {
@@ -247,35 +346,40 @@ namespace OpenTK.Platform.Tests
 
                 if (buttonDown.Button == MouseButton.Button3)
                 {
-                    captureMode++;
-                    captureMode = (CursorCaptureMode)((int)captureMode % 3);
+                    //captureMode++;
+                    //captureMode = (CursorCaptureMode)((int)captureMode % 3);
                     //windowComp.CaptureCursor((WindowHandle)handle, captured);
-                    windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
+                    //windowComp.SetCursorCaptureMode((WindowHandle)handle, captureMode);
+
+                    windowMode++;
+                    windowMode = (WindowMode)((int)windowMode % 6);
+                    windowComp.SetMode(Window, windowMode);
+                    Console.WriteLine($"Set window mode to: {windowMode}");
+                    Thread.Sleep(100);
+                    Console.WriteLine($" GetMode: {windowComp.GetMode(Window)}");
+
+                    //windowComp.SetMode((WindowHandle)handle, WindowMode.ExclusiveFullscreen);
                 }
                 else if (buttonDown.Button == MouseButton.Button2)
                 {
                     windowComp.GetMaxClientSize(Window, out int? bMaxWidth, out int? bMaxHeight);
                     windowComp.GetMinClientSize(Window, out int? bMinWidth, out int? bMinHeight);
 
-                    if (fixedBorder)
-                    {
-                        windowComp.SetBorderStyle(Window, WindowStyle.ResizableBorder);
-                    }
-                    else
-                    {
-                        windowComp.SetBorderStyle(Window, WindowStyle.FixedBorder);
-                    }
+                    borderStyle++;
+                    borderStyle = (WindowBorderStyle)((int)borderStyle % 4);
 
-                    fixedBorder = !fixedBorder;
+                    windowComp.SetBorderStyle(Window, borderStyle);
+                    Console.WriteLine($"Set border style to: {borderStyle}, GetBorderStyle: {windowComp.GetBorderStyle(Window)}");
 
                     windowComp.GetMaxClientSize(Window, out int? aMaxWidth, out int? aMaxHeight);
                     windowComp.GetMinClientSize(Window, out int? aMinWidth, out int? aMinHeight);
 
-                    System.Console.WriteLine($"Before: Min: ({bMinWidth}, {bMinHeight}), Max: ({bMaxWidth}, {bMaxHeight})");
-                    System.Console.WriteLine($"After: Min: ({aMinWidth}, {aMinHeight}), Max: ({aMaxWidth}, {aMaxHeight})");
+                    Console.WriteLine($"Before: Min: ({bMinWidth}, {bMinHeight}), Max: ({bMaxWidth}, {bMaxHeight})");
+                    Console.WriteLine($"After: Min: ({aMinWidth}, {aMinHeight}), Max: ({aMaxWidth}, {aMaxHeight})");
                 }
                 else if (buttonDown.Button == MouseButton.Button1)
                 {
+                    /*
                     mouseComp.GetPosition(out int x, out int y);
 
                     //windowComp.SetMode(Window, WindowMode.Hidden);
@@ -293,10 +397,37 @@ namespace OpenTK.Platform.Tests
                     System.Console.WriteLine($"Size: ({wx}, {wy}), Client size: ({cx}, {cy}), Set client size: {client}");
 
                     client = !client;
+                    */
+
+                    ClipboardFormat format = clipComp.GetClipboardFormat();
+                    Console.WriteLine($"Clipboard format: {format}");
+
+                    if (format == ClipboardFormat.Files)
+                    {
+                        var files = clipComp.GetClipboardFiles();
+                        System.Console.WriteLine("Copied files: ");
+                        for (int i = 0; i < files.Count; i++)
+                        {
+                            System.Console.WriteLine($"  {files[i]}");
+                        }
+                    }
+
+                    //string? clip = clipComp.GetClipboardText();
+                    //Console.WriteLine($"Clipboard text: {clip.Length.ToString() ?? "null"}");
 
                     //keyboardComp.BeginIme(Window);
                     //keyboardComp.SetImeRectangle(Window, x, y, 0, 0);
                 }
+            }
+            else if (args is MouseButtonUpEventArgs buttonUp)
+            {
+                Console.WriteLine($"Mouse button up: {buttonUp.Button}");
+            }
+            else if (args is WindowResizeEventArgs resize)
+            {
+                Console.WriteLine($"Resize! {resize.NewSize.X} {resize.NewSize.Y}");
+
+                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
             }
             else if (args is ScrollEventArgs scroll)
             {

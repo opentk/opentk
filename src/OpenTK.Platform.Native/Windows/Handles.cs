@@ -43,14 +43,14 @@ namespace OpenTK.Platform.Native.Windows
         public Vector2i LastMousePosition { get; set; }
         public Vector2 VirtualCursorPosition { get; set; }
 
-        // FIXME: Remove these as they are likely not needed.
-        public string? IMEComposition { get; set; }
-        public int IMECursor { get; set; }
+        public HMonitor? FullscreenMonitor { get; set; }
+        public bool ExclusiveFullscreen { get; set; }
+        public Win32.WINDOWPLACEMENT PreviousPlacement { get; set; }
+        public WindowBorderStyle PreviousBorderStyle { get; set; } = WindowBorderStyle.ResizableBorder;
 
-        public HWND(IntPtr hWnd, GraphicsApiHints hints)
+        public HWND(IntPtr hWnd, GraphicsApiHints hints) : base(hints)
         {
             HWnd = hWnd;
-            GraphicsApiHints = hints;
         }
     }
 
@@ -75,10 +75,6 @@ namespace OpenTK.Platform.Native.Windows
     internal class HCursor : CursorHandle
     {
         public IntPtr Cursor { get; set; }
-
-        public int HotSpotX { get; set; }
-
-        public int HotSpotY { get; set; }
 
         public CursorMode Mode { get; set; } = CursorMode.Uninitialized;
 
@@ -118,7 +114,7 @@ namespace OpenTK.Platform.Native.Windows
     {
         public IntPtr Monitor { get; set; }
 
-        public string Name { get; set; }
+        public string DeviceName { get; set; }
 
         public string AdapterName { get; set; }
 
@@ -133,6 +129,8 @@ namespace OpenTK.Platform.Native.Windows
         public Win32.RECT WorkArea { get; set; }
 
         public int RefreshRate { get; set; }
+
+        public int BitsPerPixel { get; set; }
 
         public int DpiX { get; set; }
 

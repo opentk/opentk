@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.X11
 {
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
+    // FIXME: XID is an "unsigned long int". This will be 4 bytes on a 32-bit machine and 8 bytes on a 64-bit machine.
+    // - Noggin_bops 2023-08-26
+
     [DebuggerDisplay("{Value}")]
-    internal struct XDisplayPtr
+    internal readonly struct XDisplayPtr
     {
-        public IntPtr Value { get; }
+        public readonly IntPtr Value { get; }
 
         public XDisplayPtr(IntPtr value)
         {
@@ -20,9 +24,9 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("{Value}")]
-    internal struct XGC
+    internal readonly struct XGC
     {
-        public IntPtr Value { get; }
+        public readonly IntPtr Value { get; }
 
         public XGC(IntPtr value)
         {
@@ -30,12 +34,45 @@ namespace OpenTK.Platform.Native.X11
         }
     }
 
-    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XAtom : IEquatable<XAtom>
+    [DebuggerDisplay("{Value}")]
+    internal readonly struct XIC
     {
-        public ulong Id { get; }
+        public readonly IntPtr Value { get; }
 
-        public bool IsNone => Id == 0;
+        public XIC(IntPtr value)
+        {
+            Value = value;
+        }
+    }
+
+    [DebuggerDisplay("{Value}")]
+    internal readonly struct XIM
+    {
+        public readonly IntPtr Value { get; }
+
+        public XIM(IntPtr value)
+        {
+            Value = value;
+        }
+    }
+
+    [DebuggerDisplay("{Value}")]
+    internal readonly struct XrmDatabase
+    {
+        public readonly IntPtr Value { get; }
+
+        public XrmDatabase(IntPtr value)
+        {
+            Value = value;
+        }
+    }
+
+    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    internal readonly struct XAtom : IEquatable<XAtom>
+    {
+        public readonly ulong Id { get; }
+
+        public readonly bool IsNone => Id == 0;
 
         public static readonly XAtom None = new XAtom(0);
 
@@ -74,9 +111,9 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XDrawable
+    internal readonly struct XDrawable
     {
-        public ulong Id { get; }
+        public readonly ulong Id { get; }
 
         public static readonly XDrawable None = new XDrawable(0);
 
@@ -85,16 +122,16 @@ namespace OpenTK.Platform.Native.X11
             Id = id;
         }
 
-        public static implicit operator XDrawable(XWindow window)
+        public static explicit operator XDrawable(XWindow window)
         {
             return new XDrawable(window.Id);
         }
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XColorMap
+    internal readonly struct XColorMap
     {
-        public ulong Id { get; }
+        public readonly ulong Id { get; }
 
         public static readonly XColorMap None = new XColorMap(0);
 
@@ -133,9 +170,9 @@ namespace OpenTK.Platform.Native.X11
     /// Generic XID type.
     /// </summary>
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XID
+    internal readonly struct XID
     {
-        public ulong Id { get; }
+        public readonly ulong Id { get; }
 
         public static readonly XID None = new XID(0);
 
@@ -146,9 +183,9 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XPixmap
+    internal readonly struct XPixmap
     {
-        public ulong Id { get; }
+        public readonly ulong Id { get; }
 
         public static readonly XPixmap None = new XPixmap(0);
 
@@ -161,9 +198,9 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XCursor : IEquatable<XCursor>
+    internal readonly struct XCursor : IEquatable<XCursor>
     {
-        public ulong Id { get; }
+        public readonly ulong Id { get; }
 
         public static readonly XCursor None = new XCursor(0);
 
@@ -199,9 +236,9 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XVisualId
+    internal readonly struct XVisualId
     {
-        public ulong Id { get; }
+        public readonly ulong Id { get; }
 
         public static readonly XVisualId None = new XVisualId(0);
 
@@ -256,7 +293,7 @@ namespace OpenTK.Platform.Native.X11
     /// <summary>
     /// X11 Time Structure.
     /// </summary>
-    internal struct XTime
+    internal readonly struct XTime
     {
         /// <summary>
         /// Represents the current server time.
@@ -266,7 +303,7 @@ namespace OpenTK.Platform.Native.X11
         /// <summary>
         /// Time value.
         /// </summary>
-        public ulong Value { get; }
+        public readonly ulong Value { get; }
 
         public XTime(ulong value)
         {
@@ -301,9 +338,9 @@ namespace OpenTK.Platform.Native.X11
     }
 
     [DebuggerDisplay("XID={(System.IntPtr)Id}")]
-    internal struct XWindow : IEquatable<XWindow>
+    internal readonly struct XWindow : IEquatable<XWindow>
     {
-        public ulong Id { get; }
+        public readonly ulong Id { get; }
 
         public static readonly XWindow None = new XWindow(0);
 
@@ -335,6 +372,11 @@ namespace OpenTK.Platform.Native.X11
         public static bool operator !=(XWindow left, XWindow right)
         {
             return !(left == right);
+        }
+
+        public override string ToString()
+        {
+            return $"0x{Id:X8}";
         }
     }
 
@@ -373,4 +415,75 @@ namespace OpenTK.Platform.Native.X11
         public XWindow Sibling;
         public int StackMode; // FIXME: Enum
     }
+
+    internal struct XWMHints
+    {
+        internal XWMHintsMask flags;  /* marks which fields in this structure are defined */
+        internal byte input;          /* does this application rely on the window manager to get keyboard input? */
+        internal int initial_state; /* see below */
+        internal XPixmap icon_pixmap; /* pixmap to be used as icon */
+        internal XWindow icon_window; /* window to be used as icon */
+        internal int icon_x, icon_y;  /* initial position of icon */
+        internal XPixmap icon_mask;   /* pixmap to be used as mask for icon_pixmap */
+        internal XID window_group;    /* id of related window group */
+        /* this structure may be extended in the future */
+    }
+
+    internal struct MotifWmHints {
+        public long flags;
+        public long functions;
+        public long decorations;
+        public long input_mode;
+        public long status;
+    }
+
+    [DebuggerDisplay("XID={(System.IntPtr)Id}")]
+    internal readonly struct XKeySym : IEquatable<XKeySym>
+    {
+        public readonly ulong Id { get; }
+
+        public static readonly XKeySym None = new XKeySym(0);
+
+        public XKeySym(ulong id)
+        {
+            Id = id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is XKeySym cursor && Equals(cursor);
+        }
+
+        public bool Equals(XKeySym other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
+
+        public static bool operator ==(XKeySym left, XKeySym right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(XKeySym left, XKeySym right)
+        {
+            return !(left == right);
+        }
+
+        public override string ToString()
+        {
+            return $"{Id}";
+        }
+    }
+
+    internal unsafe struct XComposeStatus {
+        public char* compose_ptr;
+        public int chars_matched;
+    }
+
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

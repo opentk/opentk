@@ -80,6 +80,18 @@ namespace OpenTK.Platform.Native
                 "libXfixes.so.1",
             },
 
+            ["Xcursor"] = new string[]
+            {
+                "libXcursor.so",
+                "libXcursor.so.1",
+            },
+
+            ["XScreenSaver"] = new string[]
+            {
+                "libXss.so",
+                "libXss.so.1",
+            },
+
             ["SDL2"] = new string[]
             {
                 "libSDL2-2.0.so",

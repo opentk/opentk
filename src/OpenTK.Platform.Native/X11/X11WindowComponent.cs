@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
@@ -13,6 +14,7 @@ using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 using static OpenTK.Platform.Native.X11.GLX;
 using static OpenTK.Platform.Native.X11.LibX11;
+using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
 {
@@ -46,6 +48,8 @@ namespace OpenTK.Platform.Native.X11
         internal static readonly Dictionary<XWindow, XWindowHandle> XWindowDict = new Dictionary<XWindow, XWindowHandle>();
 
         internal static XWindowHandle? CursorCapturingWindow;
+
+        internal static XWindow HelperWindow { get; private set; }
 
         /// <inheritdoc />
         public void Initialize(PalComponents which)
@@ -170,10 +174,24 @@ namespace OpenTK.Platform.Native.X11
 
                 XFree(array);
             }
+        
+            // Create a helper window to help with clipboard stuff.
+            // FIXME: Will this only be used for clipboard stuff?
+            unsafe 
+            {
+                XSetWindowAttributes wa = default;
+                wa.EventMask = XEventMask.PropertyChange;
+                HelperWindow = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
+                    0, 0, 1, 1, 0, 0,
+                    WindowClass.InputOnly, 
+                    ref Unsafe.AsRef<XVisual>(XDefaultVisual(X11.Display, X11.DefaultScreen)),
+                    XWindowAttributeValueMask.EventMask,
+                    ref wa);
+            }
         }
 
         /// <inheritdoc />
-        public bool CanSetIcon => false;
+        public bool CanSetIcon => true;
 
         /// <inheritdoc />
         public bool CanGetDisplay => false;
@@ -184,7 +202,7 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public bool CanCaptureCursor => true;
 
-        private static List<WindowStyle> s_emptyStyleList = new List<WindowStyle>();
+        private static List<WindowBorderStyle> s_emptyStyleList = new List<WindowBorderStyle>();
 
         private static readonly WindowMode[] _SupportedModes = new[]
         {
@@ -199,7 +217,7 @@ namespace OpenTK.Platform.Native.X11
         public IReadOnlyList<PlatformEventType> SupportedEvents { get => throw new NotImplementedException(); }
 
         /// <inheritdoc />
-        public IReadOnlyList<WindowStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
+        public IReadOnlyList<WindowBorderStyle> SupportedStyles { get; private set; } = s_emptyStyleList;
 
         /// <inheritdoc />
         public IReadOnlyList<WindowMode> SupportedModes { get; private set; } = _SupportedModes;
@@ -292,7 +310,13 @@ namespace OpenTK.Platform.Native.X11
             while (XEventsQueued(X11.Display, XEventsQueuedMode.QueuedAfterFlush) > 0)
             {
                 XNextEvent(X11.Display, out ea);
-                //Debug.Print(ea.Type.ToString());
+
+                if (XWindowDict.TryGetValue(ea.Any.Window, out XWindowHandle? xwindow) == false)
+                {
+                    // This event likely for a deleted window.
+                    Logger?.LogDebug($"Received event {ea.Type} for an unknown (likely destroyed) window {ea.Any.Window}.");
+                    continue;
+                }
 
                 switch (ea.Type)
                 {
@@ -304,9 +328,15 @@ namespace OpenTK.Platform.Native.X11
                             {
                                 if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms.WM_DELETE_WINDOW].Id)
                                 {
-                                    XWindowHandle xwindow = XWindowDict[clientMessage.Window];
-
                                     EventQueue.Raise(xwindow, PlatformEventType.Close, new CloseEventArgs(xwindow));
+                                }
+                                else if (clientMessage.Format == 32 && clientMessage.l[0] == (long)X11.Atoms[KnownAtoms._NET_WM_PING].Id)
+                                {
+                                    // Ping events to know that we are still responsive.
+                                    XEvent reply = ea;
+                                    reply.ClientMessage.Window = X11.DefaultRootWindow;
+
+                                    XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureNotify | XEventMask.SubstructureRedirect, reply);
                                 }
                             }
 
@@ -315,8 +345,6 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.ButtonPress:
                         {
                             XButtonEvent buttonPressed = ea.ButtonPressed;
-
-                            XWindowHandle xwindow = XWindowDict[buttonPressed.window];
 
                             // Buttons 4 to 7 are used for scroll.
                             if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
@@ -367,18 +395,16 @@ namespace OpenTK.Platform.Native.X11
                         }
                     case XEventType.ButtonRelease:
                         {
-                            XButtonEvent buttonPressed = ea.ButtonPressed;
-
-                            XWindowHandle xwindow = XWindowDict[buttonPressed.window];
+                            XButtonEvent buttonReleased = ea.ButtonReleased;
 
                             // Ignore release for scroll buttons.
-                            if (buttonPressed.button >= 4 && buttonPressed.button <= 7)
+                            if (buttonReleased.button >= 4 && buttonReleased.button <= 7)
                             {
                                 break;
                             }
 
                             MouseButton button;
-                            switch (buttonPressed.button)
+                            switch (buttonReleased.button)
                             {
                                 case 1: button = MouseButton.Button1; break; // Left
                                 case 2: button = MouseButton.Button3; break; // Middle
@@ -392,11 +418,77 @@ namespace OpenTK.Platform.Native.X11
 
                             break;
                         }
+                    case XEventType.KeyPress:
+                        {
+                            XKeyEvent keyPressed = ea.KeyPressed;
+
+                            // FIXME: Handle repeats
+
+                            unsafe {
+                                XKeySym keysym = default;
+                                const int TEXT_LENGTH = 32;
+                                byte* str = stackalloc byte[TEXT_LENGTH];
+                                int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+
+                                // FIXME: Convert keycode into scancode and then key.
+                                // XDisplayKeycodes -> XGetKeyboardMapping -> "normal" keysym translations..
+
+                                // FIXME: Backspace hack!
+                                if (keysym.Id == 65288)
+                                {
+                                    EventQueue.Raise(xwindow, PlatformEventType.KeyDown, new KeyDownEventArgs(xwindow, Key.Backspace, Scancode.Backspace, false));
+                                }
+
+                                bool isHighLatin1 = false;
+                                for (int i = 0; i < TEXT_LENGTH; i++)
+                                {
+                                    if (str[i] >= 0x80)
+                                    {
+                                        isHighLatin1 = true;
+                                        break;
+                                    }
+                                }
+
+                                // FIXME: Figure out when this Latin1 stuff is needed.
+                                // On Ubuntu 22.04 we can just do the "new string()" method
+                                // in all cases, even for characters like åäö.
+                                // - Noggin_bops 2023-08-26
+                                string? result = null;
+                                if (isHighLatin1)
+                                {
+                                    result = Encoding.Latin1.GetString(str, charsWritten);
+                                }
+                                else
+                                {
+                                    result = new string((sbyte*)str, 0, charsWritten);
+                                }
+
+                                EventQueue.Raise(xwindow, PlatformEventType.TextInput, new TextInputEventArgs(xwindow, result));
+                            }
+                            break;
+                        }
+                    case XEventType.KeyRelease:
+                        {
+                            XKeyEvent keyPressed = ea.KeyPressed;
+
+                            unsafe {
+                                XKeySym keysym = default;
+                                const int TEXT_LENGTH = 32;
+                                byte* str = stackalloc byte[TEXT_LENGTH];
+                                int charsWritten = XLookupString(&keyPressed, str, TEXT_LENGTH, &keysym, null);
+
+                                // FIXME: Backspace hack!
+                                if (keysym.Id == 65288)
+                                {
+                                    EventQueue.Raise(xwindow, PlatformEventType.KeyUp, new KeyUpEventArgs(xwindow, Key.Backspace, Scancode.Backspace));
+                                }
+                            }
+
+                            break;
+                        }
                     case XEventType.MotionNotify:
                         {
                             XMotionEvent motion = ea.Motion;
-
-                            XWindowHandle xwindow = XWindowDict[motion.window];
 
                             if (CursorCapturingWindow == xwindow && xwindow.CaptureMode == CursorCaptureMode.Locked)
                             {
@@ -421,8 +513,6 @@ namespace OpenTK.Platform.Native.X11
                         {
                             XCrossingEvent enter = ea.Enter;
 
-                            XWindowHandle xwindow = XWindowDict[enter.window];
-
                             EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, true));
 
                             break;
@@ -430,8 +520,6 @@ namespace OpenTK.Platform.Native.X11
                     case XEventType.LeaveNotify:
                         {
                             XCrossingEvent leave = ea.Leave;
-
-                            XWindowHandle xwindow = XWindowDict[leave.window];
 
                             EventQueue.Raise(xwindow, PlatformEventType.MouseEnter, new MouseEnterEventArgs(xwindow, false));
 
@@ -443,7 +531,7 @@ namespace OpenTK.Platform.Native.X11
 
                             // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
                             // I copied what SDLLib did:
-                            // https://github.com/libsdl-org/SDLLib/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
                             // The documentation for these values is very obtuse:
                             // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
                             // - Noggin_bops 2023-01-12
@@ -462,8 +550,6 @@ namespace OpenTK.Platform.Native.X11
                                 break;
                             }
 
-                            XWindowHandle xwindow = XWindowDict[focusIn.window];
-
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, true));
 
                             break;
@@ -474,7 +560,7 @@ namespace OpenTK.Platform.Native.X11
 
                             // Not sure what the different FocusChangeMode and FocusChangeDetail values mean.
                             // I copied what SDLLib did:
-                            // https://github.com/libsdl-org/SDLLib/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
+                            // https://github.com/libsdl-org/SDL/blob/e35c3872dc6a8f7741baba8b786b202cef7503ac/src/video/x11/SDL_x11events.c#L975-L990
                             // The documentation for these values is very obtuse:
                             // https://tronche.com/gui/x/xlib/events/input-focus/normal-and-grabbed.html
                             // - Noggin_bops 2023-01-12
@@ -492,8 +578,6 @@ namespace OpenTK.Platform.Native.X11
                                 Logger?.LogDebug($"FocusOut detail={focusOut.detail}. Ignoring.");
                                 break;
                             }
-
-                            XWindowHandle xwindow = XWindowDict[focusOut.window];
 
                             EventQueue.Raise(xwindow, PlatformEventType.Focus, new FocusEventArgs(xwindow, false));
 
@@ -551,8 +635,6 @@ namespace OpenTK.Platform.Native.X11
 
                             if (property.atom == X11.Atoms[KnownAtoms.WM_STATE])
                             {
-                                XWindowHandle xwindow = XWindowDict[property.window];
-
                                 int result = XGetWindowProperty(
                                     X11.Display,
                                     property.window,
@@ -595,14 +677,24 @@ namespace OpenTK.Platform.Native.X11
                             }
                             else if (property.atom == X11.Atoms[KnownAtoms._NET_WM_STATE])
                             {
-                                XWindowHandle xwindow = XWindowDict[property.window];
-
                                 WMState state = GetNETWMState(property.window);
                                 WMState changed = xwindow.WMState ^ state;
 
+                                // FIXME: Remove or make debug print.
                                 Console.WriteLine($"State: {state}, Changed: {changed}, Before: {xwindow.WMState}");
 
                                 xwindow.WMState = state;
+
+                                // Check if we've gone fullscreen.
+                                if (changed.HasFlag(WMState.Fullscreen))
+                                {
+                                    if (state.HasFlag(WMState.Fullscreen))
+                                    {
+                                        // FIXME: Differentiate exclusive fullscreen from windowed fullscreen?
+                                        EventQueue.Raise(xwindow, PlatformEventType.WindowModeChange, new WindowModeChangeEventArgs(xwindow, WindowMode.ExclusiveFullscreen));
+                                        break;
+                                    }
+                                }
 
                                 if (changed.HasFlag(WMState.Hidden))
                                 {
@@ -631,11 +723,51 @@ namespace OpenTK.Platform.Native.X11
                                     }
                                 }
                             }
+                            else
+                            {
+                                if (property.atom != X11.Atoms[KnownAtoms.WM_NAME] &&
+                                    property.atom != X11.Atoms[KnownAtoms._NET_WM_NAME])
+                                {
+                                    Console.WriteLine($"PropertyNotify: {XGetAtomName(X11.Display, property.atom)}");
+                                }
+                            }
+                            break;
+                        }
+                    case XEventType.ConfigureNotify:
+                        {
+                            XConfigureEvent configure = ea.Configure;
+
+                            if (configure.width != xwindow.Width ||
+                                configure.height != xwindow.Height)
+                            {
+                                xwindow.Width = configure.width;
+                                xwindow.Height = configure.height;
+                                
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowResize, new WindowResizeEventArgs(xwindow, (xwindow.Width, xwindow.Height)));
+                            }
+
+                            if (configure.x != xwindow.X ||
+                                configure.y != xwindow.Y)
+                            {
+                                xwindow.X = configure.x;
+                                xwindow.Y = configure.y;
+
+                                // FIXME: The coordinates from the event are relative to the parent window. So if we are reparented this will report wrong coordinates.
+
+                                // FIXME: Calculate the proper window location, the coordinates reported are for the client area of the window.
+                                EventQueue.Raise(xwindow, PlatformEventType.WindowMove, new WindowMoveEventArgs(xwindow, (xwindow.X, xwindow.Y), (xwindow.X, xwindow.Y)));
+                            }
 
                             break;
                         }
                     default:
+                    {
+                        if (ea.Type == (XEventType)(X11.XRandREventBase + RREventType.RRNotify))
+                        {
+                            X11DisplayComponent.HandleXRREvent(ea);
+                        }
                         break;
+                    }
                 }
             }
 
@@ -727,7 +859,7 @@ namespace OpenTK.Platform.Native.X11
                         600,
                         0,
                         vi->Depth,
-                        1,
+                        WindowClass.InputOutput,
                         ref *vi->VisualPtr,
                         XWindowAttributeValueMask.BackPixmap | XWindowAttributeValueMask.Colormap | XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask,
                         ref windowAttributes);
@@ -744,10 +876,15 @@ namespace OpenTK.Platform.Native.X11
                 attributes.ColorMap = XDefaultColormap(X11.Display, X11.DefaultScreen);
                 attributes.EventMask = XEventMask.Exposure;
 
-                window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 0, 0, 600, 800, 0, 0, 1, ref Unsafe.NullRef<XVisual>(),
+                window = XCreateWindow(X11.Display, X11.DefaultRootWindow, 
+                    0, 0, 600, 800, 0, 0, 
+                    WindowClass.InputOutput, 
+                    ref Unsafe.NullRef<XVisual>(),
                     XWindowAttributeValueMask.BackPixel | XWindowAttributeValueMask.Colormap |
-                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, ref attributes);
+                    XWindowAttributeValueMask.BorderPixel | XWindowAttributeValueMask.EventMask, 
+                    ref attributes);
 
+                // FIXME: How do we handle vulkan windows?
                 throw new PalException(this, "Cannot create a X11 window without a graphics API.");
             }
 
@@ -761,8 +898,8 @@ namespace OpenTK.Platform.Native.X11
                 0,
                 ref Unsafe.NullRef<XSizeHints>());
 
-            // Register to deletion events
-            XSetWMProtocols(X11.Display, window, new XAtom[] { X11.Atoms[KnownAtoms.WM_DELETE_WINDOW] }, 1);
+            // Register to deletion and ping events
+            XSetWMProtocols(X11.Display, window, new XAtom[] { X11.Atoms[KnownAtoms.WM_DELETE_WINDOW], X11.Atoms[KnownAtoms._NET_WM_PING] }, 2);
 
             // FIXME: Find a place for this:
             XSelectInput(
@@ -772,6 +909,7 @@ namespace OpenTK.Platform.Native.X11
                     XEventMask.VisibilityChanged |
                     XEventMask.Exposure |
                     XEventMask.ButtonPress |
+                    XEventMask.ButtonRelease |
                     XEventMask.PointerMotion |
                     XEventMask.EnterWindow |
                     XEventMask.LeaveWindow |
@@ -788,8 +926,6 @@ namespace OpenTK.Platform.Native.X11
                 XSetWMHints(X11.Display, window, wmHints);
             }
 
-
-
             XWindowHandle handle = new XWindowHandle(X11.Display, window, hints, chosenConfig, map);
 
             XWindowDict.Add(handle.Window, handle);
@@ -800,18 +936,24 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public void Destroy(WindowHandle handle)
         {
-            var xhandle = handle.As<XWindowHandle>(this);
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
-            XWindowDict.Remove(xhandle.Window);
+            XWindowDict.Remove(xwindow.Window);
 
-            XDestroyWindow(xhandle.Display, xhandle.Window);
+            XDestroyWindow(xwindow.Display, xwindow.Window);
 
-            if (xhandle.ColorMap.HasValue)
+            // If this window was fullscreen we want to restore the video mode.
+            if (xwindow.FullscreenDisplay != null)
             {
-                XFreeColormap(xhandle.Display, xhandle.ColorMap.Value);
+                X11DisplayComponent.RestoreVideoMode(this, xwindow.FullscreenDisplay);
             }
 
-            xhandle.Destroyed = true;
+            if (xwindow.ColorMap.HasValue)
+            {
+                XFreeColormap(xwindow.Display, xwindow.ColorMap.Value);
+            }
+
+            xwindow.Destroyed = true;
         }
 
         /// <inheritdoc />
@@ -884,15 +1026,65 @@ namespace OpenTK.Platform.Native.X11
         }
 
         /// <inheritdoc />
-        public IconHandle GetIcon(WindowHandle handle)
+        public IconHandle? GetIcon(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            return xwindow.Icon;
         }
 
         /// <inheritdoc />
         public void SetIcon(WindowHandle handle, IconHandle icon)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            XIconHandle xicon = icon.As<XIconHandle>(this);
+
+            X11IconComponent.IconImage[]? images = xicon.Images;
+            if (images == null)
+            {
+                Logger?.LogError($"Icon didn't include any images.");
+                return;
+            }
+
+            int longCount = 0;
+            for (int i = 0; i < images.Length; i++)
+            {
+                longCount += 2 + (images[i].Width * images[i].Height);
+            }
+
+            // FIXME: Fill this array without unsafe?
+            long[] data = new long[longCount];
+            unsafe {
+                fixed (long* dataPtr = data)
+                {
+                    long* target = dataPtr;
+                    for (int i = 0; i < images.Length; i++)
+                    {
+                        *target++ = images[i].Width;
+                        *target++ = images[i].Height;
+
+                        for (int j = 0; j < images[i].Width * images[i].Height; j++)
+                        {
+                            // FIXME: Is this the correct color format?
+                            *target++ = ((long)images[i].Data[j * 4 + 0] << 16) |
+                                        ((long)images[i].Data[j * 4 + 1] <<  8) |
+                                        ((long)images[i].Data[j * 4 + 2] <<  0) |
+                                        ((long)images[i].Data[j * 4 + 3] <<  24);
+                        }
+                    }
+                }
+            }
+
+            XChangeProperty(
+                X11.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms._NET_WM_ICON],
+                X11.Atoms[KnownAtoms.CARDINAL], 32,
+                XPropertyMode.Replace,
+                data,
+                longCount);
+
+            xwindow.Icon = xicon;
         }
 
         /// <inheritdoc />
@@ -1041,7 +1233,6 @@ namespace OpenTK.Platform.Native.X11
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             XSizeHints* hints = XAllocSizeHints();
-
             XSizeHintFlags supplied;
             XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
 
@@ -1170,20 +1361,225 @@ namespace OpenTK.Platform.Native.X11
         /// <inheritdoc />
         public DisplayHandle GetDisplay(WindowHandle handle)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // FIXME: Is there anything we can do about this function?
+            // It would be nice to be able to reduce the amount of work done
+            // so that this query can be done relatively often.
+            // Currently it involves getting all of the crtcs from
+            // xrandr, creating a list of display handles with their bounds,
+            // and then doing this loop...
+            //
+            // Ideally xrandr or x11 would expose something that tells
+            // us what window the window is considered "on".
+            //
+            // On ubuntu 22.04 this function does not always return the display
+            // that the window would be maximized on when double clicking it's title.
+            // We would ideally match that behaviour.
+            // - Noggin_bops 2023-10-05
+
+            // FIXME: GetBounds function
+            GetPosition(xwindow, out int x, out int y);
+            GetSize(xwindow, out int width, out int height);
+
+            Box2i bounds = new Box2i(x, y, x + width, y + height);
+
+            DisplayHandle? bestDisp = null;
+            int bestArea = 0;
+            float bestDistance = float.PositiveInfinity;
+
+
+            // Get all screens.
+            var rects = X11DisplayComponent.GetDisplayRects();
+            foreach (var rect in rects)
+            {
+                Box2i overlap = bounds.Intersected(rect.Bounds);
+
+                if (overlap.SizeX * overlap.SizeY > bestArea)
+                {
+                    bestArea = overlap.SizeX * overlap.SizeY;
+                    bestDisp = rect.Handle;
+                }
+                else if (bestArea <= 0)
+                {
+                    // If there is no overlap we are looking for the display which is closest.
+                    float dist = Distance(bounds, rect.Bounds);
+                    if (dist < bestDistance)
+                    {
+                        bestDistance = dist;
+                        if (bestArea < 0)
+                        {
+                            bestDisp = rect.Handle;
+                        }
+                    }
+                }
+            }
+
+            // FIXME: Maybe throw here?
+            Debug.Assert(bestDisp != null);
+
+            return bestDisp;
+
+            // FIXME: Add a function like this to all Box types.
+            static float Distance(Box2i a, Box2i b)
+            {
+                return Math.Min(
+                    Math.Min(
+                        a.DistanceToNearestEdge(b.Min), 
+                        a.DistanceToNearestEdge(b.Max)),
+                    Math.Min(
+                        a.DistanceToNearestEdge((b.Min.X, b.Max.Y)), 
+                        a.DistanceToNearestEdge((b.Min.Y, b.Max.X))));
+            }
         }
 
         /// <inheritdoc />
+        /// <remarks>
+        /// Calling this in rapid succession after <see cref="SetMode" /> will likely report the wrong mode as the X server hasn't updated the state of the window yet.
+        /// We could add a delay where we wait for the server to change the window, but for now we leave it as it is.
+        /// </remarks>
         public WindowMode GetMode(WindowHandle handle)
         {
-            // FIXME: Read WM_STATE for iconified, read _NET_WM_STATE for the rest.
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (xwindow.FullscreenDisplay != null)
+            {
+                if (xwindow.IsExclusiveFullscreen)
+                {
+                    return WindowMode.ExclusiveFullscreen;
+                }
+                else
+                {
+                    return WindowMode.WindowedFullscreen;
+                }
+            }
+
+            XSync(X11.Display, False);
+
+            int result = XGetWindowProperty(
+                X11.Display,
+                xwindow.Window,
+                X11.Atoms[KnownAtoms.WM_STATE],
+                0, ~0, false,
+                new XAtom(0),
+                out XAtom actualType,
+                out int actualFormat,
+                out long numberOfItems,
+                out long remainingBytes,
+                out IntPtr contents);
+
+            if (result == 0)
+            {
+                const int WithdrawnState = 0;
+                const int NormalState = 1;
+                const int IconicState = 3;
+
+                unsafe
+                {
+                    int state = *(int*)contents;
+                    if (state == IconicState)
+                    {
+                        return WindowMode.Minimized;
+                    }
+                    else if (state == WithdrawnState)
+                    {
+                        return WindowMode.Hidden;
+                    }
+                }
+            }
+
+            if (contents != IntPtr.Zero)
+            {
+                XFree(contents);
+            }
+
+            WMState wmState = GetNETWMState(xwindow.Window);
+
+            if (wmState.HasFlag(WMState.MaximizedHorz | WMState.MaximizedVert))
+            {
+                return WindowMode.Maximized;
+            }
+            
+            if (wmState.HasFlag(WMState.Hidden))
+            {
+                return WindowMode.Hidden;
+            }
+
+            return WindowMode.Normal;
         }
 
         /// <inheritdoc />
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            if (xwindow.FullscreenDisplay != null && mode != WindowMode.WindowedFullscreen && mode != WindowMode.ExclusiveFullscreen)
+            {
+                // Go out of fullscreen!
+
+                if (xwindow.IsExclusiveFullscreen)
+                {
+                    X11DisplayComponent.RestoreVideoMode(this, xwindow.FullscreenDisplay);
+                }
+
+                // FIXME: Do we need to check these?
+                if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
+                {
+                    Logger?.LogWarning("Can't exit fullscreen. The window manager doesn't support _NET_WM_STATE. This should never happen.");
+                    return;
+                }
+
+                if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
+                {
+                    Logger?.LogWarning("Can't exit fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
+                    return;
+                }
+
+                XEvent e = new XEvent();
+                ref XClientMessageEvent client = ref e.ClientMessage;
+
+                client.Type = XEventType.ClientMessage;
+                client.Serial = 0;
+                client.SendEvent = 1;
+                client.Display = X11.Display;
+                client.Window = xwindow.Window;
+                client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+                client.Format = 32;
+                unsafe
+                {
+                    client.l[0] = X11._NET_WM_STATE_REMOVE;
+                    client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                    client.l[2] = 0;
+                    client.l[3] = 1;
+                    client.l[4] = 0;
+                }
+
+                int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+                // Re-set the min and max limits that we removed when we went fullscreen.
+                unsafe
+                {
+                    XSizeHints* hints = XAllocSizeHints();
+                    XSizeHintFlags supplied;
+                    XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
+                    hints->MinWidth = xwindow.MinSize.Width ?? 0;
+                    hints->MinHeight = xwindow.MinSize.Height ?? 0;
+                    if (xwindow.MinSize.Width != null || xwindow.MinSize.Height != null)
+                        hints->Flags |= XSizeHintFlags.MinSize;
+
+                    hints->MaxWidth = xwindow.MaxSize.Width ?? 0;
+                    hints->MaxHeight = xwindow.MaxSize.Height ?? 0;
+                    if (xwindow.MaxSize.Width != null || xwindow.MaxSize.Height != null)
+                        hints->Flags |= XSizeHintFlags.MaxSize;
+
+                    XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+                    XFree(hints);
+                }
+
+                xwindow.FullscreenDisplay = null;
+                xwindow.IsExclusiveFullscreen = false;
+            }
 
             switch (mode)
             {
@@ -1195,11 +1591,13 @@ namespace OpenTK.Platform.Native.X11
                         XMapWindow(X11.Display, xwindow.Window);
 
                         // FIXME: We might need to do something if NET_WM is defined
-                        // See: https://github.com/libsdl-org/SDLLib/blob/c5c94a6be6bfaccec9c41f6326bd4be6b2db8aea/src/video/x11/SDL_x11window.c#L1161
+                        // See: https://github.com/libsdl-org/SDL/blob/c5c94a6be6bfaccec9c41f6326bd4be6b2db8aea/src/video/x11/SDL_x11window.c#L1161
                         break;
                     }
                 case WindowMode.Hidden:
                     {
+                        // FIXME: Figure out what we really need to do here.
+
                         //GetClientPosition(xwindow, out int x, out int y);
 
                         XWithdrawWindow(X11.Display, xwindow.Window, X11.DefaultScreen);
@@ -1278,99 +1676,317 @@ namespace OpenTK.Platform.Native.X11
 
                         break;
                     }
-                case WindowMode.ExclusiveFullscreen:
+                case WindowMode.WindowedFullscreen:
                     {
-                        if (IsMapped(xwindow))
-                        {
-                            XMapWindow(X11.Display, xwindow.Window);
-                        }
-
-                        if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
-                        {
-                            Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE.");
-                            return;
-                        }
-
-                        if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
-                        {
-                            Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
-                            return;
-                        }
-
-                        XEvent e = new XEvent();
-
-                        ref XClientMessageEvent client = ref e.ClientMessage;
-
-                        // FIXME: Remove extents or whatever is causing the window to not become "proper" fullscreen.
-                        // FIXME: Make sure that we don't trigger a "maximized" window mode change.
-
-                        client.Type = XEventType.ClientMessage;
-                        client.Serial = 0;
-                        client.SendEvent = 1;
-                        client.Display = X11.Display;
-                        client.Window = xwindow.Window;
-                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                        client.Format = 32;
-                        unsafe
-                        {
-                            client.l[0] = X11._NET_WM_STATE_ADD;
-                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_VERT].Id;
-                            client.l[2] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_MAXIMIZED_HORZ].Id;
-                            client.l[3] = 0;
-                            client.l[4] = 0;
-                        }
-
-                        int status2 = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
-
-                        client.Type = XEventType.ClientMessage;
-                        client.Serial = 0;
-                        client.SendEvent = 1;
-                        client.Display = X11.Display;
-                        client.Window = xwindow.Window;
-                        client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
-                        client.Format = 32;
-                        unsafe
-                        {
-                            client.l[0] = X11._NET_WM_STATE_ADD;
-                            client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
-                            client.l[2] = 0;
-                            client.l[3] = 0;
-                            client.l[4] = 0;
-                        }
-
-                        int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
-
+                        SetFullscreenDisplay(handle, null);
                         break;
                     }
-                case WindowMode.WindowedFullscreen:
+                case WindowMode.ExclusiveFullscreen:
+                    {
+                        XDisplayHandle xdisplay = (XDisplayHandle)GetDisplay(handle);
+                        X11DisplayComponent.GetVideoMode(this, xdisplay, out VideoMode videoMode);
+                        SetFullscreenDisplay(handle, xdisplay, videoMode);
+                        break;
+                    }
                 default:
-                    //throw new NotImplementedException();
                     break;
             }
 
             XFlush(X11.Display);
+            XSync(X11.Display, False);
         }
 
         /// <inheritdoc />
-        public WindowStyle GetBorderStyle(WindowHandle handle)
+        public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display)
         {
-            throw new NotImplementedException();
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            XDisplayHandle? xdisplay = display?.As<XDisplayHandle>(this);
+            
+            // FIXME: Save window position and size so we can restore later.
+
+            if (xdisplay == null)
+            {
+                xdisplay = (XDisplayHandle)GetDisplay(xwindow);
+            }
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE.");
+                return;
+            }
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
+                return;
+            }
+
+            if (IsMapped(xwindow) == false)
+            {
+                XMapWindow(X11.Display, xwindow.Window);
+            }
+
+            XEvent e = new XEvent();
+            ref XClientMessageEvent client = ref e.ClientMessage;
+
+            client.Type = XEventType.ClientMessage;
+            client.Serial = 0;
+            client.SendEvent = 1;
+            client.Display = X11.Display;
+            client.Window = xwindow.Window;
+            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.Format = 32;
+            unsafe
+            {
+                client.l[0] = X11._NET_WM_STATE_ADD;
+                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                client.l[2] = 0;
+                client.l[3] = 1;
+                client.l[4] = 0;
+            }
+
+            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+            // FIXME: Disable compositor for this window?
+
+            xwindow.FullscreenDisplay = xdisplay;
+            xwindow.IsExclusiveFullscreen = false;
+
+            // Set the window size to be the full size of the monitor.
+            // Remove the max and min size from WM_NORMAL_HINTS.
+
+            unsafe
+            {
+                XSizeHints* hints = XAllocSizeHints();
+                XSizeHintFlags supplied;
+                XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+                hints->Flags &= ~XSizeHintFlags.MaxSize;
+                hints->Flags &= ~XSizeHintFlags.MinSize;
+                XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+                XFree(hints);
+            }
+
+            // FIXME: Do we need to do this?
+            Box2i bounds = X11DisplayComponent.GetBounds(xdisplay);
+            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
         }
 
         /// <inheritdoc />
-        public void SetBorderStyle(WindowHandle handle, WindowStyle style)
+        public void SetFullscreenDisplay(WindowHandle handle, DisplayHandle display, VideoMode videoMode)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            XDisplayHandle xdisplay = display.As<XDisplayHandle>(this);
+
+            // FIXME: Save window position and size so we can restore later.
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE.");
+                return;
+            }
+
+            if (X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN] == XAtom.None)
+            {
+                Logger?.LogWarning("Can't make window have exclusive fullscreen. The window manager doesn't support _NET_WM_STATE_FULLSCREEN.");
+                return;
+            }
+
+            if (IsMapped(xwindow) == false)
+            {
+                XMapWindow(X11.Display, xwindow.Window);
+            }
+
+            // FIXME: Some way to restore the video mode after the change?
+            // Set the display to use the video mode.
+            X11DisplayComponent.SetVideoMode(this, xdisplay, videoMode);
+
+            XEvent e = new XEvent();
+            ref XClientMessageEvent client = ref e.ClientMessage;
+
+            client.Type = XEventType.ClientMessage;
+            client.Serial = 0;
+            client.SendEvent = 1;
+            client.Display = X11.Display;
+            client.Window = xwindow.Window;
+            client.MessageType = X11.Atoms[KnownAtoms._NET_WM_STATE];
+            client.Format = 32;
+            unsafe
+            {
+                client.l[0] = X11._NET_WM_STATE_ADD;
+                client.l[1] = (long)X11.Atoms[KnownAtoms._NET_WM_STATE_FULLSCREEN].Id;
+                client.l[2] = 0;
+                client.l[3] = 1;
+                client.l[4] = 0;
+            }
+
+            int status = XSendEvent(X11.Display, X11.DefaultRootWindow, 0, XEventMask.SubstructureRedirect | XEventMask.SubstructureNotify, e);
+
+            // FIXME: Disable compositor for this window?
+
+            xwindow.FullscreenDisplay = xdisplay;
+            xwindow.IsExclusiveFullscreen = true;
+
+            // Set the window size to be the full size of the monitor.
+            // Remove the max and min size from WM_NORMAL_HINTS.
+
+            unsafe
+            {
+                XSizeHints* hints = XAllocSizeHints();
+                XSizeHintFlags supplied;
+                XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+                hints->Flags &= ~XSizeHintFlags.MaxSize;
+                hints->Flags &= ~XSizeHintFlags.MinSize;
+                XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+                XFree(hints);
+            }
+
+            // FIXME: Do we need to do this?
+            Box2i bounds = X11DisplayComponent.GetBounds(xdisplay);
+            XMoveResizeWindow(X11.Display, xwindow.Window, bounds.X, bounds.Y, (uint)bounds.Width, (uint)bounds.Height);
+        }
+
+        /// <inheritdoc />
+        public bool GetFullscreenDisplay(WindowHandle handle, [NotNullWhen(true)] out DisplayHandle? display)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+            display = xwindow.FullscreenDisplay;
+            return display != null;
+        }
+
+        /// <inheritdoc />
+        /// <remarks>
+        /// Calling this in rapid succession after <see cref="SetBorderStyle" /> will likely report the wrong style as the X server hasn't updated the state of the window yet.
+        /// We could add a delay where we wait for the server to change the window, but for now we leave it as it is.
+        /// </remarks>
+        public WindowBorderStyle GetBorderStyle(WindowHandle handle)
+        {
+            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
+
+            // Check for ToolBox
+            {
+                XGetWindowProperty(
+                    X11.Display, 
+                    xwindow.Window, 
+                    X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE], 
+                    0, 1, false, 
+                    X11.Atoms[KnownAtoms.ATOM], 
+                    out _,
+                    out _,
+                    out _,
+                    out _,
+                    out IntPtr content);
+
+                // If window type is UTILITY, assume toolbox.
+                unsafe {
+                    XAtom windowType = *(XAtom*)content;
+                    if (windowType == X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY])
+                    {
+                        return WindowBorderStyle.ToolBox;
+                    }
+                }
+
+                XFree(content);
+            }
+
+            // Check for borderless
+            {
+                XGetWindowProperty(
+                    X11.Display, 
+                    xwindow.Window, 
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                    0, long.MaxValue, false, 
+                    X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                    out _,
+                    out _,
+                    out _,
+                    out _,
+                    out IntPtr content);
+
+                // If decorations are turned off, assume borderless.
+                unsafe {
+                    MotifWmHints* motifWmHints = (MotifWmHints*)content;
+                    if (motifWmHints->decorations == 0)
+                    {
+                        return WindowBorderStyle.Borderless;
+                    }
+                }
+
+                XFree(content);
+            }
+
+            // If FixedSize is set, assume FixedBorder.
+            if (xwindow.FixedSize != (-1, -1)) 
+            {
+                return WindowBorderStyle.FixedBorder;
+            }
+
+            return WindowBorderStyle.ResizableBorder;
+        }
+
+        /// <inheritdoc />
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             XWindowHandle xwindow = handle.As<XWindowHandle>(this);
 
             switch (style)
             {
-                case WindowStyle.ResizableBorder:
+                case WindowBorderStyle.ResizableBorder:
                 unsafe {
-                    XSizeHints* hints = XAllocSizeHints();
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
 
-                    XSizeHintFlags supplied;
-                    XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+                    SetDecorations(xwindow, true);
 
+                    SetFixedSize(xwindow, false, -1, -1);
+                    xwindow.FixedSize = (-1, -1);
+                    break;
+                }
+                case WindowBorderStyle.Borderless:
+                unsafe {
+                    // FIXME: Should the client size and location be retained when going borderless?
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
+
+                    SetDecorations(xwindow, false);
+                    
+                    SetFixedSize(xwindow, false, -1, -1);
+                    xwindow.FixedSize = (-1, -1);
+                    break;
+                }
+                case WindowBorderStyle.FixedBorder:
+                unsafe {
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_NORMAL]);
+                    // FIXME: Figure out if you can still resize the window programatically.
+                    SetDecorations(xwindow, true);
+
+                    // Set the max and min height to the same.
+                    GetClientSize(xwindow, out int width, out int height);
+                    SetFixedSize(xwindow, true, width, height);
+                    xwindow.FixedSize = (width, height);
+
+                    break;
+                }
+                case WindowBorderStyle.ToolBox:
+                {
+                    // FIXME: Check that the window type atoms are available?
+                    SetNetWMWindowType(xwindow.Window, X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE_UTILITY]);
+
+                    SetDecorations(xwindow, true);
+
+                    SetFixedSize(xwindow, false, -1, -1);
+                    xwindow.FixedSize = (-1, -1);
+                    break;
+                }
+                default:
+                    throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowBorderStyle));
+            }
+
+            static unsafe void SetFixedSize(XWindowHandle xwindow, bool fixSize, int fixedWidth, int fixedHeight)
+            {
+                XSizeHints* hints = XAllocSizeHints();
+                XSizeHintFlags supplied;
+                XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
+
+                if (fixSize == false)
+                {
                     // We default these to max values so that leaving one as null
                     // effectively means not having a max.
                     hints->MaxWidth = xwindow.MaxSize.Width ?? int.MaxValue;
@@ -1390,49 +2006,54 @@ namespace OpenTK.Platform.Native.X11
                         hints->Flags |= XSizeHintFlags.MinSize;
                     else
                         hints->Flags &= ~XSizeHintFlags.MinSize;
-
-                    XSetWMNormalHints(X11.Display, xwindow.Window, hints);
-
-                    xwindow.FixedSize = (-1, -1);
-
-                    XFree(hints);
-
-                    break;
                 }
-                case WindowStyle.Borderless:
+                else 
                 {
-                    throw new NotImplementedException();
-                }
-                case WindowStyle.FixedBorder:
-                // Set the max and min height to the same.
-                // FIXME: Figure out if you can still resize the window programatically.
+                    hints->MinWidth = fixedWidth;
+                    hints->MaxWidth = fixedWidth;
 
-                unsafe {
-                    XSizeHints* hints = XAllocSizeHints();
-
-                    XSizeHintFlags supplied;
-                    XGetWMNormalHints(X11.Display, xwindow.Window, hints, &supplied);
-
-                    GetClientSize(xwindow, out int width, out int height);
-
-                    hints->MinWidth = width;
-                    hints->MaxWidth = width;
-
-                    hints->MinHeight = height;
-                    hints->MaxHeight = height;
-
-                    xwindow.FixedSize = (width, height);
+                    hints->MinHeight = fixedHeight;
+                    hints->MaxHeight = fixedHeight;
 
                     hints->Flags |= XSizeHintFlags.MinSize | XSizeHintFlags.MaxSize;
-
-                    XSetWMNormalHints(X11.Display, xwindow.Window, hints);
-
-                    XFree(hints);
-
-                    break;
                 }
-                default:
-                    throw new NotImplementedException();
+
+                XSetWMNormalHints(X11.Display, xwindow.Window, hints);
+
+                XFree(hints);
+            }
+
+            static unsafe void SetDecorations(XWindowHandle xwindow, bool enable)
+            {
+                // We use 
+                const int MWM_HINTS_DECORATIONS = 1 << 1;
+
+                const int MWM_DECOR_ALL = 1 << 0;
+
+                MotifWmHints hints = default;
+                hints.flags = MWM_HINTS_DECORATIONS;
+                hints.decorations = enable ? MWM_DECOR_ALL : 0;
+                
+                XChangeProperty(X11.Display, 
+                        xwindow.Window, 
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                        X11.Atoms[KnownAtoms._MOTIF_WM_HINTS], 
+                        32, 
+                        XPropertyMode.Replace, 
+                        (IntPtr)(void*)&hints, 
+                        sizeof(MotifWmHints) / sizeof(long));
+            }
+        
+            static unsafe int SetNetWMWindowType(XWindow window, XAtom type)
+            {
+                return XChangeProperty(
+                        X11.Display, 
+                        window, 
+                        X11.Atoms[KnownAtoms._NET_WM_WINDOW_TYPE],
+                        X11.Atoms[KnownAtoms.ATOM], 32, 
+                        XPropertyMode.Replace,
+                        (IntPtr)(void*)&type,
+                        1);
             }
         }
 
@@ -1685,14 +2306,6 @@ namespace OpenTK.Platform.Native.X11
             XTranslateCoordinates(X11.Display, xwindow.Window, X11.DefaultRootWindow, clientX, clientY, out x, out y, out _);
 
             // FIXME: Extents?
-        }
-
-        /// <inheritdoc />
-        public void SwapBuffers(WindowHandle handle)
-        {
-            XWindowHandle xwindow = handle.As<XWindowHandle>(this);
-
-            glXSwapBuffers(xwindow.Display, xwindow.Window);
         }
     }
 }

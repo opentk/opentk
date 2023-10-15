@@ -131,6 +131,7 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         // FIXME: Move this to the window component itself?
+        // FIXME: DWMWA_BORDER_COLOR? DWMWA_WINDOW_CORNER_PREFERENCE?
         /// <summary>
         /// Sets the <c>DWMWA_USE_IMMERSIVE_DARK_MODE</c> flag on the window causing the titlebar be rendered in dark mode colors.
         /// </summary>
@@ -185,10 +186,7 @@ namespace OpenTK.Platform.Native.Windows
             }
         }
 
-        /// <summary>
-        /// Gets information about the memory of the device and the current status.
-        /// </summary>
-        /// <returns>The memory info.</returns>
+        /// <inheritdoc/>
         public unsafe SystemMemoryInfo GetSystemMemoryInformation()
         {
             Win32.MEMORYSTATUSEX status = default;
@@ -200,6 +198,12 @@ namespace OpenTK.Platform.Native.Windows
                 SystemMemoryInfo info;
                 info.TotalPhysicalMemory = (long)status.ullTotalPhys;
                 info.AvailablePhysicalMemory = (long)status.ullAvailPhys;
+
+                success = Win32.GetPhysicallyInstalledSystemMemory(out ulong systemMemory);
+                if (success)
+                {
+                    info.TotalPhysicalMemory = (long)systemMemory * 1024;
+                }
 
                 return info;
             }

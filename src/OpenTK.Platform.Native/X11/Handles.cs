@@ -1,5 +1,6 @@
 ﻿using OpenTK.Core.Platform;
 using OpenTK.Mathematics;
+using OpenTK.Platform.Native.X11.XRandR;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,45 +10,6 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native.X11
 {
-    internal class XCursorHandle : CursorHandle
-    {
-        public XCursor Cursor { get; set; }
-
-        public XCursorHandle()
-        {
-        }
-    }
-
-    internal class XOpenGLContextHandle : OpenGLContextHandle
-    {
-        public XDisplayPtr Display { get; }
-        public GLXContext Context { get; }
-
-        public XDrawable Drawable { get; }
-
-        public XOpenGLContextHandle? SharedContext { get; }
-
-        /// <summary>
-        /// We use this value to keep track of the latest swap interval set through GLX_SGI_swap_control.
-        /// </summary>
-        public int SGISwapInterval { get; set; } = 0;
-
-        public XOpenGLContextHandle(
-            XDisplayPtr display,
-            GLXContext context,
-            XDrawable drawable,
-            XOpenGLContextHandle? sharedContext = null)
-        {
-            Display = display;
-            Context = context;
-            Drawable = drawable;
-            SharedContext = sharedContext;
-        }
-    }
-
-    internal class XRandRDisplayHandle : DisplayHandle
-    {
-    }
 
     [DebuggerDisplay("XWindowHandle: Display={Display.Value} Window={Window.Id}")]
     internal class XWindowHandle : WindowHandle
@@ -55,6 +17,13 @@ namespace OpenTK.Platform.Native.X11
         public XDisplayPtr Display { get; }
         public XWindow Window { get; }
         public GLXFBConfig? FBConfig { get; }
+
+        public int X { get; set; }
+
+        public int Y { get; set; }
+
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         /// <summary>This is the size the window had when we fixed the window size.</summary>
         public Vector2i FixedSize { get; set; } = (-1, -1);
@@ -77,18 +46,115 @@ namespace OpenTK.Platform.Native.X11
         public Vector2 VirtualCursorPosition { get; set; }
         public Vector2i LastMousePosition { get; set; }
 
+        public XIconHandle? Icon { get; set; } = null;
+
+
+        public XDisplayHandle? FullscreenDisplay { get; set; } = null;
+        public bool IsExclusiveFullscreen { get; set; } = false;
+
         public XWindowHandle(
             XDisplayPtr display,
             XWindow window,
             GraphicsApiHints hints,
             GLXFBConfig? fbConfig = null,
-            XColorMap? colorMap = null)
+            XColorMap? colorMap = null) : base(hints)
         {
             Display = display;
             Window = window;
-            GraphicsApiHints = hints;
             FBConfig = fbConfig;
             ColorMap = colorMap;
+        }
+    }
+
+    internal class XOpenGLContextHandle : OpenGLContextHandle
+    {
+        public XDisplayPtr Display { get; }
+        public GLXContext Context { get; }
+
+        public GLXWindow GLXWindow { get; }
+
+        public XWindow Window { get; }
+
+        public XOpenGLContextHandle? SharedContext { get; }
+
+        /// <summary>
+        /// We use this value to keep track of the latest swap interval set through GLX_SGI_swap_control.
+        /// </summary>
+        public int SGISwapInterval { get; set; } = 0;
+
+        public XOpenGLContextHandle(
+            XDisplayPtr display,
+            GLXContext context,
+            GLXWindow glxWindow,
+            XWindow window,
+            XOpenGLContextHandle? sharedContext = null)
+        {
+            Display = display;
+            Context = context;
+            GLXWindow = glxWindow;
+            Window = window;
+            SharedContext = sharedContext;
+        }
+    }
+
+    internal class XDisplayHandle : DisplayHandle
+    {
+        public RROutput Output { get; set; }
+
+        public RRCrtc Crtc { get; set; }
+
+        public string Name { get; set; }
+
+        /// <summary>
+        /// RRMode of the display before any window being fullscreened.
+        /// </summary>
+        public RRMode OldMode { get; set; } = RRMode.None;
+
+        public XDisplayHandle(RROutput output, RRCrtc crtc)
+        {
+            Output = output;
+            Crtc = crtc;
+        }
+    }
+
+    internal class XIconHandle : IconHandle
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+
+        public X11IconComponent.IconImage[] Images { get; set; }
+
+        public XIconHandle(int width, int height, X11IconComponent.IconImage[] images)
+        {
+            Width = width;
+            Height = height;
+            Images = images;
+        }
+    }
+
+    internal class XCursorHandle : CursorHandle
+    {
+        public XCursor Cursor { get; set; }
+
+        public CursorMode Mode { get; set; }
+
+        public int Width { get; set; }
+
+        public int Height { get; set; }
+
+        public int HotspotX { get; set; }
+
+        public int HotspotY { get; set; }
+
+        public XCursorHandle()
+        {
+        }
+
+        internal enum CursorMode
+        {
+            Uninitialized,
+            SystemCursor,
+            ImageCursor,
         }
     }
 }

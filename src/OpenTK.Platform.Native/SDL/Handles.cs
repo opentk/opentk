@@ -20,7 +20,7 @@ namespace OpenTK.Platform.Native.SDL
 
         public SDLIcon? Icon { get; internal set; } = null;
 
-        public SDLWindow(SDL_WindowPtr window, uint windowID)
+        public SDLWindow(SDL_WindowPtr window, uint windowID, GraphicsApiHints hints) : base(hints)
         {
             Window = window;
             WindowID = windowID;
@@ -65,12 +65,6 @@ namespace OpenTK.Platform.Native.SDL
         public SDL_CursorPtr Cursor { get; internal set; }
 
         public CursorMode Mode { get; internal set; }
-
-        // Might need to keep a copy of the image data so we can reconstruct the cursor when needed.
-
-        public byte[]? ColorData { get; internal set; }
-
-        public byte[]? MaskData { get; internal set; }
 
         public SDL_Surface* Surface { get; internal set; }
 

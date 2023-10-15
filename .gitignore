@@ -833,3 +833,6 @@ auto/*
 ### LaTeX Patch ###
 # glossaries
 *.glstex
+
+## ImGui config INI.
+imgui.ini

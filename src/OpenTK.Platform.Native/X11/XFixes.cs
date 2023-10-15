@@ -7,6 +7,7 @@ using System.Text;
 
 namespace OpenTK.Platform.Native.X11
 {
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
     internal static unsafe class XFixes
     {
         private const string X11 = "XFixes";
@@ -23,6 +24,7 @@ namespace OpenTK.Platform.Native.X11
         internal static extern int /* Status */ XFixesQueryVersion (XDisplayPtr dpy, ref int major_version_return, ref int minor_version_return);
 
         internal unsafe struct XFixesCursorImage {
+
             public short x, y;
             public ushort width, height;
             public ushort xhot, yhot;
@@ -51,4 +53,5 @@ namespace OpenTK.Platform.Native.X11
         [DllImport(X11, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void XFixesDestroyPointerBarrier(XDisplayPtr dpy, XID /* PointerBarrier */ b);
     }
+#pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

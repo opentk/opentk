@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using OpenTK.Mathematics;
 
 #nullable enable
@@ -23,6 +24,8 @@ namespace OpenTK.Core.Platform
     /// </summary>
     public interface IWindowComponent : IPalComponent
     {
+        // FIXME: Make most Get* functions return their value instead of going through out parameters.
+
         /// <summary>
         /// True when the driver supports setting the window icon.
         /// </summary>
@@ -51,7 +54,7 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// Read-only list of window styles the driver supports.
         /// </summary>
-        IReadOnlyList<WindowStyle> SupportedStyles { get; }
+        IReadOnlyList<WindowBorderStyle> SupportedStyles { get; }
 
         /// <summary>
         /// Read-only list of window modes the driver supports.
@@ -69,6 +72,8 @@ namespace OpenTK.Core.Platform
         /// </summary>
         /// <param name="hints">Graphics API hints to be passed to the operating system.</param>
         /// <returns>Handle to the new window object.</returns>
+        // FIXME: Possibly rethink how to do GraphicsApiHints.
+        // FIXME: API for getting the GraphicsApiHints
         WindowHandle Create(GraphicsApiHints hints);
 
         /// <summary>
@@ -112,7 +117,7 @@ namespace OpenTK.Core.Platform
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support getting the window icon. See <see cref="CanSetIcon"/>.
         /// </exception>
-        IconHandle GetIcon(WindowHandle handle);
+        IconHandle? GetIcon(WindowHandle handle);
 
         /// <summary>
         /// Set window icon object handle.
@@ -258,7 +263,45 @@ namespace OpenTK.Core.Platform
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support the value set by <paramref name="mode"/>. See <see cref="SupportedModes"/>.
         /// </exception>
+        /// <remarks>
+        /// Setting <see cref="WindowMode.WindowedFullscreen"/> or <see cref="WindowMode.ExclusiveFullscreen"/>
+        /// will make the window fullscreen in the nearest monitor to the window location.
+        /// Use <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/> or
+        /// <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle, VideoMode)"/> to explicitly set the monitor.
+        /// </remarks>
         void SetMode(WindowHandle handle, WindowMode mode);
+
+        /// <summary>
+        /// Put a window into 'windowed fullscreen' on a specified display or the display the window is displayed on.
+        /// If <paramref name="display"/> is <c>null</c> then the window will be made fullscreen on the 'nearest' display.
+        /// </summary>
+        /// <param name="handle">The window to make fullscreen.</param>
+        /// <param name="display">The display to make the window fullscreen on.</param>
+        /// <remarks>
+        /// To make an 'exclusive fullscreen' window see <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle, VideoMode)"/>.
+        /// </remarks>
+        void SetFullscreenDisplay(WindowHandle handle, DisplayHandle? display);
+
+        /// <summary>
+        /// Put a window into 'exclusive fullscreen' on a specified display and change the video mode to the specified video mode.
+        /// Only video modes accuired using <see cref="IDisplayComponent.GetSupportedVideoModes(DisplayHandle)"/>
+        /// are expected to work.
+        /// </summary>
+        /// <param name="handle">The window to make fullscreen.</param>
+        /// <param name="display">The display to make the window fullscreen on.</param>
+        /// <param name="videoMode">The video mode to use when making the window fullscreen.</param>
+        /// <remarks>
+        /// To make an 'windowed fullscreen' window see <see cref="SetFullscreenDisplay(WindowHandle, DisplayHandle?)"/>.
+        /// </remarks>
+        void SetFullscreenDisplay(WindowHandle handle, DisplayHandle display, VideoMode videoMode);
+
+        /// <summary>
+        /// Gets the display that the specified window is fullscreen on, if the window is fullscreen.
+        /// </summary>
+        /// <param name="handle">The window handle.</param>
+        /// <param name="display">The display where the window is fullscreen or null if the window is not fullscreen.</param>
+        /// <returns><c>true</c> if the window was fullscreen, <c>false</c> otherwise.</returns>
+        bool GetFullscreenDisplay(WindowHandle handle, [NotNullWhen(true)] out DisplayHandle? display);
 
         /// <summary>
         /// Get the border style of a window.
@@ -266,7 +309,7 @@ namespace OpenTK.Core.Platform
         /// <param name="handle">Handle to window.</param>
         /// <returns>The border style of the window.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handle"/> is null.</exception>
-        WindowStyle GetBorderStyle(WindowHandle handle);
+        WindowBorderStyle GetBorderStyle(WindowHandle handle);
 
         /// <summary>
         /// Set the border style of a window.
@@ -278,7 +321,7 @@ namespace OpenTK.Core.Platform
         /// <exception cref="PalNotImplementedException">
         ///     Driver does not support the value set by <paramref name="style"/>. See <see cref="SupportedStyles"/>.
         /// </exception>
-        void SetBorderStyle(WindowHandle handle, WindowStyle style);
+        void SetBorderStyle(WindowHandle handle, WindowBorderStyle style);
 
         /// <summary>
         /// Set if the window is an always on top window or not.
@@ -367,11 +410,5 @@ namespace OpenTK.Core.Platform
         /// <param name="y">The screen y coordinate.</param>
         /// FIXME: Change to use Vector2i instead of x and y variables.
         void ClientToScreen(WindowHandle handle, int clientX, int clientY, out int x, out int y);
-
-        /// <summary>
-        /// Swaps the buffer of the specified window.
-        /// </summary>
-        /// <param name="handle">Handle to the window.</param>
-        void SwapBuffers(WindowHandle handle);
     }
 }

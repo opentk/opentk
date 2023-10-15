@@ -2,6 +2,13 @@ using System;
 
 namespace OpenTK.Platform.Native.X11
 {
+    internal enum WindowClass : uint
+    {
+        CopyFromParent = 0,
+        InputOutput = 1,
+        InputOnly = 2,
+    }
+
     internal enum XEventType : int
     {
         KeyPress = 2,
@@ -584,8 +591,8 @@ namespace OpenTK.Platform.Native.X11
     internal enum BarrierDirection : int
     {
         BarrierPositiveX = 1 << 0,
-		BarrierPositiveY = 1 << 1,
-		BarrierNegativeX = 1 << 2,
-		BarrierNegativeY = 1 << 3,
+        BarrierPositiveY = 1 << 1,
+        BarrierNegativeX = 1 << 2,
+        BarrierNegativeY = 1 << 3,
     }
 }

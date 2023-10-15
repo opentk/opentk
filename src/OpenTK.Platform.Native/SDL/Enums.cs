@@ -11,49 +11,55 @@ namespace OpenTK.Platform.Native.SDL
     {
         SDL_INIT_TIMER = 0x00000001u,
         SDL_INIT_AUDIO = 0x00000010u,
-        /**< SDL_INIT_VIDEO implies SDL_INIT_EVENTS */
+        /* SDL_INIT_VIDEO implies SDL_INIT_EVENTS */
         SDL_INIT_VIDEO = 0x00000020u,
-        /**< SDL_INIT_JOYSTICK implies SDL_INIT_EVENTS */
+        /* SDL_INIT_JOYSTICK implies SDL_INIT_EVENTS */
         SDL_INIT_JOYSTICK = 0x00000200u,
         SDL_INIT_HAPTIC = 0x00001000u,
-        /**< SDL_INIT_GAMECONTROLLER implies SDL_INIT_JOYSTICK */
+        /* SDL_INIT_GAMECONTROLLER implies SDL_INIT_JOYSTICK */
         SDL_INIT_GAMECONTROLLER = 0x00002000u,
         SDL_INIT_EVENTS = 0x00004000u,
         SDL_INIT_SENSOR = 0x00008000u,
-        /**< compatibility; this flag is ignored. */
+        /* compatibility; this flag is ignored. */
         SDL_INIT_NOPARACHUTE = 0x00100000u,
     }
 
     [Flags]
     internal enum SDL_WindowFlags : uint
     {
-        SDL_WINDOW_FULLSCREEN = 0x00000001,         /**< fullscreen window */
-        SDL_WINDOW_OPENGL = 0x00000002,             /**< window usable with OpenGL context */
-        SDL_WINDOW_SHOWN = 0x00000004,              /**< window is visible */
-        SDL_WINDOW_HIDDEN = 0x00000008,             /**< window is not visible */
-        SDL_WINDOW_BORDERLESS = 0x00000010,         /**< no window decoration */
-        SDL_WINDOW_RESIZABLE = 0x00000020,          /**< window can be resized */
-        SDL_WINDOW_MINIMIZED = 0x00000040,          /**< window is minimized */
-        SDL_WINDOW_MAXIMIZED = 0x00000080,          /**< window is maximized */
-        SDL_WINDOW_MOUSE_GRABBED = 0x00000100,      /**< window has grabbed mouse input */
-        SDL_WINDOW_INPUT_FOCUS = 0x00000200,        /**< window has input focus */
-        SDL_WINDOW_MOUSE_FOCUS = 0x00000400,        /**< window has mouse focus */
+        SDL_WINDOW_FULLSCREEN = 0x00000001,         /* fullscreen window */
+        SDL_WINDOW_OPENGL = 0x00000002,             /* window usable with OpenGL context */
+        SDL_WINDOW_SHOWN = 0x00000004,              /* window is visible */
+        SDL_WINDOW_HIDDEN = 0x00000008,             /* window is not visible */
+        SDL_WINDOW_BORDERLESS = 0x00000010,         /* no window decoration */
+        SDL_WINDOW_RESIZABLE = 0x00000020,          /* window can be resized */
+        SDL_WINDOW_MINIMIZED = 0x00000040,          /* window is minimized */
+        SDL_WINDOW_MAXIMIZED = 0x00000080,          /* window is maximized */
+        SDL_WINDOW_MOUSE_GRABBED = 0x00000100,      /* window has grabbed mouse input */
+        SDL_WINDOW_INPUT_FOCUS = 0x00000200,        /* window has input focus */
+        SDL_WINDOW_MOUSE_FOCUS = 0x00000400,        /* window has mouse focus */
         SDL_WINDOW_FULLSCREEN_DESKTOP = (SDL_WINDOW_FULLSCREEN | 0x00001000),
-        SDL_WINDOW_FOREIGN = 0x00000800,            /**< window not created by SDL */
-        SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000,      /**< window should be created in high-DPI mode if supported.
+        SDL_WINDOW_FOREIGN = 0x00000800,            /* window not created by SDL */
+        SDL_WINDOW_ALLOW_HIGHDPI = 0x00002000,      /* window should be created in high-DPI mode if supported.
                                                      On macOS NSHighResolutionCapable must be set true in the
                                                      application's Info.plist for this to have any effect. */
-        SDL_WINDOW_MOUSE_CAPTURE = 0x00004000,   /**< window has mouse captured (unrelated to MOUSE_GRABBED) */
-        SDL_WINDOW_ALWAYS_ON_TOP = 0x00008000,   /**< window should always be above others */
-        SDL_WINDOW_SKIP_TASKBAR = 0x00010000,   /**< window should not be added to the taskbar */
-        SDL_WINDOW_UTILITY = 0x00020000,   /**< window should be treated as a utility window */
-        SDL_WINDOW_TOOLTIP = 0x00040000,   /**< window should be treated as a tooltip */
-        SDL_WINDOW_POPUP_MENU = 0x00080000,   /**< window should be treated as a popup menu */
-        SDL_WINDOW_KEYBOARD_GRABBED = 0x00100000,   /**< window has grabbed keyboard input */
-        SDL_WINDOW_VULKAN = 0x10000000,   /**< window usable for Vulkan surface */
-        SDL_WINDOW_METAL = 0x20000000,   /**< window usable for Metal view */
+        SDL_WINDOW_MOUSE_CAPTURE = 0x00004000,   /* window has mouse captured (unrelated to MOUSE_GRABBED) */
+        SDL_WINDOW_ALWAYS_ON_TOP = 0x00008000,   /* window should always be above others */
+        SDL_WINDOW_SKIP_TASKBAR = 0x00010000,   /* window should not be added to the taskbar */
+        SDL_WINDOW_UTILITY = 0x00020000,   /* window should be treated as a utility window */
+        SDL_WINDOW_TOOLTIP = 0x00040000,   /* window should be treated as a tooltip */
+        SDL_WINDOW_POPUP_MENU = 0x00080000,   /* window should be treated as a popup menu */
+        SDL_WINDOW_KEYBOARD_GRABBED = 0x00100000,   /* window has grabbed keyboard input */
+        SDL_WINDOW_VULKAN = 0x10000000,   /* window usable for Vulkan surface */
+        SDL_WINDOW_METAL = 0x20000000,   /* window usable for Metal view */
 
-        SDL_WINDOW_INPUT_GRABBED = SDL_WINDOW_MOUSE_GRABBED /**< equivalent to SDL_WINDOW_MOUSE_GRABBED for compatibility */
+        SDL_WINDOW_INPUT_GRABBED = SDL_WINDOW_MOUSE_GRABBED, /* equivalent to SDL_WINDOW_MOUSE_GRABBED for compatibility */
+    }
+
+    internal enum SDL_FullscreenMode : uint
+    {
+        SDL_WINDOW_FULLSCREEN = 0x00000001,         /* fullscreen window */
+        SDL_WINDOW_FULLSCREEN_DESKTOP = (SDL_WINDOW_FULLSCREEN | 0x00001000),
     }
 
     internal enum SDL_BUTTON : byte
@@ -67,9 +73,9 @@ namespace OpenTK.Platform.Native.SDL
 
     internal enum SDL_FlashOperation : int
     {
-        SDL_FLASH_CANCEL,                   /**< Cancel any window flash state */
-        SDL_FLASH_BRIEFLY,                  /**< Flash the window briefly to get attention */
-        SDL_FLASH_UNTIL_FOCUSED             /**< Flash the window until it gets focus */
+        SDL_FLASH_CANCEL,                   /* Cancel any window flash state */
+        SDL_FLASH_BRIEFLY,                  /* Flash the window briefly to get attention */
+        SDL_FLASH_UNTIL_FOCUSED             /* Flash the window until it gets focus */
     }
 
     enum SDL_GLattr : int
@@ -108,7 +114,7 @@ namespace OpenTK.Platform.Native.SDL
     {
         SDL_GL_CONTEXT_PROFILE_CORE = 0x0001,
         SDL_GL_CONTEXT_PROFILE_COMPATIBILITY = 0x0002,
-        SDL_GL_CONTEXT_PROFILE_ES = 0x0004 /**< GLX_CONTEXT_ES2_PROFILE_BIT_EXT */
+        SDL_GL_CONTEXT_PROFILE_ES = 0x0004 /* GLX_CONTEXT_ES2_PROFILE_BIT_EXT */
     }
 
     [Flags]
@@ -122,8 +128,8 @@ namespace OpenTK.Platform.Native.SDL
 
     enum SDL_HitTestResult
     {
-        SDL_HITTEST_NORMAL,  /**< Region is normal. No special properties. */
-        SDL_HITTEST_DRAGGABLE,  /**< Region can drag entire window. */
+        SDL_HITTEST_NORMAL,  /* Region is normal. No special properties. */
+        SDL_HITTEST_DRAGGABLE,  /* Region can drag entire window. */
         SDL_HITTEST_RESIZE_TOPLEFT,
         SDL_HITTEST_RESIZE_TOP,
         SDL_HITTEST_RESIZE_TOPRIGHT,
@@ -134,7 +140,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_HITTEST_RESIZE_LEFT
     }
 
-    /** Pixel type. */
+    /* Pixel type. */
     enum SDL_PixelType
     {
         SDL_PIXELTYPE_UNKNOWN,
@@ -151,7 +157,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_PIXELTYPE_ARRAYF32
     }
 
-    /** Bitmap pixel order, high bit -> low bit. */
+    /* Bitmap pixel order, high bit -> low bit. */
     enum SDL_BitmapOrder
     {
         SDL_BITMAPORDER_NONE,
@@ -159,7 +165,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_BITMAPORDER_1234
     }
 
-    /** Packed component order, high bit -> low bit. */
+    /* Packed component order, high bit -> low bit. */
     enum SDL_PackedOrder
     {
         SDL_PACKEDORDER_NONE,
@@ -173,7 +179,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_PACKEDORDER_BGRA
     }
 
-    /** Array component order, low byte -> high byte. */
+    /* Array component order, low byte -> high byte. */
     enum SDL_ArrayOrder
     {
         SDL_ARRAYORDER_NONE,
@@ -181,7 +187,7 @@ namespace OpenTK.Platform.Native.SDL
         SDL_ARRAYORDER_BGR,
     }
 
-    /** Packed component layout. */
+    /* Packed component layout. */
     enum SDL_PackedLayout
     {
         SDL_PACKEDLAYOUT_NONE,
@@ -203,6 +209,31 @@ namespace OpenTK.Platform.Native.SDL
             ((1 << 28) | ((type) << 24) | ((order) << 20) | ((layout) << 16) | \
             ((bits) << 8) | ((bytes) << 0))
         */
+
+        SDL_PIXELFORMAT_RGB332 =
+            (1 << 28) |
+            (SDL_PixelType.SDL_PIXELTYPE_PACKED8 << 24) |
+            (SDL_PackedOrder.SDL_PACKEDORDER_XRGB << 20) |
+            (SDL_PackedLayout.SDL_PACKEDLAYOUT_332 << 16) |
+            (8 << 8) |
+            (1 << 0),
+
+        SDL_PIXELFORMAT_RGB565 =
+            (1 << 28) |
+            (SDL_PixelType.SDL_PIXELTYPE_PACKED16 << 24) |
+            (SDL_PackedOrder.SDL_PACKEDORDER_XRGB << 20) |
+            (SDL_PackedLayout.SDL_PACKEDLAYOUT_565 << 16) |
+            (16 << 8) |
+            (2 << 0),
+
+        SDL_PIXELFORMAT_XRGB8888 =
+            (1 << 28) |
+            (SDL_PixelType.SDL_PIXELTYPE_PACKED32 << 24) |
+            (SDL_PackedOrder.SDL_PACKEDORDER_XRGB << 20) |
+            (SDL_PackedLayout.SDL_PACKEDLAYOUT_8888 << 16) |
+            (24 << 8) |
+            (4 << 0),
+        SDL_PIXELFORMAT_RGB888 = SDL_PIXELFORMAT_XRGB8888,
 
         SDL_PIXELFORMAT_RGBA8888 =
             (1 << 28) |
@@ -231,27 +262,27 @@ namespace OpenTK.Platform.Native.SDL
 
     enum SDL_PowerState : int
     {
-        SDL_POWERSTATE_UNKNOWN,      /**< cannot determine power status */
-        SDL_POWERSTATE_ON_BATTERY,   /**< Not plugged in, running on the battery */
-        SDL_POWERSTATE_NO_BATTERY,   /**< Plugged in, no battery available */
-        SDL_POWERSTATE_CHARGING,     /**< Plugged in, charging battery */
-        SDL_POWERSTATE_CHARGED       /**< Plugged in, battery charged */
+        SDL_POWERSTATE_UNKNOWN,      /* cannot determine power status */
+        SDL_POWERSTATE_ON_BATTERY,   /* Not plugged in, running on the battery */
+        SDL_POWERSTATE_NO_BATTERY,   /* Plugged in, no battery available */
+        SDL_POWERSTATE_CHARGING,     /* Plugged in, charging battery */
+        SDL_POWERSTATE_CHARGED       /* Plugged in, battery charged */
     }
 
     enum SDL_SystemCursor : int
     {
-        SDL_SYSTEM_CURSOR_ARROW,     /**< Arrow */
-        SDL_SYSTEM_CURSOR_IBEAM,     /**< I-beam */
-        SDL_SYSTEM_CURSOR_WAIT,      /**< Wait */
-        SDL_SYSTEM_CURSOR_CROSSHAIR, /**< Crosshair */
-        SDL_SYSTEM_CURSOR_WAITARROW, /**< Small wait cursor (or Wait if not available) */
-        SDL_SYSTEM_CURSOR_SIZENWSE,  /**< Double arrow pointing northwest and southeast */
-        SDL_SYSTEM_CURSOR_SIZENESW,  /**< Double arrow pointing northeast and southwest */
-        SDL_SYSTEM_CURSOR_SIZEWE,    /**< Double arrow pointing west and east */
-        SDL_SYSTEM_CURSOR_SIZENS,    /**< Double arrow pointing north and south */
-        SDL_SYSTEM_CURSOR_SIZEALL,   /**< Four pointed arrow pointing north, south, east, and west */
-        SDL_SYSTEM_CURSOR_NO,        /**< Slashed circle or crossbones */
-        SDL_SYSTEM_CURSOR_HAND,      /**< Hand */
+        SDL_SYSTEM_CURSOR_ARROW,     /* Arrow */
+        SDL_SYSTEM_CURSOR_IBEAM,     /* I-beam */
+        SDL_SYSTEM_CURSOR_WAIT,      /* Wait */
+        SDL_SYSTEM_CURSOR_CROSSHAIR, /* Crosshair */
+        SDL_SYSTEM_CURSOR_WAITARROW, /* Small wait cursor (or Wait if not available) */
+        SDL_SYSTEM_CURSOR_SIZENWSE,  /* Double arrow pointing northwest and southeast */
+        SDL_SYSTEM_CURSOR_SIZENESW,  /* Double arrow pointing northeast and southwest */
+        SDL_SYSTEM_CURSOR_SIZEWE,    /* Double arrow pointing west and east */
+        SDL_SYSTEM_CURSOR_SIZENS,    /* Double arrow pointing north and south */
+        SDL_SYSTEM_CURSOR_SIZEALL,   /* Four pointed arrow pointing north, south, east, and west */
+        SDL_SYSTEM_CURSOR_NO,        /* Slashed circle or crossbones */
+        SDL_SYSTEM_CURSOR_HAND,      /* Hand */
         SDL_NUM_SYSTEM_CURSORS
     }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using OpenTK.Core.Utility;
 using OpenTK.Mathematics;
 
@@ -96,6 +95,11 @@ namespace OpenTK.Core.Platform
                     names.Add(_shellComponent.Name);
                 }
 
+                if (_joystickComponent is not null)
+                {
+                    names.Add(_joystickComponent.Name);
+                }
+
                 return $"Component Set [{string.Join(", ", names)}]";
             }
         }
@@ -109,7 +113,8 @@ namespace OpenTK.Core.Platform
                                          (_openGLComponent is not null ? PalComponents.OpenGL : 0) |
                                          (_surfaceComponent is not null ? PalComponents.Surface : 0) |
                                          (_windowComponent is not null ? PalComponents.Window : 0) |
-                                         (_shellComponent is not null ? PalComponents.Shell : 0);
+                                         (_shellComponent is not null ? PalComponents.Shell : 0) |
+                                         (_joystickComponent is not null ? PalComponents.Joystick : 0);
 
         private ILogger? _logger;
 
@@ -143,6 +148,8 @@ namespace OpenTK.Core.Platform
 
                 if (_shellComponent != null) _shellComponent.Logger = _logger;
 
+                if (_joystickComponent != null) _joystickComponent.Logger = _logger;
+
 #pragma warning restore SA1503 // Braces should not be omitted
             }
         }
@@ -170,6 +177,7 @@ namespace OpenTK.Core.Platform
                 PalComponents.OpenGL => _openGLComponent,
                 PalComponents.Clipboard => _clipboardComponent,
                 PalComponents.Shell => _shellComponent,
+                PalComponents.Joystick => _joystickComponent,
                 _ => throw new ArgumentException("Components are a bitfield or out of range.", nameof(which))
             };
             set
@@ -218,6 +226,10 @@ namespace OpenTK.Core.Platform
                 if ((which & PalComponents.Shell) != 0)
                 {
                     _shellComponent = value as IShellComponent;
+                }
+                if ((which & PalComponents.Joystick) != 0)
+                {
+                    _joystickComponent = value as IJoystickComponent;
                 }
             }
         }
@@ -289,16 +301,13 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        bool ICursorComponent.CanLoadSystemCursor => _cursorComponent!.CanLoadSystemCursor;
+        bool ICursorComponent.CanLoadSystemCursors => _cursorComponent!.CanLoadSystemCursors;
 
         /// <inheritdoc/>
-        bool ICursorComponent.CanScaleCursor => _cursorComponent!.CanScaleCursor;
+        bool ICursorComponent.CanInspectSystemCursors => _cursorComponent!.CanInspectSystemCursors;
 
         /// <inheritdoc/>
-        bool ICursorComponent.CanSupportAnimatedCursor => _cursorComponent!.CanSupportAnimatedCursor;
-
-        /// <inheritdoc/>
-        bool IIconComponent.CanLoadSystemIcon => _iconComponent!.CanLoadSystemIcon;
+        bool IIconComponent.CanLoadSystemIcons => _iconComponent!.CanLoadSystemIcons;
 
         /// <inheritdoc/>
         bool IWindowComponent.CanSetIcon => _windowComponent!.CanSetIcon;
@@ -316,7 +325,7 @@ namespace OpenTK.Core.Platform
         IReadOnlyList<PlatformEventType> IWindowComponent.SupportedEvents => _windowComponent!.SupportedEvents;
 
         /// <inheritdoc/>
-        IReadOnlyList<WindowStyle> IWindowComponent.SupportedStyles => _windowComponent!.SupportedStyles;
+        IReadOnlyList<WindowBorderStyle> IWindowComponent.SupportedStyles => _windowComponent!.SupportedStyles;
 
         /// <inheritdoc/>
         IReadOnlyList<WindowMode> IWindowComponent.SupportedModes => _windowComponent!.SupportedModes;
@@ -358,7 +367,7 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        IconHandle IWindowComponent.GetIcon(WindowHandle handle)
+        IconHandle? IWindowComponent.GetIcon(WindowHandle handle)
         {
             return _windowComponent!.GetIcon(handle);
         }
@@ -460,13 +469,31 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        WindowStyle IWindowComponent.GetBorderStyle(WindowHandle handle)
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        {
+            _windowComponent!.SetFullscreenDisplay(window, display);
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        {
+            _windowComponent!.SetFullscreenDisplay(window, display, videoMode);
+        }
+
+        /// <inheritdoc/>
+        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        {
+            return _windowComponent!.GetFullscreenDisplay(window, out display);
+        }
+
+        /// <inheritdoc/>
+        WindowBorderStyle IWindowComponent.GetBorderStyle(WindowHandle handle)
         {
             return _windowComponent!.GetBorderStyle(handle);
         }
 
         /// <inheritdoc/>
-        void IWindowComponent.SetBorderStyle(WindowHandle handle, WindowStyle style)
+        void IWindowComponent.SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             _windowComponent!.SetBorderStyle(handle, style);
         }
@@ -531,15 +558,16 @@ namespace OpenTK.Core.Platform
             _windowComponent!.ClientToScreen(handle, clientX, clientY, out x, out y);
         }
 
-        void IWindowComponent.SwapBuffers(WindowHandle handle)
+        /// <inheritdoc/>
+        IconHandle IIconComponent.Create(SystemIconType systemIcon)
         {
-            _windowComponent!.SwapBuffers(handle);
+            return _iconComponent!.Create(systemIcon);
         }
 
         /// <inheritdoc/>
-        IconHandle IIconComponent.Create()
+        IconHandle IIconComponent.Create(int width, int height, System.ReadOnlySpan<byte> data)
         {
-            return _iconComponent!.Create();
+            return _iconComponent!.Create(width, height, data);
         }
 
         /// <inheritdoc/>
@@ -579,39 +607,33 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IIconComponent.GetDimensions(IconHandle handle, out int width, out int height)
+        void IIconComponent.GetSize(IconHandle handle, out int width, out int height)
         {
-            _iconComponent!.GetDimensions(handle, out width, out height);
+            _iconComponent!.GetSize(handle, out width, out height);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.GetBitmapData(IconHandle handle, Span<byte> data)
+        CursorHandle ICursorComponent.Create(SystemCursorType systemCursor)
         {
-            _iconComponent!.GetBitmapData(handle, data);
+            return _cursorComponent!.Create(systemCursor);
         }
 
         /// <inheritdoc/>
-        int IIconComponent.GetBitmapByteSize(IconHandle handle)
+        CursorHandle ICursorComponent.Create(int width, int height, ReadOnlySpan<byte> image, int hotspotX, int hotspotY)
         {
-            return _iconComponent!.GetBitmapByteSize(handle);
+            return _cursorComponent!.Create(width, height, image, hotspotX, hotspotY);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.Load(IconHandle handle, int width, int height, ReadOnlySpan<byte> data)
+        CursorHandle ICursorComponent.Create(int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData, int hotspotX, int hotspotY)
         {
-            _iconComponent!.Load(handle, width, height, data);
+            return _cursorComponent!.Create(width, height, colorData, maskData, hotspotX, hotspotY);
         }
 
         /// <inheritdoc/>
-        void IIconComponent.Load(IconHandle handle, SystemIconType name)
+        bool ICursorComponent.IsSystemCursor(CursorHandle handle)
         {
-            _iconComponent!.Load(handle, name);
-        }
-
-        /// <inheritdoc/>
-        CursorHandle ICursorComponent.Create()
-        {
-            return _cursorComponent!.Create();
+            return _cursorComponent!.IsSystemCursor(handle);
         }
 
         /// <inheritdoc/>
@@ -631,51 +653,6 @@ namespace OpenTK.Core.Platform
         {
             _cursorComponent!.GetHotspot(handle, out x, out y);
         }
-
-        /// <inheritdoc/>
-        void ICursorComponent.GetImage(CursorHandle handle, Span<byte> image)
-        {
-            _cursorComponent!.GetImage(handle, image);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.GetScale(CursorHandle handle, out float horizontal, out float vertical)
-        {
-            _cursorComponent!.GetScale(handle, out horizontal, out vertical);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, SystemCursorType systemCursor)
-        {
-            _cursorComponent!.Load(handle, systemCursor);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> image)
-        {
-            _cursorComponent!.Load(handle, width, height, image);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.Load(CursorHandle handle, int width, int height, ReadOnlySpan<byte> colorData, ReadOnlySpan<byte> maskData)
-        {
-            _cursorComponent!.Load(handle, width, height, colorData, maskData);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.SetHotspot(CursorHandle handle, int x, int y)
-        {
-            _cursorComponent!.SetHotspot(handle, x, y);
-        }
-
-        /// <inheritdoc/>
-        void ICursorComponent.SetScale(CursorHandle handle, float horizontal, float vertical)
-        {
-            _cursorComponent!.SetScale(handle, horizontal, vertical);
-        }
-
-        /// <inheritdoc/>
-        bool IDisplayComponent.CanSetVideoMode => _displayComponent!.CanSetVideoMode;
 
         /// <inheritdoc/>
         bool IDisplayComponent.CanGetVirtualPosition => _displayComponent!.CanGetVirtualPosition;
@@ -738,21 +715,9 @@ namespace OpenTK.Core.Platform
         }
 
         /// <inheritdoc/>
-        void IDisplayComponent.SetVideoMode(DisplayHandle handle, in VideoMode mode)
+        VideoMode[] IDisplayComponent.GetSupportedVideoModes(DisplayHandle handle)
         {
-            _displayComponent!.SetVideoMode(handle, in mode);
-        }
-
-        /// <inheritdoc/>
-        int IDisplayComponent.GetSupportedVideoModeCount(DisplayHandle handle)
-        {
-            return _displayComponent!.GetSupportedVideoModeCount(handle);
-        }
-
-        /// <inheritdoc/>
-        void IDisplayComponent.GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
-        {
-            _displayComponent!.GetSupportedVideoModes(handle, modes);
+            return _displayComponent!.GetSupportedVideoModes(handle);
         }
 
         /// <inheritdoc/>
@@ -792,7 +757,7 @@ namespace OpenTK.Core.Platform
         bool IKeyboardComponent.SupportsIme => _keyboardComponent!.SupportsIme;
 
         /// <inheritdoc/>
-        string IKeyboardComponent.GetActiveKeyboardLayout(WindowHandle handle)
+        string IKeyboardComponent.GetActiveKeyboardLayout(WindowHandle? handle)
         {
             return _keyboardComponent!.GetActiveKeyboardLayout(handle);
         }
@@ -900,6 +865,12 @@ namespace OpenTK.Core.Platform
         int IOpenGLComponent.GetSwapInterval()
         {
             return _openGLComponent!.GetSwapInterval();
+        }
+
+        /// <inheritdoc/>
+        void IOpenGLComponent.SwapBuffers(OpenGLContextHandle handle)
+        {
+            _openGLComponent!.SwapBuffers(handle);
         }
 
         /// <inheritdoc/>

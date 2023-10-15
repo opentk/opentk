@@ -9,21 +9,30 @@ namespace X11TestProject
 {
     public class Program
     {
+        static IWindowComponent windowComp;
+        static IOpenGLComponent glComp;
+        static IDisplayComponent dispComp;
+
+        static WindowHandle window;
+        static OpenGLContextHandle context;
+
         public static void Main()
         {
-            MultiThreadExample.MultiThreadMain();
-            return;
+            //MultiThreadExample.MultiThreadMain();
+            //return;
 
-            IWindowComponent windowComp = PlatformComponents.CreateWindowComponent();
-            IOpenGLComponent glComp = PlatformComponents.CreateOpenGLComponent();
-            IDisplayComponent dispComp = PlatformComponents.CreateDisplayComponent();
+            EventQueue.EventRaised += EventQueue_EventRaised;
+
+            windowComp = PlatformComponents.CreateWindowComponent();
+            glComp = PlatformComponents.CreateOpenGLComponent();
+            dispComp = PlatformComponents.CreateDisplayComponent();
 
             windowComp.Initialize(PalComponents.Window);
             glComp.Initialize(PalComponents.OpenGL);
             dispComp.Initialize(PalComponents.Display);
 
-            WindowHandle window = windowComp.Create(new OpenGLGraphicsApiHints());
-            OpenGLContextHandle context = glComp.CreateFromWindow(window);
+            window = windowComp.Create(new OpenGLGraphicsApiHints());
+            context = glComp.CreateFromWindow(window);
             glComp.SetCurrentContext(context);
 
             windowComp.SetClientSize(window, 800, 600);
@@ -51,7 +60,13 @@ namespace X11TestProject
                 GL.ClearColor(1, 0, 1, 1);
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
-                windowComp.SwapBuffers(window);
+                GL.Enable(EnableCap.ScissorTest);
+                GL.Scissor(0, 0, 100, 100);
+                GL.ClearColor(1, 1, 0, 1);
+                GL.Clear(ClearBufferMask.ColorBufferBit);
+                GL.Disable(EnableCap.ScissorTest);
+
+                glComp.SwapBuffers(context);
 
                 windowComp.GetSize(window, out int w, out int h);
                 windowComp.SetTitle(window, $"私はまだ日本語を話すことができません [{width},{height};{w},{h};frame={++frames}]");
@@ -59,6 +74,61 @@ namespace X11TestProject
                 // Console.WriteLine("({0}, {1}) @ ({2}, {3})", width, height, x, y);
 
                 windowComp.ProcessEvents();
+            }
+        }
+
+        public static void EventQueue_EventRaised(PalHandle? handle, PlatformEventType type, EventArgs args)
+        {
+            if (args is KeyDownEventArgs keyDown)
+            {
+                if (keyDown.Key == Key.F)
+                {
+                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    {
+                        windowComp.SetMode(window, WindowMode.Normal);
+                        System.Console.WriteLine("Normal");
+                    }
+                    else
+                    {
+                        windowComp.SetFullscreenDisplay(window, null);
+                        System.Console.WriteLine("Fullscreen");
+                    }
+                }
+            }
+            else if (args is MouseButtonDownEventArgs buttonDown)
+            {
+                if (buttonDown.Button == MouseButton.Button1)
+                {
+                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    {
+                        windowComp.SetMode(window, WindowMode.Normal);
+                        System.Console.WriteLine("Normal");
+                    }
+                    else
+                    {
+                        windowComp.SetFullscreenDisplay(window, null);
+                        System.Console.WriteLine("Windowed Fullscreen");
+                    }
+                }
+                else if (buttonDown.Button == MouseButton.Button2)
+                {
+                    if (windowComp.GetFullscreenDisplay(window, out _))
+                    {
+                        windowComp.SetMode(window, WindowMode.Normal);
+                        System.Console.WriteLine("Normal");
+                    }
+                    else
+                    {
+                        var disp = windowComp.GetDisplay(window);
+                        var mode = new VideoMode(2560, 1440, 144, 24);
+                        windowComp.SetFullscreenDisplay(window, disp, mode);
+                        System.Console.WriteLine("Exlusive Fullscreen");
+                    }
+                }
+                else if (buttonDown.Button == MouseButton.Button3)
+                {
+                    windowComp.Destroy(window);
+                }
             }
         }
     }

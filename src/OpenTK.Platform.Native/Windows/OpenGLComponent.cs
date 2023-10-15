@@ -705,7 +705,7 @@ namespace OpenTK.Platform.Native.Windows
 
                 if (success == false)
                 {
-                    throw new Win32Exception("wglMakeCurrent failed");
+                    throw new Win32Exception();
                 }
             }
 
@@ -724,7 +724,7 @@ namespace OpenTK.Platform.Native.Windows
         {
             // FIXME: Maybe implement DWM hack?
             // https://github.com/glfw/glfw/issues/1072
-            // https://github.com/libsdl-org/SDLLib/issues/5797
+            // https://github.com/libsdl-org/SDL/issues/5797
 
             // Relevant glfw source:
             // https://github.com/glfw/glfw/blob/dd8a678a66f1967372e5a5e3deac41ebf65ee127/src/wgl_context.c#L340
@@ -760,6 +760,18 @@ namespace OpenTK.Platform.Native.Windows
             // but we could change it to null if we change the return to int? or
             // make it a Try* function.
             return 0;
+        }
+
+        /// <inheritdoc/>
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            HGLRC hglrc = handle.As<HGLRC>(this);
+
+            bool success = Win32.SwapBuffers(hglrc.HDC);
+            if (success == false)
+            {
+                throw new Win32Exception();
+            }
         }
     }
 }

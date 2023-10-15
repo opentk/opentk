@@ -141,13 +141,13 @@ namespace OpenTK.Platform.Native.Windows
 
             int status;
 
-            status = Win32.RegOpenKeyEx((IntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out IntPtr layoutsKey);
+            status = Win32.RegOpenKeyEx((UIntPtr)PredefinedKeys.HKEY_LOCAL_MACHINE, LAYOUTS_REGISTRY_PATH, 0, AccessMask.KeyRead, out UIntPtr layoutsKey);
             if (status != 0)
             {
                 throw new Exception($"RegOpenKeyEx (\"HKEY_LOCAL_MACHINE\\{LAYOUTS_REGISTRY_PATH}\") error: 0x{status:X8}");
             }
 
-            status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out IntPtr layoutKey);
+            status = Win32.RegOpenKeyEx(layoutsKey, layoutName, 0, AccessMask.KeyRead, out UIntPtr layoutKey);
             if (status != 0)
             {
                 throw new Exception($"RegOpenKeyEx (\"{layoutName}\") error: 0x{status:X8}");
@@ -550,7 +550,7 @@ namespace OpenTK.Platform.Native.Windows
             // FIXME: Make number scancodes always map to number keys. AZERTY.
 
             // FIXME: SDLLib marks some keys as not remappable and will always correspond to the scancode
-            // https://github.com/libsdl-org/SDLLib/blob/4187c6c08c2f0a6c84ea274c95c10ac7fdc5147a/include/SDL3/SDL_keycode.h#L47
+            // https://github.com/libsdl-org/SDL/blob/4187c6c08c2f0a6c84ea274c95c10ac7fdc5147a/include/SDL3/SDL_keycode.h#L47
             // This might be a good solution in the future.
 
             // Because some keypad keys get converted into

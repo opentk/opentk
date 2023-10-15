@@ -136,7 +136,7 @@ namespace OpenTK.Platform.Native.Windows
                     HMonitor? info = null;
                     foreach (HMonitor display in _displays)
                     {
-                        if (monitor.DeviceName == display.Name)
+                        if (monitor.DeviceName == display.DeviceName)
                         {
                             // This monitor already exists.
                             removedDisplays.Remove(display);
@@ -147,16 +147,26 @@ namespace OpenTK.Platform.Native.Windows
 
                     if (info == null)
                     {
+                        // FIXME: It seems DeviceString isn't great at actually getting a useful name
+                        // for the display itself. It often returns "Generic PnP Monitor".
+                        // It seems like there are some other APIs that can be used to query this information:
+                        // https://stackoverflow.com/questions/7767036/how-do-i-get-the-number-of-displays-in-windows/65013500#65013500
+                        // https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-displayconfiggetdeviceinfo
+                        // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/ns-wingdi-displayconfig_target_device_name
+                        // Seems like we have to enumerate these too and link them to the hmonitor we are working with...?
+                        // - Noggin_bops 2023-09-05
+
                         // This display didn't exist before, which means it's now conncted.
                         info = new HMonitor()
                         {
                             Monitor = hMonitor,
-                            Name = monitor.DeviceName,
+                            DeviceName = monitor.DeviceName,
                             AdapterName = adapter.DeviceName,
                             PublicName = monitor.DeviceString,
                             IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
                             Position = lpDevMode.dmPosition,
                             RefreshRate = (int)lpDevMode.dmDisplayFrequency,
+                            BitsPerPixel = (int)lpDevMode.dmBitsPerPel,
                             Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight),
                             DpiX = -1,
                             DpiY = -1,
@@ -169,13 +179,14 @@ namespace OpenTK.Platform.Native.Windows
                     {
                         info.Monitor = hMonitor;
 
-                        Debug.Assert(info.Name == monitor.DeviceName);
+                        Debug.Assert(info.DeviceName == monitor.DeviceName);
                         Debug.Assert(info.PublicName == monitor.DeviceString);
 
                         info.IsPrimary = adapter.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice);
 
                         info.Position = lpDevMode.dmPosition;
                         info.RefreshRate = (int)lpDevMode.dmDisplayFrequency;
+                        info.BitsPerPixel = (int)lpDevMode.dmBitsPerPel;
                         info.Resolution = new DisplayResolution((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight);
                         info.WorkArea = workArea;
                     }
@@ -193,18 +204,16 @@ namespace OpenTK.Platform.Native.Windows
             {
                 _displays.Remove(removed);
 
-                // FIXME: Add event!
                 EventQueue.Raise(removed, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(removed, true));
-                Console.WriteLine($"Removed: {removed.Name} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
+                Console.WriteLine($"Removed: {removed.DeviceName} (WasPrimary: {removed.IsPrimary}, Refresh: {removed.RefreshRate}, Res: {removed.Resolution})");
             }
 
             foreach (HMonitor connected in newDisplays)
             {
                 _displays.Add(connected);
 
-                // FIXME: Add event!
                 EventQueue.Raise(connected, PlatformEventType.DisplayConnectionChanged, new DisplayConnectionChangedEventArgs(connected, false));
-                Console.WriteLine($"Connected: {connected.Name} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
+                Console.WriteLine($"Connected: {connected.DeviceName} (IsPrimary: {connected.IsPrimary}, Refresh: {connected.RefreshRate}, Res: {connected.Resolution})");
             }
 
             HMonitor? primary = null;
@@ -285,9 +294,6 @@ namespace OpenTK.Platform.Native.Windows
         }
 
         /// <inheritdoc/>
-        public bool CanSetVideoMode => throw new NotImplementedException();
-
-        /// <inheritdoc/>
         public bool CanGetVirtualPosition => true;
 
         /// <inheritdoc/>
@@ -328,7 +334,6 @@ namespace OpenTK.Platform.Native.Windows
             throw new PalException(this, "Could not find primary monitor!");
         }
 
-        // FIXME: You probably also don't Destroy a monitor
         /// <inheritdoc/>
         public void Close(DisplayHandle handle)
         {
@@ -358,49 +363,20 @@ namespace OpenTK.Platform.Native.Windows
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            GetDisplayScale(handle, out float scaleX, out float scaleY);
-
-            // FIXME: DPI
             mode = new VideoMode(
                 hmonitor.Resolution.ResolutionX,
                 hmonitor.Resolution.ResolutionY,
                 hmonitor.RefreshRate,
-                scaleX,
-                96);
+                hmonitor.BitsPerPixel);
         }
 
         /// <inheritdoc/>
-        public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public int GetSupportedVideoModeCount(DisplayHandle handle)
+        public VideoMode[] GetSupportedVideoModes(DisplayHandle handle)
         {
             HMonitor hmonitor = handle.As<HMonitor>(this);
 
-            // FIXME: Calling this function with 0 rebuilds the cache, which means that between
-            // a call to GetSupportedVideoModeCount and GetSupportedVideoModes the cache could have changed.
-            // This is not great... would be good if we could combine the calls into one.
-            int modeIndex = 0;
-            Win32.DEVMODE lpDevMode = default;
-            lpDevMode.dmSize = (ushort)Marshal.SizeOf<Win32.DEVMODE>();
-            while (Win32.EnumDisplaySettings(hmonitor.AdapterName, (uint)modeIndex++, ref lpDevMode))
-            {
-            }
-
-            return modeIndex - 1;
-        }
-
-        /// <inheritdoc/>
-        public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
-        {
-            HMonitor hmonitor = handle.As<HMonitor>(this);
-
-            // FIXME: Should the scale really be part of the video mode?
-            // Is it something that can be set independently of video mode?
-            GetDisplayScale(handle, out float scaleX, out float scaleY);
+            // Unfortunately we don't know the size of the array we are going to create in advance
+            List<VideoMode> modes = new List<VideoMode>(32);
 
             int modeIndex = 0;
             Win32.DEVMODE lpDevMode = default;
@@ -417,14 +393,10 @@ namespace OpenTK.Platform.Native.Windows
                 if ((lpDevMode.dmFields & RequiredFields) != RequiredFields)
                     throw new PalException(this, $"Adapter setting {modeIndex - 1} didn't have all required fields set. dmFields={lpDevMode.dmFields}, requiredFields={RequiredFields}");
 
-                // FIXME: Scale and DPI
-                modes[modeIndex - 1] = new VideoMode(
-                    (int)lpDevMode.dmPelsWidth,
-                    (int)lpDevMode.dmPelsHeight,
-                    lpDevMode.dmDisplayFrequency,
-                    scaleX,
-                    96);
+                modes.Add(new VideoMode((int)lpDevMode.dmPelsWidth, (int)lpDevMode.dmPelsHeight, lpDevMode.dmDisplayFrequency, (int)lpDevMode.dmBitsPerPel));
             }
+
+            return modes.ToArray();
         }
 
         /// <inheritdoc/>

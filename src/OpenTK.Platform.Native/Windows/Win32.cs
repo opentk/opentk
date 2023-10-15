@@ -309,11 +309,43 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern UIntPtr GetClassLongPtr(IntPtr /* HWND */ hWnd, GCLP nIndex);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
+        internal static IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                return GetWindowLongPtr(hWnd, nIndex);
+            }
+            else
+            {
+                return GetWindowLong(hWnd, nIndex);
+            }
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong);
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern int GetWindowLong(IntPtr hWnd, GetGWLPIndex nIndex);
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern IntPtr GetWindowLongPtr(IntPtr hWnd, GetGWLPIndex nIndex);
+        }
+
+        internal static IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong)
+        {
+            if (Environment.Is64BitProcess)
+            {
+                return SetWindowLongPtr(hWnd, nIndex, dwNewLong);
+            }
+            else
+            {
+                return SetWindowLong(hWnd, nIndex, (int)dwNewLong);
+            }
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern int SetWindowLong(IntPtr hWnd, SetGWLPIndex nIndex, int dwNewLong);
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            static extern IntPtr SetWindowLongPtr(IntPtr hWnd, SetGWLPIndex nIndex, IntPtr dwNewLong);
+        }
+
+        
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr BeginPaint(IntPtr hWnd, out PAINTSTRUCT lpPaint);
@@ -437,7 +469,14 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("gdi32.dll", SetLastError = true)]
         internal static extern bool SwapBuffers(IntPtr hDC);
 
+        // FIXME: The heck is going on with pszIconPath?
+        [DllImport("shell32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HICON */ ExtractAssociatedIcon(IntPtr /* HINSTANCE */ hInst, string pszIconPath, ref ushort piIcon);
+
         // FIXME: Use LoadImage instead.
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, string lpCursorName);
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadCursor(IntPtr /*HINSTANCE*/ hInstance, IDC lpCursorName);
 
@@ -459,7 +498,7 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ LoadImage(
             IntPtr /*HINSTANCE*/ hInstance,
-            OIC name,
+            IDI name,
             ImageType type,
             int cx,
             int cy,
@@ -473,6 +512,21 @@ namespace OpenTK.Platform.Native.Windows
             int cx,
             int cy,
             LR fuLoad);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern int LookupIconIdFromDirectoryEx(byte* presbits, bool fIcon, int cxDesired, int cyDesired, LR Flags);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HICON */ CreateIconFromResource(byte* presbits, uint dwResSize, bool fIcon, uint dwVer);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern IntPtr /* HICON */ CreateIconFromResourceEx(byte* presbits, uint dwResSize, bool fIcon, uint dwVer, int cxDesired, int cyDesired, LR Flags);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HRSRC */ FindResource(IntPtr /* HMODULE */ hModule, string lpName, string lpType);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr /* HRSRC */ FindResource(IntPtr /* HMODULE */ hModule, string lpName, IntPtr lpType);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr /*HCURSOR*/ SetCursor(IntPtr /*HCURSOR*/ hCursor);
@@ -860,15 +914,15 @@ namespace OpenTK.Platform.Native.Windows
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int /* LSTATUS */ RegOpenKeyEx(
-            IntPtr /* HKEY */ hKey,
+            UIntPtr /* HKEY */ hKey,
             string lpSubKey,
             RegOption ulOptions,
             AccessMask /* REGSAM */ samDesired,
-            out IntPtr /* PHKEY */ phkResult);
+            out UIntPtr /* PHKEY */ phkResult);
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = false)]
         internal static extern int /* LSTATUS */ RegGetValue(
-            IntPtr /* HKEY */ hkey,
+            UIntPtr /* HKEY */ hkey,
             string? lpSubKey,
             string? lpValue,
             RRF dwFlags,
@@ -877,7 +931,7 @@ namespace OpenTK.Platform.Native.Windows
             ref uint pcbData);
 
         internal static int /* LSTATUS */ RegGetValue<T>(
-            IntPtr /* HKEY */ hkey,
+            UIntPtr /* HKEY */ hkey,
             string? lpSubKey,
             string? lpValue,
             RRF dwFlags,
@@ -1102,11 +1156,47 @@ namespace OpenTK.Platform.Native.Windows
         [DllImport("kernel32.dll", SetLastError = true)]
         internal static extern bool GlobalMemoryStatusEx(ref MEMORYSTATUSEX lpBuffer);
 
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool GetPhysicallyInstalledSystemMemory(out ulong TotalMemoryInKilobytes);
+
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr /* HPOWERNOTIFY */ RegisterSuspendResumeNotification(IntPtr /* HANDLE */ hRecipient, DEVICE_NOTIFY Flags);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool AddClipboardFormatListener(IntPtr /* HWND */ hwnd);
+
+        internal struct WINDOWPLACEMENT
+        {
+            public uint length;
+            public WPF flags;
+            public ShowWindowCommands showCmd;
+            public POINT ptMinPosition;
+            public POINT ptMaxPosition;
+            public RECT rcNormalPosition;
+            public RECT rcDevice;
+        }
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool SetWindowPlacement(IntPtr /* HWND */ hWnd, in WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        internal static extern bool GetWindowPlacement(IntPtr /* HWND */ hWnd, ref WINDOWPLACEMENT lpwndpl);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern DispChange ChangeDisplaySettingsExW(
+            [MarshalAs(UnmanagedType.LPWStr)] string? lpszDeviceName,
+            ref DEVMODE lpDevMode,
+            IntPtr /* HWND */ hwnd,
+            CDS dwflags,
+            IntPtr lParam);
+
+        [DllImport("user32.dll", SetLastError = false)]
+        internal static extern DispChange ChangeDisplaySettingsExW(
+            [MarshalAs(UnmanagedType.LPWStr)] string? lpszDeviceName,
+            IntPtr lpDevMode,
+            IntPtr /* HWND */ hwnd,
+            CDS dwflags,
+            IntPtr lParam);
     }
 
 #pragma warning restore CS0649 // Field 'field' is never assigned to, and will always have its default value 'value'

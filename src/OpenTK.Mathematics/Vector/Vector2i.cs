@@ -24,7 +24,7 @@ namespace OpenTK.Mathematics
     /// </remarks>
     [Serializable]
     [StructLayout(LayoutKind.Sequential)]
-    public struct Vector2i : IEquatable<Vector2i>
+    public struct Vector2i : IEquatable<Vector2i>, IFormattable
     {
         /// <summary>
         /// The X component of the Vector2i.
@@ -102,7 +102,12 @@ namespace OpenTK.Mathematics
         public int ManhattanLength => Math.Abs(X) + Math.Abs(Y);
 
         /// <summary>
-        /// Gets the euclidian length of the vector.
+        /// Gets the squared euclidean length of the vector.
+        /// </summary>
+        public int EuclideanLengthSquared => (X * X) + (Y * Y);
+
+        /// <summary>
+        /// Gets the euclidean length of the vector.
         /// </summary>
         public float EuclideanLength => MathF.Sqrt((X * X) + (Y * Y));
 
@@ -583,10 +588,54 @@ namespace OpenTK.Mathematics
             return new Vector2i(values.X, values.Y);
         }
 
+        /// <summary>
+        /// Converts <see cref="Vector2i"/> to <see cref="System.Drawing.Point"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector2i"/> to cast.</param>
+        /// <returns>The resulting <see cref="System.Drawing.Point"/>.</returns>
+        [Pure]
+        public static explicit operator System.Drawing.Point(Vector2i vec)
+        {
+            return new System.Drawing.Point(vec.X, vec.Y);
+        }
+
+        /// <summary>
+        /// Converts <see cref="Vector2i"/> to <see cref="System.Drawing.Size"/>.
+        /// </summary>
+        /// <param name="vec">The <see cref="Vector2i"/> to cast.</param>
+        /// <returns>The resulting <see cref="System.Drawing.Size"/>.</returns>
+        [Pure]
+        public static explicit operator System.Drawing.Size(Vector2i vec)
+        {
+            return new System.Drawing.Size(vec.X, vec.Y);
+        }
+
         /// <inheritdoc/>
         public override string ToString()
         {
-            return string.Format("({0}{2} {1})", X, Y, MathHelper.ListSeparator);
+            return ToString(null, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(string format)
+        {
+            return ToString(format, null);
+        }
+
+        /// <inheritdoc cref="ToString(string, IFormatProvider)"/>
+        public string ToString(IFormatProvider formatProvider)
+        {
+            return ToString(null, formatProvider);
+        }
+
+        /// <inheritdoc />
+        public string ToString(string format, IFormatProvider formatProvider)
+        {
+            return string.Format(
+                "({0}{2} {1})",
+                X.ToString(format, formatProvider),
+                Y.ToString(format, formatProvider),
+                MathHelper.GetListSeparator(formatProvider));
         }
 
         /// <inheritdoc/>

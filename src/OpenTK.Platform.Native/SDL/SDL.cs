@@ -13,6 +13,7 @@ using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
 {
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
     internal static unsafe class SDL
     {
         static SDL()
@@ -138,8 +139,7 @@ namespace OpenTK.Platform.Native.SDL
         internal static extern int SDL_SetWindowTitle(SDL_WindowPtr window, [MarshalAs(UnmanagedType.LPUTF8Str)] string title);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
-        [return: MarshalAs(UnmanagedType.LPUTF8Str)]
-        internal static extern string SDL_GetWindowTitle(SDL_WindowPtr window);
+        internal static extern byte* SDL_GetWindowTitle(SDL_WindowPtr window);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SDL_SetWindowPosition(SDL_WindowPtr window, int x, int y);
@@ -215,6 +215,9 @@ namespace OpenTK.Platform.Native.SDL
         internal static extern SDL_GLContext SDL_GL_GetCurrentContext();
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDL_WindowPtr SDL_GL_GetCurrentWindow();
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SDL_GL_SwapWindow(SDL_WindowPtr window);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
@@ -236,6 +239,12 @@ namespace OpenTK.Platform.Native.SDL
         {
             public int x;
             public int y;
+
+            public SDL_Point(int x, int y)
+            {
+                this.x = x;
+                this.y = y;
+            }
         }
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -258,17 +267,23 @@ namespace OpenTK.Platform.Native.SDL
 
         internal unsafe struct SDL_DisplayMode
         {
-            /**< pixel format */
-            public uint format;
-            /**< width, in screen coordinates */
+            /* pixel format */
+            public SDL_PixelFormatEnum format;
+            /* width, in screen coordinates */
             public int w;
-            /**< height, in screen coordinates */
+            /* height, in screen coordinates */
             public int h;
-            /**< refresh rate (or zero for unspecified) */
+            /* refresh rate (or zero for unspecified) */
             public int refresh_rate;
-            /**< driver-specific data, initialize to 0 */
+            /* driver-specific data, initialize to 0 */
             public void* driverdata;
         }
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int SDL_SetWindowFullscreen(SDL_WindowPtr window, SDL_FullscreenMode flags);
+
+        [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int SDL_SetWindowDisplayMode(SDL_WindowPtr window, in SDL_DisplayMode mode);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int SDL_GetDisplayMode(int displayIndex, int modeIndex, out SDL_DisplayMode mode);
@@ -281,6 +296,9 @@ namespace OpenTK.Platform.Native.SDL
             char* ptr = SDL_GetDisplayName_internal(displayIndex);
             return Marshal.PtrToStringUTF8((IntPtr)ptr);
         }
+
+        // #define SDL_BITSPERPIXEL(X) (((X) >> 8) & 0xFF)
+        internal static uint SDL_BITSPERPIXEL(SDL_PixelFormatEnum x) => (((uint)x >> 8) & 0xFF);
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int SDL_GetCurrentDisplayMode(int displayIndex, out SDL_DisplayMode mode);
@@ -382,29 +400,29 @@ namespace OpenTK.Platform.Native.SDL
 
         internal unsafe struct SDL_Surface
         {
-            public uint flags;                 /**< Read-only */
-            public SDL_PixelFormat* format;    /**< Read-only */
-            public int w, h;                   /**< Read-only */
-            public int pitch;                  /**< Read-only */
-            public void* pixels;               /**< Read-write */
+            public uint flags;                 /* Read-only */
+            public SDL_PixelFormat* format;    /* Read-only */
+            public int w, h;                   /* Read-only */
+            public int pitch;                  /* Read-only */
+            public void* pixels;               /* Read-write */
 
-            /** Application data associated with the surface */
-            public void* userdata;             /**< Read-write */
+            /* Application data associated with the surface */
+            public void* userdata;             /* Read-write */
 
-            /** information needed for surfaces requiring locks */
-            public int locked;                 /**< Read-only */
+            /* information needed for surfaces requiring locks */
+            public int locked;                 /* Read-only */
 
-            /** list of BlitMap that hold a reference to this surface */
-            public void* list_blitmap;         /**< Private */
+            /* list of BlitMap that hold a reference to this surface */
+            public void* list_blitmap;         /* Private */
 
-            /** clipping information */
-            public SDL_Rect clip_rect;         /**< Read-only */
+            /* clipping information */
+            public SDL_Rect clip_rect;         /* Read-only */
 
-            /** info for fast blit mapping to other surfaces */
-            public void* map;                  /**< Private */
+            /* info for fast blit mapping to other surfaces */
+            public void* map;                  /* Private */
 
-            /** Reference count -- used when freeing surface */
-            public int refcount;               /**< Read-mostly */
+            /* Reference count -- used when freeing surface */
+            public int refcount;               /* Read-mostly */
         }
 
         [DllImport(SDLLib, CallingConvention = CallingConvention.Cdecl)]
@@ -622,4 +640,5 @@ namespace OpenTK.Platform.Native.SDL
         internal static unsafe extern SDL_JoystickPowerLevel SDL_JoystickCurrentPowerLevel(SDL_Joystick* joystick);
 
     }
+#pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

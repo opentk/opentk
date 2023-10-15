@@ -153,18 +153,17 @@ void main()
                     }
                 }
 
-                IconHandle = IconComponent.Create();
-                IconComponent.Load(IconHandle, 16, 16, icon);
+                IconHandle = IconComponent.Create(16, 16, icon);
 
                 WindowComp.SetIcon(WindowHandle, IconHandle);
 
                 {
-                    IconComponent.GetDimensions(IconHandle, out int iw, out int ih);
+                    IconComponent.GetSize(IconHandle, out int iw, out int ih);
 
-                    int bytes = IconComponent.GetBitmapByteSize(IconHandle);
+                    int bytes = ((SDLIconComponent)IconComponent).GetBitmapByteSize(IconHandle);
                     byte[] data = new byte[bytes];
 
-                    IconComponent.GetBitmapData(IconHandle, data);
+                    ((SDLIconComponent)IconComponent).GetBitmapData(IconHandle, data);
 
                     Debug.Assert(iw == 16);
                     Debug.Assert(ih == 16);
@@ -172,8 +171,7 @@ void main()
                     Debug.Assert(data.SequenceEqual(icon));
                 }
 
-                CursorHandle = CursorComponent.Create();
-                CursorComponent.Load(CursorHandle, 16, 16, icon);
+                CursorHandle = CursorComponent.Create(16, 16, icon, 0, 0);
 
                 WindowComp.SetCursor(WindowHandle, CursorHandle);
             }
@@ -195,9 +193,7 @@ void main()
                 string name = DisplayComponent.GetName(handle);
                 bool isPrimary = DisplayComponent.IsPrimary(handle);
                 DisplayComponent.GetVideoMode(handle, out VideoMode mode);
-                int modeCount = DisplayComponent.GetSupportedVideoModeCount(handle);
-                VideoMode[] modes = new VideoMode[modeCount];
-                DisplayComponent.GetSupportedVideoModes(handle, modes);
+                VideoMode[] modes = DisplayComponent.GetSupportedVideoModes(handle);
                 DisplayComponent.GetVirtualPosition(handle, out int px, out int py);
                 DisplayComponent.GetResolution(handle, out int resx, out int resy);
                 DisplayComponent.GetWorkArea(handle, out Box2i workArea);
@@ -206,8 +202,8 @@ void main()
 
                 Console.WriteLine($"Display {i}: {name}{(isPrimary ? " (primary)" : "")}");
                 Console.WriteLine($"  Current Mode: {mode}");
-                Console.WriteLine($"  Modes: {modeCount}");
-                for (int m = 0; m < modeCount; m++)
+                Console.WriteLine($"  Modes: {modes.Length}");
+                for (int m = 0; m < modes.Length; m++)
                 {
                     Console.WriteLine($"    Mode {m}: {modes[m]}");
                 }
@@ -276,6 +272,10 @@ void main()
             {
                 WindowComp.Destroy(close.Window);
             }
+            else if (args is WindowResizeEventArgs resize)
+            {
+                GL.Viewport(0, 0, resize.NewSize.X, resize.NewSize.Y);
+            }
             else if (args is MouseButtonDownEventArgs mouseDown)
             {
                 if (mouseDown.Button == MouseButton.Button1)
@@ -324,6 +324,21 @@ void main()
             else if (args is KeyDownEventArgs keyDown)
             {
                 Console.WriteLine($"Key down! {keyDown.Key} (scancode: {keyDown.Scancode}){(keyDown.IsRepeat ? " repeat!" : "")}");
+
+                if(keyDown.Key == Key.F11)
+                {
+                    // FIXME: What does bpp=32 compared to bpp=24?
+                    VideoMode mode = new VideoMode(1920, 1080, 144, 32);
+
+                    if (WindowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    {
+                        WindowComp.SetMode(keyDown.Window, WindowMode.Normal);
+                    }
+                    else
+                    {
+                        WindowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
+                    }
+                }
             }
             else if (args is KeyUpEventArgs keyUp)
             {

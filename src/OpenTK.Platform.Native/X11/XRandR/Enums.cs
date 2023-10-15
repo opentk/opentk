@@ -38,22 +38,59 @@ namespace OpenTK.Platform.Native.X11.XRandR
         OutputProperty = 2,
         ProviderChange = 3,
         ProviderProperty = 4,
-        ResourceChange = 5
+        ResourceChange = 5,
+        /* V1.6 additions */
+        Lease = 6
     }
 
     /// <summary>
     /// Event mask for XRandR event types.
     /// </summary>
-    internal enum RREventMask : int
+    internal enum RRSelectMask : int
     {
-        ScreenChangeNotify = 1 << 0,
-        CrtcChangeNotify = 1 << 1,
-        OutputChangeNotify = 1 << 2,
-        OutputPropertyNotify = 1 << 3,
-        ProviderChangeNotify = 1 << 4,
-        ProviderPropertyChangeNotify = 1 << 5,
-        ResourceChangeNotify = 1 << 6,
-        LeaseNotify = 1 << 7
+        ScreenChangeNotifyMask = 1 << 0,
+
+        /// <summary>
+        /// New in version 1.2
+        /// </summary>
+        CrtcChangeNotifyMask = 1 << 1,
+
+        /// <summary>
+        /// New in version 1.2
+        /// </summary>
+        OutputChangeNotifyMask = 1 << 2,
+
+        /// <summary>
+        /// New in version 1.2
+        /// </summary>
+        OutputPropertyNotifyMask = 1 << 3,
+
+        /// <summary>
+        /// New in version 1.4
+        /// </summary>
+        ProviderChangeNotifyMask = 1 << 4,
+
+        /// <summary>
+        /// New in version 1.4
+        /// </summary>
+        ProviderPropertyChangeNotifyMask = 1 << 5,
+
+        /// <summary>
+        /// New in version 1.4
+        /// </summary>
+        ResourceChangeNotifyMask = 1 << 6,
+
+        /// <summary>
+        /// New in version 1.6
+        /// </summary>
+        LeaseNotifyMask = 1 << 7
+    }
+
+    internal enum RREventType : int 
+    {
+        RRScreenChangeNotify = 0,
+        /* V1.2 additions */
+        RRNotify = 1,
     }
 
     [Flags]
@@ -74,4 +111,13 @@ namespace OpenTK.Platform.Native.X11.XRandR
         DoubleClock = 1 << 12,
         ClockDivideBy2 = 1 << 13
     }
+
+    internal enum RRConfigStatus : int 
+    {
+        Success = 0x0,
+        InvalidConfigTime = 0x1,
+        InvalidTime = 0x2,
+        Failed = 0x3,
+    }
+	
 }

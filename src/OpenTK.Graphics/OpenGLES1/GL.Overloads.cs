@@ -106,6 +106,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetFloatv(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetFloatv"/>
+        public static unsafe float GetFloat(GetPName pname)
+        {
+            float data_val = default;
+            float* data = &data_val;
+            GetFloatv(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetLightfv"/>
         public static unsafe void GetLightf(LightName light, LightParameter pname, Span<float> parameters)
         {
@@ -720,6 +728,14 @@ namespace OpenTK.Graphics.OpenGLES1
                 GetBooleanv(pname, data_ptr);
             }
         }
+        /// <inheritdoc cref="GetBooleanv"/>
+        public static unsafe bool GetBoolean(GetPName pname)
+        {
+            bool data_val = default;
+            bool* data = &data_val;
+            GetBooleanv(pname, data);
+            return data_val;
+        }
         /// <inheritdoc cref="GetBufferParameteriv"/>
         public static unsafe void GetBufferParameteri(BufferTargetARB target, BufferPNameARB pname, Span<int> parameters)
         {
@@ -919,6 +935,14 @@ namespace OpenTK.Graphics.OpenGLES1
             {
                 GetIntegerv(pname, data_ptr);
             }
+        }
+        /// <inheritdoc cref="GetIntegerv"/>
+        public static unsafe int GetInteger(GetPName pname)
+        {
+            int data_val = default;
+            int* data = &data_val;
+            GetIntegerv(pname, data);
+            return data_val;
         }
         /// <inheritdoc cref="GetLightxv"/>
         public static unsafe void GetLightx(LightName light, LightParameter pname, Span<int> parameters)

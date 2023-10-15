@@ -100,6 +100,17 @@ namespace OpenTK.Graphics.Egl
 
     public static partial class Egl
     {
+        // FIXME: Integrate these...
+        public const nint DEFAULT_DISPLAY = 0;
+
+        public const nint NO_SURFACE = 0;
+        public const nint NO_CONTEXT = 0;
+
+        public const int CONTEXT_MAJOR_VERSION = 0x3098;
+        public const int CONTEXT_MINOR_VERSION = 0x30FB;
+
+        public const int CONTEXT_OPENGL_DEBUG = 0x31B0;
+
         public const int VERSION_1_0 = 1;
         public const int VERSION_1_1 = 1;
         public const int VERSION_1_2 = 1;
@@ -251,90 +262,90 @@ namespace OpenTK.Graphics.Egl
         // See EGL_ANGLE_surface_d3d_texture_2d_share_handle
         public const int EGL_D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE = 0x3200;
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetError")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetError")]
         public static extern ErrorCode GetError();
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetDisplay")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetDisplay")]
         public static extern EGLDisplay GetDisplay(EGLNativeDisplayType display_id);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglInitialize")]
+        [DllImport("libEGL.dll", EntryPoint = "eglInitialize")]
         //[return: MarshalAs(UnmanagedType.I1)]
         public static extern bool Initialize(EGLDisplay dpy, out int major, out int minor);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglTerminate")]
+        [DllImport("libEGL.dll", EntryPoint = "eglTerminate")]
         //[return: MarshalAs(UnmanagedType.I1)]
         public static extern bool Terminate(EGLDisplay dpy);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglQueryString")]
+        [DllImport("libEGL.dll", EntryPoint = "eglQueryString")]
         public static extern IntPtr QueryString(EGLDisplay dpy, int name);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetConfigs")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetConfigs")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool GetConfigs(EGLDisplay dpy, EGLConfig[] configs, int config_size, out int num_config);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglChooseConfig")]
+        [DllImport("libEGL.dll", EntryPoint = "eglChooseConfig")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool ChooseConfig(EGLDisplay dpy, int[] attrib_list, [In, Out] EGLConfig[] configs, int config_size, out int num_config);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetConfigAttrib")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetConfigAttrib")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool GetConfigAttrib(EGLDisplay dpy, EGLConfig config, int attribute, out int value);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreateWindowSurface")]
+        [DllImport("libEGL.dll", EntryPoint = "eglCreateWindowSurface")]
         public static extern EGLSurface CreateWindowSurface(EGLDisplay dpy, EGLConfig config, IntPtr win, IntPtr attrib_list);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreatePbufferSurface")]
+        [DllImport("libEGL.dll", EntryPoint = "eglCreatePbufferSurface")]
         public static extern EGLSurface CreatePbufferSurface(EGLDisplay dpy, EGLConfig config, int[] attrib_list);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreatePixmapSurface")]
+        [DllImport("libEGL.dll", EntryPoint = "eglCreatePixmapSurface")]
         public static extern EGLSurface CreatePixmapSurface(EGLDisplay dpy, EGLConfig config, EGLNativePixmapType pixmap, int[] attrib_list);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglDestroySurface")]
+        [DllImport("libEGL.dll", EntryPoint = "eglDestroySurface")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool DestroySurface(EGLDisplay dpy, EGLSurface surface);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglQuerySurface")]
+        [DllImport("libEGL.dll", EntryPoint = "eglQuerySurface")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool QuerySurface(EGLDisplay dpy, EGLSurface surface, int attribute, out int value);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglBindAPI")]
+        [DllImport("libEGL.dll", EntryPoint = "eglBindAPI")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool BindAPI(RenderApi api);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglQueryAPI")]
+        [DllImport("libEGL.dll", EntryPoint = "eglQueryAPI")]
         public static extern int QueryAPI();
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglWaitClient")]
+        [DllImport("libEGL.dll", EntryPoint = "eglWaitClient")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool WaitClient();
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglReleaseThread")]
+        [DllImport("libEGL.dll", EntryPoint = "eglReleaseThread")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool ReleaseThread();
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreatePbufferFromClientBuffer")]
+        [DllImport("libEGL.dll", EntryPoint = "eglCreatePbufferFromClientBuffer")]
         public static extern EGLSurface CreatePbufferFromClientBuffer(EGLDisplay dpy, int buftype, EGLClientBuffer buffer, EGLConfig config, int[] attrib_list);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglSurfaceAttrib")]
+        [DllImport("libEGL.dll", EntryPoint = "eglSurfaceAttrib")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SurfaceAttrib(EGLDisplay dpy, EGLSurface surface, int attribute, int value);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglBindTexImage")]
+        [DllImport("libEGL.dll", EntryPoint = "eglBindTexImage")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool BindTexImage(EGLDisplay dpy, EGLSurface surface, int buffer);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglReleaseTexImage")]
+        [DllImport("libEGL.dll", EntryPoint = "eglReleaseTexImage")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool ReleaseTexImage(EGLDisplay dpy, EGLSurface surface, int buffer);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglSwapInterval")]
+        [DllImport("libEGL.dll", EntryPoint = "eglSwapInterval")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SwapInterval(EGLDisplay dpy, int interval);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCreateContext")]
-        private static extern IntPtr eglCreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list);
+        [DllImport("libEGL.dll", EntryPoint = "eglCreateContext")]
+        private static extern IntPtr eglCreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[]? attrib_list);
 
-        public static EGLContext CreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[] attrib_list)
+        public static EGLContext CreateContext(EGLDisplay dpy, EGLConfig config, EGLContext share_context, int[]? attrib_list)
         {
             IntPtr ptr = eglCreateContext(dpy, config, share_context, attrib_list);
             if (ptr == IntPtr.Zero)
@@ -344,55 +355,55 @@ namespace OpenTK.Graphics.Egl
             return ptr;
         }
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglDestroyContext")]
+        [DllImport("libEGL.dll", EntryPoint = "eglDestroyContext")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool DestroyContext(EGLDisplay dpy, EGLContext ctx);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglMakeCurrent")]
+        [DllImport("libEGL.dll", EntryPoint = "eglMakeCurrent")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool MakeCurrent(EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetCurrentContext")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetCurrentContext")]
         public static extern EGLContext GetCurrentContext();
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetCurrentSurface")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetCurrentSurface")]
         public static extern EGLSurface GetCurrentSurface(int readdraw);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetCurrentDisplay")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetCurrentDisplay")]
         public static extern EGLDisplay GetCurrentDisplay();
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglQueryContext")]
+        [DllImport("libEGL.dll", EntryPoint = "eglQueryContext")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool QueryContext(EGLDisplay dpy, EGLContext ctx, int attribute, out int value);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglWaitGL")]
+        [DllImport("libEGL.dll", EntryPoint = "eglWaitGL")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool WaitGL();
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglWaitNative")]
+        [DllImport("libEGL.dll", EntryPoint = "eglWaitNative")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool WaitNative(int engine);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglSwapBuffers")]
+        [DllImport("libEGL.dll", EntryPoint = "eglSwapBuffers")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool SwapBuffers(EGLDisplay dpy, EGLSurface surface);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglCopyBuffers")]
+        [DllImport("libEGL.dll", EntryPoint = "eglCopyBuffers")]
         [return: MarshalAs(UnmanagedType.I1)]
         public static extern bool CopyBuffers(EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetProcAddress")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetProcAddress")]
         public static extern IntPtr GetProcAddress(string funcname);
 
-        [DllImportAttribute("libEGL.dll", EntryPoint = "eglGetProcAddress")]
+        [DllImport("libEGL.dll", EntryPoint = "eglGetProcAddress")]
         public static extern IntPtr GetProcAddress(IntPtr funcname);
 
         // EGL_EXT_platform_base
         [DllImport("libEGL.dll", EntryPoint = "eglGetPlatformDisplayEXT")]
-        public static extern EGLDisplay GetPlatformDisplayEXT(int platform, EGLNativeDisplayType native_display, int[] attrib_list);
+        public static extern EGLDisplay GetPlatformDisplayEXT(int platform, EGLNativeDisplayType native_display, int[]? attrib_list);
 
         [DllImport("libEGL.dll", EntryPoint = "eglCreatePlatformWindowSurfaceEXT")]
-        public static extern EGLSurface CreatePlatformWindowSurfaceEXT(EGLDisplay dpy, EGLConfig config, EGLNativeWindowType native_window, int[] attrib_list);
+        public static extern EGLSurface CreatePlatformWindowSurfaceEXT(EGLDisplay dpy, EGLConfig config, EGLNativeWindowType native_window, int[]? attrib_list);
 
         [DllImport("libEGL.dll", EntryPoint = "eglCreatePlatformPixmapSurfaceEXT")]
         public static extern EGLSurface CreatePlatformPixmapSurfaceEXT(EGLDisplay dpy, EGLConfig config, EGLNativePixmapType native_pixmap, int[] attrib_list);

@@ -138,7 +138,7 @@ namespace X11TestProject
                 GL.Clear(ClearBufferMask.ColorBufferBit);
 
                 await MultiThreadExample.Invoke(
-                    new Task(() => { if (WindowComponent.IsWindowDestroyed(window) == false) WindowComponent.SwapBuffers(window); })
+                    new Task(() => { if (WindowComponent.IsWindowDestroyed(window) == false) OpenGLComponent.SwapBuffers(context); })
                     );
             }
 

@@ -39,7 +39,7 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public bool CanShareContexts => throw new NotImplementedException();
+        public bool CanShareContexts => true;
 
         /// <inheritdoc/>
         public bool CanCreateFromWindow => true;
@@ -58,9 +58,30 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            OpenGLGraphicsApiHints settings = (OpenGLGraphicsApiHints)window.GraphicsApiHints;
+
+            SDLOpenGLContext? sharedContext = settings.SharedContext?.As<SDLOpenGLContext>(this);
+
+            // FIXME: Set all GL settings attriutes! See SDLWindowComponent.Create for details.
+
+            // On Windows, macos, and linux the SDL_GL_SHARE_WITH_CURRENT_CONTEXT attribute is only read
+            // during SDL_GL_CreateContext so it is important we set it here.
+            // - 2023-06-29 Noggin_bops
+            SDL_GLContext prevContext = SDL_GL_GetCurrentContext();
+            SDL_WindowPtr prevWindow = SDL_GL_GetCurrentWindow();
+            if (sharedContext != null)
+            {
+                SDL_GL_MakeCurrent(sharedContext.Window.Window, sharedContext.Context);
+                SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+            }
+
             SDL_GLContext context = SDL_GL_CreateContext(window.Window);
 
-            SDLOpenGLContext? sharedContext = (window.GraphicsApiHints as OpenGLGraphicsApiHints)?.SharedContext as SDLOpenGLContext;
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 0);
+            if (prevContext != SDL_GLContext.Null)
+            {
+                SDL_GL_MakeCurrent(prevWindow, prevContext);
+            }
 
             SDLOpenGLContext sdlContext = new SDLOpenGLContext(context, window, sharedContext);
 
@@ -96,6 +117,11 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public OpenGLContextHandle? GetCurrentContext()
         {
+            return GetCurrentContextInternal();
+        }
+
+        internal static OpenGLContextHandle? GetCurrentContextInternal()
+        {
             SDL_GLContext context = SDL_GL_GetCurrentContext();
             if (context == SDL_GLContext.Null)
             {
@@ -110,9 +136,9 @@ namespace OpenTK.Platform.Native.SDL
         /// <inheritdoc/>
         public bool SetCurrentContext(OpenGLContextHandle? handle)
         {
-            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+            SDLOpenGLContext? context = handle?.As<SDLOpenGLContext>(this);
 
-            int result = SDL_GL_MakeCurrent(context.Window.Window, context.Context);
+            int result = SDL_GL_MakeCurrent(context?.Window.Window ?? SDL_WindowPtr.Null, context?.Context ?? SDL_GLContext.Null);
             if (result < 0)
             {
                 string error = SDL_GetError();
@@ -143,6 +169,14 @@ namespace OpenTK.Platform.Native.SDL
         public int GetSwapInterval()
         {
             return SDL_GL_GetSwapInterval();
+        }
+
+        /// <inheritdoc/>
+        public void SwapBuffers(OpenGLContextHandle handle)
+        {
+            SDLOpenGLContext context = handle.As<SDLOpenGLContext>(this);
+
+            SDL_GL_SwapWindow(context.Window.Window);
         }
     }
 }

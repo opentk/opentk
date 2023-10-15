@@ -634,6 +634,66 @@ namespace OpenTK.Platform.Native.Windows
         GPTR = 0x0040
     }
 
+    [Flags]
+    internal enum CDS : uint
+    {
+        /// <summary>
+        /// The graphics mode for the current screen will be changed dynamically.
+        /// </summary>
+        Zero = 0x00000000,
+
+        /// <summary>
+        /// The mode is temporary in nature.
+        /// If you change to and from another desktop, this mode will not be reset.
+        /// </summary>
+        Fullscreen = 0x00000004,
+
+        /// <summary>
+        /// The settings will be saved in the global settings area so that they will affect all users on the machine. Otherwise, only the settings for the user are modified. This flag is only valid when specified with the CDS_UPDATEREGISTRY flag.
+        /// </summary>
+        Global = 0x00000008,
+
+        /// <summary>
+        /// The settings will be saved in the registry, but will not take effect. This flag is only valid when specified with the CDS_UPDATEREGISTRY flag.
+        /// </summary>
+        NoReset = 0x10000000,
+
+        /// <summary>
+        /// The settings should be changed, even if the requested settings are the same as the current settings.
+        /// </summary>
+        Reset = 0x40000000,
+
+        /// <summary>
+        /// This device will become the primary device.
+        /// </summary>
+        SetPrimary = 0x00000010,
+
+        /// <summary>
+        /// The system tests if the requested graphics mode could be set.
+        /// </summary>
+        Test = 0x00000002,
+
+        /// <summary>
+        /// The graphics mode for the current screen will be changed dynamically and the graphics mode will be updated in the registry. The mode information is stored in the USER profile.
+        /// </summary>
+        UpdateRegistry = 0x00000001,
+
+        /// <summary>
+        /// When set, the lParam parameter is a pointer to a VIDEOPARAMETERS structure.
+        /// </summary>
+        VideoParameters = 0x00000020,
+
+        /// <summary>
+        /// Enables settings changes to unsafe graphics modes.
+        /// </summary>
+        EnableUnsafeModes = 0x00000100,
+
+        /// <summary>
+        /// Disables settings changes to unsafe graphics modes.
+        /// </summary>
+        DisableUnsafeModes = 0x00000200,
+    }
+
     internal enum CFS : uint
     {
         /// <summary>
@@ -891,6 +951,49 @@ namespace OpenTK.Platform.Native.Windows
         ScreenPointer = 0x1A,
         Remote = 0x1B,
         Supplemental = 0x1C,
+    }
+
+    internal enum DispChange : int
+    {
+        /// <summary>
+        /// The settings change was successful.
+        /// </summary>
+        Successful = 0,
+
+        /// <summary>
+        /// The settings change was unsuccessful because the system is DualView capable.
+        /// </summary>
+        BadDualView = -6,
+
+        /// <summary>
+        /// An invalid set of flags was passed in.
+        /// </summary>
+        BadFlags = -4,
+
+        /// <summary>
+        /// The graphics mode is not supported.
+        /// </summary>
+        BadMode = -2,
+
+        /// <summary>
+        /// An invalid parameter was passed in. This can include an invalid flag or combination of flags.
+        /// </summary>
+        BadParam = -5,
+
+        /// <summary>
+        /// The display driver failed the specified graphics mode.
+        /// </summary>
+        Failed = -1,
+
+        /// <summary>
+        /// Unable to write settings to the registry.
+        /// </summary>
+        NotUpdated = -3,
+
+        /// <summary>
+        /// The computer must be restarted for the graphics mode to work.
+        /// </summary>
+        Restart = 1,
     }
 
     internal enum DIEDFL : uint
@@ -1210,7 +1313,7 @@ namespace OpenTK.Platform.Native.Windows
         UserPresent = 0x00000004,
     }
 
-    internal enum ShowWindowCommands
+    internal enum ShowWindowCommands : int
     {
         /// <summary>
         /// Hides the window and activates another window.
@@ -2311,20 +2414,6 @@ namespace OpenTK.Platform.Native.Windows
         /// Hourglass
         /// </summary>
         Wait = 32514,
-    }
-
-    internal enum OIC
-    {
-        Sample = 32512,
-        Hand = 32513,
-        Ques = 32514,
-        Bang = 32515,
-        Note = 32516,
-        WinLogo = 32517,
-        Warning = Bang,
-        Error = Hand,
-        Information = Note,
-        Shield = 32518,
     }
 
     internal enum ImageType : uint
@@ -3807,8 +3896,8 @@ namespace OpenTK.Platform.Native.Windows
         /// <summary> dmFormName member is present </summary>
         FormName = 0x00010000,
 
-        /// <summary> dmogPixels member is present </summary>
-        ogPixels = 0x00020000,
+        /// <summary> dmLogPixels member is present </summary>
+        LogPixels = 0x00020000,
 
         /// <summary> dmBitsPerPel member is present </summary>
         BitsPerPel = 0x00040000,
@@ -6092,5 +6181,30 @@ namespace OpenTK.Platform.Native.Windows
         CONTEXT_LAYER_PLANE_ARB = 0x2093,
         CONTEXT_FLAGS_ARB = 0x2094,
         CONTEXT_PROFILE_MASK_ARB = 0x9126,
+    }
+
+    internal enum WPF : uint
+    {
+        /// <summary>
+        /// If the calling thread and the thread that owns the window are attached to different input queues,
+        /// the system posts the request to the thread that owns the window.
+        /// This prevents the calling thread from blocking its execution while other threads process the request.
+        /// </summary>
+        AsyncWindowPlacement = 0x0004,
+
+        /// <summary>
+        /// The restored window will be maximized, regardless of whether it was maximized before it was minimized.
+        /// This setting is only valid the next time the window is restored.
+        /// It does not change the default restoration behavior.
+        /// This flag is only valid when the SW_SHOWMINIMIZED value is specified for the showCmd member.
+        /// </summary>
+        RestoreToMaximized = 0x0002,
+
+        /// <summary>
+        /// The coordinates of the minimized window may be specified.
+        /// This flag must be specified if the coordinates are set in the ptMinPosition member.
+        /// </summary>
+        SetMinPosition = 0x0001
+
     }
 }

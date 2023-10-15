@@ -106,7 +106,14 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
-            return SDL_GetDisplayName(display.Index);
+            string? name = SDL_GetDisplayName(display.Index);
+            if (name == null)
+            {
+                string error = SDL_GetError();
+                throw new PalException(this, $"SDL couldn't get display name: {error}");
+            }
+
+            return name;
         }
 
         /// <inheritdoc/>
@@ -121,38 +128,31 @@ namespace OpenTK.Platform.Native.SDL
                 Logger?.LogError($"SDL2 could not get current display mode: {error}");
             }
 
-            CalculateDisplayDPI(display.Index, out float dpi, out float scale);
-
-            mode = new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, scale, dpi);
+            int bpp = (int)SDL_BITSPERPIXEL(sdlMode.format);
+            mode = new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, bpp);
         }
 
         /// <inheritdoc/>
-        public void SetVideoMode(DisplayHandle handle, in VideoMode mode)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public int GetSupportedVideoModeCount(DisplayHandle handle)
+        public VideoMode[] GetSupportedVideoModes(DisplayHandle handle)
         {
             SDLDisplay display = handle.As<SDLDisplay>(this);
 
-            return SDL_GetNumDisplayModes(display.Index);
-        }
-
-        /// <inheritdoc/>
-        public void GetSupportedVideoModes(DisplayHandle handle, Span<VideoMode> modes)
-        {
-            SDLDisplay display = handle.As<SDLDisplay>(this);
-
-            int numModes = GetSupportedVideoModeCount(display);
+            int numModes = SDL_GetNumDisplayModes(display.Index);
+            VideoMode[] modes = new VideoMode[numModes];
             for (int i = 0; i < numModes; i++)
             {
-                SDL_GetDisplayMode(display.Index, i, out SDL_DisplayMode sdlMode);
-                CalculateDisplayDPI(display.Index, out float dpi, out float scale);
+                int result = SDL_GetDisplayMode(display.Index, i, out SDL_DisplayMode sdlMode);
+                if (result != 0)
+                {
+                    string error = SDL_GetError();
+                    throw new PalException(this, $"SDL 2 could not get the display mode: {error}");
+                }
 
-                modes[i] = new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, scale, dpi);
+                int bpp = (int)SDL_BITSPERPIXEL(sdlMode.format);
+                modes[i] = new VideoMode(sdlMode.w, sdlMode.h, sdlMode.refresh_rate, bpp);
             }
+
+            return modes;
         }
 
         /// <inheritdoc/>

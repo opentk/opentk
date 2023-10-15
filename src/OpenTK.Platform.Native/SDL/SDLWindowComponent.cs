@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -62,7 +64,7 @@ namespace OpenTK.Platform.Native.SDL
         public IReadOnlyList<PlatformEventType> SupportedEvents => throw new NotImplementedException();
 
         /// <inheritdoc/>
-        public IReadOnlyList<WindowStyle> SupportedStyles => throw new NotImplementedException();
+        public IReadOnlyList<WindowBorderStyle> SupportedStyles => throw new NotImplementedException();
 
         /// <inheritdoc/>
         public IReadOnlyList<WindowMode> SupportedModes => throw new NotImplementedException();
@@ -77,9 +79,7 @@ namespace OpenTK.Platform.Native.SDL
         public unsafe void ProcessEvents(bool waitForEvents = false)
         {
             SDLEvent @event;
-            int result = SDL_PollEvent(&@event);
-
-            if (result == 1)
+            while (SDL_PollEvent(&@event) != 0)
             {
                 switch (@event.Type)
                 {
@@ -120,7 +120,12 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_WINDOWEVENT:
                         {
                             SDL_WindowEvent windowEvent = @event.Window;
-                            SDLWindow sdlWindow = WindowDict[windowEvent.windowID];
+                            if (WindowDict.TryGetValue(windowEvent.windowID, out SDLWindow? sdlWindow) == false)
+                            {
+                                // If this event is to a window we don't have in our dictionary we ignore it.
+                                Logger?.LogDebug($"{@event.Type} {windowEvent.@event} Unknown window {windowEvent.windowID}");
+                                break;
+                            }
 
                             switch (windowEvent.@event)
                             {
@@ -344,7 +349,12 @@ namespace OpenTK.Platform.Native.SDL
                     case SDL_EventType.SDL_TEXTEDITING:
                         {
                             SDL_TextEditingEvent textEditingEvent = @event.TextEditingEvent;
-                            SDLWindow sdlWindow = WindowDict[textEditingEvent.windowID];
+                            if (WindowDict.TryGetValue(textEditingEvent.windowID, out SDLWindow? sdlWindow) == false)
+                            {
+                                // If this event is to a window we don't have in our dictionary we ignore it.
+                                Logger?.LogDebug($"{@event.Type} Unknown window {textEditingEvent.windowID}");
+                                break;
+                            }
 
                             // The entire buffer is not used so we find the end of the data
                             // and only convert that to a string.
@@ -415,6 +425,24 @@ namespace OpenTK.Platform.Native.SDL
         {
             OpenGLGraphicsApiHints settings = (OpenGLGraphicsApiHints)hints;
 
+            // SDL requires these attributes to be set before creating the window.
+            // SDL doesn't tell us when these attributes will be read so we don't know
+            // which attributes are read during SDL_CreateWindow or SDL_GL_CreateContext.
+            // This could cause issues on different platforms where:
+            //
+            // window1 = SDL_CreateWindow(setting1)
+            // window2 = SDL_CreateWindow(setting2)
+            // context1 = SDL_GL_CreateContext(window1)
+            // context2 = SDL_GL_CreateContext(window2)
+            //
+            // will cause context1 and 2 to have different settings on different platforms.
+            // On windows this will work as expected as the (most) settings are read when creating the context,
+            // but on X11 and Cocoa context1 and 2 will have the settings from setting2.
+            // Context sharing for example is only "read" during SDL_GL_CreateContext for windows, macos, and linux.
+            // The solution is to set all of the attributes when creating the window,
+            // but then also re-set the attributes before creating the OpenGL context.
+            // - 2023-06-29 Noggin_bops
+
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION, settings.Version.Major);
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION, settings.Version.Minor);
 
@@ -452,13 +480,17 @@ namespace OpenTK.Platform.Native.SDL
 
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_FRAMEBUFFER_SRGB_CAPABLE, settings.sRGBFramebuffer ? 1 : 0);
 
-            // FIXME: Shared context, should we make the one that we want current and then set the old one again?
-            // GetCurrentContext
-            // SetCurrentContext
-            //SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
-            // SetCurrentContext
+            SDL_GLContext prevContext = SDL_GL_GetCurrentContext();
+            SDL_WindowPtr prevWindow = SDL_GL_GetCurrentWindow();
+            if (settings.SharedContext != null)
+            {
+                SDLOpenGLContext sharedContext = settings.SharedContext.As<SDLOpenGLContext>(this);
 
-            SDL_GLprofile profile = 0;
+                SDL_GL_MakeCurrent(sharedContext.Window.Window, sharedContext.Context);
+                SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+            }
+
+            SDL_GLprofile profile;
             switch (settings.Profile)
             {
                 case OpenGLProfile.None:
@@ -472,7 +504,6 @@ namespace OpenTK.Platform.Native.SDL
                     break;
                 default:
                     throw new InvalidEnumArgumentException(nameof(settings.Profile), (int)settings.Profile, typeof(OpenGLProfile));
-                    break;
             }
             SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_CONTEXT_FLAGS, (int)profile);
 
@@ -483,9 +514,15 @@ namespace OpenTK.Platform.Native.SDL
 
             SDL_WindowPtr window = SDL_CreateWindow("", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 0, 0, SDL_WindowFlags.SDL_WINDOW_OPENGL | SDL_WindowFlags.SDL_WINDOW_RESIZABLE | SDL_WindowFlags.SDL_WINDOW_HIDDEN);
 
+            SDL_GL_SetAttribute(SDL_GLattr.SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 0);
+            if (prevContext != SDL_GLContext.Null)
+            {
+                SDL_GL_MakeCurrent(prevWindow, prevContext);
+            }
+
             uint id = SDL_GetWindowID(window);
 
-            SDLWindow sdlWindow = new SDLWindow(window, id);
+            SDLWindow sdlWindow = new SDLWindow(window, id, settings);
 
             WindowDict.Add(id, sdlWindow);
 
@@ -513,11 +550,12 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public string GetTitle(WindowHandle handle)
+        public unsafe string GetTitle(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            return SDL_GetWindowTitle(window.Window);
+            byte* title = SDL_GetWindowTitle(window.Window);
+            return Marshal.PtrToStringUTF8((IntPtr)title)!;
         }
 
         /// <inheritdoc/>
@@ -529,17 +567,10 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public IconHandle GetIcon(WindowHandle handle)
+        public IconHandle? GetIcon(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            // FIXME: What is the default icon??
-            if (window.Icon == null)
-            {
-                Logger?.LogWarning("Trying to read the default window icon. SDL 2 doesn't support this.");
-                return new SDLIcon();
-            }
-            
             return window.Icon;
         }
 
@@ -558,7 +589,9 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
+            // FIXME: This gets the client position!!
             SDL_GetWindowPosition(window.Window, out x, out y);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -568,6 +601,7 @@ namespace OpenTK.Platform.Native.SDL
 
             // FIXME: This sets the client position!!
             SDL_SetWindowPosition(window.Window, x, y);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -577,6 +611,7 @@ namespace OpenTK.Platform.Native.SDL
 
             // FIXME: This sets the client position!!
             SDL_GetWindowSize(window.Window, out width, out height);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -584,7 +619,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            SDL_SetWindowSize(window.Window, width, height);
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
@@ -608,7 +643,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            SDL_GL_GetDrawableSize(window.Window, out width, out height);
         }
 
         /// <inheritdoc/>
@@ -616,7 +651,7 @@ namespace OpenTK.Platform.Native.SDL
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
-            throw new NotImplementedException();
+            SDL_SetWindowSize(window.Window, width, height);
         }
 
         /// <inheritdoc/>
@@ -695,13 +730,14 @@ namespace OpenTK.Platform.Native.SDL
             {
                 return WindowMode.Minimized;
             }
-            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN))
-            {
-                return WindowMode.ExclusiveFullscreen;
-            }
+            // We need to check this before SDL_WINDOW_FULLSCREEN because SDL_WINDOW_FULLSCREEN_DESKTOP contains that flag.
             else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN_DESKTOP))
             {
                 return WindowMode.WindowedFullscreen;
+            }
+            else if (flags.HasFlag(SDL_WindowFlags.SDL_WINDOW_FULLSCREEN))
+            {
+                return WindowMode.ExclusiveFullscreen;
             }
             else
             {
@@ -713,6 +749,13 @@ namespace OpenTK.Platform.Native.SDL
         public void SetMode(WindowHandle handle, WindowMode mode)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
+
+            if ((SDL_GetWindowFlags(window.Window) & SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0 &&
+                (mode != WindowMode.WindowedFullscreen || mode != WindowMode.ExclusiveFullscreen))
+            {
+                // We are going out of fullscreen.
+                SDL_SetWindowFullscreen(window.Window, 0);
+            }
 
             switch (mode)
             {
@@ -730,16 +773,127 @@ namespace OpenTK.Platform.Native.SDL
                     SDL_MaximizeWindow(window.Window);
                     break;
                 case WindowMode.WindowedFullscreen:
-                    throw new NotImplementedException();
+                    SetFullscreenDisplay(window, null);
+                    break;
                 case WindowMode.ExclusiveFullscreen:
-                    throw new NotImplementedException();
+                    {
+                        // FIXME: Can we create the current video mode in a better way?
+                        int result = SDL_GetCurrentDisplayMode(SDL_GetWindowDisplayIndex(window.Window), out SDL_DisplayMode displayMode);
+                        if (result != 0)
+                        {
+                            string error = SDL_GetError();
+                            throw new PalException(this, $"SDL could not get current display mode: {error}");
+                        }
+                        VideoMode videoMode = new VideoMode(displayMode.w, displayMode.h, displayMode.refresh_rate, (int)SDL_BITSPERPIXEL(displayMode.format));
+                        SetFullscreenDisplay(window, GetDisplay(window), videoMode);
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException(nameof(mode), (int)mode, typeof(WindowMode));
             }
         }
 
         /// <inheritdoc/>
-        public WindowStyle GetBorderStyle(WindowHandle handle)
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle? display)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+
+            SDLDisplay sdlDisplay;
+            if (display != null)
+            {
+                sdlDisplay = display.As<SDLDisplay>(this);
+
+                // We need to move the window to the correct display before making it fullscreen.
+
+                int result = SDL_GetDisplayBounds(sdlDisplay.Index, out SDL_Rect rect);
+                if (result == 0) SDL_SetWindowPosition(sdlWindow.Window, rect.x, rect.y);
+                else Logger?.LogWarning("Could not get display bounds when making window fullscreen. This may cause the window to get fullscreened on the wrong display.");
+                
+                result = SDL_SetWindowFullscreen(sdlWindow.Window, SDL_FullscreenMode.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                if (result != 0)
+                {
+                    string error = SDL_GetError();
+                    throw new PalException(this, $"SDL could not make the window fullscreen: {error}");
+                }
+            }
+            else
+            {
+                // We want to go fullscreen on the current display, so we just do that.
+                int result = SDL_SetWindowFullscreen(sdlWindow.Window, SDL_FullscreenMode.SDL_WINDOW_FULLSCREEN_DESKTOP);
+                if (result != 0)
+                {
+                    string error = SDL_GetError();
+                    throw new PalException(this, $"SDL could not make the window fullscreen: {error}");
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public void SetFullscreenDisplay(WindowHandle window, DisplayHandle display, VideoMode videoMode)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+            SDLDisplay sdlDisplay = display.As<SDLDisplay>(this);
+
+            int result = SDL_GetDisplayBounds(sdlDisplay.Index, out SDL_Rect rect);
+            if (result == 0) SDL_SetWindowPosition(sdlWindow.Window, rect.x, rect.y);
+            else Logger?.LogWarning("Could not get display bounds when making window fullscreen. This may cause the window to get fullscreened on the wrong display.");
+
+            result = SDL_SetWindowFullscreen(sdlWindow.Window, SDL_FullscreenMode.SDL_WINDOW_FULLSCREEN);
+            if (result != 0)
+            {
+                string error = SDL_GetError();
+                throw new PalException(this, $"SDL could not make the window fullscreen: {error}");
+            }
+
+            // FIXME: Go from BitsPerPixel to SDL display mode format enums, how should we do it?
+            // For now we just pick a few arbitrary formats for some color depths in the hope that they are fine.
+            // - 2023-06-24 Noggin_Bops
+            SDL_DisplayMode mode;
+            mode.w = videoMode.Width;
+            mode.h = videoMode.Height;
+            // FIXME: How do we cast the refresh rate to an int?
+            mode.refresh_rate = (int)videoMode.RefreshRate;
+            mode.format = videoMode.BitsPerPixel switch
+            {
+                32 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGBA8888,
+                24 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGB888,
+                16 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGB565,
+                8 => SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGB332,
+                _ => 0,
+            };
+            if (mode.format == 0)
+            {
+                Logger?.LogWarning($"We only support bit depths of 32, 24, 16, and 8 when running on SDL.");
+                mode.format = SDL_PixelFormatEnum.SDL_PIXELFORMAT_RGBA8888;
+            }
+            unsafe { mode.driverdata = null; }
+            result = SDL_SetWindowDisplayMode(sdlWindow.Window, mode);
+            if (result != 0)
+            {
+                string error = SDL_GetError();
+                throw new PalException(this, $"SDL could not set the display mode: {error}");
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool GetFullscreenDisplay(WindowHandle window, [NotNullWhen(true)] out DisplayHandle? display)
+        {
+            SDLWindow sdlWindow = window.As<SDLWindow>(this);
+            SDL_WindowFlags flags = SDL_GetWindowFlags(sdlWindow.Window);
+            if ((flags & SDL_WindowFlags.SDL_WINDOW_FULLSCREEN) != 0)
+            {
+                display = GetDisplay(window);
+                return true;
+            }
+            else
+            {
+                display = null;
+                return false;
+            }
+        }
+
+        /// <inheritdoc/>
+        public WindowBorderStyle GetBorderStyle(WindowHandle handle)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
@@ -750,15 +904,15 @@ namespace OpenTK.Platform.Native.SDL
 
             if (hasBorder && resizable)
             {
-                return WindowStyle.ResizableBorder;
+                return WindowBorderStyle.ResizableBorder;
             }
             else if (hasBorder && resizable == false)
             {
-                return WindowStyle.FixedBorder;
+                return WindowBorderStyle.FixedBorder;
             }
             else if (hasBorder == false)
             {
-                return WindowStyle.Borderless;
+                return WindowBorderStyle.Borderless;
             }
 
             // FIXME: Toolbox windows.
@@ -766,29 +920,29 @@ namespace OpenTK.Platform.Native.SDL
         }
 
         /// <inheritdoc/>
-        public void SetBorderStyle(WindowHandle handle, WindowStyle style)
+        public void SetBorderStyle(WindowHandle handle, WindowBorderStyle style)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
 
             switch (style)
             {
-                case WindowStyle.Borderless:
+                case WindowBorderStyle.Borderless:
                     SDL_SetWindowBordered(window.Window, 0);
                     // FIXME: Maybe this borderless should not be resizable?
                     SDL_SetWindowResizable(window.Window, 1);
                     break;
-                case WindowStyle.FixedBorder:
+                case WindowBorderStyle.FixedBorder:
                     SDL_SetWindowBordered(window.Window, 1);
                     SDL_SetWindowResizable(window.Window, 0);
                     break;
-                case WindowStyle.ResizableBorder:
+                case WindowBorderStyle.ResizableBorder:
                     SDL_SetWindowBordered(window.Window, 1);
                     SDL_SetWindowResizable(window.Window, 1);
                     break;
-                case WindowStyle.ToolBox:
+                case WindowBorderStyle.ToolBox:
                     throw new NotImplementedException();
                 default:
-                    throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowStyle));
+                    throw new InvalidEnumArgumentException(nameof(style), (int)style, typeof(WindowBorderStyle));
             }
         }
 
@@ -859,9 +1013,9 @@ namespace OpenTK.Platform.Native.SDL
         public void SetCursor(WindowHandle handle, CursorHandle? cursor)
         {
             SDLWindow window = handle.As<SDLWindow>(this);
-            SDLCursor sdlCursor = cursor.As<SDLCursor>(this);
+            SDLCursor? sdlCursor = cursor?.As<SDLCursor>(this);
 
-            if (cursor == null)
+            if (sdlCursor == null)
             {
                 SDL_ShowCursor(0 /* SDL_DISABLE */);
             }
@@ -955,14 +1109,6 @@ namespace OpenTK.Platform.Native.SDL
             // FIXME: How to do this??
 
             throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public void SwapBuffers(WindowHandle handle)
-        {
-            SDLWindow window = handle.As<SDLWindow>(this);
-
-            SDL_GL_SwapWindow(window.Window);
         }
     }
 }

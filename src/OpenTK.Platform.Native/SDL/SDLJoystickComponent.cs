@@ -11,14 +11,18 @@ using static OpenTK.Platform.Native.SDL.SDL;
 
 namespace OpenTK.Platform.Native.SDL
 {
-    internal unsafe class SDLJoystickComponent : IJoystickComponent
+    public unsafe class SDLJoystickComponent : IJoystickComponent
     {
+        /// <inheritdoc/>
         public string Name => nameof(SDLJoystickComponent);
 
+        /// <inheritdoc/>
         public PalComponents Provides => PalComponents.Joystick;
 
+        /// <inheritdoc/>
         public ILogger? Logger { get; set; }
 
+        /// <inheritdoc/>
         public void Initialize(PalComponents which)
         {
             if (which != PalComponents.Joystick)
@@ -32,16 +36,21 @@ namespace OpenTK.Platform.Native.SDL
 
         // FIXME: 0 is probably not a good value to have here?
         // Should we copy the XInput values from the windows backend?
+        /// <inheritdoc/>
         public float LeftDeadzone => 0;
+        /// <inheritdoc/>
         public float RightDeadzone => 0;
+        /// <inheritdoc/>
         public float TriggerThreshold => 0;
 
+        /// <inheritdoc/>
         public bool IsConnected(int index)
         {
             // FIXME: This is probably the wrong check
             return SDL_IsGameController(index);
         }
 
+        /// <inheritdoc/>
         public JoystickHandle Open(int index)
         {
             // FIXME: Error check so we don't open a game controller that is outside of the range.
@@ -57,6 +66,7 @@ namespace OpenTK.Platform.Native.SDL
             return new SDLJoystick(gameController);
         }
 
+        /// <inheritdoc/>
         public void Close(JoystickHandle handle)
         {
             SDLJoystick joystick = handle.As<SDLJoystick>(this);
@@ -65,6 +75,7 @@ namespace OpenTK.Platform.Native.SDL
             joystick.GameController = null;
         }
 
+        /// <inheritdoc/>
         public Guid GetGuid(JoystickHandle handle)
         {
             SDLJoystick joystick = handle.As<SDLJoystick>(this);
@@ -77,6 +88,7 @@ namespace OpenTK.Platform.Native.SDL
             return new Guid(new ReadOnlySpan<byte>(guid.data, 16));
         }
 
+        /// <inheritdoc/>
         public string GetName(JoystickHandle handle)
         {
             SDLJoystick joystick = handle.As<SDLJoystick>(this);
@@ -91,6 +103,7 @@ namespace OpenTK.Platform.Native.SDL
             return Marshal.PtrToStringUTF8((IntPtr)name)!;
         }
 
+        /// <inheritdoc/>
         public float GetAxis(JoystickHandle handle, JoystickAxis axis)
         {
             SDLJoystick joystick = handle.As<SDLJoystick>(this);
@@ -126,6 +139,7 @@ namespace OpenTK.Platform.Native.SDL
             return (value + 0.5f) / 32767.5f;
         }
 
+        /// <inheritdoc/>
         public bool GetButton(JoystickHandle handle, JoystickButton button)
         {
             SDLJoystick joystick = handle.As<SDLJoystick>(this);
@@ -184,6 +198,7 @@ namespace OpenTK.Platform.Native.SDL
             return value == 1;
         }
 
+        /// <inheritdoc/>
         public bool SetVibration(JoystickHandle handle, float lowFreqIntensity, float highFreqIntensity)
         {
             SDLJoystick joystick = handle.As<SDLJoystick>(this);
@@ -199,6 +214,7 @@ namespace OpenTK.Platform.Native.SDL
             return result == 0;
         }
 
+        /// <inheritdoc/>
         public bool TryGetBatteryInfo(JoystickHandle handle, out GamepadBatteryInfo batteryInfo)
         {
             SDLJoystick joystick = handle.As<SDLJoystick>(this);

@@ -52,7 +52,8 @@ Instructions
 
 OpenTK is available as a [NuGet Package](http://www.nuget.org/packages/OpenTK/).
 
-OpenTK 4 running on Windows requires "Visual C++ Redistributable 2015" to be installed to run.
+As of OpenTK 4.8 "Visual C++ Redistributable 2015" is not longer required to run OpenTK 4 on windows.
+For earlier versions of OpenTK 4 you can install any version of `OpenTK.redist.glfw >= 3.3.8.35` to remove the "Visual C++ Redistributable 2015" requirement.
 See https://github.com/opentk/glfw-redist for more details.
 
 News
@@ -142,12 +143,26 @@ https://www.nuget.org/packages/OpenTK.GLControl/3.0.0
 Building from source
 ============
 
+To build OpenTK from source you just need to clone the git repo and open `OpenTK.sln` in Visual Studio 2019 or later.
+
 ```
 git clone https://github.com/opentk/opentk   # Download source code from git
 cd opentk                                    # Enter the source directory
-./build.cmd / ./build.sh                     # Run the bootstrap/build script for your platform
+# open OpenTK.sln
 ```
 
+Alternatively if you want to build using our buildscript you can use `build.cmd / build.sh` which require .net 6 to be installed. 
+
+```
+git clone https://github.com/opentk/opentk   # Download source code from git
+cd opentk                                    # Enter the source directory
+./build.cmd / ./build.sh                     # Run the build script for your platform
+```
+
+To specify a specific target run:
+```
+./build.cmd -t <Target>
+```
 
 Contributing
 ============

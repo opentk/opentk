@@ -89,19 +89,16 @@ namespace LocalTestProject
                 dispComp.GetVideoMode(PrimaryDisplayHandle, out VideoMode videoMode);
                 dispComp.GetDisplayScale(PrimaryDisplayHandle, out float scaleX, out float scaleY);
                 Console.WriteLine($"Primary monitor name: {name}");
-                Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
-                Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
-                Console.WriteLine($"  Scale: {videoMode.Scale}");
-                Console.WriteLine($"  Dpi: {videoMode.Dpi}");
-                Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+                Console.WriteLine($"  {videoMode}");
+                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
 
-                int modeCount = dispComp.GetSupportedVideoModeCount(PrimaryDisplayHandle);
+                int modeCount = dispComp.GetSupportedVideoModes(PrimaryDisplayHandle).Length;
                 Console.WriteLine($"Primary monitor supports {modeCount} video modes.");
 
                 if (dispComp.GetDisplayCount() > 1)
                 {
                     var secondaryHandle = dispComp.Open(1);
-                    modeCount = dispComp.GetSupportedVideoModeCount(secondaryHandle);
+                    modeCount = dispComp.GetSupportedVideoModes(secondaryHandle).Length;
                     Console.WriteLine($"Secondary monitor supports {modeCount} video modes.");
                 }
                 
@@ -117,11 +114,8 @@ namespace LocalTestProject
                 dispComp.GetVideoMode(disp, out VideoMode videoMode);
                 dispComp.GetDisplayScale(disp, out float scaleX, out float scaleY);
                 Console.WriteLine($"Primary monitor name: {name}");
-                Console.WriteLine($"  Resoltion: {videoMode.HorizontalResolution}x{videoMode.VerticalResolution}");
-                Console.WriteLine($"  Refresh rate: {videoMode.RefreshRate}");
-                Console.WriteLine($"  Scale: {videoMode.Scale}");
-                Console.WriteLine($"  Dpi: {videoMode.Dpi}");
-                Console.WriteLine($"  Scale2: {scaleX}, {scaleY}");
+                Console.WriteLine($"  {videoMode}");
+                Console.WriteLine($"  Scale: {scaleX}, {scaleY}");
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -186,13 +180,11 @@ namespace LocalTestProject
             glComp.SetCurrentContext(WindowContext);
             GLLoader.LoadBindings(glComp.GetBindingsContext(WindowContext));
 
-            CursorHandle = cursorComp.Create();
-            cursorComp.Load(CursorHandle, SystemCursorType.TextBeam);
+            CursorHandle = cursorComp.Create(SystemCursorType.TextBeam);
             cursorComp.GetSize(CursorHandle, out _, out _);
             windowComp.SetCursor(WindowHandle, CursorHandle);
             windowComp.SetCursor(WindowHandle2, CursorHandle);
 
-            ImageCursorHandle = cursorComp.Create();
             byte[] image = new byte[16 * 16 * 3];
             byte[] mask = new byte[16 * 16 * 1];
             for (int ccx = 0; ccx < 16; ccx++)
@@ -208,9 +200,8 @@ namespace LocalTestProject
                     mask[(ccy * 16 + ccx)] = (byte)((ccy % 2 == 0) ? 1 : 0);
                 }
             }
-            cursorComp.SetHotspot(ImageCursorHandle, 8, 8);
-            cursorComp.Load(ImageCursorHandle, 16, 16, image, mask);
-            windowComp.SetCursor(WindowHandle, ImageCursorHandle);
+            ImageCursorHandle = cursorComp.Create(16, 16, image, mask, 8, 8);
+            windowComp.SetCursor(WindowHandle2, ImageCursorHandle);
 
             {
                 byte[] icon = new byte[16 * 16 * 4];
@@ -247,18 +238,18 @@ namespace LocalTestProject
                     }
                 }
 
-                IconHandle = iconComp.Create();
-                iconComp.Load(IconHandle, 16, 16, icon);
+                IconHandle = iconComp.Create(16, 16, icon);
 
                 windowComp.SetIcon(WindowHandle, IconHandle);
 
+                // FIXME: Make reading icon data backend specific?
                 {
-                    iconComp.GetDimensions(IconHandle, out int iw, out int ih);
+                    iconComp.GetSize(IconHandle, out int iw, out int ih);
 
-                    int bytes = iconComp.GetBitmapByteSize(IconHandle);
+                    int bytes = ((IconComponent)iconComp).GetBitmapByteSize(IconHandle);
                     byte[] data = new byte[bytes];
 
-                    iconComp.GetBitmapData(IconHandle, data);
+                    ((IconComponent)iconComp).GetBitmapData(IconHandle, data);
 
                     Debug.Assert(iw == 16);
                     Debug.Assert(ih == 16);
@@ -268,14 +259,15 @@ namespace LocalTestProject
             }
 
             {
-                IconHandle2 = iconComp.Create();
-                (iconComp as IconComponent)?.LoadIcoFile(IconHandle2, "Wikipedia-Flags-UN-United-Nations-Flag.ico");
-
+                IconHandle2 = (iconComp as IconComponent)?.CreateFromIcoFile("Wikipedia-Flags-UN-United-Nations-Flag.ico") ??
+                                iconComp.Create(SystemIconType.Default);
+                
                 windowComp.SetIcon(WindowHandle2, IconHandle2);
             }
 
-            FileCursorHandle = cursorComp.Create();
-            (cursorComp as CursorComponent)?.LoadCurFile(FileCursorHandle, "Cute Light Green Normal Select.cur");
+            FileCursorHandle = (cursorComp as CursorComponent)?.CreateFromCurFile("Cute Light Green Normal Select.cur") ??
+                                cursorComp.Create(SystemCursorType.Default);
+
             windowComp.SetCursor(WindowHandle, FileCursorHandle);
 
             {
@@ -325,15 +317,15 @@ namespace LocalTestProject
             windowComp.SetSize(handle, width, height);
             //windowComp.SetPosition(handle, 100, 100);
 
-            windowComp.SetBorderStyle(handle, WindowStyle.Borderless);
-            WindowStyle border = windowComp.GetBorderStyle(handle);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.Borderless);
+            WindowBorderStyle border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowStyle.FixedBorder);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.FixedBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
 
-            windowComp.SetBorderStyle(handle, WindowStyle.ResizableBorder);
+            windowComp.SetBorderStyle(handle, WindowBorderStyle.ResizableBorder);
             border = windowComp.GetBorderStyle(handle);
             Console.WriteLine($"Border: {border}");
         }
@@ -435,7 +427,26 @@ namespace LocalTestProject
                 if (keyDown.IsRepeat == false)
                     vks.Add(keyDown.Scancode);
 
-                if (keyDown.Key == Key.C)
+                if (keyDown.Key == Key.F11)
+                {
+                    // FIXME: What does bpp=32 compared to bpp=24?
+                    VideoMode mode = new VideoMode(1920, 1080, 144, 32);
+
+                    if (windowComp.GetMode(keyDown.Window) == WindowMode.WindowedFullscreen)
+                    {
+                        windowComp.SetMode(keyDown.Window, WindowMode.Normal);
+                    }
+                    else
+                    {
+                        windowComp.SetMode(keyDown.Window, WindowMode.WindowedFullscreen);
+                    }
+                }
+                else if (keyDown.Key == Key.M)
+                {
+                    windowComp.GetFullscreenDisplay(keyDown.Window, out var display);
+                    Console.WriteLine($"Current fullscreen display: {(display != null ? dispComp.GetName(display) : "null")}");
+                }
+                else if (keyDown.Key == Key.C)
                 {
                     clipComp.SetClipboardText("Copy");
                 }
@@ -629,7 +640,7 @@ namespace LocalTestProject
                     var style = windowComp.GetBorderStyle(WindowHandle);
                     Console.WriteLine($"Before: {style}");
                     style += 1;
-                    style = (WindowStyle)((int)style % 4);
+                    style = (WindowBorderStyle)((int)style % 4);
 
                     windowComp.SetBorderStyle(WindowHandle, style);
 
@@ -723,7 +734,7 @@ void main()
             cursorComp.GetSize(handle, out int width, out int height);
             byte[] data = new byte[width * height * 4];
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            cursorComp.GetImage(handle, data);
+            ((CursorComponent)cursorComp).GetImage(handle, data);
 
             for (int i = 0; i < width * height; i++)
             {
@@ -753,13 +764,13 @@ void main()
 
         public static int GetIconImage(IconHandle handle)
         {
-            int size = iconComp.GetBitmapByteSize(handle);
+            int size = ((IconComponent)iconComp).GetBitmapByteSize(handle);
             byte[] data = new byte[size];
             
             // FIXME: Handle proper RGBA format when using AND and XOR masks. Atm it gets a constant alpha = 0.
-            iconComp.GetBitmapData(handle, data);
+            ((IconComponent)iconComp).GetBitmapData(handle, data);
 
-            iconComp.GetDimensions(handle, out int width, out int height);
+            iconComp.GetSize(handle, out int width, out int height);
 
             int tex = GL.GenTexture();
 
@@ -1049,7 +1060,7 @@ void main()
 
                 CheckError("draw");
 
-                windowComp.SwapBuffers(WindowHandle);
+                glComp.SwapBuffers(WindowContext);
             }
 
             if (windowComp.IsWindowDestroyed(WindowHandle2) == false)
@@ -1071,7 +1082,8 @@ void main()
 
                 GL.BindVertexArray(vao2);
                 GL.DrawArrays(PrimitiveType.Triangles, 0, 6);
-                windowComp.SwapBuffers(WindowHandle2);
+
+                glComp.SwapBuffers(Window2Context);
             }
 
             return true;

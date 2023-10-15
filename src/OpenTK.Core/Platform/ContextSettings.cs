@@ -86,17 +86,17 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// No depth buffer.
         /// </summary>
-        None,
+        None = 0,
 
         /// <summary>
         /// 24-bit depth buffer.
         /// </summary>
-        Depth24,
+        Depth24 = 24,
 
         /// <summary>
         /// 32-bit depth buffer.
         /// </summary>
-        Depth32,
+        Depth32 = 32,
     }
 
     /// <summary>
@@ -107,16 +107,16 @@ namespace OpenTK.Core.Platform
         /// <summary>
         /// No stencil bits needed.
         /// </summary>
-        None,
+        None = 0,
 
         /// <summary>
         /// 1-bit stencil buffer.
         /// </summary>
-        Stencil1,
+        Stencil1 = 1,
 
         /// <summary>
         /// 8-bit stencil buffer.
         /// </summary>
-        Stencil8,
+        Stencil8 = 8,
     }
 }

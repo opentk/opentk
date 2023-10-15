@@ -4,6 +4,7 @@ using OpenTK.Platform.Native.X11.XRandR;
 
 namespace OpenTK.Platform.Native.X11
 {
+#pragma warning disable CS0649 // Field '' is never assigned to, and will always have its default value 0
     internal struct XErrorEvent
     {
         public XEventType type;
@@ -31,6 +32,9 @@ namespace OpenTK.Platform.Native.X11
         public XConfigureRequestEvent ConfigureRequest;
 
         [FieldOffset(0)]
+        public XConfigureEvent Configure;
+
+        [FieldOffset(0)]
         public XClientMessageEvent ClientMessage;
 
         [FieldOffset(0)]
@@ -38,6 +42,12 @@ namespace OpenTK.Platform.Native.X11
 
         [FieldOffset(0)]
         public XButtonEvent ButtonReleased;
+
+        [FieldOffset(0)]
+        public XKeyEvent KeyPressed;
+
+        [FieldOffset(0)]
+        public XKeyEvent KeyReleased;
 
         [FieldOffset(0)]
         public XMotionEvent Motion;
@@ -62,6 +72,9 @@ namespace OpenTK.Platform.Native.X11
 
         [FieldOffset(0)]
         public XPropertyEvent Property;
+
+        [FieldOffset(0)]
+        public XSelectionEvent Selection;
 
         #region XRandR
 
@@ -117,6 +130,20 @@ namespace OpenTK.Platform.Native.X11
         public ulong ValueMask;
     }
 
+    internal struct XConfigureEvent {
+        public XEventType type;	        /* ConfigureNotify */
+        public ulong serial;	/* # of last request processed by server */
+        public byte send_event;	/* true if this came from a SendEvent request */
+        public XDisplayPtr display;	/* Display the event was read from */
+        public XWindow @event;
+        public XWindow window;
+        public int x, y;
+        public int width, height;
+        public int border_width;
+        public XWindow above;
+        public byte override_redirect;
+    }
+
     [StructLayout(LayoutKind.Explicit)]
     internal unsafe struct XClientMessageEvent
     {
@@ -134,7 +161,6 @@ namespace OpenTK.Platform.Native.X11
 
     internal struct XButtonEvent
     {
-
         public XEventType type;     /* ButtonPress or ButtonRelease */
         public ulong serial;        /* # of last request processed by server */
         public byte send_event;     /* true if this came from a SendEvent request */
@@ -147,6 +173,22 @@ namespace OpenTK.Platform.Native.X11
         public int x_root, y_root;  /* coordinates relative to root */
         public uint state;          /* key or button mask */
         public uint button;         /* detail */
+        public byte same_screen;    /* same screen flag */
+    }
+
+    internal struct XKeyEvent {
+        public XEventType type;     /* KeyPress or KeyRelease */
+        public ulong serial;        /* # of last request processed by server */
+        public byte send_event;     /* true if this came from a SendEvent request */
+        public XDisplayPtr display; /* Display the event was read from */
+        public XWindow window;      /* ``event'' window it is reported relative to */
+        public XWindow root;        /* root window that the event occurred on */
+        public XWindow subwindow;   /* child window */
+        public XTime time;          /* milliseconds */
+        public int x, y;            /* pointer x, y coordinates in event window */
+        public int x_root, y_root;  /* coordinates relative to root */
+        public uint state;          /* key or button mask */
+        public uint keycode;        /* detail */
         public byte same_screen;    /* same screen flag */
     }
 
@@ -241,4 +283,17 @@ namespace OpenTK.Platform.Native.X11
         public XTime time;
         public PropertyState state; /* PropertyNewValue or PropertyDelete */
     }
+
+    internal struct XSelectionEvent {
+        public XEventType type;		/* SelectionNotify */
+        public ulong serial;	    /* # of last request processed by server */
+        public byte send_event;	    /* true if this came from a SendEvent request */
+        public XDisplayPtr display;	/* Display the event was read from */
+        public XWindow requestor;
+        public XAtom selection;
+        public XAtom target;
+        public XAtom property;		/* atom or None */
+        public XTime time;
+    }
+#pragma warning restore CS0649 // Field '' is never assigned to, and will always have its default value 0
 }

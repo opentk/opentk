@@ -5,6 +5,8 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using System;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace LocalTest
 {
@@ -14,7 +16,7 @@ namespace LocalTest
         {
             GameWindowSettings gwSettings = new GameWindowSettings()
             {
-                //UpdateFrequency = 10,
+                UpdateFrequency = 250,
                 //RenderFrequency = 10,
             };
 
@@ -47,15 +49,27 @@ namespace LocalTest
         protected override void OnLoad()
         {
             base.OnLoad();
-
-
         }
+
+        protected override void OnUnload()
+        {
+            base.OnUnload();
+        }
+
+        float time = 0;
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
 
-            GL.ClearColor(Color4.Black);
+            const float CycleTime = 8.0f;
+
+            time += (float)args.Time;
+            if (time > CycleTime) time = 0;
+
+            Color4 color = Color4.FromHsv(new Vector4(time / CycleTime, 1, 1, 1));
+
+            GL.ClearColor(color);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             SwapBuffers();
@@ -64,8 +78,16 @@ namespace LocalTest
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
             base.OnUpdateFrame(args);
+        }
 
+        protected override void OnResize(ResizeEventArgs e)
+        {
+            base.OnResize(e);
+        }
 
+        protected override void OnMove(WindowPositionEventArgs e)
+        {
+            base.OnMove(e);
         }
     }
 }

@@ -9,6 +9,16 @@ using System.Threading.Tasks;
 
 namespace OpenTK.Platform.Native
 {
+    // FIXME: Remove or formalize
+    public enum Backend
+    {
+        None,
+        Win32,
+        macOS,
+        X11,
+        SDL,
+    }
+
     /// <summary>
     /// Used to create platform specific version of components.
     /// </summary>
@@ -19,6 +29,9 @@ namespace OpenTK.Platform.Native
         /// We will fall back to platform specifc backends if SDL cannot be loaded.
         /// </summary>
         public static bool PreferSDL2 { get; set; } = false;
+
+        // FIXME:
+        public static bool PreferANGLE { get; set; } = false;
 
         private delegate IPalComponent ComponentCtor();
 
@@ -62,25 +75,58 @@ namespace OpenTK.Platform.Native
                 [PalComponents.MiceInput] = () => new X11.X11MouseComponent(),
                 //[PalComponents.KeyboardInput] = () => new X11.X11KeyboardComponent(),
                 [PalComponents.MouseCursor] = () => new X11.X11CursorComponent(),
-                //[PalComponents.WindowIcon] = () => new X11.X11IconComponent(),
-                //[PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
+                [PalComponents.WindowIcon] = () => new X11.X11IconComponent(),
+                [PalComponents.Clipboard] = () => new X11.X11ClipboardComponent(),
                 //[PalComponents.Joystick] = () => new X11.X11JoystickComponent(),
             };
 
         private static Dictionary<PalComponents, ComponentCtor> macosComponents =
             new Dictionary<PalComponents, ComponentCtor>
             {
-                //[PalComponents.Window] = () => new Macos.WindowComponent(),
-                //[PalComponents.OpenGL] = () => new Macos.OpenGLComponent(),
-                //[PalComponents.Display] = () => new Macos.DisplayComponent(),
-                //[PalComponents.Shell] = () => new Macos.ShellComponent(),
-                //[PalComponents.MiceInput] = () => new Macos.MouseComponent(),
-                //[PalComponents.KeyboardInput] = () => new Macos.KeyboardComponent(),
-                //[PalComponents.MouseCursor] = () => new Macos.CursorComponent(),
-                //[PalComponents.WindowIcon] = () => new Macos.IconComponent(),
-                //[PalComponents.Clipboard] = () => new Macos.ClipboardComponent(),
-                //[PalComponents.Joystick] = () => new Macos.JoystickComponent(),
+                [PalComponents.Window] = () => new macOS.MacOSWindowComponent(),
+                [PalComponents.OpenGL] = () => new macOS.MacOSOpenGLComponent(),
+                [PalComponents.Display] = () => new macOS.MacOSDisplayComponent(),
+                //[PalComponents.Shell] = () => new macOS.MacOSShellComponent(),
+                //[PalComponents.MiceInput] = () => new macOS.MacOSMouseComponent(),
+                //[PalComponents.KeyboardInput] = () => new macOS.MacOSKeyboardComponent(),
+                //[PalComponents.MouseCursor] = () => new macOS.MacOSCursorComponent(),
+                //[PalComponents.WindowIcon] = () => new macOS.MacOSIconComponent(),
+                //[PalComponents.Clipboard] = () => new macOS.MacOSClipboardComponent(),
+                //[PalComponents.Joystick] = () => new macOS.MacOSJoystickComponent(),
             };
+
+        /// <summary>
+        /// Returns the backend that will be used to create components.
+        /// </summary>
+        /// <returns>The backend that will be used to create components.</returns>
+        // FIXME: Better documentation
+        // FIXME: What do we do with things like, Win32 + ANGLE?
+        public static Backend GetBackend()
+        {
+            // FIXME: Proper backend selection!
+
+            var test = GetPlatformComponents();
+            if (test == win32Components)
+            {
+                return Backend.Win32;
+            }
+            else if (test == x11Components)
+            {
+                return Backend.X11;
+            }
+            else if (test == macosComponents)
+            {
+                return Backend.macOS;
+            }
+            else if (test == sdlComponents)
+            {
+                return Backend.SDL;
+            }
+            else
+            {
+                return Backend.None;
+            }
+        }
 
         // FIXME: We probably only want to evaluate the platform decision once?
         private static Dictionary<PalComponents, ComponentCtor> GetPlatformComponents()
@@ -96,6 +142,8 @@ namespace OpenTK.Platform.Native
                 // If we didn't resolve we try to load it here for windows
                 if (NativeLibrary.TryLoad("SDL2.dll", Assembly.GetExecutingAssembly(), null, out _))
                     return sdlComponents;
+
+                // FIXME: Log that we couldn't find SDL2!
             }
 
             if (OperatingSystem.IsWindows())
@@ -143,7 +191,16 @@ namespace OpenTK.Platform.Native
         /// <inheritdoc cref="GetPlatformComponents"/>
         public static IOpenGLComponent CreateOpenGLComponent()
         {
-            return GetPlatformComponent<IOpenGLComponent>(PalComponents.OpenGL);
+            // FIXME: Should we do this here?
+            // FIXME: Check so that we can actually load angle binaries too!
+            if (PreferANGLE)
+            {
+                return new ANGLE.ANGLEOpenGLComponent();
+            }
+            else
+            {
+                return GetPlatformComponent<IOpenGLComponent>(PalComponents.OpenGL);
+            }
         }
 
         /// <inheritdoc cref="GetPlatformComponents"/>
