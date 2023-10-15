@@ -21,14 +21,27 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0.
         /// Used to query the machine for a number of available platforms (Intel, AMD, Nvidia, etc...) and returns them.
-        /// See more: https://www.khronos.org/registry/OpenCL/sdk/2.2/docs/man/html/clGetPlatformIDs.html.
+        /// <para>See more: https://www.khronos.org/registry/OpenCL/sdk/2.2/docs/man/html/clGetPlatformIDs.html.</para>
         /// </summary>
-        /// <param name="numberOfEntries">number of <see cref="CLPlatform"/> entries that can be added to <paramref name="platforms">. If <paramref name="platforms"> is not NULL, <paramref name="numberOfEntries"> must be greater than zero.</param>
-        /// <param name="platforms">returns a list of OpenCL platforms found. The <see cref="CLPlatform"/> values returned in <paramref name="platforms"> can be used to identify a specific OpenCL platform. If <paramref name="platforms"> is NULL, this argument is ignored. The number of OpenCL platforms returned is the minimum of the value specified by <paramref name="numberOfEntries"> or the number of OpenCL platforms available.</param>
-        /// <param name="numberOfPlatforms">returns the number of OpenCL platforms available. If <paramref name="numberOfPlatforms"> is NULL, this argument is ignored.</param>
-        /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
-        /// - <see cref="CLResultCode.InvalidValue"/> if <paramref name="numberOfEntries"> is equal to zero and <paramref name="platforms"> is not NULL or if both <paramref name="numberOfPlatforms"> and <paramref name="platforms"> are NULL.
-        /// - <see cref="CLResultCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
+        /// <param name="numberOfEntries">number of <see cref="CLPlatform"/> entries that can be added to <paramref name="platforms"/>. If <paramref name="platforms"/> is not NULL, <paramref name="numberOfEntries"/> must be greater than zero.</param>
+        /// <param name="platforms">returns a list of OpenCL platforms found. The <c><see cref="CLPlatform"/></c> values returned in <paramref name="platforms"/> can be used to identify a specific OpenCL platform. If <paramref name="platforms"/> is NULL, this argument is ignored. The number of OpenCL platforms returned is the minimum of the value specified by <paramref name="numberOfEntries"/> or the number of OpenCL platforms available.</param>
+        /// <param name="numberOfPlatforms">returns the number of OpenCL platforms available. If <paramref name="numberOfPlatforms"/> is NULL, this argument is ignored.</param>
+        /// <returns>
+        /// <list type="bullet">
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.Success">CLResultCode.Success</see></c> if the function is executed successfully.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidValue">CLResultCode.InvalidValue</see></c> if <paramref name="numberOfEntries"/> is equal to zero and <paramref name="platforms"/> is not NULL or if both <paramref name="numberOfPlatforms"/> and <paramref name="platforms"/> are NULL.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.OutOfHostMemory">CLResultCode.OutOfHostMemory</see></c> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+        /// </description></item>
+        /// </list>
+        /// </returns>
+    
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformIDs")]
         public static extern CLResultCode GetPlatformIDs(
             [In] uint numberOfEntries,
@@ -64,8 +77,8 @@ namespace OpenTK.Compute.OpenCL
         /// <param name="paramValueSizeReturned">returns the actual size in bytes of data being queried by <paramref name="paramName">. If <paramref name="paramValueSizeReturned"> is NULL, it is ignored.</param>
         /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
         /// - <see cref="CLResultCode.InvalidPlatform"/> if platform is not a valid platform.
-        /// - <see cref="CLResultCode.InvalidValue"/> if <see cref="paramName"/> is not one of the supported values or if size in bytes specified by <paramref name="paramValueSize"> is < size of return type, and <paramref name="paramValue"> is not a NULL value.
-        /// - <see cref="CLResultCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+        /// - <see cref="CLResultCode.InvalidValue"/> if <see cref="paramName"/> is not one of the supported values or if size in bytes specified by <paramref name="paramValueSize"> is less than the size of return type, and <paramref name="paramValue"> is not a NULL value.
+        /// - <see cref="CLResultCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformInfo")]
         public static extern CLResultCode GetPlatformInfo(
             [In] CLPlatform platform,
@@ -81,11 +94,12 @@ namespace OpenTK.Compute.OpenCL
         /// </summary>
         /// <param name="platform">refers to the platform returned by <see cref="GetPlatformIds(out CLPlatform[])"/> or can be NULL. If platform is NULL, the behavior is implementation-defined.</param>
         /// <param name="paramName">is an enumeration constant that identifies the platform information being queried.</param>
-        /// <param name="paramValue">is a pointer to memory location where appropriate values for a given <paramref name="paramName"> will be returned. If <paramref name="paramValue"> is NULL, it is ignored.</param>
+        /// <param name="paramValue">is a pointer to memory location where appropriate values for a given <paramref name="paramName"/> will be returned. If <paramref name="paramValue"/> is NULL, it is ignored.</param>
         /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
-        /// - <see cref="CLResultCode.InvalidPlatform"/> if platform is not a valid platform.
-        /// - <see cref="CLResultCode.InvalidValue"/> if <paramref name="paramName"> is not one of the supported values, and <paramref name="paramValue"> is not a NULL value.
-        /// - <see cref="CLResultCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+        /// - <see cref="CLResultCode.InvalidPlatform">InvalidPlatform</see> if platform is not a valid platform.
+        /// - <see cref="CLResultCode.InvalidValue">InvalidValue</see> if <paramref name="paramName"/> is not one of the supported values, and <paramref name="paramValue"/> is not a NULL value.
+        /// - <see cref="CLResultCode.OutOfHostMemory">OutOfHostMemory</see> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+        /// </returns>
         public static CLResultCode GetPlatformInfo(
             CLPlatform platform,
             PlatformInfo paramName,
@@ -117,7 +131,15 @@ namespace OpenTK.Compute.OpenCL
 
         /// <summary>
         /// Introduced in OpenCL 1.0
+        /// Query a platform for a number of devices available to it (CPU, GPU, etc...) and return a list of them.
+        /// For more see: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetDeviceIDs.html
         /// </summary>
+        /// <param name="devices"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="numberOfEntries"></param>
+        /// <param name="numberOfsizeReturned"></param>
+        /// <param name="platform"></param>
+        /// <returns></returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceIDs")]
         public static extern CLResultCode GetDeviceIDs(
             [In] CLPlatform platform,
@@ -129,6 +151,10 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
+        /// <param name="platform"></param>
+        /// <param name="deviceType"></param>
+        /// <param name="deviceIds"></param>
+        /// <returns></returns>
         public static CLResultCode GetDeviceIDs(
             CLPlatform platform,
             DeviceType deviceType,
@@ -144,6 +170,12 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
+        /// <param name="device"></param>
+        /// <param name="paramName"></param>
+        /// <param name="paramValueSize"></param>
+        /// <param name="paramValue"></param>
+        /// <param name="paramValueSizeReturned"></param>
+        /// <returns></returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceInfo")]
         public static extern CLResultCode GetDeviceInfo(
             [In] CLDevice device,
@@ -155,6 +187,10 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.0
         /// </summary>
+        /// <param name="device"></param>
+        /// <param name="paramName"></param>
+        /// <param name="paramValue"></param>
+        /// <returns></returns>
         public static CLResultCode GetDeviceInfo(
             CLDevice device,
             DeviceInfo paramName,
@@ -170,6 +206,12 @@ namespace OpenTK.Compute.OpenCL
         /// <summary>
         /// Introduced in OpenCL 1.2
         /// </summary>
+        /// <param name="inDevice"></param>
+        /// <param name="properties"></param>
+        /// <param name="numberOfDevices"></param>
+        /// <param name="outDevices"></param>
+        /// <param name="sizeReturned"></param>
+        /// <returns></returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clCreateSubDevices")]
         public static extern CLResultCode CreateSubDevices(
             [In] CLDevice inDevice,
