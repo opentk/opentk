@@ -185,10 +185,18 @@ namespace OpenTK.Windowing.Desktop
         }
 
         [Obsolete("Use the MinimumClientSize property to get or set the minimum size of the contents of the window.")]
-        public Vector2i? MinimumSize { get; set; } = null;
+        public Vector2i? MinimumSize
+        {
+            get => MinimumClientSize;
+            set { MinimumClientSize = value; }
+        }
 
         [Obsolete("Use the MaximumClientSize property to get or set the minimum size of the contents of the window.")]
-        public Vector2i? MaximumSize { get; set; } = null;
+        public Vector2i? MaximumSize
+        {
+            get => MaximumClientSize;
+            set { MaximumClientSize = value; }
+        }
 
         /// <summary>
         /// Gets or sets the aspect ratio the window is locked to until changed.
