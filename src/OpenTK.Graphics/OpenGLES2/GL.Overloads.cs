@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 22:59:32 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-15 23:11:00 GMT+02:00
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -5259,14 +5259,14 @@ namespace OpenTK.Graphics.OpenGLES2
                 ShaderSource(shader, count, str, length_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -5274,8 +5274,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -5283,8 +5283,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage2D(TextureTarget, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
+        /// <inheritdoc cref="TexImage2D(TextureTarget, int, InternalFormat, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage2D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -5292,14 +5292,14 @@ namespace OpenTK.Graphics.OpenGLES2
                 TexImage2D(target, level, internalformat, width, height, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, IntPtr pixels)
         {
             void* pixels_vptr = (void*)pixels;
             TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_vptr);
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, ReadOnlySpan<T1> pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -5307,8 +5307,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, T1[] pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = pixels)
@@ -5316,8 +5316,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 TexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels_ptr);
             }
         }
-        /// <inheritdoc cref="TexImage3D(TextureTarget, int, int, int, int, int, int, PixelFormat, PixelType, void*)"/>
-        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
+        /// <inheritdoc cref="TexImage3D(TextureTarget, int, InternalFormat, int, int, int, int, PixelFormat, PixelType, void*)"/>
+        public static unsafe void TexImage3D<T1>(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, in T1 pixels)
             where T1 : unmanaged
         {
             fixed (void* pixels_ptr = &pixels)
@@ -9306,18 +9306,18 @@ namespace OpenTK.Graphics.OpenGLES2
                     TexParameterIuivEXT(target, pname, parameters_ptr);
                 }
             }
-            /// <inheritdoc cref="TexStorageAttribs2DEXT(TextureTarget, int, SizedInternalFormat, int, int, int*)"/>
-            public static unsafe void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, in int attrib_list)
+            /// <inheritdoc cref="TexStorageAttribs2DEXT(TextureTarget, int, SizedInternalFormat, int, int, TexStorageAttribs*)"/>
+            public static unsafe void TexStorageAttribs2DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, in TexStorageAttribs attrib_list)
             {
-                fixed (int* attrib_list_ptr = &attrib_list)
+                fixed (TexStorageAttribs* attrib_list_ptr = &attrib_list)
                 {
                     TexStorageAttribs2DEXT(target, levels, internalformat, width, height, attrib_list_ptr);
                 }
             }
-            /// <inheritdoc cref="TexStorageAttribs3DEXT(TextureTarget, int, SizedInternalFormat, int, int, int, int*)"/>
-            public static unsafe void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, in int attrib_list)
+            /// <inheritdoc cref="TexStorageAttribs3DEXT(TextureTarget, int, SizedInternalFormat, int, int, int, TexStorageAttribs*)"/>
+            public static unsafe void TexStorageAttribs3DEXT(TextureTarget target, int levels, SizedInternalFormat internalformat, int width, int height, int depth, in TexStorageAttribs attrib_list)
             {
-                fixed (int* attrib_list_ptr = &attrib_list)
+                fixed (TexStorageAttribs* attrib_list_ptr = &attrib_list)
                 {
                     TexStorageAttribs3DEXT(target, levels, internalformat, width, height, depth, attrib_list_ptr);
                 }
@@ -9520,8 +9520,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 }
                 return rawCounterMaxValue_val;
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
-            public static unsafe void GetPerfQueryDataINTEL(int queryHandle, uint flags, int dataSize, IntPtr data, ref uint bytesWritten)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
+            public static unsafe void GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, IntPtr data, ref uint bytesWritten)
             {
                 fixed (uint* bytesWritten_ptr = &bytesWritten)
                 {
@@ -9529,8 +9529,8 @@ namespace OpenTK.Graphics.OpenGLES2
                     GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_vptr, bytesWritten_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
-            public static unsafe void GetPerfQueryDataINTEL<T1>(int queryHandle, uint flags, int dataSize, ref T1 data, ref uint bytesWritten)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
+            public static unsafe void GetPerfQueryDataINTEL<T1>(int queryHandle, PerfQueryDataFlags flags, int dataSize, ref T1 data, ref uint bytesWritten)
                 where T1 : unmanaged
             {
                 fixed (void* data_ptr = &data)
@@ -9539,8 +9539,8 @@ namespace OpenTK.Graphics.OpenGLES2
                     GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_ptr, bytesWritten_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL(int queryHandle, uint flags, int dataSize, IntPtr data)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
+            public static unsafe uint GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, IntPtr data)
             {
                 uint bytesWritten_val;
                 void* data_vptr = (void*)data;
@@ -9548,8 +9548,8 @@ namespace OpenTK.Graphics.OpenGLES2
                 GetPerfQueryDataINTEL(queryHandle, flags, dataSize, data_vptr, bytesWritten);
                 return bytesWritten_val;
             }
-            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, uint, int, void*, uint*)"/>
-            public static unsafe uint GetPerfQueryDataINTEL<T1>(int queryHandle, uint flags, int dataSize, ref T1 data)
+            /// <inheritdoc cref="GetPerfQueryDataINTEL(int, PerfQueryDataFlags, int, void*, uint*)"/>
+            public static unsafe uint GetPerfQueryDataINTEL<T1>(int queryHandle, PerfQueryDataFlags flags, int dataSize, ref T1 data)
                 where T1 : unmanaged
             {
                 uint bytesWritten_val;
@@ -9576,14 +9576,14 @@ namespace OpenTK.Graphics.OpenGLES2
                 GetPerfQueryIdByNameINTEL(queryName, queryId);
                 return queryId_val;
             }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, uint*)"/>
-            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
+            public static unsafe string GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
             {
                 string queryName;
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
-                fixed (uint* capsMask_ptr = &capsMask)
+                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = &capsMask)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
@@ -9592,13 +9592,13 @@ namespace OpenTK.Graphics.OpenGLES2
                 }
                 return queryName;
             }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, uint*)"/>
-            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref uint capsMask)
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
+            public static unsafe void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances, ref PerformanceQueryCapsMaskINTEL capsMask)
             {
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
-                fixed (uint* capsMask_ptr = &capsMask)
+                fixed (PerformanceQueryCapsMaskINTEL* capsMask_ptr = &capsMask)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask_ptr);
@@ -9606,16 +9606,16 @@ namespace OpenTK.Graphics.OpenGLES2
                     Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);
                 }
             }
-            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, uint*)"/>
-            public static unsafe uint GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances)
+            /// <inheritdoc cref="GetPerfQueryInfoINTEL(uint, uint, byte*, uint*, uint*, uint*, PerformanceQueryCapsMaskINTEL*)"/>
+            public static unsafe PerformanceQueryCapsMaskINTEL GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, out string queryName, ref uint dataSize, ref uint noCounters, ref uint noInstances)
             {
-                uint capsMask_val;
+                PerformanceQueryCapsMaskINTEL capsMask_val;
                 fixed (uint* dataSize_ptr = &dataSize)
                 fixed (uint* noCounters_ptr = &noCounters)
                 fixed (uint* noInstances_ptr = &noInstances)
                 {
                     var queryName_ptr = (byte*)Marshal.AllocCoTaskMem((int)queryNameLength);
-                    uint* capsMask = &capsMask_val;
+                    PerformanceQueryCapsMaskINTEL* capsMask = &capsMask_val;
                     GetPerfQueryInfoINTEL(queryId, queryNameLength, queryName_ptr, dataSize_ptr, noCounters_ptr, noInstances_ptr, capsMask);
                     queryName = Marshal.PtrToStringUTF8((IntPtr)queryName_ptr)!;
                     Marshal.FreeCoTaskMem((IntPtr)queryName_ptr);

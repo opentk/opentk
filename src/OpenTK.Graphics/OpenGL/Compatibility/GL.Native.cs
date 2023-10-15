@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 22:59:32 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-15 23:11:00 GMT+02:00
 using System;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics;
@@ -5150,7 +5150,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage1D.xhtml" /></remarks>
-        public static void TexImage1D(TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage1D_fnptr((uint)target, level, internalformat, width, border, (uint)format, (uint)type, pixels);
+        public static void TexImage1D(TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage1D_fnptr((uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v1.0]</b> <b>[entry point: <c>glTexImage2D</c>]</b><br/> Specify a two-dimensional texture image. </summary>
         /// <param name="target"> Specifies the target texture. Must be GL_TEXTURE_2D, GL_PROXY_TEXTURE_2D, GL_TEXTURE_1D_ARRAY, GL_PROXY_TEXTURE_1D_ARRAY, GL_TEXTURE_RECTANGLE, GL_PROXY_TEXTURE_RECTANGLE, GL_TEXTURE_CUBE_MAP_POSITIVE_X, GL_TEXTURE_CUBE_MAP_NEGATIVE_X, GL_TEXTURE_CUBE_MAP_POSITIVE_Y, GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, GL_TEXTURE_CUBE_MAP_POSITIVE_Z, GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, or GL_PROXY_TEXTURE_CUBE_MAP. </param>
@@ -5163,7 +5163,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage2D.xhtml" /></remarks>
-        public static void TexImage2D(TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, internalformat, width, height, border, (uint)format, (uint)type, pixels);
+        public static void TexImage2D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage2D_fnptr((uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v3.2 | GL_ARB_texture_multisample]</b> <b>[entry point: <c>glTexImage2DMultisample</c>]</b><br/> Establish the data storage, format, dimensions, and number of samples of a multisample texture&apos;s image. </summary>
         /// <param name="target"> Specifies the target of the operation. target must be GL_TEXTURE_2D_MULTISAMPLE or GL_PROXY_TEXTURE_2D_MULTISAMPLE. </param>
@@ -5187,7 +5187,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         /// <param name="type"> Specifies the data type of the pixel data. The following symbolic values are accepted: GL_UNSIGNED_BYTE, GL_BYTE, GL_UNSIGNED_SHORT, GL_SHORT, GL_UNSIGNED_INT, GL_INT, GL_HALF_FLOAT, GL_FLOAT, GL_UNSIGNED_BYTE_3_3_2, GL_UNSIGNED_BYTE_2_3_3_REV, GL_UNSIGNED_SHORT_5_6_5, GL_UNSIGNED_SHORT_5_6_5_REV, GL_UNSIGNED_SHORT_4_4_4_4, GL_UNSIGNED_SHORT_4_4_4_4_REV, GL_UNSIGNED_SHORT_5_5_5_1, GL_UNSIGNED_SHORT_1_5_5_5_REV, GL_UNSIGNED_INT_8_8_8_8, GL_UNSIGNED_INT_8_8_8_8_REV, GL_UNSIGNED_INT_10_10_10_2, and GL_UNSIGNED_INT_2_10_10_10_REV. </param>
         /// <param name="data"> Specifies a pointer to the image data in memory. </param>
         /// <remarks><see href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glTexImage3D.xhtml" /></remarks>
-        public static void TexImage3D(TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3D_fnptr((uint)target, level, internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+        public static void TexImage3D(TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTexImage3D_fnptr((uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
         
         /// <summary> <b>[requires: v3.2 | GL_ARB_texture_multisample]</b> <b>[entry point: <c>glTexImage3DMultisample</c>]</b><br/> Establish the data storage, format, dimensions, and number of samples of a multisample texture&apos;s image. </summary>
         /// <param name="target"> Specifies the target of the operation. target must be GL_TEXTURE_2D_MULTISAMPLE_ARRAY or GL_PROXY_TEXTURE_2D_MULTISAMPLE_ARRAY. </param>
@@ -6884,7 +6884,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void ProgramUniform4ui64vNV(int program, int location, int count, ulong* value) => GLPointers._glProgramUniform4ui64vNV_fnptr(program, location, count, value);
             
             /// <summary> <b>[requires: GL_AMD_occlusion_query_event]</b> <b>[entry point: <c>glQueryObjectParameteruiAMD</c>]</b><br/>  </summary>
-            public static void QueryObjectParameteruiAMD(QueryTarget target, int id, All pname, uint param) => GLPointers._glQueryObjectParameteruiAMD_fnptr((uint)target, id, (uint)pname, param);
+            public static void QueryObjectParameteruiAMD(QueryTarget target, int id, All pname, OcclusionQueryEventMaskAMD param) => GLPointers._glQueryObjectParameteruiAMD_fnptr((uint)target, id, (uint)pname, (uint)param);
             
             /// <summary> <b>[requires: GL_AMD_framebuffer_multisample_advanced]</b> <b>[entry point: <c>glRenderbufferStorageMultisampleAdvancedAMD</c>]</b><br/>  </summary>
             public static void RenderbufferStorageMultisampleAdvancedAMD(RenderbufferTarget target, int samples, int storageSamples, InternalFormat internalformat, int width, int height) => GLPointers._glRenderbufferStorageMultisampleAdvancedAMD_fnptr((uint)target, samples, storageSamples, (uint)internalformat, width, height);
@@ -11052,13 +11052,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static unsafe partial class ATI
         {
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glAlphaFragmentOp1ATI</c>]</b><br/>  </summary>
-            public static void AlphaFragmentOp1ATI(FragmentOp1ATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => GLPointers._glAlphaFragmentOp1ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod);
+            public static void AlphaFragmentOp1ATI(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => GLPointers._glAlphaFragmentOp1ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glAlphaFragmentOp2ATI</c>]</b><br/>  </summary>
-            public static void AlphaFragmentOp2ATI(FragmentOp2ATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => GLPointers._glAlphaFragmentOp2ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
+            public static void AlphaFragmentOp2ATI(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => GLPointers._glAlphaFragmentOp2ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glAlphaFragmentOp3ATI</c>]</b><br/>  </summary>
-            public static void AlphaFragmentOp3ATI(FragmentOp3ATI op, uint dst, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => GLPointers._glAlphaFragmentOp3ATI_fnptr((uint)op, dst, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
+            public static void AlphaFragmentOp3ATI(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => GLPointers._glAlphaFragmentOp3ATI_fnptr((uint)op, (uint)dst, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod, (uint)arg3, (uint)arg3Rep, (uint)arg3Mod);
             
             /// <summary> <b>[requires: GL_ATI_vertex_array_object]</b> <b>[entry point: <c>glArrayObjectATI</c>]</b><br/>  </summary>
             public static void ArrayObjectATI(EnableCap array, int size, ScalarType type, int stride, int buffer, uint offset) => GLPointers._glArrayObjectATI_fnptr((uint)array, size, (uint)type, stride, buffer, offset);
@@ -11073,13 +11073,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void ClientActiveVertexStreamATI(VertexStreamATI stream) => GLPointers._glClientActiveVertexStreamATI_fnptr((uint)stream);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glColorFragmentOp1ATI</c>]</b><br/>  </summary>
-            public static void ColorFragmentOp1ATI(FragmentOp1ATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod) => GLPointers._glColorFragmentOp1ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod);
+            public static void ColorFragmentOp1ATI(FragmentOp1ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod) => GLPointers._glColorFragmentOp1ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glColorFragmentOp2ATI</c>]</b><br/>  </summary>
-            public static void ColorFragmentOp2ATI(FragmentOp2ATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod) => GLPointers._glColorFragmentOp2ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod);
+            public static void ColorFragmentOp2ATI(FragmentOp2ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod) => GLPointers._glColorFragmentOp2ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glColorFragmentOp3ATI</c>]</b><br/>  </summary>
-            public static void ColorFragmentOp3ATI(FragmentOp3ATI op, uint dst, uint dstMask, uint dstMod, uint arg1, uint arg1Rep, uint arg1Mod, uint arg2, uint arg2Rep, uint arg2Mod, uint arg3, uint arg3Rep, uint arg3Mod) => GLPointers._glColorFragmentOp3ATI_fnptr((uint)op, dst, dstMask, dstMod, arg1, arg1Rep, arg1Mod, arg2, arg2Rep, arg2Mod, arg3, arg3Rep, arg3Mod);
+            public static void ColorFragmentOp3ATI(FragmentOp3ATI op, FragmentShaderRegATI dst, FragmentShaderDestMaskATI dstMask, FragmentShaderDestModMaskATI dstMod, FragmentShaderGenericSourceATI arg1, FragmentShaderValueRepATI arg1Rep, FragmentShaderColorModMaskATI arg1Mod, FragmentShaderGenericSourceATI arg2, FragmentShaderValueRepATI arg2Rep, FragmentShaderColorModMaskATI arg2Mod, FragmentShaderGenericSourceATI arg3, FragmentShaderValueRepATI arg3Rep, FragmentShaderColorModMaskATI arg3Mod) => GLPointers._glColorFragmentOp3ATI_fnptr((uint)op, (uint)dst, (uint)dstMask, (uint)dstMod, (uint)arg1, (uint)arg1Rep, (uint)arg1Mod, (uint)arg2, (uint)arg2Rep, (uint)arg2Mod, (uint)arg3, (uint)arg3Rep, (uint)arg3Mod);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glDeleteFragmentShaderATI</c>]</b><br/>  </summary>
             public static void DeleteFragmentShaderATI(uint id) => GLPointers._glDeleteFragmentShaderATI_fnptr(id);
@@ -11175,7 +11175,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void NormalStream3svATI(VertexStreamATI stream, short* coords) => GLPointers._glNormalStream3svATI_fnptr((uint)stream, coords);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glPassTexCoordATI</c>]</b><br/>  </summary>
-            public static void PassTexCoordATI(uint dst, uint coord, SwizzleOpATI swizzle) => GLPointers._glPassTexCoordATI_fnptr(dst, coord, (uint)swizzle);
+            public static void PassTexCoordATI(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI coord, SwizzleOpATI swizzle) => GLPointers._glPassTexCoordATI_fnptr((uint)dst, (uint)coord, (uint)swizzle);
             
             /// <summary> <b>[requires: GL_ATI_pn_triangles]</b> <b>[entry point: <c>glPNTrianglesfATI</c>]</b><br/>  </summary>
             public static void PNTrianglesfATI(PNTrianglesPNameATI pname, float param) => GLPointers._glPNTrianglesfATI_fnptr((uint)pname, param);
@@ -11184,10 +11184,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void PNTrianglesiATI(PNTrianglesPNameATI pname, int param) => GLPointers._glPNTrianglesiATI_fnptr((uint)pname, param);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glSampleMapATI</c>]</b><br/>  </summary>
-            public static void SampleMapATI(uint dst, uint interp, SwizzleOpATI swizzle) => GLPointers._glSampleMapATI_fnptr(dst, interp, (uint)swizzle);
+            public static void SampleMapATI(FragmentShaderRegATI dst, FragmentShaderTextureSourceATI interp, SwizzleOpATI swizzle) => GLPointers._glSampleMapATI_fnptr((uint)dst, (uint)interp, (uint)swizzle);
             
             /// <summary> <b>[requires: GL_ATI_fragment_shader]</b> <b>[entry point: <c>glSetFragmentShaderConstantATI</c>]</b><br/>  </summary>
-            public static void SetFragmentShaderConstantATI(uint dst, float* value) => GLPointers._glSetFragmentShaderConstantATI_fnptr(dst, value);
+            public static void SetFragmentShaderConstantATI(FragmentShaderConATI dst, float* value) => GLPointers._glSetFragmentShaderConstantATI_fnptr((uint)dst, value);
             
             /// <summary> <b>[requires: GL_ATI_separate_stencil]</b> <b>[entry point: <c>glStencilFuncSeparateATI</c>]</b><br/>  </summary>
             public static void StencilFuncSeparateATI(StencilFunction frontfunc, StencilFunction backfunc, int reference, uint mask) => GLPointers._glStencilFuncSeparateATI_fnptr((uint)frontfunc, (uint)backfunc, reference, mask);
@@ -12238,13 +12238,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void MultiTexGenivEXT(TextureUnit texunit, TextureCoordName coord, TextureGenParameter pname, int* parameters) => GLPointers._glMultiTexGenivEXT_fnptr((uint)texunit, (uint)coord, (uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glMultiTexImage1DEXT</c>]</b><br/>  </summary>
-            public static void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, internalformat, width, border, (uint)format, (uint)type, pixels);
+            public static void MultiTexImage1DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage1DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glMultiTexImage2DEXT</c>]</b><br/>  </summary>
-            public static void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, internalformat, width, height, border, (uint)format, (uint)type, pixels);
+            public static void MultiTexImage2DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage2DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glMultiTexImage3DEXT</c>]</b><br/>  </summary>
-            public static void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage3DEXT_fnptr((uint)texunit, (uint)target, level, internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+            public static void MultiTexImage3DEXT(TextureUnit texunit, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glMultiTexImage3DEXT_fnptr((uint)texunit, (uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glMultiTexParameterfEXT</c>]</b><br/>  </summary>
             public static void MultiTexParameterfEXT(TextureUnit texunit, TextureTarget target, TextureParameterName pname, float param) => GLPointers._glMultiTexParameterfEXT_fnptr((uint)texunit, (uint)target, (uint)pname, param);
@@ -12757,13 +12757,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TextureBufferRangeEXT(int texture, TextureTarget target, SizedInternalFormat internalformat, int buffer, IntPtr offset, nint size) => GLPointers._glTextureBufferRangeEXT_fnptr(texture, (uint)target, (uint)internalformat, buffer, offset, size);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glTextureImage1DEXT</c>]</b><br/>  </summary>
-            public static void TextureImage1DEXT(int texture, TextureTarget target, int level, int internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage1DEXT_fnptr(texture, (uint)target, level, internalformat, width, border, (uint)format, (uint)type, pixels);
+            public static void TextureImage1DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage1DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glTextureImage2DEXT</c>]</b><br/>  </summary>
-            public static void TextureImage2DEXT(int texture, TextureTarget target, int level, int internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage2DEXT_fnptr(texture, (uint)target, level, internalformat, width, height, border, (uint)format, (uint)type, pixels);
+            public static void TextureImage2DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage2DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, height, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_direct_state_access]</b> <b>[entry point: <c>glTextureImage3DEXT</c>]</b><br/>  </summary>
-            public static void TextureImage3DEXT(int texture, TextureTarget target, int level, int internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage3DEXT_fnptr(texture, (uint)target, level, internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
+            public static void TextureImage3DEXT(int texture, TextureTarget target, int level, InternalFormat internalformat, int width, int height, int depth, int border, PixelFormat format, PixelType type, void* pixels) => GLPointers._glTextureImage3DEXT_fnptr(texture, (uint)target, level, (int)internalformat, width, height, depth, border, (uint)format, (uint)type, pixels);
             
             /// <summary> <b>[requires: GL_EXT_light_texture]</b> <b>[entry point: <c>glTextureLightEXT</c>]</b><br/>  </summary>
             public static void TextureLightEXT(LightTexturePNameEXT pname) => GLPointers._glTextureLightEXT_fnptr((uint)pname);
@@ -13185,13 +13185,13 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void GetPerfCounterInfoINTEL(uint queryId, uint counterId, uint counterNameLength, byte* counterName, uint counterDescLength, byte* counterDesc, uint* counterOffset, uint* counterDataSize, uint* counterTypeEnum, uint* counterDataTypeEnum, ulong* rawCounterMaxValue) => GLPointers._glGetPerfCounterInfoINTEL_fnptr(queryId, counterId, counterNameLength, counterName, counterDescLength, counterDesc, counterOffset, counterDataSize, counterTypeEnum, counterDataTypeEnum, rawCounterMaxValue);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query]</b> <b>[entry point: <c>glGetPerfQueryDataINTEL</c>]</b><br/>  </summary>
-            public static void GetPerfQueryDataINTEL(int queryHandle, uint flags, int dataSize, void* data, uint* bytesWritten) => GLPointers._glGetPerfQueryDataINTEL_fnptr(queryHandle, flags, dataSize, data, bytesWritten);
+            public static void GetPerfQueryDataINTEL(int queryHandle, PerfQueryDataFlags flags, int dataSize, void* data, uint* bytesWritten) => GLPointers._glGetPerfQueryDataINTEL_fnptr(queryHandle, (uint)flags, dataSize, data, bytesWritten);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query]</b> <b>[entry point: <c>glGetPerfQueryIdByNameINTEL</c>]</b><br/>  </summary>
             public static void GetPerfQueryIdByNameINTEL(byte* queryName, uint* queryId) => GLPointers._glGetPerfQueryIdByNameINTEL_fnptr(queryName, queryId);
             
             /// <summary> <b>[requires: GL_INTEL_performance_query]</b> <b>[entry point: <c>glGetPerfQueryInfoINTEL</c>]</b><br/>  </summary>
-            public static void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, uint* capsMask) => GLPointers._glGetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, capsMask);
+            public static void GetPerfQueryInfoINTEL(uint queryId, uint queryNameLength, byte* queryName, uint* dataSize, uint* noCounters, uint* noInstances, PerformanceQueryCapsMaskINTEL* capsMask) => GLPointers._glGetPerfQueryInfoINTEL_fnptr(queryId, queryNameLength, queryName, dataSize, noCounters, noInstances, (uint*)capsMask);
             
             /// <summary> <b>[requires: GL_INTEL_map_texture]</b> <b>[entry point: <c>glMapTexture2DINTEL</c>]</b><br/>  </summary>
             public static void* MapTexture2DINTEL(int texture, int level, uint access, int* stride, All* layout) => GLPointers._glMapTexture2DINTEL_fnptr(texture, level, access, stride, (uint*)layout);
@@ -14621,10 +14621,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TexCoordFormatNV(int size, All type, int stride) => GLPointers._glTexCoordFormatNV_fnptr(size, (uint)type, stride);
             
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b> <b>[entry point: <c>glTexImage2DMultisampleCoverageNV</c>]</b><br/>  </summary>
-            public static void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTexImage2DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TexImage2DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTexImage2DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b> <b>[entry point: <c>glTexImage3DMultisampleCoverageNV</c>]</b><br/>  </summary>
-            public static void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTexImage3DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TexImage3DMultisampleCoverageNV(TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTexImage3DMultisampleCoverageNV_fnptr((uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b> <b>[entry point: <c>glTexPageCommitmentMemNV</c>]</b><br/>  </summary>
             public static void TexPageCommitmentMemNV(TextureTarget target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._glTexPageCommitmentMemNV_fnptr((uint)target, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
@@ -14639,16 +14639,16 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TextureBarrierNV() => GLPointers._glTextureBarrierNV_fnptr();
             
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b> <b>[entry point: <c>glTextureImage2DMultisampleCoverageNV</c>]</b><br/>  </summary>
-            public static void TextureImage2DMultisampleCoverageNV(int texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage2DMultisampleCoverageNV(int texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b> <b>[entry point: <c>glTextureImage2DMultisampleNV</c>]</b><br/>  </summary>
-            public static void TextureImage2DMultisampleNV(int texture, TextureTarget target, int samples, int internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleNV_fnptr(texture, (uint)target, samples, internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage2DMultisampleNV(int texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, bool fixedSampleLocations) => GLPointers._glTextureImage2DMultisampleNV_fnptr(texture, (uint)target, samples, (int)internalFormat, width, height, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b> <b>[entry point: <c>glTextureImage3DMultisampleCoverageNV</c>]</b><br/>  </summary>
-            public static void TextureImage3DMultisampleCoverageNV(int texture, TextureTarget target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage3DMultisampleCoverageNV(int texture, TextureTarget target, int coverageSamples, int colorSamples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleCoverageNV_fnptr(texture, (uint)target, coverageSamples, colorSamples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_texture_multisample]</b> <b>[entry point: <c>glTextureImage3DMultisampleNV</c>]</b><br/>  </summary>
-            public static void TextureImage3DMultisampleNV(int texture, TextureTarget target, int samples, int internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleNV_fnptr(texture, (uint)target, samples, internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
+            public static void TextureImage3DMultisampleNV(int texture, TextureTarget target, int samples, InternalFormat internalFormat, int width, int height, int depth, bool fixedSampleLocations) => GLPointers._glTextureImage3DMultisampleNV_fnptr(texture, (uint)target, samples, (int)internalFormat, width, height, depth, (byte)(fixedSampleLocations ? 1 : 0));
             
             /// <summary> <b>[requires: GL_NV_memory_object_sparse]</b> <b>[entry point: <c>glTexturePageCommitmentMemNV</c>]</b><br/>  </summary>
             public static void TexturePageCommitmentMemNV(int texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint memory, ulong offset, bool commit) => GLPointers._glTexturePageCommitmentMemNV_fnptr(texture, layer, level, xoffset, yoffset, zoffset, width, height, depth, memory, offset, (byte)(commit ? 1 : 0));
@@ -14663,7 +14663,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void TransformFeedbackStreamAttribsNV(int count, int* attribs, int nbuffers, int* bufstreams, All bufferMode) => GLPointers._glTransformFeedbackStreamAttribsNV_fnptr(count, attribs, nbuffers, bufstreams, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_NV_transform_feedback]</b> <b>[entry point: <c>glTransformFeedbackVaryingsNV</c>]</b><br/>  </summary>
-            public static void TransformFeedbackVaryingsNV(int program, int count, int* locations, TransformFeedbackBufferMode bufferMode) => GLPointers._glTransformFeedbackVaryingsNV_fnptr(program, count, locations, (uint)bufferMode);
+            public static void TransformFeedbackVaryingsNV(int program, int count, TransformFeedbackTokenNV* locations, TransformFeedbackBufferMode bufferMode) => GLPointers._glTransformFeedbackVaryingsNV_fnptr(program, count, (int*)locations, (uint)bufferMode);
             
             /// <summary> <b>[requires: GL_NV_path_rendering]</b> <b>[entry point: <c>glTransformPathNV</c>]</b><br/>  </summary>
             public static void TransformPathNV(uint resultPath, uint srcPath, PathTransformType transformType, float* transformValues) => GLPointers._glTransformPathNV_fnptr(resultPath, srcPath, (uint)transformType, transformValues);
@@ -15564,7 +15564,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
         public static unsafe partial class PGI
         {
             /// <summary> <b>[requires: GL_PGI_misc_hints]</b> <b>[entry point: <c>glHintPGI</c>]</b><br/>  </summary>
-            public static void HintPGI(HintTargetPGI target, int mode) => GLPointers._glHintPGI_fnptr((uint)target, mode);
+            public static void HintPGI(HintTargetPGI target, VertexHintsMaskPGI mode) => GLPointers._glHintPGI_fnptr((uint)target, (int)mode);
             
         }
         /// <summary>SGI extensions.</summary>
@@ -15759,7 +15759,7 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static bool IsAsyncMarkerSGIX(uint marker) => GLPointers._glIsAsyncMarkerSGIX_fnptr(marker) != 0;
             
             /// <summary> <b>[requires: GL_SGIX_fragment_lighting]</b> <b>[entry point: <c>glLightEnviSGIX</c>]</b><br/>  </summary>
-            public static void LightEnviSGIX(LightEnvParameterSGIX pname, int param) => GLPointers._glLightEnviSGIX_fnptr((uint)pname, param);
+            public static void LightEnviSGIX(LightEnvParameterSGIX pname, LightEnvModeSGIX param) => GLPointers._glLightEnviSGIX_fnptr((uint)pname, (int)param);
             
             /// <summary> <b>[requires: GL_SGIX_list_priority]</b> <b>[entry point: <c>glListParameterfSGIX</c>]</b><br/>  </summary>
             public static void ListParameterfSGIX(int list, ListParameterName pname, float param) => GLPointers._glListParameterfSGIX_fnptr(list, (uint)pname, param);
@@ -15798,10 +15798,10 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void SpriteParameterfvSGIX(SpriteParameterNameSGIX pname, float* parameters) => GLPointers._glSpriteParameterfvSGIX_fnptr((uint)pname, parameters);
             
             /// <summary> <b>[requires: GL_SGIX_sprite]</b> <b>[entry point: <c>glSpriteParameteriSGIX</c>]</b><br/>  </summary>
-            public static void SpriteParameteriSGIX(SpriteParameterNameSGIX pname, int param) => GLPointers._glSpriteParameteriSGIX_fnptr((uint)pname, param);
+            public static void SpriteParameteriSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX param) => GLPointers._glSpriteParameteriSGIX_fnptr((uint)pname, (int)param);
             
             /// <summary> <b>[requires: GL_SGIX_sprite]</b> <b>[entry point: <c>glSpriteParameterivSGIX</c>]</b><br/>  </summary>
-            public static void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, int* parameters) => GLPointers._glSpriteParameterivSGIX_fnptr((uint)pname, parameters);
+            public static void SpriteParameterivSGIX(SpriteParameterNameSGIX pname, SpriteModeSGIX* parameters) => GLPointers._glSpriteParameterivSGIX_fnptr((uint)pname, (int*)parameters);
             
             /// <summary> <b>[requires: GL_SGIX_instruments]</b> <b>[entry point: <c>glStartInstrumentsSGIX</c>]</b><br/>  </summary>
             public static void StartInstrumentsSGIX() => GLPointers._glStartInstrumentsSGIX_fnptr();
@@ -15883,58 +15883,58 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             public static void ReplacementCodeubvSUN(byte* code) => GLPointers._glReplacementCodeubvSUN_fnptr(code);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiColor3fVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiColor3fVertex3fSUN(uint rc, float r, float g, float b, float x, float y, float z) => GLPointers._glReplacementCodeuiColor3fVertex3fSUN_fnptr(rc, r, g, b, x, y, z);
+            public static void ReplacementCodeuiColor3fVertex3fSUN(TriangleListSUN rc, float r, float g, float b, float x, float y, float z) => GLPointers._glReplacementCodeuiColor3fVertex3fSUN_fnptr((uint)rc, r, g, b, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiColor3fVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiColor3fVertex3fvSUN(uint* rc, float* c, float* v) => GLPointers._glReplacementCodeuiColor3fVertex3fvSUN_fnptr(rc, c, v);
+            public static void ReplacementCodeuiColor3fVertex3fvSUN(TriangleListSUN* rc, float* c, float* v) => GLPointers._glReplacementCodeuiColor3fVertex3fvSUN_fnptr((uint*)rc, c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiColor4fNormal3fVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiColor4fNormal3fVertex3fSUN(uint rc, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fSUN_fnptr(rc, r, g, b, a, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiColor4fNormal3fVertex3fSUN(TriangleListSUN rc, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fSUN_fnptr((uint)rc, r, g, b, a, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiColor4fNormal3fVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(uint* rc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fvSUN_fnptr(rc, c, n, v);
+            public static void ReplacementCodeuiColor4fNormal3fVertex3fvSUN(TriangleListSUN* rc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiColor4fNormal3fVertex3fvSUN_fnptr((uint*)rc, c, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiColor4ubVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiColor4ubVertex3fSUN(uint rc, byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4ubVertex3fSUN_fnptr(rc, r, g, b, a, x, y, z);
+            public static void ReplacementCodeuiColor4ubVertex3fSUN(TriangleListSUN rc, byte r, byte g, byte b, byte a, float x, float y, float z) => GLPointers._glReplacementCodeuiColor4ubVertex3fSUN_fnptr((uint)rc, r, g, b, a, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiColor4ubVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiColor4ubVertex3fvSUN(uint* rc, byte* c, float* v) => GLPointers._glReplacementCodeuiColor4ubVertex3fvSUN_fnptr(rc, c, v);
+            public static void ReplacementCodeuiColor4ubVertex3fvSUN(TriangleListSUN* rc, byte* c, float* v) => GLPointers._glReplacementCodeuiColor4ubVertex3fvSUN_fnptr((uint*)rc, c, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiNormal3fVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiNormal3fVertex3fSUN(uint rc, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiNormal3fVertex3fSUN_fnptr(rc, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiNormal3fVertex3fSUN(TriangleListSUN rc, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiNormal3fVertex3fSUN_fnptr((uint)rc, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiNormal3fVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiNormal3fVertex3fvSUN(uint* rc, float* n, float* v) => GLPointers._glReplacementCodeuiNormal3fVertex3fvSUN_fnptr(rc, n, v);
+            public static void ReplacementCodeuiNormal3fVertex3fvSUN(TriangleListSUN* rc, float* n, float* v) => GLPointers._glReplacementCodeuiNormal3fVertex3fvSUN_fnptr((uint*)rc, n, v);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list]</b> <b>[entry point: <c>glReplacementCodeuiSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiSUN(uint code) => GLPointers._glReplacementCodeuiSUN_fnptr(code);
+            public static void ReplacementCodeuiSUN(TriangleListSUN code) => GLPointers._glReplacementCodeuiSUN_fnptr((uint)code);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN(uint rc, float s, float t, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN_fnptr(rc, s, t, r, g, b, a, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN(TriangleListSUN rc, float s, float t, float r, float g, float b, float a, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN_fnptr((uint)rc, s, t, r, g, b, a, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(uint* rc, float* tc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN_fnptr(rc, tc, c, n, v);
+            public static void ReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(TriangleListSUN* rc, float* tc, float* c, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN_fnptr((uint*)rc, tc, c, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3fSUN(uint rc, float s, float t, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN_fnptr(rc, s, t, nx, ny, nz, x, y, z);
+            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3fSUN(TriangleListSUN rc, float s, float t, float nx, float ny, float nz, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN_fnptr((uint)rc, s, t, nx, ny, nz, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(uint* rc, float* tc, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN_fnptr(rc, tc, n, v);
+            public static void ReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(TriangleListSUN* rc, float* tc, float* n, float* v) => GLPointers._glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN_fnptr((uint*)rc, tc, n, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiTexCoord2fVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiTexCoord2fVertex3fSUN(uint rc, float s, float t, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fSUN_fnptr(rc, s, t, x, y, z);
+            public static void ReplacementCodeuiTexCoord2fVertex3fSUN(TriangleListSUN rc, float s, float t, float x, float y, float z) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fSUN_fnptr((uint)rc, s, t, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiTexCoord2fVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiTexCoord2fVertex3fvSUN(uint* rc, float* tc, float* v) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fvSUN_fnptr(rc, tc, v);
+            public static void ReplacementCodeuiTexCoord2fVertex3fvSUN(TriangleListSUN* rc, float* tc, float* v) => GLPointers._glReplacementCodeuiTexCoord2fVertex3fvSUN_fnptr((uint*)rc, tc, v);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiVertex3fSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiVertex3fSUN(uint rc, float x, float y, float z) => GLPointers._glReplacementCodeuiVertex3fSUN_fnptr(rc, x, y, z);
+            public static void ReplacementCodeuiVertex3fSUN(TriangleListSUN rc, float x, float y, float z) => GLPointers._glReplacementCodeuiVertex3fSUN_fnptr((uint)rc, x, y, z);
             
             /// <summary> <b>[requires: GL_SUN_vertex]</b> <b>[entry point: <c>glReplacementCodeuiVertex3fvSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuiVertex3fvSUN(uint* rc, float* v) => GLPointers._glReplacementCodeuiVertex3fvSUN_fnptr(rc, v);
+            public static void ReplacementCodeuiVertex3fvSUN(TriangleListSUN* rc, float* v) => GLPointers._glReplacementCodeuiVertex3fvSUN_fnptr((uint*)rc, v);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list]</b> <b>[entry point: <c>glReplacementCodeuivSUN</c>]</b><br/>  </summary>
-            public static void ReplacementCodeuivSUN(uint* code) => GLPointers._glReplacementCodeuivSUN_fnptr(code);
+            public static void ReplacementCodeuivSUN(TriangleListSUN* code) => GLPointers._glReplacementCodeuivSUN_fnptr((uint*)code);
             
             /// <summary> <b>[requires: GL_SUN_triangle_list]</b> <b>[entry point: <c>glReplacementCodeusSUN</c>]</b><br/>  </summary>
             public static void ReplacementCodeusSUN(ushort code) => GLPointers._glReplacementCodeusSUN_fnptr(code);

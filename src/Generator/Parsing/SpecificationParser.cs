@@ -522,6 +522,23 @@ namespace Generator.Parsing
                     return new CSPrimitive("int", @const);
                 }
 
+                // For now we only expect int and uint to be able to be turned into groupNameToEnumGroup.
+                // - 2022-08-09
+                // FIXME: We might want to make sure that the underlying type for the enumName groupName is the same as the parameter groupName.
+                //   Right now we blindly substituting the type for the enumName.
+                if (group != null && (type == "GLuint" || type == "GLint"))
+                {
+                    Console.WriteLine($"Making {type} into group {group}");
+                    CSPrimitive baseType = type switch
+                    {
+                        "GLint" => new CSPrimitive("int", @const),
+                        "GLuint" => new CSPrimitive("uint", @const),
+                        _ => throw new Exception("This should not happen!"),
+                    };
+
+                    return new CSEnum(group.Name, group, baseType, @const);
+                }
+
                 BaseCSType csType;
                 {
                     csType = type switch
