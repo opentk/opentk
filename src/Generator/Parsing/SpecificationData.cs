@@ -1,8 +1,58 @@
-﻿using System;
+﻿using Generator.Writing;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Dynamic;
+using System.IO.Compression;
 
 namespace Generator.Parsing
 {
+    public enum InputAPI
+    {
+        GL,
+        GLES1,
+        GLES2,
+        WGL,
+        GLX,
+    }
+
+    public record Specification2(
+        List<Command> Commands,
+        List<Enums> Enums,
+        List<API> APIs);
+
+    public record API(
+        InputAPI Name,
+        List<FunctionReference> Functions,
+        List<EnumReference> Enums);
+
+    public record FunctionReference(
+        string EntryPoint,
+        Version? AddedIn,
+        Version? RemovedIn,
+        List<ExtensionReference> PartOfExtensions,
+        GLProfile Profile);
+
+    public record EnumReference(
+        string EnumName,
+        Version? AddedIn,
+        Version? RemovedIn,
+        List<ExtensionReference> PartOfExtensions,
+        // FIXME! there can be multiple profiles??
+        GLProfile Profile);
+
+    public record APIVersion(
+        Version Name,
+        List<string> EntryPoints,
+        List<string> EnumValues);
+
+    public record ExtensionReference(
+        string Name,
+        string Vendor);
+        //List<string> EntryPoints,
+        //List<string> EnumValues);
+
+
     public record Specification(
         List<Command> Commands,
         List<Enums> Enums,
@@ -15,7 +65,7 @@ namespace Generator.Parsing
         PType ReturnType,
         GLParameter[] Parameters);
 
-
+    // FIXME: Maybe flatten the list of enums?
     public record Enums(
         string Namespace,
         string[] Groups,
@@ -153,6 +203,28 @@ namespace Generator.Parsing
             BinaryOperator.Division => '/',
             _ => throw new Exception("Invalid binary operator, there is no char associated."),
         };
+
+        public bool TryDecomposeIntoParameterRefAndConstant([NotNullWhen(true)] out Constant? constant, [NotNullWhen(true)] out ParameterReference? reference)
+        {
+            if (Left is ParameterReference leftRef && Right is Constant rightConst)
+            {
+                reference = leftRef;
+                constant = rightConst;
+                return true;
+            }
+            else if (Right is ParameterReference rightRef && Left is Constant leftConst)
+            {
+                reference = rightRef;
+                constant = leftConst;
+                return true;
+            }
+            else
+            {
+                constant = default;
+                reference = default;
+                return false;
+            }
+        }
     }
 
     public record ParameterReference(string ParameterName) : Expression;
@@ -168,6 +240,9 @@ namespace Generator.Parsing
         GLES2,
         GLSC2,
         GLCore,
+
+        WGL,
+        GLX,
     }
 
     public enum GLProfile
@@ -200,6 +275,7 @@ namespace Generator.Parsing
         Nint,
         Enum,
         Bool8,
+        Bool32,
         Char8,
         VoidPtr,
 
@@ -214,6 +290,56 @@ namespace Generator.Parsing
         GLDebugProcAMD,
         GLDebugProcNV,
         GLVulkanProcNV,
+
+        // WGL Types
+        WGL_Proc,
+        WGL_Rect,
+        WGL_LPString,
+        WGL_COLORREF,
+        WGL_LAYERPLANEDESCRIPTOR,
+        WGL_PIXELFORMATDESCRIPTOR,
+        WGL_GPU_DEVICE,
+        WGL_PGPU_DEVICE,
+
+        // GLX Types
+        GLX_Colormap,
+        GLX_Display,
+        GLX_Font,
+        GLX_Pixmap,
+        GLX_Screen,
+        GLX_Status,
+        GLX_Window,
+        GLX_EXTFuncPtr,
+        GLX_XVisualInfo,
+        GLX_DMbuffer,
+        GLX_DMparams,
+        GLX_VLNode,
+        GLX_VLPath,
+        GLX_VLServer,
+        GLX_FBConfigID,
+        GLX_FBConfig,
+        GLX_ContextID,
+        GLX_Context,
+        GLX_GLXPixmap,
+        GLX_GLXDrawable,
+        GLX_GLXWindow,
+        GLX_GLXPbuffer,
+        GLX_VideoCaptureDeviceNV,
+        GLX_VideoDeviceNV,
+        GLX_VideoSourceSGIX,
+        GLX_FBConfigIDSGIX,
+        GLX_FBConfigSGIX,
+        GLX_GLXPbufferSGIX,
+        GLX_GLXPbufferClobberEvent,
+        GLX_GLXBufferSwapComplete,
+        GLX_GLXEvent,
+        GLX_GLXStereoNotifyEventEXT,
+        GLX_GLXBufferClobberEventSGIX,
+        GLX_GLXHyperpipeNetworkSGIX,
+        GLX_GLXHyperpipeConfigSGIX,
+        GLX_GLXPipeRect,
+        GLX_GLXPipeRectLimits,
+
     }
 
     public enum HandleType
@@ -230,6 +356,7 @@ namespace Generator.Parsing
         TransformFeedbackHandle,
         VertexArrayHandle,
         DisplayListHandle,
+        PerfQueryHandle,
     }
 
 

@@ -7,12 +7,20 @@ using System.CodeDom.Compiler;
 
 namespace Generator.Writing
 {
-    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
+    // FIXME: Add the needed properties for apis here...
+    //public record API(string name, APIVersion[] APIVersions);
 
+    //public record APIVersion(Version Version, Function[] Functions /* something enums */);
+
+    //public record Extension(string name, Function[] Functions /* something enums */);
+
+    //public record Function(NativeFunction Native, Overload[] Overloads);
+
+    public record OutputData(List<NativeFunction> AllNativeFunctions, List<GLOutputApi> Apis);
 
     public record GLOutputApi(
         OutputApi Api,
-        Dictionary<string, GLVendorFunctions> Vendors,
+        SortedDictionary<string, GLVendorFunctions> Vendors,
         List<EnumGroup> EnumGroups,
         Dictionary<NativeFunction, FunctionDocumentation> Documentation);
 
@@ -20,15 +28,24 @@ namespace Generator.Writing
         string Name,
         string Purpose,
         ParameterDocumentation[] Parameters,
-        string RefPagesLink,
+        string? RefPagesLink,
         List<string> AddedIn,
         List<string>? RemovedIn
         );
 
     public record GLVendorFunctions(
-        List<NativeFunction> NativeFunctions,
-        List<Overload[]> OverloadsGroupedByNativeFunctions,
+        List<OverloadedFunction> Functions,
         HashSet<NativeFunction> NativeFunctionsWithPostfix);
+
+    public record OverloadedFunction(
+        NativeFunction NativeFunction,
+        Overload[] Overloads) : IComparable<OverloadedFunction>
+    {
+        public int CompareTo(OverloadedFunction? other)
+        {
+            return NativeFunction.FunctionName.CompareTo(other?.NativeFunction.FunctionName);
+        }
+    }
 
     public record NativeFunction(
         string EntryPoint,
@@ -44,7 +61,6 @@ namespace Generator.Writing
         NativeFunction NativeFunction,
         BaseCSType ReturnType,
         NameTable NameTable,
-        string ReturnVariableName,
         string[] GenericTypes,
         string OverloadName);
 
@@ -88,6 +104,15 @@ namespace Generator.Writing
         public bool Constant { get; }
     }
 
+    public interface IBaseTypeCSType
+    {
+        public BaseCSType BaseType { get; }
+
+        public bool TakeAddressInFixedStatement { get; }
+
+        public BaseCSType CreateWithNewType(BaseCSType type);
+    }
+
     public record CSVoid(bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString() => "void";
@@ -109,7 +134,15 @@ namespace Generator.Writing
         }
     }
 
-    public record CSStruct(string TypeName, bool Constant, CSPrimitive? UnderlyingType) : BaseCSType, IConstantCSType
+    public record CSStructPrimitive(string StructName, bool Constant, CSPrimitive UnderlyingType) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return StructName;
+        }
+    }
+
+    public record CSStruct(string TypeName, bool Constant) : BaseCSType, IConstantCSType
     {
         public override string ToCSString()
         {
@@ -125,11 +158,29 @@ namespace Generator.Writing
         }
     }
 
-    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType
+    public record CSBool32(bool Constant) : BaseCSType, IConstantCSType
+    {
+        public override string ToCSString()
+        {
+            return "int";
+        }
+    }
+
+    public interface ICSCharType : IConstantCSType { }
+
+    public record CSChar8(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
     {
         public override string ToCSString()
         {
             return "byte";
+        }
+    }
+
+    public record CSChar16(bool Constant) : BaseCSType, IConstantCSType, ICSCharType
+    {
+        public override string ToCSString()
+        {
+            return "char";
         }
     }
 
@@ -149,9 +200,13 @@ namespace Generator.Writing
         }
     }
 
-    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType
+    public record CSRef(CSRef.Type RefType, BaseCSType ReferencedType) : BaseCSType, IBaseTypeCSType
     {
         public enum Type { Ref, Out, In }
+
+        public BaseCSType BaseType => ReferencedType;
+
+        public bool TakeAddressInFixedStatement => true;
 
         public override string ToCSString()
         {
@@ -164,18 +219,32 @@ namespace Generator.Writing
             };
             return $"{modifier} {ReferencedType.ToCSString()}";
         }
+
+        public BaseCSType CreateWithNewType(BaseCSType type)
+        {
+            return new CSRef(RefType, type);
+        }
     }
 
-    public record CSArray(BaseCSType BaseType) : BaseCSType
+    public record CSArray(BaseCSType BaseType) : BaseCSType, IBaseTypeCSType
     {
+        public bool TakeAddressInFixedStatement => false;
+
         public override string ToCSString()
         {
             return $"{BaseType.ToCSString()}[]";
         }
+
+        public BaseCSType CreateWithNewType(BaseCSType type)
+        {
+            return new CSArray(type);
+        }
     }
 
-    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType
+    public record CSSpan(BaseCSType BaseType, bool Readonly) : BaseCSType, IBaseTypeCSType
     {
+        public bool TakeAddressInFixedStatement => false;
+
         public override string ToCSString()
         {
             if (Readonly)
@@ -186,6 +255,11 @@ namespace Generator.Writing
             {
                 return $"Span<{BaseType.ToCSString()}>";
             }
+        }
+
+        public BaseCSType CreateWithNewType(BaseCSType type)
+        {
+            return new CSSpan(type, Readonly);
         }
     }
 
@@ -220,6 +294,8 @@ namespace Generator.Writing
     {
         public Dictionary<Parameter, string> Table = new Dictionary<Parameter, string>();
 
+        public string? ReturnName = "returnValue";
+
         public NameTable()
         {
         }
@@ -227,6 +303,7 @@ namespace Generator.Writing
         public NameTable(NameTable table)
         {
             Table = new Dictionary<Parameter, string>(table.Table);
+            ReturnName = table.ReturnName;
         }
 
         public NameTable New()
@@ -255,6 +332,9 @@ namespace Generator.Writing
             {
                 Table[param] = name;
             }
+
+            // Replace the return name.
+            ReturnName = table.ReturnName;
         }
     }
 
@@ -265,6 +345,8 @@ namespace Generator.Writing
         GL,
         GLCompat,
         GLES1,
-        GLES3
+        GLES2,
+        WGL,
+        GLX,
     }
 }

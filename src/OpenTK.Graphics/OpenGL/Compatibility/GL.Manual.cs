@@ -4,25 +4,22 @@ using OpenTK.Mathematics;
 
 namespace OpenTK.Graphics.OpenGL.Compatibility
 {
+    /// <summary>
+    /// OpenGL 1.0+
+    /// </summary>
     public static unsafe partial class GL
     {
-        // FIXME: Remove this when it's fixed
-        // This is here because there in the gl.xml
-        // one of the paramteres for "glSampleMaskIndexedNV"
-        // is marked with a group named this, but this group is never referenced
-        // anywhere else in the file.
-        public enum SampleMaskNV
-        { }
-
         // Right now this is the only method that actually takes a color besides a few FFP methods.
         // So currently its not worth it creating an overloader for these.
         // I also doubt there will ever be created new methods that take in a color.
         // 30-05-2021 FrederikJA
+        /// <inheritdoc cref="ClearColor(float, float, float, float)"/>
         public static void ClearColor(Color4<Rgba> clearColor)
         {
             GL.ClearColor(clearColor.X, clearColor.Y, clearColor.Z, clearColor.W);
         }
 
+        /// <inheritdoc cref="ShaderSource(int, int, byte**, in int)"/>
         public static void ShaderSource(int shader, string str)
         {
             IntPtr str_iptr = Marshal.StringToCoTaskMemAnsi(str);
@@ -31,6 +28,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             Marshal.FreeCoTaskMem(str_iptr);
         }
 
+        /// <summary>
+        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramPropertyARB, ref int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, ref int, out string)"/>.
+        /// </summary>
         public static void GetShaderInfoLog(int shader, out string info)
         {
             int length = default;
@@ -45,6 +45,9 @@ namespace OpenTK.Graphics.OpenGL.Compatibility
             }
         }
 
+        /// <summary>
+        /// This is a convenience function that calls <see cref="GL.GetProgrami(int, ProgramPropertyARB, ref int)"/> followed by <see cref="GL.GetProgramInfoLog(int, int, ref int, out string)"/>.
+        /// </summary>
         public static void GetProgramInfoLog(int program, out string info)
         {
             int length = default;
