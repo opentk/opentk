@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 22:54:52 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-15 22:59:32 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES2
@@ -700,7 +700,6 @@ namespace OpenTK.Graphics.OpenGLES2
         AllCompletedNv = 34034,
         FenceStatusNv = 34035,
         FenceConditionNv = 34036,
-        TextureRectangle = 34037,
         DepthStencil = 34041,
         DepthStencilOes = 34041,
         UnsignedInt248 = 34042,
@@ -3337,7 +3336,6 @@ namespace OpenTK.Graphics.OpenGLES2
         SampleAlphaToCoverage = 32926,
         SampleCoverage = 32928,
         DebugOutputSynchronous = 33346,
-        TextureRectangle = 34037,
         TextureCubeMap = 34067,
         SampleShading = 35894,
         RasterizerDiscard = 35977,
@@ -3399,7 +3397,6 @@ namespace OpenTK.Graphics.OpenGLES2
     {
         Texture2d = 3553,
         Texture3d = 32879,
-        TextureRectangle = 34037,
         TextureCubeMap = 34067,
         Texture2dArray = 35866,
         Renderbuffer = 36161,
@@ -3413,7 +3410,6 @@ namespace OpenTK.Graphics.OpenGLES2
         Texture2d = 3553,
         Texture3d = 32879,
         Texture3dOes = 32879,
-        TextureRectangle = 34037,
         TextureCubeMap = 34067,
         TextureCubeMapPositiveX = 34069,
         TextureCubeMapNegativeX = 34070,

@@ -184,7 +184,7 @@ namespace Generator.Parsing
                         {
                             if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
                                 enumNameToReference.Add(enumName, value);
                             }
 
@@ -206,7 +206,7 @@ namespace Generator.Parsing
                         {
                             if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None);
+                                value = new EnumReference(enumName, feature.Version, null, new List<ExtensionReference>(), GLProfile.None, false);
                                 enumNameToReference.Add(enumName, value);
                             }
 
@@ -235,7 +235,7 @@ namespace Generator.Parsing
                         {
                             if (enumNameToReference.TryGetValue(enumName, out EnumReference? value) == false)
                             {
-                                value = new EnumReference(enumName, null, null, new List<ExtensionReference>(), GLProfile.None);
+                                value = new EnumReference(enumName, null, null, new List<ExtensionReference>(), GLProfile.None, false);
                                 enumNameToReference.Add(enumName, value);
                             }
 

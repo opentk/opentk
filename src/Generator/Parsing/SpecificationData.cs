@@ -58,7 +58,9 @@ namespace Generator.Parsing
         Version? RemovedIn,
         List<ExtensionReference> PartOfExtensions,
         // FIXME! there can be multiple profiles??
-        GLProfile Profile);
+        GLProfile Profile,
+        // Is this enum reference copied from another namespace.
+        bool IsCrossReferenced);
 
     public record APIVersion(
         Version Name,

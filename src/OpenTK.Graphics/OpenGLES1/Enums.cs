@@ -1,4 +1,4 @@
-// This file is auto generated, do not edit. Generated: 2023-10-15 22:54:52 GMT+02:00
+// This file is auto generated, do not edit. Generated: 2023-10-15 22:59:32 GMT+02:00
 using System;
 
 namespace OpenTK.Graphics.OpenGLES1
@@ -10,7 +10,6 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         False = 0,
         NoError = 0,
-        None = 0,
         NoneOes = 0,
         Points = 0,
         Zero = 0,
@@ -296,7 +295,6 @@ namespace OpenTK.Graphics.OpenGLES1
         Rgba8Oes = 32856,
         Rgb10A2Ext = 32857,
         TextureBinding2d = 32873,
-        Texture3d = 32879,
         VertexArray = 32884,
         VertexArrayKhr = 32884,
         NormalArray = 32885,
@@ -464,7 +462,6 @@ namespace OpenTK.Graphics.OpenGLES1
         AllCompletedNv = 34034,
         FenceStatusNv = 34035,
         FenceConditionNv = 34036,
-        TextureRectangle = 34037,
         DepthStencilOes = 34041,
         UnsignedInt248Oes = 34042,
         MaxTextureLodBiasExt = 34045,
@@ -476,7 +473,6 @@ namespace OpenTK.Graphics.OpenGLES1
         DecrWrapOes = 34056,
         NormalMapOes = 34065,
         ReflectionMapOes = 34066,
-        TextureCubeMap = 34067,
         TextureCubeMapOes = 34067,
         TextureBindingCubeMapOes = 34068,
         TextureCubeMapPositiveXOes = 34069,
@@ -633,7 +629,6 @@ namespace OpenTK.Graphics.OpenGLES1
         DepthAttachmentOes = 36096,
         StencilAttachmentOes = 36128,
         FramebufferOes = 36160,
-        Renderbuffer = 36161,
         RenderbufferOes = 36161,
         RenderbufferWidthOes = 36162,
         RenderbufferHeightOes = 36163,
@@ -755,21 +750,6 @@ namespace OpenTK.Graphics.OpenGLES1
     {
         SyncFlushCommandsBitApple = 1,
     }
-    [Flags]
-    public enum FragmentShaderDestMaskATI : uint
-    {
-        None = 0,
-    }
-    [Flags]
-    public enum FragmentShaderDestModMaskATI : uint
-    {
-        None = 0,
-    }
-    [Flags]
-    public enum PathFontStyle : uint
-    {
-        None = 0,
-    }
     ///<summary>Used in <see cref="GL.QCOM.EndTilingQCOM" />, <see cref="GL.QCOM.StartTilingQCOM" /></summary>
     [Flags]
     public enum BufferBitQCOM : uint
@@ -879,38 +859,22 @@ namespace OpenTK.Graphics.OpenGLES1
     }
     public enum FragmentShaderValueRepATI : uint
     {
-        None = 0,
         Alpha = 6406,
     }
     ///<summary>Used in <see cref="GL.APPLE.FenceSyncAPPLE" />, <see cref="GL.APPLE.WaitSyncAPPLE" /></summary>
     public enum SyncBehaviorFlags : uint
     {
-        None = 0,
-    }
-    public enum TextureCompareMode : uint
-    {
-        None = 0,
     }
     public enum PathColorFormat : uint
     {
-        None = 0,
         Alpha = 6406,
         Rgb = 6407,
         Rgba = 6408,
         Luminance = 6409,
         LuminanceAlpha = 6410,
     }
-    public enum CombinerBiasNV : uint
-    {
-        None = 0,
-    }
-    public enum CombinerScaleNV : uint
-    {
-        None = 0,
-    }
     public enum DrawBufferMode : uint
     {
-        None = 0,
         NoneOes = 0,
         Front = 1028,
         Back = 1029,
@@ -918,33 +882,25 @@ namespace OpenTK.Graphics.OpenGLES1
     }
     public enum PixelTexGenModeSGIX : uint
     {
-        None = 0,
         Alpha = 6406,
         Rgb = 6407,
         Rgba = 6408,
     }
     public enum ReadBufferMode : uint
     {
-        None = 0,
         NoneOes = 0,
         Front = 1028,
         Back = 1029,
     }
     public enum ColorBuffer : uint
     {
-        None = 0,
         Front = 1028,
         Back = 1029,
         FrontAndBack = 1032,
     }
     public enum PathGenMode : uint
     {
-        None = 0,
         Constant = 34166,
-    }
-    public enum PathTransformType : uint
-    {
-        None = 0,
     }
     ///<summary>Used in <see cref="GL.DrawArrays" />, <see cref="GL.DrawElements" />, <see cref="GL.EXT.MultiDrawArraysEXT" />, ...</summary>
     public enum PrimitiveType : uint
@@ -1234,8 +1190,6 @@ namespace OpenTK.Graphics.OpenGLES1
         SampleAlphaToOne = 32927,
         SampleCoverage = 32928,
         DebugOutputSynchronous = 33346,
-        TextureRectangle = 34037,
-        TextureCubeMap = 34067,
         TextureCubeMapOes = 34067,
         TextureGenStrOes = 36192,
         DebugOutput = 37600,
@@ -1327,18 +1281,11 @@ namespace OpenTK.Graphics.OpenGLES1
     public enum CopyImageSubDataTarget : uint
     {
         Texture2d = 3553,
-        Texture3d = 32879,
-        TextureRectangle = 34037,
-        TextureCubeMap = 34067,
-        Renderbuffer = 36161,
     }
     ///<summary>Used in <see cref="GL.BindTexture" />, <see cref="GL.CompressedTexImage2D" />, <see cref="GL.CompressedTexSubImage2D" />, ...</summary>
     public enum TextureTarget : uint
     {
         Texture2d = 3553,
-        Texture3d = 32879,
-        TextureRectangle = 34037,
-        TextureCubeMap = 34067,
         TextureCubeMapOes = 34067,
         TextureCubeMapPositiveXOes = 34069,
         TextureCubeMapNegativeXOes = 34070,
@@ -1346,7 +1293,6 @@ namespace OpenTK.Graphics.OpenGLES1
         TextureCubeMapNegativeYOes = 34072,
         TextureCubeMapPositiveZOes = 34073,
         TextureCubeMapNegativeZOes = 34074,
-        Renderbuffer = 36161,
     }
     ///<summary>Used in <see cref="GL.GetPointerv" />, <see cref="GL.KHR.GetPointerv" /></summary>
     public enum GetPointervPName : uint
@@ -1694,7 +1640,6 @@ namespace OpenTK.Graphics.OpenGLES1
         Query = 33507,
         ProgramPipeline = 33508,
         Sampler = 33510,
-        Renderbuffer = 36161,
     }
     public enum PixelCopyType : uint
     {
@@ -2094,7 +2039,6 @@ namespace OpenTK.Graphics.OpenGLES1
     ///<summary>Used in <see cref="GL.OES.BindRenderbufferOES" />, <see cref="GL.OES.FramebufferRenderbufferOES" />, <see cref="GL.OES.GetRenderbufferParameterivOES" />, ...</summary>
     public enum RenderbufferTarget : uint
     {
-        Renderbuffer = 36161,
         RenderbufferOes = 36161,
     }
     ///<summary>Used in <see cref="GL.APPLE.GetSyncivAPPLE" /></summary>

@@ -216,6 +216,9 @@ namespace Generator.Process
 
                     foreach (EnumReference enumRef in enums)
                     {
+                        if (enumRef.IsCrossReferenced)
+                            continue;
+
                         if (removeFunctions)
                         {
                             // FIXME: Should we check the profile of the extension??
@@ -270,7 +273,7 @@ namespace Generator.Process
                                         {
                                             if (MatchesAPI(api.Name, outputApi))
                                             {
-                                                api.Enums.Add(new EnumReference(@enum.Name, null, null, new List<ExtensionReference>(), GLProfile.None));
+                                                api.Enums.Add(new EnumReference(@enum.Name, null, null, new List<ExtensionReference>(), GLProfile.None, true));
                                                 Logger.Info($"Added enum entry '{@enum.MangledName}' to {outputApi}.");
                                             }
                                         }
