@@ -159,24 +159,34 @@ module Box3 =
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Inflate =
         [<Property>]
-        let ``After inflating a box the point should be either on the edge of the box or the box shouldn't change size`` (b1 : Box3, v1 : Vector3) =
-            let v2 = b1.Size
-            
-            b1.Inflate(v1)
-            
-            Assert.True(b1.DistanceToNearestEdge(v1) = (float32)0 || v2 = b1.Size)
-        
-        [<Property>]
-        let ``After inflating the point should be enclosed in the box`` (b1 : Box3, v1 : Vector3) =
-            Assert.True(b1.Inflated(v1).Contains(v1, true))
+        let ``Box3.Inflate produces the expected min and max changes`` (b1 : Box3, v1 : Vector3) =
+            let size = Vector3.ComponentMax(v1, -b1.HalfSize);
+            let b = Box3(b1.Min - size, b1.Max + size)
+            Assert.Equal(b, b1.Inflated(v1))
 
         [<Property>]
         let ``Box3.Inflate is equivalent to Box3.Inflated`` (b1 : Box3, v1 : Vector3) =
             let mutable b = b1
-            
             b.Inflate(v1)
-            
             Assert.Equal(b, b1.Inflated(v1))
+            
+    [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
+    module Extend =
+        [<Property>]
+        let ``After extending a box the point should be either on the edge of the box or the box shouldn't change size`` (b1 : Box3, v1 : Vector3) =
+            let v2 = b1.Size
+            b1.Extend(v1)
+            Assert.True(b1.DistanceToNearestEdge(v1) = (float32)0 || v2 = b1.Size)
+        
+        [<Property>]
+        let ``After extending the point should be enclosed in the box`` (b1 : Box3, v1 : Vector3) =
+            Assert.True(b1.Extended(v1).Contains(v1, true))
+
+        [<Property>]
+        let ``Box3.Extend is equivalent to Box3.Extended`` (b1 : Box3, v1 : Vector3) =
+            let mutable b = b1
+            b.Extend(v1)
+            Assert.Equal(b, b1.Extended(v1))
         
     [<Properties(Arbitrary = [|typeof<OpenTKGen>|])>]
     module Center =
