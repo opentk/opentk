@@ -19,13 +19,28 @@ namespace OpenTK.Compute.OpenCL
         #region Platform API
 
         /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// Used to query the machine for a number of available platforms (Intel, AMD, Nvidia, etc...) and returns them.
+        /// Queries the machine for a number of available platforms (Intel, AMD, Nvidia, etc...) and
+        /// returns them to <c><paramref name="platforms"/></c>.
         /// <para>See more: https://www.khronos.org/registry/OpenCL/sdk/2.2/docs/man/html/clGetPlatformIDs.html.</para>
         /// </summary>
-        /// <param name="numberOfEntries">number of <see cref="CLPlatform"/> entries that can be added to <paramref name="platforms"/>. If <paramref name="platforms"/> is not NULL, <paramref name="numberOfEntries"/> must be greater than zero.</param>
-        /// <param name="platforms">returns a list of OpenCL platforms found. The <c><see cref="CLPlatform"/></c> values returned in <paramref name="platforms"/> can be used to identify a specific OpenCL platform. If <paramref name="platforms"/> is NULL, this argument is ignored. The number of OpenCL platforms returned is the minimum of the value specified by <paramref name="numberOfEntries"/> or the number of OpenCL platforms available.</param>
-        /// <param name="numberOfPlatforms">returns the number of OpenCL platforms available. If <paramref name="numberOfPlatforms"/> is NULL, this argument is ignored.</param>
+        /// <remarks>Introduced in OpenCL 1.0</remarks>
+        /// 
+        /// <param name="numberOfEntries">Number of <c><see cref="CLPlatform"/></c> entries that can be added to
+        /// <c><paramref name="platforms"/></c>. If <c><paramref name="platforms"/></c> is not NULL,
+        /// <c><paramref name="numberOfEntries"/></c> must be greater than zero.
+        /// </param>
+        /// 
+        /// <param name="platforms"><para>Returns a list of OpenCL platforms found. The <c><see cref="CLPlatform"/></c>
+        /// values returned in <c><paramref name="platforms"/></c> can be used to identify a specific OpenCL platform.</para>
+        /// <para> If <c><paramref name="platforms"/></c> is NULL, this argument is ignored.
+        /// The number of OpenCL platforms returned is the minimum of the value specified by
+        /// <c><paramref name="numberOfEntries"/></c> or the number of OpenCL platforms available.</para>
+        /// </param>
+        /// 
+        /// <param name="numberOfPlatforms">Returns the number of OpenCL platforms available.
+        /// If <paramref name="numberOfPlatforms"/> is NULL, this argument is ignored.
+        /// </param>
+        /// 
         /// <returns>
         /// <list type="bullet">
         /// <item><description>
@@ -33,11 +48,14 @@ namespace OpenTK.Compute.OpenCL
         /// </description></item>
         /// 
         /// <item><description>
-        ///     <c><see cref="CLResultCode.InvalidValue">CLResultCode.InvalidValue</see></c> if <paramref name="numberOfEntries"/> is equal to zero and <paramref name="platforms"/> is not NULL or if both <paramref name="numberOfPlatforms"/> and <paramref name="platforms"/> are NULL.
+        ///     <c><see cref="CLResultCode.InvalidValue">CLResultCode.InvalidValue</see></c>
+        ///     if <paramref name="numberOfEntries"/> is equal to zero and <paramref name="platforms"/>
+        ///     is not NULL or if both <paramref name="numberOfPlatforms"/> and <paramref name="platforms"/> are NULL.
         /// </description></item>
         /// 
         /// <item><description>
-        ///     <c><see cref="CLResultCode.OutOfHostMemory">CLResultCode.OutOfHostMemory</see></c> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+        ///     <c><see cref="CLResultCode.OutOfHostMemory">CLResultCode.OutOfHostMemory</see></c>
+        ///     if there is a failure to allocate resources required by the OpenCL implementation on the host.
         /// </description></item>
         /// </list>
         /// </returns>
@@ -49,13 +67,37 @@ namespace OpenTK.Compute.OpenCL
             [Out] out uint numberOfPlatforms);
 
         /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// Used to query the machine for all available platforms (Intel, AMD, Nvidia, etc...) and returns them.
+        /// Queries the machine for all available platforms (Intel, AMD, Nvidia, etc...) and returns them to
+        /// <c><paramref name="platforms"/></c>.
         /// </summary>
-        /// <param name="platformIds">returns a list of OpenCL platforms found. The <see cref="CLPlatform"/> values returned in <paramref name="platforms"> can be used to identify a specific OpenCL platform.</param>
-        /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
-        /// - <see cref="CLResultCode.InvalidValue"/> if <paramref name="numberOfEntries"> is equal to zero and <paramref name="platforms"> is not NULL or if both <paramref name="numberOfPlatforms"> and <paramref name="platforms"> are NULL.
-        /// - <see cref="CLResultCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
+        /// <remarks>Introduced in OpenCL 1.0
+        /// <para>Calls on <c><see cref="GetPlatformIDs(uint, CLPlatform[], out uint)">
+        /// GetPlatformIDs(uint, CLPlatform[], out uint)</see></c> and sets the number 
+        /// of platforms to be returned to the number of platforms found</para>
+        /// </remarks>
+        /// 
+        /// <param name="platformIds">Returns a list of OpenCL platforms found. The <c><see cref="CLPlatform"/></c>
+        /// values returned in <c><paramref name="platforms"/></c> can be used to identify a specific OpenCL platform.
+        /// </param>
+        /// 
+        /// <returns>
+        /// <list type="bullet">
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.Success">CLResultCode.Success</see></c> if the function is executed successfully.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidValue">CLResultCode.InvalidValue</see></c>
+        ///     if <c><paramref name="numberOfEntries"/></c> is equal to zero and <c><paramref name="platforms"/></c>
+        ///     is not NULL or if both <c><paramref name="numberOfPlatforms"/></c> and <c><paramref name="platforms"/></c> are NULL.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.OutOfHostMemory">CLResultCode.OutOfHostMemory</see></c>
+        ///     if there is a failure to allocate resources required by the OpenCL implementation on the host.
+        /// </description></item>
+        /// </list>
+        /// </returns>
         public static CLResultCode GetPlatformIDs(out CLPlatform[] platformIds)
         {
             var resultCode = GetPlatformIDs(0, null, out uint sizeReturned);
@@ -66,19 +108,61 @@ namespace OpenTK.Compute.OpenCL
         }
 
         /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// Used to query a specific platform for a specified piece of information. The information queried is defined by <see cref="PlatformInfo"/>
-        /// See more: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetPlatformInfo.html.
+        /// Queries a specific platform for a specified piece of information.
+        /// The information that can be queried is defined by <c><see cref="PlatformInfo"/></c>.
+        /// The information returned is stored in <c><paramref name="paramValue"/></c>.
+        /// <para>See more: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetPlatformInfo.html.</para>
         /// </summary>
-        /// <param name="platform">refers to the platform returned by <see cref="GetPlatformIds(out CLPlatform[])"/> or can be NULL. If platform is NULL, the behavior is implementation-defined.</param>
-        /// <param name="paramName">is an enumeration constant that identifies the platform information being queried.</param>
-        /// <param name="paramValueSize">specifies the size in bytes of memory pointed to by <paramref name="paramValue">. This size in bytes must be ≥ size of return type specified by the query <paramref name="paramName">.</param>
-        /// <param name="paramValue">is a pointer to memory location where appropriate values for a given <paramref name="paramName"> will be returned. If <paramref name="paramValue"> is NULL, it is ignored.</param>
-        /// <param name="paramValueSizeReturned">returns the actual size in bytes of data being queried by <paramref name="paramName">. If <paramref name="paramValueSizeReturned"> is NULL, it is ignored.</param>
-        /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
-        /// - <see cref="CLResultCode.InvalidPlatform"/> if platform is not a valid platform.
-        /// - <see cref="CLResultCode.InvalidValue"/> if <see cref="paramName"/> is not one of the supported values or if size in bytes specified by <paramref name="paramValueSize"> is less than the size of return type, and <paramref name="paramValue"> is not a NULL value.
-        /// - <see cref="CLResultCode.OutOfHostMemory"/> if there is a failure to allocate resources required by the OpenCL implementation on the host.</returns>
+        /// <remarks>Introduced in OpenCL 1.0</remarks>
+        /// 
+        /// <param name="platform">Refers to the platform returned by <c><see cref="GetPlatformIds(out CLPlatform[])"/></c>
+        /// or can be NULL. If <c><paramref name="platform"/></c> is NULL, the behavior is implementation-defined.
+        /// </param>
+        /// 
+        /// <param name="paramName">An enumeration constant that identifies the platform information being queried. 
+        /// <para>For more details see: <c><see cref="PlatformInfo"/></c></para>
+        /// </param>
+        /// 
+        /// <param name="paramValueSize">Specifies the size in bytes of memory pointed
+        /// to by <c><paramref name="paramValue"/></c>. This size in bytes must be ≥ size of return
+        /// type specified by the query <c><paramref name="paramName"/></c>.
+        /// </param>
+        /// 
+        /// <param name="paramValue">A pointer to memory location where appropriate values for
+        /// a given <c><paramref name="paramName"/></c> will be returned.
+        /// If <c><paramref name="paramValue"/></c> is NULL, it is ignored.
+        /// </param>
+        /// 
+        /// <param name="paramValueSizeReturned">Returns the actual size in bytes of data being queried
+        /// by <c><paramref name="paramName"/></c>. If <c><paramref name="paramValueSizeReturned"/></c>
+        /// is NULL, it is ignored.
+        /// </param>
+        /// 
+        /// <returns>
+        /// <list type="bullet">
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.Success">CLResultCode.Success</see></c> if the function is executed successfully.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidPlatform">CLResultCode.InvalidPlatform</see></c>
+        ///     if <c><paramref name="platform"/></c> is not a valid platform.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidValue">CLResultCode.InvalidValue</see></c>
+        ///     if <c><see cref="paramName"/></c> is not one of
+        ///     the supported values or if size in bytes specified by <c><paramref name="paramValueSize"/></c>
+        ///     is less than the size of return type, and <c><paramref name="paramValue"/></c> is not a NULL value.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.OutOfHostMemory">CLResultCode.OutOfHostMemory</see></c>
+        ///     if there is a failure to allocate resources required
+        ///     by the OpenCL implementation on the host.
+        /// </description></item>
+        /// </list>
+        /// </returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetPlatformInfo")]
         public static extern CLResultCode GetPlatformInfo(
             [In] CLPlatform platform,
@@ -88,17 +172,48 @@ namespace OpenTK.Compute.OpenCL
             [Out] out nuint paramValueSizeReturned);
 
         /// <summary>
-        /// Introduced in OpenCL 1.0.
-        /// Used to query a specific platform for a specified piece of information. The information queried is defined by <see cref="PlatformInfo"/>
-        /// See more: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetPlatformInfo.html.
+        /// Used to query a specific platform for a specified piece of information of arbitrary size
+        /// The information queried is defined by <c><see cref="PlatformInfo"/></c>.
+        /// The information returned is stored in <c><paramref name="paramValue"/></c>.
+        /// <para>See more: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetPlatformInfo.html.</para>
         /// </summary>
-        /// <param name="platform">refers to the platform returned by <see cref="GetPlatformIds(out CLPlatform[])"/> or can be NULL. If platform is NULL, the behavior is implementation-defined.</param>
-        /// <param name="paramName">is an enumeration constant that identifies the platform information being queried.</param>
-        /// <param name="paramValue">is a pointer to memory location where appropriate values for a given <paramref name="paramName"/> will be returned. If <paramref name="paramValue"/> is NULL, it is ignored.</param>
-        /// <returns>returns <see cref="CLResultCode.Success"/> if the function is executed successfully. Otherwise, it returns one of the following errors:
-        /// - <see cref="CLResultCode.InvalidPlatform">InvalidPlatform</see> if platform is not a valid platform.
-        /// - <see cref="CLResultCode.InvalidValue">InvalidValue</see> if <paramref name="paramName"/> is not one of the supported values, and <paramref name="paramValue"/> is not a NULL value.
-        /// - <see cref="CLResultCode.OutOfHostMemory">OutOfHostMemory</see> if there is a failure to allocate resources required by the OpenCL implementation on the host.
+        /// <remarks>Introduced in OpenCL 1.0</remarks>
+        /// 
+        /// <param name="platform">Refers to the platform returned by <c><see cref="GetPlatformIds(out CLPlatform[])"/></c>
+        /// or can be NULL. If <c><paramref name="platform"/></c> is NULL, the behavior is implementation-defined.
+        /// </param>
+        /// 
+        /// <param name="paramName">An enumeration constant that identifies the platform information being queried.
+        /// </param>
+        /// 
+        /// <param name="paramValue">A pointer to memory location where appropriate values for a given
+        /// <c><paramref name="paramName"/></c> will be returned. If <c><paramref name="paramValue"/></c> is NULL,
+        /// it is ignored.
+        /// </param>
+        /// 
+        /// <returns>
+        /// <list type="bullet">
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.Success">CLResultCode.Success</see></c> if the function is executed successfully.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidPlatform">CLResultCode.InvalidPlatform</see></c>
+        ///     if <c><paramref name="platform"/></c> is not a valid platform.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidValue">CLResultCode.InvalidValue</see></c>
+        ///     if <c><see cref="paramName"/></c> is not one of
+        ///     the supported values, and <c><paramref name="paramValue"/></c> is not a NULL value.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.OutOfHostMemory">CLResultCode.OutOfHostMemory</see></c>
+        ///     if there is a failure to allocate resources required
+        ///     by the OpenCL implementation on the host.
+        /// </description></item>
+        /// </list>
         /// </returns>
         public static CLResultCode GetPlatformInfo(
             CLPlatform platform,
@@ -113,13 +228,24 @@ namespace OpenTK.Compute.OpenCL
         }
 
         /// <summary>
-        /// Introduced in OpenCL 1.2 and dicontinued in OpenCL 2.2
-        /// Returns the address of the extension function named by <paramref name="functionName"/> for a given <paramref name="platform"/>. 
-        /// For more see: https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/clGetExtensionFunctionAddressForPlatform.html
+        /// Returns the address of the extension function named by
+        /// <c><paramref name="functionName"/></c> for a given <c><paramref name="platform"/></c>. 
+        /// <para>For more see: 
+        /// https://registry.khronos.org/OpenCL/sdk/2.1/docs/man/xhtml/clGetExtensionFunctionAddressForPlatform.html
+        /// </para>
         /// </summary>
-        /// <param name="platform"><see cref="CLPlatform"/> object</param>
-        /// <param name="functionName">Name of an extension function.</param>
-        /// <returns>returns the address of the extension function named by <paramref name="functionName"/> for a given platform. The pointer returned should be cast to a function pointer type matching the extension function's definition defined in the appropriate extension specification and header file. </returns>
+        /// <remarks>Introduced in OpenCL 1.2 and dicontinued in OpenCL 2.2</remarks>
+        /// 
+        /// <param name="platform"><c><see cref="CLPlatform"/></c> object
+        /// </param>
+        /// 
+        /// <param name="functionName">Name of an extension function.
+        /// </param>
+        /// 
+        /// <returns>The address of the extension function named by <c><paramref name="functionName"/></c>
+        /// for a given platform. The pointer returned should be cast to a function pointer type matching the
+        /// extension function's definition defined in the appropriate extension specification and header file.
+        /// </returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetExtensionFunctionAddressForPlatform")]
         public static extern IntPtr GetExtensionFunctionAddressForPlatform(
             [In] CLPlatform platform,
@@ -130,16 +256,83 @@ namespace OpenTK.Compute.OpenCL
         #region Device API
 
         /// <summary>
-        /// Introduced in OpenCL 1.0
-        /// Query a platform for a number of devices available to it (CPU, GPU, etc...) and return a list of them.
-        /// For more see: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetDeviceIDs.html
+        /// Query a platform for a number of devices available to it (CPU, GPU, etc...) and return a
+        /// list of them to <c><paramref name="devices"/></c>.
+        /// <para>For more see: https://registry.khronos.org/OpenCL/sdk/3.0/docs/man/html/clGetDeviceIDs.html</para>
         /// </summary>
-        /// <param name="devices"></param>
-        /// <param name="deviceType"></param>
-        /// <param name="numberOfEntries"></param>
-        /// <param name="numberOfsizeReturned"></param>
-        /// <param name="platform"></param>
-        /// <returns></returns>
+        /// <remarks>Introduced in OpenCL 1.0</remarks>
+        /// 
+        /// <param name="devices">Returns a list of OpenCL devices found.
+        /// The <c><see cref="CLDevice">CLDevice</see></c> values returned in <c><paramref name="devices"/></c>
+        /// can be used to identify a specific OpenCL device.
+        /// If <c><paramref name="devices"/></c> is NULL, this argument is ignored.
+        /// <para>The number of OpenCL devices returned is the minimum of the value specified by
+        /// <c><paramref name="numberOfEntries"/></c> or the number of OpenCL devices whose type
+        /// matches <c><paramref name="deviceType"/></c>.</para>
+        /// </param>
+        /// 
+        /// <param name="deviceType">A bitfield that identifies the type of OpenCL device.
+        /// The <c><paramref name="deviceType"/></c> can be used to query specific OpenCL devices
+        /// or all OpenCL devices available. <para>The valid values for <c><paramref name="deviceType"/></c>
+        /// are specified by <c><see cref="DeviceType">DeviceType</see></c>.</para>
+        /// </param>
+        /// 
+        /// <param name="numberOfEntries">The number of <c><see cref="CLDevice">CLDevice</see></c> entries that can be
+        /// added to <c><paramref name="devices"/></c>. If <c><paramref name="devices"/></c> is not NULL,
+        /// the <c><paramref name="numberOfEntries"/></c> must be greater than zero.
+        /// </param>
+        /// 
+        /// <param name="numberOfsizeReturned">Returns the number of OpenCL devices available that
+        /// match <c><paramref name="deviceType"/></c>. If <c><paramref name="numberOfsizeReturned"/></c> is NULL,
+        /// this argument is ignored.
+        /// </param>
+        /// 
+        /// <param name="platform">Refers to the platform ID returned by 
+        /// <c><see cref="GetPlatformIds(out CLPlatform[])"/></c> or can be NULL.
+        /// If <c><paramref name="platform"/></c> is NULL, the behavior is implementation-defined.
+        /// </param>
+        /// 
+        /// <returns>
+        /// <list type="bullet">
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.Success">CLResultCode.Success</see></c> if the function is executed successfully.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidPlatform">CLResultCode.InvalidPlatform</see></c>
+        ///     if <c><paramref name="platform"/></c> is not a valid platform.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidDeviceType">CLResultCode.InvalidDeviceType</see></c>
+        ///     if <c><paramref name="deviceType"/></c> is not a valid value.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.InvalidValue">CLResultCode.InvalidValue</see></c>
+        ///     if <c><paramref name="numberOfEntries"/></c> is equal to zero and
+        ///     <c><paramref name="devices"/></c> is not NULL or if both <c><paramref name="numberOfEntries"/></c>
+        ///     and <c><paramref name="devices"/></c> are NULL.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.DeviceNotFound">CLResultCode.DeviceNotFound</see></c>
+        ///     if no OpenCL devices that matched <c><paramref name="deviceType"/></c> were found.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.OutOfResources">CLResultCode.OutOfResources</see></c>
+        ///     if there is a failure to allocate resources required
+        ///     by the OpenCL implementation on the device.
+        /// </description></item>
+        /// 
+        /// <item><description>
+        ///     <c><see cref="CLResultCode.OutOfHostMemory">CLResultCode.OutOfHostMemory</see></c>
+        ///     if there is a failure to allocate resources required
+        ///     by the OpenCL implementation on the host.
+        /// </description></item>
+        /// </list>
+        /// </returns>
         [DllImport(LibName, CallingConvention = CallingConvention, EntryPoint = "clGetDeviceIDs")]
         public static extern CLResultCode GetDeviceIDs(
             [In] CLPlatform platform,
@@ -149,8 +342,9 @@ namespace OpenTK.Compute.OpenCL
             [Out] out uint numberOfsizeReturned);
 
         /// <summary>
-        /// Introduced in OpenCL 1.0
+        /// 
         /// </summary>
+        /// <remarks>Introduced in OpenCL 1.0</remarks>
         /// <param name="platform"></param>
         /// <param name="deviceType"></param>
         /// <param name="deviceIds"></param>
